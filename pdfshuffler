@@ -220,7 +220,7 @@ class PDFshuffler:
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_SAVE_AS, gtk.ICON_SIZE_BUTTON)
         self.button_export.set_image(image)
-        self.button_export.connect('clicked', self.export_pdf)
+        self.button_export.connect('clicked', self.choose_export_pdf_name)
         hbox.pack_start(self.button_export, expand=True, fill=True, padding=20)
 
         # Define window callback function and show window
