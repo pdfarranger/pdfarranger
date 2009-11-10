@@ -248,6 +248,8 @@ class PDFshuffler:
         self.popup.append(popup_delete)
 
         # Initializing variables
+        self.export_directory = os.getenv('HOME')
+        self.import_directory = os.getenv('HOME')
         self.nfile = 0
         self.idle = None
         self.iv_auto_scroll_timer = None
@@ -330,6 +332,8 @@ class PDFshuffler:
 
         if not pdfdoc:
             pdfdoc = PDF_Doc(filename, self.nfile, self.tmp_dir)
+            self.import_directory = os.path.split(filename)[0]
+            self.export_directory = self.import_directory
             if pdfdoc.nfile != 0 and pdfdoc != []:
                 self.nfile = pdfdoc.nfile
                 self.pdfqueue.append(pdfdoc)
@@ -377,6 +381,7 @@ class PDFshuffler:
                                                  gtk.STOCK_SAVE,
                                                  gtk.RESPONSE_OK))
         chooser.set_do_overwrite_confirmation(True)
+        chooser.set_current_folder(self.export_directory)
         filter_pdf = gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_pattern('*.pdf')
@@ -391,8 +396,13 @@ class PDFshuffler:
             response = chooser.run()
             if response == gtk.RESPONSE_OK:
                 file_out = chooser.get_filename()
+                (path, shortname) = os.path.split(file_out)
+                (shortname, ext) = os.path.splitext(shortname)
+                if ext.lower() != '.pdf':
+                    file_out = file_out + '.pdf'
                 try:
                     self.export_to_file(file_out)
+                    self.export_directory = path
                 except IOError:
                     error_msg_win = gtk.MessageDialog(flags=gtk.DIALOG_MODAL,
                                                       type=gtk.MESSAGE_ERROR,
@@ -408,11 +418,6 @@ class PDFshuffler:
     # =======================================================
     def export_to_file(self, file_out):
         """Export to file"""
-
-        (path, shortname) = os.path.split(file_out)
-        (shortname, ext) = os.path.splitext(shortname)
-        if ext.lower() != '.pdf':
-            file_out = file_out + '.pdf'
 
         pdf_output = PdfFileWriter()
         pdf_input = []
@@ -476,6 +481,7 @@ class PDFshuffler:
                                                   gtk.RESPONSE_CANCEL,
                                                   gtk.STOCK_OPEN,
                                                   gtk.RESPONSE_OK))
+        chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
         filter_pdf = gtk.FileFilter()
