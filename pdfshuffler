@@ -376,6 +376,7 @@ class PDFshuffler:
                                                  gtk.RESPONSE_CANCEL,
                                                  gtk.STOCK_SAVE,
                                                  gtk.RESPONSE_OK))
+        chooser.set_do_overwrite_confirmation(True)
         filter_pdf = gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_pattern('*.pdf')
