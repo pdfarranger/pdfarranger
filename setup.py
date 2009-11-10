@@ -45,7 +45,7 @@ for name in os.listdir('po'):
         data_files.append((install_dir, [out_name]))
 
 setup(name='pdfshuffler',
-      version='0.4',
+      version='0.5',
       author='Konstantinos Poulios',
       author_email='poulios.konstantinos at gmail dot com',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
