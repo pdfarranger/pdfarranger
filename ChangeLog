@@ -1,0 +1,88 @@
+Version 0.4.2:
+--------------
+
+* Patch cancel-file-open-fix.patch from Serafeim Zanikolas.
+
+* Patch fix-temp-dirname.patch from Serafeim Zanikolas.
+
+* The problem with thumbnail creation on Xservers with color depth other
+  than 24 has been fixed. Closes bug #2789181.
+
+* Pressing quit button during loading a document doesn't freeze the
+  application anymore.
+
+* Dimensions of the main window respecting small screen sizes.
+
+
+Version 0.4.1:
+--------------
+
+* Forced MediaBox dimensions returned from pyPdf to be of type float.
+
+* Fixed a bug which messed up cropping if the imported document included
+  already rotated pages.
+
+
+Version 0.4:
+--------------
+
+* The library python-poppler replaced ghostscript for the rendering of
+  pdf pages.
+
+* A multi-threading mechanism has been implemented in order to prevent
+  program from becoming inactive during loading of pdf files with many
+  pages.
+
+* A workaround for bug lp:#355479 has been included.
+
+* File permissions have been corrected.
+
+* The patch from fabianaffolter has been applied on the .desktop file
+  and the Category of the application has been changed from "Graphics"
+  to "Office".
+
+
+Version 0.3.1:
+--------------
+
+* Fixes the bug, that was leading to loss of the crop information of a
+  page after draggging ane dropping it to a second instance of
+  pdfshuffler.
+
+
+Version 0.3:
+------------
+
+* Page rotation and cropping has been added.
+
+* Multiple items selection has been enabled and drag and drop support
+  for multiple selected items has been implemented.
+
+* Autoscroll during drag and drop.
+
+* Multilanguage support has been implemented. German, spanish and
+  greek translations incluced.
+
+* Export to pdf with filename which overrides an imported pdf filename
+  now works.
+
+
+Version 0.2:
+------------
+
+* A great part of the programm has been rewritten. A new and more 
+  flexible mechanism for loading the document pages has been implemented.
+
+* Drag and drop functionality has been improved. Now drag and drop of 
+  pages between different instances of PDF-Shuffler is possible.
+
+* An application icon has been created.
+
+
+Version 0.1:
+------------
+
+* First release. Implementation of a GUI for pyPdf using python-gtk.
+  For the rendering of the pdf documents the programm gs (ghostscript) 
+  has been used. This is a first just working approach. There is a lot
+  more to do.

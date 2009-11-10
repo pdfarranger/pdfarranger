@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=PDF-Shuffler
+Comment=PDF Merging, Rearranging, and Splitting
+Type=Application
+Exec=pdfshuffler
+Icon=pdfshuffler
+Categories=Office;
+Terminal=false
+StartupNotify=false

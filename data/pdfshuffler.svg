@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="300"
+   height="300"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="pdfshuffler.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/kostas/Desktop/pdfshuffler.png"
+   inkscape:export-xdpi="14.4"
+   inkscape:export-ydpi="14.4">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4751">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop4753" />
+      <stop
+         id="stop4763"
+         offset="0.91071427"
+         style="stop-color:#7f007f;stop-opacity:1;" />
+      <stop
+         style="stop-color:#0000ff;stop-opacity:1;"
+         offset="1"
+         id="stop4755" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4743">
+      <stop
+         style="stop-color:#4d4d4d;stop-opacity:1;"
+         offset="0"
+         id="stop4745" />
+      <stop
+         style="stop-color:#4d4d4d;stop-opacity:0;"
+         offset="1"
+         id="stop4747" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4735">
+      <stop
+         style="stop-color:#d6e3e3;stop-opacity:1;"
+         offset="0"
+         id="stop4737" />
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="1"
+         id="stop4739" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4727">
+      <stop
+         style="stop-color:#3758ff;stop-opacity:1;"
+         offset="0"
+         id="stop4729" />
+      <stop
+         style="stop-color:#0000ff;stop-opacity:1;"
+         offset="1"
+         id="stop4731" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4717">
+      <stop
+         style="stop-color:#ffb2ff;stop-opacity:1;"
+         offset="0"
+         id="stop4719" />
+      <stop
+         id="stop4725"
+         offset="1"
+         style="stop-color:#ff00ff;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4707">
+      <stop
+         style="stop-color:#ffda42;stop-opacity:1;"
+         offset="0"
+         id="stop4709" />
+      <stop
+         id="stop4715"
+         offset="1"
+         style="stop-color:#ff0000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4691">
+      <stop
+         id="stop4705"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         id="stop4703"
+         offset="1"
+         style="stop-color:#04ff00;stop-opacity:1;" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2390"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4691"
+       id="linearGradient4699"
+       x1="15.185715"
+       y1="119.40044"
+       x2="201.11098"
+       y2="119.40044"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-18)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4707"
+       id="linearGradient4713"
+       x1="0.881223"
+       y1="109.5406"
+       x2="170.03773"
+       y2="109.5406"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-18)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4717"
+       id="linearGradient4723"
+       x1="22.021743"
+       y1="99.182249"
+       x2="153.85376"
+       y2="99.182249"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-18)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4727"
+       id="linearGradient4733"
+       x1="12.858827"
+       y1="101.05511"
+       x2="125.1628"
+       y2="101.05511"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0.7613146,-17.953527)"
+       spreadMethod="pad" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4735"
+       id="radialGradient4741"
+       cx="189.2718"
+       cy="133.60805"
+       fx="189.2718"
+       fy="133.60805"
+       r="111.12802"
+       gradientTransform="matrix(1,0,0,0.8186404,0,6.231102)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4743"
+       id="radialGradient4749"
+       cx="139.74099"
+       cy="255.0762"
+       fx="139.74099"
+       fy="255.0762"
+       r="130.42264"
+       gradientTransform="matrix(1.5440848,0,0,0.1951499,-0.6671924,127.80153)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4751"
+       id="radialGradient4767"
+       cx="215.10474"
+       cy="177.57961"
+       fx="215.10474"
+       fy="177.57961"
+       r="202.15565"
+       gradientTransform="matrix(1,0,0,0.1297218,0,154.54365)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="118.615"
+     inkscape:cy="120.88252"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1000"
+     inkscape:window-height="723"
+     inkscape:window-x="91"
+     inkscape:window-y="25" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#808080;stroke:#4d4d4d;stroke-width:1.55596292;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 3.6961424,132.18198 C 2.0734071,137.17299 5.3215966,138.82427 9.4737962,140.08403 L 21.878827,143.73734 L 21.93547,145.18199 C 22.063721,148.21357 24.603735,150.44398 27.628159,150.19475 L 37.852434,149.34554 L 144.85256,187.55164 C 147.74004,188.84041 151.03082,185.53512 152.32956,182.00055 L 162.59651,158.04802 L 237.92198,209.66552 C 240.3826,211.47359 243.99965,211.10563 246.05061,208.8435 L 299.26781,121.18769 C 301.31878,118.92557 300.99161,115.63206 298.53099,113.82398"
+       id="rect3192"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <rect
+       style="fill:url(#linearGradient4733);fill-opacity:1.0;stroke:#000000;stroke-width:2.17599440000000000;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2398"
+       width="110.12798"
+       height="127.43299"
+       x="14.708143"
+       y="19.385107"
+       ry="5.4777718"
+       transform="matrix(0.996623,-8.2113516e-2,4.2261543e-2,0.9991066,0,0)"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <path
+       style="fill:url(#linearGradient4723);fill-opacity:1;stroke:#000000;stroke-width:2.17512703;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 48.822926,13.984228 L 146.97785,15.809809 C 150.02702,15.966042 152.60863,18.546516 152.7662,21.595637 L 140.04042,143.15846 C 140.19798,146.20757 137.87007,148.5365 134.82089,148.38027 L 28.897664,142.02316 C 25.848474,141.86694 23.266872,139.28646 23.109307,136.23734 L 43.603394,19.206039 C 43.445829,16.156918 45.773736,13.827994 48.822926,13.984228 z"
+       id="rect3173"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <path
+       sodipodi:nodetypes="ccccccczc"
+       id="path3176"
+       d="M 77.468573,15.926305 L 163.16182,40.40946 C 166.211,40.565688 168.79261,43.146168 168.95017,46.195288 L 123.20908,161.93187 C 123.36663,164.98099 121.03874,167.30992 117.98955,167.15368 L 8.1821682,134.90221 C 4.0299791,133.64299 0.7711377,132.00367 2.3938114,127.01247 L 71.439841,21.148117 C 73.107769,18.590777 74.419383,15.770071 77.468573,15.926305 z"
+       style="fill:url(#linearGradient4713);fill-opacity:1;stroke:#000000;stroke-width:2.17512703;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <path
+       style="fill:url(#linearGradient4699);fill-opacity:1;stroke:#000000;stroke-width:2.17512703;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 101.42086,20.215059 L 194.23507,47.530409 C 197.28424,47.686637 199.86585,50.267117 200.02342,53.316237 L 151.04551,176.82113 C 149.74652,180.35577 146.44758,183.65573 143.56023,182.36662 L 21.453033,138.78637 C 17.627627,137.3569 14.949799,134.46878 16.959396,131.05846 L 92.479018,25.275031 C 94.253024,22.790104 94.892122,19.654227 101.42086,20.215059 z"
+       id="path3178"
+       sodipodi:nodetypes="ccccccczc"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <path
+       sodipodi:nodetypes="ccccccccc"
+       id="path3180"
+       d="M 80.577667,89.56943 L 153.51408,27.6891 C 155.5653,25.427594 159.19715,25.062693 161.65727,26.870944 L 297.22784,108.49804 C 299.68796,110.30631 300.01715,113.58269 297.96592,115.8442 L 244.76404,203.527 C 242.71283,205.78852 239.08098,206.15341 236.62086,204.34515 L 81.315752,96.91559 C 78.855638,95.10733 78.52645,91.83096 80.577667,89.56943 z"
+       style="fill:url(#radialGradient4741);fill-opacity:1;stroke:#000000;stroke-width:2.17512703;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861" />
+    <text
+       xml:space="preserve"
+       style="font-size:27.77963257px;font-style:normal;font-weight:normal;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="-20.606281"
+       y="149.67995"
+       id="text3205"
+       transform="matrix(0.7546661,-0.656109,0.8129658,0.6182944,0,0)"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861"><tspan
+         sodipodi:role="line"
+         id="tspan3207"
+         x="-20.606281"
+         y="149.67995"
+         style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold">PDF</tspan></text>
+    <text
+       transform="matrix(-0.5491289,0.833383,-0.8542178,-0.5246662,0,0)"
+       id="text3229"
+       y="-282.16574"
+       x="-57.589748"
+       style="font-size:27.77963066px;font-style:normal;font-weight:normal;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861"><tspan
+         y="-282.16574"
+         x="-57.589748"
+         id="tspan3231"
+         sodipodi:role="line"
+         style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold">PDF</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:65.77364348999999777px;font-style:normal;font-weight:normal;fill:url(#radialGradient4767);fill-opacity:1;stroke:#000000;stroke-width:2.34399998;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+       x="7.2658076"
+       y="202.10019"
+       id="text3233"
+       transform="scale(0.6989506,1.4307163)"
+       inkscape:export-filename="/home/kostas/Desktop/pdfshuffler16.png"
+       inkscape:export-xdpi="5.0848861"
+       inkscape:export-ydpi="5.0848861"><tspan
+         sodipodi:role="line"
+         id="tspan3235"
+         x="7.2658076"
+         y="202.10019"
+         style="fill:url(#radialGradient4767);fill-opacity:1;stroke:#000000;stroke-width:2.34399998;stroke-miterlimit:4;stroke-dasharray:none">PDF-Shuffler</tspan></text>
+  </g>
+</svg>

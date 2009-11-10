@@ -1,0 +1,39 @@
+
+PDF-Shuffler 0.4.2
+----------------
+
+This is the latest release of PDF-Shuffler, a simple pyGTK utility to merge,
+split and rearrange PDF documents. PDF-Shuffler lets also rotate and crop
+individual pages of a pdf document.
+
+PDF-Shuffler requires python-poppler and version 1.10 or newer of python-pypdf.
+
+PDF-Shuffler is written in Python using PyGTK. It is released under the GNU GPL-2.
+
+In order to install run:
+
+ python setup.py install
+
+as superuser.
+ 
+
+What's new in this version:
+---------------------------
+
+* The library python-poppler replaced ghostscript for the rendering of
+  pdf pages.
+
+* A multi-threading mechanism has been implemented in order to prevent
+  program from becoming inactive during loading of pdf files with many
+  pages.
+
+* The Menu entry has moved from "Graphics" to "Office".
+
+* Many bug fixes.
+
+
+Known issues with this release:
+-------------------------------
+
+* http://bugzilla.gnome.org/show_bug.cgi?id=575011. A workaround for this
+  problem has been included.

@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-13 11:14+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pdfshuffler:101 pdfshuffler:479
+#, python-format
+msgid "File %s does not exist"
+msgstr ""
+
+#: pdfshuffler:205 pdfshuffler:236
+msgid "Delete Page(s)"
+msgstr ""
+
+#: pdfshuffler:212
+msgid "Import pdf"
+msgstr ""
+
+#: pdfshuffler:219
+msgid "Export pdf"
+msgstr ""
+
+#: pdfshuffler:233
+msgid "Rotate Page(s) Clockwise"
+msgstr ""
+
+#: pdfshuffler:234
+msgid "Rotate Page(s) Counterclockwise"
+msgstr ""
+
+#: pdfshuffler:235
+msgid "Crop Page(s)"
+msgstr ""
+
+#: pdfshuffler:347
+msgid "page"
+msgstr ""
+
+#: pdfshuffler:373
+msgid "Export ..."
+msgstr ""
+
+#: pdfshuffler:380 pdfshuffler:464
+msgid "PDF files"
+msgstr ""
+
+#: pdfshuffler:385 pdfshuffler:469
+msgid "All files"
+msgstr ""
+
+#: pdfshuffler:403
+#, python-format
+msgid "File %s is encrypted."
+msgstr ""
+
+#: pdfshuffler:404
+msgid "Support for such files has not been implemented yet."
+msgstr ""
+
+#: pdfshuffler:405
+msgid "File export failed."
+msgstr ""
+
+#: pdfshuffler:446
+msgid "exporting to:"
+msgstr ""
+
+#: pdfshuffler:455
+msgid "Import ..."
+msgstr ""
+
+#: pdfshuffler:481
+msgid "Closed, no files selected"
+msgstr ""
+
+#: pdfshuffler:774
+msgid "Crop Selected Page(s)"
+msgstr ""
+
+#: pdfshuffler:782
+msgid "Crop Margins"
+msgstr ""
+
+#: pdfshuffler:789
+#, python-format
+msgid "% of width"
+msgstr ""
+
+#: pdfshuffler:789
+#, python-format
+msgid "% of height"
+msgstr ""
+
+#: pdfshuffler:790
+msgid "Left"
+msgstr ""
+
+#: pdfshuffler:790
+msgid "Right"
+msgstr ""
+
+#: pdfshuffler:790
+msgid "Top"
+msgstr ""
+
+#: pdfshuffler:790
+msgid "Bottom"
+msgstr ""
+
+#: pdfshuffler:825
+msgid "Dialog closed"
+msgstr ""

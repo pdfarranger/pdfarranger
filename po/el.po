@@ -1,0 +1,130 @@
+# PDF-Shuffler Greek Translation.
+# Copyright (C) 2009
+# This file is distributed under the same license as the pdfshuffler package.
+# Konstantinos Poulios <poulios.konstantinos@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PDF-Shuffler 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-13 11:14+0300\n"
+"PO-Revision-Date: 2009-05-13 11:15+0200\n"
+"Last-Translator: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
+"Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+
+#: pdfshuffler:101
+#: pdfshuffler:479
+#, python-format
+msgid "File %s does not exist"
+msgstr "Το αρχείο %s δεν υπάρχει"
+
+#: pdfshuffler:205
+#: pdfshuffler:236
+msgid "Delete Page(s)"
+msgstr "Διαγραφή σελίδας/ων"
+
+#: pdfshuffler:212
+msgid "Import pdf"
+msgstr "Εισαγωγή pdf"
+
+#: pdfshuffler:219
+msgid "Export pdf"
+msgstr "Εξαγωγή pdf"
+
+#: pdfshuffler:233
+msgid "Rotate Page(s) Clockwise"
+msgstr "Περιστροφή σελίδας/ων ωρολογιακά"
+
+#: pdfshuffler:234
+msgid "Rotate Page(s) Counterclockwise"
+msgstr "Περιστροφή σελίδας/ων αντιωρολογιακά"
+
+#: pdfshuffler:235
+msgid "Crop Page(s)"
+msgstr "Περικοπή σελίδας/ων"
+
+#: pdfshuffler:347
+msgid "page"
+msgstr "σελίδα"
+
+#: pdfshuffler:373
+msgid "Export ..."
+msgstr "Εξαγωγή ..."
+
+#: pdfshuffler:380
+#: pdfshuffler:464
+msgid "PDF files"
+msgstr "Αρχεία PDF"
+
+#: pdfshuffler:385
+#: pdfshuffler:469
+msgid "All files"
+msgstr "Όλα τα αρχεία"
+
+#: pdfshuffler:403
+#, python-format
+msgid "File %s is encrypted."
+msgstr "Το αρχείο %s είναι κρυπτογραφημένο."
+
+#: pdfshuffler:404
+msgid "Support for such files has not been implemented yet."
+msgstr "Η υποστήριξη για τέτοια αρχεία δεν έχει υλοποιηθεί ακόμα."
+
+#: pdfshuffler:405
+msgid "File export failed."
+msgstr "Αποτυχία εξαγωγής αρχείου."
+
+#: pdfshuffler:446
+msgid "exporting to:"
+msgstr "εξαγωγή:"
+
+#: pdfshuffler:455
+msgid "Import ..."
+msgstr "Εισαγωγή ..."
+
+#: pdfshuffler:481
+msgid "Closed, no files selected"
+msgstr "Κλείσιμο χωρίς επιλογή αρχείου"
+
+#: pdfshuffler:774
+msgid "Crop Selected Page(s)"
+msgstr "Περικοπή επιλεγμένης/ων σελίδας/ων"
+
+#: pdfshuffler:782
+msgid "Crop Margins"
+msgstr "Αποκοπή περιθωρίων"
+
+#: pdfshuffler:789
+#, python-format
+msgid "% of width"
+msgstr "% του πλάτους"
+
+#: pdfshuffler:789
+#, python-format
+msgid "% of height"
+msgstr "% του ύψους"
+
+#: pdfshuffler:790
+msgid "Left"
+msgstr "Αριστερά"
+
+#: pdfshuffler:790
+msgid "Right"
+msgstr "Δεξιά"
+
+#: pdfshuffler:790
+msgid "Top"
+msgstr "Πάνω"
+
+#: pdfshuffler:790
+msgid "Bottom"
+msgstr "Κάτω"
+
+#: pdfshuffler:825
+msgid "Dialog closed"
+msgstr "Κλείσιμο διαλόγου"
+
