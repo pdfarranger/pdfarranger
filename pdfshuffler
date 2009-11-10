@@ -749,8 +749,8 @@ class PDFshuffler:
                 for side in range(4):
                     model.set_value(iter, 8 + side, crop[side])
 
-            angle = model.get_value(iter, 7) + angle
-            model.set_value(iter, 7, angle)
+            new_angle = model.get_value(iter, 7) + angle
+            model.set_value(iter, 7, new_angle)
             model.set_value(iter, 6, False) #rendering request
 
         if self.rendering_thread.paused:
