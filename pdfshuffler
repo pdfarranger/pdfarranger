@@ -367,8 +367,8 @@ class PDFshuffler:
         return res
 
     # =======================================================
-    def export_pdf(self, widget=None):
-        """Exports pdf"""
+    def choose_export_pdf_name(self, widget=None):
+        """Handles choosing a name for exporting """
 
         chooser = gtk.FileChooserDialog(title=_('Export ...'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
@@ -386,67 +386,84 @@ class PDFshuffler:
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
-        response = chooser.run()
-        if response == gtk.RESPONSE_OK:
-            file_out = chooser.get_filename()
-            (path, shortname) = os.path.split(file_out)
-            (shortname, ext) = os.path.splitext(shortname)
-            if ext.lower() != '.pdf':
-                file_out = file_out + '.pdf'
-
-            pdf_output = PdfFileWriter()
-            pdf_input = []
-            for pdfdoc in self.pdfqueue:
-                pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
-                if pdfdoc_inp.getIsEncrypted():
-                    if (pdfdoc_inp.decrypt('')!=1): # Workaround for lp:#355479 
-                        print(_('File %s is encrypted.') % pdfdoc.filename)
-                        print(_('Support for such files has not been implemented yet.'))
-                        print(_('File export failed.'))
-                        return
-                    #else
-                    #   ask for password and decrypt file
-                pdf_input.append(pdfdoc_inp)
-
-            for row in self.model:
-                # add pages from input to output document
-                nfile = row[2]
-                npage = row[3]
-                current_page = pdf_input[nfile-1].getPage(npage-1)
-                angle = row[7]
-                angle0 = current_page.get("/Rotate",0)
-                crop = [row[8],row[9],row[10],row[11]]
-                if angle is not 0:
-                    current_page.rotateClockwise(angle)
-                if crop != [0.,0.,0.,0.]:
-                    rotate_times = ( ( ( angle + angle0 ) % 360 + 45 ) / 90 ) % 4
-                    crop_init = crop
-                    if rotate_times is not 0:
-                        perm = [0,2,1,3]
-                        for it in range(rotate_times):
-                            perm.append(perm.pop(0))
-                        perm.insert(1,perm.pop(2))
-                        crop = [crop_init[perm[side]] for side in range(4)]
-                    #(x1, y1) = current_page.cropBox.lowerLeft
-                    #(x2, y2) = current_page.cropBox.upperRight
-                    (x1, y1) = [float(xy) for xy in current_page.mediaBox.lowerLeft]
-                    (x2, y2) = [float(xy) for xy in current_page.mediaBox.upperRight]
-                    x1_new = int( x1 + (x2-x1) * crop[0] )
-                    x2_new = int( x2 - (x2-x1) * crop[1] )
-                    y1_new = int( y1 + (y2-y1) * crop[3] )
-                    y2_new = int( y2 - (y2-y1) * crop[2] )
-                    #current_page.cropBox.lowerLeft = (x1_new, y1_new)
-                    #current_page.cropBox.upperRight = (x2_new, y2_new)
-                    current_page.mediaBox.lowerLeft = (x1_new, y1_new)
-                    current_page.mediaBox.upperRight = (x2_new, y2_new)
-
-                pdf_output.addPage(current_page)
-
-            # finally, write "output" to document-output.pdf
-            print(_('exporting to:'), file_out)
-            pdf_output.write(file(file_out, 'wb'))
-
+        while True:
+            response = chooser.run()
+            if response == gtk.RESPONSE_OK:
+                file_out = chooser.get_filename()
+                try:
+                    self.export_to_file(file_out)
+                except IOError:
+                    error_msg_win = gtk.MessageDialog(flags=gtk.DIALOG_MODAL,
+                                                      type=gtk.MESSAGE_ERROR,
+                       message_format=_("Error writing file: %s") % file_out,
+                                                      buttons=gtk.BUTTONS_OK)
+                    response = error_msg_win.run()
+                    if response == gtk.RESPONSE_OK:
+                        error_msg_win.destroy()
+                    continue
+            break
         chooser.destroy()
+
+    # =======================================================
+    def export_to_file(self, file_out):
+        """Export to file"""
+
+        (path, shortname) = os.path.split(file_out)
+        (shortname, ext) = os.path.splitext(shortname)
+        if ext.lower() != '.pdf':
+            file_out = file_out + '.pdf'
+
+        pdf_output = PdfFileWriter()
+        pdf_input = []
+        for pdfdoc in self.pdfqueue:
+            pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
+            if pdfdoc_inp.getIsEncrypted():
+                if (pdfdoc_inp.decrypt('')!=1): # Workaround for lp:#355479 
+                    print(_('File %s is encrypted.') % pdfdoc.filename)
+                    print(_('Support for such files has not been implemented yet.'))
+                    print(_('File export failed.'))
+                    return
+                #else
+                #   ask for password and decrypt file
+            pdf_input.append(pdfdoc_inp)
+
+        for row in self.model:
+            # add pages from input to output document
+            nfile = row[2]
+            npage = row[3]
+            current_page = pdf_input[nfile-1].getPage(npage-1)
+            angle = row[7]
+            angle0 = current_page.get("/Rotate",0)
+            crop = [row[8],row[9],row[10],row[11]]
+            if angle is not 0:
+                current_page.rotateClockwise(angle)
+            if crop != [0.,0.,0.,0.]:
+                rotate_times = ( ( ( angle + angle0 ) % 360 + 45 ) / 90 ) % 4
+                crop_init = crop
+                if rotate_times is not 0:
+                    perm = [0,2,1,3]
+                    for it in range(rotate_times):
+                        perm.append(perm.pop(0))
+                    perm.insert(1,perm.pop(2))
+                    crop = [crop_init[perm[side]] for side in range(4)]
+                #(x1, y1) = current_page.cropBox.lowerLeft
+                #(x2, y2) = current_page.cropBox.upperRight
+                (x1, y1) = [float(xy) for xy in current_page.mediaBox.lowerLeft]
+                (x2, y2) = [float(xy) for xy in current_page.mediaBox.upperRight]
+                x1_new = int( x1 + (x2-x1) * crop[0] )
+                x2_new = int( x2 - (x2-x1) * crop[1] )
+                y1_new = int( y1 + (y2-y1) * crop[3] )
+                y2_new = int( y2 - (y2-y1) * crop[2] )
+                #current_page.cropBox.lowerLeft = (x1_new, y1_new)
+                #current_page.cropBox.upperRight = (x2_new, y2_new)
+                current_page.mediaBox.lowerLeft = (x1_new, y1_new)
+                current_page.mediaBox.upperRight = (x2_new, y2_new)
+
+            pdf_output.addPage(current_page)
+
+        # finally, write "output" to document-output.pdf
+        print(_('exporting to:'), file_out)
+        pdf_output.write(file(file_out, 'wb'))
 
     # =======================================================
     def import_pdf(self, widget=None):
