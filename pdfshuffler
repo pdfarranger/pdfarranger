@@ -213,7 +213,7 @@ class PDFshuffler:
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON)
         self.button_import.set_image(image)
-        self.button_import.connect('clicked', self.import_pdf)
+        self.button_import.connect('clicked', self.on_action_add_doc_activate)
         hbox.pack_start(self.button_import, expand=True, fill=True, padding=20)
 
         self.button_export = gtk.Button(_('Export pdf'))
@@ -224,7 +224,7 @@ class PDFshuffler:
         hbox.pack_start(self.button_export, expand=True, fill=True, padding=20)
 
         # Define window callback function and show window
-        self.window.connect('size_allocate', self.win_resize_cb)        # resize
+        self.window.connect('size_allocate', self.on_window_size_request)        # resize
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
 
@@ -234,8 +234,8 @@ class PDFshuffler:
         popup_rotate_left = gtk.MenuItem(_('Rotate Page(s) Counterclockwise'))
         popup_crop = gtk.MenuItem(_('Crop Page(s)'))
         popup_delete = gtk.MenuItem(_('Delete Page(s)'))
-        popup_rotate_right.connect('activate', self.rotate_page, 90)
-        popup_rotate_left.connect('activate', self.rotate_page, -90)
+        popup_rotate_right.connect('activate', self.rotate_page_right)
+        popup_rotate_left.connect('activate', self.rotate_page_left)
         popup_crop.connect('activate', self.crop_page_dialog)
         popup_delete.connect('activate', self.clear_selected)
         popup_rotate_right.show()
@@ -268,7 +268,7 @@ class PDFshuffler:
             self.add_pdf_pages(filename)
 
     # =======================================================
-    def win_resize_cb(self, window, event):
+    def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
            iconview cols no."""
 
@@ -286,7 +286,7 @@ class PDFshuffler:
             self.celltxt.set_property('width', self.iv_col_width)
             self.celltxt.set_property('wrap-width', self.iv_col_width)
             self.iconview.set_item_width(self.iv_col_width + 12) #-1)
-            self.win_resize_cb(self.window, None)
+            self.on_window_size_request(self.window, None)
 
     # =======================================================
     def on_keypress_event(self, widget, event):
@@ -424,11 +424,12 @@ class PDFshuffler:
         for pdfdoc in self.pdfqueue:
             pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
             if pdfdoc_inp.getIsEncrypted():
-                if (pdfdoc_inp.decrypt('')!=1): # Workaround for lp:#355479 
+                if (pdfdoc_inp.decrypt('')!=1): # Workaround for lp:#355479
                     print(_('File %s is encrypted.') % pdfdoc.filename)
                     print(_('Support for such files has not been implemented yet.'))
                     print(_('File export failed.'))
                     return
+                #FIXME
                 #else
                 #   ask for password and decrypt file
             pdf_input.append(pdfdoc_inp)
@@ -472,10 +473,10 @@ class PDFshuffler:
         pdf_output.write(file(file_out, 'wb'))
 
     # =======================================================
-    def import_pdf(self, widget=None):
-        """Imports pdf"""
+    def on_action_add_doc_activate(self, widget, data=None):
+        """Import doc"""
 
-        chooser = gtk.FileChooserDialog(title=_('Import ...'),
+        chooser = gtk.FileChooserDialog(title=_('Import...'),
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                         buttons=(gtk.STOCK_CANCEL,
                                                   gtk.RESPONSE_CANCEL,
@@ -484,21 +485,30 @@ class PDFshuffler:
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
-        filter_pdf = gtk.FileFilter()
-        filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_pattern('*.pdf')
-        chooser.add_filter(filter_pdf)
-
         filter_all = gtk.FileFilter()
         filter_all.set_name(_('All files'))
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
+        filter_pdf = gtk.FileFilter()
+        filter_pdf.set_name(_('PDF files'))
+        filter_pdf.add_pattern('*.pdf')
+        chooser.add_filter(filter_pdf)
+
         response = chooser.run()
         if response == gtk.RESPONSE_OK:
             for filename in chooser.get_filenames():
                 if os.path.isfile(filename):
-                    self.add_pdf_pages(filename)
+                    # FIXME
+                    ext = os.path.splitext(filename)[1].lower()
+                    if ext == '.pdf':
+                        self.add_pdf_pages(filename)
+                    elif ext == '.odt' or ext == '.ods' or ext == '.odc':
+                        print('OpenDocument not supported yet!')
+                    elif ext == '.png' or ext == '.jpg' or ext == '.tiff':
+                        print('Image file not supported yet!')
+                    else:
+                        print('File type not supported!')
                 else:
                     print(_('File %s does not exist') % filename)
         elif response == gtk.RESPONSE_CANCEL:
@@ -752,7 +762,13 @@ class PDFshuffler:
         return path
 
     # =======================================================
-    def rotate_page(self, widget, angle):
+    def rotate_page_right(self, widget, data=None):
+        self.rotate_page(90)
+    
+    def rotate_page_left(self, widget, data=None):
+        self.rotate_page(-90)
+    
+    def rotate_page(self, angle):
         """Rotates the selected page in the IconView"""
 
         model = self.iconview.get_model()
@@ -798,8 +814,8 @@ class PDFshuffler:
         dialog = gtk.Dialog(title=(_('Crop Selected Page(s)')),
                             parent=self.window,
                             flags=gtk.DIALOG_MODAL,
-                            buttons=(gtk.STOCK_OK, gtk.RESPONSE_OK,
-                                     gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
+                            buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                     gtk.STOCK_OK, gtk.RESPONSE_OK))
         dialog.set_size_request(340, 250)
         dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -849,9 +865,30 @@ class PDFshuffler:
             print(_('Dialog closed'))
         dialog.destroy()
 
+    # =======================================================
+    def about_dialog(self, widget, data=None):
+        about_dialog = gtk.AboutDialog()
+        try:
+            about_dialog.set_transient_for(self.window)
+            about_dialog.set_modal(True)
+        except:
+            pass
+        # FIXME
+        about_dialog.set_name('PDF-Shuffler')
+        about_dialog.set_version('0.5')
+        about_dialog.set_comments(
+            'PDF-Shuffler is a simple pyGTK utility which lets you merge, ' +
+            'split and rearrange PDF documents. You can also rotate and ' +
+            'crop individual pages of a pdf document.')
+        about_dialog.set_authors(['Konstantinos Poulios',])
+        about_dialog.set_website_label('http://pdfshuffler.sourceforge.net/')
+        about_dialog.set_logo_icon_name('pdfshuffler')
+        about_dialog.connect('response', lambda w, a: about_dialog.destroy())
+        about_dialog.connect('delete_event', lambda w, a: about_dialog.destroy())
+        about_dialog.show_all()
 
 # =======================================================
-class PDF_Doc():
+class PDF_Doc:
     """Class handling pdf documents"""
 
     def __init__(self, filename, nfile, tmp_dir):
