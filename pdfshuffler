@@ -223,6 +223,13 @@ class PDFshuffler:
         self.button_export.connect('clicked', self.choose_export_pdf_name)
         hbox.pack_start(self.button_export, expand=True, fill=True, padding=20)
 
+        self.button_export = gtk.Button(_('About'))
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_ABOUT, gtk.ICON_SIZE_BUTTON)
+        self.button_export.set_image(image)
+        self.button_export.connect('clicked', self.about_dialog)
+        hbox.pack_start(self.button_export, expand=True, fill=True, padding=20)
+
         # Define window callback function and show window
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
