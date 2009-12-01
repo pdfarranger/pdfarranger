@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Name=PDF-Shuffler
-Comment=PDF Merging, Rearranging, and Splitting
+Comment=PDF Merging, Rearranging, Splitting, Rotating and Cropping
 Type=Application
 Exec=pdfshuffler
 Icon=pdfshuffler
