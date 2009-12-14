@@ -1,3 +1,19 @@
+Version 0.5:
+--------------
+
+* "About" dialog from rodolphe.
+
+* Italian and French translations.
+
+* Remember last export/import directory.
+
+* Replace confirmation message from ftsamis.
+
+* Failed to export error message from Külaots.
+
+* Patch fixing multiple rotations from Külaots.
+
+
 Version 0.4.2:
 --------------
 
