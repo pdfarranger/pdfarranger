@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-13 11:14+0300\n"
+"POT-Creation-Date: 2009-12-14 18:57+0100\n"
 "PO-Revision-Date: 2009-05-13 11:16+0200\n"
 "Last-Translator: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
@@ -11,14 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Spanish\n"
 
-#: pdfshuffler:101
-#: pdfshuffler:479
+#: pdfshuffler:101 pdfshuffler:520
 #, python-format
 msgid "File %s does not exist"
 msgstr "El archivo %s no existe"
 
-#: pdfshuffler:205
-#: pdfshuffler:236
+#: pdfshuffler:205 pdfshuffler:243
 msgid "Delete Page(s)"
 msgstr "Borrar página(s)"
 
@@ -30,96 +28,122 @@ msgstr "Importar pdf"
 msgid "Export pdf"
 msgstr "Exportar pdf"
 
-#: pdfshuffler:233
+#: pdfshuffler:226
+msgid "About"
+msgstr ""
+
+#: pdfshuffler:240
 msgid "Rotate Page(s) Clockwise"
 msgstr "Girar página(s) hacia la derecha"
 
-#: pdfshuffler:234
+#: pdfshuffler:241
 msgid "Rotate Page(s) Counterclockwise"
 msgstr "Girar página(s) hacia la izquierda"
 
-#: pdfshuffler:235
+#: pdfshuffler:242
 msgid "Crop Page(s)"
 msgstr "Recortar página(s)"
 
-#: pdfshuffler:347
+#: pdfshuffler:358
 msgid "page"
 msgstr "página"
 
-#: pdfshuffler:373
+#: pdfshuffler:384
 msgid "Export ..."
 msgstr "Exportar ..."
 
-#: pdfshuffler:380
-#: pdfshuffler:464
+#: pdfshuffler:393 pdfshuffler:501
 msgid "PDF files"
 msgstr "Archivos PDF"
 
-#: pdfshuffler:385
-#: pdfshuffler:469
+#: pdfshuffler:398 pdfshuffler:496
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: pdfshuffler:403
+#: pdfshuffler:416
+#, python-format
+msgid "Error writing file: %s"
+msgstr ""
+
+#: pdfshuffler:435
 #, python-format
 msgid "File %s is encrypted."
 msgstr "El archivo %s está encriptado."
 
-#: pdfshuffler:404
+#: pdfshuffler:436
 msgid "Support for such files has not been implemented yet."
 msgstr "Aún no se ha aplicado el soporte para este tipo de archivo."
 
-#: pdfshuffler:405
+#: pdfshuffler:437
 msgid "File export failed."
 msgstr "No se ha podido exportar el archivo."
 
-#: pdfshuffler:446
+#: pdfshuffler:479
 msgid "exporting to:"
 msgstr "exportando a:"
 
-#: pdfshuffler:455
-msgid "Import ..."
+#: pdfshuffler:486
+#, fuzzy
+msgid "Import..."
 msgstr "Importar ..."
 
-#: pdfshuffler:481
+#: pdfshuffler:514
+msgid "OpenDocument not supported yet!"
+msgstr ""
+
+#: pdfshuffler:516
+msgid "Image file not supported yet!"
+msgstr ""
+
+#: pdfshuffler:518
+msgid "File type not supported!"
+msgstr ""
+
+#: pdfshuffler:522
 msgid "Closed, no files selected"
 msgstr "Cerrado, ningún archivo seleccionado"
 
-#: pdfshuffler:774
+#: pdfshuffler:821
 msgid "Crop Selected Page(s)"
 msgstr "Recortar la(s) página(s) seleccionada(s)"
 
-#: pdfshuffler:782
+#: pdfshuffler:829
 msgid "Crop Margins"
 msgstr "Recortar los márgenes"
 
-#: pdfshuffler:789
+#: pdfshuffler:836
 #, python-format
 msgid "% of width"
 msgstr "% de la anchura"
 
-#: pdfshuffler:789
+#: pdfshuffler:836
 #, python-format
 msgid "% of height"
 msgstr "% de la altura"
 
-#: pdfshuffler:790
+#: pdfshuffler:837
 msgid "Left"
 msgstr "Izquierdo"
 
-#: pdfshuffler:790
+#: pdfshuffler:837
 msgid "Right"
 msgstr "Derecho"
 
-#: pdfshuffler:790
+#: pdfshuffler:837
 msgid "Top"
 msgstr "Superior"
 
-#: pdfshuffler:790
+#: pdfshuffler:837
 msgid "Bottom"
 msgstr "Inferior"
 
-#: pdfshuffler:825
+#: pdfshuffler:872
 msgid "Dialog closed"
 msgstr "Ventana de dialogo cerrada"
 
+#: pdfshuffler:887
+msgid ""
+"PDF-Shuffler is a simple pyGTK utility which lets you merge, split and "
+"rearrange PDF documents. You can also rotate and crop individual pages of a "
+"pdf document."
+msgstr ""

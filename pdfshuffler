@@ -511,11 +511,11 @@ class PDFshuffler:
                     if ext == '.pdf':
                         self.add_pdf_pages(filename)
                     elif ext == '.odt' or ext == '.ods' or ext == '.odc':
-                        print('OpenDocument not supported yet!')
+                        print(_('OpenDocument not supported yet!'))
                     elif ext == '.png' or ext == '.jpg' or ext == '.tiff':
-                        print('Image file not supported yet!')
+                        print(_('Image file not supported yet!'))
                     else:
-                        print('File type not supported!')
+                        print(_('File type not supported!'))
                 else:
                     print(_('File %s does not exist') % filename)
         elif response == gtk.RESPONSE_CANCEL:
@@ -883,10 +883,10 @@ class PDFshuffler:
         # FIXME
         about_dialog.set_name('PDF-Shuffler')
         about_dialog.set_version('0.5')
-        about_dialog.set_comments(
-            'PDF-Shuffler is a simple pyGTK utility which lets you merge, ' +
-            'split and rearrange PDF documents. You can also rotate and ' +
-            'crop individual pages of a pdf document.')
+        about_dialog.set_comments(_(
+            'PDF-Shuffler is a simple pyGTK utility which lets you merge, \
+split and rearrange PDF documents. You can also rotate and crop individual \
+pages of a pdf document.'))
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label('http://pdfshuffler.sourceforge.net/')
         about_dialog.set_logo_icon_name('pdfshuffler')
