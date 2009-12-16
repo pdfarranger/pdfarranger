@@ -8,20 +8,22 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 18:57+0100\n"
-"PO-Revision-Date: 2009-05-13 11:15+0200\n"
-"Last-Translator: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
+"PO-Revision-Date: 2009-12-14 19:29+0100\n"
+"Last-Translator: Konstantinos Poulios <logari81@googlemail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Greek\n"
 
-#: pdfshuffler:101 pdfshuffler:520
+#: pdfshuffler:101
+#: pdfshuffler:520
 #, python-format
 msgid "File %s does not exist"
 msgstr "Το αρχείο %s δεν υπάρχει"
 
-#: pdfshuffler:205 pdfshuffler:243
+#: pdfshuffler:205
+#: pdfshuffler:243
 msgid "Delete Page(s)"
 msgstr "Διαγραφή σελίδας/ων"
 
@@ -35,7 +37,7 @@ msgstr "Εξαγωγή pdf"
 
 #: pdfshuffler:226
 msgid "About"
-msgstr ""
+msgstr "Περί"
 
 #: pdfshuffler:240
 msgid "Rotate Page(s) Clockwise"
@@ -57,18 +59,20 @@ msgstr "σελίδα"
 msgid "Export ..."
 msgstr "Εξαγωγή ..."
 
-#: pdfshuffler:393 pdfshuffler:501
+#: pdfshuffler:393
+#: pdfshuffler:501
 msgid "PDF files"
 msgstr "Αρχεία PDF"
 
-#: pdfshuffler:398 pdfshuffler:496
+#: pdfshuffler:398
+#: pdfshuffler:496
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
 #: pdfshuffler:416
 #, python-format
 msgid "Error writing file: %s"
-msgstr ""
+msgstr "Σφάλμα εγγραφής στο αρχείο: %s"
 
 #: pdfshuffler:435
 #, python-format
@@ -88,21 +92,20 @@ msgid "exporting to:"
 msgstr "εξαγωγή:"
 
 #: pdfshuffler:486
-#, fuzzy
 msgid "Import..."
 msgstr "Εισαγωγή ..."
 
 #: pdfshuffler:514
 msgid "OpenDocument not supported yet!"
-msgstr ""
+msgstr "Αρχεία τύπου OpenDocument δεν υποστηρίζονται!"
 
 #: pdfshuffler:516
 msgid "Image file not supported yet!"
-msgstr ""
+msgstr "Αρχεία εικόνων δεν υποστηρίζονται ακόμα!"
 
 #: pdfshuffler:518
 msgid "File type not supported!"
-msgstr ""
+msgstr "Αυτός ο τύπος αρχείου δεν υποστηρίζεται!"
 
 #: pdfshuffler:522
 msgid "Closed, no files selected"
@@ -147,8 +150,6 @@ msgid "Dialog closed"
 msgstr "Κλείσιμο διαλόγου"
 
 #: pdfshuffler:887
-msgid ""
-"PDF-Shuffler is a simple pyGTK utility which lets you merge, split and "
-"rearrange PDF documents. You can also rotate and crop individual pages of a "
-"pdf document."
-msgstr ""
+msgid "PDF-Shuffler is a simple pyGTK utility which lets you merge, split and rearrange PDF documents. You can also rotate and crop individual pages of a pdf document."
+msgstr "Το PDF-Shuffler είναι μία απλή εφαρμογή pyGTK που σας επιτρέπει να συνενώσετε, διαχωρίσετε και να αναδιατάξετε έγγραφα pdf. Επίσης μπορείτε να περιστρέψετε και να περικόψετε τις σελίδες ενός εγγράφου pdf."
+

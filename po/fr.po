@@ -4,8 +4,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 18:57+0100\n"
 "PO-Revision-Date: 2009-07-26 14:11+0100\n"
-"Last-Translator: Emmanuel <info@simple-linux.com>\n"
-"Language-Team: Emmanuel <info@simple-linux.com>\n"
+"Last-Translator: Emmanuel <emmanuel@simple-linux.com>\n"
+"Language-Team: Emmanuel <emmanuel@simple-linux.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,7 +31,7 @@ msgstr "Exporter PDF"
 
 #: pdfshuffler:226
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: pdfshuffler:240
 msgid "Rotate Page(s) Clockwise"
@@ -64,7 +64,7 @@ msgstr "Tous les fichiers"
 #: pdfshuffler:416
 #, python-format
 msgid "Error writing file: %s"
-msgstr ""
+msgstr "Une erreur s'est produite pendant l'écriture du fichier : %s"
 
 #: pdfshuffler:435
 #, python-format
@@ -84,21 +84,20 @@ msgid "exporting to:"
 msgstr "exporter en :"
 
 #: pdfshuffler:486
-#, fuzzy
 msgid "Import..."
 msgstr "Importer ..."
 
 #: pdfshuffler:514
 msgid "OpenDocument not supported yet!"
-msgstr ""
+msgstr "OpenDocument n'est pas encore supporté !"
 
 #: pdfshuffler:516
 msgid "Image file not supported yet!"
-msgstr ""
+msgstr "Le format image n'est pas encore supporté !"
 
 #: pdfshuffler:518
 msgid "File type not supported!"
-msgstr ""
+msgstr "Type de ficher pas encore supporté !"
 
 #: pdfshuffler:522
 msgid "Closed, no files selected"
@@ -148,3 +147,6 @@ msgid ""
 "rearrange PDF documents. You can also rotate and crop individual pages of a "
 "pdf document."
 msgstr ""
+"PDF-Shuffler est un simple outil pyGTK qui vous permet de réunir, couper et "  
+"réarrangez des documents PDF. Vous pouvez aussi pivoter et couper des pages individuelles d'un "  
+"document pdf."
