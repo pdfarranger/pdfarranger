@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 18:57+0100\n"
-"PO-Revision-Date: 2009-12-14 23:09+0100\n"
+"PO-Revision-Date: 2009-12-21 11:33+0100\n"
 "Last-Translator: Konstantinos Poulios <logari81@googlemail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Exportieren in PDF"
 
 #: pdfshuffler:226
 msgid "About"
-msgstr ""
+msgstr "Über"
 
 #: pdfshuffler:240
 msgid "Rotate Page(s) Clockwise"
