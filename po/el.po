@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.4\n"
+"Project-Id-Version: PDF-Shuffler 0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 18:57+0100\n"
 "PO-Revision-Date: 2009-12-14 19:29+0100\n"

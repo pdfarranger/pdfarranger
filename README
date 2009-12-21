@@ -1,5 +1,5 @@
 
-PDF-Shuffler 0.4.2
+PDF-Shuffler 0.5
 ----------------
 
 This is the latest release of PDF-Shuffler, a simple pyGTK utility to merge,
@@ -20,16 +20,17 @@ as superuser.
 What's new in this version:
 ---------------------------
 
-* The library python-poppler replaced ghostscript for the rendering of
-  pdf pages.
+* "About" dialog from rodolphe.
 
-* A multi-threading mechanism has been implemented in order to prevent
-  program from becoming inactive during loading of pdf files with many
-  pages.
+* Italian and French translations.
 
-* The Menu entry has moved from "Graphics" to "Office".
+* Remember last export/import directory.
 
-* Many bug fixes.
+* Replace confirmation message from ftsamis.
+
+* Failed to export error message from Külaots.
+
+* Patch fixing multiple rotations from Külaots.
 
 
 Known issues with this release:

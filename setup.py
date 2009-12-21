@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #
-# PDF-Shuffler 0.4 - pyGTK PDF Merging, Rearranging, and Splitting
+# PDF-Shuffler 0.5 - pyGTK PDF Merging, Rearranging, and Splitting
 # Copyright (C) 2008-2009 Konstantinos Poulios
 # <https://sourceforge.net/projects/pdfshuffler>
 #
