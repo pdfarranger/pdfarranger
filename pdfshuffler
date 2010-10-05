@@ -395,7 +395,7 @@ class PDFshuffler:
         chooser.set_current_folder(self.export_directory)
         filter_pdf = gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_pattern('*.pdf')
+        filter_pdf.add_mime_type('application/pdf')
         chooser.add_filter(filter_pdf)
 
         filter_all = gtk.FileFilter()
@@ -503,7 +503,7 @@ class PDFshuffler:
 
         filter_pdf = gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_pattern('*.pdf')
+        filter_pdf.add_mime_type('application/pdf')
         chooser.add_filter(filter_pdf)
 
         response = chooser.run()
