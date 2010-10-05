@@ -810,14 +810,25 @@ class PDFshuffler:
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
 
+        sides = ('L', 'R', 'T', 'B')
+        side_names = {'L':_('Left'), 'R':_('Right'),
+                      'T':_('Top'), 'B':_('Bottom') }
+        opposite_sides = {'L':'R', 'R':'L', 'T':'B', 'B':'T' }
+
+        def set_crop_value(spinbutton, side):
+           opp_side = opposite_sides[side]
+           pos = sides.index(opp_side)
+           adj = spin_list[pos].get_adjustment()
+           adj.set_upper(99.0 - spinbutton.get_value())
+
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
 
         crop = [0.,0.,0.,0.]
         if selection:
             path = selection[0]
-            iter = model.get_iter(path)
-            crop = [model.get_value(iter, 8 + side) for side in range(4)]
+            pos = model.get_iter(path)
+            crop = [model.get_value(pos, 8 + side) for side in range(4)]
 
         dialog = gtk.Dialog(title=(_('Crop Selected Page(s)')),
                             parent=self.window,
@@ -835,19 +846,20 @@ class PDFshuffler:
 
         spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')] 
-        for margin in (_('Left'),_('Right'),_('Top'),_('Bottom')):
+        for side in sides:
             hbox = gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)
 
-            label = gtk.Label(margin)
+            label = gtk.Label(side_names[side])
             label.set_alignment(0, 0.0)
             hbox.pack_start(label, True, True, 20)
 
-            adj = gtk.Adjustment(100.*crop.pop(0), 0.0, 100.0, 1.0, 5.0, 0.0)
-            spinner = gtk.SpinButton(adj, 0, 1)
-            spinner.set_activates_default(True)
-            spin_list.append(spinner)
-            hbox.pack_start(spinner, False, False, 30)
+            adj = gtk.Adjustment(100.*crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
+            spin = gtk.SpinButton(adj, 0, 1)
+            spin.set_activates_default(True)
+            spin.connect('value-changed', set_crop_value, side)
+            spin_list.append(spin)
+            hbox.pack_start(spin, False, False, 30)
 
             label = gtk.Label(units.pop(0))
             label.set_alignment(0, 0.0)
@@ -858,13 +870,13 @@ class PDFshuffler:
 
         if result == gtk.RESPONSE_OK:
             crop = []
-            for side in spin_list:
-                crop.append( side.get_value()/100. )
+            for spin in spin_list:
+                crop.append( spin.get_value()/100. )
             for path in selection:
-                iter = model.get_iter(path)
+                pos = model.get_iter(path)
                 for it in range(4):
-                    model.set_value(iter, 8 + it, crop[it])
-                model.set_value(iter, 6, False) #rendering request
+                    model.set_value(pos, 8 + it, crop[it])
+                model.set_value(pos, 6, False) #rendering request
             self.render()
         elif result == gtk.RESPONSE_CANCEL:
             print(_('Dialog closed'))
