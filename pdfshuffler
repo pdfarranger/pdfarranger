@@ -258,7 +258,6 @@ class PDFshuffler:
         self.export_directory = os.getenv('HOME')
         self.import_directory = os.getenv('HOME')
         self.nfile = 0
-        self.idle = None
         self.iv_auto_scroll_timer = None
         self.pdfqueue = []
 
