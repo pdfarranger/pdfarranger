@@ -1,6 +1,6 @@
 
-PDF-Shuffler 0.5
-----------------
+PDF-Shuffler 0.5.1
+------------------
 
 This is the latest release of PDF-Shuffler, a simple pyGTK utility to merge,
 split and rearrange PDF documents. PDF-Shuffler lets also rotate and crop
@@ -20,21 +20,13 @@ as superuser.
 What's new in this version:
 ---------------------------
 
-* "About" dialog from rodolphe.
+* Many bug fixes (3011515, 3027933, 3030180).
 
-* Italian and French translations.
-
-* Remember last export/import directory.
-
-* Replace confirmation message from ftsamis.
-
-* Failed to export error message from Külaots.
-
-* Patch fixing multiple rotations from Külaots.
+* Czech translation.
 
 
 Known issues with this release:
 -------------------------------
 
-* http://bugzilla.gnome.org/show_bug.cgi?id=575011. A workaround for this
+* http://bugzilla.gnome.org/show_bug.cgi?id=570152. A workaround for this
   problem has been included.
