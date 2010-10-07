@@ -33,6 +33,7 @@ import sys          #needed for proccessing of command line args
 import urllib       #needed to parse filename information passed by DnD
 import threading
 import tempfile
+from copy import copy
 
 import locale       #for multilanguage support
 import gettext
@@ -449,7 +450,7 @@ class PDFshuffler:
             # add pages from input to output document
             nfile = row[2]
             npage = row[3]
-            current_page = pdf_input[nfile-1].getPage(npage-1)
+            current_page = copy(pdf_input[nfile-1].getPage(npage-1))
             angle = row[7]
             angle0 = current_page.get("/Rotate",0)
             crop = [row[8],row[9],row[10],row[11]]
