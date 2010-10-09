@@ -63,6 +63,7 @@ except:
 gtk.gdk.threads_init()
 import gobject      #to use custom signals
 import pango        #to adjust the text alignment in CellRendererText
+import gio          #to inquire mime types information
 
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
@@ -506,18 +507,21 @@ class PDFshuffler:
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_mime_type('application/pdf')
         chooser.add_filter(filter_pdf)
+        chooser.set_filter(filter_pdf)
 
         response = chooser.run()
         if response == gtk.RESPONSE_OK:
             for filename in chooser.get_filenames():
                 if os.path.isfile(filename):
                     # FIXME
-                    ext = os.path.splitext(filename)[1].lower()
-                    if ext == '.pdf':
+                    f = gio.File(filename)
+                    f_info = f.query_info('standard::content-type')
+                    mime_type = f_info.get_content_type()
+                    if mime_type == 'application/pdf':
                         self.add_pdf_pages(filename)
-                    elif ext == '.odt' or ext == '.ods' or ext == '.odc':
+                    elif mime_type[:34] == 'application/vnd.oasis.opendocument':
                         print(_('OpenDocument not supported yet!'))
-                    elif ext == '.png' or ext == '.jpg' or ext == '.tiff':
+                    elif mime_type[:5] == 'image':
                         print(_('Image file not supported yet!'))
                     else:
                         print(_('File type not supported!'))
@@ -914,13 +918,15 @@ class PDF_Doc:
         self.filename = os.path.abspath(filename)
         (self.path, self.shortname) = os.path.split(self.filename)
         (self.shortname, self.ext) = os.path.splitext(self.shortname)
-        if self.ext.lower() == '.pdf':
+        f = gio.File(filename)
+        mime_type = f.query_info('standard::content-type').get_content_type()
+        if mime_type == 'application/pdf':
             self.nfile = nfile + 1
             self.mtime = os.path.getmtime(filename)
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
                                                   self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
-            self.document = poppler.document_new_from_file ("file://" + self.copyname, None)
+            self.document = poppler.document_new_from_file("file://" + self.copyname, None)
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
