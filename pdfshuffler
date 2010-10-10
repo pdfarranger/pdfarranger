@@ -897,7 +897,7 @@ class PDFshuffler:
             pass
         # FIXME
         about_dialog.set_name('PDF-Shuffler')
-        about_dialog.set_version('0.5')
+        about_dialog.set_version('0.5.1')
         about_dialog.set_comments(_(
             'PDF-Shuffler is a simple pyGTK utility which lets you merge, \
 split and rearrange PDF documents. You can also rotate and crop individual \
