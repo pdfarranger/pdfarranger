@@ -932,7 +932,8 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         angle = row[7]
                         crop = [row[8],row[9],row[10],row[11]]
                         pdfdoc = self.pdfqueue[nfile - 1]
-                        thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle, crop)
+                        thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle,
+                                                            crop, self.scale)
                         row[6] = True
                         row[4] = thumbnail.get_width()
                         row[1] = thumbnail
@@ -944,17 +945,18 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                 self.paused = True
                 self.evnt.wait()
 
-    def load_pdf_thumbnail(self, pdfdoc, npage, rotation=0, crop=[0.,0.,0.,0.]):
+    def load_pdf_thumbnail(self, pdfdoc, npage, rotation=0,
+                           crop=[0.,0.,0.,0.], scale=1.):
         """Create pdf pixbuf"""
 
         page = pdfdoc.document.get_page(npage-1)
         try:
             pix_w, pix_h = page.get_size()
-            pix_w = int(pix_w * self.scale)
-            pix_h = int(pix_h * self.scale)
+            pix_w = int(pix_w * scale)
+            pix_h = int(pix_h * scale)
             thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
                                        8, pix_w , pix_h)
-            page.render_to_pixbuf(0,0,pix_w,pix_h,self.scale,0,thumbnail)
+            page.render_to_pixbuf(0,0,pix_w,pix_h,scale,0,thumbnail)
             rotation = (-rotation) % 360
             rotation = ((rotation + 45) / 90) * 90
             thumbnail = thumbnail.rotate_simple(rotation)
