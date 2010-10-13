@@ -60,7 +60,6 @@ except:
     print('No version of PyGTK was found on your system.')
     sys.exit(1)
 
-gtk.gdk.threads_init()
 import gobject      #to use custom signals
 import pango        #to adjust the text alignment in CellRendererText
 import gio          #to inquire mime types information
@@ -69,15 +68,12 @@ import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
 class PDFshuffler:
-    # =======================================================
-    # All the preferences are stored here.
-    # =======================================================
     prefs = {
         'window width': min(700, gtk.gdk.screen_get_default().get_width() / 2),
         'window height': min(600, gtk.gdk.screen_get_default().get_height() - 50),
         'window x': 0,
         'window y': 0,
-        'initial thumbnail size': 530,
+        'initial thumbnail size': 300,
         'initial zoom scale': 0.25,
     }
 
@@ -100,7 +96,7 @@ class PDFshuffler:
         try:
             gtk.window_set_default_icon_from_file(pixmap)
         except:
-            print(_('File %s does not exist') % pixmap)
+            print(_("Can't load icon. Application isn't installed correctly."))
 
         # Create the main window, and attach delete_event signal to terminating
         # the application
@@ -108,10 +104,10 @@ class PDFshuffler:
         self.window.set_title('PDF-Shuffler')
         self.window.set_border_width(0)
         self.window.move(self.prefs['window x'], self.prefs['window y'])
-        self.window.set_size_request(self.prefs['window width'],
+        self.window.set_default_size(self.prefs['window width'],
                                      self.prefs['window height'])
         self.window.connect('delete_event', self.close_application)
-        self.window.show()
+        self.window.show_all()
 
         # Create a vbox to hold the thumbnails-container
         vbox = gtk.VBox()
@@ -286,7 +282,8 @@ class PDFshuffler:
            iconview cols no."""
 
         #add 12 because of: http://bugzilla.gnome.org/show_bug.cgi?id=570152
-        col_num = 9 * window.get_size()[0] / (10 * (self.iv_col_width + 12))
+        col_num = 9 * window.get_size()[0] \
+            / (10 * (self.iv_col_width + self.iconview.get_column_spacing() * 2))
         self.iconview.set_columns(col_num)
 
     def reset_iv_width(self, renderer=None):
@@ -995,8 +992,8 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
 
 
 if __name__ == '__main__':
+    gtk.gdk.threads_init()
     PDFshuffler()
-    gtk.gdk.threads_enter()
+#    gtk.gdk.threads_enter()
     gtk.main()
-    gtk.gdk.threads_leave()
-
+#    gtk.gdk.threads_leave()
