@@ -48,10 +48,10 @@ try:
 except AssertionError:
     print('You do not have the required versions of GTK+ and/or PyGTK ' +
           'installed.\n\n' +
-          'Installed GTK+ version is ' + 
+          'Installed GTK+ version is ' +
           '.'.join([str(n) for n in gtk.gtk_version]) + '\n' +
           'Required GTK+ version is 2.10.0 or higher\n\n'
-          'Installed PyGTK version is ' + 
+          'Installed PyGTK version is ' +
           '.'.join([str(n) for n in gtk.pygtk_version]) + '\n' +
           'Required PyGTK version is 2.10.0 or higher')
     sys.exit(1)
@@ -73,8 +73,8 @@ class PDFshuffler:
     # All the preferences are stored here.
     # =======================================================
     prefs = {
-        'window width': min (700, gtk.gdk.screen_get_default().get_width() / 2 ),
-        'window height': min(600, gtk.gdk.screen_get_default().get_height() - 50 ),
+        'window width': min(700, gtk.gdk.screen_get_default().get_width() / 2),
+        'window height': min(600, gtk.gdk.screen_get_default().get_height() - 50),
         'window x': 0,
         'window y': 0,
         'initial thumbnail size': 530,
@@ -113,7 +113,7 @@ class PDFshuffler:
         self.window.connect('delete_event', self.close_application)
         self.window.show()
 
-        # Create a vbox to hold the thumnails-container
+        # Create a vbox to hold the thumbnails-container
         vbox = gtk.VBox()
         self.window.add(vbox)
 
@@ -127,7 +127,7 @@ class PDFshuffler:
                               gtk.DEST_DEFAULT_MOTION,
                               self.TARGETS_SW,
                               gtk.gdk.ACTION_COPY |
-                              gtk.gdk.ACTION_MOVE )
+                              gtk.gdk.ACTION_MOVE)
         self.sw.connect('drag_data_received', self.sw_dnd_received_data)
         self.sw.connect('button_press_event', self.sw_button_press_event)
         vbox.pack_start(self.sw)
@@ -174,7 +174,7 @@ class PDFshuffler:
         self.iconview.enable_model_drag_source(gtk.gdk.BUTTON1_MASK,
                                                self.TARGETS_IV,
                                                gtk.gdk.ACTION_COPY |
-                                               gtk.gdk.ACTION_MOVE )
+                                               gtk.gdk.ACTION_MOVE)
         self.iconview.enable_model_drag_dest(self.TARGETS_IV,
                                              gtk.gdk.ACTION_DEFAULT)
         self.iconview.connect('drag_begin', self.iv_drag_begin)
@@ -237,7 +237,7 @@ class PDFshuffler:
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
 
-        #Creating the popup menu
+        # Creating the popup menu
         self.popup = gtk.Menu()
         popup_rotate_right = gtk.MenuItem(_('Rotate Page(s) Clockwise'))
         popup_rotate_left = gtk.MenuItem(_('Rotate Page(s) Counterclockwise'))
@@ -275,14 +275,12 @@ class PDFshuffler:
         for filename in sys.argv[1:]:
             self.add_pdf_pages(filename)
 
-    # =======================================================
     def render(self):
         if self.rendering_thread.paused:
             self.rendering_thread.paused = False
             self.rendering_thread.evnt.set()
             self.rendering_thread.evnt.clear()
 
-    # =======================================================
     def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
            iconview cols no."""
@@ -291,7 +289,6 @@ class PDFshuffler:
         col_num = 9 * window.get_size()[0] / (10 * (self.iv_col_width + 12))
         self.iconview.set_columns(col_num)
 
-    # =======================================================
     def reset_iv_width(self, renderer=None):
         """Reconfigures the width of the iconview columns"""
 
@@ -303,7 +300,6 @@ class PDFshuffler:
             self.iconview.set_item_width(self.iv_col_width + 12) #-1)
             self.on_window_size_request(self.window, None)
 
-    # =======================================================
     def on_keypress_event(self, widget, event):
         """Keypress events in Main Window"""
 
@@ -311,7 +307,6 @@ class PDFshuffler:
         if event.keyval == 65535:   # Delete keystroke
             self.clear_selected()
 
-    # =======================================================
     def close_application(self, widget, event=None, data=None):
         """Termination"""
 
@@ -329,10 +324,9 @@ class PDFshuffler:
             sys.exit(0)
         return False
 
-    # =======================================================
     def add_pdf_pages(self, filename,
                             firstpage=None, lastpage=None,
-                            angle=0, crop=[0.,0.,0.,0.]   ):
+                            angle=0, crop=[0.,0.,0.,0.]):
         """Add pages of a pdf document to the model"""
 
         res = False
@@ -383,7 +377,6 @@ class PDFshuffler:
             self.render()
         return res
 
-    # =======================================================
     def choose_export_pdf_name(self, widget=None):
         """Handles choosing a name for exporting """
 
@@ -428,7 +421,6 @@ class PDFshuffler:
             break
         chooser.destroy()
 
-    # =======================================================
     def export_to_file(self, file_out):
         """Export to file"""
 
@@ -458,7 +450,7 @@ class PDFshuffler:
             if angle is not 0:
                 current_page.rotateClockwise(angle)
             if crop != [0.,0.,0.,0.]:
-                rotate_times = ( ( ( angle + angle0 ) % 360 + 45 ) / 90 ) % 4
+                rotate_times = (((angle + angle0) % 360 + 45) / 90) % 4
                 crop_init = crop
                 if rotate_times is not 0:
                     perm = [0,2,1,3]
@@ -470,10 +462,10 @@ class PDFshuffler:
                 #(x2, y2) = current_page.cropBox.upperRight
                 (x1, y1) = [float(xy) for xy in current_page.mediaBox.lowerLeft]
                 (x2, y2) = [float(xy) for xy in current_page.mediaBox.upperRight]
-                x1_new = int( x1 + (x2-x1) * crop[0] )
-                x2_new = int( x2 - (x2-x1) * crop[1] )
-                y1_new = int( y1 + (y2-y1) * crop[3] )
-                y2_new = int( y2 - (y2-y1) * crop[2] )
+                x1_new = int(x1 + (x2-x1) * crop[0])
+                x2_new = int(x2 - (x2-x1) * crop[1])
+                y1_new = int(y1 + (y2-y1) * crop[3])
+                y2_new = int(y2 - (y2-y1) * crop[2])
                 #current_page.cropBox.lowerLeft = (x1_new, y1_new)
                 #current_page.cropBox.upperRight = (x2_new, y2_new)
                 current_page.mediaBox.lowerLeft = (x1_new, y1_new)
@@ -485,7 +477,6 @@ class PDFshuffler:
         print(_('exporting to:'), file_out)
         pdf_output.write(file(file_out, 'wb'))
 
-    # =======================================================
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
 
@@ -531,7 +522,6 @@ class PDFshuffler:
             print(_('Closed, no files selected'))
         chooser.destroy()
 
-    # =======================================================
     def clear_selected(self, button=None):
         """Removes the selected Element in the IconView"""
 
@@ -551,7 +541,6 @@ class PDFshuffler:
                     self.iconview.select_path(path)
             self.iconview.grab_focus()
 
-    # =======================================================
     def iv_drag_begin(self, iconview, context):
         """Sets custom icon on drag begin for multiple items selected"""
 
@@ -559,8 +548,7 @@ class PDFshuffler:
             iconview.stop_emission('drag_begin')
             context.set_icon_stock(gtk.STOCK_DND_MULTIPLE, 0, 0)
 
-    # =======================================================
-    def iv_dnd_get_data(self, iconview, context, 
+    def iv_dnd_get_data(self, iconview, context,
                         selection_data, target_id, etime):
         """Handles requests for data by drag and drop in iconview"""
 
@@ -570,7 +558,7 @@ class PDFshuffler:
         data = []
         for path in selection:
             if selection_data.target == 'MODEL_ROW_INTERN':
-                data.append( str(path[0]) )
+                data.append(str(path[0]))
             elif selection_data.target == 'MODEL_ROW_EXTERN':
                 iter = model.get_iter(path)
                 nfile, npage, angle = model.get(iter, 2, 3, 7)
@@ -578,14 +566,13 @@ class PDFshuffler:
                 pdfdoc = self.pdfqueue[nfile - 1]
                 data.append('\n'.join([pdfdoc.filename,
                                        str(npage),
-                                       str(angle)      ] +
-                                       [str(side) for side in crop] ) )
+                                       str(angle)] +
+                                       [str(side) for side in crop]))
         if data:
             data = '\n;\n'.join(data)
             selection_data.set(selection_data.target, 8, data)
 
-    # =======================================================
-    def iv_dnd_received_data(self, iconview, context, x, y, 
+    def iv_dnd_received_data(self, iconview, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in iconview"""
 
@@ -605,7 +592,7 @@ class PDFshuffler:
                     path = row.path
                     ref_to = gtk.TreeRowReference(model,path)
             if ref_to:
-                before = (   position == gtk.ICON_VIEW_DROP_LEFT
+                before = (position == gtk.ICON_VIEW_DROP_LEFT
                           or position == gtk.ICON_VIEW_DROP_ABOVE)
                 #if target_id == self.MODEL_ROW_INTERN:
                 if selection_data.target == 'MODEL_ROW_INTERN':
@@ -630,7 +617,7 @@ class PDFshuffler:
                             path = ref_from.get_path()
                             iter_from = model.get_iter(path)
                             model.remove(iter_from)
-                        
+
                 #elif target_id == self.MODEL_ROW_EXTERN:
                 elif selection_data.target == 'MODEL_ROW_EXTERN':
                     if not before:
@@ -641,7 +628,7 @@ class PDFshuffler:
                         npage, angle = [int(k) for k in tmp[1:3]]
                         crop = [float(side) for side in tmp[3:7]]
                         if self.add_pdf_pages(filename, npage, npage,
-                                                        angle, crop  ):
+                                                        angle, crop):
                             if len(model) > 0:
                                 path = ref_to.get_path()
                                 iter_to = model.get_iter(path)
@@ -655,7 +642,6 @@ class PDFshuffler:
                                 if context.action == gtk.gdk.ACTION_MOVE:
                                     context.finish(True, True, etime)
 
-    # =======================================================
     def iv_dnd_data_delete(self, widget, context):
         """Deletes dnd items after a successful move operation"""
 
@@ -667,7 +653,6 @@ class PDFshuffler:
             iter = model.get_iter(path)
             model.remove(iter)
 
-    # =======================================================
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles the drag-motion signal in order to auto-scroll the view"""
 
@@ -688,7 +673,6 @@ class PDFshuffler:
             gobject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
 
-    # =======================================================
     def iv_dnd_leave_end(self, widget, context, ignored=None):
         """Ends the auto-scroll during DND"""
 
@@ -696,7 +680,6 @@ class PDFshuffler:
             gobject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
 
-    # =======================================================
     def iv_auto_scroll(self):
         """Timeout routine for auto-scroll"""
 
@@ -704,13 +687,12 @@ class PDFshuffler:
         sw_vpos = sw_vadj.get_value()
         if self.iv_auto_scroll_direction == gtk.DIR_UP:
             sw_vpos -= sw_vadj.step_increment
-            sw_vadj.set_value( max(sw_vpos, sw_vadj.lower) )
+            sw_vadj.set_value(max(sw_vpos, sw_vadj.lower))
         elif self.iv_auto_scroll_direction == gtk.DIR_DOWN:
             sw_vpos += sw_vadj.step_increment
-            sw_vadj.set_value( min(sw_vpos, sw_vadj.upper - sw_vadj.page_size) )
+            sw_vadj.set_value(min(sw_vpos, sw_vadj.upper - sw_vadj.page_size))
         return True  #call me again
 
-    # =======================================================
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
 
@@ -725,10 +707,9 @@ class PDFshuffler:
                     iconview.unselect_all()
                 iconview.select_path(path)
                 iconview.grab_focus()
-                self.popup.popup( None, None, None, event.button, time)
+                self.popup.popup(None, None, None, event.button, time)
             return 1
 
-    # =======================================================
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
@@ -754,14 +735,12 @@ class PDFshuffler:
                 if os.path.isfile(filename): # is it file?
                     self.add_pdf_pages(filename)
 
-    # =======================================================
     def sw_button_press_event(self, scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
 
         if event.button == 1:
             self.iconview.unselect_all()
 
-    # =======================================================
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
 
@@ -777,13 +756,12 @@ class PDFshuffler:
             path = path[5:]  # 5 is len('file:')
         return path
 
-    # =======================================================
     def rotate_page_right(self, widget, data=None):
         self.rotate_page(90)
-    
+
     def rotate_page_left(self, widget, data=None):
         self.rotate_page(-90)
-    
+
     def rotate_page(self, angle):
         """Rotates the selected page in the IconView"""
 
@@ -794,7 +772,7 @@ class PDFshuffler:
             nfile = model.get_value(iter, 2)
             npage = model.get_value(iter, 3)
 
-            rotate_times = ( ( (-angle) % 360 + 45 ) / 90 ) % 4
+            rotate_times = (((-angle) % 360 + 45) / 90) % 4
             crop = [0.,0.,0.,0.]
             if rotate_times is not 0:
                 perm = [0,2,1,3]
@@ -811,7 +789,6 @@ class PDFshuffler:
 
         self.render()
 
-    # =======================================================
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
 
@@ -850,7 +827,7 @@ class PDFshuffler:
         frame.add(vbox)
 
         spin_list = []
-        units = 2 * [_('% of width')] + 2 * [_('% of height')] 
+        units = 2 * [_('% of width')] + 2 * [_('% of height')]
         for side in sides:
             hbox = gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)
@@ -874,9 +851,7 @@ class PDFshuffler:
         result = dialog.run()
 
         if result == gtk.RESPONSE_OK:
-            crop = []
-            for spin in spin_list:
-                crop.append( spin.get_value()/100. )
+            crop = [spin.get_value()/100. for spin in spin_list]
             for path in selection:
                 pos = model.get_iter(path)
                 for it in range(4):
@@ -887,7 +862,6 @@ class PDFshuffler:
             print(_('Dialog closed'))
         dialog.destroy()
 
-    # =======================================================
     def about_dialog(self, widget, data=None):
         about_dialog = gtk.AboutDialog()
         try:
@@ -896,12 +870,11 @@ class PDFshuffler:
         except:
             pass
         # FIXME
-        about_dialog.set_name('PDF-Shuffler')
-        about_dialog.set_version('0.5.1')
+        about_dialog.set_name('PdfShuffler')
+        about_dialog.set_version('0.6')
         about_dialog.set_comments(_(
-            'PDF-Shuffler is a simple pyGTK utility which lets you merge, \
-split and rearrange PDF documents. You can also rotate and crop individual \
-pages of a pdf document.'))
+            'PdfShuffler is a simple pyGTK utility for splitting, rearrangement ' \
+            'and modification of PDF documents.'))
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label('http://pdfshuffler.sourceforge.net/')
         about_dialog.set_logo_icon_name('pdfshuffler')
@@ -909,7 +882,6 @@ pages of a pdf document.'))
         about_dialog.connect('delete_event', lambda w, a: about_dialog.destroy())
         about_dialog.show_all()
 
-# =======================================================
 class PDF_Doc:
     """Class handling pdf documents"""
 
@@ -926,13 +898,12 @@ class PDF_Doc:
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
                                                   self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
-            self.document = poppler.document_new_from_file("file://" + self.copyname, None)
+            self.document = poppler.document_new_from_file ("file://" + self.copyname, None)
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
 
 
-# =======================================================
 class PDF_Renderer(threading.Thread,gobject.GObject):
 
     def __init__(self, model, pdfqueue, scale=1., width=100):
@@ -947,33 +918,32 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
         self.paused = False
 
     def run(self):
-       while not self.quit:
-           rendered_all = True
-           for row in self.model:
-               if self.quit:
-                   break
-               if not row[6]:
-                   rendered_all = False
-                   gtk.gdk.threads_enter()
-                   try:
-                       nfile = row[2]
-                       npage = row[3]
-                       angle = row[7]
-                       crop = [row[8],row[9],row[10],row[11]]
-                       pdfdoc = self.pdfqueue[nfile - 1]
-                       thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle, crop)
-                       row[6] = True
-                       row[4] = thumbnail.get_width()
-                       row[1] = thumbnail
-                   finally:
-                       gtk.gdk.threads_leave()
-           if rendered_all:
-               if self.model.get_iter_first(): #just checking if model isn't empty
-                   self.emit('reset_iv_width')
-               self.paused = True
-               self.evnt.wait()
+        while not self.quit:
+            rendered_all = True
+            for row in self.model:
+                if self.quit:
+                    break
+                if not row[6]:
+                    rendered_all = False
+                    gtk.gdk.threads_enter()
+                    try:
+                        nfile = row[2]
+                        npage = row[3]
+                        angle = row[7]
+                        crop = [row[8],row[9],row[10],row[11]]
+                        pdfdoc = self.pdfqueue[nfile - 1]
+                        thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle, crop)
+                        row[6] = True
+                        row[4] = thumbnail.get_width()
+                        row[1] = thumbnail
+                    finally:
+                        gtk.gdk.threads_leave()
+            if rendered_all:
+                if self.model.get_iter_first(): #just checking if model isn't empty
+                    self.emit('reset_iv_width')
+                self.paused = True
+                self.evnt.wait()
 
-    # =======================================================
     def load_pdf_thumbnail(self, pdfdoc, npage, rotation=0, crop=[0.,0.,0.,0.]):
         """Create pdf pixbuf"""
 
@@ -991,10 +961,10 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
             pix_w = thumbnail.get_width()
             pix_h = thumbnail.get_height()
             if crop != [0.,0.,0.,0.]:
-                src_x = int( crop[0] * pix_w )
-                src_y = int( crop[2] * pix_h )
-                width = int( (1. - crop[0] - crop[1]) * pix_w )
-                height = int( (1. - crop[2] - crop[3]) * pix_h )
+                src_x = int(crop[0] * pix_w)
+                src_y = int(crop[2] * pix_h)
+                width = int((1. - crop[0] - crop[1]) * pix_w)
+                height = int((1. - crop[2] - crop[3]) * pix_h)
                 new_thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
                                                8, width, height)
                 thumbnail.copy_area(src_x, src_y, width, height,
@@ -1022,7 +992,6 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
         return thumbnail
 
 
-# =======================================================
 if __name__ == '__main__':
     PDFshuffler()
     gtk.gdk.threads_enter()
