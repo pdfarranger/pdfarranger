@@ -4,7 +4,8 @@
 """
  --------------------------------------------------------------------------
 
- PDF-Shuffler 0.5.1 - pyGTK PDF Merging, Rearranging, and Splitting
+ PdfShuffler 0.6 - GTK+ based utility for splitting, rearrangement and 
+ modification of PDF documents.
  Copyright (C) 2008-2010 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
 
@@ -67,7 +68,7 @@ import gio          #to inquire mime types information
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
-class PDFshuffler:
+class PdfShuffler:
     prefs = {
         'window width': min(700, gtk.gdk.screen_get_default().get_width() / 2),
         'window height': min(600, gtk.gdk.screen_get_default().get_height() - 50),
@@ -870,7 +871,7 @@ class PDFshuffler:
         about_dialog.set_name('PdfShuffler')
         about_dialog.set_version('0.6')
         about_dialog.set_comments(_(
-            'PdfShuffler is a simple pyGTK utility for splitting, rearrangement ' \
+            'PdfShuffler is a GTK+ based utility for splitting, rearrangement ' \
             'and modification of PDF documents.'))
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label('http://pdfshuffler.sourceforge.net/')
@@ -976,15 +977,37 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
             pix_h = pix_w
             thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
                                        8, pix_w, pix_h)
-            pixbuf.fill(0xffffffff)
+            thumbnail.fill(0xffffffff)
 
-        #add border
-        thickness = 3
-        color = 0x000000FF
+        thumbnail = self.make_shadow(thumbnail)
+
+        return thumbnail
+
+    def make_shadow(self, thumbnail):
+        # add border and shadows
+        # canvas
+        th = 3
+        pix_w = thumbnail.get_width()
+        pix_h = thumbnail.get_height()
+        color = 0xFFFFFF00
         canvas = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
-                                pix_w + thickness + 1,
-                                pix_h + thickness + 1)
+                                pix_w + th + 1, pix_h + th + 1)
         canvas.fill(color)
+
+        # border
+        color_border = 0x404040FF
+        canvas_border = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
+                                pix_w + 2, pix_h + 2)
+        canvas_border.fill(color_border)
+
+        # shadow
+        color_shadow = 0xA0A090FF
+        canvas_shadow = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
+                        pix_w + th, pix_h + th)
+        canvas_shadow.fill(color_shadow)
+
+        canvas_shadow.copy_area(0, 0, pix_w + th, pix_h + th, canvas, 1, 1)
+        canvas_border.copy_area(0, 0, pix_w + 2, pix_h + 2, canvas, 0, 0)
         thumbnail.copy_area(0, 0, pix_w, pix_h, canvas, 1, 1)
         thumbnail = canvas
 
@@ -993,7 +1016,7 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
 
 if __name__ == '__main__':
     gtk.gdk.threads_init()
-    PDFshuffler()
+    PdfShuffler()
 #    gtk.gdk.threads_enter()
     gtk.main()
 #    gtk.gdk.threads_leave()
