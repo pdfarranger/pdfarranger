@@ -314,7 +314,7 @@ class PdfShuffler:
         self.progress_bar.set_text(text)
         if fraction == 1.0:
             self.progress_bar.hide_all()
-        elif fraction == 0.0:
+        elif not self.progress_bar.flags() & gtk.VISIBLE:
             self.progress_bar.show_all()
         gtk.gdk.threads_leave()
 
@@ -970,15 +970,11 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
     def run(self):
         while not self.quit:
             rendered_all = True
-            started_rendering = False
             for idx, row in enumerate(self.model):
                 if self.quit:
                     break
                 if not row[6]:
                     rendered_all = False
-                    if not started_rendering:
-                        started_rendering = True
-                        self.emit('update_progress_bar', 0., "Rendering thumbnails...")
                     try:
                         nfile = row[2]
                         npage = row[3]
