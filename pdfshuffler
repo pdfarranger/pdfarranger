@@ -192,6 +192,12 @@ class PdfShuffler:
 
         align.add(self.iconview)
 
+        # Progress bar
+        self.progress_bar = gtk.ProgressBar()
+        self.progress_bar.set_size_request(50, 0)
+        vbox.pack_start(self.progress_bar, expand=False, fill=True, padding=5)
+        self.progress_bar.set_size_request(-1,20)
+
         # Create a horizontal box to hold the buttons
         hbox = gtk.HBox()
         vbox.pack_start(hbox, expand=False, fill=False)
@@ -233,6 +239,7 @@ class PdfShuffler:
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
+        self.progress_bar.hide_all()
 
         # Creating the popup menu
         self.popup = gtk.Menu()
@@ -263,9 +270,13 @@ class PdfShuffler:
         gobject.type_register(PDF_Renderer)
         gobject.signal_new('reset_iv_width', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, ())
+        gobject.signal_new('update_progress_bar', PDF_Renderer,
+                           gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
+                           [gobject.TYPE_FLOAT, gobject.TYPE_STRING])
         self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue,
                                              self.zoom_scale, self.iv_col_width)
         self.rendering_thread.connect('reset_iv_width', self.reset_iv_width)
+        self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
         self.rendering_thread.start()
 
         self.set_unsaved(False)
@@ -296,6 +307,16 @@ class PdfShuffler:
             title += '*'
         title += ' - PdfShuffler'
         self.window.set_title(title)
+
+    def update_progress_bar(self, object, fraction, text):
+        gtk.gdk.threads_enter()
+        self.progress_bar.set_fraction(fraction)
+        self.progress_bar.set_text(text)
+        if fraction == 1.0:
+            self.progress_bar.hide_all()
+        elif fraction == 0.0:
+            self.progress_bar.show_all()
+        gtk.gdk.threads_leave()
 
     def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
@@ -949,12 +970,15 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
     def run(self):
         while not self.quit:
             rendered_all = True
-            for row in self.model:
+            started_rendering = False
+            for idx, row in enumerate(self.model):
                 if self.quit:
                     break
                 if not row[6]:
                     rendered_all = False
-                    gtk.gdk.threads_enter()
+                    if not started_rendering:
+                        started_rendering = True
+                        self.emit('update_progress_bar', 0., "Rendering thumbnails...")
                     try:
                         nfile = row[2]
                         npage = row[3]
@@ -967,7 +991,8 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         row[4] = thumbnail.get_width()
                         row[1] = thumbnail
                     finally:
-                        gtk.gdk.threads_leave()
+                        self.emit('update_progress_bar', float(idx+1) / len(self.model),
+                            "Rendering thumbnails... [%s/%s]" % (idx+1, len(self.model)))
             if rendered_all:
                 if self.model.get_iter_first(): #just checking if model isn't empty
                     self.emit('reset_iv_width')
