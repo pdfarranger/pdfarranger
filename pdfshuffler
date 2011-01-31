@@ -273,10 +273,14 @@ class PdfShuffler:
         gobject.signal_new('update_progress_bar', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_FLOAT, gobject.TYPE_STRING])
+        gobject.signal_new('update_thumbnail', PDF_Renderer,
+                           gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
+                           [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
         self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue,
                                              self.zoom_scale, self.iv_col_width)
         self.rendering_thread.connect('reset_iv_width', self.reset_iv_width)
         self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
+        self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
         self.set_unsaved(False)
@@ -316,6 +320,14 @@ class PdfShuffler:
             self.progress_bar.hide_all()
         elif not self.progress_bar.flags() & gtk.VISIBLE:
             self.progress_bar.show_all()
+        gtk.gdk.threads_leave()
+
+    def update_thumbnail(self, object, num, thumbnail):
+        gtk.gdk.threads_enter()
+        row = self.model[num]
+        row[6] = True
+        row[4] = thumbnail.get_width()
+        row[1] = thumbnail
         gtk.gdk.threads_leave()
 
     def on_window_size_request(self, window, event):
@@ -983,9 +995,7 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         pdfdoc = self.pdfqueue[nfile - 1]
                         thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle,
                                                             crop, self.scale)
-                        row[6] = True
-                        row[4] = thumbnail.get_width()
-                        row[1] = thumbnail
+                        self.emit('update_thumbnail', idx, thumbnail)
                     finally:
                         self.emit('update_progress_bar', float(idx+1) / len(self.model),
                             "Rendering thumbnails... [%s/%s]" % (idx+1, len(self.model)))
