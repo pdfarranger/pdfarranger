@@ -127,6 +127,7 @@ class PdfShuffler:
                               gtk.gdk.ACTION_MOVE)
         self.sw.connect('drag_data_received', self.sw_dnd_received_data)
         self.sw.connect('button_press_event', self.sw_button_press_event)
+        self.sw.connect('scroll_event', self.sw_scroll_event)
         vbox.pack_start(self.sw)
 
         # Create an alignment to keep the thumbnails center-aligned
@@ -795,6 +796,21 @@ class PdfShuffler:
         if event.button == 1:
             self.iconview.unselect_all()
 
+    def sw_scroll_event(self, scrolledwindow, event):
+        """Manages mouse scroll events in scrolledwindow"""
+
+        if event.state & gtk.gdk.CONTROL_MASK:
+            if event.direction == gtk.gdk.SCROLL_UP:
+                self.zoom_scale = min(self.zoom_scale*1.1, 1.5)
+                self.rendering_thread.scale = self.zoom_scale
+                self.render()
+                return 1
+            elif event.direction == gtk.gdk.SCROLL_DOWN:
+                self.zoom_scale = max(self.zoom_scale/1.1, 0.1)
+                self.rendering_thread.scale = self.zoom_scale
+                self.render()
+                return 1
+
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
 
@@ -944,6 +960,7 @@ class PdfShuffler:
         about_dialog.connect('delete_event', lambda w, a: about_dialog.destroy())
         about_dialog.show_all()
 
+
 class PDF_Doc:
     """Class handling pdf documents"""
 
@@ -964,6 +981,9 @@ class PDF_Doc:
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
+            self.npage = 0
+        self.thumbnails = [None]*self.npage
+        self.thumbnails_scale = [1.]*self.npage
 
 
 class PDF_Renderer(threading.Thread,gobject.GObject):
@@ -980,10 +1000,15 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
         self.paused = False
 
     def run(self):
+        scale = self.scale
         while not self.quit:
             rendered_all = True
+            scale_changed = False
             for idx, row in enumerate(self.model):
                 if self.quit:
+                    break
+                if self.scale != scale:
+                    scale_changed = True
                     break
                 if not row[6]:
                     rendered_all = False
@@ -994,12 +1019,16 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         crop = [row[8],row[9],row[10],row[11]]
                         pdfdoc = self.pdfqueue[nfile - 1]
                         thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle,
-                                                            crop, self.scale)
+                                                            crop, scale)
                         self.emit('update_thumbnail', idx, thumbnail)
                     finally:
                         self.emit('update_progress_bar', float(idx+1) / len(self.model),
                             "Rendering thumbnails... [%s/%s]" % (idx+1, len(self.model)))
-            if rendered_all:
+            if scale_changed:
+                for row in self.model:
+                    row[6] = False
+                scale = self.scale
+            elif rendered_all:
                 if self.model.get_iter_first(): #just checking if model isn't empty
                     self.emit('reset_iv_width')
                 self.paused = True
@@ -1009,14 +1038,21 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                            crop=[0.,0.,0.,0.], scale=1.):
         """Create pdf pixbuf"""
 
-        page = pdfdoc.document.get_page(npage-1)
         try:
+            page = pdfdoc.document.get_page(npage-1)
             pix_w, pix_h = page.get_size()
             pix_w = int(pix_w * scale)
             pix_h = int(pix_h * scale)
-            thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                       8, pix_w , pix_h)
-            page.render_to_pixbuf(0,0,pix_w,pix_h,scale,0,thumbnail)
+            if pdfdoc.thumbnails[npage-1] and pdfdoc.thumbnails_scale[npage-1] >= scale:
+                thumbnail = pdfdoc.thumbnails[npage-1] \
+                                  .scale_simple(pix_w,pix_h,gtk.gdk.INTERP_TILES)
+            else:
+                thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
+                                           8, pix_w , pix_h)
+                page.render_to_pixbuf(0,0,pix_w,pix_h,scale,0,thumbnail)
+                pdfdoc.thumbnails[npage-1] = thumbnail
+                pdfdoc.thumbnails_scale[npage-1] = scale
+
             rotation = (-rotation) % 360
             rotation = ((rotation + 45) / 90) * 90
             thumbnail = thumbnail.rotate_simple(rotation)
