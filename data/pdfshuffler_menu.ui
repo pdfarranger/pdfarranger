@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkMenuBar" id="menubar">
+    <property name="visible">True</property>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_file">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">_File</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu_file">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_import">
+                <property name="label">gtk-open</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_save">
+                <property name="label">gtk-save</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_save_as">
+                <property name="label">gtk-save-as</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparatorMenuItem" id="separatormenuitem_file">
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_quit">
+                <property name="label">gtk-quit</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_edit">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">_Edit</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu_edit">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_undo">
+                <property name="label">gtk-undo</property>
+                <property name="sensitive">False</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_redo">
+                <property name="label">gtk-redo</property>
+                <property name="sensitive">False</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparatorMenuItem" id="separatormenuitem_edit1">
+                <property name="sensitive">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_rotate_left">
+                <property name="label" translatable="yes">Rotate left</property>
+                <property name="visible">True</property>
+                <property name="use_stock">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_rotate_right">
+                <property name="label" translatable="yes">Rotate right</property>
+                <property name="visible">True</property>
+                <property name="use_stock">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparatorMenuItem" id="separatormenuitem_edit2">
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_crop">
+                <property name="label" translatable="yes">Crop</property>
+                <property name="visible">True</property>
+                <property name="use_stock">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_delete">
+                <property name="label">gtk-delete</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_view">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">_View</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu_view">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_zoomin">
+                <property name="label" translatable="yes">Zoom in</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_zoomout">
+                <property name="label" translatable="yes">Zoom out</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_help">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">_Help</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu_help">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkImageMenuItem" id="imagemenuitem_about">
+                <property name="label">gtk-about</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
