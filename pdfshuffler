@@ -80,7 +80,7 @@ class PdfShuffler:
         'window x': 0,
         'window y': 0,
         'initial thumbnail size': 300,
-        'initial zoom scale': 0.25,
+        'initial zoom level': -14,
     }
 
     MODEL_ROW_INTERN = 1001
@@ -128,6 +128,7 @@ class PdfShuffler:
             menu_ui_path = os.path.join(current_dir, 'data', 'pdfshuffler_menu.ui')
         menu_uiXML = gtk.Builder()
         menu_uiXML.add_from_file(menu_ui_path)
+        menu_uiXML.connect_signals(self)
         self.menubar = menu_uiXML.get_object('menubar')
         vbox.pack_start(self.menubar, expand=False, fill=True)
 
@@ -165,7 +166,7 @@ class PdfShuffler:
                                    float,           # 10.Crop top
                                    float)           # 11.Crop bottom
 
-        self.zoom_scale = self.prefs['initial zoom scale']
+        self.zoom_level = self.prefs['initial zoom level']
         self.iv_col_width = self.prefs['initial thumbnail size']
 
         self.iconview = gtk.IconView(self.model)
@@ -303,7 +304,7 @@ class PdfShuffler:
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
         self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue,
-                                             self.zoom_scale, self.iv_col_width)
+                                             1.1 ** self.zoom_level, self.iv_col_width)
         self.rendering_thread.connect('reset_iv_width', self.reset_iv_width)
         self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
@@ -831,15 +832,26 @@ class PdfShuffler:
 
         if event.state & gtk.gdk.CONTROL_MASK:
             if event.direction == gtk.gdk.SCROLL_UP:
-                self.zoom_scale = min(self.zoom_scale*1.1, 1.5)
-                self.rendering_thread.scale = self.zoom_scale
-                self.render()
+                self.zoom_change(1)
                 return 1
             elif event.direction == gtk.gdk.SCROLL_DOWN:
-                self.zoom_scale = max(self.zoom_scale/1.1, 0.1)
-                self.rendering_thread.scale = self.zoom_scale
-                self.render()
+                self.zoom_change(-1)
                 return 1
+
+    def zoom_change(self, step=5):
+        """Modifies the zoom level"""
+
+        self.zoom_level = max(min(self.zoom_level + step, 5), -24)
+        self.rendering_thread.scale = 1.1 ** self.zoom_level
+        self.render()
+
+    def zoom_in(self, widget=None):
+        """Increases the zoom level by 5 steps"""
+        self.zoom_change(5)
+
+    def zoom_out(self, widget=None, step=5):
+        """Reduces the zoom level by 5 steps"""
+        self.zoom_change(-5)
 
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
