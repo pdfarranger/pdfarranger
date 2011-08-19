@@ -3,7 +3,7 @@
 
 """
 
- PdfShuffler 0.6.0 - GTK+ based utility for splitting, rearrangement and 
+ PdfShuffler 0.6.0 - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
  Copyright (C) 2008-2011 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
@@ -40,7 +40,7 @@ gettext.install('pdfshuffler', unicode=1)
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
 VERSION = '0.6.0'
 WEBSITE = 'http://pdfshuffler.sourceforge.net/'
-LICENSE = 'GNU General Public License (GPL) Version 3.' 
+LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 try:
     import pygtk
@@ -236,7 +236,7 @@ class PdfShuffler:
         self.button_delete.connect('clicked', self.clear_selected)
         bbox.add(self.button_delete)
 
-        self.button_import = gtk.Button(_('_Import PDF...')) 
+        self.button_import = gtk.Button(_('_Import PDF...'))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON)
         self.button_import.set_image(image)
@@ -287,7 +287,7 @@ class PdfShuffler:
                 'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
             myDocuments = _winreg.QueryValueEx(regKey, 'Personal')[0]
             self.export_directory = myDocuments
-        else:     
+        else:
             self.export_directory = os.getenv('HOME')
         self.import_directory = self.export_directory
         self.nfile = 0
@@ -994,7 +994,7 @@ class PdfShuffler:
         about_dialog.set_version(VERSION)
         about_dialog.set_comments(_(
             '%s is a tool for rearranging and modifying PDF files.' \
-            'Developed using GTK+ and Python' % APPNAME))
+            'Developed using GTK+ and Python') % APPNAME)
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name('pdfshuffler')
@@ -1021,7 +1021,7 @@ class PDF_Doc:
             expected_mime_type = 'application/pdf'
             file_prefix = 'file://'
 
-        if mime_type == expected_mime_type:             
+        if mime_type == expected_mime_type:
             self.nfile = nfile + 1
             self.mtime = os.path.getmtime(filename)
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
