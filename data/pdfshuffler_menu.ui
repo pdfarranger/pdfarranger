@@ -18,12 +18,14 @@
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="on_action_add_doc_activate"/>
               </object>
             </child>
             <child>
               <object class="GtkImageMenuItem" id="imagemenuitem_save">
                 <property name="label">gtk-save</property>
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
               </object>
@@ -34,6 +36,7 @@
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="choose_export_pdf_name"/>
               </object>
             </child>
             <child>
@@ -47,6 +50,7 @@
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="close_application"/>
               </object>
             </child>
           </object>
@@ -87,6 +91,7 @@
                 <property name="label" translatable="yes">Rotate left</property>
                 <property name="visible">True</property>
                 <property name="use_stock">False</property>
+                <signal name="activate" handler="rotate_page_left"/>
               </object>
             </child>
             <child>
@@ -94,6 +99,7 @@
                 <property name="label" translatable="yes">Rotate right</property>
                 <property name="visible">True</property>
                 <property name="use_stock">False</property>
+                <signal name="activate" handler="rotate_page_right"/>
               </object>
             </child>
             <child>
@@ -106,6 +112,7 @@
                 <property name="label" translatable="yes">Crop</property>
                 <property name="visible">True</property>
                 <property name="use_stock">False</property>
+                <signal name="activate" handler="crop_page_dialog"/>
               </object>
             </child>
             <child>
@@ -114,6 +121,7 @@
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="clear_selected"/>
               </object>
             </child>
           </object>
@@ -130,18 +138,20 @@
             <property name="visible">True</property>
             <child>
               <object class="GtkImageMenuItem" id="imagemenuitem_zoomin">
-                <property name="label" translatable="yes">Zoom in</property>
+                <property name="label">Zoom in</property>
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="zoom_in"/>
               </object>
             </child>
             <child>
               <object class="GtkImageMenuItem" id="imagemenuitem_zoomout">
-                <property name="label" translatable="yes">Zoom out</property>
+                <property name="label">Zoom out</property>
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="zoom_out"/>
               </object>
             </child>
           </object>
@@ -162,6 +172,7 @@
                 <property name="visible">True</property>
                 <property name="use_underline">True</property>
                 <property name="use_stock">True</property>
+                <signal name="activate" handler="about_dialog"/>
               </object>
             </child>
           </object>
