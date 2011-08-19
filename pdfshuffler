@@ -166,7 +166,7 @@ class PdfShuffler:
                                    float,           # 10.Crop top
                                    float)           # 11.Crop bottom
 
-        self.zoom_level = self.prefs['initial zoom level']
+        self.zoom_set(self.prefs['initial zoom level'])
         self.iv_col_width = self.prefs['initial thumbnail size']
 
         self.iconview = gtk.IconView(self.model)
@@ -304,7 +304,7 @@ class PdfShuffler:
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
         self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue,
-                                             1.1 ** self.zoom_level, self.iv_col_width)
+                                             self.zoom_scale, self.iv_col_width)
         self.rendering_thread.connect('reset_iv_width', self.reset_iv_width)
         self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
@@ -435,14 +435,17 @@ class PdfShuffler:
 
         for npage in range(n_start, n_end + 1):
             descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
-            width = self.iv_col_width
+            page = pdfdoc.document.get_page(npage-1)
+            pix_w, pix_h = page.get_size()
+            pix_w = int(pix_w * self.zoom_scale)
+            pix_h = int(pix_h * self.zoom_scale)
             thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                       8, width, width)
+                                       8, pix_w, pix_h)
             self.model.append((descriptor,              # 0
                                thumbnail,               # 1
                                pdfdoc.nfile,            # 2
                                npage,                   # 3
-                               width,                   # 4
+                               pix_w,                   # 4
                                pdfdoc.filename,         # 5
                                False,                   # 6
                                angle,                   # 7
@@ -450,6 +453,7 @@ class PdfShuffler:
                                crop[2],crop[3]       )) # 10-11
             res = True
 
+        self.reset_iv_width()
         gobject.idle_add(self.retitle)
         if res:
             self.render()
@@ -838,11 +842,15 @@ class PdfShuffler:
                 self.zoom_change(-1)
                 return 1
 
+    def zoom_set(self, level):
+        """Sets the zoom level"""
+        self.zoom_level = max(min(level, 5), -24)
+        self.zoom_scale = 1.1 ** self.zoom_level
+
     def zoom_change(self, step=5):
         """Modifies the zoom level"""
-
-        self.zoom_level = max(min(self.zoom_level + step, 5), -24)
-        self.rendering_thread.scale = 1.1 ** self.zoom_level
+        self.zoom_set(self.zoom_level + step)
+        self.rendering_thread.scale = self.zoom_scale
         self.render()
 
     def zoom_in(self, widget=None):
