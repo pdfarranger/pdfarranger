@@ -21,4 +21,5 @@
 #
 
 # Make translation files
-xgettext -L python -o po/pdfshuffler.pot pdfshuffler
+intltool-extract --type=gettext/glade data/pdfshuffler.ui
+xgettext --language=Python --keyword=_ --keyword=N_ --output=po/pdfshuffler.pot pdfshuffler data/pdfshuffler.ui.h
