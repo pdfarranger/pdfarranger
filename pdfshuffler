@@ -1014,12 +1014,14 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         self.emit('update_thumbnail', idx, thumbnail)
                     finally:
                         self.emit('update_progress_bar', float(idx+1) / len(self.model),
-                            "Rendering thumbnails... [%s/%s]" % (idx+1, len(self.model)))
+                            _('Rendering thumbnails... [%s/%s]') % (idx+1, len(self.model)))
             if scale_changed:
                 for row in self.model:
                     row[6] = False
                 scale = self.scale
             elif rendered_all:
+                self.emit('update_progress_bar', 1.,
+                    _('Rendering thumbnails... [%s/%s]') % (len(self.model), len(self.model)))
                 if self.model.get_iter_first(): #just checking if model isn't empty
                     self.emit('reset_iv_width')
                 self.paused = True
