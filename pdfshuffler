@@ -70,9 +70,6 @@ import gio          #to inquire mime types information
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
-if os.name == 'nt':
-    import _winreg
-
 class PdfShuffler:
     prefs = {
         'window width': min(700, gtk.gdk.screen_get_default().get_width() / 2),
@@ -231,13 +228,7 @@ class PdfShuffler:
         self.popup.append(popup_delete)
 
         # Initializing variables
-        if os.name == 'nt':
-            regKey = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
-                'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
-            myDocuments = _winreg.QueryValueEx(regKey, 'Personal')[0]
-            self.export_directory = myDocuments
-        else:
-            self.export_directory = os.getenv('HOME')
+        self.export_directory = os.getenv('HOME')
         self.import_directory = self.export_directory
         self.nfile = 0
         self.iv_auto_scroll_timer = None
@@ -540,10 +531,7 @@ class PdfShuffler:
                     f = gio.File(filename)
                     f_info = f.query_info('standard::content-type')
                     mime_type = f_info.get_content_type()
-                    if os.name == 'nt':
-                        expected_mime_type = '.pdf'
-                    else:
-                        expected_mime_type = 'application/pdf'
+                    expected_mime_type = 'application/pdf'
 
                     if mime_type == expected_mime_type:
                         self.add_pdf_pages(filename)
@@ -971,12 +959,8 @@ class PDF_Doc:
         (self.shortname, self.ext) = os.path.splitext(self.shortname)
         f = gio.File(filename)
         mime_type = f.query_info('standard::content-type').get_content_type()
-        if os.name == 'nt':
-            expected_mime_type = '.pdf'
-            file_prefix = 'file:///'
-        else:
-            expected_mime_type = 'application/pdf'
-            file_prefix = 'file://'
+        expected_mime_type = 'application/pdf'
+        file_prefix = 'file://'
 
         if mime_type == expected_mime_type:
             self.nfile = nfile + 1
@@ -1120,8 +1104,7 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
 
 
 if __name__ == '__main__':
-    if os.name != 'nt':
-        gtk.gdk.threads_init()
+    gtk.gdk.threads_init()
     PdfShuffler()
 #    gtk.gdk.threads_enter()
     gtk.main()
