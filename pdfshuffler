@@ -453,11 +453,11 @@ class PdfShuffler:
         for pdfdoc in self.pdfqueue:
             pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
             if pdfdoc_inp.getIsEncrypted():
-                try:
+                try: # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
                 except:
                     stat = 0
-                if (stat!=1): # Workaround for lp:#355479
+                if (stat!=1):
                     errmsg = _('File %s is encrypted.\n'
                                'Support for encrypted files has not been implemented yet.\n'
                                'File export failed.') % pdfdoc.filename
