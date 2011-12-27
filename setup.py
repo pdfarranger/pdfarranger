@@ -25,11 +25,11 @@ import os
 import re
 from distutils.core import setup
 
-data_files=[('share/applications/pdfshuffler', ['data/pdfshuffler_menu.ui']),
-            ('share/applications/', ['data/pdfshuffler.desktop']),
+data_files=[('share/applications/pdfshuffler', ['data/pdfshuffler.ui']),
+            ('share/applications', ['data/pdfshuffler.desktop']),
             ('share/man/man1', ['doc/pdfshuffler.1']),
-            ('share/pixmaps/', ['data/pdfshuffler.svg']),
-            ('share/pixmaps/', ['data/pdfshuffler.png']) ]
+            ('share/pixmaps', ['data/pdfshuffler.svg']),
+            ('share/pixmaps', ['data/pdfshuffler.png']) ]
 
 
 # Freshly generate .mo from .po, add to data_files:
@@ -49,11 +49,12 @@ for name in os.listdir('po'):
 setup(name='pdfshuffler',
       version='0.6.0',
       author='Konstantinos Poulios',
-      author_email='poulios.konstantinos at gmail dot com',
+      author_email='logari81 at gmail dot com',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
       url = 'https://sourceforge.net/projects/pdfshuffler',
       license='GNU GPL-3',
-      scripts=['pdfshuffler'],
+      scripts=['bin/pdfshuffler'],
+      packages=['pdfshuffler'],
       data_files=data_files
      )
 
