@@ -68,9 +68,16 @@ except:
 import gobject      #to use custom signals
 import pango        #to adjust the text alignment in CellRendererText
 import gio          #to inquire mime types information
+import cairo
 
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
+
+from math import pi as M_PI
+
+from cairorendering import CellRendererImage, CairoImage
+gobject.type_register(CellRendererImage)
+
 
 class PdfShuffler:
     prefs = {
@@ -144,18 +151,18 @@ class PdfShuffler:
         self.sw.add_with_viewport(align)
 
         # Create ListStore model and IconView
-        self.model = gtk.ListStore(str,             # 0.Text descriptor
-                                   gtk.gdk.Pixbuf,  # 1.Thumbnail image
-                                   int,             # 2.Document number
-                                   int,             # 3.Page number
-                                   int,             # 4.Thumbnail width
-                                   str,             # 5.Document filename
-                                   bool,            # 6.Rendered
-                                   int,             # 7.Rotation angle
-                                   float,           # 8.Crop left
-                                   float,           # 9.Crop right
-                                   float,           # 10.Crop top
-                                   float)           # 11.Crop bottom
+        self.model = gtk.ListStore(str,         # 0.Text descriptor
+                                   CairoImage,  # 1.Cached page image
+                                   int,         # 2.Document number
+                                   int,         # 3.Page number
+                                   int,         # 4.Thumbnail width
+                                   str,         # 5.Document filename
+                                   bool,        # 6.Rendered
+                                   int,         # 7.Rotation angle
+                                   float,       # 8.Crop left
+                                   float,       # 9.Crop right
+                                   float,       # 10.Crop top
+                                   float)       # 11.Crop bottom
 
         self.zoom_set(self.prefs['initial zoom level'])
         self.iv_col_width = self.prefs['initial thumbnail size']
@@ -163,11 +170,9 @@ class PdfShuffler:
         self.iconview = gtk.IconView(self.model)
         self.iconview.set_item_width(self.iv_col_width + 12)
 
-        self.iconview.set_pixbuf_column(1)
-#        self.cellpb = gtk.CellRendererPixbuf()
-#        self.cellpb.set_property('follow-state', True)
-#        self.iconview.pack_start(self.cellpb, False)
-#        self.iconview.set_attributes(self.cellpb, pixbuf=1)
+        self.cellthmb = CellRendererImage()
+        self.iconview.pack_start(self.cellthmb, False)
+        self.iconview.set_attributes(self.cellthmb, image=1)
 
 #        self.iconview.set_text_column(0)
         self.celltxt = gtk.CellRendererText()
@@ -296,7 +301,7 @@ class PdfShuffler:
         gtk.gdk.threads_enter()
         row = self.model[num]
         row[6] = True
-        row[4] = thumbnail.get_width()
+        row[4] = thumbnail.surface.get_width()
         row[1] = thumbnail
         gtk.gdk.threads_leave()
 
@@ -382,8 +387,7 @@ class PdfShuffler:
             pix_w, pix_h = page.get_size()
             pix_w = int(pix_w * self.zoom_scale)
             pix_h = int(pix_h * self.zoom_scale)
-            thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                       8, pix_w, pix_h)
+            thumbnail = CairoImage(cairo.FORMAT_ARGB32, pix_w, pix_h)
             self.model.append((descriptor,              # 0
                                thumbnail,               # 1
                                pdfdoc.nfile,            # 2
@@ -1038,78 +1042,67 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
 
     def load_pdf_thumbnail(self, pdfdoc, npage, rotation=0,
                            crop=[0.,0.,0.,0.], scale=1.):
-        """Create pdf pixbuf"""
+        """Create pdf page cairo image"""
+        th1 = 2. # border thickness
+        th2 = 3. # shadow thickness
 
         try:
             page = pdfdoc.document.get_page(npage-1)
-            pix_w, pix_h = page.get_size()
-            pix_w = int(pix_w * scale)
-            pix_h = int(pix_h * scale)
-            if pdfdoc.thumbnails[npage-1] and pdfdoc.thumbnails_scale[npage-1] >= scale:
-                thumbnail = pdfdoc.thumbnails[npage-1] \
-                                  .scale_simple(pix_w,pix_h,gtk.gdk.INTERP_TILES)
+            w0, h0 = page.get_size()
+            if pdfdoc.thumbnails[npage-1]:
+                img = pdfdoc.thumbnails[npage-1]
             else:
-                thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                           8, pix_w , pix_h)
-                page.render_to_pixbuf(0,0,pix_w,pix_h,scale,0,thumbnail)
-                pdfdoc.thumbnails[npage-1] = thumbnail
-                pdfdoc.thumbnails_scale[npage-1] = scale
+                img = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w0), int(h0))
+                cr = cairo.Context(img)
+                page.render(cr)
+                pdfdoc.thumbnails[npage-1] = img
 
-            rotation = (-rotation) % 360
+            rotation = int(rotation) % 360
             rotation = ((rotation + 45) / 90) * 90
-            thumbnail = thumbnail.rotate_simple(rotation)
-            pix_w = thumbnail.get_width()
-            pix_h = thumbnail.get_height()
-            if crop != [0.,0.,0.,0.]:
-                src_x = int(crop[0] * pix_w)
-                src_y = int(crop[2] * pix_h)
-                width = int((1. - crop[0] - crop[1]) * pix_w)
-                height = int((1. - crop[2] - crop[3]) * pix_h)
-                new_thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                               8, width, height)
-                thumbnail.copy_area(src_x, src_y, width, height,
-                                    new_thumbnail, 0, 0)
-                thumbnail = new_thumbnail
-                pix_w = thumbnail.get_width()
-                pix_h = thumbnail.get_height()
+            if rotation == 90 or rotation == 270:
+                w1, h1 = h0, w0
+            else:
+                w1, h1 = w0, h0
+
+            x = crop[0] * w1
+            y = crop[2] * h1
+            w2 = (1. - crop[0] - crop[1]) * w1
+            h2 = (1. - crop[2] - crop[3]) * h1
+
+            w3 = int(w2*scale)
+            h3 = int(h2*scale)
+            th = int(2*th1+th2)
+            thumbnail = CairoImage(cairo.FORMAT_ARGB32, th+w3, th+h3)
+            thumbnail.context.save()
+            thumbnail.context.translate(th1,th1)
+            thumbnail.context.scale(scale, scale)
+            thumbnail.context.translate(-x,-y)
+            if rotation > 0:
+                thumbnail.context.translate(w1/2,h1/2)
+                thumbnail.context.rotate(rotation * M_PI / 180)
+                thumbnail.context.translate(-w0/2,-h0/2)
+
+            thumbnail.context.set_source_surface(img)
+            thumbnail.context.paint()
+            thumbnail.context.restore()
+
+            thumbnail.context.set_source_rgb(0.5,0.5,0.5)
+            thumbnail.context.set_line_width(int(th2))
+            th = 2*th1+th2/2
+            thumbnail.context.move_to(th1,h3+th)
+            thumbnail.context.line_to(w3+th,h3+th)
+            thumbnail.context.line_to(w3+th,th1)
+            thumbnail.context.stroke()
+
+            thumbnail.context.set_source_rgb(0,0,0)
+            thumbnail.context.set_line_width(int(th1))
+            thumbnail.context.rectangle(th1/2,th1/2,w3+th1,h3+th1)
+            thumbnail.context.stroke()
         except:
-            pix_w = self.default_width
-            pix_h = pix_w
-            thumbnail = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False,
-                                       8, pix_w, pix_h)
-            thumbnail.fill(0xffffffff)
-
-        thumbnail = self.make_shadow(thumbnail)
-
-        return thumbnail
-
-    def make_shadow(self, thumbnail):
-        # add border and shadows
-        # canvas
-        th = 3
-        pix_w = thumbnail.get_width()
-        pix_h = thumbnail.get_height()
-        color = 0xFFFFFF00
-        canvas = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
-                                pix_w + th + 1, pix_h + th + 1)
-        canvas.fill(color)
-
-        # border
-        color_border = 0x404040FF
-        canvas_border = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
-                                pix_w + 2, pix_h + 2)
-        canvas_border.fill(color_border)
-
-        # shadow
-        color_shadow = 0xA0A090FF
-        canvas_shadow = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8,
-                        pix_w + th, pix_h + th)
-        canvas_shadow.fill(color_shadow)
-
-        canvas_shadow.copy_area(0, 0, pix_w + th, pix_h + th, canvas, 1, 1)
-        canvas_border.copy_area(0, 0, pix_w + 2, pix_h + 2, canvas, 0, 0)
-        thumbnail.copy_area(0, 0, pix_w, pix_h, canvas, 1, 1)
-        thumbnail = canvas
+            w3 = h3 = int(self.default_width * scale)
+            thumbnail = CairoImage(cairo.FORMAT_ARGB32, w3, h3)
+            thumbnail.context.set_source_rgb(1,1,1)
+            thumbnail.context.paint()
 
         return thumbnail
 
