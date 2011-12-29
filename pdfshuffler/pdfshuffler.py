@@ -73,8 +73,6 @@ import cairo
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
-from math import pi as M_PI
-
 from cairorendering import CellRendererImage, CairoImage
 gobject.type_register(CellRendererImage)
 
@@ -155,14 +153,15 @@ class PdfShuffler:
                                    CairoImage,  # 1.Cached page image
                                    int,         # 2.Document number
                                    int,         # 3.Page number
-                                   int,         # 4.Thumbnail width
+                                   float,       # 4.Scale
                                    str,         # 5.Document filename
-                                   bool,        # 6.Rendered
-                                   int,         # 7.Rotation angle
-                                   float,       # 8.Crop left
-                                   float,       # 9.Crop right
-                                   float,       # 10.Crop top
-                                   float)       # 11.Crop bottom
+                                   int,         # 6.Rotation angle
+                                   float,       # 7.Crop left
+                                   float,       # 8.Crop right
+                                   float,       # 9.Crop top
+                                   float,       # 10.Crop bottom
+                                   int,         # 11.Page width
+                                   int)         # 12.Page height
 
         self.zoom_set(self.prefs['initial zoom level'])
         self.iv_col_width = self.prefs['initial thumbnail size']
@@ -172,7 +171,9 @@ class PdfShuffler:
 
         self.cellthmb = CellRendererImage()
         self.iconview.pack_start(self.cellthmb, False)
-        self.iconview.set_attributes(self.cellthmb, image=1)
+        self.iconview.set_attributes(self.cellthmb, image=1,
+            scale=4, rotation=6, cropL=7, cropR=8, cropT=9, cropB=10,
+            width=11, height=12)
 
 #        self.iconview.set_text_column(0)
         self.celltxt = gtk.CellRendererText()
@@ -243,17 +244,13 @@ class PdfShuffler:
         self.pdfqueue = []
 
         gobject.type_register(PDF_Renderer)
-        gobject.signal_new('reset_iv_width', PDF_Renderer,
-                           gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, ())
         gobject.signal_new('update_progress_bar', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_FLOAT, gobject.TYPE_STRING])
         gobject.signal_new('update_thumbnail', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
-        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue,
-                                             self.zoom_scale, self.iv_col_width)
-        self.rendering_thread.connect('reset_iv_width', self.reset_iv_width)
+        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
         self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
@@ -300,8 +297,7 @@ class PdfShuffler:
     def update_thumbnail(self, object, num, thumbnail):
         gtk.gdk.threads_enter()
         row = self.model[num]
-        row[6] = True
-        row[4] = thumbnail.surface.get_width()
+        row[4] = self.zoom_scale
         row[1] = thumbnail
         gtk.gdk.threads_leave()
 
@@ -317,7 +313,10 @@ class PdfShuffler:
     def reset_iv_width(self, renderer=None):
         """Reconfigures the width of the iconview columns"""
 
-        max_w = max(row[4] for row in self.model)
+        if not self.model.get_iter_first(): #just checking if model is empty
+            return
+
+        max_w = 10 + int(max(row[4]*row[11] for row in self.model))
         if max_w != self.iv_col_width:
             self.iv_col_width = max_w
             self.celltxt.set_property('width', self.iv_col_width)
@@ -384,20 +383,17 @@ class PdfShuffler:
         for npage in range(n_start, n_end + 1):
             descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
             page = pdfdoc.document.get_page(npage-1)
-            pix_w, pix_h = page.get_size()
-            pix_w = int(pix_w * self.zoom_scale)
-            pix_h = int(pix_h * self.zoom_scale)
-            thumbnail = CairoImage(cairo.FORMAT_ARGB32, pix_w, pix_h)
-            self.model.append((descriptor,              # 0
-                               thumbnail,               # 1
-                               pdfdoc.nfile,            # 2
-                               npage,                   # 3
-                               pix_w,                   # 4
-                               pdfdoc.filename,         # 5
-                               False,                   # 6
-                               angle,                   # 7
-                               crop[0],crop[1],         # 8-9
-                               crop[2],crop[3]       )) # 10-11
+            w, h = page.get_size()
+            self.model.append((descriptor,         # 0
+                               CairoImage(),       # 1
+                               pdfdoc.nfile,       # 2
+                               npage,              # 3
+                               self.zoom_scale,    # 4
+                               pdfdoc.filename,    # 5
+                               angle,              # 6
+                               crop[0],crop[1],    # 7-8
+                               crop[2],crop[3],    # 9-10
+                               int(w),int(h)    )) # 11-12
             res = True
 
         self.reset_iv_width()
@@ -479,15 +475,15 @@ class PdfShuffler:
             nfile = row[2]
             npage = row[3]
             current_page = copy(pdf_input[nfile-1].getPage(npage-1))
-            angle = row[7]
+            angle = row[6]
             angle0 = current_page.get("/Rotate",0)
-            crop = [row[8],row[9],row[10],row[11]]
-            if angle is not 0:
+            crop = [row[7],row[8],row[9],row[10]]
+            if angle != 0:
                 current_page.rotateClockwise(angle)
             if crop != [0.,0.,0.,0.]:
                 rotate_times = (((angle + angle0) % 360 + 45) / 90) % 4
                 crop_init = crop
-                if rotate_times is not 0:
+                if rotate_times != 0:
                     perm = [0,2,1,3]
                     for it in range(rotate_times):
                         perm.append(perm.pop(0))
@@ -795,12 +791,13 @@ class PdfShuffler:
         """Sets the zoom level"""
         self.zoom_level = max(min(level, 5), -24)
         self.zoom_scale = 1.1 ** self.zoom_level
+        for row in self.model:
+            row[4] = self.zoom_scale
+        self.reset_iv_width()
 
     def zoom_change(self, step=5):
         """Modifies the zoom level"""
         self.zoom_set(self.zoom_level + step)
-        self.rendering_thread.scale = self.zoom_scale
-        self.render()
 
     def zoom_in(self, widget=None):
         """Increases the zoom level by 5 steps"""
@@ -854,11 +851,10 @@ class PdfShuffler:
                 for side in range(4):
                     model.set_value(iter, 8 + side, crop[side])
 
-            new_angle = model.get_value(iter, 7) + angle
+            new_angle = model.get_value(iter, 7) + int(angle)
+            new_angle = new_angle % 360
             model.set_value(iter, 7, new_angle)
             model.set_value(iter, 6, False) #rendering request
-
-        self.render()
 
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
@@ -934,7 +930,6 @@ class PdfShuffler:
                 model.set_value(pos, 6, False) #rendering request
             if modified:
                 self.set_unsaved(True)
-            self.render()
         elif result == gtk.RESPONSE_CANCEL:
             print(_('Dialog closed'))
         dialog.destroy()
@@ -985,126 +980,47 @@ class PDF_Doc:
         else:
             self.nfile = 0
             self.npage = 0
-        self.thumbnails = [None]*self.npage
-        self.thumbnails_scale = [1.]*self.npage
 
 
 class PDF_Renderer(threading.Thread,gobject.GObject):
 
-    def __init__(self, model, pdfqueue, scale=1., width=100):
+    def __init__(self, model, pdfqueue):
         threading.Thread.__init__(self)
         gobject.GObject.__init__(self)
         self.model = model
-        self.scale = scale
-        self.default_width = width
         self.pdfqueue = pdfqueue
         self.quit = False
         self.evnt = threading.Event()
         self.paused = False
 
     def run(self):
-        scale = self.scale
         while not self.quit:
             rendered_all = True
-            scale_changed = False
             for idx, row in enumerate(self.model):
                 if self.quit:
                     break
-                if self.scale != scale:
-                    scale_changed = True
-                    break
-                if not row[6]:
+                if not row[1].surface:
                     rendered_all = False
                     try:
                         nfile = row[2]
                         npage = row[3]
-                        angle = row[7]
-                        crop = [row[8],row[9],row[10],row[11]]
                         pdfdoc = self.pdfqueue[nfile - 1]
-                        thumbnail = self.load_pdf_thumbnail(pdfdoc, npage, angle,
-                                                            crop, scale)
+                        page = pdfdoc.document.get_page(npage-1)
+                        w, h = page.get_size()
+                        thumbnail = CairoImage(int(w), int(h))
+                        cr = cairo.Context(thumbnail.surface)
+                        page.render(cr)
                         self.emit('update_thumbnail', idx, thumbnail)
                     finally:
                         self.emit('update_progress_bar', float(idx+1) / len(self.model),
                             _('Rendering thumbnails... [%(i1)s/%(i2)s]')
                             % {'i1' : idx+1, 'i2' : len(self.model)})
-            if scale_changed:
-                for row in self.model:
-                    row[6] = False
-                scale = self.scale
-            elif rendered_all:
+            if rendered_all:
                 self.emit('update_progress_bar', 1.,
                     _('Rendering thumbnails... [%(i1)s/%(i1)s]') % {'i1' : len(self.model)})
-                if self.model.get_iter_first(): #just checking if model isn't empty
-                    self.emit('reset_iv_width')
                 self.paused = True
                 self.evnt.wait()
 
-    def load_pdf_thumbnail(self, pdfdoc, npage, rotation=0,
-                           crop=[0.,0.,0.,0.], scale=1.):
-        """Create pdf page cairo image"""
-        th1 = 2. # border thickness
-        th2 = 3. # shadow thickness
-
-        try:
-            page = pdfdoc.document.get_page(npage-1)
-            w0, h0 = page.get_size()
-            if pdfdoc.thumbnails[npage-1]:
-                img = pdfdoc.thumbnails[npage-1]
-            else:
-                img = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w0), int(h0))
-                cr = cairo.Context(img)
-                page.render(cr)
-                pdfdoc.thumbnails[npage-1] = img
-
-            rotation = int(rotation) % 360
-            rotation = ((rotation + 45) / 90) * 90
-            if rotation == 90 or rotation == 270:
-                w1, h1 = h0, w0
-            else:
-                w1, h1 = w0, h0
-
-            x = crop[0] * w1
-            y = crop[2] * h1
-            w2 = (1. - crop[0] - crop[1]) * w1
-            h2 = (1. - crop[2] - crop[3]) * h1
-
-            w3 = int(w2*scale)
-            h3 = int(h2*scale)
-            th = int(2*th1+th2)
-            thumbnail = CairoImage(cairo.FORMAT_ARGB32, th+w3, th+h3)
-            thumbnail.context.save()
-            thumbnail.context.translate(th1,th1)
-            thumbnail.context.scale(scale, scale)
-            thumbnail.context.translate(-x,-y)
-            if rotation > 0:
-                thumbnail.context.translate(w1/2,h1/2)
-                thumbnail.context.rotate(rotation * M_PI / 180)
-                thumbnail.context.translate(-w0/2,-h0/2)
-
-            thumbnail.context.set_source_surface(img)
-            thumbnail.context.paint()
-            thumbnail.context.restore()
-
-            thumbnail.context.set_source_rgb(0.5,0.5,0.5)
-            thumbnail.context.set_line_width(int(th2))
-            th = 2*th1+th2/2
-            thumbnail.context.move_to(th1,h3+th)
-            thumbnail.context.line_to(w3+th,h3+th)
-            thumbnail.context.line_to(w3+th,th1)
-            thumbnail.context.stroke()
-
-            thumbnail.context.set_source_rgb(0,0,0)
-            thumbnail.context.set_line_width(int(th1))
-            thumbnail.context.rectangle(th1/2,th1/2,w3+th1,h3+th1)
-            thumbnail.context.stroke()
-        except:
-            w3 = h3 = int(self.default_width * scale)
-            thumbnail = CairoImage(cairo.FORMAT_ARGB32, w3, h3)
-            thumbnail.context.set_source_rgb(1,1,1)
-            thumbnail.context.paint()
-
-        return thumbnail
 
 def main():
     """This function starts PdfShuffler"""

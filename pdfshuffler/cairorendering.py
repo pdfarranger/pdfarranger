@@ -30,15 +30,58 @@ import gtk
 import gobject
 import cairo
 
+from math import pi as M_PI
+
 class CellRendererImage(gtk.GenericCellRenderer):
     __gproperties__ = {
-            "image": (gobject.TYPE_OBJECT, "Image",
-                     "Image", gobject.PARAM_READWRITE),
+            "image": (gobject.TYPE_OBJECT, "Image", "Image",
+                      gobject.PARAM_READWRITE),
+            "width": (gobject.TYPE_INT, "Width", "Width",
+                      0, 1000, 0, gobject.PARAM_READWRITE),
+            "height": (gobject.TYPE_INT, "Height", "Height",
+                       0, 1000, 0, gobject.PARAM_READWRITE),
+            "rotation": (gobject.TYPE_INT, "Rotation", "Rotation",
+                         0, 360, 0, gobject.PARAM_READWRITE),
+            "scale": (gobject.TYPE_DOUBLE, "Scale", "Scale",
+                      0.01, 100., 1., gobject.PARAM_READWRITE),
+            "cropL": (gobject.TYPE_DOUBLE, "CropL", "CropL",
+                      0., 1., 0., gobject.PARAM_READWRITE),
+            "cropR": (gobject.TYPE_DOUBLE, "CropR", "CropR",
+                      0., 1., 0., gobject.PARAM_READWRITE),
+            "cropT": (gobject.TYPE_DOUBLE, "CropT", "CropT",
+                      0., 1., 0., gobject.PARAM_READWRITE),
+            "cropB": (gobject.TYPE_DOUBLE, "CropB", "CropB",
+                      0., 1., 0., gobject.PARAM_READWRITE),
     }
 
     def __init__(self):
         self.__gobject_init__()
-        self.page = None
+        self.th1 = 2. # border thickness
+        self.th2 = 3. # shadow thickness
+
+    def get_geometry(self):
+
+        if not self.image.surface:
+            w0 = self.width
+            h0 = self.height
+        else:
+            w0 = self.image.surface.get_width()
+            h0 = self.image.surface.get_height()
+
+        rotation = int(self.rotation) % 360
+        rotation = ((self.rotation + 45) / 90) * 90
+        if rotation == 90 or rotation == 270:
+            w1, h1 = h0, w0
+        else:
+            w1, h1 = w0, h0
+
+        x = self.cropL * w1
+        y = self.cropT * h1
+
+        w2 = int(self.scale * (1. - self.cropL - self.cropR) * w1)
+        h2 = int(self.scale * (1. - self.cropT - self.cropB) * h1)
+        
+        return w0,h0,w1,h1,w2,h2,rotation
 
     def do_set_property(self, pspec, value):
         setattr(self, pspec.name, value)
@@ -48,41 +91,62 @@ class CellRendererImage(gtk.GenericCellRenderer):
 
     def on_render(self, window, widget, background_area, cell_area, \
                  expose_area, flags):
-        if not self.image:
+        if not self.image.surface:
             return
+
+        w0,h0,w1,h1,w2,h2,rotation = self.get_geometry()
+        th = int(2*self.th1+self.th2)
+        w = w2 + th
+        h = h2 + th
 
         x = cell_area.x
         y = cell_area.y
-        w = self.image.surface.get_width()
-        h = self.image.surface.get_height()
         if cell_area and w > 0 and h > 0:
             x += self.get_property('xalign') * \
                  (cell_area.width - w - self.get_property('xpad'))
             y += self.get_property('yalign') * \
                  (cell_area.height - h - self.get_property('ypad'))
 
-        pix_rect = gtk.gdk.Rectangle()
-        pix_rect.x = x
-        pix_rect.y = y
-        pix_rect.width = w
-        pix_rect.height = h
-
-        draw_rect = cell_area.intersect(pix_rect)
-
         cr = window.cairo_create()
-        cr.set_source_rgb(1, 1, 1)
-        cr.rectangle(draw_rect.x, draw_rect.y, draw_rect.width, draw_rect.height)
+        cr.translate(x,y)
+
+        x = self.cropL * w1
+        y = self.cropT * h1
+
+        #shadow
+        cr.set_source_rgb(0.5, 0.5, 0.5)
+        cr.rectangle(th, th, w2, h2)
         cr.fill()
-        cr.set_source_surface(self.image.surface, draw_rect.x, draw_rect.y)
+
+        #border
+        cr.set_source_rgb(0, 0, 0)
+        cr.rectangle(0, 0, w2+2*self.th1, h2+2*self.th1)
+        cr.fill()
+
+        #image
+        cr.set_source_rgb(1, 1, 1)
+        cr.rectangle(self.th1, self.th1, w2, h2)
+        cr.fill_preserve()
+        cr.clip()
+
+        cr.translate(self.th1,self.th1)
+        cr.scale(self.scale, self.scale)
+        cr.translate(-x,-y)
+        if rotation > 0:
+            cr.translate(w1/2,h1/2)
+            cr.rotate(rotation * M_PI / 180)
+            cr.translate(-w0/2,-h0/2)
+
+        cr.set_source_surface(self.image.surface)
         cr.paint()
 
     def on_get_size(self, widget, cell_area=None):
-        if not self.image:
-            return 0, 0, 0, 0
-
         x = y = 0
-        w = self.image.surface.get_width()
-        h = self.image.surface.get_height()
+        w0,h0,w1,h1,w2,h2,rotation = self.get_geometry()
+        th = int(2*self.th1+self.th2)
+        w = w2 + th
+        h = h2 + th
+
         if cell_area and w > 0 and h > 0:
             x = self.get_property('xalign') * \
                 (cell_area.width - w - self.get_property('xpad'))
@@ -95,9 +159,11 @@ class CellRendererImage(gtk.GenericCellRenderer):
 
 class CairoImage(gobject.GObject):
 
-    def __init__(self, format, width, height):
+    def __init__(self, width=0, height=0):
         gobject.GObject.__init__(self)
-        self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-        self.context = cairo.Context(self.surface)
+        if width > 0 and height > 0:
+            self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        else:
+            self.surface = None
 
 
