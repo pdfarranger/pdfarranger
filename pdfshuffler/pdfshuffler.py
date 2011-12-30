@@ -605,8 +605,8 @@ class PdfShuffler:
                 data.append(str(path[0]))
             elif selection_data.target == 'MODEL_ROW_EXTERN':
                 iter = model.get_iter(path)
-                nfile, npage, angle = model.get(iter, 2, 3, 7)
-                crop = model.get(iter, 8, 9, 10, 11)
+                nfile, npage, angle = model.get(iter, 2, 3, 6)
+                crop = model.get(iter, 7, 8, 9, 10)
                 pdfdoc = self.pdfqueue[nfile - 1]
                 data.append('\n'.join([pdfdoc.filename,
                                        str(npage),
@@ -856,15 +856,14 @@ class PdfShuffler:
                 for it in range(rotate_times):
                     perm.append(perm.pop(0))
                 perm.insert(1,perm.pop(2))
-                crop = [model.get_value(iter, 8 + perm[side]) for side in range(4)]
+                crop = [model.get_value(iter, 7 + perm[side]) for side in range(4)]
                 for side in range(4):
-                    model.set_value(iter, 8 + side, crop[side])
+                    model.set_value(iter, 7 + side, crop[side])
 
-            new_angle = model.get_value(iter, 7) + int(angle)
+            new_angle = model.get_value(iter, 6) + int(angle)
             new_angle = new_angle % 360
-            model.set_value(iter, 7, new_angle)
-            model.set_value(iter, 6, False) #rendering request
-
+            model.set_value(iter, 6, new_angle)
+ 
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
 
@@ -886,7 +885,7 @@ class PdfShuffler:
         if selection:
             path = selection[0]
             pos = model.get_iter(path)
-            crop = [model.get_value(pos, 8 + side) for side in range(4)]
+            crop = [model.get_value(pos, 7 + side) for side in range(4)]
 
         dialog = gtk.Dialog(title=(_('Crop Selected Pages')),
                             parent=self.window,
@@ -932,11 +931,10 @@ class PdfShuffler:
             for path in selection:
                 pos = model.get_iter(path)
                 for it in range(4):
-                    old_val = model.get_value(pos, 8 + it)
-                    model.set_value(pos, 8 + it, crop[it])
+                    old_val = model.get_value(pos, 7 + it)
+                    model.set_value(pos, 7 + it, crop[it])
                     if crop[it] != old_val:
                         modified = True
-                model.set_value(pos, 6, False) #rendering request
             if modified:
                 self.set_unsaved(True)
         elif result == gtk.RESPONSE_CANCEL:
