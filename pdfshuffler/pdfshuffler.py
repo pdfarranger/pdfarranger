@@ -76,6 +76,7 @@ from pyPdf import PdfFileWriter, PdfFileReader
 from cairorendering import CellRendererImage, CairoImage
 gobject.type_register(CellRendererImage)
 
+import time
 
 class PdfShuffler:
     prefs = {
@@ -210,6 +211,7 @@ class PdfShuffler:
 
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
+        self.progress_bar_timeout_id = 0
 
         # Define window callback function and show window
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
@@ -244,16 +246,10 @@ class PdfShuffler:
         self.pdfqueue = []
 
         gobject.type_register(PDF_Renderer)
-        gobject.signal_new('update_progress_bar', PDF_Renderer,
-                           gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
-                           [gobject.TYPE_FLOAT, gobject.TYPE_STRING])
         gobject.signal_new('update_thumbnail', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
                            [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
-        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
-        self.rendering_thread.connect('update_progress_bar', self.update_progress_bar)
-        self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
-        self.rendering_thread.start()
+        self.rendering_thread = 0
 
         self.set_unsaved(False)
 
@@ -262,10 +258,16 @@ class PdfShuffler:
             self.add_pdf_pages(filename)
 
     def render(self):
-        if self.rendering_thread.paused:
-            self.rendering_thread.paused = False
-            self.rendering_thread.evnt.set()
-            self.rendering_thread.evnt.clear()
+        if self.rendering_thread:
+            self.rendering_thread.quit = True
+        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
+        self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
+        self.rendering_thread.start()
+
+        if self.progress_bar_timeout_id:
+            gobject.source_remove(self.progress_bar_timeout_id)
+        self.progress_bar_timout_id = \
+            gobject.timeout_add(50, self.progress_bar_timeout)
 
     def set_unsaved(self, flag):
         self.is_unsaved = flag
@@ -284,22 +286,30 @@ class PdfShuffler:
         title += ' - ' + APPNAME
         self.window.set_title(title)
 
-    def update_progress_bar(self, object, fraction, text):
-        gtk.gdk.threads_enter()
+    def progress_bar_timeout(self):
+        cnt_finished = 0
+        cnt_all = 0
+        for row in self.model:
+            cnt_all += 1
+            if row[1].surface:
+                cnt_finished += 1
+        fraction = float(cnt_finished)/float(cnt_all)
+        
         self.progress_bar.set_fraction(fraction)
-        self.progress_bar.set_text(text)
-        if fraction == 1.0:
+        self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
+                                   % {'i1' : cnt_finished, 'i2' : cnt_all})
+        if fraction >= 0.999:
             self.progress_bar.hide_all()
+            return False
         elif not self.progress_bar.flags() & gtk.VISIBLE:
             self.progress_bar.show_all()
-        gtk.gdk.threads_leave()
 
+        return True
+  
     def update_thumbnail(self, object, num, thumbnail):
-        gtk.gdk.threads_enter()
         row = self.model[num]
         row[4] = self.zoom_scale
         row[1] = thumbnail
-        gtk.gdk.threads_leave()
 
     def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
@@ -334,12 +344,11 @@ class PdfShuffler:
     def close_application(self, widget, event=None, data=None):
         """Termination"""
 
-        #gtk.gdk.threads_leave()
-        self.rendering_thread.quit = True
-        #gtk.gdk.threads_enter()
-        if self.rendering_thread.paused == True:
-             self.rendering_thread.evnt.set()
-             self.rendering_thread.evnt.clear()
+        if self.rendering_thread:
+            self.rendering_thread.quit = True
+            while self.rendering_thread.isAlive():
+                time.sleep(0.5)
+
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
         if gtk.main_level():
@@ -990,45 +999,34 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
         self.model = model
         self.pdfqueue = pdfqueue
         self.quit = False
-        self.evnt = threading.Event()
-        self.paused = False
 
     def run(self):
-        while not self.quit:
-            rendered_all = True
-            for idx, row in enumerate(self.model):
-                if self.quit:
-                    break
-                if not row[1].surface:
-                    rendered_all = False
-                    try:
-                        nfile = row[2]
-                        npage = row[3]
-                        pdfdoc = self.pdfqueue[nfile - 1]
-                        page = pdfdoc.document.get_page(npage-1)
-                        w, h = page.get_size()
-                        thumbnail = CairoImage(int(w), int(h))
-                        cr = cairo.Context(thumbnail.surface)
-                        page.render(cr)
-                        self.emit('update_thumbnail', idx, thumbnail)
-                    finally:
-                        self.emit('update_progress_bar', float(idx+1) / len(self.model),
-                            _('Rendering thumbnails... [%(i1)s/%(i2)s]')
-                            % {'i1' : idx+1, 'i2' : len(self.model)})
-            if rendered_all:
-                self.emit('update_progress_bar', 1.,
-                    _('Rendering thumbnails... [%(i1)s/%(i1)s]') % {'i1' : len(self.model)})
-                self.paused = True
-                self.evnt.wait()
+        for idx, row in enumerate(self.model):
+            if self.quit:
+                return
+            if not row[1].surface:
+                try:
+                    nfile = row[2]
+                    npage = row[3]
+                    pdfdoc = self.pdfqueue[nfile - 1]
+                    page = pdfdoc.document.get_page(npage-1)
+                    w, h = page.get_size()
+                    thumbnail = CairoImage(int(w), int(h))
+                    cr = cairo.Context(thumbnail.surface)
+                    page.render(cr)
+                    time.sleep(0.003)
+                    gobject.idle_add(self.emit,'update_thumbnail', idx, thumbnail,
+                                     priority=gobject.PRIORITY_LOW)
+                except Exception,e:
+                    print e
 
 
 def main():
     """This function starts PdfShuffler"""
     gtk.gdk.threads_init()
+    gobject.threads_init()
     PdfShuffler()
-#    gtk.gdk.threads_enter()
     gtk.main()
-#    gtk.gdk.threads_leave()
 
 if __name__ == '__main__':
     main()
