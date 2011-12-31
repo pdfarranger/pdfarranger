@@ -36,10 +36,10 @@ class CellRendererImage(gtk.GenericCellRenderer):
     __gproperties__ = {
             "image": (gobject.TYPE_OBJECT, "Image", "Image",
                       gobject.PARAM_READWRITE),
-            "width": (gobject.TYPE_INT, "Width", "Width",
-                      0, 1000, 0, gobject.PARAM_READWRITE),
-            "height": (gobject.TYPE_INT, "Height", "Height",
-                       0, 1000, 0, gobject.PARAM_READWRITE),
+            "width": (gobject.TYPE_DOUBLE, "Width", "Width",
+                      0., 1.e4, 0., gobject.PARAM_READWRITE),
+            "height": (gobject.TYPE_DOUBLE, "Height", "Height",
+                       0., 1.e4, 0., gobject.PARAM_READWRITE),
             "rotation": (gobject.TYPE_INT, "Rotation", "Rotation",
                          0, 360, 0, gobject.PARAM_READWRITE),
             "scale": (gobject.TYPE_DOUBLE, "Scale", "Scale",
@@ -61,19 +61,18 @@ class CellRendererImage(gtk.GenericCellRenderer):
 
     def get_geometry(self):
 
+        rotation = int(self.rotation) % 360
+        rotation = ((rotation + 45) / 90) * 90
         if not self.image.surface:
-            w0 = self.width
-            h0 = self.height
+            w0 = w1 = self.width
+            h0 = h1 = self.height
         else:
             w0 = self.image.surface.get_width()
             h0 = self.image.surface.get_height()
-
-        rotation = int(self.rotation) % 360
-        rotation = ((self.rotation + 45) / 90) * 90
-        if rotation == 90 or rotation == 270:
-            w1, h1 = h0, w0
-        else:
-            w1, h1 = w0, h0
+            if rotation == 90 or rotation == 270:
+                w1, h1 = h0, w0
+            else:
+                w1, h1 = w0, h0
 
         x = self.cropL * w1
         y = self.cropT * h1

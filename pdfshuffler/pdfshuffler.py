@@ -320,13 +320,34 @@ class PdfShuffler:
             / (10 * (self.iv_col_width + self.iconview.get_column_spacing() * 2))
         self.iconview.set_columns(col_num)
 
+    def update_geometry(self, iter):
+        """Recomputes the width and height of the rotated page and saves
+           the result in the ListStore"""
+
+        if not self.model.iter_is_valid(iter):
+            return
+
+        nfile, npage, rotation = self.model.get(iter, 2, 3, 6)
+        crop = self.model.get(iter, 7, 8, 9, 10)
+        page = self.pdfqueue[nfile-1].document.get_page(npage-1)
+        w0, h0 = page.get_size()
+
+        rotation = int(rotation) % 360
+        rotation = ((rotation + 45) / 90) * 90
+        if rotation == 90 or rotation == 270:
+            w1, h1 = h0, w0
+        else:
+            w1, h1 = w0, h0
+
+        self.model.set(iter, 11, w1, 12, h1)
+
     def reset_iv_width(self, renderer=None):
         """Reconfigures the width of the iconview columns"""
 
         if not self.model.get_iter_first(): #just checking if model is empty
             return
 
-        max_w = 10 + int(max(row[4]*row[11] for row in self.model))
+        max_w = 10 + int(max(row[4]*row[11]*(1.-row[7]-row[8]) for row in self.model))
         if max_w != self.iv_col_width:
             self.iv_col_width = max_w
             self.celltxt.set_property('width', self.iv_col_width)
@@ -393,22 +414,23 @@ class PdfShuffler:
             descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
             page = pdfdoc.document.get_page(npage-1)
             w, h = page.get_size()
-            self.model.append((descriptor,         # 0
-                               CairoImage(),       # 1
-                               pdfdoc.nfile,       # 2
-                               npage,              # 3
-                               self.zoom_scale,    # 4
-                               pdfdoc.filename,    # 5
-                               angle,              # 6
-                               crop[0],crop[1],    # 7-8
-                               crop[2],crop[3],    # 9-10
-                               int(w),int(h)    )) # 11-12
+            iter = self.model.append((descriptor,         # 0
+                                      CairoImage(),       # 1
+                                      pdfdoc.nfile,       # 2
+                                      npage,              # 3
+                                      self.zoom_scale,    # 4
+                                      pdfdoc.filename,    # 5
+                                      angle,              # 6
+                                      crop[0],crop[1],    # 7-8
+                                      crop[2],crop[3],    # 9-10
+                                      w,h              )) # 11-12
+            self.update_geometry(iter)
             res = True
 
         self.reset_iv_width()
         gobject.idle_add(self.retitle)
         if res:
-            self.render()
+            gobject.idle_add(self.render)
         return res
 
     def choose_export_pdf_name(self, widget=None):
@@ -844,14 +866,14 @@ class PdfShuffler:
         selection = self.iconview.get_selected_items()
         if len(selection) > 0:
             self.set_unsaved(True)
-        for path in selection:
-            iter = model.get_iter(path)
-            nfile = model.get_value(iter, 2)
-            npage = model.get_value(iter, 3)
+        rotate_times = (((-angle) % 360 + 45) / 90) % 4
+        if rotate_times is not 0:
+            for path in selection:
+                iter = model.get_iter(path)
+                nfile = model.get_value(iter, 2)
+                npage = model.get_value(iter, 3)
 
-            rotate_times = (((-angle) % 360 + 45) / 90) % 4
-            crop = [0.,0.,0.,0.]
-            if rotate_times is not 0:
+                crop = [0.,0.,0.,0.]
                 perm = [0,2,1,3]
                 for it in range(rotate_times):
                     perm.append(perm.pop(0))
@@ -860,9 +882,11 @@ class PdfShuffler:
                 for side in range(4):
                     model.set_value(iter, 7 + side, crop[side])
 
-            new_angle = model.get_value(iter, 6) + int(angle)
-            new_angle = new_angle % 360
-            model.set_value(iter, 6, new_angle)
+                new_angle = model.get_value(iter, 6) + int(angle)
+                new_angle = new_angle % 360
+                model.set_value(iter, 6, new_angle)
+                self.update_geometry(iter)
+        self.reset_iv_width()
  
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
@@ -935,8 +959,10 @@ class PdfShuffler:
                     model.set_value(pos, 7 + it, crop[it])
                     if crop[it] != old_val:
                         modified = True
+                self.update_geometry(pos)
             if modified:
                 self.set_unsaved(True)
+            self.reset_iv_width()
         elif result == gtk.RESPONSE_CANCEL:
             print(_('Dialog closed'))
         dialog.destroy()
