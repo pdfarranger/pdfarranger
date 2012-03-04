@@ -222,18 +222,22 @@ class PdfShuffler:
         popup_rotate_left = gtk.ImageMenuItem(_('Rotate _Left'))
         popup_crop = gtk.MenuItem(_('C_rop...'))
         popup_delete = gtk.ImageMenuItem(gtk.STOCK_DELETE)
+        popup_saveselection = gtk.MenuItem(_('_Export selection...'))
         popup_rotate_right.connect('activate', self.rotate_page_right)
         popup_rotate_left.connect('activate', self.rotate_page_left)
         popup_crop.connect('activate', self.crop_page_dialog)
         popup_delete.connect('activate', self.clear_selected)
+        popup_saveselection.connect('activate', self.choose_export_pdf_name, True)
         popup_rotate_right.show()
         popup_rotate_left.show()
         popup_crop.show()
         popup_delete.show()
+        popup_saveselection.show()
         self.popup.append(popup_rotate_right)
         self.popup.append(popup_rotate_left)
         self.popup.append(popup_crop)
         self.popup.append(popup_delete)
+        self.popup.append(popup_saveselection)
 
         # Initializing variables
         self.export_directory = os.getenv('HOME')
@@ -432,7 +436,7 @@ class PdfShuffler:
             gobject.idle_add(self.render)
         return res
 
-    def choose_export_pdf_name(self, widget=None):
+    def choose_export_pdf_name(self, widget=None, only_selected=False):
         """Handles choosing a name for exporting """
 
         chooser = gtk.FileChooserDialog(title=_('Export ...'),
@@ -462,7 +466,7 @@ class PdfShuffler:
                 if ext.lower() != '.pdf':
                     file_out = file_out + '.pdf'
                 try:
-                    self.export_to_file(file_out)
+                    self.export_to_file(file_out, only_selected)
                     self.export_directory = path
                     self.set_unsaved(False)
                 except Exception, e:
@@ -478,9 +482,10 @@ class PdfShuffler:
             break
         chooser.destroy()
 
-    def export_to_file(self, file_out):
+    def export_to_file(self, file_out, only_selected=False):
         """Export to file"""
 
+        selection = self.iconview.get_selected_items()
         pdf_output = PdfFileWriter()
         pdf_input = []
         for pdfdoc in self.pdfqueue:
@@ -501,6 +506,10 @@ class PdfShuffler:
             pdf_input.append(pdfdoc_inp)
 
         for row in self.model:
+
+            if only_selected and row.path not in selection:
+                continue
+
             # add pages from input to output document
             nfile = row[2]
             npage = row[3]
@@ -535,7 +544,6 @@ class PdfShuffler:
             pdf_output.addPage(current_page)
 
         # finally, write "output" to document-output.pdf
-        print(_('exporting to:'), file_out)
         pdf_output.write(file(file_out, 'wb'))
 
     def on_action_add_doc_activate(self, widget, data=None):
@@ -886,7 +894,7 @@ class PdfShuffler:
                 model.set_value(iter, 6, new_angle)
                 self.update_geometry(iter)
         self.reset_iv_width()
- 
+
     def crop_page_dialog(self, widget):
         """Opens a dialog box to define margins for page cropping"""
 
