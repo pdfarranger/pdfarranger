@@ -1,0 +1,215 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PDF-Shuffler 0.6.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-25 23:16+0200\n"
+"PO-Revision-Date: 2011-11-25 18:26+0100\n"
+"Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
+"Language-Team: SuliX Support Team <support@sulix.hu>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: pdfshuffler:102
+msgid "Can't load icon. Application is not installed correctly."
+msgstr "Az ikon betöltése nem sikerült, az alkalmazás nincs megfelelően telepítve."
+
+#: pdfshuffler:213
+msgid "_Rotate Right"
+msgstr "Forgatás _Jobbra"
+
+#: pdfshuffler:214
+msgid "Rotate _Left"
+msgstr "Forgatás _Balra"
+
+#: pdfshuffler:215
+msgid "C_rop..."
+msgstr "_Vágás..."
+
+#: pdfshuffler:274
+msgid "No document"
+msgstr "Nincs dokumentum"
+
+#: pdfshuffler:276
+msgid "Several documents"
+msgstr "Néhány dokumentum"
+
+#: pdfshuffler:377
+msgid "page"
+msgstr "oldal"
+
+#: pdfshuffler:405
+msgid "Export ..."
+msgstr "Exportálás..."
+
+#: pdfshuffler:414
+#: pdfshuffler:521
+msgid "PDF files"
+msgstr "PDF fájlok"
+
+#: pdfshuffler:419
+#: pdfshuffler:516
+msgid "All files"
+msgstr "Minden fájl"
+
+#: pdfshuffler:438
+#, python-format
+msgid "Error writing file: %s"
+msgstr "Nem sikerült írni a következő fájlba: %s"
+
+#: pdfshuffler:456
+#, python-format
+msgid "File %s is encrypted."
+msgstr "A következő fájl titkosított: %s."
+
+#: pdfshuffler:457
+msgid "Support for such files has not been implemented yet."
+msgstr "Az ilyen típusú fájlok jelenleg még nem támogatottak."
+
+#: pdfshuffler:458
+msgid "File export failed."
+msgstr "A fájl exportálása nem sikerült"
+
+#: pdfshuffler:500
+msgid "exporting to:"
+msgstr "exportálás ide:"
+
+#: pdfshuffler:506
+msgid "_Import..."
+msgstr "_Importálás..."
+
+#: pdfshuffler:539
+msgid "OpenDocument not supported yet!"
+msgstr "Az OpenDocument formátum még nem támogatott!"
+
+#: pdfshuffler:541
+msgid "Image file not supported yet!"
+msgstr "A képfájl még nem támogatott!"
+
+#: pdfshuffler:543
+msgid "File type not supported!"
+msgstr "A fájltípus nem támogatott!"
+
+#: pdfshuffler:545
+#, python-format
+msgid "File %s does not exist"
+msgstr "A fájl nem létezik: %s"
+
+#: pdfshuffler:547
+msgid "Closed, no files selected"
+msgstr "Bezárva, nincs fájl kiválasztva"
+
+#: pdfshuffler:855
+msgid "Left"
+msgstr "Balra"
+
+#: pdfshuffler:855
+msgid "Right"
+msgstr "Jobbra"
+
+#: pdfshuffler:856
+msgid "Top"
+msgstr "Fent"
+
+#: pdfshuffler:856
+msgid "Bottom"
+msgstr "Lent"
+
+#: pdfshuffler:874
+msgid "Crop Selected Pages"
+msgstr "A kiválasztott oldalak levágása"
+
+#: pdfshuffler:882
+msgid "Crop Margins"
+msgstr "Margók levágása"
+
+#: pdfshuffler:889
+#, fuzzy, python-format
+msgid "% of width"
+msgstr "% szélesség"
+
+#: pdfshuffler:889
+#, fuzzy, python-format
+msgid "% of height"
+msgstr "% magasság"
+
+#: pdfshuffler:927
+msgid "Dialog closed"
+msgstr "Párbeszédablak bezárva"
+
+#: pdfshuffler:941
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files.Developed using GTK+ and Python"
+msgstr "A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. GTK+ és Python segítségével írták"
+
+#: pdfshuffler:1017
+#, python-format
+msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
+msgstr "Bélyegképek előállítása... [%(i1)s/%(i2)s]"
+
+#: pdfshuffler:1025
+#, python-format
+msgid "Rendering thumbnails... [%(i1)s/%(i1)s]"
+msgstr "Bélyegképek előállítása... [%(i1)s/%(i1)s]"
+
+#: data/pdfshuffler.ui.h:1
+msgid "Crop"
+msgstr "Levágás"
+
+#: data/pdfshuffler.ui.h:2
+msgid "Delete"
+msgstr "Törlés"
+
+#: data/pdfshuffler.ui.h:3
+msgid "Open"
+msgstr "Megnyitás"
+
+#: data/pdfshuffler.ui.h:4
+msgid "Rotate left"
+msgstr "Forgatás balra"
+
+#: data/pdfshuffler.ui.h:5
+msgid "Rotate right"
+msgstr "Forgatás jobbra"
+
+#: data/pdfshuffler.ui.h:6
+msgid "Save"
+msgstr "Mentés"
+
+#: data/pdfshuffler.ui.h:7
+msgid "Save as"
+msgstr "Mentés másként"
+
+#: data/pdfshuffler.ui.h:8
+msgid "Zoom in"
+msgstr "Nagyítás"
+
+#: data/pdfshuffler.ui.h:9
+msgid "Zoom out"
+msgstr "Kicsinyítés"
+
+#: data/pdfshuffler.ui.h:10
+msgid "_Edit"
+msgstr "_Szerkesztés"
+
+#: data/pdfshuffler.ui.h:11
+msgid "_File"
+msgstr "_Fájl"
+
+#: data/pdfshuffler.ui.h:12
+msgid "_Help"
+msgstr "_Súgó"
+
+#: data/pdfshuffler.ui.h:13
+msgid "_View"
+msgstr "_Nézet"
+
