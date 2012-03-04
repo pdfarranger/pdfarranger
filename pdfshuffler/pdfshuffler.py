@@ -991,8 +991,8 @@ class PdfShuffler:
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name('pdfshuffler')
         about_dialog.set_license(LICENSE)
-        about_dialog.connect('response', lambda w, a: about_dialog.destroy())
-        about_dialog.connect('delete_event', lambda w, a: about_dialog.destroy())
+        about_dialog.connect('response', lambda w, *args: w.destroy())
+        about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
 
 
