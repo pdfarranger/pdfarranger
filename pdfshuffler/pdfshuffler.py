@@ -175,7 +175,6 @@ class PdfShuffler:
             scale=4, rotation=6, cropL=7, cropR=8, cropT=9, cropB=10,
             width=11, height=12)
 
-#        self.iconview.set_text_column(0)
         self.celltxt = gtk.CellRendererText()
         self.celltxt.set_property('width', self.iv_col_width)
         self.celltxt.set_property('wrap-width', self.iv_col_width)
@@ -199,12 +198,6 @@ class PdfShuffler:
         self.iconview.connect('drag_end', self.iv_dnd_leave_end)
         self.iconview.connect('button_press_event', self.iv_button_press_event)
 
-        style = self.iconview.get_style().copy()
-        style_sw = self.sw.get_style()
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            style.base[state] = style_sw.bg[gtk.STATE_NORMAL]
-        self.iconview.set_style(style)
-
         align.add(self.iconview)
 
         # Progress bar
@@ -216,6 +209,12 @@ class PdfShuffler:
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
         self.progress_bar.hide_all()
+
+        # Change iconview color background
+        style = self.sw.get_style().copy()
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            style.base[state] = style.bg[gtk.STATE_NORMAL]
+        self.iconview.set_style(style)
 
         # Creating the popup menu
         self.popup = gtk.Menu()
