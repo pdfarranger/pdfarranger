@@ -5,7 +5,7 @@
 
  PdfShuffler 0.6.0 - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
- Copyright (C) 2008-2011 Konstantinos Poulios
+ Copyright (C) 2008-2012 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
 
  This file is part of PdfShuffler.
@@ -27,9 +27,9 @@
 """
 
 import os
-import shutil       #needed for file operations like whole directory deletion
-import sys          #needed for proccessing of command line args
-import urllib       #needed to parse filename information passed by DnD
+import shutil       # for file operations like whole directory deletion
+import sys          # for proccessing of command line args
+import urllib       # for parsing filename information passed by DnD
 import threading
 import tempfile
 from copy import copy
@@ -65,15 +65,15 @@ except:
     print('No version of PyGTK was found on your system.')
     sys.exit(1)
 
-import gobject      #to use custom signals
-import pango        #to adjust the text alignment in CellRendererText
-import gio          #to inquire mime types information
+import gobject      # for using custom signals
+import pango        # for adjusting the text alignment in CellRendererText
+import gio          # for inquiring mime types information
 import cairo
 
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
-from cairorendering import CellRendererImage, CairoImage
+from pdfshuffler_iconview import CellRendererImage, CairoImage
 gobject.type_register(CellRendererImage)
 
 import time
@@ -130,7 +130,6 @@ class PdfShuffler:
         self.window.set_default_size(self.prefs['window width'],
                                      self.prefs['window height'])
         self.window.connect('delete_event', self.close_application)
-        self.window.show_all()
 
         # Create a scrolled window to hold the thumbnails-container
         self.sw = self.uiXML.get_object('scrolledwindow')
@@ -199,7 +198,6 @@ class PdfShuffler:
         self.iconview.connect('drag_leave', self.iv_dnd_leave_end)
         self.iconview.connect('drag_end', self.iv_dnd_leave_end)
         self.iconview.connect('button_press_event', self.iv_button_press_event)
-        self.iv_auto_scroll_direction = 0
 
         style = self.iconview.get_style().copy()
         style_sw = self.sw.get_style()
@@ -242,6 +240,7 @@ class PdfShuffler:
         self.export_directory = os.getenv('HOME')
         self.import_directory = self.export_directory
         self.nfile = 0
+        self.iv_auto_scroll_direction = 0
         self.iv_auto_scroll_timer = None
         self.pdfqueue = []
 
@@ -294,7 +293,7 @@ class PdfShuffler:
             if row[1].surface:
                 cnt_finished += 1
         fraction = float(cnt_finished)/float(cnt_all)
-        
+
         self.progress_bar.set_fraction(fraction)
         self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
                                    % {'i1' : cnt_finished, 'i2' : cnt_all})
@@ -347,7 +346,8 @@ class PdfShuffler:
         if not self.model.get_iter_first(): #just checking if model is empty
             return
 
-        max_w = 10 + int(max(row[4]*row[11]*(1.-row[7]-row[8]) for row in self.model))
+        max_w = 10 + int(max(row[4]*row[11]*(1.-row[7]-row[8]) \
+                             for row in self.model))
         if max_w != self.iv_col_width:
             self.iv_col_width = max_w
             self.celltxt.set_property('width', self.iv_col_width)
@@ -542,7 +542,7 @@ class PdfShuffler:
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
 
-        chooser = gtk.FileChooserDialog(title=_('_Import...'),
+        chooser = gtk.FileChooserDialog(title=_('Import...'),
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                         buttons=(gtk.STOCK_CANCEL,
                                                   gtk.RESPONSE_CANCEL,
