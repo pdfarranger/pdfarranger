@@ -25,11 +25,12 @@ import os
 import re
 from distutils.core import setup
 
-data_files=[('share/applications/pdfshuffler', ['data/pdfshuffler.ui']),
+data_files=[('share/pdfshuffler', ['data/pdfshuffler.ui']),
             ('share/applications', ['data/pdfshuffler.desktop']),
             ('share/man/man1', ['doc/pdfshuffler.1']),
-            ('share/pixmaps', ['data/pdfshuffler.svg']),
-            ('share/pixmaps', ['data/pdfshuffler.png']) ]
+            ('share/pixmaps', ['data/pdfshuffler.png']),
+            ('share/pdfshuffler/icons/hicolor/scalable',
+                ['data/pdfshuffler.svg']) ]
 
 
 # Freshly generate .mo from .po, add to data_files:

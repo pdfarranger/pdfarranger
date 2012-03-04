@@ -112,11 +112,21 @@ class PdfShuffler:
         # Import the user interface file, trying different possible locations
         ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
         if not os.path.exists(ui_path):
-            ui_path = '/usr/local/share/applications/pdfshuffler/pdfshuffler.ui'
-            if not os.path.exists(ui_path):
-                parent_dir = os.path.dirname( \
-                             os.path.dirname(os.path.realpath(__file__)))
-                ui_path = os.path.join(parent_dir, 'data', 'pdfshuffler.ui')
+            ui_path = '/usr/local/share/pdfshuffler/pdfshuffler.ui'
+
+        if not os.path.exists(ui_path):
+            parent_dir = os.path.dirname( \
+                         os.path.dirname(os.path.realpath(__file__)))
+            ui_path = os.path.join(parent_dir, 'data', 'pdfshuffler.ui')
+
+        if not os.path.exists(ui_path):
+            head, tail = os.path.split(parent_dir)
+            while tail != 'lib' and tail != '':
+                head, tail = os.path.split(head)
+            if tail == 'lib':
+                ui_path = os.path.join(head, 'share', 'pdfshuffler', \
+                                       'pdfshuffler.ui')
+
         self.uiXML = gtk.Builder()
         self.uiXML.add_from_file(ui_path)
         self.uiXML.connect_signals(self)
