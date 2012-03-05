@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-25 23:16+0200\n"
+"POT-Creation-Date: 2012-03-05 07:32+0100\n"
 "PO-Revision-Date: 2011-11-25 18:26+0100\n"
 "Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: SuliX Support Team <support@sulix.hu>\n"
@@ -19,147 +19,137 @@ msgstr ""
 "X-Poedit-Country: HUNGARY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: pdfshuffler:102
+#: pdfshuffler/pdfshuffler.py:110
 msgid "Can't load icon. Application is not installed correctly."
-msgstr "Az ikon betöltése nem sikerült, az alkalmazás nincs megfelelően telepítve."
+msgstr ""
+"Az ikon betöltése nem sikerült, az alkalmazás nincs megfelelően telepítve."
 
-#: pdfshuffler:213
+#: pdfshuffler/pdfshuffler.py:231
 msgid "_Rotate Right"
 msgstr "Forgatás _Jobbra"
 
-#: pdfshuffler:214
+#: pdfshuffler/pdfshuffler.py:232
 msgid "Rotate _Left"
 msgstr "Forgatás _Balra"
 
-#: pdfshuffler:215
+#: pdfshuffler/pdfshuffler.py:233
 msgid "C_rop..."
 msgstr "_Vágás..."
 
-#: pdfshuffler:274
+#: pdfshuffler/pdfshuffler.py:235
+#, fuzzy
+msgid "_Export selection..."
+msgstr "Exportálás..."
+
+#: pdfshuffler/pdfshuffler.py:293
 msgid "No document"
 msgstr "Nincs dokumentum"
 
-#: pdfshuffler:276
+#: pdfshuffler/pdfshuffler.py:295
 msgid "Several documents"
 msgstr "Néhány dokumentum"
 
-#: pdfshuffler:377
-msgid "page"
-msgstr "oldal"
-
-#: pdfshuffler:405
-msgid "Export ..."
-msgstr "Exportálás..."
-
-#: pdfshuffler:414
-#: pdfshuffler:521
-msgid "PDF files"
-msgstr "PDF fájlok"
-
-#: pdfshuffler:419
-#: pdfshuffler:516
-msgid "All files"
-msgstr "Minden fájl"
-
-#: pdfshuffler:438
-#, python-format
-msgid "Error writing file: %s"
-msgstr "Nem sikerült írni a következő fájlba: %s"
-
-#: pdfshuffler:456
-#, python-format
-msgid "File %s is encrypted."
-msgstr "A következő fájl titkosított: %s."
-
-#: pdfshuffler:457
-msgid "Support for such files has not been implemented yet."
-msgstr "Az ilyen típusú fájlok jelenleg még nem támogatottak."
-
-#: pdfshuffler:458
-msgid "File export failed."
-msgstr "A fájl exportálása nem sikerült"
-
-#: pdfshuffler:500
-msgid "exporting to:"
-msgstr "exportálás ide:"
-
-#: pdfshuffler:506
-msgid "_Import..."
-msgstr "_Importálás..."
-
-#: pdfshuffler:539
-msgid "OpenDocument not supported yet!"
-msgstr "Az OpenDocument formátum még nem támogatott!"
-
-#: pdfshuffler:541
-msgid "Image file not supported yet!"
-msgstr "A képfájl még nem támogatott!"
-
-#: pdfshuffler:543
-msgid "File type not supported!"
-msgstr "A fájltípus nem támogatott!"
-
-#: pdfshuffler:545
-#, python-format
-msgid "File %s does not exist"
-msgstr "A fájl nem létezik: %s"
-
-#: pdfshuffler:547
-msgid "Closed, no files selected"
-msgstr "Bezárva, nincs fájl kiválasztva"
-
-#: pdfshuffler:855
-msgid "Left"
-msgstr "Balra"
-
-#: pdfshuffler:855
-msgid "Right"
-msgstr "Jobbra"
-
-#: pdfshuffler:856
-msgid "Top"
-msgstr "Fent"
-
-#: pdfshuffler:856
-msgid "Bottom"
-msgstr "Lent"
-
-#: pdfshuffler:874
-msgid "Crop Selected Pages"
-msgstr "A kiválasztott oldalak levágása"
-
-#: pdfshuffler:882
-msgid "Crop Margins"
-msgstr "Margók levágása"
-
-#: pdfshuffler:889
-#, fuzzy, python-format
-msgid "% of width"
-msgstr "% szélesség"
-
-#: pdfshuffler:889
-#, fuzzy, python-format
-msgid "% of height"
-msgstr "% magasság"
-
-#: pdfshuffler:927
-msgid "Dialog closed"
-msgstr "Párbeszédablak bezárva"
-
-#: pdfshuffler:941
-#, python-format
-msgid "%s is a tool for rearranging and modifying PDF files.Developed using GTK+ and Python"
-msgstr "A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. GTK+ és Python segítségével írták"
-
-#: pdfshuffler:1017
+#: pdfshuffler/pdfshuffler.py:311
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Bélyegképek előállítása... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler:1025
+#: pdfshuffler/pdfshuffler.py:427
+msgid "page"
+msgstr "oldal"
+
+#: pdfshuffler/pdfshuffler.py:452
+msgid "Export ..."
+msgstr "Exportálás..."
+
+#: pdfshuffler/pdfshuffler.py:461 pdfshuffler/pdfshuffler.py:577
+msgid "PDF files"
+msgstr "PDF fájlok"
+
+#: pdfshuffler/pdfshuffler.py:466 pdfshuffler/pdfshuffler.py:572
+msgid "All files"
+msgstr "Minden fájl"
+
+#: pdfshuffler/pdfshuffler.py:509
+#, fuzzy, python-format
+msgid ""
+"File %s is encrypted.\n"
+"Support for encrypted files has not been implemented yet.\n"
+"File export failed."
+msgstr "Az ilyen típusú fájlok jelenleg még nem támogatottak."
+
+#: pdfshuffler/pdfshuffler.py:562
+#, fuzzy
+msgid "Import..."
+msgstr "_Importálás..."
+
+#: pdfshuffler/pdfshuffler.py:595
+msgid "OpenDocument not supported yet!"
+msgstr "Az OpenDocument formátum még nem támogatott!"
+
+#: pdfshuffler/pdfshuffler.py:597
+msgid "Image file not supported yet!"
+msgstr "A képfájl még nem támogatott!"
+
+#: pdfshuffler/pdfshuffler.py:599
+msgid "File type not supported!"
+msgstr "A fájltípus nem támogatott!"
+
+#: pdfshuffler/pdfshuffler.py:601
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i1)s]"
-msgstr "Bélyegképek előállítása... [%(i1)s/%(i1)s]"
+msgid "File %s does not exist"
+msgstr "A fájl nem létezik: %s"
+
+#: pdfshuffler/pdfshuffler.py:603
+msgid "Closed, no files selected"
+msgstr "Bezárva, nincs fájl kiválasztva"
+
+#: pdfshuffler/pdfshuffler.py:912
+msgid "Left"
+msgstr "Balra"
+
+#: pdfshuffler/pdfshuffler.py:912
+msgid "Right"
+msgstr "Jobbra"
+
+#: pdfshuffler/pdfshuffler.py:913
+msgid "Top"
+msgstr "Fent"
+
+#: pdfshuffler/pdfshuffler.py:913
+msgid "Bottom"
+msgstr "Lent"
+
+#: pdfshuffler/pdfshuffler.py:931
+msgid "Crop Selected Pages"
+msgstr "A kiválasztott oldalak levágása"
+
+#: pdfshuffler/pdfshuffler.py:939
+msgid "Crop Margins"
+msgstr "Margók levágása"
+
+#: pdfshuffler/pdfshuffler.py:946
+#, fuzzy, python-format
+msgid "% of width"
+msgstr "% szélesség"
+
+#: pdfshuffler/pdfshuffler.py:946
+#, fuzzy, python-format
+msgid "% of height"
+msgstr "% magasság"
+
+#: pdfshuffler/pdfshuffler.py:984
+msgid "Dialog closed"
+msgstr "Párbeszédablak bezárva"
+
+#: pdfshuffler/pdfshuffler.py:998
+#, fuzzy, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. "
+"GTK+ és Python segítségével írták"
 
 #: data/pdfshuffler.ui.h:1
 msgid "Crop"
@@ -170,46 +160,68 @@ msgid "Delete"
 msgstr "Törlés"
 
 #: data/pdfshuffler.ui.h:3
-msgid "Open"
-msgstr "Megnyitás"
+#, fuzzy
+msgid "Import"
+msgstr "_Importálás..."
 
 #: data/pdfshuffler.ui.h:4
+msgid "Open a file and append it to the current document"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:5
 msgid "Rotate left"
 msgstr "Forgatás balra"
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfshuffler.ui.h:6
 msgid "Rotate right"
 msgstr "Forgatás jobbra"
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfshuffler.ui.h:7
 msgid "Save"
 msgstr "Mentés"
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfshuffler.ui.h:8
 msgid "Save as"
 msgstr "Mentés másként"
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfshuffler.ui.h:9
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfshuffler.ui.h:10
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfshuffler.ui.h:11
 msgid "_Edit"
 msgstr "_Szerkesztés"
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfshuffler.ui.h:12
 msgid "_File"
 msgstr "_Fájl"
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfshuffler.ui.h:13
 msgid "_Help"
 msgstr "_Súgó"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfshuffler.ui.h:14
 msgid "_View"
 msgstr "_Nézet"
 
+#~ msgid "Error writing file: %s"
+#~ msgstr "Nem sikerült írni a következő fájlba: %s"
+
+#~ msgid "File %s is encrypted."
+#~ msgstr "A következő fájl titkosított: %s."
+
+#~ msgid "File export failed."
+#~ msgstr "A fájl exportálása nem sikerült"
+
+#~ msgid "exporting to:"
+#~ msgstr "exportálás ide:"
+
+#~ msgid "Rendering thumbnails... [%(i1)s/%(i1)s]"
+#~ msgstr "Bélyegképek előállítása... [%(i1)s/%(i1)s]"
+
+#~ msgid "Open"
+#~ msgstr "Megnyitás"

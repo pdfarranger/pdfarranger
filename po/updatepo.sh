@@ -23,6 +23,5 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Make translation files
-intltool-extract --type=gettext/glade data/pdfshuffler.ui
-xgettext --language=Python --keyword=_ --keyword=N_ --output=po/pdfshuffler.pot pdfshuffler/*.py data/pdfshuffler.ui.h
+# Update translation files
+find ./po -type f -iname "*.po" -exec msgmerge -U {} po/pdfshuffler.pot \;

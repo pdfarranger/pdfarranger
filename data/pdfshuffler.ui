@@ -24,7 +24,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_import">
-                        <property name="label">gtk-open</property>
+                        <property name="label">gtk-add</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>
@@ -243,13 +243,15 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkToolButton" id="toolbutton_open">
+                  <object class="GtkToolButton" id="toolbutton_import">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Open a file and append it to the current document</property>
                     <property name="use_action_appearance">False</property>
-                    <property name="label" translatable="yes">Open</property>
+                    <property name="label" translatable="yes">Import</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-open</property>
+                    <property name="stock_id">gtk-add</property>
                     <signal name="clicked" handler="on_action_add_doc_activate" swapped="no"/>
                   </object>
                   <packing>
@@ -300,6 +302,8 @@
                   <object class="GtkToolButton" id="toolbutton_zoom_in">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Zoom in</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Zoom in</property>
                     <property name="use_underline">True</property>
@@ -315,6 +319,8 @@
                   <object class="GtkToolButton" id="toolbutton_zoom_out">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Zoom out</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Zoom out</property>
                     <property name="use_underline">True</property>
@@ -340,6 +346,8 @@
                   <object class="GtkToolButton" id="toolbutton_rotate_left">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Rotate left</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Rotate left</property>
                     <property name="use_underline">True</property>
@@ -355,6 +363,8 @@
                   <object class="GtkToolButton" id="toolbutton_rotate_right">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Rotate right</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Rotate right</property>
                     <property name="use_underline">True</property>
@@ -370,6 +380,8 @@
                   <object class="GtkToolButton" id="toolbutton_delete">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Delete</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Delete</property>
                     <property name="use_underline">True</property>

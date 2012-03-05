@@ -995,7 +995,7 @@ class PdfShuffler:
         about_dialog.set_name(APPNAME)
         about_dialog.set_version(VERSION)
         about_dialog.set_comments(_(
-            '%s is a tool for rearranging and modifying PDF files.' \
+            '%s is a tool for rearranging and modifying PDF files. ' \
             'Developed using GTK+ and Python') % APPNAME)
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label(WEBSITE)
