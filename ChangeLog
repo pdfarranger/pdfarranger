@@ -1,8 +1,18 @@
 Version 0.6:
 --------------
 
+* Cairo based rendering.
+
+* Zooming support.
+
+* Progressbar indicating loading of files.
+
+* New user interface with a conventional menubar and toolbar.
+
 * Export only selected pages option in the right-click menu from
   Alexander Hirzel.
+
+* Hungarian, Japanese and Chinese translations.
 
 
 Version 0.5.1:

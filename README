@@ -1,5 +1,5 @@
 
-PDF-Shuffler 0.5.1
+PDF-Shuffler 0.6
 ------------------
 
 This is the latest release of PDF-Shuffler, a simple pyGTK utility to merge,
@@ -8,7 +8,7 @@ individual pages of a pdf document.
 
 PDF-Shuffler requires python-poppler and version 1.10 or newer of python-pypdf.
 
-PDF-Shuffler is written in Python using PyGTK. It is released under the GNU GPL-2.
+PDF-Shuffler is written in Python using PyGTK. It is released under the GNU GPL-3.
 
 In order to install run:
 
@@ -20,13 +20,16 @@ as superuser.
 What's new in this version:
 ---------------------------
 
-* Many bug fixes (3011515, 3027933, 3030180).
+* Cairo based rendering.
 
-* Czech translation.
+* Zooming support.
 
+* Progressbar indicating loading of files.
 
-Known issues with this release:
--------------------------------
+* New user interface with a conventional menubar and toolbar.
 
-* http://bugzilla.gnome.org/show_bug.cgi?id=570152. A workaround for this
-  problem has been included.
+* Export only selected pages option in the right-click menu from
+  Alexander Hirzel.
+
+* Hungarian, Japanese and Chinese translations.
+
