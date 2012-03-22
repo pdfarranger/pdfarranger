@@ -272,6 +272,7 @@ class PdfShuffler:
     def render(self):
         if self.rendering_thread:
             self.rendering_thread.quit = True
+            self.rendering_thread.join()
         self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
@@ -380,8 +381,7 @@ class PdfShuffler:
 
         if self.rendering_thread:
             self.rendering_thread.quit = True
-            while self.rendering_thread.isAlive():
-                time.sleep(0.5)
+            self.rendering_thread.join()
 
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
