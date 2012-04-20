@@ -73,7 +73,7 @@ import cairo
 import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
-from pdfshuffler_iconview import CellRendererImage, CairoImage
+from pdfshuffler_iconview import CellRendererImage
 gobject.type_register(CellRendererImage)
 
 import time
@@ -160,7 +160,8 @@ class PdfShuffler:
 
         # Create ListStore model and IconView
         self.model = gtk.ListStore(str,         # 0.Text descriptor
-                                   CairoImage,  # 1.Cached page image
+                                   gobject.TYPE_PYOBJECT,
+                                                # 1.Cached page image
                                    int,         # 2.Document number
                                    int,         # 3.Page number
                                    float,       # 4.Scale
@@ -304,7 +305,7 @@ class PdfShuffler:
         cnt_all = 0
         for row in self.model:
             cnt_all += 1
-            if row[1].surface:
+            if row[1]:
                 cnt_finished += 1
         fraction = float(cnt_finished)/float(cnt_all)
 
@@ -321,8 +322,10 @@ class PdfShuffler:
   
     def update_thumbnail(self, object, num, thumbnail):
         row = self.model[num]
+        gtk.gdk.threads_enter()
         row[4] = self.zoom_scale
         row[1] = thumbnail
+        gtk.gdk.threads_leave()
 
     def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
@@ -428,7 +431,7 @@ class PdfShuffler:
             page = pdfdoc.document.get_page(npage-1)
             w, h = page.get_size()
             iter = self.model.append((descriptor,         # 0
-                                      CairoImage(),       # 1
+                                      None,               # 1
                                       pdfdoc.nfile,       # 2
                                       npage,              # 3
                                       self.zoom_scale,    # 4
@@ -1045,15 +1048,15 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
         for idx, row in enumerate(self.model):
             if self.quit:
                 return
-            if not row[1].surface:
+            if not row[1]:
                 try:
                     nfile = row[2]
                     npage = row[3]
                     pdfdoc = self.pdfqueue[nfile - 1]
                     page = pdfdoc.document.get_page(npage-1)
                     w, h = page.get_size()
-                    thumbnail = CairoImage(int(w), int(h))
-                    cr = cairo.Context(thumbnail.surface)
+                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w), int(h))
+                    cr = cairo.Context(thumbnail)
                     page.render(cr)
                     time.sleep(0.003)
                     gobject.idle_add(self.emit,'update_thumbnail', idx, thumbnail,

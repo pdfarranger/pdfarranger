@@ -34,7 +34,7 @@ from math import pi as M_PI
 
 class CellRendererImage(gtk.GenericCellRenderer):
     __gproperties__ = {
-            "image": (gobject.TYPE_OBJECT, "Image", "Image",
+            "image": (gobject.TYPE_PYOBJECT, "Image", "Image",
                       gobject.PARAM_READWRITE),
             "width": (gobject.TYPE_DOUBLE, "Width", "Width",
                       0., 1.e4, 0., gobject.PARAM_READWRITE),
@@ -63,12 +63,12 @@ class CellRendererImage(gtk.GenericCellRenderer):
 
         rotation = int(self.rotation) % 360
         rotation = ((rotation + 45) / 90) * 90
-        if not self.image.surface:
+        if not self.image:
             w0 = w1 = self.width
             h0 = h1 = self.height
         else:
-            w0 = self.image.surface.get_width()
-            h0 = self.image.surface.get_height()
+            w0 = self.image.get_width()
+            h0 = self.image.get_height()
             if rotation == 90 or rotation == 270:
                 w1, h1 = h0, w0
             else:
@@ -90,7 +90,7 @@ class CellRendererImage(gtk.GenericCellRenderer):
 
     def on_render(self, window, widget, background_area, cell_area, \
                  expose_area, flags):
-        if not self.image.surface:
+        if not self.image:
             return
 
         w0,h0,w1,h1,w2,h2,rotation = self.get_geometry()
@@ -136,7 +136,7 @@ class CellRendererImage(gtk.GenericCellRenderer):
             cr.rotate(rotation * M_PI / 180)
             cr.translate(-w0/2,-h0/2)
 
-        cr.set_source_surface(self.image.surface)
+        cr.set_source_surface(self.image)
         cr.paint()
 
     def on_get_size(self, widget, cell_area=None):
@@ -154,15 +154,5 @@ class CellRendererImage(gtk.GenericCellRenderer):
         w += 2 * self.get_property('xpad')
         h += 2 * self.get_property('ypad')
         return int(x), int(y), w, h
-
-
-class CairoImage(gobject.GObject):
-
-    def __init__(self, width=0, height=0):
-        gobject.GObject.__init__(self)
-        if width > 0 and height > 0:
-            self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-        else:
-            self.surface = None
 
 
