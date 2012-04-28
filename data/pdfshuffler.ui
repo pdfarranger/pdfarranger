@@ -36,9 +36,9 @@
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_save">
                         <property name="label">gtk-save</property>
-                        <property name="visible">True</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
@@ -92,6 +92,7 @@
                         <property name="label">gtk-undo</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
@@ -102,6 +103,7 @@
                         <property name="label">gtk-redo</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
@@ -111,6 +113,7 @@
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem_edit1">
                         <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                       </object>
                     </child>
                     <child>
@@ -261,8 +264,9 @@
                 </child>
                 <child>
                   <object class="GtkToolButton" id="toolbutton_save">
-                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
                     <property name="use_action_appearance">False</property>
                     <property name="label" translatable="yes">Save</property>
                     <property name="use_underline">True</property>
