@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-05 07:32+0100\n"
+"POT-Creation-Date: 2012-04-28 23:13+0200\n"
 "PO-Revision-Date: 2012-03-05 07:49+0100\n"
 "Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
@@ -16,56 +16,54 @@ msgstr ""
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:231
+#: pdfshuffler/pdfshuffler.py:233
 msgid "_Rotate Right"
 msgstr "_Rechts drehen"
 
-#: pdfshuffler/pdfshuffler.py:232
+#: pdfshuffler/pdfshuffler.py:234
 msgid "Rotate _Left"
 msgstr "_Links drehen"
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:235
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:237
 msgid "_Export selection..."
 msgstr "Markierte Seiten _Exportieren ..."
 
-#: pdfshuffler/pdfshuffler.py:293
+#: pdfshuffler/pdfshuffler.py:299
 #, fuzzy
 msgid "No document"
 msgstr "Keine Datei"
 
-#: pdfshuffler/pdfshuffler.py:295
+#: pdfshuffler/pdfshuffler.py:301
 #, fuzzy
 msgid "Several documents"
 msgstr "Mehrere Dateien"
 
-#: pdfshuffler/pdfshuffler.py:311
+#: pdfshuffler/pdfshuffler.py:317
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:427
+#: pdfshuffler/pdfshuffler.py:435
 msgid "page"
 msgstr "Seite"
 
-#: pdfshuffler/pdfshuffler.py:452
+#: pdfshuffler/pdfshuffler.py:461
 msgid "Export ..."
 msgstr "Exportieren ..."
 
-#: pdfshuffler/pdfshuffler.py:461
-#: pdfshuffler/pdfshuffler.py:577
+#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
 msgid "PDF files"
 msgstr "PDF Dateien"
 
-#: pdfshuffler/pdfshuffler.py:466
-#: pdfshuffler/pdfshuffler.py:572
+#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfshuffler/pdfshuffler.py:509
+#: pdfshuffler/pdfshuffler.py:518
 #, fuzzy, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -73,72 +71,74 @@ msgid ""
 "File export failed."
 msgstr "Solche Dateien werden noch nicht unterstützt."
 
-#: pdfshuffler/pdfshuffler.py:562
+#: pdfshuffler/pdfshuffler.py:571
 msgid "Import..."
 msgstr "Importieren..."
 
-#: pdfshuffler/pdfshuffler.py:595
+#: pdfshuffler/pdfshuffler.py:604
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument-Dateien werden noch nicht unterstützt!"
 
-#: pdfshuffler/pdfshuffler.py:597
+#: pdfshuffler/pdfshuffler.py:606
 msgid "Image file not supported yet!"
 msgstr "Bilddateien werden noch nicht unterstützt!"
 
-#: pdfshuffler/pdfshuffler.py:599
+#: pdfshuffler/pdfshuffler.py:608
 msgid "File type not supported!"
 msgstr "Dateityp wird nicht unterstützt!"
 
-#: pdfshuffler/pdfshuffler.py:601
+#: pdfshuffler/pdfshuffler.py:610
 #, python-format
 msgid "File %s does not exist"
 msgstr "Die Datei %s existiert nicht"
 
-#: pdfshuffler/pdfshuffler.py:603
+#: pdfshuffler/pdfshuffler.py:612
 msgid "Closed, no files selected"
 msgstr "Geschlossen, keine Datei wurde ausgewählt "
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Left"
 msgstr "Links"
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Top"
 msgstr "Oben"
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Bottom"
 msgstr "Unten"
 
-#: pdfshuffler/pdfshuffler.py:931
+#: pdfshuffler/pdfshuffler.py:940
 msgid "Crop Selected Pages"
 msgstr "Markierte Seiten zuschneiden"
 
-#: pdfshuffler/pdfshuffler.py:939
+#: pdfshuffler/pdfshuffler.py:948
 msgid "Crop Margins"
 msgstr "Seitenränder zuschneiden"
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of width"
 msgstr "% der Seitenbreite"
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of height"
 msgstr "% der Seitenhöhe"
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:993
 msgid "Dialog closed"
 msgstr "Dialogfenster wurde geschlossen"
 
-#: pdfshuffler/pdfshuffler.py:998
+#: pdfshuffler/pdfshuffler.py:1007
 #, python-format
-msgid "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ and Python"
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
 msgstr ""
 
 #: data/pdfshuffler.ui.h:1

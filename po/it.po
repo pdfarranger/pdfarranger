@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-05 07:32+0100\n"
+"POT-Creation-Date: 2012-04-28 23:13+0200\n"
 "PO-Revision-Date: 2009-06-25 14:11+0100\n"
 "Last-Translator: netcelli <netcelli@dchublist.com>\n"
 "Language-Team: netcelli <netcelli@gmail.com>\n"
@@ -17,53 +17,53 @@ msgstr ""
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:231
+#: pdfshuffler/pdfshuffler.py:233
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:232
+#: pdfshuffler/pdfshuffler.py:234
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:235
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:237
 #, fuzzy
 msgid "_Export selection..."
 msgstr "Esporta ..."
 
-#: pdfshuffler/pdfshuffler.py:293
+#: pdfshuffler/pdfshuffler.py:299
 msgid "No document"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:295
+#: pdfshuffler/pdfshuffler.py:301
 msgid "Several documents"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:311
+#: pdfshuffler/pdfshuffler.py:317
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:427
+#: pdfshuffler/pdfshuffler.py:435
 msgid "page"
 msgstr "pagina"
 
-#: pdfshuffler/pdfshuffler.py:452
+#: pdfshuffler/pdfshuffler.py:461
 msgid "Export ..."
 msgstr "Esporta ..."
 
-#: pdfshuffler/pdfshuffler.py:461 pdfshuffler/pdfshuffler.py:577
+#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
 msgid "PDF files"
 msgstr "File PDF"
 
-#: pdfshuffler/pdfshuffler.py:466 pdfshuffler/pdfshuffler.py:572
+#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
 msgid "All files"
 msgstr "Tutti i file"
 
-#: pdfshuffler/pdfshuffler.py:509
+#: pdfshuffler/pdfshuffler.py:518
 #, fuzzy, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -71,72 +71,72 @@ msgid ""
 "File export failed."
 msgstr "Il supporto per questo tipo di file non è ancora stato implementato"
 
-#: pdfshuffler/pdfshuffler.py:562
+#: pdfshuffler/pdfshuffler.py:571
 #, fuzzy
 msgid "Import..."
 msgstr "Importa ..."
 
-#: pdfshuffler/pdfshuffler.py:595
+#: pdfshuffler/pdfshuffler.py:604
 msgid "OpenDocument not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:597
+#: pdfshuffler/pdfshuffler.py:606
 msgid "Image file not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:599
+#: pdfshuffler/pdfshuffler.py:608
 msgid "File type not supported!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:601
+#: pdfshuffler/pdfshuffler.py:610
 #, python-format
 msgid "File %s does not exist"
 msgstr "Il file %s non esiste"
 
-#: pdfshuffler/pdfshuffler.py:603
+#: pdfshuffler/pdfshuffler.py:612
 msgid "Closed, no files selected"
 msgstr "Chiuso, nessun file selezionato"
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Left"
 msgstr "Sinistra"
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Right"
 msgstr "Destra"
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Top"
 msgstr "Alto"
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Bottom"
 msgstr "Basso"
 
-#: pdfshuffler/pdfshuffler.py:931
+#: pdfshuffler/pdfshuffler.py:940
 #, fuzzy
 msgid "Crop Selected Pages"
 msgstr "Taglia pagina(e) seleziona(e)"
 
-#: pdfshuffler/pdfshuffler.py:939
+#: pdfshuffler/pdfshuffler.py:948
 msgid "Crop Margins"
 msgstr "Taglia margini"
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of width"
 msgstr "% in larghezza"
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of height"
 msgstr "% in altezza"
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:993
 msgid "Dialog closed"
 msgstr "FInestra di dialogo chiusa"
 
-#: pdfshuffler/pdfshuffler.py:998
+#: pdfshuffler/pdfshuffler.py:1007
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

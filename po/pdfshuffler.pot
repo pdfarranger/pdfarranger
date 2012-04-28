@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-05 07:32+0100\n"
+"POT-Creation-Date: 2012-04-28 23:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,52 +21,52 @@ msgstr ""
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:231
+#: pdfshuffler/pdfshuffler.py:233
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:232
+#: pdfshuffler/pdfshuffler.py:234
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:235
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:237
 msgid "_Export selection..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:293
+#: pdfshuffler/pdfshuffler.py:299
 msgid "No document"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:295
+#: pdfshuffler/pdfshuffler.py:301
 msgid "Several documents"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:311
+#: pdfshuffler/pdfshuffler.py:317
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:427
+#: pdfshuffler/pdfshuffler.py:435
 msgid "page"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:452
+#: pdfshuffler/pdfshuffler.py:461
 msgid "Export ..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:461 pdfshuffler/pdfshuffler.py:577
+#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
 msgid "PDF files"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:466 pdfshuffler/pdfshuffler.py:572
+#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
 msgid "All files"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:509
+#: pdfshuffler/pdfshuffler.py:518
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -74,70 +74,70 @@ msgid ""
 "File export failed."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:562
+#: pdfshuffler/pdfshuffler.py:571
 msgid "Import..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:595
+#: pdfshuffler/pdfshuffler.py:604
 msgid "OpenDocument not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:597
+#: pdfshuffler/pdfshuffler.py:606
 msgid "Image file not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:599
+#: pdfshuffler/pdfshuffler.py:608
 msgid "File type not supported!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:601
+#: pdfshuffler/pdfshuffler.py:610
 #, python-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:603
+#: pdfshuffler/pdfshuffler.py:612
 msgid "Closed, no files selected"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:912
+#: pdfshuffler/pdfshuffler.py:921
 msgid "Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Top"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:913
+#: pdfshuffler/pdfshuffler.py:922
 msgid "Bottom"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:931
+#: pdfshuffler/pdfshuffler.py:940
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:939
+#: pdfshuffler/pdfshuffler.py:948
 msgid "Crop Margins"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of width"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:946
+#: pdfshuffler/pdfshuffler.py:955
 #, python-format
 msgid "% of height"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:993
 msgid "Dialog closed"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:998
+#: pdfshuffler/pdfshuffler.py:1007
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
