@@ -172,7 +172,8 @@ class PdfShuffler:
                                    float,       # 9.Crop top
                                    float,       # 10.Crop bottom
                                    int,         # 11.Page width
-                                   int)         # 12.Page height
+                                   int,         # 12.Page height
+                                   float)       # 13.Resampling factor
 
         self.zoom_set(self.prefs['initial zoom level'])
         self.iv_col_width = self.prefs['initial thumbnail size']
@@ -184,7 +185,7 @@ class PdfShuffler:
         self.iconview.pack_start(self.cellthmb, False)
         self.iconview.set_attributes(self.cellthmb, image=1,
             scale=4, rotation=6, cropL=7, cropR=8, cropT=9, cropB=10,
-            width=11, height=12)
+            width=11, height=12, resample=13)
 
         self.celltxt = gtk.CellRendererText()
         self.celltxt.set_property('width', self.iv_col_width)
@@ -261,7 +262,8 @@ class PdfShuffler:
         gobject.type_register(PDF_Renderer)
         gobject.signal_new('update_thumbnail', PDF_Renderer,
                            gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
-                           [gobject.TYPE_INT, gobject.TYPE_PYOBJECT])
+                           [gobject.TYPE_INT, gobject.TYPE_PYOBJECT,
+                            gobject.TYPE_FLOAT])
         self.rendering_thread = 0
 
         self.set_unsaved(False)
@@ -274,7 +276,9 @@ class PdfShuffler:
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
-        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
+        #FIXME: the resample=2. factor has to be dynamic when lazy rendering
+        #       is implemented
+        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue, 2)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
@@ -320,9 +324,10 @@ class PdfShuffler:
 
         return True
   
-    def update_thumbnail(self, object, num, thumbnail):
+    def update_thumbnail(self, object, num, thumbnail, resample):
         row = self.model[num]
         gtk.gdk.threads_enter()
+        row[13] = resample
         row[4] = self.zoom_scale
         row[1] = thumbnail
         gtk.gdk.threads_leave()
@@ -439,7 +444,8 @@ class PdfShuffler:
                                       angle,              # 6
                                       crop[0],crop[1],    # 7-8
                                       crop[2],crop[3],    # 9-10
-                                      w,h              )) # 11-12
+                                      w,h,                # 11-12
+                                      2.              ))  # 13 FIXME
             self.update_geometry(iter)
             res = True
 
@@ -1037,11 +1043,12 @@ class PDF_Doc:
 
 class PDF_Renderer(threading.Thread,gobject.GObject):
 
-    def __init__(self, model, pdfqueue):
+    def __init__(self, model, pdfqueue, resample=1.):
         threading.Thread.__init__(self)
         gobject.GObject.__init__(self)
         self.model = model
         self.pdfqueue = pdfqueue
+        self.resample = resample
         self.quit = False
 
     def run(self):
@@ -1055,11 +1062,16 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                     pdfdoc = self.pdfqueue[nfile - 1]
                     page = pdfdoc.document.get_page(npage-1)
                     w, h = page.get_size()
-                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w), int(h))
+                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                                   int(w/self.resample),
+                                                   int(h/self.resample))
                     cr = cairo.Context(thumbnail)
+                    if self.resample != 1.:
+                        cr.scale(1./self.resample, 1./self.resample)
                     page.render(cr)
                     time.sleep(0.003)
-                    gobject.idle_add(self.emit,'update_thumbnail', idx, thumbnail,
+                    gobject.idle_add(self.emit,'update_thumbnail',
+                                     idx, thumbnail, self.resample,
                                      priority=gobject.PRIORITY_LOW)
                 except Exception,e:
                     print e

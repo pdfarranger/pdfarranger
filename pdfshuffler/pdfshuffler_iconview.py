@@ -44,6 +44,9 @@ class CellRendererImage(gtk.GenericCellRenderer):
                          0, 360, 0, gobject.PARAM_READWRITE),
             "scale": (gobject.TYPE_FLOAT, "Scale", "Scale",
                       0.01, 100., 1., gobject.PARAM_READWRITE),
+            "resample": (gobject.TYPE_FLOAT,
+                     "Resample", "Resample Coefficient",
+                      1., 100., 1., gobject.PARAM_READWRITE),
             "cropL": (gobject.TYPE_FLOAT, "CropL", "CropL",
                       0., 1., 0., gobject.PARAM_READWRITE),
             "cropR": (gobject.TYPE_FLOAT, "CropR", "CropR",
@@ -64,8 +67,8 @@ class CellRendererImage(gtk.GenericCellRenderer):
         rotation = int(self.rotation) % 360
         rotation = ((rotation + 45) / 90) * 90
         if not self.image:
-            w0 = w1 = self.width
-            h0 = h1 = self.height
+            w0 = w1 = self.width / self.resample
+            h0 = h1 = self.height / self.resample
         else:
             w0 = self.image.get_width()
             h0 = self.image.get_height()
@@ -77,8 +80,9 @@ class CellRendererImage(gtk.GenericCellRenderer):
         x = self.cropL * w1
         y = self.cropT * h1
 
-        w2 = int(self.scale * (1. - self.cropL - self.cropR) * w1)
-        h2 = int(self.scale * (1. - self.cropT - self.cropB) * h1)
+        scale = self.resample * self.scale
+        w2 = int(scale * (1. - self.cropL - self.cropR) * w1)
+        h2 = int(scale * (1. - self.cropT - self.cropB) * h1)
         
         return w0,h0,w1,h1,w2,h2,rotation
 
@@ -129,7 +133,8 @@ class CellRendererImage(gtk.GenericCellRenderer):
         cr.clip()
 
         cr.translate(self.th1,self.th1)
-        cr.scale(self.scale, self.scale)
+        scale = self.resample * self.scale
+        cr.scale(scale, scale)
         cr.translate(-x,-y)
         if rotation > 0:
             cr.translate(w1/2,h1/2)
