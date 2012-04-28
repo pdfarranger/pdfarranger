@@ -33,3 +33,11 @@ What's new in this version:
 
 * Hungarian, Japanese and Chinese translations.
 
+
+Known issues:
+-------------
+
+* High memory consumption.
+
+* No autoscrolling during navigation with the keyboard arrows.
+

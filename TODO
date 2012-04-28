@@ -11,3 +11,7 @@ TODO list for PDF-Shuffler
 
 * Add support for encrypted files.
 
+* Lazy thumbnails rendering.
+
+* Support autoscroll during navigation with the keyboard arrows.
+
