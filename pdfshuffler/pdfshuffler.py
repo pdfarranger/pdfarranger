@@ -32,7 +32,6 @@ import sys          # for proccessing of command line args
 import urllib       # for parsing filename information passed by DnD
 import threading
 import tempfile
-import glob
 from copy import copy
 
 import locale       #for multilanguage support
@@ -114,9 +113,6 @@ class PdfShuffler:
         ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
         if not os.path.exists(ui_path):
             ui_path = '/usr/local/share/pdfshuffler/pdfshuffler.ui'
-            
-        if not os.path.exists(ui_path): # Windows standard path
-            ui_path = './data/pdfshuffler.ui'
 
         if not os.path.exists(ui_path):
             parent_dir = os.path.dirname( \
@@ -327,7 +323,7 @@ class PdfShuffler:
             self.progress_bar.show_all()
 
         return True
-
+  
     def update_thumbnail(self, object, num, thumbnail, resample):
         row = self.model[num]
         gtk.gdk.threads_enter()
@@ -396,23 +392,7 @@ class PdfShuffler:
             self.rendering_thread.join()
 
         if os.path.isdir(self.tmp_dir):
-            try:
-                shutil.rmtree(self.tmp_dir)
-            except:
-                # ============= Start python-poppler for Windows bug workaround ============
-                # python-poppler does not "release" the file and only the files of previous sessions can be deleted
-                # Get the list of all pdf-shuffler temporary dirs
-                temp_dir_root = os.path.split(self.tmp_dir)[0]
-                shuffler_dirs = glob.glob(temp_dir_root + "/tmp??????pdfshuffler")
-                # delete if possible
-                for directory in shuffler_dirs :
-                    try :
-                        shutil.rmtree(directory)
-                    except :
-                        pass
-                # ============= End python-poppler for Windows bug workaround ==============
-
-
+            shutil.rmtree(self.tmp_dir)
         if gtk.main_level():
             gtk.main_quit()
         else:
@@ -594,8 +574,7 @@ class PdfShuffler:
                                                   gtk.RESPONSE_CANCEL,
                                                   gtk.STOCK_OPEN,
                                                   gtk.RESPONSE_OK))
-        if self.import_directory :
-            chooser.set_current_folder(self.import_directory)
+        chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
         filter_all = gtk.FileFilter()
@@ -617,7 +596,7 @@ class PdfShuffler:
                     f = gio.File(filename)
                     f_info = f.query_info('standard::content-type')
                     mime_type = f_info.get_content_type()
-                    expected_mime_type = '.pdf'
+                    expected_mime_type = 'application/pdf'
 
                     if mime_type == expected_mime_type:
                         self.add_pdf_pages(filename)
@@ -1046,8 +1025,8 @@ class PDF_Doc:
         (self.shortname, self.ext) = os.path.splitext(self.shortname)
         f = gio.File(filename)
         mime_type = f.query_info('standard::content-type').get_content_type()
-        expected_mime_type = '.pdf'
-        file_prefix = 'file:///'
+        expected_mime_type = 'application/pdf'
+        file_prefix = 'file://'
 
         if mime_type == expected_mime_type:
             self.nfile = nfile + 1
@@ -1102,7 +1081,6 @@ def main():
     """This function starts PdfShuffler"""
     gtk.gdk.threads_init()
     gobject.threads_init()
-    gtk.gdk.threads_enter()     # This line is necessary in Windows
     PdfShuffler()
     gtk.main()
 
