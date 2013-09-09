@@ -490,13 +490,7 @@ class PdfShuffler:
                     self.set_unsaved(False)
                 except Exception, e:
                     chooser.destroy()
-                    error_msg_dlg = gtk.MessageDialog(flags=gtk.DIALOG_MODAL,
-                                                      type=gtk.MESSAGE_ERROR,
-                                                      message_format=str(e),
-                                                      buttons=gtk.BUTTONS_OK)
-                    response = error_msg_dlg.run()
-                    if response == gtk.RESPONSE_OK:
-                        error_msg_dlg.destroy()
+                    self.error_message_dialog(e)
                     return
             break
         chooser.destroy()
@@ -591,23 +585,28 @@ class PdfShuffler:
         response = chooser.run()
         if response == gtk.RESPONSE_OK:
             for filename in chooser.get_filenames():
-                if os.path.isfile(filename):
-                    # FIXME
-                    f = gio.File(filename)
-                    f_info = f.query_info('standard::content-type')
-                    mime_type = f_info.get_content_type()
-                    expected_mime_type = 'application/pdf'
+                try:
+                    if os.path.isfile(filename):
+                        # FIXME
+                        f = gio.File(filename)
+                        f_info = f.query_info('standard::content-type')
+                        mime_type = f_info.get_content_type()
+                        expected_mime_type = 'application/pdf'
 
-                    if mime_type == expected_mime_type:
-                        self.add_pdf_pages(filename)
-                    elif mime_type[:34] == 'application/vnd.oasis.opendocument':
-                        print(_('OpenDocument not supported yet!'))
-                    elif mime_type[:5] == 'image':
-                        print(_('Image file not supported yet!'))
+                        if mime_type == expected_mime_type:
+                            self.add_pdf_pages(filename)
+                        elif mime_type[:34] == 'application/vnd.oasis.opendocument':
+                            print(_('OpenDocument not supported yet!'))
+                        elif mime_type[:5] == 'image':
+                            print(_('Image file not supported yet!'))
+                        else:
+                            print(_('File type not supported!'))
                     else:
-                        print(_('File type not supported!'))
-                else:
-                    print(_('File %s does not exist') % filename)
+                        print(_('File %s does not exist') % filename)
+                except Exception, e:
+                    chooser.destroy()
+                    self.error_message_dialog(e)
+                    return
         elif response == gtk.RESPONSE_CANCEL:
             print(_('Closed, no files selected'))
         chooser.destroy()
@@ -824,8 +823,12 @@ class PdfShuffler:
             uri_splitted = uri.split() # we may have more than one file dropped
             for uri in uri_splitted:
                 filename = self.get_file_path_from_dnd_dropped_uri(uri)
-                if os.path.isfile(filename): # is it file?
-                    self.add_pdf_pages(filename)
+                try:
+                    if os.path.isfile(filename): # is it a file?
+                        self.add_pdf_pages(filename)
+                except Exception, e:
+                    self.error_message_dialog(e)
+                
 
     def sw_button_press_event(self, scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -1014,6 +1017,14 @@ class PdfShuffler:
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
 
+    def error_message_dialog(self, msg):
+        error_msg_dlg = gtk.MessageDialog(flags=gtk.DIALOG_MODAL,
+                                          type=gtk.MESSAGE_ERROR,
+                                          message_format=str(msg),
+                                          buttons=gtk.BUTTONS_OK)
+        response = error_msg_dlg.run()
+        if response == gtk.RESPONSE_OK:
+            error_msg_dlg.destroy()
 
 class PDF_Doc:
     """Class handling PDF documents"""
