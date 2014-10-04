@@ -3,9 +3,9 @@
 
 """
 
- PdfShuffler 0.6.0 - GTK+ based utility for splitting, rearrangement and
+ PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
- Copyright (C) 2008-2012 Konstantinos Poulios
+ Copyright (C) 2008-2014 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
 
  This file is part of PdfShuffler.
@@ -37,51 +37,44 @@ from copy import copy
 import locale       #for multilanguage support
 import gettext
 gettext.install('pdfshuffler', unicode=1)
-
+_ = gettext.gettext
 
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
-VERSION = '0.6.0'
+VERSION = '0.7.0'
 WEBSITE = 'http://pdfshuffler.sourceforge.net/'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 try:
-    import pygtk
-    pygtk.require('2.0')
-    import gtk
-    assert gtk.gtk_version >= (2, 10, 0)
-    assert gtk.pygtk_version >= (2, 10, 0)
-except AssertionError:
-    print('You do not have the required versions of GTK+ and PyGTK ' +
-          'installed.\n\n' +
-          'Installed GTK+ version is ' +
-          '.'.join([str(n) for n in gtk.gtk_version]) + '\n' +
-          'Required GTK+ version is 2.10.0 or higher\n\n'
-          'Installed PyGTK version is ' +
-          '.'.join([str(n) for n in gtk.pygtk_version]) + '\n' +
-          'Required PyGTK version is 2.10.0 or higher')
-    sys.exit(1)
+    import gi
+    gi.require_version('Gtk', '3.0')
+    from gi.repository import Gtk
 except:
-    print('PyGTK version 2.10.0 or higher is required to run this program.')
-    print('No version of PyGTK was found on your system.')
+    print('You do not have the required version of GTK+ installed.\n\n' +
+          'Installed GTK+ version is ' +
+          '.'.join([str(Gtk.get_major_version()), \
+                    str(Gtk.get_minor_version()), \
+                    str(Gtk.get_micro_version())]) + '\n' +
+          'Required GTK+ version is 3.0 or higher')
     sys.exit(1)
 
-import gobject      # for using custom signals
-import pango        # for adjusting the text alignment in CellRendererText
-import gio          # for inquiring mime types information
+from gi.repository import Gdk
+from gi.repository import GObject      # for using custom signals
+from gi.repository import Pango        # for adjusting the text alignment in CellRendererText
+from gi.repository import Gio          # for inquiring mime types information
+from gi.repository import Poppler      #for the rendering of pdf pages
 import cairo
 
-import poppler      #for the rendering of pdf pages
 from pyPdf import PdfFileWriter, PdfFileReader
 
 from pdfshuffler_iconview import CellRendererImage
-gobject.type_register(CellRendererImage)
+GObject.type_register(CellRendererImage)
 
 import time
 
 class PdfShuffler:
     prefs = {
-        'window width': min(700, gtk.gdk.screen_get_default().get_width() / 2),
-        'window height': min(600, gtk.gdk.screen_get_default().get_height() - 50),
+        'window width': min(700, Gdk.Screen.get_default().get_width() / 2),
+        'window height': min(600, Gdk.Screen.get_default().get_height() - 50),
         'window x': 0,
         'window y': 0,
         'initial thumbnail size': 300,
@@ -92,20 +85,20 @@ class PdfShuffler:
     MODEL_ROW_EXTERN = 1002
     TEXT_URI_LIST = 1003
     MODEL_ROW_MOTION = 1004
-    TARGETS_IV = [('MODEL_ROW_INTERN', gtk.TARGET_SAME_WIDGET, MODEL_ROW_INTERN),
-                  ('MODEL_ROW_EXTERN', gtk.TARGET_OTHER_APP, MODEL_ROW_EXTERN),
-                  ('MODEL_ROW_MOTION', 0, MODEL_ROW_MOTION)]
-    TARGETS_SW = [('text/uri-list', 0, TEXT_URI_LIST),
-                  ('MODEL_ROW_EXTERN', gtk.TARGET_OTHER_APP, MODEL_ROW_EXTERN)]
+    TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET, MODEL_ROW_INTERN),
+                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN),
+                  Gtk.TargetEntry.new('MODEL_ROW_MOTION', 0, MODEL_ROW_MOTION)]
+    TARGETS_SW = [Gtk.TargetEntry.new('text/uri-list', 0, TEXT_URI_LIST),
+                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
 
     def __init__(self):
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp("pdfshuffler")
         os.chmod(self.tmp_dir, 0700)
 
-        icon_theme = gtk.icon_theme_get_default()
+        icon_theme = Gtk.IconTheme.get_default()
         try:
-            gtk.window_set_default_icon(icon_theme.load_icon("pdfshuffler", 64, 0))
+            Gtk.window_set_default_icon(icon_theme.load_icon("pdfshuffler", 64, 0))
         except:
             print(_("Can't load icon. Application is not installed correctly."))
 
@@ -127,7 +120,7 @@ class PdfShuffler:
                 ui_path = os.path.join(head, 'share', 'pdfshuffler', \
                                        'pdfshuffler.ui')
 
-        self.uiXML = gtk.Builder()
+        self.uiXML = Gtk.Builder()
         self.uiXML.add_from_file(ui_path)
         self.uiXML.connect_signals(self)
 
@@ -143,24 +136,24 @@ class PdfShuffler:
 
         # Create a scrolled window to hold the thumbnails-container
         self.sw = self.uiXML.get_object('scrolledwindow')
-        self.sw.drag_dest_set(gtk.DEST_DEFAULT_MOTION |
-                              gtk.DEST_DEFAULT_HIGHLIGHT |
-                              gtk.DEST_DEFAULT_DROP |
-                              gtk.DEST_DEFAULT_MOTION,
+        self.sw.drag_dest_set(Gtk.DestDefaults.MOTION |
+                              Gtk.DestDefaults.HIGHLIGHT |
+                              Gtk.DestDefaults.DROP |
+                              Gtk.DestDefaults.MOTION,
                               self.TARGETS_SW,
-                              gtk.gdk.ACTION_COPY |
-                              gtk.gdk.ACTION_MOVE)
+                              Gdk.DragAction.COPY |
+                              Gdk.DragAction.MOVE)
         self.sw.connect('drag_data_received', self.sw_dnd_received_data)
         self.sw.connect('button_press_event', self.sw_button_press_event)
         self.sw.connect('scroll_event', self.sw_scroll_event)
 
         # Create an alignment to keep the thumbnails center-aligned
-        align = gtk.Alignment(0.5, 0.5, 0, 0)
+        align = Gtk.Alignment.new(0.5, 0.5, 0, 0)
         self.sw.add_with_viewport(align)
 
         # Create ListStore model and IconView
-        self.model = gtk.ListStore(str,         # 0.Text descriptor
-                                   gobject.TYPE_PYOBJECT,
+        self.model = Gtk.ListStore(str,         # 0.Text descriptor
+                                   GObject.TYPE_PYOBJECT,
                                                 # 1.Cached page image
                                    int,         # 2.Document number
                                    int,         # 3.Page number
@@ -171,36 +164,47 @@ class PdfShuffler:
                                    float,       # 8.Crop right
                                    float,       # 9.Crop top
                                    float,       # 10.Crop bottom
-                                   int,         # 11.Page width
-                                   int,         # 12.Page height
+                                   float,       # 11.Page width
+                                   float,       # 12.Page height
                                    float)       # 13.Resampling factor
 
         self.zoom_set(self.prefs['initial zoom level'])
         self.iv_col_width = self.prefs['initial thumbnail size']
 
-        self.iconview = gtk.IconView(self.model)
-        self.iconview.set_item_width(self.iv_col_width + 12)
+        self.iconview = Gtk.IconView(self.model)
+        self.iconview.clear()
+        self.iconview.set_item_width(-1) #self.iv_col_width + 12)
 
         self.cellthmb = CellRendererImage()
         self.iconview.pack_start(self.cellthmb, False)
-        self.iconview.set_attributes(self.cellthmb, image=1,
-            scale=4, rotation=6, cropL=7, cropR=8, cropT=9, cropB=10,
-            width=11, height=12, resample=13)
+#        print(help(self.iconview.set_cell_data_func))
+        self.iconview.set_cell_data_func(self.cellthmb, self.set_cellrenderer_data, None)
+#        self.iconview.add_attribute(self.cellthmb, 'image', 1)
+#        self.iconview.add_attribute(self.cellthmb, 'scale', 4)
+#        self.iconview.add_attribute(self.cellthmb, 'rotation', 6)
+#        self.iconview.add_attribute(self.cellthmb, 'cropL', 7)
+#        self.iconview.add_attribute(self.cellthmb, 'cropR', 8)
+#        self.iconview.add_attribute(self.cellthmb, 'cropT', 9)
+#        self.iconview.add_attribute(self.cellthmb, 'cropB', 10)
+#        self.iconview.add_attribute(self.cellthmb, 'width', 11)
+#        self.iconview.add_attribute(self.cellthmb, 'height', 12)
+#        self.iconview.add_attribute(self.cellthmb, 'resample', 13)
 
-        self.celltxt = gtk.CellRendererText()
-        self.celltxt.set_property('width', self.iv_col_width)
-        self.celltxt.set_property('wrap-width', self.iv_col_width)
-        self.celltxt.set_property('alignment', pango.ALIGN_CENTER)
-        self.iconview.pack_start(self.celltxt, False)
-        self.iconview.set_attributes(self.celltxt, text=0)
+#        self.celltxt = Gtk.CellRendererText()
+#        self.celltxt.set_property('width', self.iv_col_width)
+#        self.celltxt.set_property('wrap-width', self.iv_col_width)
+#        self.celltxt.set_property('alignment', Pango.Alignment.CENTER)
+#        self.iconview.pack_start(self.celltxt, False)
+#        self.iconview.add_attribute(self.celltxt, 'text', 0)
+        self.iconview.set_text_column(0)
 
-        self.iconview.set_selection_mode(gtk.SELECTION_MULTIPLE)
-        self.iconview.enable_model_drag_source(gtk.gdk.BUTTON1_MASK,
+        self.iconview.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
+        self.iconview.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK,
                                                self.TARGETS_IV,
-                                               gtk.gdk.ACTION_COPY |
-                                               gtk.gdk.ACTION_MOVE)
+                                               Gdk.DragAction.COPY |
+                                               Gdk.DragAction.MOVE)
         self.iconview.enable_model_drag_dest(self.TARGETS_IV,
-                                             gtk.gdk.ACTION_DEFAULT)
+                                             Gdk.DragAction.DEFAULT)
         self.iconview.connect('drag_begin', self.iv_drag_begin)
         self.iconview.connect('drag_data_get', self.iv_dnd_get_data)
         self.iconview.connect('drag_data_received', self.iv_dnd_received_data)
@@ -220,36 +224,27 @@ class PdfShuffler:
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
         self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
-        self.progress_bar.hide_all()
+        self.progress_bar.hide()
 
         # Change iconview color background
-        style = self.sw.get_style().copy()
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            style.base[state] = style.bg[gtk.STATE_NORMAL]
-        self.iconview.set_style(style)
+        style_context_sw = self.sw.get_style_context()
+        for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT,
+                      Gtk.StateFlags.ACTIVE, Gtk.StateFlags.SELECTED):
+           self.iconview.override_background_color \
+              (state, style_context_sw.get_background_color(state))
 
         # Creating the popup menu
-        self.popup = gtk.Menu()
-        popup_rotate_right = gtk.ImageMenuItem(_('_Rotate Right'))
-        popup_rotate_left = gtk.ImageMenuItem(_('Rotate _Left'))
-        popup_crop = gtk.MenuItem(_('C_rop...'))
-        popup_delete = gtk.ImageMenuItem(gtk.STOCK_DELETE)
-        popup_saveselection = gtk.MenuItem(_('_Export selection...'))
-        popup_rotate_right.connect('activate', self.rotate_page_right)
-        popup_rotate_left.connect('activate', self.rotate_page_left)
-        popup_crop.connect('activate', self.crop_page_dialog)
-        popup_delete.connect('activate', self.clear_selected)
-        popup_saveselection.connect('activate', self.choose_export_pdf_name, True)
-        popup_rotate_right.show()
-        popup_rotate_left.show()
-        popup_crop.show()
-        popup_delete.show()
-        popup_saveselection.show()
-        self.popup.append(popup_rotate_right)
-        self.popup.append(popup_rotate_left)
-        self.popup.append(popup_crop)
-        self.popup.append(popup_delete)
-        self.popup.append(popup_saveselection)
+        self.popup = Gtk.Menu()
+        labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'),
+                  _('_Delete'), _('_Export selection...'))
+        cbs = (self.rotate_page_right, self.rotate_page_left,
+               self.crop_page_dialog, self.clear_selected,
+               self.choose_export_selection_pdf_name)
+        for label, cb in zip(labels, cbs):
+           popup_item = Gtk.MenuItem.new_with_mnemonic(label)
+           popup_item.connect('activate', cb)
+           popup_item.show()
+           self.popup.append(popup_item)
 
         # Initializing variables
         self.export_directory = os.getenv('HOME')
@@ -259,11 +254,11 @@ class PdfShuffler:
         self.iv_auto_scroll_timer = None
         self.pdfqueue = []
 
-        gobject.type_register(PDF_Renderer)
-        gobject.signal_new('update_thumbnail', PDF_Renderer,
-                           gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE,
-                           [gobject.TYPE_INT, gobject.TYPE_PYOBJECT,
-                            gobject.TYPE_FLOAT])
+        GObject.type_register(PDF_Renderer)
+        GObject.signal_new('update_thumbnail', PDF_Renderer,
+                           GObject.SignalFlags.RUN_FIRST, None,
+                           [GObject.TYPE_INT, GObject.TYPE_PYOBJECT,
+                            GObject.TYPE_FLOAT])
         self.rendering_thread = 0
 
         self.set_unsaved(False)
@@ -271,6 +266,19 @@ class PdfShuffler:
         # Importing documents passed as command line arguments
         for filename in sys.argv[1:]:
             self.add_pdf_pages(filename)
+
+    def set_cellrenderer_data(self, column, cell, model, iter, data=None):
+
+        cell.set_property('image', model.get_value(iter,1))
+        cell.set_property('scale', model.get_value(iter,4))
+        cell.set_property('rotation', model.get_value(iter,6))
+        cell.set_property('cropL', model.get_value(iter,7))
+        cell.set_property('cropR', model.get_value(iter,8))
+        cell.set_property('cropT', model.get_value(iter,9))
+        cell.set_property('cropB', model.get_value(iter,10))
+        cell.set_property('width', model.get_value(iter,11))
+        cell.set_property('height', model.get_value(iter,12))
+        cell.set_property('resample', model.get_value(iter,13))
 
     def render(self):
         if self.rendering_thread:
@@ -283,13 +291,13 @@ class PdfShuffler:
         self.rendering_thread.start()
 
         if self.progress_bar_timeout_id:
-            gobject.source_remove(self.progress_bar_timeout_id)
+            GObject.source_remove(self.progress_bar_timeout_id)
         self.progress_bar_timout_id = \
-            gobject.timeout_add(50, self.progress_bar_timeout)
+            GObject.timeout_add(50, self.progress_bar_timeout)
 
     def set_unsaved(self, flag):
         self.is_unsaved = flag
-        gobject.idle_add(self.retitle)
+        GObject.idle_add(self.retitle)
 
     def retitle(self):
         title = ''
@@ -317,20 +325,18 @@ class PdfShuffler:
         self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
                                    % {'i1' : cnt_finished, 'i2' : cnt_all})
         if fraction >= 0.999:
-            self.progress_bar.hide_all()
+            self.progress_bar.hide()
             return False
-        elif not self.progress_bar.flags() & gtk.VISIBLE:
-            self.progress_bar.show_all()
+        elif not self.progress_bar.get_visible():
+            self.progress_bar.show()
 
         return True
   
     def update_thumbnail(self, object, num, thumbnail, resample):
         row = self.model[num]
-        gtk.gdk.threads_enter()
         row[13] = resample
         row[4] = self.zoom_scale
         row[1] = thumbnail
-        gtk.gdk.threads_leave()
 
     def on_window_size_request(self, window, event):
         """Main Window resize - workaround for autosetting of
@@ -372,15 +378,15 @@ class PdfShuffler:
                              for row in self.model))
         if max_w != self.iv_col_width:
             self.iv_col_width = max_w
-            self.celltxt.set_property('width', self.iv_col_width)
-            self.celltxt.set_property('wrap-width', self.iv_col_width)
-            self.iconview.set_item_width(self.iv_col_width + 12) #-1)
+#            self.celltxt.set_property('width', self.iv_col_width)
+#            self.celltxt.set_property('wrap-width', self.iv_col_width)
+            self.iconview.set_item_width(-1) #self.iv_col_width + 12) #-1)
             self.on_window_size_request(self.window, None)
 
     def on_keypress_event(self, widget, event):
         """Keypress events in Main Window"""
 
-        #keyname = gtk.gdk.keyval_name(event.keyval)
+        #keyname = Gdk.keyval_name(event.keyval)
         if event.keyval == 65535:   # Delete keystroke
             self.clear_selected()
 
@@ -393,8 +399,8 @@ class PdfShuffler:
 
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
-        if gtk.main_level():
-            gtk.main_quit()
+        if Gtk.main_level():
+            Gtk.main_quit()
         else:
             sys.exit(0)
         return False
@@ -450,35 +456,35 @@ class PdfShuffler:
             res = True
 
         self.reset_iv_width()
-        gobject.idle_add(self.retitle)
+        GObject.idle_add(self.retitle)
         if res:
-            gobject.idle_add(self.render)
+            GObject.idle_add(self.render)
         return res
 
     def choose_export_pdf_name(self, widget=None, only_selected=False):
         """Handles choosing a name for exporting """
 
-        chooser = gtk.FileChooserDialog(title=_('Export ...'),
-                                        action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                                 gtk.RESPONSE_CANCEL,
-                                                 gtk.STOCK_SAVE,
-                                                 gtk.RESPONSE_OK))
+        chooser = Gtk.FileChooserDialog(title=_('Export ...'),
+                                        action=Gtk.FileChooserAction.SAVE,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_SAVE,
+                                                 Gtk.ResponseType.OK))
         chooser.set_do_overwrite_confirmation(True)
         chooser.set_current_folder(self.export_directory)
-        filter_pdf = gtk.FileFilter()
+        filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_mime_type('application/pdf')
         chooser.add_filter(filter_pdf)
 
-        filter_all = gtk.FileFilter()
+        filter_all = Gtk.FileFilter()
         filter_all.set_name(_('All files'))
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
         while True:
             response = chooser.run()
-            if response == gtk.RESPONSE_OK:
+            if response == Gtk.ResponseType.OK:
                 file_out = chooser.get_filename()
                 (path, shortname) = os.path.split(file_out)
                 (shortname, ext) = os.path.splitext(shortname)
@@ -494,6 +500,9 @@ class PdfShuffler:
                     return
             break
         chooser.destroy()
+
+    def choose_export_selection_pdf_name(self, widget=None):
+        self.choose_export_pdf_name(widget, True)
 
     def export_to_file(self, file_out, only_selected=False):
         """Export to file"""
@@ -562,34 +571,34 @@ class PdfShuffler:
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
 
-        chooser = gtk.FileChooserDialog(title=_('Import...'),
-                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                                  gtk.RESPONSE_CANCEL,
-                                                  gtk.STOCK_OPEN,
-                                                  gtk.RESPONSE_OK))
+        chooser = Gtk.FileChooserDialog(title=_('Import...'),
+                                        action=Gtk.FileChooserAction.OPEN,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                  Gtk.ResponseType.CANCEL,
+                                                  Gtk.STOCK_OPEN,
+                                                  Gtk.ResponseType.OK))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
-        filter_all = gtk.FileFilter()
+        filter_all = Gtk.FileFilter()
         filter_all.set_name(_('All files'))
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
-        filter_pdf = gtk.FileFilter()
+        filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_mime_type('application/pdf')
         chooser.add_filter(filter_pdf)
         chooser.set_filter(filter_pdf)
 
         response = chooser.run()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             for filename in chooser.get_filenames():
                 try:
                     if os.path.isfile(filename):
                         # FIXME
-                        f = gio.File(filename)
-                        f_info = f.query_info('standard::content-type')
+                        f = Gio.File.new_for_path(filename)
+                        f_info = f.query_info('standard::content-type', 0, None)
                         mime_type = f_info.get_content_type()
                         expected_mime_type = 'application/pdf'
 
@@ -607,10 +616,10 @@ class PdfShuffler:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
-        elif response == gtk.RESPONSE_CANCEL:
+        elif response == Gtk.ResponseType.CANCEL:
             print(_('Closed, no files selected'))
         chooser.destroy()
-        gobject.idle_add(self.retitle)
+        GObject.idle_add(self.retitle)
 
     def clear_selected(self, button=None):
         """Removes the selected elements in the IconView"""
@@ -637,7 +646,7 @@ class PdfShuffler:
 
         if len(iconview.get_selected_items()) > 1:
             iconview.stop_emission('drag_begin')
-            context.set_icon_stock(gtk.STOCK_DND_MULTIPLE, 0, 0)
+            context.set_icon_stock(Gtk.STOCK_DND_MULTIPLE, 0, 0)
 
     def iv_dnd_get_data(self, iconview, context,
                         selection_data, target_id, etime):
@@ -645,12 +654,29 @@ class PdfShuffler:
 
         model = iconview.get_model()
         selection = self.iconview.get_selected_items()
-        selection.sort(key=lambda x: x[0])
+        selection.sort(key=lambda x: x.get_indices()[0])
         data = []
+#        target = selection_data.get_target()
+#        print 'repr(target):',repr(target)
+#        print 'str(target):',str(target)
+#        print context.list_targets()
+#        print 'get_data:',selection_data.get_data()
+#        print 'get_data_type:',selection_data.get_data_type()
+#        print 'get_display:',selection_data.get_display()
+#        print 'get_format:',selection_data.get_format()
+#        print 'get_length:',selection_data.get_length()
+#        print 'get_selection:',selection_data.get_selection()
+#        print 'get_target:',selection_data.get_target()
+#        print 'get_targets:',selection_data.get_targets()
+#        print 'get_text:',selection_data.get_text()
+#        print 'get_uris:',selection_data.get_uris()
+#        print 'targets_include_text:',selection_data.targets_include_text()
+#        print selection_data.get_target(),target_id
         for path in selection:
-            if selection_data.target == 'MODEL_ROW_INTERN':
+            target = str(selection_data.get_target())
+            if target == 'MODEL_ROW_INTERN':
                 data.append(str(path[0]))
-            elif selection_data.target == 'MODEL_ROW_EXTERN':
+            elif target == 'MODEL_ROW_EXTERN':
                 iter = model.get_iter(path)
                 nfile, npage, angle = model.get(iter, 2, 3, 6)
                 crop = model.get(iter, 7, 8, 9, 10)
@@ -661,38 +687,38 @@ class PdfShuffler:
                                        [str(side) for side in crop]))
         if data:
             data = '\n;\n'.join(data)
-            selection_data.set(selection_data.target, 8, data)
+            selection_data.set(selection_data.get_target(), 8, data)
 
     def iv_dnd_received_data(self, iconview, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in iconview"""
 
         model = iconview.get_model()
-        data = selection_data.data
+        data = selection_data.get_data()
         if data:
             data = data.split('\n;\n')
-            drop_info = iconview.get_dest_item_at_pos(x, y)
-            iter_to = None
-            if drop_info:
-                path, position = drop_info
-                ref_to = gtk.TreeRowReference(model,path)
+            item = iconview.get_dest_item_at_pos(x, y)
+            if item:
+                path, position = item
+                ref_to = Gtk.TreeRowReference.new(model,path)
             else:
-                position = gtk.ICON_VIEW_DROP_RIGHT
+                ref_to = None
+                position = Gtk.IconViewDropPosition.DROP_RIGHT
                 if len(model) > 0:  #find the iterator of the last row
                     row = model[-1]
-                    path = row.path
-                    ref_to = gtk.TreeRowReference(model,path)
+                    ref_to = Gtk.TreeRowReference.new(model,row.path)
             if ref_to:
-                before = (position == gtk.ICON_VIEW_DROP_LEFT
-                          or position == gtk.ICON_VIEW_DROP_ABOVE)
-                #if target_id == self.MODEL_ROW_INTERN:
-                if selection_data.target == 'MODEL_ROW_INTERN':
+                before = (position == Gtk.IconViewDropPosition.DROP_LEFT
+                          or position == Gtk.IconViewDropPosition.DROP_ABOVE)
+                target = str(selection_data.get_target())
+                #if target_id == 'MODEL_ROW_INTERN':
+                if target == 'MODEL_ROW_INTERN':
                     if before:
                         data.sort(key=int)
                     else:
                         data.sort(key=int,reverse=True)
-                    ref_from_list = [gtk.TreeRowReference(model,path)
-                                     for path in data]
+                    ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
+                                     for p in data]
                     for ref_from in ref_from_list:
                         path = ref_to.get_path()
                         iter_to = model.get_iter(path)
@@ -700,17 +726,17 @@ class PdfShuffler:
                         iter_from = model.get_iter(path)
                         row = model[iter_from]
                         if before:
-                            model.insert_before(iter_to, row)
+                            model.insert_before(iter_to, row[:])
                         else:
-                            model.insert_after(iter_to, row)
-                    if context.action == gtk.gdk.ACTION_MOVE:
+                            model.insert_after(iter_to, row[:])
+                    if context.get_actions() & Gdk.DragAction.MOVE:
                         for ref_from in ref_from_list:
                             path = ref_from.get_path()
                             iter_from = model.get_iter(path)
                             model.remove(iter_from)
 
-                #elif target_id == self.MODEL_ROW_EXTERN:
-                elif selection_data.target == 'MODEL_ROW_EXTERN':
+                #elif target_id == 'MODEL_ROW_EXTERN':
+                elif target == 'MODEL_ROW_EXTERN':
                     if not before:
                         data.reverse()
                     while data:
@@ -730,7 +756,7 @@ class PdfShuffler:
                                     model.move_before(iter_from, iter_to)
                                 else:
                                     model.move_after(iter_from, iter_to)
-                                if context.action == gtk.gdk.ACTION_MOVE:
+                                if context.get_actions() & Gdk.DragAction.MOVE:
                                     context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, widget, context):
@@ -738,7 +764,7 @@ class PdfShuffler:
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-        ref_del_list = [gtk.TreeRowReference(model,path) for path in selection]
+        ref_del_list = [Gtk.TreeRowReference.new(model,path) for path in selection]
         for ref_del in ref_del_list:
             path = ref_del.get_path()
             iter = model.get_iter(path)
@@ -752,23 +778,23 @@ class PdfShuffler:
         sw_height = self.sw.get_allocation().height
         if y -sw_vadj.get_value() < autoscroll_area:
             if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = gtk.DIR_UP
-                self.iv_auto_scroll_timer = gobject.timeout_add(150,
+                self.iv_auto_scroll_direction = Gtk.DirectionType.UP
+                self.iv_auto_scroll_timer = GObject.timeout_add(150,
                                                                 self.iv_auto_scroll)
         elif y -sw_vadj.get_value() > sw_height - autoscroll_area:
             if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = gtk.DIR_DOWN
-                self.iv_auto_scroll_timer = gobject.timeout_add(150,
+                self.iv_auto_scroll_direction = Gtk.DirectionType.DOWN
+                self.iv_auto_scroll_timer = GObject.timeout_add(150,
                                                                 self.iv_auto_scroll)
         elif self.iv_auto_scroll_timer:
-            gobject.source_remove(self.iv_auto_scroll_timer)
+            GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
 
     def iv_dnd_leave_end(self, widget, context, ignored=None):
         """Ends the auto-scroll during DND"""
 
         if self.iv_auto_scroll_timer:
-            gobject.source_remove(self.iv_auto_scroll_timer)
+            GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
 
     def iv_auto_scroll(self):
@@ -776,12 +802,12 @@ class PdfShuffler:
 
         sw_vadj = self.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
-        if self.iv_auto_scroll_direction == gtk.DIR_UP:
-            sw_vpos -= sw_vadj.step_increment
-            sw_vadj.set_value(max(sw_vpos, sw_vadj.lower))
-        elif self.iv_auto_scroll_direction == gtk.DIR_DOWN:
-            sw_vpos += sw_vadj.step_increment
-            sw_vadj.set_value(min(sw_vpos, sw_vadj.upper - sw_vadj.page_size))
+        if self.iv_auto_scroll_direction == Gtk.DirectionType.UP:
+            sw_vpos -= sw_vadj.get_step_increment()
+            sw_vadj.set_value(max(sw_vpos, sw_vadj.get_lower()))
+        elif self.iv_auto_scroll_direction == Gtk.DirectionType.DOWN:
+            sw_vpos += sw_vadj.get_step_increment()
+            sw_vadj.set_value(min(sw_vpos, sw_vadj.get_upper() - sw_vadj.get_page_size()))
         return True  #call me again
 
     def iv_button_press_event(self, iconview, event):
@@ -798,14 +824,14 @@ class PdfShuffler:
                     iconview.unselect_all()
                 iconview.select_path(path)
                 iconview.grab_focus()
-                self.popup.popup(None, None, None, event.button, time)
+                self.popup.popup(None, None, None, None, event.button, time)
             return 1
 
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
 
-        data = selection_data.data
+        data = selection_data.get_data()
         if target_id == self.MODEL_ROW_EXTERN:
             self.model
             if data:
@@ -816,7 +842,7 @@ class PdfShuffler:
                 npage, angle = [int(k) for k in tmp[1:3]]
                 crop = [float(side) for side in tmp[3:7]]
                 if self.add_pdf_pages(filename, npage, npage, angle, crop):
-                    if context.action == gtk.gdk.ACTION_MOVE:
+                    if context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
         elif target_id == self.TEXT_URI_LIST:
             uri = data.strip()
@@ -839,11 +865,11 @@ class PdfShuffler:
     def sw_scroll_event(self, scrolledwindow, event):
         """Manages mouse scroll events in scrolledwindow"""
 
-        if event.state & gtk.gdk.CONTROL_MASK:
-            if event.direction == gtk.gdk.SCROLL_UP:
+        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
+            if event.direction == Gdk.ScrollDirection.UP:
                 self.zoom_change(1)
                 return 1
-            elif event.direction == gtk.gdk.SCROLL_DOWN:
+            elif event.direction == Gdk.ScrollDirection.DOWN:
                 self.zoom_change(-1)
                 return 1
 
@@ -940,45 +966,45 @@ class PdfShuffler:
             pos = model.get_iter(path)
             crop = [model.get_value(pos, 7 + side) for side in range(4)]
 
-        dialog = gtk.Dialog(title=(_('Crop Selected Pages')),
+        dialog = Gtk.Dialog(title=(_('Crop Selected Pages')),
                             parent=self.window,
-                            flags=gtk.DIALOG_MODAL,
-                            buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                     gtk.STOCK_OK, gtk.RESPONSE_OK))
+                            flags=Gtk.DialogFlags.MODAL,
+                            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                                     Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_size_request(340, 250)
-        dialog.set_default_response(gtk.RESPONSE_OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
 
-        frame = gtk.Frame(_('Crop Margins'))
+        frame = Gtk.Frame(_('Crop Margins'))
         dialog.vbox.pack_start(frame, False, False, 20)
 
-        vbox = gtk.VBox(False, 0)
+        vbox = Gtk.VBox(False, 0)
         frame.add(vbox)
 
         spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
         for side in sides:
-            hbox = gtk.HBox(True, 0)
+            hbox = Gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)
 
-            label = gtk.Label(side_names[side])
+            label = Gtk.Label(label=side_names[side])
             label.set_alignment(0, 0.0)
             hbox.pack_start(label, True, True, 20)
 
-            adj = gtk.Adjustment(100.*crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
-            spin = gtk.SpinButton(adj, 0, 1)
+            adj = Gtk.Adjustment(100.*crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
+            spin = Gtk.SpinButton(adj, 0, 1)
             spin.set_activates_default(True)
             spin.connect('value-changed', set_crop_value, side)
             spin_list.append(spin)
             hbox.pack_start(spin, False, False, 30)
 
-            label = gtk.Label(units.pop(0))
+            label = Gtk.Label(label=units.pop(0))
             label.set_alignment(0, 0.0)
             hbox.pack_start(label, True, True, 0)
 
         dialog.show_all()
         result = dialog.run()
 
-        if result == gtk.RESPONSE_OK:
+        if result == Gtk.ResponseType.OK:
             modified = False
             crop = [spin.get_value()/100. for spin in spin_list]
             for path in selection:
@@ -992,12 +1018,12 @@ class PdfShuffler:
             if modified:
                 self.set_unsaved(True)
             self.reset_iv_width()
-        elif result == gtk.RESPONSE_CANCEL:
+        elif result == Gtk.ResponseType.CANCEL:
             print(_('Dialog closed'))
         dialog.destroy()
 
     def about_dialog(self, widget, data=None):
-        about_dialog = gtk.AboutDialog()
+        about_dialog = Gtk.AboutDialog()
         try:
             about_dialog.set_transient_for(self.window)
             about_dialog.set_modal(True)
@@ -1018,12 +1044,12 @@ class PdfShuffler:
         about_dialog.show_all()
 
     def error_message_dialog(self, msg):
-        error_msg_dlg = gtk.MessageDialog(flags=gtk.DIALOG_MODAL,
-                                          type=gtk.MESSAGE_ERROR,
+        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DIALOG_MODAL,
+                                          type=Gtk.MESSAGE_ERROR,
                                           message_format=str(msg),
-                                          buttons=gtk.BUTTONS_OK)
+                                          buttons=Gtk.BUTTONS_OK)
         response = error_msg_dlg.run()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.RESPONSE_OK:
             error_msg_dlg.destroy()
 
 class PDF_Doc:
@@ -1034,8 +1060,8 @@ class PDF_Doc:
         self.filename = os.path.abspath(filename)
         (self.path, self.shortname) = os.path.split(self.filename)
         (self.shortname, self.ext) = os.path.splitext(self.shortname)
-        f = gio.File(filename)
-        mime_type = f.query_info('standard::content-type').get_content_type()
+        f = Gio.File.new_for_path(filename)
+        mime_type = f.query_info('standard::content-type', 0, None).get_content_type()
         expected_mime_type = 'application/pdf'
         file_prefix = 'file://'
 
@@ -1045,18 +1071,18 @@ class PDF_Doc:
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
                                                   self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
-            self.document = poppler.document_new_from_file (file_prefix + self.copyname, None)
+            self.document = Poppler.Document.new_from_file (file_prefix + self.copyname, None)
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
             self.npage = 0
 
 
-class PDF_Renderer(threading.Thread,gobject.GObject):
+class PDF_Renderer(threading.Thread,GObject.GObject):
 
     def __init__(self, model, pdfqueue, resample=1.):
         threading.Thread.__init__(self)
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
         self.model = model
         self.pdfqueue = pdfqueue
         self.resample = resample
@@ -1081,19 +1107,18 @@ class PDF_Renderer(threading.Thread,gobject.GObject):
                         cr.scale(1./self.resample, 1./self.resample)
                     page.render(cr)
                     time.sleep(0.003)
-                    gobject.idle_add(self.emit,'update_thumbnail',
+                    GObject.idle_add(self.emit,'update_thumbnail',
                                      idx, thumbnail, self.resample,
-                                     priority=gobject.PRIORITY_LOW)
+                                     priority=GObject.PRIORITY_LOW)
                 except Exception,e:
                     print e
 
 
 def main():
     """This function starts PdfShuffler"""
-    gtk.gdk.threads_init()
-    gobject.threads_init()
+    GObject.threads_init()
     PdfShuffler()
-    gtk.main()
+    Gtk.main()
 
 if __name__ == '__main__':
     main()

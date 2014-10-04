@@ -1,3 +1,9 @@
+Version 0.7:
+--------------
+
+* Port to Gtk+3 (new dependency on gir1.2-poppler-0.18).
+
+
 Version 0.6:
 --------------
 

@@ -1,5 +1,5 @@
 
-PDF-Shuffler 0.6
+PDF-Shuffler 0.7
 ------------------
 
 This is the latest release of PDF-Shuffler, a simple pyGTK utility to merge,
@@ -20,18 +20,7 @@ as superuser.
 What's new in this version:
 ---------------------------
 
-* Cairo based rendering.
-
-* Zooming support.
-
-* Progressbar indicating loading of files.
-
-* New user interface with a conventional menubar and toolbar.
-
-* Export only selected pages option in the right-click menu from
-  Alexander Hirzel.
-
-* Hungarian, Japanese and Chinese translations.
+* Port to Gtk+3 (new dependency on gir1.2-poppler-0.18).
 
 
 Known issues:
