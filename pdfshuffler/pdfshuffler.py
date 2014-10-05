@@ -64,7 +64,10 @@ from gi.repository import Gio          # for inquiring mime types information
 from gi.repository import Poppler      #for the rendering of pdf pages
 import cairo
 
-from pyPdf import PdfFileWriter, PdfFileReader
+try:
+    from pyPdf import PdfFileWriter, PdfFileReader
+except ImportError:
+    from PyPDF2 import PdfFileWriter, PdfFileReader
 
 from pdfshuffler_iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
