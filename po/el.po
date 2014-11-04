@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-28 23:13+0200\n"
+"POT-Creation-Date: 2014-10-04 13:01+0200\n"
 "PO-Revision-Date: 2012-03-05 07:45+0100\n"
 "Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
@@ -17,56 +17,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Greek\n"
 
-#: pdfshuffler/pdfshuffler.py:110
+#: pdfshuffler/pdfshuffler.py:103
 msgid "Can't load icon. Application is not installed correctly."
 msgstr "Αδυναμία φόρτωσης εικονιδίου. Η εφαρμογή δεν έχει εγκατασταθεί σωστά."
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
 msgstr "Περιστροφή  _Δεξιά"
 
-#: pdfshuffler/pdfshuffler.py:234
+#: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
 msgstr "Περιστροφή  _Αριστερά"
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
 msgstr "_Περικοπή"
 
-#: pdfshuffler/pdfshuffler.py:237
+#: pdfshuffler/pdfshuffler.py:239
+#, fuzzy
+msgid "_Delete"
+msgstr "Διαγραφή"
+
+#: pdfshuffler/pdfshuffler.py:239
 msgid "_Export selection..."
 msgstr "Εξαγωγή επιλεγμένων..."
 
-#: pdfshuffler/pdfshuffler.py:299
+#: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
 msgstr "Κανένα έγγραφο"
 
-#: pdfshuffler/pdfshuffler.py:301
+#: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
 msgstr "Διάφορα έγγραφα"
 
-#: pdfshuffler/pdfshuffler.py:317
+#: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Απεικόνιση μικρογραφιών... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler/pdfshuffler.py:435
+#: pdfshuffler/pdfshuffler.py:441
 msgid "page"
 msgstr "σελίδα"
 
-#: pdfshuffler/pdfshuffler.py:461
+#: pdfshuffler/pdfshuffler.py:467
 msgid "Export ..."
 msgstr "Εξαγωγή ..."
 
-#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
+#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
 msgid "PDF files"
 msgstr "Αρχεία PDF"
 
-#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
+#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: pdfshuffler/pdfshuffler.py:518
+#: pdfshuffler/pdfshuffler.py:521
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -77,70 +82,70 @@ msgstr ""
 "Η υποστήριξη για κρυπτογραφημένα αρχεία δεν έχει υλοποιηθεί ακόμα.Η εξαγωγή "
 "του αρχείου απέτυχε."
 
-#: pdfshuffler/pdfshuffler.py:571
+#: pdfshuffler/pdfshuffler.py:574
 msgid "Import..."
 msgstr "Εισαγωγή ..."
 
-#: pdfshuffler/pdfshuffler.py:604
+#: pdfshuffler/pdfshuffler.py:608
 msgid "OpenDocument not supported yet!"
 msgstr "Αρχεία τύπου OpenDocument δεν υποστηρίζονται!"
 
-#: pdfshuffler/pdfshuffler.py:606
+#: pdfshuffler/pdfshuffler.py:610
 msgid "Image file not supported yet!"
 msgstr "Αρχεία εικόνων δεν υποστηρίζονται ακόμα!"
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
 msgstr "Αυτός ο τύπος αρχείου δεν υποστηρίζεται!"
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfshuffler/pdfshuffler.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "Το αρχείο %s δεν υπάρχει"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
 msgstr "Κλείσιμο χωρίς επιλογή αρχείου"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Left"
 msgstr "Αριστερά"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Right"
 msgstr "Δεξιά"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Top"
 msgstr "Πάνω"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Bottom"
 msgstr "Κάτω"
 
-#: pdfshuffler/pdfshuffler.py:940
+#: pdfshuffler/pdfshuffler.py:969
 msgid "Crop Selected Pages"
 msgstr "Περικοπή επιλεγμένων σελίδων"
 
-#: pdfshuffler/pdfshuffler.py:948
+#: pdfshuffler/pdfshuffler.py:977
 msgid "Crop Margins"
 msgstr "Αποκοπή περιθωρίων"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of width"
 msgstr "% του πλάτους"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of height"
 msgstr "% του ύψους"
 
-#: pdfshuffler/pdfshuffler.py:993
+#: pdfshuffler/pdfshuffler.py:1022
 msgid "Dialog closed"
 msgstr "Κλείσιμο διαλόγου"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfshuffler/pdfshuffler.py:1036
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -150,96 +155,57 @@ msgstr ""
 "γραμμένο σε GTK+ και Python"
 
 #: data/pdfshuffler.ui.h:1
-msgid "Crop"
-msgstr "Περικοπή"
-
-#: data/pdfshuffler.ui.h:2
-msgid "Delete"
-msgstr "Διαγραφή"
-
-#: data/pdfshuffler.ui.h:3
-msgid "Import"
-msgstr "Εισαγωγή"
-
-#: data/pdfshuffler.ui.h:4
-msgid "Open a file and append it to the current document"
-msgstr "Άνοιγμα ενός αρχείου και προσάρτηση στο τρέχον έγγραφο"
-
-#: data/pdfshuffler.ui.h:5
-msgid "Rotate left"
-msgstr "Περιστροφή  αριστερά"
-
-#: data/pdfshuffler.ui.h:6
-msgid "Rotate right"
-msgstr "Περιστροφή  δεξιά"
-
-#: data/pdfshuffler.ui.h:7
-msgid "Save"
-msgstr "Αποθήκευση"
-
-#: data/pdfshuffler.ui.h:8
-msgid "Save as"
-msgstr "Αποθήκευση ως"
-
-#: data/pdfshuffler.ui.h:9
-msgid "Zoom in"
-msgstr "Μεγέθυνση"
-
-#: data/pdfshuffler.ui.h:10
-msgid "Zoom out"
-msgstr "Σμίκρυνση"
-
-#: data/pdfshuffler.ui.h:11
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: data/pdfshuffler.ui.h:12
 msgid "_File"
 msgstr "_Αρχείο"
 
-#: data/pdfshuffler.ui.h:13
-msgid "_Help"
-msgstr "_Βοήθεια"
+#: data/pdfshuffler.ui.h:2
+msgid "_Edit"
+msgstr "_Επεξεργασία"
 
-#: data/pdfshuffler.ui.h:14
+#: data/pdfshuffler.ui.h:3
+msgid "Rotate left"
+msgstr "Περιστροφή  αριστερά"
+
+#: data/pdfshuffler.ui.h:4
+msgid "Rotate right"
+msgstr "Περιστροφή  δεξιά"
+
+#: data/pdfshuffler.ui.h:5
+msgid "Crop"
+msgstr "Περικοπή"
+
+#: data/pdfshuffler.ui.h:6
 msgid "_View"
 msgstr "_Προβολή"
 
-#~ msgid "Import pdf"
-#~ msgstr "Εισαγωγή pdf"
+#: data/pdfshuffler.ui.h:7
+msgid "_Help"
+msgstr "_Βοήθεια"
 
-#~ msgid "Export pdf"
-#~ msgstr "Εξαγωγή pdf"
+#: data/pdfshuffler.ui.h:8
+msgid "Open a file and append it to the current document"
+msgstr "Άνοιγμα ενός αρχείου και προσάρτηση στο τρέχον έγγραφο"
 
-#~ msgid "About"
-#~ msgstr "Περί"
+#: data/pdfshuffler.ui.h:9
+msgid "Import"
+msgstr "Εισαγωγή"
 
-#~ msgid "Rotate Page(s) Clockwise"
-#~ msgstr "Περιστροφή σελίδας/ων ωρολογιακά"
+#: data/pdfshuffler.ui.h:10
+msgid "Save"
+msgstr "Αποθήκευση"
 
-#~ msgid "Rotate Page(s) Counterclockwise"
-#~ msgstr "Περιστροφή σελίδας/ων αντιωρολογιακά"
+#: data/pdfshuffler.ui.h:11
+msgid "Save as"
+msgstr "Αποθήκευση ως"
 
-#~ msgid "Crop Page(s)"
-#~ msgstr "Περικοπή σελίδας/ων"
+#: data/pdfshuffler.ui.h:12
+msgid "Zoom in"
+msgstr "Μεγέθυνση"
 
-#~ msgid "Error writing file: %s"
-#~ msgstr "Σφάλμα εγγραφής στο αρχείο: %s"
+#: data/pdfshuffler.ui.h:13
+msgid "Zoom out"
+msgstr "Σμίκρυνση"
 
-#~ msgid "File %s is encrypted."
-#~ msgstr "Το αρχείο %s είναι κρυπτογραφημένο."
-
-#~ msgid "File export failed."
-#~ msgstr "Αποτυχία εξαγωγής αρχείου."
-
-#~ msgid "exporting to:"
-#~ msgstr "εξαγωγή:"
-
-#~ msgid ""
-#~ "PDF-Shuffler is a simple pyGTK utility which lets you merge, split and "
-#~ "rearrange PDF documents. You can also rotate and crop individual pages of "
-#~ "a pdf document."
-#~ msgstr ""
-#~ "Το PDF-Shuffler είναι μία απλή εφαρμογή pyGTK που σας επιτρέπει να "
-#~ "συνενώσετε, διαχωρίσετε και να αναδιατάξετε έγγραφα pdf. Επίσης μπορείτε "
-#~ "να περιστρέψετε και να περικόψετε τις σελίδες ενός εγγράφου pdf."
+#: data/pdfshuffler.ui.h:14
+msgid "Delete"
+msgstr "Διαγραφή"

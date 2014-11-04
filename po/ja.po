@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-28 23:13+0200\n"
+"POT-Creation-Date: 2014-10-04 13:01+0200\n"
 "PO-Revision-Date: 2010-11-20 01:48+JST\n"
 "Last-Translator: Toshiharu Kudoh <toshi.kd2@gmail.com>\n"
 "Language-Team: Japanese <LL@li.org>\n"
@@ -16,57 +16,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pdfshuffler/pdfshuffler.py:110
+#: pdfshuffler/pdfshuffler.py:103
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:234
+#: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:237
+#: pdfshuffler/pdfshuffler.py:239
+#, fuzzy
+msgid "_Delete"
+msgstr "ページの削除"
+
+#: pdfshuffler/pdfshuffler.py:239
 #, fuzzy
 msgid "_Export selection..."
 msgstr "エクスポート..."
 
-#: pdfshuffler/pdfshuffler.py:299
+#: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:301
+#: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:317
+#: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:435
+#: pdfshuffler/pdfshuffler.py:441
 msgid "page"
 msgstr "ページ"
 
-#: pdfshuffler/pdfshuffler.py:461
+#: pdfshuffler/pdfshuffler.py:467
 msgid "Export ..."
 msgstr "エクスポート..."
 
-#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
+#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
 msgid "PDF files"
 msgstr "PDF ファイル"
 
-#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
+#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
 msgid "All files"
 msgstr "全てのファイル"
 
-#: pdfshuffler/pdfshuffler.py:518
+#: pdfshuffler/pdfshuffler.py:521
 #, fuzzy, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -74,71 +79,71 @@ msgid ""
 "File export failed."
 msgstr "そのファイルのサポートはまだ実装されていません。"
 
-#: pdfshuffler/pdfshuffler.py:571
+#: pdfshuffler/pdfshuffler.py:574
 msgid "Import..."
 msgstr "インポート..."
 
-#: pdfshuffler/pdfshuffler.py:604
+#: pdfshuffler/pdfshuffler.py:608
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument はまだサポートされていません！"
 
-#: pdfshuffler/pdfshuffler.py:606
+#: pdfshuffler/pdfshuffler.py:610
 msgid "Image file not supported yet!"
 msgstr "画像ファイルはまだサポートされていません！"
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
 msgstr "サポートされていないファイル形式です！"
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfshuffler/pdfshuffler.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "%s は存在しません"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
 msgstr "ファイルが選択されていませんので閉じられました"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Left"
 msgstr "左"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Right"
 msgstr "右"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Top"
 msgstr "上"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Bottom"
 msgstr "下"
 
-#: pdfshuffler/pdfshuffler.py:940
+#: pdfshuffler/pdfshuffler.py:969
 #, fuzzy
 msgid "Crop Selected Pages"
 msgstr "選択されたページのトリミング"
 
-#: pdfshuffler/pdfshuffler.py:948
+#: pdfshuffler/pdfshuffler.py:977
 msgid "Crop Margins"
 msgstr "余白のトリミング"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of width"
 msgstr "% の幅"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of height"
 msgstr "% の高さ"
 
-#: pdfshuffler/pdfshuffler.py:993
+#: pdfshuffler/pdfshuffler.py:1022
 msgid "Dialog closed"
 msgstr "ダイアログが閉じられました"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfshuffler/pdfshuffler.py:1036
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -146,95 +151,59 @@ msgid ""
 msgstr ""
 
 #: data/pdfshuffler.ui.h:1
-msgid "Crop"
+msgid "_File"
 msgstr ""
 
 #: data/pdfshuffler.ui.h:2
-#, fuzzy
-msgid "Delete"
-msgstr "ページの削除"
+msgid "_Edit"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:3
+msgid "Rotate left"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:4
+msgid "Rotate right"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:5
+msgid "Crop"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:6
+msgid "_View"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:7
+msgid "_Help"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:8
+msgid "Open a file and append it to the current document"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:9
 #, fuzzy
 msgid "Import"
 msgstr "インポート..."
 
-#: data/pdfshuffler.ui.h:4
-msgid "Open a file and append it to the current document"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:5
-msgid "Rotate left"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:6
-msgid "Rotate right"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:7
+#: data/pdfshuffler.ui.h:10
 msgid "Save"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfshuffler.ui.h:11
 msgid "Save as"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfshuffler.ui.h:12
 msgid "Zoom in"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfshuffler.ui.h:13
 msgid "Zoom out"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:11
-msgid "_Edit"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:12
-msgid "_File"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:13
-msgid "_Help"
-msgstr ""
-
 #: data/pdfshuffler.ui.h:14
-msgid "_View"
-msgstr ""
-
-#~ msgid "Import pdf"
-#~ msgstr "PDF をインポート"
-
-#~ msgid "Export pdf"
-#~ msgstr "PDF をエクスポート"
-
-#~ msgid "About"
-#~ msgstr "情報"
-
-#~ msgid "Rotate Page(s) Clockwise"
-#~ msgstr "ページを時計回りで回転"
-
-#~ msgid "Rotate Page(s) Counterclockwise"
-#~ msgstr "ページを反時計回りで回転"
-
-#~ msgid "Crop Page(s)"
-#~ msgstr "ページのトリミング"
-
-#~ msgid "Error writing file: %s"
-#~ msgstr "%s の書き出し中にエラーが発生しました"
-
-#~ msgid "File %s is encrypted."
-#~ msgstr "%s は暗号化されています。"
-
-#~ msgid "File export failed."
-#~ msgstr "ファイルの書き出しに失敗しました。"
-
-#~ msgid ""
-#~ "PDF-Shuffler is a simple pyGTK utility which lets you merge, split and "
-#~ "rearrange PDF documents. You can also rotate and crop individual pages of "
-#~ "a pdf document."
-#~ msgstr ""
-#~ "PDF-Shuffler は PDF ドキュメントのマージ、分割、回転、ページの再配置をさせ"
-#~ "るシンプルな pyGTK ユーティリティです。PDF ドキュメントの個々のページを回"
-#~ "転させたり、トリミングすることも可能です。"
+#, fuzzy
+msgid "Delete"
+msgstr "ページの削除"

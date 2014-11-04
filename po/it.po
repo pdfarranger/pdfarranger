@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-28 23:13+0200\n"
+"POT-Creation-Date: 2014-10-04 13:01+0200\n"
 "PO-Revision-Date: 2009-06-25 14:11+0100\n"
 "Last-Translator: netcelli <netcelli@dchublist.com>\n"
 "Language-Team: netcelli <netcelli@gmail.com>\n"
@@ -13,57 +13,62 @@ msgstr ""
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 
-#: pdfshuffler/pdfshuffler.py:110
+#: pdfshuffler/pdfshuffler.py:103
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:234
+#: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:237
+#: pdfshuffler/pdfshuffler.py:239
+#, fuzzy
+msgid "_Delete"
+msgstr "Cancella pagina(e)"
+
+#: pdfshuffler/pdfshuffler.py:239
 #, fuzzy
 msgid "_Export selection..."
 msgstr "Esporta ..."
 
-#: pdfshuffler/pdfshuffler.py:299
+#: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:301
+#: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:317
+#: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:435
+#: pdfshuffler/pdfshuffler.py:441
 msgid "page"
 msgstr "pagina"
 
-#: pdfshuffler/pdfshuffler.py:461
+#: pdfshuffler/pdfshuffler.py:467
 msgid "Export ..."
 msgstr "Esporta ..."
 
-#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
+#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
 msgid "PDF files"
 msgstr "File PDF"
 
-#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
+#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
 msgid "All files"
 msgstr "Tutti i file"
 
-#: pdfshuffler/pdfshuffler.py:518
+#: pdfshuffler/pdfshuffler.py:521
 #, fuzzy, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -71,72 +76,72 @@ msgid ""
 "File export failed."
 msgstr "Il supporto per questo tipo di file non è ancora stato implementato"
 
-#: pdfshuffler/pdfshuffler.py:571
+#: pdfshuffler/pdfshuffler.py:574
 #, fuzzy
 msgid "Import..."
 msgstr "Importa ..."
 
-#: pdfshuffler/pdfshuffler.py:604
+#: pdfshuffler/pdfshuffler.py:608
 msgid "OpenDocument not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:606
+#: pdfshuffler/pdfshuffler.py:610
 msgid "Image file not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfshuffler/pdfshuffler.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "Il file %s non esiste"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
 msgstr "Chiuso, nessun file selezionato"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Left"
 msgstr "Sinistra"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:950
 msgid "Right"
 msgstr "Destra"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Top"
 msgstr "Alto"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:951
 msgid "Bottom"
 msgstr "Basso"
 
-#: pdfshuffler/pdfshuffler.py:940
+#: pdfshuffler/pdfshuffler.py:969
 #, fuzzy
 msgid "Crop Selected Pages"
 msgstr "Taglia pagina(e) seleziona(e)"
 
-#: pdfshuffler/pdfshuffler.py:948
+#: pdfshuffler/pdfshuffler.py:977
 msgid "Crop Margins"
 msgstr "Taglia margini"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of width"
 msgstr "% in larghezza"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:984
 #, python-format
 msgid "% of height"
 msgstr "% in altezza"
 
-#: pdfshuffler/pdfshuffler.py:993
+#: pdfshuffler/pdfshuffler.py:1022
 msgid "Dialog closed"
 msgstr "FInestra di dialogo chiusa"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfshuffler/pdfshuffler.py:1036
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -144,83 +149,59 @@ msgid ""
 msgstr ""
 
 #: data/pdfshuffler.ui.h:1
-msgid "Crop"
+msgid "_File"
 msgstr ""
 
 #: data/pdfshuffler.ui.h:2
-#, fuzzy
-msgid "Delete"
-msgstr "Cancella pagina(e)"
+msgid "_Edit"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:3
+msgid "Rotate left"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:4
+msgid "Rotate right"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:5
+msgid "Crop"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:6
+msgid "_View"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:7
+msgid "_Help"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:8
+msgid "Open a file and append it to the current document"
+msgstr ""
+
+#: data/pdfshuffler.ui.h:9
 #, fuzzy
 msgid "Import"
 msgstr "Importa ..."
 
-#: data/pdfshuffler.ui.h:4
-msgid "Open a file and append it to the current document"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:5
-msgid "Rotate left"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:6
-msgid "Rotate right"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:7
+#: data/pdfshuffler.ui.h:10
 msgid "Save"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfshuffler.ui.h:11
 msgid "Save as"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfshuffler.ui.h:12
 msgid "Zoom in"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfshuffler.ui.h:13
 msgid "Zoom out"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:11
-msgid "_Edit"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:12
-msgid "_File"
-msgstr ""
-
-#: data/pdfshuffler.ui.h:13
-msgid "_Help"
-msgstr ""
-
 #: data/pdfshuffler.ui.h:14
-msgid "_View"
-msgstr ""
-
-#~ msgid "Import pdf"
-#~ msgstr "Importa PDF"
-
-#~ msgid "Export pdf"
-#~ msgstr "Esporta PDF"
-
-#~ msgid "Rotate Page(s) Clockwise"
-#~ msgstr "Ruota pagina(e) in senso orario"
-
-#~ msgid "Rotate Page(s) Counterclockwise"
-#~ msgstr "Ruota pagina(e) in senso antiorario"
-
-#~ msgid "Crop Page(s)"
-#~ msgstr "Taglia pagina(e)"
-
-#~ msgid "File %s is encrypted."
-#~ msgstr "Il file %s è criptato."
-
-#~ msgid "File export failed."
-#~ msgstr "Esportazione dei file fallita"
-
-#~ msgid "exporting to:"
-#~ msgstr "esporta in:"
+#, fuzzy
+msgid "Delete"
+msgstr "Cancella pagina(e)"
