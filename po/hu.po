@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-04 13:01+0200\n"
+"POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2011-11-25 18:26+0100\n"
 "Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: SuliX Support Team <support@sulix.hu>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-Country: HUNGARY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: pdfshuffler/pdfshuffler.py:103
+#: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 "Az ikon betöltése nem sikerült, az alkalmazás nincs megfelelően telepítve."
@@ -109,45 +109,45 @@ msgstr "A fájl nem létezik: %s"
 msgid "Closed, no files selected"
 msgstr "Bezárva, nincs fájl kiválasztva"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
 msgstr "Balra"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
 msgstr "Jobbra"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
 msgstr "Fent"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
 msgstr "Lent"
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfshuffler/pdfshuffler.py:953
 msgid "Crop Selected Pages"
 msgstr "A kiválasztott oldalak levágása"
 
-#: pdfshuffler/pdfshuffler.py:977
+#: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
 msgstr "Margók levágása"
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:968
 #, fuzzy, python-format
-msgid "% of width"
-msgstr "% szélesség"
+msgid "%% of width"
+msgstr "%% szélesség"
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:969
 #, fuzzy, python-format
-msgid "% of height"
-msgstr "% magasság"
+msgid "%% of height"
+msgstr "%% magasság"
 
-#: pdfshuffler/pdfshuffler.py:1022
+#: pdfshuffler/pdfshuffler.py:1007
 msgid "Dialog closed"
 msgstr "Párbeszédablak bezárva"
 
-#: pdfshuffler/pdfshuffler.py:1036
+#: pdfshuffler/pdfshuffler.py:1021
 #, fuzzy, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

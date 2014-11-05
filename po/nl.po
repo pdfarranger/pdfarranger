@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfshuffler-sourceforge-net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-04 13:01+0200\n"
+"POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2013-11-20 10:08+0000\n"
 "Last-Translator: Thomas De Rocker\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/pdfshuffler-"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfshuffler/pdfshuffler.py:103
+#: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
@@ -107,46 +107,46 @@ msgstr "Bestand %s bestaat niet"
 msgid "Closed, no files selected"
 msgstr "Gesloten, geen bestanden geselecteerd"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
 msgstr "Links"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
 msgstr "Boven"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
 msgstr "Onder"
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfshuffler/pdfshuffler.py:953
 #, fuzzy
 msgid "Crop Selected Pages"
 msgstr "Geselecteerde pagina('s) bijsnijden"
 
-#: pdfshuffler/pdfshuffler.py:977
+#: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
 msgstr "Marges bijsnijden"
 
-#: pdfshuffler/pdfshuffler.py:984
-#, python-format
-msgid "% of width"
-msgstr "% van breedte"
+#: pdfshuffler/pdfshuffler.py:968
+#, fuzzy, python-format
+msgid "%% of width"
+msgstr "%% van breedte"
 
-#: pdfshuffler/pdfshuffler.py:984
-#, python-format
-msgid "% of height"
-msgstr "% van hoogte"
+#: pdfshuffler/pdfshuffler.py:969
+#, fuzzy, python-format
+msgid "%% of height"
+msgstr "%% van hoogte"
 
-#: pdfshuffler/pdfshuffler.py:1022
+#: pdfshuffler/pdfshuffler.py:1007
 msgid "Dialog closed"
 msgstr "Dialoog afgesloten"
 
-#: pdfshuffler/pdfshuffler.py:1036
+#: pdfshuffler/pdfshuffler.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

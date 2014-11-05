@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-04 13:01+0200\n"
+"POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pdfshuffler/pdfshuffler.py:103
+#: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
@@ -103,45 +103,45 @@ msgstr ""
 msgid "Closed, no files selected"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfshuffler/pdfshuffler.py:953
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:977
+#: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:968
 #, python-format
-msgid "% of width"
+msgid "%% of width"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:984
+#: pdfshuffler/pdfshuffler.py:969
 #, python-format
-msgid "% of height"
+msgid "%% of height"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:1022
+#: pdfshuffler/pdfshuffler.py:1007
 msgid "Dialog closed"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:1036
+#: pdfshuffler/pdfshuffler.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

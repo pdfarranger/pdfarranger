@@ -965,7 +965,8 @@ class PdfShuffler:
         frame.add(vbox)
 
         spin_list = []
-        units = 2 * [_('% of width')] + 2 * [_('% of height')]
+        units = 2 * [_('%% of width').replace('%%','%')] +\
+                2 * [_('%% of height').replace('%%','%')]
         for side in sides:
             hbox = Gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)

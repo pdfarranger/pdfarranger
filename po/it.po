@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-04 13:01+0200\n"
+"POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2009-06-25 14:11+0100\n"
 "Last-Translator: netcelli <netcelli@dchublist.com>\n"
 "Language-Team: netcelli <netcelli@gmail.com>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 
-#: pdfshuffler/pdfshuffler.py:103
+#: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
@@ -102,46 +102,46 @@ msgstr "Il file %s non esiste"
 msgid "Closed, no files selected"
 msgstr "Chiuso, nessun file selezionato"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
 msgstr "Sinistra"
 
-#: pdfshuffler/pdfshuffler.py:950
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
 msgstr "Destra"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
 msgstr "Alto"
 
-#: pdfshuffler/pdfshuffler.py:951
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
 msgstr "Basso"
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfshuffler/pdfshuffler.py:953
 #, fuzzy
 msgid "Crop Selected Pages"
 msgstr "Taglia pagina(e) seleziona(e)"
 
-#: pdfshuffler/pdfshuffler.py:977
+#: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
 msgstr "Taglia margini"
 
-#: pdfshuffler/pdfshuffler.py:984
-#, python-format
-msgid "% of width"
-msgstr "% in larghezza"
+#: pdfshuffler/pdfshuffler.py:968
+#, fuzzy, python-format
+msgid "%% of width"
+msgstr "%% in larghezza"
 
-#: pdfshuffler/pdfshuffler.py:984
-#, python-format
-msgid "% of height"
-msgstr "% in altezza"
+#: pdfshuffler/pdfshuffler.py:969
+#, fuzzy, python-format
+msgid "%% of height"
+msgstr "%% in altezza"
 
-#: pdfshuffler/pdfshuffler.py:1022
+#: pdfshuffler/pdfshuffler.py:1007
 msgid "Dialog closed"
 msgstr "FInestra di dialogo chiusa"
 
-#: pdfshuffler/pdfshuffler.py:1036
+#: pdfshuffler/pdfshuffler.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
