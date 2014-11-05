@@ -78,8 +78,6 @@ class PdfShuffler:
     prefs = {
         'window width': min(700, Gdk.Screen.get_default().get_width() / 2),
         'window height': min(600, Gdk.Screen.get_default().get_height() - 50),
-        'window x': 0,
-        'window y': 0,
         'initial thumbnail size': 300,
         'initial zoom level': -14,
     }
@@ -132,7 +130,6 @@ class PdfShuffler:
         self.window = self.uiXML.get_object('main_window')
         self.window.set_title(APPNAME)
         self.window.set_border_width(0)
-        self.window.move(self.prefs['window x'], self.prefs['window y'])
         self.window.set_default_size(self.prefs['window width'],
                                      self.prefs['window height'])
         self.window.connect('delete_event', self.close_application)
@@ -659,22 +656,6 @@ class PdfShuffler:
         selection = self.iconview.get_selected_items()
         selection.sort(key=lambda x: x.get_indices()[0])
         data = []
-#        target = selection_data.get_target()
-#        print 'repr(target):',repr(target)
-#        print 'str(target):',str(target)
-#        print context.list_targets()
-#        print 'get_data:',selection_data.get_data()
-#        print 'get_data_type:',selection_data.get_data_type()
-#        print 'get_display:',selection_data.get_display()
-#        print 'get_format:',selection_data.get_format()
-#        print 'get_length:',selection_data.get_length()
-#        print 'get_selection:',selection_data.get_selection()
-#        print 'get_target:',selection_data.get_target()
-#        print 'get_targets:',selection_data.get_targets()
-#        print 'get_text:',selection_data.get_text()
-#        print 'get_uris:',selection_data.get_uris()
-#        print 'targets_include_text:',selection_data.targets_include_text()
-#        print selection_data.get_target(),target_id
         for path in selection:
             target = str(selection_data.get_target())
             if target == 'MODEL_ROW_INTERN':
@@ -977,7 +958,7 @@ class PdfShuffler:
         dialog.set_size_request(340, 250)
         dialog.set_default_response(Gtk.ResponseType.OK)
 
-        frame = Gtk.Frame(_('Crop Margins'))
+        frame = Gtk.Frame(label=_('Crop Margins'))
         dialog.vbox.pack_start(frame, False, False, 20)
 
         vbox = Gtk.VBox(False, 0)
@@ -994,7 +975,7 @@ class PdfShuffler:
             hbox.pack_start(label, True, True, 20)
 
             adj = Gtk.Adjustment(100.*crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
-            spin = Gtk.SpinButton(adj, 0, 1)
+            spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
             spin.set_activates_default(True)
             spin.connect('value-changed', set_crop_value, side)
             spin_list.append(spin)
