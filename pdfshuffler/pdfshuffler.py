@@ -228,10 +228,17 @@ class PdfShuffler:
 
         # Change iconview color background
         style_context_sw = self.sw.get_style_context()
-        for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT,
-                      Gtk.StateFlags.ACTIVE, Gtk.StateFlags.SELECTED):
+        color_selected = self.iconview.get_style_context()\
+                             .get_background_color(Gtk.StateFlags.SELECTED)
+        color_prelight = color_selected.copy()
+        color_prelight.alpha = 0.3
+        for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.ACTIVE):
            self.iconview.override_background_color \
               (state, style_context_sw.get_background_color(state))
+        self.iconview.override_background_color(Gtk.StateFlags.SELECTED,
+                                                color_selected)
+        self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
+                                                color_prelight)
 
         # Creating the popup menu
         self.popup = Gtk.Menu()
@@ -572,6 +579,7 @@ class PdfShuffler:
         """Import doc"""
 
         chooser = Gtk.FileChooserDialog(title=_('Import...'),
+                                        parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
                                         buttons=(Gtk.STOCK_CANCEL,
                                                   Gtk.ResponseType.CANCEL,
@@ -1031,6 +1039,7 @@ class PdfShuffler:
     def error_message_dialog(self, msg):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DIALOG_MODAL,
                                           type=Gtk.MESSAGE_ERROR,
+                                          parent=self.window,
                                           message_format=str(msg),
                                           buttons=Gtk.BUTTONS_OK)
         response = error_msg_dlg.run()
