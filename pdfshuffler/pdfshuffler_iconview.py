@@ -65,7 +65,7 @@ class CellRendererImage(Gtk.CellRenderer):
     def get_geometry(self):
 
         rotation = int(self.rotation) % 360
-        rotation = ((rotation + 45) / 90) * 90
+        rotation = round(rotation / 90) * 90
         if not self.image:
             w0 = w1 = self.width / self.resample
             h0 = h1 = self.height / self.resample

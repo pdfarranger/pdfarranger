@@ -36,7 +36,7 @@ from copy import copy
 
 import locale       #for multilanguage support
 import gettext
-gettext.install('pdfshuffler', unicode=1)
+gettext.install('pdfshuffler')
 _ = gettext.gettext
 
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
@@ -95,7 +95,7 @@ class PdfShuffler:
     def __init__(self):
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp("pdfshuffler")
-        os.chmod(self.tmp_dir, 0700)
+        os.chmod(self.tmp_dir, 0o700)
 
         icon_theme = Gtk.IconTheme.get_default()
         try:
@@ -177,7 +177,6 @@ class PdfShuffler:
 
         self.cellthmb = CellRendererImage()
         self.iconview.pack_start(self.cellthmb, False)
-#        print(help(self.iconview.set_cell_data_func))
         self.iconview.set_cell_data_func(self.cellthmb, self.set_cellrenderer_data, None)
 #        self.iconview.add_attribute(self.cellthmb, 'image', 1)
 #        self.iconview.add_attribute(self.cellthmb, 'scale', 4)
@@ -367,7 +366,7 @@ class PdfShuffler:
         w0, h0 = page.get_size()
 
         rotation = int(rotation) % 360
-        rotation = ((rotation + 45) / 90) * 90
+        rotation = round(rotation / 90) * 90
         if rotation == 90 or rotation == 270:
             w1, h1 = h0, w0
         else:
@@ -501,7 +500,7 @@ class PdfShuffler:
                     self.export_to_file(file_out, only_selected)
                     self.export_directory = path
                     self.set_unsaved(False)
-                except Exception, e:
+                except Exception as e:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
@@ -528,7 +527,7 @@ class PdfShuffler:
                     errmsg = _('File %s is encrypted.\n'
                                'Support for encrypted files has not been implemented yet.\n'
                                'File export failed.') % pdfdoc.filename
-                    raise Exception, errmsg
+                    raise Exception(errmsg)
                 #FIXME
                 #else
                 #   ask for password and decrypt file
@@ -549,7 +548,7 @@ class PdfShuffler:
             if angle != 0:
                 current_page.rotateClockwise(angle)
             if crop != [0.,0.,0.,0.]:
-                rotate_times = (((angle + angle0) % 360 + 45) / 90) % 4
+                rotate_times = int(round(((angle + angle0) % 360) / 90) % 4)
                 crop_init = crop
                 if rotate_times != 0:
                     perm = [0,2,1,3]
@@ -620,7 +619,7 @@ class PdfShuffler:
                             print(_('File type not supported!'))
                     else:
                         print(_('File %s does not exist') % filename)
-                except Exception, e:
+                except Exception as e:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
@@ -844,7 +843,7 @@ class PdfShuffler:
                 try:
                     if os.path.isfile(filename): # is it a file?
                         self.add_pdf_pages(filename)
-                except Exception, e:
+                except Exception as e:
                     self.error_message_dialog(e)
                 
 
@@ -913,7 +912,7 @@ class PdfShuffler:
         selection = self.iconview.get_selected_items()
         if len(selection) > 0:
             self.set_unsaved(True)
-        rotate_times = (((-angle) % 360 + 45) / 90) % 4
+        rotate_times = int(round(((-angle) % 360) / 90) % 4)
         if rotate_times is not 0:
             for path in selection:
                 iter = model.get_iter(path)
@@ -1104,8 +1103,8 @@ class PDF_Renderer(threading.Thread,GObject.GObject):
                     GObject.idle_add(self.emit,'update_thumbnail',
                                      idx, thumbnail, self.resample,
                                      priority=GObject.PRIORITY_LOW)
-                except Exception,e:
-                    print e
+                except Exception as e:
+                    print(e)
 
 
 def main():

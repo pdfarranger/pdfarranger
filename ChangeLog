@@ -3,6 +3,8 @@ Version 0.7:
 
 * Port to Gtk+3 (new dependency on gir1.2-poppler-0.18).
 
+* Port to Python 3 (new alternative dependency on python3-pypdf2).
+
 
 Version 0.6:
 --------------
@@ -93,7 +95,7 @@ Version 0.3.1:
 --------------
 
 * Fixes the bug, that was leading to loss of the crop information of a
-  page after draggging ane dropping it to a second instance of
+  page after dragging and dropping it to a second instance of
   pdfshuffler.
 
 
@@ -107,8 +109,8 @@ Version 0.3:
 
 * Autoscroll during drag and drop.
 
-* Multilanguage support has been implemented. German, spanish and
-  greek translations incluced.
+* Multi-language support has been implemented. German, Spanish and
+  Greek translations included.
 
 * Export to pdf with filename which overrides an imported pdf filename
   now works.
@@ -117,7 +119,7 @@ Version 0.3:
 Version 0.2:
 ------------
 
-* A great part of the programm has been rewritten. A new and more 
+* A great part of the program has been rewritten. A new and more 
   flexible mechanism for loading the document pages has been implemented.
 
 * Drag and drop functionality has been improved. Now drag and drop of 

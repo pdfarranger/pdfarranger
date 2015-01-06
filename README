@@ -22,6 +22,8 @@ What's new in this version:
 
 * Port to Gtk+3 (new dependency on gir1.2-poppler-0.18).
 
+* Port to Python 3 (new alternative dependency on python3-pypdf2).
+
 
 Known issues:
 -------------
