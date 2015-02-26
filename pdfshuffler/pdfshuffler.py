@@ -581,9 +581,9 @@ class PdfShuffler:
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
                                         buttons=(Gtk.STOCK_CANCEL,
-                                                  Gtk.ResponseType.CANCEL,
-                                                  Gtk.STOCK_OPEN,
-                                                  Gtk.ResponseType.OK))
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_OPEN,
+                                                 Gtk.ResponseType.OK))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
@@ -678,7 +678,7 @@ class PdfShuffler:
                                        [str(side) for side in crop]))
         if data:
             data = '\n;\n'.join(data)
-            selection_data.set(selection_data.get_target(), 8, data)
+            selection_data.set(selection_data.get_target(), 8, data.encode())
 
     def iv_dnd_received_data(self, iconview, context, x, y,
                              selection_data, target_id, etime):
@@ -687,7 +687,7 @@ class PdfShuffler:
         model = iconview.get_model()
         data = selection_data.get_data()
         if data:
-            data = data.split('\n;\n')
+            data = data.decode().split('\n;\n')
             item = iconview.get_dest_item_at_pos(x, y)
             if item:
                 path, position = item
@@ -1036,13 +1036,13 @@ class PdfShuffler:
         about_dialog.show_all()
 
     def error_message_dialog(self, msg):
-        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DIALOG_MODAL,
-                                          type=Gtk.MESSAGE_ERROR,
+        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
+                                          type=Gtk.MessageType.ERROR,
                                           parent=self.window,
                                           message_format=str(msg),
-                                          buttons=Gtk.BUTTONS_OK)
+                                          buttons=Gtk.ButtonsType.OK)
         response = error_msg_dlg.run()
-        if response == Gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             error_msg_dlg.destroy()
 
 class PDF_Doc:
@@ -1064,7 +1064,7 @@ class PDF_Doc:
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
                                                   self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
-            self.document = Poppler.Document.new_from_file (file_prefix + self.copyname, None)
+            self.document = Poppler.Document.new_from_file(file_prefix + self.copyname, None)
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
