@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=PDF Shuffler
+GenericName=PDF Shuffler
+Comment=A graphical tool for manipulating PDF
+Comment[sk]=Grafický nástroj na manipuláciu s PDF
+Exec=pdfshuffler
+Icon=pdfshuffler
+StartupNotify=false
+Categories=Office;
+MimeType=application/pdf;
+Terminal=false
