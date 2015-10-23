@@ -1,3 +1,9 @@
+pdfshuffler (0.7.0~git20151023.68dccc5-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+
+ -- Jerome Robert <jeromerobert@gmx.com>  Fri, 23 Oct 2015 19:43:13 +0200
+
 pdfshuffler (0.6.0-7) unstable; urgency=medium
 
   * Remove calls to deprecated GDK threading functions altogether.

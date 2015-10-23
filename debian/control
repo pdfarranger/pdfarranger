@@ -5,7 +5,6 @@ Maintainer: Python Applications Packaging Team <python-apps-team@lists.alioth.de
 Uploaders: Vincent Cheng <vcheng@debian.org>, Jeremy Lainé <jeremy.laine@m4x.org>
 Build-Depends: debhelper (>= 9), gettext, python (>= 2.6.6-3~)
 Standards-Version: 3.9.6
-X-Python-Version: >= 2.4
 Homepage: http://sourceforge.net/projects/pdfshuffler/
 Vcs-Svn: svn://anonscm.debian.org/python-apps/packages/pdfshuffler/trunk/
 Vcs-Browser: http://anonscm.debian.org/viewvc/python-apps/packages/pdfshuffler/trunk/
@@ -13,9 +12,11 @@ Vcs-Browser: http://anonscm.debian.org/viewvc/python-apps/packages/pdfshuffler/t
 Package: pdfshuffler
 Architecture: all
 Depends:
- python-gtk2,
- python-poppler,
- python-pypdf (>= 1.10),
+ gir1.2-gtk-3.0,
+ gir1.2-poppler-0.18,
+ python-gi,
+ python-cairo,
+ python-pypdf2,
  ${misc:Depends},
  ${python:Depends}
 Description: merge, split and re-arrange pages from PDF documents
