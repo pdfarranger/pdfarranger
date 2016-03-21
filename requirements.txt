@@ -1,0 +1,2 @@
+https://github.com/jeromerobert/pdfshuffler/zipball/master
+PyPDF2
