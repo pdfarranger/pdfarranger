@@ -82,7 +82,7 @@ try:
 except ImportError:
     from PyPDF2 import PdfFileWriter, PdfFileReader
 
-from pdfshuffler_iconview import CellRendererImage
+from .pdfshuffler_iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
 import time
