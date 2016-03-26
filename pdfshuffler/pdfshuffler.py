@@ -61,6 +61,7 @@ from gi.repository import Gdk
 from gi.repository import GObject      # for using custom signals
 from gi.repository import Pango        # for adjusting the text alignment in CellRendererText
 from gi.repository import Gio          # for inquiring mime types information
+gi.require_version('Poppler', '0.18')
 from gi.repository import Poppler      #for the rendering of pdf pages
 import cairo
 
