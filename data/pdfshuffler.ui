@@ -180,7 +180,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_zoomin">
-                        <property name="label">Zoom in</property>
+                        <property name="label" translatable="yes">Zoom in</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>
@@ -191,7 +191,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_zoomout">
-                        <property name="label">Zoom out</property>
+                        <property name="label" translatable="yes">Zoom out</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>

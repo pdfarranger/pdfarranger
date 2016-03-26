@@ -122,6 +122,7 @@ class PdfShuffler:
                                        'pdfshuffler.ui')
 
         self.uiXML = Gtk.Builder()
+        self.uiXML.set_translation_domain('pdfshuffler')
         self.uiXML.add_from_file(ui_path)
         self.uiXML.connect_signals(self)
 

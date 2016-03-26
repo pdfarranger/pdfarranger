@@ -4,9 +4,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2012-03-05 07:51+0100\n"
-"Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
+"Last-Translator: Rafael Jesús García Perdigón <rafagarp@gmail.com>\n"
 "Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,18 +15,19 @@ msgstr ""
 #: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
+"No se puede cargar el icono. La aplicación no está instalada correctamente"
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
-msgstr ""
+msgstr "_Rotar a la derecha"
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
-msgstr ""
+msgstr "Rotar a la _izquierda"
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
-msgstr "_Recortar.."
+msgstr "R_ecortar.."
 
 #: pdfshuffler/pdfshuffler.py:239
 #, fuzzy
@@ -35,20 +36,20 @@ msgstr "Borrar"
 
 #: pdfshuffler/pdfshuffler.py:239
 msgid "_Export selection..."
-msgstr "Exportar las  páginas seleccionadas..."
+msgstr "E_xportar las páginas seleccionadas..."
 
 #: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
-msgstr ""
+msgstr "No hay documento seleccionado"
 
 #: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
-msgstr ""
+msgstr "Varios documentos"
 
 #: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr ""
+msgstr "Renderizando las miniaturas... [%(i1)s/%(i2)s]"
 
 #: pdfshuffler/pdfshuffler.py:441
 msgid "page"
@@ -67,12 +68,14 @@ msgid "All files"
 msgstr "Todos los archivos"
 
 #: pdfshuffler/pdfshuffler.py:521
-#, fuzzy, python-format
 msgid ""
 "File %s is encrypted.\n"
 "Support for encrypted files has not been implemented yet.\n"
 "File export failed."
-msgstr "Aún no se ha añadido la compatibilidad con este tipo de archivos."
+msgstr ""
+"El fichero %s está encriptado.\n"
+"Aún no se ha añadido compatibilidad con este tipo de archivos.La exportación "
+"del fichero ha fallado."
 
 #: pdfshuffler/pdfshuffler.py:574
 msgid "Import..."
@@ -89,7 +92,7 @@ msgstr "Aún no se ha añadido la compatibilidad con archivos de imagen."
 
 #: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
-msgstr "Archivos de este tipo no son compatibles."
+msgstr "Archivos de este tipo no son compatibles!"
 
 #: pdfshuffler/pdfshuffler.py:614
 #, python-format
@@ -98,7 +101,7 @@ msgstr "El archivo %s no existe"
 
 #: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
-msgstr "Cerrado, ningún archivo seleccionado"
+msgstr "Cerrado, ningún archivo seleccionado."
 
 #: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
@@ -144,22 +147,24 @@ msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
+"%s es una herramienta para reordenar y modificar ficheros PDF. Desarrollado "
+"usando GTK+ y Python"
 
 #: data/pdfshuffler.ui.h:1
 msgid "_File"
-msgstr ""
+msgstr "_Fichero"
 
 #: data/pdfshuffler.ui.h:2
 msgid "_Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: data/pdfshuffler.ui.h:3
 msgid "Rotate left"
-msgstr ""
+msgstr "Rotar a la izquierda"
 
 #: data/pdfshuffler.ui.h:4
 msgid "Rotate right"
-msgstr ""
+msgstr "Rotar a la derecha"
 
 #: data/pdfshuffler.ui.h:5
 msgid "Crop"
@@ -175,7 +180,7 @@ msgstr "_Ayuda"
 
 #: data/pdfshuffler.ui.h:8
 msgid "Open a file and append it to the current document"
-msgstr ""
+msgstr "Abrir un fichero y añadirlo al documento actual"
 
 #: data/pdfshuffler.ui.h:9
 msgid "Import"
@@ -191,11 +196,11 @@ msgstr "Guardar como"
 
 #: data/pdfshuffler.ui.h:12
 msgid "Zoom in"
-msgstr ""
+msgstr "Acercar"
 
 #: data/pdfshuffler.ui.h:13
 msgid "Zoom out"
-msgstr ""
+msgstr "Alejar"
 
 #: data/pdfshuffler.ui.h:14
 msgid "Delete"

@@ -2,6 +2,7 @@
 Version=1.0
 Name=PDF-Shuffler
 Comment=PDF Merging, Rearranging, Splitting, Rotating and Cropping
+Comment[es]=Mezcle, reordene, divida, rote y recorte documentos PDF
 Type=Application
 Exec=pdfshuffler
 Icon=pdfshuffler
