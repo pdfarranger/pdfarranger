@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 #
 # PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and 

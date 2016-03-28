@@ -519,7 +519,7 @@ class PdfShuffler:
         pdf_output = PdfFileWriter()
         pdf_input = []
         for pdfdoc in self.pdfqueue:
-            pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
+            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'))
             if pdfdoc_inp.getIsEncrypted():
                 try: # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
@@ -574,7 +574,7 @@ class PdfShuffler:
             pdf_output.addPage(current_page)
 
         # finally, write "output" to document-output.pdf
-        pdf_output.write(file(file_out, 'wb'))
+        pdf_output.write(open(file_out, 'wb'))
 
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
