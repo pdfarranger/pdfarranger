@@ -3,8 +3,8 @@
 #
 # PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and 
 # modification of PDF documents.
-# Copyright (C) 2008-2014 Konstantinos Poulios
-# <https://sourceforge.net/projects/pdfshuffler>
+# Copyright (C) 2008-2016 Konstantinos Poulios
+# <https://gna.org/projects/pdfshuffler/>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,22 +25,30 @@ import os
 import re
 from distutils.core import setup
 
-data_files=[('share/pdfshuffler', ['data/pdfshuffler.ui']),
-            ('share/applications', ['data/pdfshuffler.desktop']),
+data_files=[('share/applications', ['data/pdfshuffler.desktop']),
+            ('share/pdfshuffler', ['data/pdfshuffler.ui']),
+            ('share/pdfshuffler/icons/hicolor/16x16/apps',
+             ['data/hicolor/16x16/apps/pdfshuffler.png']),
+            ('share/pdfshuffler/icons/hicolor/32x32/apps',
+             ['data/hicolor/32x32/apps/pdfshuffler.png']),
+            ('share/pdfshuffler/icons/hicolor/48x48/apps',
+             ['data/hicolor/48x48/apps/pdfshuffler.png']),
+            ('share/pdfshuffler/icons/hicolor/256x256/apps',
+             ['data/hicolor/256x256/apps/pdfshuffler.png']),
+            ('share/pdfshuffler/icons/hicolor/scalable/apps',
+             ['data/hicolor/scalable/apps/pdfshuffler.svg']),
             ('share/man/man1', ['doc/pdfshuffler.1']),
-            ('share/pixmaps', ['data/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/scalable',
-                ['data/pdfshuffler.svg']) ]
+            ('share/appdata', ['data/pdfshuffler.appdata.xml']) ]
 
 
 # Freshly generate .mo from .po, add to data_files:
-if os.path.isdir('mo/'):
-    os.system ('rm -r mo/')
+if os.path.isdir('locale/'):
+    os.system ('rm -r locale/')
 for name in os.listdir('po'):
     m = re.match(r'(.+)\.po$', name)
     if m != None:
         lang = m.group(1)
-        out_dir = 'mo/%s/LC_MESSAGES' % lang
+        out_dir = 'locale/%s/LC_MESSAGES' % lang
         out_name = os.path.join(out_dir, 'pdfshuffler.mo')
         install_dir = 'share/locale/%s/LC_MESSAGES/' % lang
         os.makedirs(out_dir)
@@ -52,7 +60,7 @@ setup(name='pdfshuffler',
       author='Konstantinos Poulios',
       author_email='logari81 at gmail dot com',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
-      url = 'https://sourceforge.net/projects/pdfshuffler',
+      url = 'https://gna.org/projects/pdfshuffler/',
       license='GNU GPL-3',
       scripts=['bin/pdfshuffler'],
       packages=['pdfshuffler'],
@@ -60,8 +68,8 @@ setup(name='pdfshuffler',
      )
 
 # Clean up temporary files
-if os.path.isdir('mo/'):
-    os.system ('rm -r mo/')
+if os.path.isdir('locale/'):
+    os.system ('rm -r locale/')
 if os.path.isdir('build/'):
     os.system ('rm -r build/')
 

@@ -5,7 +5,7 @@
 
  PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
- Copyright (C) 2008-2014 Konstantinos Poulios
+ Copyright (C) 2008-2016 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
 
  This file is part of PdfShuffler.
@@ -34,14 +34,26 @@ import threading
 import tempfile
 from copy import copy
 
+sharedir = '/usr/share'
+if sys.argv[0]:
+    execdir = os.path.dirname(os.path.realpath(sys.argv[0]))
+    basedir = os.path.dirname(execdir)
+    sharedir = os.path.join(basedir, 'share')
+    if not os.path.exists(sharedir):
+        sharedir = basedir
+localedir = os.path.join(sharedir, 'locale')
+
 import locale       #for multilanguage support
 import gettext
-gettext.install('pdfshuffler')
+locale.setlocale(locale.LC_ALL, '')
+locale.bindtextdomain('pdfshuffler', localedir)
+gettext.bindtextdomain('pdfshuffler',  localedir)
+gettext.textdomain('pdfshuffler')
 _ = gettext.gettext
 
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
 VERSION = '0.7.0'
-WEBSITE = 'http://pdfshuffler.sourceforge.net/'
+WEBSITE = 'https://gna.org/projects/pdfshuffler/'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 try:
@@ -95,32 +107,23 @@ class PdfShuffler:
 
     def __init__(self):
         # Create the temporary directory
-        self.tmp_dir = tempfile.mkdtemp("pdfshuffler")
+        self.tmp_dir = tempfile.mkdtemp('pdfshuffler')
         os.chmod(self.tmp_dir, 0o700)
 
-        icon_theme = Gtk.IconTheme.get_default()
-        try:
-            Gtk.window_set_default_icon(icon_theme.load_icon("pdfshuffler", 64, 0))
-        except:
-            print(_("Can't load icon. Application is not installed correctly."))
+        iconsdir = os.path.join(sharedir, 'pdfshuffler', 'icons')
+        if not os.path.exists(iconsdir):
+            iconsdir = os.path.join(sharedir, 'data')
+        Gtk.IconTheme.get_default().append_search_path(iconsdir)
+        Gtk.Window.set_default_icon_name('pdfshuffler')
 
         # Import the user interface file, trying different possible locations
-        ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
+        ui_path = os.path.join(basedir, 'share', 'pdfshuffler', 'pdfshuffler.ui')
+        if not os.path.exists(ui_path):
+            ui_path = os.path.join(basedir, 'data', 'pdfshuffler.ui')
+        if not os.path.exists(ui_path):
+            ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
         if not os.path.exists(ui_path):
             ui_path = '/usr/local/share/pdfshuffler/pdfshuffler.ui'
-
-        if not os.path.exists(ui_path):
-            parent_dir = os.path.dirname( \
-                         os.path.dirname(os.path.realpath(__file__)))
-            ui_path = os.path.join(parent_dir, 'data', 'pdfshuffler.ui')
-
-        if not os.path.exists(ui_path):
-            head, tail = os.path.split(parent_dir)
-            while tail != 'lib' and tail != '':
-                head, tail = os.path.split(head)
-            if tail == 'lib':
-                ui_path = os.path.join(head, 'share', 'pdfshuffler', \
-                                       'pdfshuffler.ui')
 
         self.uiXML = Gtk.Builder()
         self.uiXML.set_translation_domain('pdfshuffler')
