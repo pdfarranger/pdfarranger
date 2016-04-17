@@ -37,8 +37,7 @@ data_files=[('share/applications', ['data/pdfshuffler.desktop']),
              ['data/hicolor/256x256/apps/pdfshuffler.png']),
             ('share/pdfshuffler/icons/hicolor/scalable/apps',
              ['data/hicolor/scalable/apps/pdfshuffler.svg']),
-            ('share/man/man1', ['doc/pdfshuffler.1']),
-            ('share/appdata', ['data/pdfshuffler.appdata.xml']) ]
+            ('share/man/man1', ['doc/pdfshuffler.1'])]
 
 
 # Freshly generate .mo from .po, add to data_files:
