@@ -32,6 +32,14 @@ import sys          # for proccessing of command line args
 import urllib       # for parsing filename information passed by DnD
 import threading
 import tempfile
+
+try:
+    # Python 2
+    from urllib import url2pathname
+except ImportError:
+    # Python 3
+    from urllib.request import url2pathname
+
 from copy import copy
 
 sharedir = '/usr/share'
@@ -891,8 +899,12 @@ class PdfShuffler:
 
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
-
-        path = urllib.url2pathname(uri) # escape special chars
+        try:
+            # Python 3
+            uri = uri.decode()
+        except AttributeError:
+            pass
+        path = url2pathname(uri) # escape special chars
         path = path.strip('\r\n\x00')   # remove \r\n and NULL
 
         # get the path to file
