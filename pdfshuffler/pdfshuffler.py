@@ -32,6 +32,7 @@ import sys          # for proccessing of command line args
 import urllib       # for parsing filename information passed by DnD
 import threading
 import tempfile
+import subprocess
 
 try:
     # Python 2
@@ -255,10 +256,10 @@ class PdfShuffler:
         # Creating the popup menu
         self.popup = Gtk.Menu()
         labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'),
-                  _('_Delete'), _('_Export selection...'))
+                  _('_Delete'), _('_Export selection...'), _('Edit with _Inkscape...'))
         cbs = (self.rotate_page_right, self.rotate_page_left,
                self.crop_page_dialog, self.clear_selected,
-               self.choose_export_selection_pdf_name)
+               self.choose_export_selection_pdf_name, self.edit_with_inkscape)
         for label, cb in zip(labels, cbs):
            popup_item = Gtk.MenuItem.new_with_mnemonic(label)
            popup_item.connect('activate', cb)
@@ -522,6 +523,29 @@ class PdfShuffler:
 
     def choose_export_selection_pdf_name(self, widget=None):
         self.choose_export_pdf_name(widget, True)
+
+    def edit_with_inkscape(self, widget=None):
+        fd, tmp_pdf = tempfile.mkstemp('.pdf')
+        os.close(fd)
+        self.export_to_file(tmp_pdf, True)
+        fd, tmp_svg = tempfile.mkstemp('.svg')
+        os.close(fd)
+        # Prefere inkscape SVG convertion to Poppler convertion
+        #TODO Check how to do convertion with Cairo to avoid running inkscape
+        # 2 times
+        subprocess.call(['inkscape', '--export-plain-svg='+tmp_svg, tmp_pdf])
+        old_time = os.path.getmtime(tmp_svg)
+        subprocess.call(['inkscape', tmp_svg])
+        new_time = os.path.getmtime(tmp_svg)
+        if old_time != new_time:
+            subprocess.call(['inkscape', '--export-pdf='+tmp_pdf, tmp_svg])
+            self.add_pdf_pages(tmp_pdf)
+            selection = self.iconview.get_selected_items()[0]
+            old_item = self.model.get_iter(selection)
+            new_item = self.model.get_iter(self.model[-1].path)
+            self.model.move_before(new_item, old_item)
+            self.model.remove(old_item)
+        os.remove(tmp_svg)
 
     def export_to_file(self, file_out, only_selected=False):
         """Export to file"""
