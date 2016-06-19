@@ -320,8 +320,8 @@ class PdfShuffler:
         cnt_all = 0
         for row in self.model:
             cnt_all += 1
-        if row[1]:
-            cnt_finished += 1
+            if row[1]:
+                cnt_finished += 1
         fraction = float(cnt_finished)/float(cnt_all)
 
         self.progress_bar.set_fraction(fraction)
