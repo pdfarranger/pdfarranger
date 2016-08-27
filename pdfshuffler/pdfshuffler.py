@@ -86,9 +86,9 @@ from gi.repository import Poppler      #for the rendering of pdf pages
 import cairo
 
 try:
-    from pyPdf import PdfFileWriter, PdfFileReader
-except ImportError:
     from PyPDF2 import PdfFileWriter, PdfFileReader
+except ImportError:
+    from pyPdf import PdfFileWriter, PdfFileReader
 
 from .pdfshuffler_iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
