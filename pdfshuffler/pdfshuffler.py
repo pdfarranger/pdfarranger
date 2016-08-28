@@ -255,9 +255,10 @@ class PdfShuffler:
         # Creating the popup menu
         self.popup = Gtk.Menu()
         labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'),
-                  _('_Delete'), _('_Export selection...'))
+                  _('_Delete'), _('Re_verse Order'), _('_Export selection...'))
         cbs = (self.rotate_page_right, self.rotate_page_left,
                self.crop_page_dialog, self.clear_selected,
+               self.reverse_order,
                self.choose_export_selection_pdf_name)
         for label, cb in zip(labels, cbs):
            popup_item = Gtk.MenuItem.new_with_mnemonic(label)
@@ -1055,6 +1056,28 @@ class PdfShuffler:
         elif result == Gtk.ResponseType.CANCEL:
             print(_('Dialog closed'))
         dialog.destroy()
+
+    def reverse_order(self, widget, data=None):
+        """Reverses the selected elements in the IconView"""
+        # must be a contiguous selection
+
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+        if len(selection) < 2:
+            return
+
+        # selection is a list of 1-tuples, not in order
+        indices = sorted([i[0] for i in selection])
+        first = indices[0]
+        last = indices[-1]
+        contiguous = (len(indices) == last - first + 1)
+        if not contiguous:
+            return
+
+        self.set_unsaved(True)
+        indices.reverse()
+        new_order = range(first) + indices + range(last + 1, len(model))
+        model.reorder(new_order)
 
     def about_dialog(self, widget, data=None):
         about_dialog = Gtk.AboutDialog()
