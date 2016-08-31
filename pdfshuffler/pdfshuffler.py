@@ -225,6 +225,7 @@ class PdfShuffler:
         self.iconview.connect('drag_leave', self.iv_dnd_leave_end)
         self.iconview.connect('drag_end', self.iv_dnd_leave_end)
         self.iconview.connect('button_press_event', self.iv_button_press_event)
+        self.iconview.connect('selection_changed', self.iv_selection_changed_event)
 
         align.add(self.iconview)
 
@@ -265,6 +266,11 @@ class PdfShuffler:
            popup_item.connect('activate', cb)
            popup_item.show()
            self.popup.append(popup_item)
+           if cb == self.reverse_order:
+                self.reverse_order_popup_menu_item = popup_item
+
+        # Application menu
+        self.reverse_order_app_menu_item = self.uiXML.get_object('imagemenuitem_reverse_order')
 
         # Initializing variables
         self.export_directory = os.getenv('HOME')
@@ -832,6 +838,16 @@ class PdfShuffler:
                 self.popup.popup(None, None, None, None, event.button, time)
             return 1
 
+    def iv_selection_changed_event(self, user_data):
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+
+        # Set sensitivity of the 'Reverse Order' action according to the
+        # selection.
+        sensitive = self.reverse_order_available(selection)
+        self.reverse_order_app_menu_item.set_sensitive(sensitive)
+        self.reverse_order_popup_menu_item.set_sensitive(sensitive)
+
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
@@ -1032,14 +1048,13 @@ class PdfShuffler:
             print(_('Dialog closed'))
         dialog.destroy()
 
-    def reverse_order(self, widget, data=None):
-        """Reverses the selected elements in the IconView"""
-        # must be a contiguous selection
-
-        model = self.iconview.get_model()
-        selection = self.iconview.get_selected_items()
+    def reverse_order_available(self, selection):
+        """Determine whether the selection is suitable for the
+           reverse-order command: the selection must be a multiple and
+           contiguous range of pages.
+        """
         if len(selection) < 2:
-            return
+            return False
 
         # selection is a list of 1-tuples, not in order
         indices = sorted([i[0] for i in selection])
@@ -1047,7 +1062,22 @@ class PdfShuffler:
         last = indices[-1]
         contiguous = (len(indices) == last - first + 1)
         if not contiguous:
+            return False
+
+        return True
+
+    def reverse_order(self, widget, data=None):
+        """Reverses the selected elements in the IconView"""
+
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+        if not self.reverse_order_available(selection):
             return
+
+        # selection is a list of 1-tuples, not in order
+        indices = sorted([i[0] for i in selection])
+        first = indices[0]
+        last = indices[-1]
 
         self.set_unsaved(True)
         indices.reverse()
