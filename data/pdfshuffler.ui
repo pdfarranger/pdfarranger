@@ -163,6 +163,16 @@
                         <signal name="activate" handler="clear_selected" swapped="no"/>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_reverse_order">
+                        <property name="label" translatable="yes">Reverse Order</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="reverse_order" swapped="no"/>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
