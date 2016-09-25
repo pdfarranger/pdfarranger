@@ -412,9 +412,19 @@ class PdfShuffler:
     def on_keypress_event(self, widget, event):
         """Keypress events in Main Window"""
 
-        #keyname = Gdk.keyval_name(event.keyval)
+        #print ("Key %s (%d) was pressed" % (Gdk.keyval_name(event.keyval), event.keyval))
+        if event.state & Gdk.ModifierType.CONTROL_MASK:
+            if event.keyval == 65363:  # Key Right
+                print ('rotating right')
+                self.rotate_page(90)
+            elif event.keyval == 65361:  # Key Left
+                print ('rotating left')
+                self.rotate_page(-90)
+
         if event.keyval == 65535:   # Delete keystroke
             self.clear_selected()
+        elif event.keyval == 65379:  # Key Insert
+            self.on_action_add_doc_activate('')
 
     def close_application(self, widget, event=None, data=None):
         """Termination"""
