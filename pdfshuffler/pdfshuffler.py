@@ -522,20 +522,24 @@ class PdfShuffler:
             response = chooser.run()
             if response == Gtk.ResponseType.OK:
                 file_out = chooser.get_filename()
-                (path, shortname) = os.path.split(file_out)
-                (shortname, ext) = os.path.splitext(shortname)
-                if ext.lower() != '.pdf':
-                    file_out = file_out + '.pdf'
                 try:
-                    self.export_to_file(file_out, only_selected)
-                    self.export_directory = path
-                    self.set_unsaved(False)
+                    self.save(only_selected, file_out)
                 except Exception as e:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
             break
         chooser.destroy()
+
+    def save(self, only_selected, file_out):
+        """Saves to the specified file.  May throw exceptions."""
+        (path, shortname) = os.path.split(file_out)
+        (shortname, ext) = os.path.splitext(shortname)
+        if ext.lower() != '.pdf':
+            file_out = file_out + '.pdf'
+        self.export_to_file(file_out, only_selected)
+        self.export_directory = path
+        self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, widget=None):
         self.choose_export_pdf_name(widget, True)
