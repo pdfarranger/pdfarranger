@@ -326,10 +326,11 @@ class PdfShuffler:
         GObject.idle_add(self.retitle)
 
     def retitle(self):
+        all_files = self.active_file_names()
         title = ''
-        if len(self.pdfqueue) == 1:
-            title += self.pdfqueue[0].filename
-        elif len(self.pdfqueue) == 0:
+        if len(all_files) == 1:
+            title += all_files.pop()
+        elif len(all_files) == 0:
             title += _("No document")
         else:
             title += _("Several documents")
@@ -337,6 +338,7 @@ class PdfShuffler:
             title += '*'
         title += ' - ' + APPNAME
         self.window.set_title(title)
+        return False
 
     def progress_bar_timeout(self):
         cnt_finished = 0
@@ -420,6 +422,8 @@ class PdfShuffler:
             elif event.keyval == 65361:  # Key Left
                 print ('rotating left')
                 self.rotate_page(-90)
+            elif event.keyval == 115: # Key 's'
+                self.on_action_save('')
 
         if event.keyval == 65535:   # Delete keystroke
             self.clear_selected()
@@ -530,6 +534,32 @@ class PdfShuffler:
                     return
             break
         chooser.destroy()
+
+    def active_file_names(self):
+        """Returns the file names currently associated with pages in the model."""
+        all_files = set()
+        for row in self.model:
+            nfile = row[2]
+            f = self.pdfqueue[nfile-1]
+            all_files.add(f.filename)
+        return all_files
+
+    def on_action_save(self, widget, data=None):
+        all_files = self.active_file_names()
+        if len(all_files) == 0:
+            self.error_message_dialog("Nothing to save!")
+            returng
+        elif len(all_files) != 1:
+            self.error_message_dialog("Unable to save as there is more than one file.  Choose Save As, then specify a file name to use.")
+            return
+        else:
+            try:
+                self.save(False, all_files.pop())
+            except Exception as e:
+                chooser.destroy()
+                self.error_message_dialog(e)
+                return
+
 
     def save(self, only_selected, file_out):
         """Saves to the specified file.  May throw exceptions."""

@@ -64,11 +64,11 @@ Author: Konstantinos Poulios
                       <object class="GtkImageMenuItem" id="imagemenuitem_save">
                         <property name="label">gtk-save</property>
                         <property name="use_action_appearance">False</property>
-                        <property name="sensitive">False</property>
+                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="no_show_all">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_action_save" swapped="no"/>
                       </object>
                     </child>
                     <child>
