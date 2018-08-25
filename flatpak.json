@@ -1,0 +1,71 @@
+{
+  "id" : "com.github.Johnn3y.pdfshuffler",
+  "runtime" : "org.gnome.Platform",
+  "runtime-version" : "3.28",
+  "sdk" : "org.gnome.Sdk",
+  "command" : "pdfshuffler",
+  "modules" : [
+    {
+      "name" : "openjpeg",
+      "buildsystem" : "cmake",
+      "sources" : [
+        {
+          "url" : "https://github.com/uclouvain/openjpeg",
+          "commit" : "9d1a9dc20dd5155bab977a4f53d05c4bbd66533a",
+          "type" : "git"
+        }
+      ]
+    },
+    {
+      "name" : "poppler",
+      "buildsystem" : "cmake",
+      "sources" : [
+        {
+          "url" : "https://anongit.freedesktop.org/git/poppler/poppler.git",
+          "commit" : "93b214986aa89bc085c7937f63e5eafe795d985c",
+          "type" : "git"
+        }
+      ]
+    },
+    {
+      "name" : "PyPDF2",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "url" : "https://github.com/mstamy2/PyPDF2",
+          "commit" : "18a2627adac13124d4122c8b92aaa863ccfb8c29",
+          "type" : "git"
+        }
+      ],
+      "build-commands" : [
+        "python3 setup.py build",
+        "python3 setup.py install --prefix=/app"
+      ]
+    },
+    {
+      "name" : "pdfshuffler",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "url" : "https://github.com/Johnn3y/pdfshuffler",
+          "commit" : "5bff267f64b5517b373e95ea421b26138fd0f150",
+          "type" : "git"
+        }
+      ],
+      "build-commands" : [
+        "python3 setup.py build",
+        "python3 setup.py install --prefix=/app"
+      ]
+    }
+  ],
+  "cleanup" : [
+    "/include",
+    "/lib/pkgconfig"
+  ],
+  "finish-args" : [
+    "--socket=wayland",
+    "--socket=x11",
+    "--share=ipc",
+    "--filesystem=home"
+  ]
+}
