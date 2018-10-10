@@ -4,10 +4,10 @@
 # Pilar Embid Giner <embid_mar@gva.es>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-28 23:13+0200\n"
-"PO-Revision-Date: 2014-06-11 10:11+0200\n"
+"POT-Creation-Date: 2014-11-05 21:09+0100\n"
+"PO-Revision-Date: 2018-10-10 08:57+0200\n"
 "Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
 "Language-Team: LliureX\n"
 "Language: ca\n"
@@ -15,58 +15,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: pdfshuffler/pdfshuffler.py:110
+#: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr "No es pot carregar la icona: no s'ha instal·lat correctament."
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
 msgstr "Gi_ra a la dreta"
 
-#: pdfshuffler/pdfshuffler.py:234
+#: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
 msgstr "Gira a _l'esquerra"
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
 msgstr "_Retalla..."
 
-#: pdfshuffler/pdfshuffler.py:237
-msgid "_Export selection..."
-msgstr "_Exporta la selecció"
+#: pdfshuffler/pdfshuffler.py:239
+msgid "_Delete"
+msgstr "_Esborra"
 
-#: pdfshuffler/pdfshuffler.py:299
+#: pdfshuffler/pdfshuffler.py:239
+msgid "_Export selection..."
+msgstr "_Exporta la selecció..."
+
+#: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
 msgstr "Cap document"
 
-#: pdfshuffler/pdfshuffler.py:301
+#: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
 msgstr "Diversos documents"
 
-#: pdfshuffler/pdfshuffler.py:317
+#: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "S'estan renderitzant les miniatures... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler/pdfshuffler.py:435
+#: pdfshuffler/pdfshuffler.py:441
 msgid "page"
 msgstr "pàgina"
 
-#: pdfshuffler/pdfshuffler.py:461
+#: pdfshuffler/pdfshuffler.py:467
 msgid "Export ..."
 msgstr "Exporta..."
 
-#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
+#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
 msgid "PDF files"
 msgstr "Fitxers PDF"
 
-#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
+#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: pdfshuffler/pdfshuffler.py:518
+#: pdfshuffler/pdfshuffler.py:521
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -77,135 +81,135 @@ msgstr ""
 "El suport per a fitxers encriptats no s'ha implementat encara.\n"
 "L'exportació del fitxer ha fallat."
 
-#: pdfshuffler/pdfshuffler.py:571
+#: pdfshuffler/pdfshuffler.py:574
 msgid "Import..."
 msgstr "Importa..."
 
-#: pdfshuffler/pdfshuffler.py:604
-msgid "OpenDocument not supported yet!"
-msgstr "L'OpenDocument encara no s'admet."
-
-#: pdfshuffler/pdfshuffler.py:606
-msgid "Image file not supported yet!"
-msgstr "Els fitxers d'imatge encara no s'admeten."
-
 #: pdfshuffler/pdfshuffler.py:608
-msgid "File type not supported!"
-msgstr "El tipus de fitxer no s'admet."
+msgid "OpenDocument not supported yet!"
+msgstr "L'OpenDocument encara no s'admet!"
 
-#  ERR_FILE_NOT_EXISTS
 #: pdfshuffler/pdfshuffler.py:610
-#, python-format
-msgid "File %s does not exist"
-msgstr "El fitxer %s no existix."
+msgid "Image file not supported yet!"
+msgstr "Els fitxers d'imatge encara no s'admeten!"
 
 #: pdfshuffler/pdfshuffler.py:612
+msgid "File type not supported!"
+msgstr "El tipus de fitxer no s'admet!"
+
+#  ERR_FILE_NOT_EXISTS
+#: pdfshuffler/pdfshuffler.py:614
+#, python-format
+msgid "File %s does not exist"
+msgstr "El fitxer %s no existeix"
+
+#: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
-msgstr "S'ha tancat, no hi ha cap fitxer seleccionat."
+msgstr "S'ha tancat, no hi ha cap fitxer seleccionat"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
 msgstr "Esquerra"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
 msgstr "Dreta"
 
 # Netscape_4.7->String:RESDLL.DLL
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
 msgstr "Dalt"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
 msgstr "Baix"
 
-#: pdfshuffler/pdfshuffler.py:940
+#: pdfshuffler/pdfshuffler.py:953
 msgid "Crop Selected Pages"
 msgstr "Retalla les pàgines seleccionades"
 
-#: pdfshuffler/pdfshuffler.py:948
+#: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
 msgstr "Retalla els marges"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:968
 #, python-format
-msgid "% of width"
-msgstr "% d'amplària"
+msgid "%% of width"
+msgstr "%% d'amplària"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfshuffler/pdfshuffler.py:969
 #, python-format
-msgid "% of height"
-msgstr "% d'alçària"
-
-#: pdfshuffler/pdfshuffler.py:993
-msgid "Dialog closed"
-msgstr "S'ha tancat el diàleg."
+msgid "%% of height"
+msgstr "%% d'alçària"
 
 #: pdfshuffler/pdfshuffler.py:1007
+msgid "Dialog closed"
+msgstr "S'ha tancat el diàleg"
+
+#: pdfshuffler/pdfshuffler.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 "El %s és una ferramenta per a organitzar i modificar fitxers PDF. S'ha "
-"realitzat utilitzant GTK+ i Python."
+"realitzat utilitzant GTK+ i Python"
 
 #: data/pdfshuffler.ui.h:1
-msgid "Crop"
-msgstr "Retalla"
-
-#: data/pdfshuffler.ui.h:2
-msgid "Delete"
-msgstr "Esborra"
-
-#: data/pdfshuffler.ui.h:3
-msgid "Import"
-msgstr "Importa"
-
-#: data/pdfshuffler.ui.h:4
-msgid "Open a file and append it to the current document"
-msgstr "Obri un fitxer i afig-lo al document actual"
-
-#: data/pdfshuffler.ui.h:5
-msgid "Rotate left"
-msgstr "Gira cap a l'esquerra"
-
-#: data/pdfshuffler.ui.h:6
-msgid "Rotate right"
-msgstr "Gira cap a la dreta"
-
-#: data/pdfshuffler.ui.h:7
-msgid "Save"
-msgstr "Guarda"
-
-#: data/pdfshuffler.ui.h:8
-msgid "Save as"
-msgstr "Voz masculina"
-
-#: data/pdfshuffler.ui.h:9
-msgid "Zoom in"
-msgstr "Amplia"
-
-#: data/pdfshuffler.ui.h:10
-msgid "Zoom out"
-msgstr "Reduïx"
-
-#: data/pdfshuffler.ui.h:11
-msgid "_Edit"
-msgstr "_Edita"
-
-#: data/pdfshuffler.ui.h:12
 msgid "_File"
 msgstr "_Fitxer"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfshuffler.ui.h:2
+msgid "_Edit"
+msgstr "_Edita"
+
+#: data/pdfshuffler.ui.h:3
+msgid "Rotate left"
+msgstr "Gira cap a l'esquerra"
+
+#: data/pdfshuffler.ui.h:4
+msgid "Rotate right"
+msgstr "Gira cap a la dreta"
+
+#: data/pdfshuffler.ui.h:5
+msgid "Crop"
+msgstr "Retalla"
+
+#: data/pdfshuffler.ui.h:6
+msgid "_View"
+msgstr "_Visualitza"
+
+#: data/pdfshuffler.ui.h:7
 msgid "_Help"
 msgstr "A_juda"
 
+#: data/pdfshuffler.ui.h:8
+msgid "Open a file and append it to the current document"
+msgstr "Obri un fitxer i afig-lo al document actual"
+
+#: data/pdfshuffler.ui.h:9
+msgid "Import"
+msgstr "Importa"
+
+#: data/pdfshuffler.ui.h:10
+msgid "Save"
+msgstr "Guarda"
+
+#: data/pdfshuffler.ui.h:11
+msgid "Save as"
+msgstr "Guarda com"
+
+#: data/pdfshuffler.ui.h:12
+msgid "Zoom in"
+msgstr "Amplia"
+
+#: data/pdfshuffler.ui.h:13
+msgid "Zoom out"
+msgstr "Reduïx"
+
 #: data/pdfshuffler.ui.h:14
-msgid "_View"
-msgstr "_Visualitza"
+msgid "Delete"
+msgstr "Esborra"
