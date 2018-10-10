@@ -1,0 +1,123 @@
+pdfshuffler (0.7.0~git20151023.68dccc5-lliurex2) bionic; urgency=medium
+
+  * Bionic release
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 10 Oct 2018 08:39:58 +0200
+
+pdfshuffler (0.7.0~git20151023.68dccc5-1) unstable; urgency=medium
+
+  [ Jerome Robert ]
+  * New upstream release
+
+ --   
+
+pdfshuffler (0.6.0-7) unstable; urgency=medium
+
+  * Remove calls to deprecated GDK threading functions altogether.
+
+ -- Jeremy Lainé <jeremy.laine@m4x.org>  Tue, 07 Oct 2014 16:07:58 +0200
+
+pdfshuffler (0.6.0-6) unstable; urgency=medium
+
+  * Fall back to PyPDF2 if pyPdf is not found (Closes: #762083).
+  * Fix "Attempt to unlock mutex that was not locked" error.
+  * Update to Standards version 3.9.6, no changes required.
+  * Add myself to uploaders.
+
+ -- Jeremy Lainé <jeremy.laine@m4x.org>  Sat, 27 Sep 2014 14:41:33 +0200
+
+pdfshuffler (0.6.0-5) unstable; urgency=medium
+
+  * Adopt package. (Closes: #728579)
+  * Remove debian/pdfshuffler.1 and use upstream manpage instead.
+  * Update to Standards version 3.9.5, no changes required.
+  * Update to dh compat level 9.
+  * Update to copyright format 1.0.
+
+ -- Vincent Cheng <vcheng@debian.org>  Thu, 16 Jan 2014 21:31:13 -0800
+
+pdfshuffler (0.6.0-4) unstable; urgency=low
+
+  * Set Maintainer to Debian QA Group <packages@qa.debian.org> and drop
+    Uploaders field.
+  * Drop debian/patches/add-save-button, as upstream doesn't approve it.
+
+ -- Serafeim Zanikolas <sez@debian.org>  Tue, 29 Oct 2013 20:12:47 +0000
+
+pdfshuffler (0.6.0-3) unstable; urgency=low
+
+  * Add copyright to debian/patches/add-save-button
+  * Actually bump Standards-Version
+
+ -- Serafeim Zanikolas <sez@debian.org>  Thu, 17 Oct 2013 21:17:38 +0100
+
+pdfshuffler (0.6.0-2) unstable; urgency=low
+
+  * Apply patch debian/patches/add-save-button to add "Save" option
+    (Closes: #722995).
+  * Bump Standards-Version to 3.9.4 (no changes)
+
+ -- Serafeim Zanikolas <sez@debian.org>  Sun, 06 Oct 2013 16:19:48 +0100
+
+pdfshuffler (0.6.0-1) unstable; urgency=low
+
+  * New Upstream Release
+    - works with poppler 0.18 (Closes: #660937)
+    - drop fix-shebag patch
+  * Add patch for manpage typo (thanks to A. Costa <agcosta@gis.net>;
+    Closes: #650070)
+  * Bump Standards-Version to 3.9.3
+    - convert debian/copyright to DEP5 format
+
+ -- Serafeim Zanikolas <sez@debian.org>  Sun, 29 Apr 2012 01:03:32 +0200
+
+pdfshuffler (0.5.1-2) unstable; urgency=low
+
+  * Migrate to dh_python2
+    - Build-Depends: drop python-support, and require python (>= 2.6.6-3~)
+    - add X-Python-Version in debian/control
+    - debian/rules: invoke dh with python2 addon
+  * Bump Standards-Version to 3.9.2 (no changes)
+  * Add desktop file (thanks to Slavko <linux@slavino.sk>; Closes: #635532)
+  * Fix minor typo in long package description
+
+ -- Serafeim Zanikolas <sez@debian.org>  Mon, 08 Aug 2011 00:09:25 +0200
+
+pdfshuffler (0.5.1-1) unstable; urgency=low
+
+  * New Upstream Release
+  * debian/copyright: update to reflect upstream change to GPLv3
+
+ -- Serafeim Zanikolas <sez@debian.org>  Tue, 15 Feb 2011 00:43:28 +0100
+
+pdfshuffler (0.5-2) unstable; urgency=high
+
+  * Add python and python-support in Build-Depends, and ${python:Depends} in
+    Depends (Closes: #596904; setting urgency=high for RC bug). Thanks to
+    Andrew Starr-Bochicchio <a.starr.b@gmail.com>
+  * Update my email address in debian/control:Maintainer
+  * Bump standards version (no changes)
+
+ -- Serafeim Zanikolas <sez@debian.org>  Wed, 15 Sep 2010 23:33:31 +0200
+
+pdfshuffler (0.5-1) unstable; urgency=low
+
+  * New Upstream Release
+  * Bump Standards-Version to 3.8.4 (no changes)
+  * Switch dpkg-source format to 3.0 (quilt)
+  * Add DEP-3 headers to patches
+
+ -- Serafeim Zanikolas <serzan@hellug.gr>  Sun, 24 Jan 2010 17:04:08 +0100
+
+pdfshuffler (0.4.2-2) unstable; urgency=low
+
+  * Simplify debian/rules.
+  * Correct copyright symbols in copyright file.
+
+ -- Serafeim Zanikolas <serzan@hellug.gr>  Fri, 05 Jun 2009 22:44:44 +0200
+
+pdfshuffler (0.4.2-1) unstable; urgency=low
+
+  * Initial release (Closes: #513003)
+
+ -- Serafeim Zanikolas <serzan@hellug.gr>  Sat, 16 May 2009 23:26:32 +0200

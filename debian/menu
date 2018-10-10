@@ -1,0 +1,2 @@
+?package(pdfshuffler):needs="X11" section="Applications/Office/"\
+  title="pdfshuffler" command="/usr/bin/pdfshuffler"
