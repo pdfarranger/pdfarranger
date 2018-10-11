@@ -90,7 +90,7 @@ try:
 except ImportError:
     from PyPDF2 import PdfFileWriter, PdfFileReader
 
-from .pdfshuffler_iconview import CellRendererImage
+from pdfshuffler_iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
 import time
@@ -107,7 +107,7 @@ class PdfShuffler:
     MODEL_ROW_EXTERN = 1002
     TEXT_URI_LIST = 1003
     MODEL_ROW_MOTION = 1004
-    TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET, MODEL_ROW_INTERN),
+    TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET, MODEL_ROW_INTERN), 
                   Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN),
                   Gtk.TargetEntry.new('MODEL_ROW_MOTION', 0, MODEL_ROW_MOTION)]
     TARGETS_SW = [Gtk.TargetEntry.new('text/uri-list', 0, TEXT_URI_LIST),
@@ -143,8 +143,7 @@ class PdfShuffler:
         self.window = self.uiXML.get_object('main_window')
         self.window.set_title(APPNAME)
         self.window.set_border_width(0)
-        self.window.set_default_size(self.prefs['window width'],
-                                     self.prefs['window height'])
+        self.window.set_default_size(self.prefs['window width'], self.prefs['window height'])
         self.window.connect('delete_event', self.close_application)
 
         # Create a scrolled window to hold the thumbnails-container
@@ -211,12 +210,8 @@ class PdfShuffler:
         self.iconview.set_text_column(0)
 
         self.iconview.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
-        self.iconview.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK,
-                                               self.TARGETS_IV,
-                                               Gdk.DragAction.COPY |
-                                               Gdk.DragAction.MOVE)
-        self.iconview.enable_model_drag_dest(self.TARGETS_IV,
-                                             Gdk.DragAction.DEFAULT)
+        self.iconview.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, self.TARGETS_IV, Gdk.DragAction.COPY | Gdk.DragAction.MOVE)
+        self.iconview.enable_model_drag_dest(self.TARGETS_IV, Gdk.DragAction.DEFAULT)
         self.iconview.connect('drag_begin', self.iv_drag_begin)
         self.iconview.connect('drag_data_get', self.iv_dnd_get_data)
         self.iconview.connect('drag_data_received', self.iv_dnd_received_data)
@@ -240,25 +235,18 @@ class PdfShuffler:
 
         # Change iconview color background
         style_context_sw = self.sw.get_style_context()
-        color_selected = self.iconview.get_style_context()\
-                             .get_background_color(Gtk.StateFlags.SELECTED)
+        color_selected = self.iconview.get_style_context().get_background_color(Gtk.StateFlags.SELECTED)
         color_prelight = color_selected.copy()
         color_prelight.alpha = 0.3
         for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.ACTIVE):
-           self.iconview.override_background_color \
-              (state, style_context_sw.get_background_color(state))
-        self.iconview.override_background_color(Gtk.StateFlags.SELECTED,
-                                                color_selected)
-        self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
-                                                color_prelight)
+           self.iconview.override_background_color (state, style_context_sw.get_background_color(state))
+        self.iconview.override_background_color(Gtk.StateFlags.SELECTED, color_selected)
+        self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT, color_prelight)
 
         # Creating the popup menu
         self.popup = Gtk.Menu()
-        labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'),
-                  _('_Delete'), _('_Export selection...'))
-        cbs = (self.rotate_page_right, self.rotate_page_left,
-               self.crop_page_dialog, self.clear_selected,
-               self.choose_export_selection_pdf_name)
+        labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'), _('_Delete'), _('_Export selection...'))
+        cbs = (self.rotate_page_right, self.rotate_page_left, self.crop_page_dialog, self.clear_selected, self.choose_export_selection_pdf_name)
         for label, cb in zip(labels, cbs):
            popup_item = Gtk.MenuItem.new_with_mnemonic(label)
            popup_item.connect('activate', cb)
@@ -274,10 +262,7 @@ class PdfShuffler:
         self.pdfqueue = []
 
         GObject.type_register(PDF_Renderer)
-        GObject.signal_new('update_thumbnail', PDF_Renderer,
-                           GObject.SignalFlags.RUN_FIRST, None,
-                           [GObject.TYPE_INT, GObject.TYPE_PYOBJECT,
-                            GObject.TYPE_FLOAT])
+        GObject.signal_new('update_thumbnail', PDF_Renderer, GObject.SignalFlags.RUN_FIRST, None, [GObject.TYPE_INT, GObject.TYPE_PYOBJECT, GObject.TYPE_FLOAT])
         self.rendering_thread = 0
 
         self.set_unsaved(False)
@@ -305,14 +290,13 @@ class PdfShuffler:
             self.rendering_thread.join()
         #FIXME: the resample=2. factor has to be dynamic when lazy rendering
         #       is implemented
-        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue, 2)
+        self.rendering_thread = PDF_Renderer(self.model, self.pdfqueue)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
         if self.progress_bar_timeout_id:
             GObject.source_remove(self.progress_bar_timeout_id)
-        self.progress_bar_timout_id = \
-            GObject.timeout_add(50, self.progress_bar_timeout)
+        self.progress_bar_timout_id = GObject.timeout_add(50, self.progress_bar_timeout)
 
     def set_unsaved(self, flag):
         self.is_unsaved = flag
@@ -341,8 +325,7 @@ class PdfShuffler:
         fraction = float(cnt_finished)/float(cnt_all)
 
         self.progress_bar.set_fraction(fraction)
-        self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
-                                   % {'i1' : cnt_finished, 'i2' : cnt_all})
+        self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]') % {'i1' : cnt_finished, 'i2' : cnt_all})
         if fraction >= 0.999:
             self.progress_bar.hide()
             return False
@@ -362,8 +345,7 @@ class PdfShuffler:
            iconview cols no."""
 
         #add 12 because of: http://bugzilla.gnome.org/show_bug.cgi?id=570152
-        col_num = 9 * window.get_size()[0] \
-            / (10 * (self.iv_col_width + self.iconview.get_column_spacing() * 2))
+        col_num = 9 * window.get_size()[0] / (10 * (self.iv_col_width + self.iconview.get_column_spacing() * 2))
         self.iconview.set_columns(col_num)
 
     def update_geometry(self, iter):
@@ -685,16 +667,12 @@ class PdfShuffler:
                 nfile, npage, angle = model.get(iter, 2, 3, 6)
                 crop = model.get(iter, 7, 8, 9, 10)
                 pdfdoc = self.pdfqueue[nfile - 1]
-                data.append('\n'.join([pdfdoc.filename,
-                                       str(npage),
-                                       str(angle)] +
-                                       [str(side) for side in crop]))
+                data.append('\n'.join([pdfdoc.filename, str(npage), str(angle)] + [str(side) for side in crop]))
         if data:
             data = '\n;\n'.join(data)
             selection_data.set(selection_data.get_target(), 8, data.encode())
 
-    def iv_dnd_received_data(self, iconview, context, x, y,
-                             selection_data, target_id, etime):
+    def iv_dnd_received_data(self, iconview, context, x, y, selection_data, target_id, etime):
         """Handles received data by drag and drop in iconview"""
 
         model = iconview.get_model()
@@ -867,12 +845,18 @@ class PdfShuffler:
             self.iconview.unselect_all()
 
     def sw_scroll_event(self, scrolledwindow, event):
-        """Manages mouse scroll events in scrolledwindow"""
+        """Manages mouse scroll events in scrolledwindow"""#
 
         if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
-            if event.direction == Gdk.ScrollDirection.UP:
+            isSmooth, dx, dy = Gdk.Event.get_scroll_deltas(event)
+            
+            if isSmooth:
+                self.zoom_change(dy * -1);
+
+            elif event.direction == Gdk.ScrollDirection.UP:
                 self.zoom_change(1)
                 return 1
+
             elif event.direction == Gdk.ScrollDirection.DOWN:
                 self.zoom_change(-1)
                 return 1
@@ -887,6 +871,7 @@ class PdfShuffler:
 
     def zoom_change(self, step=5):
         """Modifies the zoom level"""
+        #print('set zoom: ', step)
         self.zoom_set(self.zoom_level + step)
 
     def zoom_in(self, widget=None):
@@ -955,8 +940,7 @@ class PdfShuffler:
         """Opens a dialog box to define margins for page cropping"""
 
         sides = ('L', 'R', 'T', 'B')
-        side_names = {'L':_('Left'), 'R':_('Right'),
-                      'T':_('Top'), 'B':_('Bottom') }
+        side_names = {'L':_('Left'), 'R':_('Right'), 'T':_('Top'), 'B':_('Bottom') }
         opposite_sides = {'L':'R', 'R':'L', 'T':'B', 'B':'T' }
 
         def set_crop_value(spinbutton, side):
@@ -974,11 +958,7 @@ class PdfShuffler:
             pos = model.get_iter(path)
             crop = [model.get_value(pos, 7 + side) for side in range(4)]
 
-        dialog = Gtk.Dialog(title=(_('Crop Selected Pages')),
-                            parent=self.window,
-                            flags=Gtk.DialogFlags.MODAL,
-                            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                                     Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        dialog = Gtk.Dialog(title=(_('Crop Selected Pages')), parent=self.window, flags=Gtk.DialogFlags.MODAL, buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_size_request(340, 250)
         dialog.set_default_response(Gtk.ResponseType.OK)
 
@@ -989,8 +969,7 @@ class PdfShuffler:
         frame.add(vbox)
 
         spin_list = []
-        units = 2 * [_('%% of width').replace('%%','%')] +\
-                2 * [_('%% of height').replace('%%','%')]
+        units = 2 * [_('%% of width').replace('%%','%')] + 2 * [_('%% of height').replace('%%','%')]
         for side in sides:
             hbox = Gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)
@@ -1041,9 +1020,7 @@ class PdfShuffler:
         # FIXME
         about_dialog.set_name(APPNAME)
         about_dialog.set_version(VERSION)
-        about_dialog.set_comments(_(
-            '%s is a tool for rearranging and modifying PDF files. ' \
-            'Developed using GTK+ and Python') % APPNAME)
+        about_dialog.set_comments(_('%s is a tool for rearranging and modifying PDF files. Developed using GTK+ and Python') % APPNAME)
         about_dialog.set_authors(['Konstantinos Poulios',])
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name('pdfshuffler')
@@ -1053,11 +1030,7 @@ class PdfShuffler:
         about_dialog.show_all()
 
     def error_message_dialog(self, msg):
-        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
-                                          type=Gtk.MessageType.ERROR,
-                                          parent=self.window,
-                                          message_format=str(msg),
-                                          buttons=Gtk.ButtonsType.OK)
+        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.ERROR, parent=self.window, message_format=str(msg), buttons=Gtk.ButtonsType.OK)
         response = error_msg_dlg.run()
         if response == Gtk.ResponseType.OK:
             error_msg_dlg.destroy()
@@ -1078,8 +1051,7 @@ class PDF_Doc:
         if mime_type == expected_mime_type:
             self.nfile = nfile + 1
             self.mtime = os.path.getmtime(filename)
-            self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
-                                                  self.shortname + '.pdf')
+            self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile + self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
             self.document = Poppler.Document.new_from_file(file_prefix + self.copyname, None)
             self.npage = self.document.get_n_pages()
@@ -1109,17 +1081,19 @@ class PDF_Renderer(threading.Thread,GObject.GObject):
                     pdfdoc = self.pdfqueue[nfile - 1]
                     page = pdfdoc.document.get_page(npage-1)
                     w, h = page.get_size()
-                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
-                                                   int(w/self.resample),
-                                                   int(h/self.resample))
+                    
+                    print('width:{0}, height:{1}, resample:{2}'.format(w, h, self.resample))
+                    
+                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w/self.resample), int(h/self.resample))
                     cr = cairo.Context(thumbnail)
+                    
                     if self.resample != 1.:
                         cr.scale(1./self.resample, 1./self.resample)
+                    
                     page.render(cr)
-                    time.sleep(0.003)
-                    GObject.idle_add(self.emit,'update_thumbnail',
-                                     idx, thumbnail, self.resample,
-                                     priority=GObject.PRIORITY_LOW)
+                    #time.sleep(0.003)
+                    GObject.idle_add(self.emit,'update_thumbnail', idx, thumbnail, self.resample, priority=GObject.PRIORITY_LOW)
+                
                 except Exception as e:
                     print(e)
 
