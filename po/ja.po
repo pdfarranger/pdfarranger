@@ -1,8 +1,10 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010.
-#
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
+# Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.1\n"

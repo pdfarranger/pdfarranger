@@ -1,17 +1,23 @@
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
+# netcelli, 2009
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.4\n"
+"Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2009-06-25 14:11+0100\n"
 "Last-Translator: netcelli <netcelli@dchublist.com>\n"
 "Language-Team: netcelli <netcelli@gmail.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Italian\n"
-"X-Poedit-Country: ITALY\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
@@ -30,12 +36,10 @@ msgid "C_rop..."
 msgstr ""
 
 #: pdfshuffler/pdfshuffler.py:239
-#, fuzzy
 msgid "_Delete"
 msgstr "Cancella pagina(e)"
 
 #: pdfshuffler/pdfshuffler.py:239
-#, fuzzy
 msgid "_Export selection..."
 msgstr "Esporta ..."
 
@@ -69,7 +73,7 @@ msgid "All files"
 msgstr "Tutti i file"
 
 #: pdfshuffler/pdfshuffler.py:521
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "File %s is encrypted.\n"
 "Support for encrypted files has not been implemented yet.\n"
@@ -77,7 +81,6 @@ msgid ""
 msgstr "Il supporto per questo tipo di file non è ancora stato implementato"
 
 #: pdfshuffler/pdfshuffler.py:574
-#, fuzzy
 msgid "Import..."
 msgstr "Importa ..."
 
@@ -119,7 +122,6 @@ msgid "Bottom"
 msgstr "Basso"
 
 #: pdfshuffler/pdfshuffler.py:953
-#, fuzzy
 msgid "Crop Selected Pages"
 msgstr "Taglia pagina(e) seleziona(e)"
 
@@ -128,12 +130,12 @@ msgid "Crop Margins"
 msgstr "Taglia margini"
 
 #: pdfshuffler/pdfshuffler.py:968
-#, fuzzy, python-format
+#, python-format
 msgid "%% of width"
 msgstr "%% in larghezza"
 
 #: pdfshuffler/pdfshuffler.py:969
-#, fuzzy, python-format
+#, python-format
 msgid "%% of height"
 msgstr "%% in altezza"
 
@@ -181,7 +183,6 @@ msgid "Open a file and append it to the current document"
 msgstr ""
 
 #: data/pdfshuffler.ui.h:9
-#, fuzzy
 msgid "Import"
 msgstr "Importa ..."
 
@@ -202,6 +203,5 @@ msgid "Zoom out"
 msgstr ""
 
 #: data/pdfshuffler.ui.h:14
-#, fuzzy
 msgid "Delete"
 msgstr "Cancella pagina(e)"

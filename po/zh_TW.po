@@ -1,15 +1,21 @@
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: pdfshuffler\n"
+"Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
 "PO-Revision-Date: 2013-11-12 08:38+0800\n"
 "Last-Translator: Franklin Weng <franklin at goodhorse dot idv dot tw>\n"
 "Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
 
 #: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."

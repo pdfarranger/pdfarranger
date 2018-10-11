@@ -1,16 +1,24 @@
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
+# Konstantinos Poulios, 2008-2017
+# Rafael Jesús García Perdigón, 2012
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.5\n"
+"Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
-"PO-Revision-Date: 2012-03-05 07:51+0100\n"
-"Last-Translator: Rafael Jesús García Perdigón <rafagarp@gmail.com>\n"
-"Language-Team: Konstantinos Poulios <poulios.konstantinos@gmail.com>\n"
-"Language: es\n"
+"PO-Revision-Date: 2017-02-26 16:16+0000\n"
+"Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/logari81/pdfshuffler/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Spanish\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
@@ -92,7 +100,7 @@ msgstr "Aún no se ha añadido la compatibilidad con archivos de imagen."
 
 #: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
-msgstr "Archivos de este tipo no son compatibles!"
+msgstr "¡Archivos de este tipo no son compatibles!"
 
 #: pdfshuffler/pdfshuffler.py:614
 #, python-format
@@ -101,7 +109,7 @@ msgstr "El archivo %s no existe"
 
 #: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
-msgstr "Cerrado, ningún archivo seleccionado."
+msgstr "Cerrado, ningún archivo seleccionado"
 
 #: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
@@ -128,12 +136,12 @@ msgid "Crop Margins"
 msgstr "Recortar los márgenes"
 
 #: pdfshuffler/pdfshuffler.py:968
-#, fuzzy, python-format
+#, python-format
 msgid "%% of width"
 msgstr "%% de la anchura"
 
 #: pdfshuffler/pdfshuffler.py:969
-#, fuzzy, python-format
+#, python-format
 msgid "%% of height"
 msgstr "%% de la altura"
 

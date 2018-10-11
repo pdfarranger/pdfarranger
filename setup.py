@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 #
-# PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and 
+# PDF-Shuffler 0.7 - GTK+ based utility for splitting, rearrangement and 
 # modification of PDF documents.
-# Copyright (C) 2008-2016 Konstantinos Poulios
+# Copyright (C) 2008-2017 Konstantinos Poulios
 # <https://gna.org/projects/pdfshuffler/>
 #
 # This program is free software; you can redistribute it and/or modify

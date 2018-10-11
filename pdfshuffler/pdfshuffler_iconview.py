@@ -3,12 +3,12 @@
 
 """
 
- PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and
+ PDF-Shuffler 0.7 - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
- Copyright (C) 2008-2013 Konstantinos Poulios
+ Copyright (C) 2008-2017 Konstantinos Poulios
  <https://sourceforge.net/projects/pdfshuffler>
 
- This file is part of PdfShuffler.
+ This file is part of PDF-Shuffler.
 
  PdfShuffler is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

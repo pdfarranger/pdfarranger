@@ -4,75 +4,73 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# Rogênio Belém <rogeniobelem@gmail.com>, 2013
+# Toratora <darex7@o2.pl>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
-"PO-Revision-Date: 2013-03-28 10:48-0300\n"
-"Last-Translator: Rogênio L. Belém <rogeniobelem@gmail.com>\n"
-"Language-Team: Rogênio L. Belém <rogeniobelem@gmail.com>\n"
+"PO-Revision-Date: 2017-02-26 16:16+0000\n"
+"Last-Translator: Toratora <darex7@o2.pl>\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/logari81/pdfshuffler/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pl_PL\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: pdfshuffler/pdfshuffler.py:104
 msgid "Can't load icon. Application is not installed correctly."
-msgstr ""
-"Não foi possível carregar o ícone. O aplicativo não foi instalado "
-"corretamente."
+msgstr "Nie można załadować. Aplikacja nie jest zainstalowana prawidłowo."
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "_Rotate Right"
-msgstr "Rotacionar à _direita"
+msgstr "_Obróć w prawo"
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "Rotate _Left"
-msgstr "Rotacionar à _esquerda"
+msgstr "Obróć w_lewo"
 
 #: pdfshuffler/pdfshuffler.py:238
 msgid "C_rop..."
-msgstr "_Recortar.."
+msgstr "P_rzytnij..."
 
 #: pdfshuffler/pdfshuffler.py:239
 msgid "_Delete"
-msgstr "Remover"
+msgstr "_Usuń..."
 
 #: pdfshuffler/pdfshuffler.py:239
 msgid "_Export selection..."
-msgstr "_Exportar as páginas selecionadas..."
+msgstr "_Zapisz wybrany/wybrane "
 
 #: pdfshuffler/pdfshuffler.py:307
 msgid "No document"
-msgstr "Nenhum documento"
+msgstr "Brak dokumentu"
 
 #: pdfshuffler/pdfshuffler.py:309
 msgid "Several documents"
-msgstr "Vários documentos"
+msgstr "Kilka dokumentów"
 
 #: pdfshuffler/pdfshuffler.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Gerando miniaturas... [%(i1)s/%(i2)s]"
+msgstr "Podgląd miniaturek... [%(i1)s/%(i2)s] "
 
 #: pdfshuffler/pdfshuffler.py:441
 msgid "page"
-msgstr "página"
+msgstr "strona"
 
 #: pdfshuffler/pdfshuffler.py:467
 msgid "Export ..."
-msgstr "Exportar ..."
+msgstr "Zapisz ..."
 
 #: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
 msgid "PDF files"
-msgstr "Arquivos PDF"
+msgstr "Pliki PDF"
 
 #: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
 msgid "All files"
-msgstr "Todos os arquivos"
+msgstr "Wszystkie pliki"
 
 #: pdfshuffler/pdfshuffler.py:521
 #, python-format
@@ -80,135 +78,130 @@ msgid ""
 "File %s is encrypted.\n"
 "Support for encrypted files has not been implemented yet.\n"
 "File export failed."
-msgstr ""
-"O arquivo %s está encriptado.\n"
-"O suporte a arquivos encriptados ainda não foi implementado.\n"
-"Falha na exportação do arquivo."
+msgstr "Plik %s jest szyfrowany.\nWsparcie dla zaszyfrowanych plików nie została jeszcze \nwdrożone.\nZapis pliku nie powiódł się."
 
 #: pdfshuffler/pdfshuffler.py:574
 msgid "Import..."
-msgstr "Importar..."
+msgstr "Zaimportuj... "
 
 #: pdfshuffler/pdfshuffler.py:608
 msgid "OpenDocument not supported yet!"
-msgstr "OpenDocument ainda não é suportado."
+msgstr "Otwarty dokument  jeszcze nie jest obsługiwany!"
 
 #: pdfshuffler/pdfshuffler.py:610
 msgid "Image file not supported yet!"
-msgstr "Esta imagem de arquivo ainda não é suportada!"
+msgstr "Obraz pliku, nie jest jeszcze obsługiwany!"
 
 #: pdfshuffler/pdfshuffler.py:612
 msgid "File type not supported!"
-msgstr "Tipo de arquivo não compatível!"
+msgstr "Typ pliku, nie jest obsługiwany!"
 
 #: pdfshuffler/pdfshuffler.py:614
 #, python-format
 msgid "File %s does not exist"
-msgstr "O arquivo %s não existe"
+msgstr "Plik %s nie istnieje"
 
 #: pdfshuffler/pdfshuffler.py:620
 msgid "Closed, no files selected"
-msgstr "Fechado, nenhum arquivo selecionado"
+msgstr "Zamknij, nie wybrano żadnych plików"
 
 #: pdfshuffler/pdfshuffler.py:934
 msgid "Left"
-msgstr "Esquerda"
+msgstr "Lewo"
 
 #: pdfshuffler/pdfshuffler.py:934
 msgid "Right"
-msgstr "Direita"
+msgstr "Prawo"
 
 #: pdfshuffler/pdfshuffler.py:935
 msgid "Top"
-msgstr "Superior"
+msgstr "Górę "
 
 #: pdfshuffler/pdfshuffler.py:935
 msgid "Bottom"
-msgstr "Inferior"
+msgstr "Dół"
 
 #: pdfshuffler/pdfshuffler.py:953
 msgid "Crop Selected Pages"
-msgstr "Recortar as páginas selecionadas"
+msgstr "Przytnij wybrane strony"
 
 #: pdfshuffler/pdfshuffler.py:961
 msgid "Crop Margins"
-msgstr "Recortar as márgens"
+msgstr "Przytnij margines"
 
 #: pdfshuffler/pdfshuffler.py:968
 #, python-format
 msgid "%% of width"
-msgstr "%% da largura"
+msgstr "%% szerokość"
 
 #: pdfshuffler/pdfshuffler.py:969
 #, python-format
 msgid "%% of height"
-msgstr "%% da altura"
+msgstr "%% wysokości"
 
 #: pdfshuffler/pdfshuffler.py:1007
 msgid "Dialog closed"
-msgstr "Caixa de diálogo fechada"
+msgstr "Zamyka okno "
 
 #: pdfshuffler/pdfshuffler.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
-msgstr ""
-"%s é uma ferramenta que rearranja e modifica arquivos PDF. Desenvolvido "
-"utilizando GTK+ e Python"
+msgstr "%s jest narzędziem do układania i modyfikowania plików PDF. Opracowanym przy użyciu GTK i Python"
 
 #: data/pdfshuffler.ui.h:1
 msgid "_File"
-msgstr "_Arquivo"
+msgstr "_Plik"
 
 #: data/pdfshuffler.ui.h:2
 msgid "_Edit"
-msgstr "_Editar"
+msgstr "_Edytuj "
 
 #: data/pdfshuffler.ui.h:3
 msgid "Rotate left"
-msgstr "Rotacionar à esquerda"
+msgstr "Obróć w lewo"
 
 #: data/pdfshuffler.ui.h:4
 msgid "Rotate right"
-msgstr "Rotacionar à direita"
+msgstr "Obróć w prawo"
 
 #: data/pdfshuffler.ui.h:5
 msgid "Crop"
-msgstr "Recortar"
+msgstr "Przytnij "
 
 #: data/pdfshuffler.ui.h:6
 msgid "_View"
-msgstr "_Ver"
+msgstr "_Widok"
 
 #: data/pdfshuffler.ui.h:7
 msgid "_Help"
-msgstr "_Ajuda"
+msgstr "_Pomoc"
 
 #: data/pdfshuffler.ui.h:8
 msgid "Open a file and append it to the current document"
-msgstr "Abrir um arquivo e adicioná-lo ao documento atual"
+msgstr "Otwórz plik i dołączyć go do bieżącego dokumentu"
 
 #: data/pdfshuffler.ui.h:9
 msgid "Import"
-msgstr "Importar"
+msgstr "Zaimportuj "
 
 #: data/pdfshuffler.ui.h:10
 msgid "Save"
-msgstr "Salvar"
+msgstr "Zapisz"
 
 #: data/pdfshuffler.ui.h:11
 msgid "Save as"
-msgstr "Salvar como"
+msgstr "Zapisz jako"
 
 #: data/pdfshuffler.ui.h:12
 msgid "Zoom in"
-msgstr "Ampliar"
+msgstr "Powiększ "
 
 #: data/pdfshuffler.ui.h:13
 msgid "Zoom out"
-msgstr "Reduzir"
+msgstr "Pomniejsz"
 
 #: data/pdfshuffler.ui.h:14
 msgid "Delete"
-msgstr "Remover"
+msgstr "Usuń"

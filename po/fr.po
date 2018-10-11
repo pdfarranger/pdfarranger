@@ -1,3 +1,10 @@
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
+# David VANTYGHEM <david.vantyghem@free.fr>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
