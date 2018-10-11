@@ -548,7 +548,7 @@ class PdfShuffler:
         all_files = self.active_file_names()
         if len(all_files) == 0:
             self.error_message_dialog("Nothing to save!")
-            returng
+            return
         elif len(all_files) != 1:
             self.error_message_dialog("Unable to save as there is more than one file.  Choose Save As, then specify a file name to use.")
             return
