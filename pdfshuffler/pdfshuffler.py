@@ -54,10 +54,17 @@ localedir = os.path.join(sharedir, 'locale')
 import locale       #for multilanguage support
 import gettext
 locale.setlocale(locale.LC_ALL, '')
-locale.bindtextdomain('pdfshuffler', localedir)
-gettext.bindtextdomain('pdfshuffler',  localedir)
+try:
+    locale.bindtextdomain('pdfshuffler', localedir)
+    gettext.bindtextdomain('pdfshuffler',  localedir)
+except AttributeError:
+    # disable translations altogether. UI will be in English but at least consistenly so.
+    # this is required for windows/osx there is no bindtextdomain
+    # a proper fix would be something like: https://github.com/Cimbali/pympress/pull/21/files
+    gettext.install('')
 gettext.textdomain('pdfshuffler')
 _ = gettext.gettext
+
 
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
 VERSION = '0.7.0'
@@ -671,7 +678,7 @@ class PdfShuffler:
                         f = Gio.File.new_for_path(filename)
                         f_info = f.query_info('standard::content-type', 0, None)
                         mime_type = f_info.get_content_type()
-                        expected_mime_type = 'application/pdf'
+                        expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
 
                         if mime_type == expected_mime_type:
                             self.add_pdf_pages(filename)
@@ -680,7 +687,7 @@ class PdfShuffler:
                         elif mime_type[:5] == 'image':
                             print(_('Image file not supported yet!'))
                         else:
-                            print(_('File type not supported!'))
+                            print(_('File type "%s" not supported!') % mime_type)
                     else:
                         print(_('File %s does not exist') % filename)
                 except Exception as e:
@@ -1194,8 +1201,8 @@ class PDF_Doc:
         (self.shortname, self.ext) = os.path.splitext(self.shortname)
         f = Gio.File.new_for_path(filename)
         mime_type = f.query_info('standard::content-type', 0, None).get_content_type()
-        expected_mime_type = 'application/pdf'
-        file_prefix = 'file://'
+        expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
+        file_prefix = 'file://' if os.name != 'nt' else 'file:///'
 
         if mime_type == expected_mime_type:
             self.nfile = nfile + 1
