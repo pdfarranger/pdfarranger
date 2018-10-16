@@ -659,7 +659,7 @@ class PdfShuffler:
                                                  Gtk.ResponseType.CANCEL,
                                                  Gtk.STOCK_OPEN,
                                                  Gtk.ResponseType.OK))
-        chooser.set_current_folder(self.import_directory)
+        chooser.set_current_folder(self.import_directory or '')
         chooser.set_select_multiple(True)
 
         filter_all = Gtk.FileFilter()
