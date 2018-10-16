@@ -445,7 +445,11 @@ class PdfShuffler:
             self.rendering_thread.join()
 
         if os.path.isdir(self.tmp_dir):
-            shutil.rmtree(self.tmp_dir)
+            try:
+                shutil.rmtree(self.tmp_dir)
+            except PermissionError as e:
+                # win32 complains about locked files - ignore for now
+                print('Could not remove temp files due to locking:', e)
         if Gtk.main_level():
             Gtk.main_quit()
         else:
