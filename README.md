@@ -19,7 +19,7 @@ In order to install run:
 On Debian based distributions:
 
 ```
-sudo apt-get install python-gi python-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18
+sudo apt-get install gettext python3-wheel python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18
 ```
 
 On Arch Linux:
