@@ -1,16 +1,15 @@
 # About
 
-This repo is an unofficial mirror (possibly not synchronized) of
-<https://savannah.nongnu.org/projects/pdfshuffler/> and
-<http://sourceforge.net/projects/pdfshuffler/>.
+*pdfarranger* is a small python-gtk application, which helps the user to merge
+or split pdf documents and rotate, crop and rearrange their pages using an
+interactive and intuitive graphical interface. It is a frontend for
+python-pyPdf.
 
-I set it up because I feel frustrated to work with subversion and without PR.
-The developer of pdfshuffler do not read this repo so don't expect any PR or
-issues posted here to reach him.
+*pdfarranger* is a fork of Konstantinos Poulios's pdfshuffler
+(see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
+[Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
+It's an humble tentative de make the project a bit more active.
 
-I just use this repo to keep my own patches and, as a source for `pip install`.
-
-See <https://github.com/jeromerobert/pdfshuffler/issues/9> for details.
 
 # Install
 
@@ -31,5 +30,5 @@ sudo pacman -S poppler-glib gettext python-pip python-gobject gtk3 python-cairo
 Then:
 
 ```
-pip install --user -r https://raw.githubusercontent.com/jeromerobert/pdfshuffler/master/requirements.txt
+pip install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
