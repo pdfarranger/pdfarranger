@@ -437,6 +437,10 @@ class PdfShuffler:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
 
+        # Release Poppler.Document instances to unlock all temporay files
+        self.rendering_thread.pdfqueue = []
+        self.pdfqueue = []
+
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
         if Gtk.main_level():
