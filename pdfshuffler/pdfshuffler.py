@@ -721,7 +721,7 @@ class PdfShuffler:
 
         if len(iconview.get_selected_items()) > 1:
             iconview.stop_emission('drag_begin')
-            context.set_icon_stock(Gtk.STOCK_DND_MULTIPLE, 0, 0)
+            Gtk.drag_set_icon_name(context, "gtk-dnd-multiple", 0, 0)
 
     def iv_dnd_get_data(self, iconview, context,
                         selection_data, target_id, etime):
