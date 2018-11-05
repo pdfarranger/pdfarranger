@@ -285,7 +285,7 @@ class PdfShuffler:
                            GObject.SignalFlags.RUN_FIRST, None,
                            [GObject.TYPE_INT, GObject.TYPE_PYOBJECT,
                             GObject.TYPE_FLOAT])
-        self.rendering_thread = 0
+        self.rendering_thread = None
 
         self.set_unsaved(False)
 
@@ -436,9 +436,9 @@ class PdfShuffler:
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
+            self.rendering_thread.pdfqueue = []
 
         # Release Poppler.Document instances to unlock all temporay files
-        self.rendering_thread.pdfqueue = []
         self.pdfqueue = []
 
         if os.path.isdir(self.tmp_dir):
