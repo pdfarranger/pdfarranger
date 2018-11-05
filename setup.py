@@ -54,14 +54,14 @@ for name in os.listdir('po'):
         os.system('msgfmt -o %s po/%s' % (out_name, name))
         data_files.append((install_dir, [out_name]))
 
-setup(name='pdfshuffler',
-      version='0.7.0',
-      author='Konstantinos Poulios',
-      author_email='logari81 at gmail dot com',
+setup(name='pdfarranger',
+      version='1.0',
+      author='Jerome Robert',
+      author_email='jeromerobert@gmx.com',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
-      url = 'https://gna.org/projects/pdfshuffler/',
+      url = 'https://github.com/jeromerobert/pdfarranger',
       license='GNU GPL-3',
-      scripts=['bin/pdfshuffler'],
+      scripts=['bin/pdfarranger'],
       packages=['pdfshuffler'],
       data_files=data_files
      )

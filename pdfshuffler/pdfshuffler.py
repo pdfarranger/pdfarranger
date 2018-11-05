@@ -59,9 +59,9 @@ gettext.bindtextdomain('pdfshuffler',  localedir)
 gettext.textdomain('pdfshuffler')
 _ = gettext.gettext
 
-APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
-VERSION = '0.7.0'
-WEBSITE = 'https://gna.org/projects/pdfshuffler/'
+APPNAME = 'pdfarranger'
+VERSION = '1.0'
+WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 try:
@@ -1166,11 +1166,14 @@ class PdfShuffler:
             pass
         # FIXME
         about_dialog.set_name(APPNAME)
+        about_dialog.set_program_name(APPNAME)
         about_dialog.set_version(VERSION)
         about_dialog.set_comments(_(
             '%s is a tool for rearranging and modifying PDF files. ' \
             'Developed using GTK+ and Python') % APPNAME)
-        about_dialog.set_authors(['Konstantinos Poulios',])
+        about_dialog.set_authors(['Konstantinos Poulios'])
+        about_dialog.add_credit_section('Maintainers and contributors', [
+            'https://github.com/jeromerobert/pdfarranger/graphs/contributors'])
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name('pdfshuffler')
         about_dialog.set_license(LICENSE)
