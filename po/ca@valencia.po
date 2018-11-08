@@ -17,120 +17,120 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: ../data/pdfshuffler.ui:19
+#: ../data/pdfarranger.ui:19
 msgid "_File"
 msgstr "_Fitxer"
 
-#: ../data/pdfshuffler.ui:84
+#: ../data/pdfarranger.ui:84
 msgid "_Edit"
 msgstr "_Edita"
 
-#: ../data/pdfshuffler.ui:121 ../data/pdfshuffler.ui:354
-#: ../data/pdfshuffler.ui:356
+#: ../data/pdfarranger.ui:121 ../data/pdfarranger.ui:354
+#: ../data/pdfarranger.ui:356
 msgid "Rotate left"
 msgstr "Gira cap a l'esquerra"
 
-#: ../data/pdfshuffler.ui:131 ../data/pdfshuffler.ui:371
-#: ../data/pdfshuffler.ui:373
+#: ../data/pdfarranger.ui:131 ../data/pdfarranger.ui:371
+#: ../data/pdfarranger.ui:373
 msgid "Rotate right"
 msgstr "Gira cap a la dreta"
 
-#: ../data/pdfshuffler.ui:147
+#: ../data/pdfarranger.ui:147
 msgid "Crop"
 msgstr "Retalla"
 
-#: ../data/pdfshuffler.ui:175
+#: ../data/pdfarranger.ui:175
 msgid "_View"
 msgstr "_Visualitza"
 
-#: ../data/pdfshuffler.ui:183 ../data/pdfshuffler.ui:310
-#: ../data/pdfshuffler.ui:312
+#: ../data/pdfarranger.ui:183 ../data/pdfarranger.ui:310
+#: ../data/pdfarranger.ui:312
 msgid "Zoom in"
 msgstr "Amplia"
 
-#: ../data/pdfshuffler.ui:194 ../data/pdfshuffler.ui:327
-#: ../data/pdfshuffler.ui:329
+#: ../data/pdfarranger.ui:194 ../data/pdfarranger.ui:327
+#: ../data/pdfarranger.ui:329
 msgid "Zoom out"
 msgstr "Redueïx"
 
-#: ../data/pdfshuffler.ui:212
+#: ../data/pdfarranger.ui:212
 msgid "_Help"
 msgstr "A_juda"
 
-#: ../data/pdfshuffler.ui:253
+#: ../data/pdfarranger.ui:253
 msgid "Open a file and append it to the current document"
 msgstr "Obri un fitxer i afig-lo al document actual"
 
-#: ../data/pdfshuffler.ui:255
+#: ../data/pdfarranger.ui:255
 msgid "Import"
 msgstr "Importa"
 
-#: ../data/pdfshuffler.ui:271
+#: ../data/pdfarranger.ui:271
 msgid "Save"
 msgstr "Guarda"
 
-#: ../data/pdfshuffler.ui:285
+#: ../data/pdfarranger.ui:285
 msgid "Save as"
 msgstr "Guarda com"
 
-#: ../data/pdfshuffler.ui:388 ../data/pdfshuffler.ui:390
+#: ../data/pdfarranger.ui:388 ../data/pdfarranger.ui:390
 msgid "Delete"
 msgstr "Esborra"
 
-#: ../pdfshuffler/pdfshuffler.py:258
+#: ../pdfarranger/pdfarranger.py:258
 msgid "_Rotate Right"
 msgstr "Gi_ra a la dreta"
 
-#: ../pdfshuffler/pdfshuffler.py:258
+#: ../pdfarranger/pdfarranger.py:258
 msgid "Rotate _Left"
 msgstr "Gira a _l'esquerra"
 
-#: ../pdfshuffler/pdfshuffler.py:258
+#: ../pdfarranger/pdfarranger.py:258
 msgid "C_rop..."
 msgstr "_Retalla..."
 
-#: ../pdfshuffler/pdfshuffler.py:259
+#: ../pdfarranger/pdfarranger.py:259
 msgid "_Delete"
 msgstr "_Esborra"
 
-#: ../pdfshuffler/pdfshuffler.py:259
+#: ../pdfarranger/pdfarranger.py:259
 msgid "_Export selection..."
 msgstr "_Exporta la selecció..."
 
-#: ../pdfshuffler/pdfshuffler.py:259
+#: ../pdfarranger/pdfarranger.py:259
 msgid "Edit with _Inkscape..."
 msgstr "Editar amb _Inkscape"
 
-#: ../pdfshuffler/pdfshuffler.py:327
+#: ../pdfarranger/pdfarranger.py:327
 msgid "No document"
 msgstr "Cap document"
 
-#: ../pdfshuffler/pdfshuffler.py:329
+#: ../pdfarranger/pdfarranger.py:329
 msgid "Several documents"
 msgstr "Diversos documents"
 
-#: ../pdfshuffler/pdfshuffler.py:345
+#: ../pdfarranger/pdfarranger.py:345
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "S'estan renderitzant les miniatures... [%(i1)s/%(i2)s]"
 
-#: ../pdfshuffler/pdfshuffler.py:461
+#: ../pdfarranger/pdfarranger.py:461
 msgid "page"
 msgstr "pàgina"
 
-#: ../pdfshuffler/pdfshuffler.py:487
+#: ../pdfarranger/pdfarranger.py:487
 msgid "Export ..."
 msgstr "Exporta..."
 
-#: ../pdfshuffler/pdfshuffler.py:496 ../pdfshuffler/pdfshuffler.py:633
+#: ../pdfarranger/pdfarranger.py:496 ../pdfarranger/pdfarranger.py:633
 msgid "PDF files"
 msgstr "Fitxers PDF"
 
-#: ../pdfshuffler/pdfshuffler.py:501 ../pdfshuffler/pdfshuffler.py:628
+#: ../pdfarranger/pdfarranger.py:501 ../pdfarranger/pdfarranger.py:628
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: ../pdfshuffler/pdfshuffler.py:564
+#: ../pdfarranger/pdfarranger.py:564
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -141,75 +141,75 @@ msgstr ""
 "El suport per a fitxers encriptats no s'ha implementat encara.\n"
 "L'exportació del fitxer ha fallat."
 
-#: ../pdfshuffler/pdfshuffler.py:617
+#: ../pdfarranger/pdfarranger.py:617
 msgid "Import..."
 msgstr "Importa..."
 
-#: ../pdfshuffler/pdfshuffler.py:652
+#: ../pdfarranger/pdfarranger.py:652
 msgid "OpenDocument not supported yet!"
 msgstr "L'OpenDocument encara no s'admet!"
 
-#: ../pdfshuffler/pdfshuffler.py:654
+#: ../pdfarranger/pdfarranger.py:654
 msgid "Image file not supported yet!"
 msgstr "Els fitxers d'imatge encara no s'admeten!"
 
-#: ../pdfshuffler/pdfshuffler.py:656
+#: ../pdfarranger/pdfarranger.py:656
 msgid "File type not supported!"
 msgstr "El tipus de fitxer no s'admet!"
 
 #  ERR_FILE_NOT_EXISTS
-#: ../pdfshuffler/pdfshuffler.py:658
+#: ../pdfarranger/pdfarranger.py:658
 #, python-format
 msgid "File %s does not exist"
 msgstr "El fitxer %s no existeix"
 
-#: ../pdfshuffler/pdfshuffler.py:664
+#: ../pdfarranger/pdfarranger.py:664
 msgid "Closed, no files selected"
 msgstr "S'ha tancat, no hi ha cap fitxer seleccionat"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfshuffler/pdfshuffler.py:982
+#: ../pdfarranger/pdfarranger.py:982
 msgid "Left"
 msgstr "Esquerra"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfshuffler/pdfshuffler.py:982
+#: ../pdfarranger/pdfarranger.py:982
 msgid "Right"
 msgstr "Dreta"
 
 # Netscape_4.7->String:RESDLL.DLL
-#: ../pdfshuffler/pdfshuffler.py:983
+#: ../pdfarranger/pdfarranger.py:983
 msgid "Top"
 msgstr "Dalt"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfshuffler/pdfshuffler.py:983
+#: ../pdfarranger/pdfarranger.py:983
 msgid "Bottom"
 msgstr "Baix"
 
-#: ../pdfshuffler/pdfshuffler.py:1001
+#: ../pdfarranger/pdfarranger.py:1001
 msgid "Crop Selected Pages"
 msgstr "Retalla les pàgines seleccionades"
 
-#: ../pdfshuffler/pdfshuffler.py:1009
+#: ../pdfarranger/pdfarranger.py:1009
 msgid "Crop Margins"
 msgstr "Retalla els marges"
 
-#: ../pdfshuffler/pdfshuffler.py:1016
+#: ../pdfarranger/pdfarranger.py:1016
 #, python-format
 msgid "%% of width"
 msgstr "%% d'amplària"
 
-#: ../pdfshuffler/pdfshuffler.py:1017
+#: ../pdfarranger/pdfarranger.py:1017
 #, python-format
 msgid "%% of height"
 msgstr "%% d'alçària"
 
-#: ../pdfshuffler/pdfshuffler.py:1055
+#: ../pdfarranger/pdfarranger.py:1055
 msgid "Dialog closed"
 msgstr "S'ha tancat el diàleg"
 
-#: ../pdfshuffler/pdfshuffler.py:1069
+#: ../pdfarranger/pdfarranger.py:1069
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

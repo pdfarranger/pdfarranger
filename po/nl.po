@@ -20,60 +20,60 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfshuffler/pdfshuffler.py:104
+#: pdfarranger/pdfarranger.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr "Het pictogram kan niet worden geladen; de applicatie is incorrect geïnstalleerd."
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "_Rotate Right"
 msgstr "Naar rechts _draaien"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "Rotate _Left"
 msgstr "Naar _links draaien"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "C_rop..."
 msgstr "Bij_snijden..."
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Delete"
 msgstr "_Verwijderen"
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Export selection..."
 msgstr "Selectie _exporteren..."
 
-#: pdfshuffler/pdfshuffler.py:307
+#: pdfarranger/pdfarranger.py:307
 msgid "No document"
 msgstr "Geen document"
 
-#: pdfshuffler/pdfshuffler.py:309
+#: pdfarranger/pdfarranger.py:309
 msgid "Several documents"
 msgstr "Meerdere documenten"
 
-#: pdfshuffler/pdfshuffler.py:325
+#: pdfarranger/pdfarranger.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Bezig met laden van miniaturen... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler/pdfshuffler.py:441
+#: pdfarranger/pdfarranger.py:441
 msgid "page"
 msgstr "pagina"
 
-#: pdfshuffler/pdfshuffler.py:467
+#: pdfarranger/pdfarranger.py:467
 msgid "Export ..."
 msgstr "Exporteren..."
 
-#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
+#: pdfarranger/pdfarranger.py:476 pdfarranger/pdfarranger.py:589
 msgid "PDF files"
 msgstr "PDF-bestanden"
 
-#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
+#: pdfarranger/pdfarranger.py:481 pdfarranger/pdfarranger.py:584
 msgid "All files"
 msgstr "Alle bestanden"
 
-#: pdfshuffler/pdfshuffler.py:521
+#: pdfarranger/pdfarranger.py:521
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -81,128 +81,128 @@ msgid ""
 "File export failed."
 msgstr "Het bestand, %s, is beveiligd.\nDe ondersteuning voor beveiligde bestanden is nog niet ingebouwd.\nDe bestandsexport is mislukt."
 
-#: pdfshuffler/pdfshuffler.py:574
+#: pdfarranger/pdfarranger.py:574
 msgid "Import..."
 msgstr "Importeren..."
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfarranger/pdfarranger.py:608
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument wordt nog niet ondersteund!"
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfarranger/pdfarranger.py:610
 msgid "Image file not supported yet!"
 msgstr "Afbeeldingsbestand wordt nog niet ondersteund!"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfarranger/pdfarranger.py:612
 msgid "File type not supported!"
 msgstr "Bestandstype wordt niet ondersteund!"
 
-#: pdfshuffler/pdfshuffler.py:614
+#: pdfarranger/pdfarranger.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "Het bestand, %s, bestaat niet"
 
-#: pdfshuffler/pdfshuffler.py:620
+#: pdfarranger/pdfarranger.py:620
 msgid "Closed, no files selected"
 msgstr "Gesloten, geen bestanden geselecteerd"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Left"
 msgstr "Links"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Top"
 msgstr "Boven"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Bottom"
 msgstr "Onder"
 
-#: pdfshuffler/pdfshuffler.py:953
+#: pdfarranger/pdfarranger.py:953
 msgid "Crop Selected Pages"
 msgstr "Geselecteerde pagina's bijsnijden"
 
-#: pdfshuffler/pdfshuffler.py:961
+#: pdfarranger/pdfarranger.py:961
 msgid "Crop Margins"
 msgstr "Marges bijsnijden"
 
-#: pdfshuffler/pdfshuffler.py:968
+#: pdfarranger/pdfarranger.py:968
 #, python-format
 msgid "%% of width"
 msgstr "%% van breedte"
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfarranger/pdfarranger.py:969
 #, python-format
 msgid "%% of height"
 msgstr "%% van hoogte"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfarranger/pdfarranger.py:1007
 msgid "Dialog closed"
 msgstr "Het dialoogvenster is gesloten"
 
-#: pdfshuffler/pdfshuffler.py:1021
+#: pdfarranger/pdfarranger.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr "%s is een hulpprogramma voor het herordenen en bewerken van PDF-bestanden, ontwikkeld in GTK+ en Python"
 
-#: data/pdfshuffler.ui.h:1
+#: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "_Bestand"
 
-#: data/pdfshuffler.ui.h:2
+#: data/pdfarranger.ui.h:2
 msgid "_Edit"
 msgstr "_Bewerken"
 
-#: data/pdfshuffler.ui.h:3
+#: data/pdfarranger.ui.h:3
 msgid "Rotate left"
 msgstr "Naar links draaien"
 
-#: data/pdfshuffler.ui.h:4
+#: data/pdfarranger.ui.h:4
 msgid "Rotate right"
 msgstr "Naar rechts draaien"
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfarranger.ui.h:5
 msgid "Crop"
 msgstr "Bijsnijden"
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfarranger.ui.h:6
 msgid "_View"
 msgstr "_Beeld"
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfarranger.ui.h:7
 msgid "_Help"
 msgstr "_Hulp"
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfarranger.ui.h:8
 msgid "Open a file and append it to the current document"
 msgstr "Open een bestand en wijs het toe aan het huidige document"
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfarranger.ui.h:9
 msgid "Import"
 msgstr "Importeren"
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfarranger.ui.h:10
 msgid "Save"
 msgstr "Opslaan"
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfarranger.ui.h:11
 msgid "Save as"
 msgstr "Opslaan als"
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Inzoomen"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
-#: data/pdfshuffler.ui.h:14
+#: data/pdfarranger.ui.h:14
 msgid "Delete"
 msgstr "Verwijderen"

@@ -17,56 +17,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2\n"
 
-#: pdfshuffler/pdfshuffler.py:110
+#: pdfarranger/pdfarranger.py:110
 msgid "Can't load icon. Application is not installed correctly."
 msgstr "Simge yüklenemiyor. Uygulama doğru yüklenmemiş."
 
-#: pdfshuffler/pdfshuffler.py:233
+#: pdfarranger/pdfarranger.py:233
 msgid "_Rotate Right"
 msgstr "Sağa Döndür"
 
-#: pdfshuffler/pdfshuffler.py:234
+#: pdfarranger/pdfarranger.py:234
 msgid "Rotate _Left"
 msgstr "Sola Döndür"
 
-#: pdfshuffler/pdfshuffler.py:235
+#: pdfarranger/pdfarranger.py:235
 msgid "C_rop..."
 msgstr "Kırp"
 
-#: pdfshuffler/pdfshuffler.py:237
+#: pdfarranger/pdfarranger.py:237
 msgid "_Export selection..."
 msgstr "Seçimi dışa aktar"
 
-#: pdfshuffler/pdfshuffler.py:299
+#: pdfarranger/pdfarranger.py:299
 msgid "No document"
 msgstr "belge yok"
 
-#: pdfshuffler/pdfshuffler.py:301
+#: pdfarranger/pdfarranger.py:301
 msgid "Several documents"
 msgstr "Çeşitli belgeler"
 
-#: pdfshuffler/pdfshuffler.py:317
+#: pdfarranger/pdfarranger.py:317
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Küçük resimler işleniyor… [% (I2) s/% (I2) s]"
 
-#: pdfshuffler/pdfshuffler.py:435
+#: pdfarranger/pdfarranger.py:435
 msgid "page"
 msgstr "sayfa"
 
-#: pdfshuffler/pdfshuffler.py:461
+#: pdfarranger/pdfarranger.py:461
 msgid "Export ..."
 msgstr "Dışa Aktar …"
 
-#: pdfshuffler/pdfshuffler.py:470 pdfshuffler/pdfshuffler.py:586
+#: pdfarranger/pdfarranger.py:470 pdfarranger/pdfarranger.py:586
 msgid "PDF files"
 msgstr "PDF dosyaları"
 
-#: pdfshuffler/pdfshuffler.py:475 pdfshuffler/pdfshuffler.py:581
+#: pdfarranger/pdfarranger.py:475 pdfarranger/pdfarranger.py:581
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: pdfshuffler/pdfshuffler.py:518
+#: pdfarranger/pdfarranger.py:518
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -77,70 +77,70 @@ msgstr ""
 "Şifreli dosya desteği henüz geliştirilmedi.\n"
 "Dosya dışarıya aktarımı başarısız."
 
-#: pdfshuffler/pdfshuffler.py:571
+#: pdfarranger/pdfarranger.py:571
 msgid "Import..."
 msgstr "İçe Aktar.."
 
-#: pdfshuffler/pdfshuffler.py:604
+#: pdfarranger/pdfarranger.py:604
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument henüz desteklenmiyor."
 
-#: pdfshuffler/pdfshuffler.py:606
+#: pdfarranger/pdfarranger.py:606
 msgid "Image file not supported yet!"
 msgstr "Resim dosyası henüz desteklenmiyor."
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfarranger/pdfarranger.py:608
 msgid "File type not supported!"
 msgstr "Bu dosya tipi desteklenmiyor."
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfarranger/pdfarranger.py:610
 #, python-format
 msgid "File %s does not exist"
 msgstr "%s dosyası mevcut değil."
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfarranger/pdfarranger.py:612
 msgid "Closed, no files selected"
 msgstr "Kapalı, dosya seçilmedi"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfarranger/pdfarranger.py:921
 msgid "Left"
 msgstr "Sol"
 
-#: pdfshuffler/pdfshuffler.py:921
+#: pdfarranger/pdfarranger.py:921
 msgid "Right"
 msgstr "Sağ"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfarranger/pdfarranger.py:922
 msgid "Top"
 msgstr "Üst"
 
-#: pdfshuffler/pdfshuffler.py:922
+#: pdfarranger/pdfarranger.py:922
 msgid "Bottom"
 msgstr "Alt"
 
-#: pdfshuffler/pdfshuffler.py:940
+#: pdfarranger/pdfarranger.py:940
 msgid "Crop Selected Pages"
 msgstr "Seçilen sayfaları kırp"
 
-#: pdfshuffler/pdfshuffler.py:948
+#: pdfarranger/pdfarranger.py:948
 msgid "Crop Margins"
 msgstr "Kenar boşluklarını kırp"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfarranger/pdfarranger.py:955
 #, python-format
 msgid "% of width"
 msgstr "% genişlik"
 
-#: pdfshuffler/pdfshuffler.py:955
+#: pdfarranger/pdfarranger.py:955
 #, python-format
 msgid "% of height"
 msgstr "% yükseklik"
 
-#: pdfshuffler/pdfshuffler.py:993
+#: pdfarranger/pdfarranger.py:993
 msgid "Dialog closed"
 msgstr "İletişim kapatıldı"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfarranger/pdfarranger.py:1007
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -149,58 +149,58 @@ msgstr ""
 "%s PDF dosyalarını değiştirme ve yeniden ayarlama aracıdır. GTK+ and Python "
 "kullanılarak geliştirilmiştir"
 
-#: data/pdfshuffler.ui.h:1
+#: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "Dosya"
 
-#: data/pdfshuffler.ui.h:2
+#: data/pdfarranger.ui.h:2
 msgid "_Edit"
 msgstr "Düzenle"
 
-#: data/pdfshuffler.ui.h:3
+#: data/pdfarranger.ui.h:3
 msgid "Rotate left"
 msgstr "Sola döndür"
 
-#: data/pdfshuffler.ui.h:4
+#: data/pdfarranger.ui.h:4
 msgid "Rotate right"
 msgstr "Sağa döndür"
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfarranger.ui.h:5
 msgid "Crop"
 msgstr "Kırp"
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfarranger.ui.h:6
 msgid "_View"
 msgstr "Görünüm"
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfarranger.ui.h:7
 msgid "_Help"
 msgstr "Yardım"
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfarranger.ui.h:8
 msgid "Open a file and append it to the current document"
 msgstr "Bir dosya açın ve mevcut dokümana ekleyin"
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfarranger.ui.h:9
 msgid "Import"
 msgstr "İçe aktar"
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfarranger.ui.h:10
 msgid "Save"
 msgstr "Kaydet"
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfarranger.ui.h:11
 msgid "Save as"
 msgstr "Farklı kaydet"
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Yakınlaştır"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Uzaklaş"
 
-#: data/pdfshuffler.ui.h:14
+#: data/pdfarranger.ui.h:14
 msgid "Delete"
 msgstr "Sil"

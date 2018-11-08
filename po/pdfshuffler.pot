@@ -17,60 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pdfshuffler/pdfshuffler.py:104
+#: pdfarranger/pdfarranger.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "C_rop..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Delete"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Export selection..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:307
+#: pdfarranger/pdfarranger.py:307
 msgid "No document"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:309
+#: pdfarranger/pdfarranger.py:309
 msgid "Several documents"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:325
+#: pdfarranger/pdfarranger.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:441
+#: pdfarranger/pdfarranger.py:441
 msgid "page"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:467
+#: pdfarranger/pdfarranger.py:467
 msgid "Export ..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
+#: pdfarranger/pdfarranger.py:476 pdfarranger/pdfarranger.py:589
 msgid "PDF files"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
+#: pdfarranger/pdfarranger.py:481 pdfarranger/pdfarranger.py:584
 msgid "All files"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:521
+#: pdfarranger/pdfarranger.py:521
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -78,128 +78,128 @@ msgid ""
 "File export failed."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:574
+#: pdfarranger/pdfarranger.py:574
 msgid "Import..."
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfarranger/pdfarranger.py:608
 msgid "OpenDocument not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfarranger/pdfarranger.py:610
 msgid "Image file not supported yet!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfarranger/pdfarranger.py:612
 msgid "File type not supported!"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:614
+#: pdfarranger/pdfarranger.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:620
+#: pdfarranger/pdfarranger.py:620
 msgid "Closed, no files selected"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Left"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Right"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Top"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Bottom"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:953
+#: pdfarranger/pdfarranger.py:953
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:961
+#: pdfarranger/pdfarranger.py:961
 msgid "Crop Margins"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:968
+#: pdfarranger/pdfarranger.py:968
 #, python-format
 msgid "%% of width"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfarranger/pdfarranger.py:969
 #, python-format
 msgid "%% of height"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfarranger/pdfarranger.py:1007
 msgid "Dialog closed"
 msgstr ""
 
-#: pdfshuffler/pdfshuffler.py:1021
+#: pdfarranger/pdfarranger.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:1
+#: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:2
+#: data/pdfarranger.ui.h:2
 msgid "_Edit"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:3
+#: data/pdfarranger.ui.h:3
 msgid "Rotate left"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:4
+#: data/pdfarranger.ui.h:4
 msgid "Rotate right"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfarranger.ui.h:5
 msgid "Crop"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfarranger.ui.h:6
 msgid "_View"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfarranger.ui.h:7
 msgid "_Help"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfarranger.ui.h:8
 msgid "Open a file and append it to the current document"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfarranger.ui.h:9
 msgid "Import"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfarranger.ui.h:10
 msgid "Save"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfarranger.ui.h:11
 msgid "Save as"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr ""
 
-#: data/pdfshuffler.ui.h:14
+#: data/pdfarranger.ui.h:14
 msgid "Delete"
 msgstr ""

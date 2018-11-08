@@ -19,60 +19,60 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfshuffler/pdfshuffler.py:104
+#: pdfarranger/pdfarranger.py:104
 msgid "Can't load icon. Application is not installed correctly."
 msgstr "无法加载图标。应用程序未正确安装。"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "_Rotate Right"
 msgstr "向右旋转(_R)"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "Rotate _Left"
 msgstr "向左旋转(_L)"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "C_rop..."
 msgstr "裁剪(_R)..."
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: pdfshuffler/pdfshuffler.py:239
+#: pdfarranger/pdfarranger.py:239
 msgid "_Export selection..."
 msgstr "导出所选(_E)..."
 
-#: pdfshuffler/pdfshuffler.py:307
+#: pdfarranger/pdfarranger.py:307
 msgid "No document"
 msgstr "无文档"
 
-#: pdfshuffler/pdfshuffler.py:309
+#: pdfarranger/pdfarranger.py:309
 msgid "Several documents"
 msgstr "多个文档"
 
-#: pdfshuffler/pdfshuffler.py:325
+#: pdfarranger/pdfarranger.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "正在渲染缩略图... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler/pdfshuffler.py:441
+#: pdfarranger/pdfarranger.py:441
 msgid "page"
 msgstr "页面"
 
-#: pdfshuffler/pdfshuffler.py:467
+#: pdfarranger/pdfarranger.py:467
 msgid "Export ..."
 msgstr "导出..."
 
-#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
+#: pdfarranger/pdfarranger.py:476 pdfarranger/pdfarranger.py:589
 msgid "PDF files"
 msgstr "PDF 文件"
 
-#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
+#: pdfarranger/pdfarranger.py:481 pdfarranger/pdfarranger.py:584
 msgid "All files"
 msgstr "所有文件"
 
-#: pdfshuffler/pdfshuffler.py:521
+#: pdfarranger/pdfarranger.py:521
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -80,128 +80,128 @@ msgid ""
 "File export failed."
 msgstr "文件 %s 已加密。\n尚未实现对加密文件的支持。\n文件导出失败。"
 
-#: pdfshuffler/pdfshuffler.py:574
+#: pdfarranger/pdfarranger.py:574
 msgid "Import..."
 msgstr "导入..."
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfarranger/pdfarranger.py:608
 msgid "OpenDocument not supported yet!"
 msgstr "尚不支持 OpenDocument 文件!"
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfarranger/pdfarranger.py:610
 msgid "Image file not supported yet!"
 msgstr "尚不支持图像文件!"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfarranger/pdfarranger.py:612
 msgid "File type not supported!"
 msgstr "文件类型不支持!"
 
-#: pdfshuffler/pdfshuffler.py:614
+#: pdfarranger/pdfarranger.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "文件 %s 不存在"
 
-#: pdfshuffler/pdfshuffler.py:620
+#: pdfarranger/pdfarranger.py:620
 msgid "Closed, no files selected"
 msgstr "已关闭，未选择文件"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Left"
 msgstr "左边"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Right"
 msgstr "右边"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Top"
 msgstr "顶部"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Bottom"
 msgstr "底部"
 
-#: pdfshuffler/pdfshuffler.py:953
+#: pdfarranger/pdfarranger.py:953
 msgid "Crop Selected Pages"
 msgstr "裁剪所选页面"
 
-#: pdfshuffler/pdfshuffler.py:961
+#: pdfarranger/pdfarranger.py:961
 msgid "Crop Margins"
 msgstr "裁剪边距"
 
-#: pdfshuffler/pdfshuffler.py:968
+#: pdfarranger/pdfarranger.py:968
 #, python-format
 msgid "%% of width"
 msgstr "%% 的宽度"
 
-#: pdfshuffler/pdfshuffler.py:969
+#: pdfarranger/pdfarranger.py:969
 #, python-format
 msgid "%% of height"
 msgstr "%% 的高度"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfarranger/pdfarranger.py:1007
 msgid "Dialog closed"
 msgstr "对话框已关闭"
 
-#: pdfshuffler/pdfshuffler.py:1021
+#: pdfarranger/pdfarranger.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr "%s 是用于重排及修改 PDF 文件的工具。采用 GTK+ 及 Python 开发"
 
-#: data/pdfshuffler.ui.h:1
+#: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "文件(_F)"
 
-#: data/pdfshuffler.ui.h:2
+#: data/pdfarranger.ui.h:2
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: data/pdfshuffler.ui.h:3
+#: data/pdfarranger.ui.h:3
 msgid "Rotate left"
 msgstr "向左旋转"
 
-#: data/pdfshuffler.ui.h:4
+#: data/pdfarranger.ui.h:4
 msgid "Rotate right"
 msgstr "向右旋转"
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfarranger.ui.h:5
 msgid "Crop"
 msgstr "裁剪"
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfarranger.ui.h:6
 msgid "_View"
 msgstr "查看(_V)"
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfarranger.ui.h:7
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfarranger.ui.h:8
 msgid "Open a file and append it to the current document"
 msgstr "打开文件，并将其追加到当前文件末尾"
 
-#: data/pdfshuffler.ui.h:9
+#: data/pdfarranger.ui.h:9
 msgid "Import"
 msgstr "导入"
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfarranger.ui.h:10
 msgid "Save"
 msgstr "保存"
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfarranger.ui.h:11
 msgid "Save as"
 msgstr "另存为"
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "放大"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "缩小"
 
-#: data/pdfshuffler.ui.h:14
+#: data/pdfarranger.ui.h:14
 msgid "Delete"
 msgstr "删除"

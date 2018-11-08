@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
 <!--
-This file is part of PDF-Shuffler which is released under the GNU General Public
+This file is part of pdfarranger which is released under the GNU General Public
 License version 3 or later.
 See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 -->
@@ -10,7 +10,7 @@ BugReportURL: https://sourceforge.net/p/pdfshuffler/feature-requests/34/
 SentUpstream: 2014-09-17
 -->
 <application>
-  <id type="desktop">pdfshuffler.desktop</id>
+  <id type="desktop">pdfarranger.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <description>
     <p>
