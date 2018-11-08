@@ -927,7 +927,6 @@ class PdfShuffler:
 
         data = selection_data.get_data()
         if target_id == self.MODEL_ROW_EXTERN:
-            self.model
             if data:
                 data = data.split('\n;\n')
             while data:
