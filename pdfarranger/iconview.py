@@ -25,9 +25,8 @@
 
 from gi.repository import Gtk
 from gi.repository import GObject
-import cairo
-
 from math import pi as M_PI
+
 
 class CellRendererImage(Gtk.CellRenderer):
     __gproperties__ = {
@@ -74,14 +73,11 @@ class CellRendererImage(Gtk.CellRenderer):
             else:
                 w1, h1 = w0, h0
 
-        x = self.cropL * w1
-        y = self.cropT * h1
-
         scale = self.resample * self.scale
         w2 = int(scale * (1. - self.cropL - self.cropR) * w1)
         h2 = int(scale * (1. - self.cropT - self.cropB) * h1)
-        
-        return w0,h0,w1,h1,w2,h2,rotation
+
+        return w0, h0, w1, h1, w2, h2, rotation
 
     def do_set_property(self, pspec, value):
         setattr(self, pspec.name, value)
@@ -89,13 +85,12 @@ class CellRendererImage(Gtk.CellRenderer):
     def do_get_property(self, pspec):
         return getattr(self, pspec.name)
 
-    def do_render(self, window, widget, background_area, cell_area, \
-                 expose_area):
+    def do_render(self, window, widget, background_area, cell_area, expose_area):
         if not self.image:
             return
 
-        w0,h0,w1,h1,w2,h2,rotation = self.get_geometry()
-        th = int(2*self.th1+self.th2)
+        w0, h0, w1, h1, w2, h2, rotation = self.get_geometry()
+        th = int(2 * self.th1 + self.th2)
         w = w2 + th
         h = h2 + th
 
@@ -107,43 +102,43 @@ class CellRendererImage(Gtk.CellRenderer):
             y += self.get_property('yalign') * \
                  (cell_area.height - h - self.get_property('ypad'))
 
-        window.translate(x,y)
+        window.translate(x, y)
 
         x = self.cropL * w1
         y = self.cropT * h1
 
-        #shadow
+        # shadow
         window.set_source_rgb(0.5, 0.5, 0.5)
         window.rectangle(th, th, w2, h2)
         window.fill()
 
-        #border
+        # border
         window.set_source_rgb(0, 0, 0)
-        window.rectangle(0, 0, w2+2*self.th1, h2+2*self.th1)
+        window.rectangle(0, 0, w2 + 2 * self.th1, h2 + 2 * self.th1)
         window.fill()
 
-        #image
+        # image
         window.set_source_rgb(1, 1, 1)
         window.rectangle(self.th1, self.th1, w2, h2)
         window.fill_preserve()
         window.clip()
 
-        window.translate(self.th1,self.th1)
+        window.translate(self.th1, self.th1)
         scale = self.resample * self.scale
         window.scale(scale, scale)
-        window.translate(-x,-y)
+        window.translate(-x, -y)
         if rotation > 0:
-            window.translate(w1/2,h1/2)
+            window.translate(w1 / 2, h1 / 2)
             window.rotate(rotation * M_PI / 180)
-            window.translate(-w0/2,-h0/2)
+            window.translate(-w0 / 2, -h0 / 2)
 
         window.set_source_surface(self.image)
         window.paint()
 
     def do_get_size(self, widget, cell_area=None):
         x = y = 0
-        w0,h0,w1,h1,w2,h2,rotation = self.get_geometry()
-        th = int(2*self.th1+self.th2)
+        w0, h0, w1, h1, w2, h2, rotation = self.get_geometry()
+        th = int(2 * self.th1 + self.th2)
         w = w2 + th
         h = h2 + th
 
