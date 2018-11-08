@@ -54,9 +54,10 @@ localedir = os.path.join(sharedir, 'locale')
 import locale       #for multilanguage support
 import gettext
 locale.setlocale(locale.LC_ALL, '')
-locale.bindtextdomain('pdfshuffler', localedir)
-gettext.bindtextdomain('pdfshuffler',  localedir)
-gettext.textdomain('pdfshuffler')
+DOMAIN='pdfarranger'
+locale.bindtextdomain(DOMAIN, localedir)
+gettext.bindtextdomain(DOMAIN,  localedir)
+gettext.textdomain(DOMAIN)
 _ = gettext.gettext
 
 APPNAME = 'pdfarranger'
@@ -90,7 +91,7 @@ try:
 except ImportError:
     from pyPdf import PdfFileWriter, PdfFileReader
 
-from .pdfshuffler_iconview import CellRendererImage
+from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
 import time
@@ -115,26 +116,26 @@ class PdfShuffler:
 
     def __init__(self):
         # Create the temporary directory
-        self.tmp_dir = tempfile.mkdtemp('pdfshuffler')
+        self.tmp_dir = tempfile.mkdtemp(DOMAIN)
         os.chmod(self.tmp_dir, 0o700)
 
-        iconsdir = os.path.join(sharedir, 'pdfshuffler', 'icons')
+        iconsdir = os.path.join(sharedir, DOMAIN, 'icons')
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
-        Gtk.Window.set_default_icon_name('pdfshuffler')
+        Gtk.Window.set_default_icon_name(DOMAIN)
 
         # Import the user interface file, trying different possible locations
-        ui_path = os.path.join(basedir, 'share', 'pdfshuffler', 'pdfshuffler.ui')
+        ui_path = os.path.join(basedir, 'share', DOMAIN, DOMAIN + '.ui')
         if not os.path.exists(ui_path):
-            ui_path = os.path.join(basedir, 'data', 'pdfshuffler.ui')
+            ui_path = os.path.join(basedir, 'data', DOMAIN + '.ui')
         if not os.path.exists(ui_path):
-            ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
+            ui_path = '/usr/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
         if not os.path.exists(ui_path):
-            ui_path = '/usr/local/share/pdfshuffler/pdfshuffler.ui'
+            ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
 
         self.uiXML = Gtk.Builder()
-        self.uiXML.set_translation_domain('pdfshuffler')
+        self.uiXML.set_translation_domain(DOMAIN)
         self.uiXML.add_from_file(ui_path)
         self.uiXML.connect_signals(self)
 
@@ -1175,7 +1176,7 @@ class PdfShuffler:
         about_dialog.add_credit_section('Maintainers and contributors', [
             'https://github.com/jeromerobert/pdfarranger/graphs/contributors'])
         about_dialog.set_website_label(WEBSITE)
-        about_dialog.set_logo_icon_name('pdfshuffler')
+        about_dialog.set_logo_icon_name(DOMAIN)
         about_dialog.set_license(LICENSE)
         about_dialog.connect('response', lambda w, *args: w.destroy())
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())

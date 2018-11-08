@@ -25,19 +25,19 @@ import os
 import re
 from distutils.core import setup
 
-data_files=[('share/applications', ['data/pdfshuffler.desktop']),
-            ('share/pdfshuffler', ['data/pdfshuffler.ui']),
-            ('share/pdfshuffler/icons/hicolor/16x16/apps',
-             ['data/hicolor/16x16/apps/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/32x32/apps',
-             ['data/hicolor/32x32/apps/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/48x48/apps',
-             ['data/hicolor/48x48/apps/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/256x256/apps',
-             ['data/hicolor/256x256/apps/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/scalable/apps',
-             ['data/hicolor/scalable/apps/pdfshuffler.svg']),
-            ('share/man/man1', ['doc/pdfshuffler.1'])]
+data_files=[('share/applications', ['data/pdfarranger.desktop']),
+            ('share/pdfarranger', ['data/pdfarranger.ui']),
+            ('share/pdfarranger/icons/hicolor/16x16/apps',
+             ['data/hicolor/16x16/apps/pdfarranger.png']),
+            ('share/pdfarranger/icons/hicolor/32x32/apps',
+             ['data/hicolor/32x32/apps/pdfarranger.png']),
+            ('share/pdfarranger/icons/hicolor/48x48/apps',
+             ['data/hicolor/48x48/apps/pdfarranger.png']),
+            ('share/pdfarranger/icons/hicolor/256x256/apps',
+             ['data/hicolor/256x256/apps/pdfarranger.png']),
+            ('share/pdfarranger/icons/hicolor/scalable/apps',
+             ['data/hicolor/scalable/apps/pdfarranger.svg']),
+            ('share/man/man1', ['doc/pdfarranger.1'])]
 
 
 # Freshly generate .mo from .po, add to data_files:
@@ -48,7 +48,7 @@ for name in os.listdir('po'):
     if m != None:
         lang = m.group(1)
         out_dir = 'locale/%s/LC_MESSAGES' % lang
-        out_name = os.path.join(out_dir, 'pdfshuffler.mo')
+        out_name = os.path.join(out_dir, 'pdfarranger.mo')
         install_dir = 'share/locale/%s/LC_MESSAGES/' % lang
         os.makedirs(out_dir)
         os.system('msgfmt -o %s po/%s' % (out_name, name))
@@ -62,7 +62,7 @@ setup(name='pdfarranger',
       url = 'https://github.com/jeromerobert/pdfarranger',
       license='GNU GPL-3',
       scripts=['bin/pdfarranger'],
-      packages=['pdfshuffler'],
+      packages=['pdfarranger'],
       data_files=data_files
      )
 

@@ -14,16 +14,16 @@ SentUpstream: 2014-09-17
   <metadata_license>CC0-1.0</metadata_license>
   <description>
     <p>
-      PDF-Shuffler is a small application, which helps the user to merge or split pdf
+      pdfarranger is a small application, which helps the user to merge or split pdf
       documents and rotate, crop and rearrange their pages using an interactive and
       intuitive graphical interface.
       It is a frontend for python-pyPdf.
     </p>
     <!-- FIXME: Probably needs another paragraph or two -->
   </description>
-  <url type="homepage">http://pdfshuffler.sourceforge.net/</url>
+  <url type="homepage">https://github.com/jeromerobert/pdfarranger</url>
   <screenshots>
     <screenshot type="default">http://a.fsdn.com/con/app/proj/pdfshuffler/screenshots/181783.jpg/</screenshot>
   </screenshots>
-  <updatecontact>logari81@gmail.com</updatecontact>
+  <updatecontact>jeromerobert@gmx.com</updatecontact>
 </application>
