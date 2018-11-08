@@ -920,8 +920,8 @@ class PdfShuffler:
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
 
-        data = selection_data.get_data()
         if target_id == self.MODEL_ROW_EXTERN:
+            data = selection_data.get_data().decode()
             if data:
                 data = data.split('\n;\n')
             while data:
@@ -933,9 +933,7 @@ class PdfShuffler:
                     if context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
         elif target_id == self.TEXT_URI_LIST:
-            uri = data.strip()
-            uri_splitted = uri.split() # we may have more than one file dropped
-            for uri in uri_splitted:
+            for uri in selection_data.get_uris():
                 filename = self.get_file_path_from_dnd_dropped_uri(uri)
                 try:
                     if os.path.isfile(filename): # is it a file?
@@ -983,11 +981,6 @@ class PdfShuffler:
 
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
-        try:
-            # Python 3
-            uri = uri.decode()
-        except AttributeError:
-            pass
         path = url2pathname(uri) # escape special chars
         path = path.strip('\r\n\x00')   # remove \r\n and NULL
 
