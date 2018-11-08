@@ -558,7 +558,6 @@ class PdfShuffler:
             try:
                 self.save(False, all_files.pop())
             except Exception as e:
-                chooser.destroy()
                 self.error_message_dialog(e)
                 return
 
