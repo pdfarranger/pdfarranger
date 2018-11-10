@@ -1,12 +1,9 @@
 #!/bin/sh
 
 #
-# PdfShuffler 0.6.0 - GTK+ based utility for splitting, rearrangement and
+# pdfarranger - GTK+ based utility for splitting, rearrangement and
 # modification of PDF documents.
-# Copyright (C) 2008-2012 Konstantinos Poulios
-# <https://sourceforge.net/projects/pdfshuffler>
-#
-# This file is part of PdfShuffler.
+# Copyright (C) 2008-2017 Konstantinos Poulios
 #
 # PdfShuffler is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,4 +21,4 @@
 #
 
 # Update translation files
-find ./po -type f -iname "*.po" -exec msgmerge -U {} po/pdfshuffler.pot \;
+find ./po -type f -iname "*.po" -exec msgmerge -U {} po/pdfarranger.pot \;

@@ -1,14 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
 
- PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and
+ pdfarranger - GTK+ based utility for splitting, rearrangement and
  modification of PDF documents.
- Copyright (C) 2008-2014 Konstantinos Poulios
- <https://sourceforge.net/projects/pdfshuffler>
+ Copyright (C) 2008-2017 Konstantinos Poulios
 
- This file is part of PdfShuffler.
+ This file is part of PDF-Shuffler.
 
  PdfShuffler is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -27,8 +26,15 @@
 """
 
 try:
-   from pdfshuffler.pdfshuffler import main
+   from pdfarranger.pdfarranger import main
    main()
-except ImportError as e:
-   print('Error: Could not import pdfshuffler')
-   print('Cause: %s' % e)
+except:
+   try: # try to load the module locally when not installed
+      import os, sys
+      sys.path.append(os.getcwd())
+      from pdfarranger.pdfarranger import main
+      main()
+   except ImportError as e:
+      print('Error: Could not import pdfarranger')
+      print('Cause: %s' % e)
+

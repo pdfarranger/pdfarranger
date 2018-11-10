@@ -1,204 +1,208 @@
+# PDF-Shuffler translation files.
+# Copyright (C) 2008-2017 Konstantinos Poulios
+# This file is part of PDF-Shuffler which is released under the GNU General
+# Public License version 3 or later.
+# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# Translators:
+# fri, 2015
+# Miro Hrončok, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.5\n"
+"Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-05 21:09+0100\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Miro Hrončok <miro@hroncok.cz>\n"
-"Language-Team: Czech\n"
-"Language: Czech\n"
+"PO-Revision-Date: 2017-02-26 16:16+0000\n"
+"Last-Translator: fri\n"
+"Language-Team: Czech (http://www.transifex.com/logari81/pdfshuffler/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: pdfshuffler/pdfshuffler.py:104
+#: pdfarranger/pdfarranger.py:104
 msgid "Can't load icon. Application is not installed correctly."
-msgstr ""
+msgstr "Nelze nahrát ikonu. Program není nainstalován správně."
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "_Rotate Right"
-msgstr ""
+msgstr "_Otočit vpravo"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "Rotate _Left"
-msgstr ""
+msgstr "Otočit _vlevo"
 
-#: pdfshuffler/pdfshuffler.py:238
+#: pdfarranger/pdfarranger.py:238
 msgid "C_rop..."
-msgstr ""
+msgstr "Oř_ezat..."
 
-#: pdfshuffler/pdfshuffler.py:239
-#, fuzzy
+#: pdfarranger/pdfarranger.py:239
 msgid "_Delete"
-msgstr "Odstranit stránku/y"
+msgstr "_Smazat"
 
-#: pdfshuffler/pdfshuffler.py:239
-#, fuzzy
+#: pdfarranger/pdfarranger.py:239
 msgid "_Export selection..."
-msgstr "Exportovat..."
+msgstr "_Vyvést výběr..."
 
-#: pdfshuffler/pdfshuffler.py:307
+#: pdfarranger/pdfarranger.py:307
 msgid "No document"
-msgstr ""
+msgstr "Žádný dokument"
 
-#: pdfshuffler/pdfshuffler.py:309
+#: pdfarranger/pdfarranger.py:309
 msgid "Several documents"
-msgstr ""
+msgstr "Několik dokumentů"
 
-#: pdfshuffler/pdfshuffler.py:325
+#: pdfarranger/pdfarranger.py:325
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr ""
+msgstr "Vykreslují se náhledy... [%(i1)s/%(i2)s]"
 
-#: pdfshuffler/pdfshuffler.py:441
+#: pdfarranger/pdfarranger.py:441
 msgid "page"
 msgstr "stránka"
 
-#: pdfshuffler/pdfshuffler.py:467
+#: pdfarranger/pdfarranger.py:467
 msgid "Export ..."
-msgstr "Exportovat..."
+msgstr "Vyvést..."
 
-#: pdfshuffler/pdfshuffler.py:476 pdfshuffler/pdfshuffler.py:589
+#: pdfarranger/pdfarranger.py:476 pdfarranger/pdfarranger.py:589
 msgid "PDF files"
-msgstr "PDF soubory"
+msgstr "Soubory PDF"
 
-#: pdfshuffler/pdfshuffler.py:481 pdfshuffler/pdfshuffler.py:584
+#: pdfarranger/pdfarranger.py:481 pdfarranger/pdfarranger.py:584
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: pdfshuffler/pdfshuffler.py:521
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:521
+#, python-format
 msgid ""
 "File %s is encrypted.\n"
 "Support for encrypted files has not been implemented yet.\n"
 "File export failed."
-msgstr "Podpora takových souborů ještě nebyla implementována."
+msgstr "Soubor %s je zašifrován.\nPodpora pro šifrované soubory ještě nebyla udělána.\nSoubor se nepodařilo vyvést.."
 
-#: pdfshuffler/pdfshuffler.py:574
+#: pdfarranger/pdfarranger.py:574
 msgid "Import..."
-msgstr "Import..."
+msgstr "Zavést..."
 
-#: pdfshuffler/pdfshuffler.py:608
+#: pdfarranger/pdfarranger.py:608
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument ještě není podporován!"
 
-#: pdfshuffler/pdfshuffler.py:610
+#: pdfarranger/pdfarranger.py:610
 msgid "Image file not supported yet!"
 msgstr "Soubory obrázků ještě nejsou podporovány!"
 
-#: pdfshuffler/pdfshuffler.py:612
+#: pdfarranger/pdfarranger.py:612
 msgid "File type not supported!"
 msgstr "Tento typ souboru není podporován!"
 
-#: pdfshuffler/pdfshuffler.py:614
+#: pdfarranger/pdfarranger.py:614
 #, python-format
 msgid "File %s does not exist"
 msgstr "Soubor %s neexistuje"
 
-#: pdfshuffler/pdfshuffler.py:620
+#: pdfarranger/pdfarranger.py:620
 msgid "Closed, no files selected"
-msgstr "Zavírám, nebyly zvolený žádné soubory"
+msgstr "Zavírá se, nebyly zvolený žádné soubory"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Left"
 msgstr "Levý"
 
-#: pdfshuffler/pdfshuffler.py:934
+#: pdfarranger/pdfarranger.py:934
 msgid "Right"
 msgstr "Pravý"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Top"
 msgstr "Horní"
 
-#: pdfshuffler/pdfshuffler.py:935
+#: pdfarranger/pdfarranger.py:935
 msgid "Bottom"
-msgstr "Spodní"
+msgstr "Dolní"
 
-#: pdfshuffler/pdfshuffler.py:953
-#, fuzzy
+#: pdfarranger/pdfarranger.py:953
 msgid "Crop Selected Pages"
-msgstr "Oříznout zvolenou/é stránku/y"
+msgstr "Oříznout vybrané stránky"
 
-#: pdfshuffler/pdfshuffler.py:961
+#: pdfarranger/pdfarranger.py:961
 msgid "Crop Margins"
 msgstr "Oříznout okraje"
 
-#: pdfshuffler/pdfshuffler.py:968
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:968
+#, python-format
 msgid "%% of width"
 msgstr "%% šířky"
 
-#: pdfshuffler/pdfshuffler.py:969
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:969
+#, python-format
 msgid "%% of height"
 msgstr "%% výšky"
 
-#: pdfshuffler/pdfshuffler.py:1007
+#: pdfarranger/pdfarranger.py:1007
 msgid "Dialog closed"
 msgstr "Dialog uzavřen"
 
-#: pdfshuffler/pdfshuffler.py:1021
+#: pdfarranger/pdfarranger.py:1021
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
-msgstr ""
+msgstr "%s je nástroj na přeuspořádání a měnění souborů PDF. Vyvíjeno za použití GTK+ a Pythonu"
 
-#: data/pdfshuffler.ui.h:1
+#: data/pdfarranger.ui.h:1
 msgid "_File"
-msgstr ""
+msgstr "So_ubor"
 
-#: data/pdfshuffler.ui.h:2
+#: data/pdfarranger.ui.h:2
 msgid "_Edit"
-msgstr ""
+msgstr "Ú_pravy"
 
-#: data/pdfshuffler.ui.h:3
+#: data/pdfarranger.ui.h:3
 msgid "Rotate left"
-msgstr ""
+msgstr "Otočit vlevo"
 
-#: data/pdfshuffler.ui.h:4
+#: data/pdfarranger.ui.h:4
 msgid "Rotate right"
-msgstr ""
+msgstr "Otočit vpravo"
 
-#: data/pdfshuffler.ui.h:5
+#: data/pdfarranger.ui.h:5
 msgid "Crop"
-msgstr ""
+msgstr "Ořezat"
 
-#: data/pdfshuffler.ui.h:6
+#: data/pdfarranger.ui.h:6
 msgid "_View"
-msgstr ""
+msgstr "Po_hled"
 
-#: data/pdfshuffler.ui.h:7
+#: data/pdfarranger.ui.h:7
 msgid "_Help"
-msgstr ""
+msgstr "_Nápověda"
 
-#: data/pdfshuffler.ui.h:8
+#: data/pdfarranger.ui.h:8
 msgid "Open a file and append it to the current document"
-msgstr ""
+msgstr "Otevřít soubor a připojit jej k nynějšímu dokumentu"
 
-#: data/pdfshuffler.ui.h:9
-#, fuzzy
+#: data/pdfarranger.ui.h:9
 msgid "Import"
-msgstr "Import..."
+msgstr "Zavést"
 
-#: data/pdfshuffler.ui.h:10
+#: data/pdfarranger.ui.h:10
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
-#: data/pdfshuffler.ui.h:11
+#: data/pdfarranger.ui.h:11
 msgid "Save as"
-msgstr ""
+msgstr "Uložit jako"
 
-#: data/pdfshuffler.ui.h:12
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
-msgstr ""
+msgstr "Přiblížit"
 
-#: data/pdfshuffler.ui.h:13
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
-msgstr ""
+msgstr "Oddálit"
 
-#: data/pdfshuffler.ui.h:14
-#, fuzzy
+#: data/pdfarranger.ui.h:14
 msgid "Delete"
-msgstr "Odstranit stránku/y"
+msgstr "Smazat"

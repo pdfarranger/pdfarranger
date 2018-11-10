@@ -1,0 +1,206 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <murathan.bostanci@profelis.com.tr>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PDF-Shuffler 0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-30 17:22+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Murathan BOSTANCI <murathan.bostanci@profelis.com.tr>\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+
+#: pdfarranger/pdfarranger.py:110
+msgid "Can't load icon. Application is not installed correctly."
+msgstr "Simge yüklenemiyor. Uygulama doğru yüklenmemiş."
+
+#: pdfarranger/pdfarranger.py:233
+msgid "_Rotate Right"
+msgstr "Sağa Döndür"
+
+#: pdfarranger/pdfarranger.py:234
+msgid "Rotate _Left"
+msgstr "Sola Döndür"
+
+#: pdfarranger/pdfarranger.py:235
+msgid "C_rop..."
+msgstr "Kırp"
+
+#: pdfarranger/pdfarranger.py:237
+msgid "_Export selection..."
+msgstr "Seçimi dışa aktar"
+
+#: pdfarranger/pdfarranger.py:299
+msgid "No document"
+msgstr "belge yok"
+
+#: pdfarranger/pdfarranger.py:301
+msgid "Several documents"
+msgstr "Çeşitli belgeler"
+
+#: pdfarranger/pdfarranger.py:317
+#, python-format
+msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
+msgstr "Küçük resimler işleniyor… [% (I2) s/% (I2) s]"
+
+#: pdfarranger/pdfarranger.py:435
+msgid "page"
+msgstr "sayfa"
+
+#: pdfarranger/pdfarranger.py:461
+msgid "Export ..."
+msgstr "Dışa Aktar …"
+
+#: pdfarranger/pdfarranger.py:470 pdfarranger/pdfarranger.py:586
+msgid "PDF files"
+msgstr "PDF dosyaları"
+
+#: pdfarranger/pdfarranger.py:475 pdfarranger/pdfarranger.py:581
+msgid "All files"
+msgstr "Tüm dosyalar"
+
+#: pdfarranger/pdfarranger.py:518
+#, python-format
+msgid ""
+"File %s is encrypted.\n"
+"Support for encrypted files has not been implemented yet.\n"
+"File export failed."
+msgstr ""
+"%s dosyası şifreli.\n"
+"Şifreli dosya desteği henüz geliştirilmedi.\n"
+"Dosya dışarıya aktarımı başarısız."
+
+#: pdfarranger/pdfarranger.py:571
+msgid "Import..."
+msgstr "İçe Aktar.."
+
+#: pdfarranger/pdfarranger.py:604
+msgid "OpenDocument not supported yet!"
+msgstr "OpenDocument henüz desteklenmiyor."
+
+#: pdfarranger/pdfarranger.py:606
+msgid "Image file not supported yet!"
+msgstr "Resim dosyası henüz desteklenmiyor."
+
+#: pdfarranger/pdfarranger.py:608
+msgid "File type not supported!"
+msgstr "Bu dosya tipi desteklenmiyor."
+
+#: pdfarranger/pdfarranger.py:610
+#, python-format
+msgid "File %s does not exist"
+msgstr "%s dosyası mevcut değil."
+
+#: pdfarranger/pdfarranger.py:612
+msgid "Closed, no files selected"
+msgstr "Kapalı, dosya seçilmedi"
+
+#: pdfarranger/pdfarranger.py:921
+msgid "Left"
+msgstr "Sol"
+
+#: pdfarranger/pdfarranger.py:921
+msgid "Right"
+msgstr "Sağ"
+
+#: pdfarranger/pdfarranger.py:922
+msgid "Top"
+msgstr "Üst"
+
+#: pdfarranger/pdfarranger.py:922
+msgid "Bottom"
+msgstr "Alt"
+
+#: pdfarranger/pdfarranger.py:940
+msgid "Crop Selected Pages"
+msgstr "Seçilen sayfaları kırp"
+
+#: pdfarranger/pdfarranger.py:948
+msgid "Crop Margins"
+msgstr "Kenar boşluklarını kırp"
+
+#: pdfarranger/pdfarranger.py:955
+#, python-format
+msgid "% of width"
+msgstr "% genişlik"
+
+#: pdfarranger/pdfarranger.py:955
+#, python-format
+msgid "% of height"
+msgstr "% yükseklik"
+
+#: pdfarranger/pdfarranger.py:993
+msgid "Dialog closed"
+msgstr "İletişim kapatıldı"
+
+#: pdfarranger/pdfarranger.py:1007
+#, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"%s PDF dosyalarını değiştirme ve yeniden ayarlama aracıdır. GTK+ and Python "
+"kullanılarak geliştirilmiştir"
+
+#: data/pdfarranger.ui.h:1
+msgid "_File"
+msgstr "Dosya"
+
+#: data/pdfarranger.ui.h:2
+msgid "_Edit"
+msgstr "Düzenle"
+
+#: data/pdfarranger.ui.h:3
+msgid "Rotate left"
+msgstr "Sola döndür"
+
+#: data/pdfarranger.ui.h:4
+msgid "Rotate right"
+msgstr "Sağa döndür"
+
+#: data/pdfarranger.ui.h:5
+msgid "Crop"
+msgstr "Kırp"
+
+#: data/pdfarranger.ui.h:6
+msgid "_View"
+msgstr "Görünüm"
+
+#: data/pdfarranger.ui.h:7
+msgid "_Help"
+msgstr "Yardım"
+
+#: data/pdfarranger.ui.h:8
+msgid "Open a file and append it to the current document"
+msgstr "Bir dosya açın ve mevcut dokümana ekleyin"
+
+#: data/pdfarranger.ui.h:9
+msgid "Import"
+msgstr "İçe aktar"
+
+#: data/pdfarranger.ui.h:10
+msgid "Save"
+msgstr "Kaydet"
+
+#: data/pdfarranger.ui.h:11
+msgid "Save as"
+msgstr "Farklı kaydet"
+
+#: data/pdfarranger.ui.h:12
+msgid "Zoom in"
+msgstr "Yakınlaştır"
+
+#: data/pdfarranger.ui.h:13
+msgid "Zoom out"
+msgstr "Uzaklaş"
+
+#: data/pdfarranger.ui.h:14
+msgid "Delete"
+msgstr "Sil"
