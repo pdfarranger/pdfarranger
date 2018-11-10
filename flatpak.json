@@ -3,7 +3,7 @@
   "runtime" : "org.gnome.Platform",
   "runtime-version" : "3.28",
   "sdk" : "org.gnome.Sdk",
-  "command" : "pdfshuffler",
+  "command" : "pdfarranger",
   "modules" : [
     {
       "name" : "openjpeg",
@@ -48,7 +48,7 @@
       "sources" : [
         {
           "url" : "https://github.com/Johnn3y/pdfshuffler",
-          "commit" : "5bff267f64b5517b373e95ea421b26138fd0f150",
+          "commit" : "e6fae40b6c4440d53d6391c801786c39f6fbe749",
           "type" : "git"
         }
       ],
@@ -66,6 +66,10 @@
     "--socket=wayland",
     "--socket=x11",
     "--share=ipc",
-    "--filesystem=home"
+    "--filesystem=home",
+    "--filesystem=xdg-run/dconf",
+    "--filesystem=~/.config/dconf:ro",
+    "--talk-name=ca.desrt.dconf",
+    "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
   ]
 }
