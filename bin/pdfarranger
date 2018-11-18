@@ -29,12 +29,7 @@ try:
    from pdfarranger.pdfarranger import main
    main()
 except:
-   try: # try to load the module locally when not installed
-      import os, sys
-      sys.path.append(os.getcwd())
-      from pdfarranger.pdfarranger import main
-      main()
-   except ImportError as e:
-      print('Error: Could not import pdfarranger')
-      print('Cause: %s' % e)
-
+   import os, sys
+   sys.path.append(os.getcwd())
+   from pdfarranger.pdfarranger import main
+   main()
