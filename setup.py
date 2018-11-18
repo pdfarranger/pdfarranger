@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #
 # pdfarranger - GTK+ based utility for splitting, rearrangement and 
@@ -27,15 +27,15 @@ from DistUtilsExtra.auto import setup
 
 data_files=[('share/applications', ['data/pdfarranger.desktop']),
             ('share/pdfarranger', ['data/pdfarranger.ui']),
-            ('share/pdfarranger/icons/hicolor/16x16/apps',
+            ('share/icons/hicolor/16x16/apps',
              ['data/hicolor/16x16/apps/pdfarranger.png']),
-            ('share/pdfarranger/icons/hicolor/32x32/apps',
+            ('share/icons/hicolor/32x32/apps',
              ['data/hicolor/32x32/apps/pdfarranger.png']),
-            ('share/pdfarranger/icons/hicolor/48x48/apps',
+            ('share/icons/hicolor/48x48/apps',
              ['data/hicolor/48x48/apps/pdfarranger.png']),
-            ('share/pdfarranger/icons/hicolor/256x256/apps',
+            ('share/icons/hicolor/256x256/apps',
              ['data/hicolor/256x256/apps/pdfarranger.png']),
-            ('share/pdfarranger/icons/hicolor/scalable/apps',
+            ('share/icons/hicolor/scalable/apps',
              ['data/hicolor/scalable/apps/pdfarranger.svg']),
             ('share/man/man1', ['doc/pdfarranger.1'])]
 

@@ -123,7 +123,7 @@ class PdfShuffler:
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
         os.chmod(self.tmp_dir, 0o700)
 
-        iconsdir = os.path.join(sharedir, DOMAIN, 'icons')
+        iconsdir = os.path.join(sharedir, 'icons')
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
