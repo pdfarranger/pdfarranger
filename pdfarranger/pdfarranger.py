@@ -53,7 +53,11 @@ import locale       # for multilanguage support
 import gettext
 locale.setlocale(locale.LC_ALL, '')
 DOMAIN = 'pdfarranger'
-locale.bindtextdomain(DOMAIN, localedir)
+if os.name == 'nt':
+    # Temporary workaround for https://github.com/jeromerobert/pdfarranger/issues/19
+    print("Some translations won't work")
+else:
+    locale.bindtextdomain(DOMAIN, localedir)
 gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
