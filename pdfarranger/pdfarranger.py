@@ -554,19 +554,13 @@ class PdfShuffler:
 
     def on_action_save(self, widget, data=None):
         all_files = self.active_file_names()
-        if len(all_files) == 0:
-            self.error_message_dialog("Nothing to save!")
-            return
-        elif len(all_files) != 1:
-            self.error_message_dialog("Unable to save as there is more than one file.  Choose Save As, then specify a file name to use.")
-            return
-        else:
-            try:
+        try:
+            if len(all_files) == 1:
                 self.save(False, all_files.pop())
-            except Exception as e:
-                self.error_message_dialog(e)
-                return
-
+            else:
+                self.choose_export_pdf_name(widget)
+        except Exception as e:
+            self.error_message_dialog(e)
 
     def save(self, only_selected, file_out):
         """Saves to the specified file.  May throw exceptions."""
