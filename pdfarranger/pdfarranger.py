@@ -39,7 +39,8 @@ except ImportError:
 
 from copy import copy
 
-sharedir = '/usr/share'
+sharedir = os.path.join(sys.prefix, 'share')
+basedir = '.'
 if sys.argv[0]:
     execdir = os.path.dirname(os.path.realpath(sys.argv[0]))
     basedir = os.path.dirname(execdir)
@@ -47,6 +48,9 @@ if sys.argv[0]:
     if not os.path.exists(sharedir):
         sharedir = basedir
 localedir = os.path.join(sharedir, 'locale')
+if not os.path.exists(localedir):
+    # Assume we are in development mode
+    localedir = os.path.join(basedir, 'build', 'mo')
 
 import locale       # for multilanguage support
 import gettext
