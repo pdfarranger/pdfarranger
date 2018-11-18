@@ -22,7 +22,8 @@
 
 import os
 import re
-from distutils.core import setup
+
+from DistUtilsExtra.auto import setup
 
 data_files=[('share/applications', ['data/pdfarranger.desktop']),
             ('share/pdfarranger', ['data/pdfarranger.ui']),
@@ -38,21 +39,6 @@ data_files=[('share/applications', ['data/pdfarranger.desktop']),
              ['data/hicolor/scalable/apps/pdfarranger.svg']),
             ('share/man/man1', ['doc/pdfarranger.1'])]
 
-
-# Freshly generate .mo from .po, add to data_files:
-if os.path.isdir('locale/'):
-    os.system ('rm -r locale/')
-for name in os.listdir('po'):
-    m = re.match(r'(.+)\.po$', name)
-    if m != None:
-        lang = m.group(1)
-        out_dir = 'locale/%s/LC_MESSAGES' % lang
-        out_name = os.path.join(out_dir, 'pdfarranger.mo')
-        install_dir = 'share/locale/%s/LC_MESSAGES/' % lang
-        os.makedirs(out_dir)
-        os.system('msgfmt -o %s po/%s' % (out_name, name))
-        data_files.append((install_dir, [out_name]))
-
 setup(name='pdfarranger',
       version='1.0',
       author='Jerome Robert',
@@ -64,10 +50,3 @@ setup(name='pdfarranger',
       packages=['pdfarranger'],
       data_files=data_files
      )
-
-# Clean up temporary files
-if os.path.isdir('locale/'):
-    os.system ('rm -r locale/')
-if os.path.isdir('build/'):
-    os.system ('rm -r build/')
-
