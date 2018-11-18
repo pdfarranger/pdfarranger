@@ -105,7 +105,7 @@ class PdfShuffler:
         'window width': min(700, Gdk.Screen.get_default().get_width() / 2),
         'window height': min(600, Gdk.Screen.get_default().get_height() - 50),
         'initial thumbnail size': 300,
-        'initial zoom level': -14,
+        'initial zoom level': 0,
     }
 
     MODEL_ROW_INTERN = 1001
@@ -315,9 +315,9 @@ class PdfShuffler:
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
-        #FIXME: the resample=2. factor has to be dynamic when lazy rendering
+        #FIXME: the resample=1. factor has to be dynamic when lazy rendering
         #       is implemented
-        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 2)
+        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
@@ -951,19 +951,27 @@ class PdfShuffler:
 
     def sw_scroll_event(self, scrolledwindow, event):
         """Manages mouse scroll events in scrolledwindow"""
-
         if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
-            if event.direction == Gdk.ScrollDirection.UP:
-                self.zoom_change(1)
-                return 1
+            zoom_delta = 0
+            if event.direction == Gdk.ScrollDirection.SMOOTH:
+                dy = event.get_scroll_deltas()[2]
+                if dy > 0:
+                    zoom_delta = -1
+                elif dy < 0:
+                    zoom_delta = 1
+            elif event.direction == Gdk.ScrollDirection.UP:
+                zoom_delta = 1
             elif event.direction == Gdk.ScrollDirection.DOWN:
-                self.zoom_change(-1)
+                zoom_delta = -1
+
+            if zoom_delta != 0:
+                self.zoom_change(zoom_delta)
                 return 1
 
     def zoom_set(self, level):
         """Sets the zoom level"""
-        self.zoom_level = max(min(level, 5), -24)
-        self.zoom_scale = 1.1 ** self.zoom_level
+        self.zoom_level = max(min(level, 20), -6)
+        self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
             row[4] = self.zoom_scale
         self.reset_iv_width()
