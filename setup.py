@@ -23,20 +23,11 @@
 import os
 import re
 
-from DistUtilsExtra.auto import setup
+from setuptools import setup
+from DistUtilsExtra.command import *
 
 data_files=[('share/applications', ['data/pdfarranger.desktop']),
             ('share/pdfarranger', ['data/pdfarranger.ui']),
-            ('share/icons/hicolor/16x16/apps',
-             ['data/hicolor/16x16/apps/pdfarranger.png']),
-            ('share/icons/hicolor/32x32/apps',
-             ['data/hicolor/32x32/apps/pdfarranger.png']),
-            ('share/icons/hicolor/48x48/apps',
-             ['data/hicolor/48x48/apps/pdfarranger.png']),
-            ('share/icons/hicolor/256x256/apps',
-             ['data/hicolor/256x256/apps/pdfarranger.png']),
-            ('share/icons/hicolor/scalable/apps',
-             ['data/hicolor/scalable/apps/pdfarranger.svg']),
             ('share/man/man1', ['doc/pdfarranger.1'])]
 
 setup(name='pdfarranger',
@@ -48,5 +39,11 @@ setup(name='pdfarranger',
       license='GNU GPL-3',
       scripts=['bin/pdfarranger'],
       packages=['pdfarranger'],
-      data_files=data_files
+      data_files=data_files,
+      cmdclass={
+         "build": build_extra.build_extra,
+         "build_i18n": build_i18n.build_i18n,
+         "clean_i18n": clean_i18n.clean_i18n,
+         "build_icons" :  build_icons.build_icons,
+      },
      )
