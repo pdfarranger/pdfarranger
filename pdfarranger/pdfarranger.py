@@ -1146,7 +1146,7 @@ class PdfShuffler:
 
         self.set_unsaved(True)
         indices.reverse()
-        new_order = range(first) + indices + range(last + 1, len(model))
+        new_order = list(range(first)) + indices + list(range(last + 1, len(model)))
         model.reorder(new_order)
 
     def about_dialog(self, widget, data=None):
