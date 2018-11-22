@@ -13,8 +13,6 @@ It's an humble tentative de make the project a bit more active.
 
 # Install
 
-In order to install run:
-
 On Debian based distributions:
 
 ```
@@ -25,6 +23,12 @@ On Arch Linux:
 
 ```
 sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk3 python-cairo
+```
+
+On Fedora
+
+```
+sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo intltool python3-wheel python3-PyPDF2
 ```
 
 Then:
