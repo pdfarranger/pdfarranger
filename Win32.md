@@ -16,8 +16,9 @@ pacman -Su
 ```
 
 ### mingw (with msys2)
+
 ```
-pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-python3-pip
+pacman -S mingw-w64-x86_64-python3-distutils-extra mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-python3-pip
 ```
 
 Then
