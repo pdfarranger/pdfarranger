@@ -32,3 +32,12 @@ Then:
 ```
 pip install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
+
+# For developers
+
+From a git clone:
+
+```
+./setup.py build
+python -m pdfarranger.pdfarranger
+```

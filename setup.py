@@ -37,13 +37,16 @@ setup(name='pdfarranger',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
       url = 'https://github.com/jeromerobert/pdfarranger',
       license='GNU GPL-3',
-      scripts=['bin/pdfarranger'],
       packages=['pdfarranger'],
       data_files=data_files,
+      zip_safe = False,
       cmdclass={
          "build": build_extra.build_extra,
          "build_i18n": build_i18n.build_i18n,
          "clean_i18n": clean_i18n.clean_i18n,
          "build_icons" :  build_icons.build_icons,
       },
+      entry_points={
+         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
+      }
      )
