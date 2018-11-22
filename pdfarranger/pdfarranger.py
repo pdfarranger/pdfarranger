@@ -6,7 +6,7 @@
  modification of PDF documents.
  Copyright (C) 2008-2017 Konstantinos Poulios
 
- PdfShuffler is free software; you can redistribute it and/or modify
+ pdfarranger is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 3 of the License, or
  (at your option) any later version.
@@ -100,7 +100,7 @@ from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
 
-class PdfShuffler:
+class PdfArranger:
     prefs = {
         'window width': min(700, Gdk.Screen.get_default().get_width() / 2),
         'window height': min(600, Gdk.Screen.get_default().get_height() - 50),
@@ -1249,9 +1249,9 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
 
 def main():
-    """This function starts PdfShuffler"""
+    """This function starts pdfarranger"""
     GObject.threads_init()
-    PdfShuffler()
+    PdfArranger()
     Gtk.main()
 
 if __name__ == '__main__':
