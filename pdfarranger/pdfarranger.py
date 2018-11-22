@@ -151,7 +151,9 @@ class PdfShuffler:
         self.window.set_default_size(self.prefs['window width'],
                                      self.prefs['window height'])
         self.window.connect('delete_event', self.close_application)
-        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
+
+        if hasattr(GLib, "unix_signal_add"):
+            GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
 
         # Create a scrolled window to hold the thumbnails-container
         self.sw = self.uiXML.get_object('scrolledwindow')
