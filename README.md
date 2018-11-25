@@ -16,7 +16,7 @@ It's an humble tentative de make the project a bit more active.
 On Debian based distributions:
 
 ```
-sudo apt-get install python3-distutils-extra python3-wheel python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18
+sudo apt-get install python3-distutils-extra python3-wheel python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18 python3-setuptools
 ```
 
 On Arch Linux:
@@ -34,7 +34,7 @@ sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobjec
 Then:
 
 ```
-pip install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
+pip3 install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
 
 # For developers
