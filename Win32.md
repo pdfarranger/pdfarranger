@@ -1,40 +1,45 @@
-# PDFShuffler on Windows
+# pdfarranger on Windows
 
 Tested on Windows 10.
 
 ## Installation
 
-Install MSYS2: http://www.msys2.org/
+Install [MSYS2](http://www.msys2.org) then upgrade it:
 
-### upgrade
 ```
 pacman -Syu
 ```
-You might need to run it again (it tells you to)
+
+You might need to run it again (it tells you to):
+
 ```
 pacman -Su
 ```
 
-### mingw (with msys2)
+Install the required dependencies:
 
 ```
-pacman -S mingw-w64-x86_64-python3-distutils-extra mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-python3-pip
+pacman -S python3-pip python3-distutils-extra mingw-w64-x86_64-gtk3 \
+ mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext \
+ mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler
 ```
 
-Then
+Install pdfarranger:
 
 ```
 pip3 install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
 
-### Run
+## Running pdfarranger
 
-Launch from a mingw64 shell:
+From a MSYS2 shell:
+
 ```
-~/.local/bin/pdfarranger
+/mingw64/bin/python3 ~/.local/bin/pdfarranger
 ```
 
-#### Example Bat file which lauches the app with windows integration (home folder etc.)
+## Example Bat file which lauches the app with windows integration (home folder etc.)
+
 ```
 @echo off
 set PYTHONPATH=C:\msys64\home\%USERNAME%\.local\lib\python3.7\site-packages;C:\msys64\mingw64\lib\python3.7
@@ -45,9 +50,5 @@ Note: This might break if the username contains spaces!
 
 ## TODO
 
-* fix translations
-	* https://github.com/Cimbali/pympress/pull/21/files
-* fix delete of temp files on exit (there is some code in the old win version)
 * fix about dialog (argv0 is python3w in some cases)
 * easier install
-
