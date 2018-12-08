@@ -57,8 +57,11 @@ import gettext
 locale.setlocale(locale.LC_ALL, '')
 DOMAIN = 'pdfarranger'
 if os.name == 'nt':
-    # Temporary workaround for https://github.com/jeromerobert/pdfarranger/issues/19
-    print("Some translations won't work")
+    from ctypes import cdll
+    libintl = cdll['libintl-8']
+    libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
+    libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
+    del libintl
 else:
     locale.bindtextdomain(DOMAIN, localedir)
 gettext.bindtextdomain(DOMAIN, localedir)
