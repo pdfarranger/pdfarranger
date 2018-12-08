@@ -303,7 +303,7 @@ class PdfArranger:
         self.rendering_thread = None
 
         self.set_unsaved(False)
-
+        self.export_file = None
         # Importing documents passed as command line arguments
         for filename in sys.argv[1:]:
             self.add_pdf_pages(filename)
@@ -562,10 +562,9 @@ class PdfArranger:
         return all_files
 
     def on_action_save(self, widget, data=None):
-        all_files = self.active_file_names()
         try:
-            if len(all_files) == 1:
-                self.save(False, all_files.pop())
+            if self.export_file:
+                self.save(False, self.export_file)
             else:
                 self.choose_export_pdf_name(widget)
         except Exception as e:
@@ -579,6 +578,7 @@ class PdfArranger:
             file_out = file_out + '.pdf'
         self.export_to_file(file_out, only_selected)
         self.export_directory = path
+        self.export_file = file_out
         self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, widget=None):
