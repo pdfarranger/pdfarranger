@@ -29,6 +29,7 @@ import threading
 import tempfile
 import time
 import signal
+import pathlib
 
 try:
     # Python 2
@@ -1236,7 +1237,6 @@ class PDFDoc:
         f = Gio.File.new_for_path(filename)
         mime_type = f.query_info('standard::content-type', 0, None).get_content_type()
         expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
-        file_prefix = 'file://' if os.name != 'nt' else 'file:///'
 
         if mime_type == expected_mime_type:
             self.nfile = nfile + 1
@@ -1244,7 +1244,8 @@ class PDFDoc:
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
                                                   self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
-            self.document = Poppler.Document.new_from_file(file_prefix + self.copyname, None)
+            uri = pathlib.Path(self.copyname).as_uri()
+            self.document = Poppler.Document.new_from_file(uri, None)
             self.npage = self.document.get_n_pages()
         else:
             self.nfile = 0
