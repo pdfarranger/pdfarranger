@@ -1,2 +1,2 @@
-https://github.com/jeromerobert/pdfarranger/zipball/master
+https://github.com/jeromerobert/pdfarranger/zipball/develop
 PyPDF2
