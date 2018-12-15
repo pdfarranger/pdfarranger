@@ -8,7 +8,7 @@ python-pyPdf.
 *pdfarranger* is a fork of Konstantinos Poulios's pdfshuffler
 (see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
-It's an humble tentative de make the project a bit more active.
+It's an humble tentative to make the project a bit more active.
 
 
 # Install
