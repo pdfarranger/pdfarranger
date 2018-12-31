@@ -129,7 +129,7 @@ class PdfArranger:
 
         iconsdir = os.path.join(sharedir, 'icons')
         if not os.path.exists(iconsdir):
-            iconsdir = os.path.join(sharedir, 'data')
+            iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
         Gtk.Window.set_default_icon_name(DOMAIN)
 
