@@ -69,7 +69,7 @@ gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
 
-APPNAME = 'pdfarranger'
+APPNAME = 'PDF Arranger'
 VERSION = '1.0'
 WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
