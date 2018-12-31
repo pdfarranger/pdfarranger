@@ -31,7 +31,7 @@ data_files=[('share/applications', ['data/pdfarranger.desktop']),
             ('share/man/man1', ['doc/pdfarranger.1'])]
 
 setup(name='pdfarranger',
-      version='1.0',
+      version='1.1.1',
       author='Jerome Robert',
       author_email='jeromerobert@gmx.com',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
