@@ -172,10 +172,6 @@ class PdfArranger:
         self.sw.connect('button_press_event', self.sw_button_press_event)
         self.sw.connect('scroll_event', self.sw_scroll_event)
 
-        # Create an alignment to keep the thumbnails center-aligned
-        align = Gtk.Alignment.new(0.5, 0.5, 0, 0)
-        self.sw.add_with_viewport(align)
-
         # Create ListStore model and IconView
         self.model = Gtk.ListStore(str,         # 0.Text descriptor
                                    GObject.TYPE_PYOBJECT,
@@ -241,7 +237,7 @@ class PdfArranger:
         self.iconview.connect('button_release_event', self.iv_button_release_event)
         self.iconview.connect('selection_changed', self.iv_selection_changed_event)
 
-        align.add(self.iconview)
+        self.sw.add_with_viewport(self.iconview)
 
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
