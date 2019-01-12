@@ -30,6 +30,8 @@ import tempfile
 import time
 import signal
 import pathlib
+import platform
+import configparser
 
 try:
     # Python 2
@@ -103,15 +105,58 @@ except ImportError:
 from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
+class Config(object):
+    """ Wrap a ConfigParser object for PDFArranger """
+    @staticmethod
+    def _config_file():
+        """ Return the location of the configuration file """
+        home = os.path.expanduser("~")
+        if platform.system() == 'Darwin':
+            p = os.path.join(home, 'Library', 'Caches')
+        elif 'LOCALAPPDATA' in os.environ:
+            p = os.getenv('LOCALAPPDATA')
+        elif 'XDG_CACHE_HOME' in os.environ:
+            p = os.getenv('XDG_CACHE_HOME')
+        else:
+            p = os.path.join(home, '.cache')
+        p = os.path.join(p, DOMAIN)
+        os.makedirs(p, exist_ok=True)
+        return os.path.join(p, 'config.ini')
+
+    def __init__(self):
+        self.data = configparser.ConfigParser()
+        self.data.add_section('window')
+        self.data.read(Config._config_file())
+
+    def window_size(self):
+        ds = Gdk.Screen.get_default()
+        return self.data.getint('window', 'width', fallback=int(min(700, ds.get_width() / 2))), \
+               self.data.getint('window', 'height', fallback=int(min(600, ds.get_height() - 50)))
+
+    def set_window_size(self, size):
+        self.data.set('window', 'width', str(size[0]))
+        self.data.set('window', 'height', str(size[1]))
+
+    def maximized(self):
+        return self.data.getboolean('window', 'maximized', fallback=False)
+
+    def set_maximized(self, m):
+        self.data.set('window', 'maximized', str(m))
+
+    def zoom_level(self):
+        return self.data.getint('DEFAULT', 'zoom-level', fallback=0)
+
+    def set_zoom_level(self, l):
+        self.data.set('DEFAULT', 'zoom-level', str(l))
+
+    def save(self):
+        conffile = Config._config_file()
+        os.makedirs(os.path.dirname(conffile), exist_ok=True)
+        with open(conffile, 'w') as f:
+            self.data.write(f)
 
 class PdfArranger:
-    prefs = {
-        'window width': min(700, Gdk.Screen.get_default().get_width() / 2),
-        'window height': min(600, Gdk.Screen.get_default().get_height() - 50),
-        'initial thumbnail size': 300,
-        'initial zoom level': 0,
-    }
-
+    INITIAL_THUMBNAIL_SIZE = 300
     MODEL_ROW_INTERN = 1001
     MODEL_ROW_EXTERN = 1002
     TEXT_URI_LIST = 1003
@@ -142,6 +187,7 @@ class PdfArranger:
         if not os.path.exists(ui_path):
             ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
 
+        self.config = Config()
         self.uiXML = Gtk.Builder()
         self.uiXML.set_translation_domain(DOMAIN)
         self.uiXML.add_from_file(ui_path)
@@ -152,8 +198,9 @@ class PdfArranger:
         self.window = self.uiXML.get_object('main_window')
         self.window.set_title(APPNAME)
         self.window.set_border_width(0)
-        self.window.set_default_size(self.prefs['window width'],
-                                     self.prefs['window height'])
+        if self.config.maximized():
+            self.window.maximize()
+        self.window.set_default_size(*self.config.window_size())
         self.window.connect('delete_event', self.close_application)
 
         if hasattr(GLib, "unix_signal_add"):
@@ -189,8 +236,8 @@ class PdfArranger:
                                    float,       # 12.Page height
                                    float)       # 13.Resampling factor
 
-        self.zoom_set(self.prefs['initial zoom level'])
-        self.iv_col_width = self.prefs['initial thumbnail size']
+        self.zoom_set(self.config.zoom_level())
+        self.iv_col_width = self.INITIAL_THUMBNAIL_SIZE
 
         self.iconview = Gtk.IconView(self.model)
         self.iconview.clear()
@@ -449,7 +496,10 @@ class PdfArranger:
 
         # Release Poppler.Document instances to unlock all temporay files
         self.pdfqueue = []
-
+        self.config.set_window_size(self.window.get_size())
+        self.config.set_maximized(self.window.is_maximized())
+        self.config.set_zoom_level(self.zoom_level)
+        self.config.save()
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
         if Gtk.main_level():
