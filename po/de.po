@@ -164,11 +164,11 @@ msgstr "Bearbeiten"
 
 #: data/pdfarranger.ui.h:3
 msgid "Rotate left"
-msgstr "Rechts drehen"
+msgstr "Links drehen"
 
 #: data/pdfarranger.ui.h:4
 msgid "Rotate right"
-msgstr "Links drehen"
+msgstr "Rechts drehen"
 
 #: data/pdfarranger.ui.h:5
 msgid "Crop"
