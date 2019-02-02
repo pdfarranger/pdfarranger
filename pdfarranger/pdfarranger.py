@@ -1159,8 +1159,7 @@ class PdfArranger:
         frame.add(vbox)
 
         spin_list = []
-        units = 2 * [_('%% of width').replace('%%','%')] +\
-                2 * [_('%% of height').replace('%%','%')]
+        units = 2 * [_('% of width')] + 2 * [_('% of height')]
         for side in sides:
             hbox = Gtk.HBox(True, 0)
             vbox.pack_start(hbox, False, False, 5)
