@@ -1149,35 +1149,36 @@ class PdfArranger:
                             flags=Gtk.DialogFlags.MODAL,
                             buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                                      Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        dialog.set_size_request(340, 250)
         dialog.set_default_response(Gtk.ResponseType.OK)
-
+        margin = 12
+        label= Gtk.Label(label=_('Cropping does not remove any content\nfrom the PDF file, it only hides it.'))
+        dialog.vbox.pack_start(label, False, False, 0)
         frame = Gtk.Frame(label=_('Crop Margins'))
-        dialog.vbox.pack_start(frame, False, False, 20)
-
-        vbox = Gtk.VBox(False, 0)
-        frame.add(vbox)
+        frame.props.margin = margin
+        dialog.vbox.pack_start(frame, True, True, 0)
+        grid = Gtk.Grid()
+        grid.set_column_spacing(margin)
+        grid.set_row_spacing(margin)
+        grid.props.margin = margin
+        frame.add(grid)
 
         spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
-        for side in sides:
-            hbox = Gtk.HBox(True, 0)
-            vbox.pack_start(hbox, False, False, 5)
-
+        for row, side in enumerate(sides):
             label = Gtk.Label(label=side_names[side])
-            label.set_alignment(0, 0.0)
-            hbox.pack_start(label, True, True, 20)
+            label.set_alignment(0, 0)
+            grid.attach(label, 0, row, 1, 1)
 
             adj = Gtk.Adjustment(100. * crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
             spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
             spin.set_activates_default(True)
             spin.connect('value-changed', set_crop_value, side)
             spin_list.append(spin)
-            hbox.pack_start(spin, False, False, 30)
+            grid.attach(spin, 1, row, 1, 1)
 
             label = Gtk.Label(label=units.pop(0))
-            label.set_alignment(0, 0.0)
-            hbox.pack_start(label, True, True, 0)
+            label.set_alignment(0, 0)
+            grid.attach(label, 2, row, 1, 1)
 
         dialog.show_all()
         result = dialog.run()
