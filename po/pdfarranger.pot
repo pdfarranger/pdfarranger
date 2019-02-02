@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-25 21:01+0100\n"
+"POT-Creation-Date: 2019-02-03 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,60 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pdfarranger/pdfarranger.py:268
+#: pdfarranger/pdfarranger.py:316
 msgid "_Rotate Right"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:268
+#: pdfarranger/pdfarranger.py:316
 msgid "Rotate _Left"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:268
+#: pdfarranger/pdfarranger.py:316
 msgid "C_rop..."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:269
+#: pdfarranger/pdfarranger.py:317
 msgid "_Delete"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:269
+#: pdfarranger/pdfarranger.py:317
 msgid "Re_verse Order"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:269
+#: pdfarranger/pdfarranger.py:317
 msgid "_Export selection..."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:344
+#: pdfarranger/pdfarranger.py:390
 msgid "No document"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:346
+#: pdfarranger/pdfarranger.py:392
 msgid "Several documents"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:363
+#: pdfarranger/pdfarranger.py:409
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:494
+#: pdfarranger/pdfarranger.py:544
 msgid "page"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:520
+#: pdfarranger/pdfarranger.py:570
 msgid "Export ..."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:529 pdfarranger/pdfarranger.py:666
+#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
 msgid "PDF files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:534 pdfarranger/pdfarranger.py:661
+#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
 msgid "All files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:597
+#: pdfarranger/pdfarranger.py:647
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -78,71 +78,75 @@ msgid ""
 "File export failed."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:650
+#: pdfarranger/pdfarranger.py:700
 msgid "Import..."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:685
+#: pdfarranger/pdfarranger.py:735
 msgid "OpenDocument not supported yet!"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:687
+#: pdfarranger/pdfarranger.py:737
 msgid "Image file not supported yet!"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:689
+#: pdfarranger/pdfarranger.py:739
 #, python-format
 msgid "File type \"%s\" not supported!"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:691
+#: pdfarranger/pdfarranger.py:741
 #, python-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:697
+#: pdfarranger/pdfarranger.py:747
 msgid "Closed, no files selected"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1078
+#: pdfarranger/pdfarranger.py:1128
 msgid "Left"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1078
+#: pdfarranger/pdfarranger.py:1128
 msgid "Right"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1079
+#: pdfarranger/pdfarranger.py:1129
 msgid "Top"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1079
+#: pdfarranger/pdfarranger.py:1129
 msgid "Bottom"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1097
+#: pdfarranger/pdfarranger.py:1147
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1105
+#: pdfarranger/pdfarranger.py:1154
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1156
 msgid "Crop Margins"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1112
-#, python-format
-msgid "%% of width"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of width"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1113
-#, python-format
-msgid "%% of height"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of height"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1151
+#: pdfarranger/pdfarranger.py:1201
 msgid "Dialog closed"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1202
+#: pdfarranger/pdfarranger.py:1252
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "

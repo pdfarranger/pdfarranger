@@ -9,141 +9,150 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-04 13:01+0200\n"
+"POT-Creation-Date: 2019-02-03 17:29+0100\n"
 "PO-Revision-Date: 2014-11-05 07:31+0000\n"
 "Last-Translator: Dean Lee <xslidian@gmail.com>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/pdfshuffler/language/zh_CN/)\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
+"pdfshuffler/language/zh_CN/)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/pdfarranger.py:104
-msgid "Can't load icon. Application is not installed correctly."
-msgstr "无法加载图标。应用程序未正确安装。"
-
-#: pdfarranger/pdfarranger.py:238
+#: pdfarranger/pdfarranger.py:316
 msgid "_Rotate Right"
 msgstr "向右旋转(_R)"
 
-#: pdfarranger/pdfarranger.py:238
+#: pdfarranger/pdfarranger.py:316
 msgid "Rotate _Left"
 msgstr "向左旋转(_L)"
 
-#: pdfarranger/pdfarranger.py:238
+#: pdfarranger/pdfarranger.py:316
 msgid "C_rop..."
 msgstr "裁剪(_R)..."
 
-#: pdfarranger/pdfarranger.py:239
+#: pdfarranger/pdfarranger.py:317
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: pdfarranger/pdfarranger.py:239
+#: pdfarranger/pdfarranger.py:317
+msgid "Re_verse Order"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:317
 msgid "_Export selection..."
 msgstr "导出所选(_E)..."
 
-#: pdfarranger/pdfarranger.py:307
+#: pdfarranger/pdfarranger.py:390
 msgid "No document"
 msgstr "无文档"
 
-#: pdfarranger/pdfarranger.py:309
+#: pdfarranger/pdfarranger.py:392
 msgid "Several documents"
 msgstr "多个文档"
 
-#: pdfarranger/pdfarranger.py:325
+#: pdfarranger/pdfarranger.py:409
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "正在渲染缩略图... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:441
+#: pdfarranger/pdfarranger.py:544
 msgid "page"
 msgstr "页面"
 
-#: pdfarranger/pdfarranger.py:467
+#: pdfarranger/pdfarranger.py:570
 msgid "Export ..."
 msgstr "导出..."
 
-#: pdfarranger/pdfarranger.py:476 pdfarranger/pdfarranger.py:589
+#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
 msgid "PDF files"
 msgstr "PDF 文件"
 
-#: pdfarranger/pdfarranger.py:481 pdfarranger/pdfarranger.py:584
+#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
 msgid "All files"
 msgstr "所有文件"
 
-#: pdfarranger/pdfarranger.py:521
+#: pdfarranger/pdfarranger.py:647
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
 "Support for encrypted files has not been implemented yet.\n"
 "File export failed."
-msgstr "文件 %s 已加密。\n尚未实现对加密文件的支持。\n文件导出失败。"
+msgstr ""
+"文件 %s 已加密。\n"
+"尚未实现对加密文件的支持。\n"
+"文件导出失败。"
 
-#: pdfarranger/pdfarranger.py:574
+#: pdfarranger/pdfarranger.py:700
 msgid "Import..."
 msgstr "导入..."
 
-#: pdfarranger/pdfarranger.py:608
+#: pdfarranger/pdfarranger.py:735
 msgid "OpenDocument not supported yet!"
 msgstr "尚不支持 OpenDocument 文件!"
 
-#: pdfarranger/pdfarranger.py:610
+#: pdfarranger/pdfarranger.py:737
 msgid "Image file not supported yet!"
 msgstr "尚不支持图像文件!"
 
-#: pdfarranger/pdfarranger.py:612
-msgid "File type not supported!"
+#: pdfarranger/pdfarranger.py:739
+#, fuzzy, python-format
+msgid "File type \"%s\" not supported!"
 msgstr "文件类型不支持!"
 
-#: pdfarranger/pdfarranger.py:614
+#: pdfarranger/pdfarranger.py:741
 #, python-format
 msgid "File %s does not exist"
 msgstr "文件 %s 不存在"
 
-#: pdfarranger/pdfarranger.py:620
+#: pdfarranger/pdfarranger.py:747
 msgid "Closed, no files selected"
 msgstr "已关闭，未选择文件"
 
-#: pdfarranger/pdfarranger.py:934
+#: pdfarranger/pdfarranger.py:1128
 msgid "Left"
 msgstr "左边"
 
-#: pdfarranger/pdfarranger.py:934
+#: pdfarranger/pdfarranger.py:1128
 msgid "Right"
 msgstr "右边"
 
-#: pdfarranger/pdfarranger.py:935
+#: pdfarranger/pdfarranger.py:1129
 msgid "Top"
 msgstr "顶部"
 
-#: pdfarranger/pdfarranger.py:935
+#: pdfarranger/pdfarranger.py:1129
 msgid "Bottom"
 msgstr "底部"
 
-#: pdfarranger/pdfarranger.py:953
+#: pdfarranger/pdfarranger.py:1147
 msgid "Crop Selected Pages"
 msgstr "裁剪所选页面"
 
-#: pdfarranger/pdfarranger.py:961
+#: pdfarranger/pdfarranger.py:1154
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1156
 msgid "Crop Margins"
 msgstr "裁剪边距"
 
-#: pdfarranger/pdfarranger.py:968
-#, python-format
-msgid "%% of width"
-msgstr "%% 的宽度"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of width"
+msgstr "% 的宽度"
 
-#: pdfarranger/pdfarranger.py:969
-#, python-format
-msgid "%% of height"
-msgstr "%% 的高度"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of height"
+msgstr "% 的高度"
 
-#: pdfarranger/pdfarranger.py:1007
+#: pdfarranger/pdfarranger.py:1201
 msgid "Dialog closed"
 msgstr "对话框已关闭"
 
-#: pdfarranger/pdfarranger.py:1021
+#: pdfarranger/pdfarranger.py:1252
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -171,37 +180,41 @@ msgid "Crop"
 msgstr "裁剪"
 
 #: data/pdfarranger.ui.h:6
+msgid "Reverse Order"
+msgstr ""
+
+#: data/pdfarranger.ui.h:7
 msgid "_View"
 msgstr "查看(_V)"
 
-#: data/pdfarranger.ui.h:7
-msgid "_Help"
-msgstr "帮助(_H)"
-
 #: data/pdfarranger.ui.h:8
-msgid "Open a file and append it to the current document"
-msgstr "打开文件，并将其追加到当前文件末尾"
-
-#: data/pdfarranger.ui.h:9
-msgid "Import"
-msgstr "导入"
-
-#: data/pdfarranger.ui.h:10
-msgid "Save"
-msgstr "保存"
-
-#: data/pdfarranger.ui.h:11
-msgid "Save as"
-msgstr "另存为"
-
-#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "放大"
 
-#: data/pdfarranger.ui.h:13
+#: data/pdfarranger.ui.h:9
 msgid "Zoom out"
 msgstr "缩小"
 
+#: data/pdfarranger.ui.h:10
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: data/pdfarranger.ui.h:11
+msgid "Open a file and append it to the current document"
+msgstr "打开文件，并将其追加到当前文件末尾"
+
+#: data/pdfarranger.ui.h:12
+msgid "Import"
+msgstr "导入"
+
+#: data/pdfarranger.ui.h:13
+msgid "Save"
+msgstr "保存"
+
 #: data/pdfarranger.ui.h:14
+msgid "Save as"
+msgstr "另存为"
+
+#: data/pdfarranger.ui.h:15
 msgid "Delete"
 msgstr "删除"

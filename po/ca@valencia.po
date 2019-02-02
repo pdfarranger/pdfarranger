@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 09:08+0200\n"
+"POT-Creation-Date: 2019-02-03 17:29+0100\n"
 "PO-Revision-Date: 2018-10-10 09:09+0200\n"
 "Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
 "Language-Team: LliureX\n"
@@ -17,120 +17,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: ../data/pdfarranger.ui:19
-msgid "_File"
-msgstr "_Fitxer"
-
-#: ../data/pdfarranger.ui:84
-msgid "_Edit"
-msgstr "_Edita"
-
-#: ../data/pdfarranger.ui:121 ../data/pdfarranger.ui:354
-#: ../data/pdfarranger.ui:356
-msgid "Rotate left"
-msgstr "Gira cap a l'esquerra"
-
-#: ../data/pdfarranger.ui:131 ../data/pdfarranger.ui:371
-#: ../data/pdfarranger.ui:373
-msgid "Rotate right"
-msgstr "Gira cap a la dreta"
-
-#: ../data/pdfarranger.ui:147
-msgid "Crop"
-msgstr "Retalla"
-
-#: ../data/pdfarranger.ui:175
-msgid "_View"
-msgstr "_Visualitza"
-
-#: ../data/pdfarranger.ui:183 ../data/pdfarranger.ui:310
-#: ../data/pdfarranger.ui:312
-msgid "Zoom in"
-msgstr "Amplia"
-
-#: ../data/pdfarranger.ui:194 ../data/pdfarranger.ui:327
-#: ../data/pdfarranger.ui:329
-msgid "Zoom out"
-msgstr "Redueïx"
-
-#: ../data/pdfarranger.ui:212
-msgid "_Help"
-msgstr "A_juda"
-
-#: ../data/pdfarranger.ui:253
-msgid "Open a file and append it to the current document"
-msgstr "Obri un fitxer i afig-lo al document actual"
-
-#: ../data/pdfarranger.ui:255
-msgid "Import"
-msgstr "Importa"
-
-#: ../data/pdfarranger.ui:271
-msgid "Save"
-msgstr "Guarda"
-
-#: ../data/pdfarranger.ui:285
-msgid "Save as"
-msgstr "Guarda com"
-
-#: ../data/pdfarranger.ui:388 ../data/pdfarranger.ui:390
-msgid "Delete"
-msgstr "Esborra"
-
-#: ../pdfarranger/pdfarranger.py:258
+#: pdfarranger/pdfarranger.py:316
 msgid "_Rotate Right"
 msgstr "Gi_ra a la dreta"
 
-#: ../pdfarranger/pdfarranger.py:258
+#: pdfarranger/pdfarranger.py:316
 msgid "Rotate _Left"
 msgstr "Gira a _l'esquerra"
 
-#: ../pdfarranger/pdfarranger.py:258
+#: pdfarranger/pdfarranger.py:316
 msgid "C_rop..."
 msgstr "_Retalla..."
 
-#: ../pdfarranger/pdfarranger.py:259
+#: pdfarranger/pdfarranger.py:317
 msgid "_Delete"
 msgstr "_Esborra"
 
-#: ../pdfarranger/pdfarranger.py:259
+#: pdfarranger/pdfarranger.py:317
+msgid "Re_verse Order"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:317
 msgid "_Export selection..."
 msgstr "_Exporta la selecció..."
 
-#: ../pdfarranger/pdfarranger.py:259
-msgid "Edit with _Inkscape..."
-msgstr "Editar amb _Inkscape"
-
-#: ../pdfarranger/pdfarranger.py:327
+#: pdfarranger/pdfarranger.py:390
 msgid "No document"
 msgstr "Cap document"
 
-#: ../pdfarranger/pdfarranger.py:329
+#: pdfarranger/pdfarranger.py:392
 msgid "Several documents"
 msgstr "Diversos documents"
 
-#: ../pdfarranger/pdfarranger.py:345
+#: pdfarranger/pdfarranger.py:409
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "S'estan renderitzant les miniatures... [%(i1)s/%(i2)s]"
 
-#: ../pdfarranger/pdfarranger.py:461
+#: pdfarranger/pdfarranger.py:544
 msgid "page"
 msgstr "pàgina"
 
-#: ../pdfarranger/pdfarranger.py:487
+#: pdfarranger/pdfarranger.py:570
 msgid "Export ..."
 msgstr "Exporta..."
 
-#: ../pdfarranger/pdfarranger.py:496 ../pdfarranger/pdfarranger.py:633
+#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
 msgid "PDF files"
 msgstr "Fitxers PDF"
 
-#: ../pdfarranger/pdfarranger.py:501 ../pdfarranger/pdfarranger.py:628
+#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: ../pdfarranger/pdfarranger.py:564
+#: pdfarranger/pdfarranger.py:647
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -141,75 +81,80 @@ msgstr ""
 "El suport per a fitxers encriptats no s'ha implementat encara.\n"
 "L'exportació del fitxer ha fallat."
 
-#: ../pdfarranger/pdfarranger.py:617
+#: pdfarranger/pdfarranger.py:700
 msgid "Import..."
 msgstr "Importa..."
 
-#: ../pdfarranger/pdfarranger.py:652
+#: pdfarranger/pdfarranger.py:735
 msgid "OpenDocument not supported yet!"
 msgstr "L'OpenDocument encara no s'admet!"
 
-#: ../pdfarranger/pdfarranger.py:654
+#: pdfarranger/pdfarranger.py:737
 msgid "Image file not supported yet!"
 msgstr "Els fitxers d'imatge encara no s'admeten!"
 
-#: ../pdfarranger/pdfarranger.py:656
-msgid "File type not supported!"
+#: pdfarranger/pdfarranger.py:739
+#, fuzzy, python-format
+msgid "File type \"%s\" not supported!"
 msgstr "El tipus de fitxer no s'admet!"
 
 #  ERR_FILE_NOT_EXISTS
-#: ../pdfarranger/pdfarranger.py:658
+#: pdfarranger/pdfarranger.py:741
 #, python-format
 msgid "File %s does not exist"
 msgstr "El fitxer %s no existeix"
 
-#: ../pdfarranger/pdfarranger.py:664
+#: pdfarranger/pdfarranger.py:747
 msgid "Closed, no files selected"
 msgstr "S'ha tancat, no hi ha cap fitxer seleccionat"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfarranger/pdfarranger.py:982
+#: pdfarranger/pdfarranger.py:1128
 msgid "Left"
 msgstr "Esquerra"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfarranger/pdfarranger.py:982
+#: pdfarranger/pdfarranger.py:1128
 msgid "Right"
 msgstr "Dreta"
 
 # Netscape_4.7->String:RESDLL.DLL
-#: ../pdfarranger/pdfarranger.py:983
+#: pdfarranger/pdfarranger.py:1129
 msgid "Top"
 msgstr "Dalt"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: ../pdfarranger/pdfarranger.py:983
+#: pdfarranger/pdfarranger.py:1129
 msgid "Bottom"
 msgstr "Baix"
 
-#: ../pdfarranger/pdfarranger.py:1001
+#: pdfarranger/pdfarranger.py:1147
 msgid "Crop Selected Pages"
 msgstr "Retalla les pàgines seleccionades"
 
-#: ../pdfarranger/pdfarranger.py:1009
+#: pdfarranger/pdfarranger.py:1154
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1156
 msgid "Crop Margins"
 msgstr "Retalla els marges"
 
-#: ../pdfarranger/pdfarranger.py:1016
-#, python-format
-msgid "%% of width"
-msgstr "%% d'amplària"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of width"
+msgstr "% d'amplària"
 
-#: ../pdfarranger/pdfarranger.py:1017
-#, python-format
-msgid "%% of height"
-msgstr "%% d'alçària"
+#: pdfarranger/pdfarranger.py:1166
+msgid "% of height"
+msgstr "% d'alçària"
 
-#: ../pdfarranger/pdfarranger.py:1055
+#: pdfarranger/pdfarranger.py:1201
 msgid "Dialog closed"
 msgstr "S'ha tancat el diàleg"
 
-#: ../pdfarranger/pdfarranger.py:1069
+#: pdfarranger/pdfarranger.py:1252
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -218,5 +163,62 @@ msgstr ""
 "El %s és una ferramenta per a organitzar i modificar fitxers PDF. S'ha "
 "realitzat utilitzant GTK+ i Python"
 
-#~ msgid "Can't load icon. Application is not installed correctly."
-#~ msgstr "No es pot carregar la icona: no s'ha instal·lat correctament."
+#: data/pdfarranger.ui.h:1
+msgid "_File"
+msgstr "_Fitxer"
+
+#: data/pdfarranger.ui.h:2
+msgid "_Edit"
+msgstr "_Edita"
+
+#: data/pdfarranger.ui.h:3
+msgid "Rotate left"
+msgstr "Gira cap a l'esquerra"
+
+#: data/pdfarranger.ui.h:4
+msgid "Rotate right"
+msgstr "Gira cap a la dreta"
+
+#: data/pdfarranger.ui.h:5
+msgid "Crop"
+msgstr "Retalla"
+
+#: data/pdfarranger.ui.h:6
+msgid "Reverse Order"
+msgstr ""
+
+#: data/pdfarranger.ui.h:7
+msgid "_View"
+msgstr "_Visualitza"
+
+#: data/pdfarranger.ui.h:8
+msgid "Zoom in"
+msgstr "Amplia"
+
+#: data/pdfarranger.ui.h:9
+msgid "Zoom out"
+msgstr "Redueïx"
+
+#: data/pdfarranger.ui.h:10
+msgid "_Help"
+msgstr "A_juda"
+
+#: data/pdfarranger.ui.h:11
+msgid "Open a file and append it to the current document"
+msgstr "Obri un fitxer i afig-lo al document actual"
+
+#: data/pdfarranger.ui.h:12
+msgid "Import"
+msgstr "Importa"
+
+#: data/pdfarranger.ui.h:13
+msgid "Save"
+msgstr "Guarda"
+
+#: data/pdfarranger.ui.h:14
+msgid "Save as"
+msgstr "Guarda com"
+
+#: data/pdfarranger.ui.h:15
+msgid "Delete"
+msgstr "Esborra"
