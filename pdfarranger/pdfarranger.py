@@ -367,9 +367,7 @@ class PdfArranger:
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
-        #FIXME: the resample=1. factor has to be dynamic when lazy rendering
-        #       is implemented
-        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1)
+        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1 / self.zoom_scale)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
@@ -466,6 +464,7 @@ class PdfArranger:
 #            self.celltxt.set_property('wrap-width', self.iv_col_width)
             self.iconview.set_item_width(-1) #self.iv_col_width + 12) #-1)
             self.on_window_size_request(self.window, None)
+        GObject.idle_add(self.render)
 
     def on_keypress_event(self, widget, event):
         """Keypress events in Main Window"""
@@ -1300,7 +1299,7 @@ class PDFDoc:
 
 class PDFRenderer(threading.Thread, GObject.GObject):
 
-    def __init__(self, model, pdfqueue, resample=1.):
+    def __init__(self, model, pdfqueue, resample):
         threading.Thread.__init__(self)
         GObject.GObject.__init__(self)
         self.model = model
@@ -1312,26 +1311,24 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         for idx, row in enumerate(self.model):
             if self.quit:
                 return
-            if not row[1]:
-                try:
-                    nfile = row[2]
-                    npage = row[3]
-                    pdfdoc = self.pdfqueue[nfile - 1]
-                    page = pdfdoc.document.get_page(npage - 1)
-                    w, h = page.get_size()
-                    thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
-                                                   int(w / self.resample),
-                                                   int(h / self.resample))
-                    cr = cairo.Context(thumbnail)
-                    if self.resample != 1.:
-                        cr.scale(1. / self.resample, 1. / self.resample)
-                    page.render(cr)
-                    time.sleep(0.003)
-                    GObject.idle_add(self.emit, 'update_thumbnail',
-                                     idx, thumbnail, self.resample,
-                                     priority=GObject.PRIORITY_LOW)
-                except Exception as e:
-                    print(e)
+            try:
+                nfile = row[2]
+                npage = row[3]
+                pdfdoc = self.pdfqueue[nfile - 1]
+                page = pdfdoc.document.get_page(npage - 1)
+                w, h = page.get_size()
+                thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                               int(w / self.resample),
+                                               int(h / self.resample))
+                cr = cairo.Context(thumbnail)
+                if self.resample != 1.:
+                    cr.scale(1. / self.resample, 1. / self.resample)
+                page.render(cr)
+                GObject.idle_add(self.emit, 'update_thumbnail',
+                                 idx, thumbnail, self.resample,
+                                 priority=GObject.PRIORITY_LOW)
+            except Exception as e:
+                traceback.print_exc()
 
 
 def main():

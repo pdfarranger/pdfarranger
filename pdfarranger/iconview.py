@@ -42,7 +42,7 @@ class CellRendererImage(Gtk.CellRenderer):
                       0.01, 100., 1., GObject.PARAM_READWRITE),
             "resample": (GObject.TYPE_FLOAT,
                      "Resample", "Resample Coefficient",
-                      1., 100., 1., GObject.PARAM_READWRITE),
+                      0., 100., 1., GObject.PARAM_READWRITE),
             "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
                       0., 1., 0., GObject.PARAM_READWRITE),
             "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
