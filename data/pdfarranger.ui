@@ -22,12 +22,12 @@ Author: Konstantinos Poulios
 
 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.4"/>
   <!-- interface-license-type gplv3 -->
   <!-- interface-name PDF-Shuffler -->
   <!-- interface-copyright 2008-2017 Konstantinos Poulios -->
   <!-- interface-authors Konstantinos Poulios -->
-  <object class="GtkWindow" id="main_window">
+  <object class="GtkApplicationWindow" id="main_window">
     <property name="can_focus">False</property>
     <child>
       <object class="GtkBox" id="main_box">
@@ -52,34 +52,31 @@ Author: Konstantinos Poulios
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_import">
                         <property name="label">gtk-add</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_action_add_doc_activate" swapped="no"/>
+                        <property name="action_name">win.import</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_save">
                         <property name="label">gtk-save</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_action_save" swapped="no"/>
+                        <property name="action_name">win.save</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_save_as">
                         <property name="label">gtk-save-as</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="choose_export_pdf_name" swapped="no"/>
+                        <property name="action_name">win.export-selection</property>
                       </object>
                     </child>
                     <child>
@@ -146,21 +143,21 @@ Author: Konstantinos Poulios
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_rotate_left">
                         <property name="label" translatable="yes">Rotate left</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="rotate_page_left" swapped="no"/>
+                        <property name="action_name">win.rotate</property>
+                        <property name="action_target">-90</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_rotate_right">
                         <property name="label" translatable="yes">Rotate right</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="rotate_page_right" swapped="no"/>
+                        <property name="action_name">win.rotate</property>
+                        <property name="action_target">90</property>
                       </object>
                     </child>
                     <child>
@@ -172,22 +169,20 @@ Author: Konstantinos Poulios
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_crop">
                         <property name="label" translatable="yes">Crop</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="crop_page_dialog" swapped="no"/>
+                        <property name="action_name">win.crop</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_delete">
                         <property name="label">gtk-delete</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="clear_selected" swapped="no"/>
+                        <property name="action_name">win.delete</property>
                       </object>
                     </child>
                     <child>
@@ -196,9 +191,8 @@ Author: Konstantinos Poulios
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="reverse_order" swapped="no"/>
+                        <property name="action_name">win.reverse-order</property>
                       </object>
                     </child>
                   </object>
@@ -281,7 +275,6 @@ Author: Konstantinos Poulios
             <property name="can_focus">False</property>
             <child>
               <object class="GtkToolButton" id="toolbutton_import">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -289,7 +282,7 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Import</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-add</property>
-                <signal name="clicked" handler="on_action_add_doc_activate" swapped="no"/>
+                <property name="action_name">win.import</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -313,13 +306,12 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_save_as">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Save as</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-save-as</property>
-                <signal name="clicked" handler="choose_export_pdf_name" swapped="no"/>
+                <property name="action_name">win.export-selection</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -382,7 +374,6 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_rotate_left">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -390,7 +381,8 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Rotate left</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">object-rotate-left</property>
-                <signal name="clicked" handler="rotate_page_left" swapped="no"/>
+                <property name="action_name">win.rotate</property>
+                <property name="action_target">-90</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -399,7 +391,6 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_rotate_right">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -407,7 +398,8 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Rotate right</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">object-rotate-right</property>
-                <signal name="clicked" handler="rotate_page_right" swapped="no"/>
+                <property name="action_name">win.rotate</property>
+                <property name="action_target">90</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -416,7 +408,6 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_delete">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -424,7 +415,7 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Delete</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-delete</property>
-                <signal name="clicked" handler="clear_selected" swapped="no"/>
+                <property name="action_name">win.delete</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -466,6 +457,64 @@ Author: Konstantinos Poulios
             <property name="position">3</property>
           </packing>
         </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="popup_menu">
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">Rotate _Left</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.rotate</property>
+        <property name="action_target">-90</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">_Rotate Right</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.rotate</property>
+        <property name="action_target">90</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">C_rop</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.crop</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label">_Delete</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.delete</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">Re_verse Order</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.reverse-order</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">_Export selection...</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.export-selection</property>
       </object>
     </child>
   </object>

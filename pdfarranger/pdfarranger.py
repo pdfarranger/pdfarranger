@@ -69,20 +69,18 @@ VERSION = '1.1.1'
 WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
-try:
-    import gi
-    # check that we don't need GObject.threads_init()
-    gi.check_version('3.10.2')
-    gi.require_version('Gtk', '3.0')
-    from gi.repository import Gtk
-except:
-    print('You do not have the required version of GTK+ installed.\n\n' +
+import gi
+# check that we don't need GObject.threads_init()
+gi.check_version('3.10.2')
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+if Gtk.check_version(3,4,0):
+    raise Exception('You do not have the required version of GTK+ installed. ' +
           'Installed GTK+ version is ' +
           '.'.join([str(Gtk.get_major_version()),
                     str(Gtk.get_minor_version()),
-                    str(Gtk.get_micro_version())]) + '\n' +
-          'Required GTK+ version is 3.0 or higher')
-    sys.exit(1)
+                    str(Gtk.get_micro_version())]) +
+          '. Required GTK+ version is 3.4 or higher.')
 
 from gi.repository import Gdk
 from gi.repository import GObject      # for using custom signals
@@ -146,7 +144,8 @@ class Config(object):
         with open(conffile, 'w') as f:
             self.data.write(f)
 
-class PdfArranger(object):
+
+class PdfArranger(Gtk.Application):
     INITIAL_THUMBNAIL_SIZE = 300
     MODEL_ROW_INTERN = 1001
     MODEL_ROW_EXTERN = 1002
@@ -158,7 +157,47 @@ class PdfArranger(object):
     TARGETS_SW = [Gtk.TargetEntry.new('text/uri-list', 0, TEXT_URI_LIST),
                   Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, application_id="com.github.jeromerobert.pdfarranger",
+                         flags=Gio.ApplicationFlags.HANDLES_OPEN|Gio.ApplicationFlags.NON_UNIQUE,
+                         **kwargs)
+
+    def do_open(self, files, n, hints):
+        """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
+        self.activate()
+        # Importing documents passed as command line arguments
+        for f in files:
+            self.add_pdf_pages(f.get_path())
+
+    def __create_actions(self):
+        # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
+        # related some other are application related. As pdfarrager is a single window app does not
+        # matter that much.
+        self.window.add_action_entries([
+            ("rotate", self.rotate_page, "i"),
+            ("delete", self.clear_selected),
+            ("crop", self.crop_page_dialog),
+            ("export-selection", self.choose_export_selection_pdf_name),
+            ("reverse-order", self.reverse_order),
+            ("save", self.on_action_save),
+            ("import", self.on_action_add_doc_activate),
+        ])
+        accels = [
+             ("delete", 'Delete'),
+             ("crop", 'c'),
+             ("rotate(90)", '<Ctrl>Right'),
+             ("rotate(-90)", '<Ctrl>Left'),
+             ("save", '<Ctrl>s'),
+             ("import", 'Insert'),
+        ]
+        for a, k in accels:
+            self.set_accels_for_action("win." + a, [k])
+        # Disable actions
+        self.iv_selection_changed_event()
+
+    def do_activate(self):
+        """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
+        # TODO: huge method that should be splitted
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
         os.chmod(self.tmp_dir, 0o700)
@@ -189,6 +228,7 @@ class PdfArranger(object):
         self.window = self.uiXML.get_object('main_window')
         self.window.set_title(APPNAME)
         self.window.set_border_width(0)
+        self.window.set_application(self)
         if self.config.maximized():
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
@@ -283,7 +323,6 @@ class PdfArranger(object):
 
         # Define window callback function and show window
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
-        self.window.connect('key_press_event', self.on_keypress_event ) # keypress
         self.window.show_all()
         self.progress_bar.hide()
 
@@ -301,24 +340,8 @@ class PdfArranger(object):
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
                                                 color_prelight)
 
-        # Creating the popup menu
-        self.popup = Gtk.Menu()
-        labels = (_('_Rotate Right'), _('Rotate _Left'), _('C_rop...'),
-                  _('_Delete'), _('Re_verse Order'), _('_Export selection...'))
-        cbs = (self.rotate_page_right, self.rotate_page_left,
-               self.crop_page_dialog, self.clear_selected,
-               self.reverse_order,
-               self.choose_export_selection_pdf_name)
-        for label, cb in zip(labels, cbs):
-           popup_item = Gtk.MenuItem.new_with_mnemonic(label)
-           popup_item.connect('activate', cb)
-           popup_item.show()
-           self.popup.append(popup_item)
-           if cb == self.reverse_order:
-                self.reverse_order_popup_menu_item = popup_item
-
-        # Application menu
-        self.reverse_order_app_menu_item = self.uiXML.get_object('imagemenuitem_reverse_order')
+        self.popup = self.uiXML.get_object('popup_menu')
+        self.popup.attach_to_widget(self.window, None)
 
         # Initializing variables
         self.export_directory = os.path.expanduser('~')
@@ -338,9 +361,7 @@ class PdfArranger(object):
 
         self.set_unsaved(False)
         self.export_file = None
-        # Importing documents passed as command line arguments
-        for filename in sys.argv[1:]:
-            self.add_pdf_pages(filename)
+        self.__create_actions()
 
     def set_cellrenderer_data(self, column, cell, model, iter, data=None):
         cell.set_property('image', model.get_value(iter,1))
@@ -457,25 +478,6 @@ class PdfArranger(object):
             self.on_window_size_request(self.window, None)
         GObject.idle_add(self.render)
 
-    def on_keypress_event(self, widget, event):
-        """Keypress events in Main Window"""
-
-        #print ("Key %s (%d) was pressed" % (Gdk.keyval_name(event.keyval), event.keyval))
-        if event.state & Gdk.ModifierType.CONTROL_MASK:
-            if event.keyval == 65363:  # Key Right
-                print('rotating right')
-                self.rotate_page(90)
-            elif event.keyval == 65361:  # Key Left
-                print('rotating left')
-                self.rotate_page(-90)
-            elif event.keyval == 115: # Key 's'
-                self.on_action_save('')
-
-        if event.keyval == 65535:   # Delete keystroke
-            self.clear_selected()
-        elif event.keyval == 65379:  # Key Insert
-            self.on_action_add_doc_activate('')
-
     def close_application(self, widget=None, event=None, data=None):
         """Termination"""
 
@@ -554,7 +556,7 @@ class PdfArranger(object):
             GObject.idle_add(self.render)
         return res
 
-    def choose_export_pdf_name(self, widget=None, only_selected=False):
+    def choose_export_pdf_name(self, only_selected=False):
         """Handles choosing a name for exporting """
 
         chooser = Gtk.FileChooserDialog(title=_('Export ...'),
@@ -597,12 +599,12 @@ class PdfArranger(object):
             all_files.add(f.filename)
         return all_files
 
-    def on_action_save(self, widget, data=None):
+    def on_action_save(self, action, param, unknown):
         try:
             if self.export_file:
                 self.save(False, self.export_file)
             else:
-                self.choose_export_pdf_name(widget)
+                self.choose_export_pdf_name()
         except Exception as e:
             self.error_message_dialog(e)
 
@@ -617,8 +619,8 @@ class PdfArranger(object):
         self.export_file = file_out
         self.set_unsaved(False)
 
-    def choose_export_selection_pdf_name(self, widget=None):
-        self.choose_export_pdf_name(widget, True)
+    def choose_export_selection_pdf_name(self, action, target, unknown):
+        self.choose_export_pdf_name(True)
 
     def export_to_file(self, file_out, only_selected=False):
         """Export to file"""
@@ -684,7 +686,7 @@ class PdfArranger(object):
         # finally, write "output" to document-output.pdf
         pdf_output.write(open(file_out, 'wb'))
 
-    def on_action_add_doc_activate(self, widget, data=None):
+    def on_action_add_doc_activate(self, action, param, unknown):
         """Import doc"""
 
         chooser = Gtk.FileChooserDialog(title=_('Import...'),
@@ -738,25 +740,24 @@ class PdfArranger(object):
         chooser.destroy()
         GObject.idle_add(self.retitle)
 
-    def clear_selected(self, button=None):
+    def clear_selected(self, action, parameter, unknown):
         """Removes the selected elements in the IconView"""
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-        if selection:
-            selection.sort(reverse=True)
-            self.set_unsaved(True)
-            for path in selection:
-                iter = model.get_iter(path)
-                model.remove(iter)
-            path = selection[-1]
-            self.iconview.select_path(path)
-            if not self.iconview.path_is_selected(path):
-                if len(model) > 0:	# select the last row
-                    row = model[-1]
-                    path = row.path
-                    self.iconview.select_path(path)
-            self.iconview.grab_focus()
+        selection.sort(reverse=True)
+        self.set_unsaved(True)
+        for path in selection:
+            iter = model.get_iter(path)
+            model.remove(iter)
+        path = selection[-1]
+        self.iconview.select_path(path)
+        if not self.iconview.path_is_selected(path):
+            if len(model) > 0:	# select the last row
+                row = model[-1]
+                path = row.path
+                self.iconview.select_path(path)
+        self.iconview.grab_focus()
 
     def iv_drag_begin(self, iconview, context):
         """Sets custom icon on drag begin for multiple items selected"""
@@ -985,14 +986,12 @@ class PdfArranger(object):
                 self.popup.popup(None, None, None, None, event.button, time)
             return 1
 
-    def iv_selection_changed_event(self, user_data):
+    def iv_selection_changed_event(self, user_data=None):
         selection = self.iconview.get_selected_items()
-
-        # Set sensitivity of the 'Reverse Order' action according to the
-        # selection.
-        sensitive = self.reverse_order_available(selection)
-        self.reverse_order_app_menu_item.set_sensitive(sensitive)
-        self.reverse_order_popup_menu_item.set_sensitive(sensitive)
+        ne = len(selection) > 0
+        for a, e in [ ("reverse-order", self.reverse_order_available(selection)),
+            ("delete", ne), ("crop", ne), ("rotate", ne) ]:
+            self.window.lookup_action(a).set_enabled(e)
 
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
                              selection_data, target_id, etime):
@@ -1080,15 +1079,9 @@ class PdfArranger(object):
             path = path[5:]  # 5 is len('file:')
         return path
 
-    def rotate_page_right(self, widget, data=None):
-        self.rotate_page(90)
-
-    def rotate_page_left(self, widget, data=None):
-        self.rotate_page(-90)
-
-    def rotate_page(self, angle):
+    def rotate_page(self, action, angle, unknown):
         """Rotates the selected page in the IconView"""
-
+        angle = angle.get_int32()
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         if len(selection) > 0:
@@ -1111,7 +1104,7 @@ class PdfArranger(object):
                 self.update_geometry(iter)
         self.reset_iv_width()
 
-    def crop_page_dialog(self, widget):
+    def crop_page_dialog(self, action, parameter, unknown):
         """Opens a dialog box to define margins for page cropping"""
 
         sides = ('L', 'R', 'T', 'B')
@@ -1187,8 +1180,6 @@ class PdfArranger(object):
             if modified:
                 self.set_unsaved(True)
             self.reset_iv_width()
-        elif result == Gtk.ResponseType.CANCEL:
-            print(_('Dialog closed'))
         dialog.destroy()
 
     def reverse_order_available(self, selection):
@@ -1209,7 +1200,7 @@ class PdfArranger(object):
 
         return True
 
-    def reverse_order(self, widget, data=None):
+    def reverse_order(self, action, parameter, unknown):
         """Reverses the selected elements in the IconView"""
 
         model = self.iconview.get_model()
@@ -1320,9 +1311,3 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                                  priority=GObject.PRIORITY_LOW)
             except Exception as e:
                 traceback.print_exc()
-
-
-def main():
-    """This function starts pdfarranger"""
-    PdfArranger()
-    Gtk.main()

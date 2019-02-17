@@ -1,3 +1,4 @@
 #! /usr/bin/env python3
+import sys
 from . import pdfarranger
-pdfarranger.main()
+pdfarranger.PdfArranger().run(sys.argv)
