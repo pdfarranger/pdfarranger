@@ -636,7 +636,7 @@ class PdfArranger:
         pdf_output = PdfFileWriter()
         pdf_input = []
         for pdfdoc in self.pdfqueue:
-            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'))
+            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict = False)
             if pdfdoc_inp.getIsEncrypted():
                 try: # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
