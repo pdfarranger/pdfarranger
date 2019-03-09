@@ -32,14 +32,7 @@ import signal
 import pathlib
 import platform
 import configparser
-
-try:
-    # Python 2
-    from urllib import url2pathname
-except ImportError:
-    # Python 3
-    from urllib.request import url2pathname
-
+from urllib.request import url2pathname
 from copy import copy
 
 sharedir = os.path.join(sys.prefix, 'share')
@@ -78,6 +71,8 @@ LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 try:
     import gi
+    # check that we don't need GObject.threads_init()
+    gi.check_version('3.10.2')
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk
 except:
@@ -96,11 +91,7 @@ from gi.repository import GLib
 gi.require_version('Poppler', '0.18')
 from gi.repository import Poppler      #for the rendering of pdf pages
 import cairo
-
-try:
-    from PyPDF2 import PdfFileWriter, PdfFileReader
-except ImportError:
-    from pyPdf import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfFileWriter, PdfFileReader
 
 from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
@@ -155,7 +146,7 @@ class Config(object):
         with open(conffile, 'w') as f:
             self.data.write(f)
 
-class PdfArranger:
+class PdfArranger(object):
     INITIAL_THUMBNAIL_SIZE = 300
     MODEL_ROW_INTERN = 1001
     MODEL_ROW_EXTERN = 1002
@@ -1333,6 +1324,5 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
 def main():
     """This function starts pdfarranger"""
-    GObject.threads_init()
     PdfArranger()
     Gtk.main()
