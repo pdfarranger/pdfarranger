@@ -194,6 +194,13 @@ class PdfArranger(Gtk.Application):
             self.set_accels_for_action("win." + a, [k])
         # Disable actions
         self.iv_selection_changed_event()
+        # Display accelerators in the menus
+        for o in self.uiXML.get_objects():
+            if isinstance(o, Gtk.MenuItem) and o.get_action_name() is not None:
+                an = Gio.Action.print_detailed_name(o.get_action_name(), o.get_action_target_value())
+                a = self.get_accels_for_action(an)
+                if len(a) > 0:
+                    o.get_child().set_accel(*Gtk.accelerator_parse(a[0]))
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
