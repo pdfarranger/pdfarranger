@@ -76,7 +76,7 @@ Author: Konstantinos Poulios
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <property name="action_name">win.export-selection</property>
+                        <property name="action_name">win.save-as</property>
                       </object>
                     </child>
                     <child>
@@ -310,7 +310,7 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Save as</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-save-as</property>
-                <property name="action_name">win.export-selection</property>
+                <property name="action_name">win.save-as</property>
               </object>
               <packing>
                 <property name="expand">False</property>

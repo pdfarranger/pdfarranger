@@ -180,6 +180,7 @@ class PdfArranger(Gtk.Application):
             ('export-selection', self.choose_export_selection_pdf_name),
             ('reverse-order', self.reverse_order),
             ('save', self.on_action_save),
+            ('save-as', self.on_action_save_as),
             ('import', self.on_action_add_doc_activate),
             ('zoom', self.zoom_change, 'i'),
             ('quit', self.on_quit),
@@ -190,6 +191,7 @@ class PdfArranger(Gtk.Application):
             ('rotate(90)', '<Ctrl>Right'),
             ('rotate(-90)', '<Ctrl>Left'),
             ('save', '<Ctrl>s'),
+            ('save-as', '<Ctrl><Shift>s'),
             ('quit', '<Ctrl>q'),
             ('import', 'Insert'),
             ('zoom(5)', 'plus'),
@@ -618,6 +620,9 @@ class PdfArranger(Gtk.Application):
                 self.choose_export_pdf_name()
         except Exception as e:
             self.error_message_dialog(e)
+
+    def on_action_save_as(self, action, param, unknown):
+        self.choose_export_pdf_name()
 
     def save(self, only_selected, file_out):
         """Saves to the specified file.  May throw exceptions."""
