@@ -639,6 +639,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         pdf_output = PdfFileWriter()
         pdf_input = []
+        metadata = None
         for pdfdoc in self.pdfqueue:
             pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'))
             if pdfdoc_inp.getIsEncrypted():
@@ -654,6 +655,9 @@ class PdfArranger(Gtk.Application):
                 #FIXME
                 #else
                 #   ask for password and decrypt file
+            if metadata is None:
+                # get the metadata of the first imported document
+                metadata = pdfdoc_inp.getDocumentInfo()
             pdf_input.append(pdfdoc_inp)
 
         for row in self.model:
@@ -694,6 +698,7 @@ class PdfArranger(Gtk.Application):
 
             pdf_output.addPage(current_page)
 
+        pdf_output.addMetadata(metadata)
         # finally, write "output" to document-output.pdf
         pdf_output.write(open(file_out, 'wb'))
 
