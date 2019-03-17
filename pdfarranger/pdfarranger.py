@@ -174,21 +174,26 @@ class PdfArranger(Gtk.Application):
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
         self.window.add_action_entries([
-            ("rotate", self.rotate_page, "i"),
-            ("delete", self.clear_selected),
-            ("crop", self.crop_page_dialog),
-            ("export-selection", self.choose_export_selection_pdf_name),
-            ("reverse-order", self.reverse_order),
-            ("save", self.on_action_save),
-            ("import", self.on_action_add_doc_activate),
+            ('rotate', self.rotate_page, 'i'),
+            ('delete', self.clear_selected),
+            ('crop', self.crop_page_dialog),
+            ('export-selection', self.choose_export_selection_pdf_name),
+            ('reverse-order', self.reverse_order),
+            ('save', self.on_action_save),
+            ('import', self.on_action_add_doc_activate),
+            ('zoom', self.zoom_change, 'i'),
+            ('quit', self.on_quit),
         ])
         accels = [
-             ("delete", 'Delete'),
-             ("crop", 'c'),
-             ("rotate(90)", '<Ctrl>Right'),
-             ("rotate(-90)", '<Ctrl>Left'),
-             ("save", '<Ctrl>s'),
-             ("import", 'Insert'),
+            ('delete', 'Delete'),
+            ('crop', 'c'),
+            ('rotate(90)', '<Ctrl>Right'),
+            ('rotate(-90)', '<Ctrl>Left'),
+            ('save', '<Ctrl>s'),
+            ('quit', '<Ctrl>q'),
+            ('import', 'Insert'),
+            ('zoom(5)', 'plus'),
+            ('zoom(-5)', 'minus'),
         ]
         for a, k in accels:
             self.set_accels_for_action("win." + a, [k])
@@ -485,6 +490,9 @@ class PdfArranger(Gtk.Application):
             self.on_window_size_request(self.window, None)
         GObject.idle_add(self.render)
 
+    def on_quit(self, action, param, unknown):
+        self.close_application()
+
     def close_application(self, widget=None, event=None, data=None):
         """Termination"""
 
@@ -501,11 +509,7 @@ class PdfArranger(Gtk.Application):
         self.config.save()
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
-        if Gtk.main_level():
-            Gtk.main_quit()
-        else:
-            sys.exit(0)
-        return False
+        self.quit()
 
     def add_pdf_pages(self, filename,
                             firstpage=None, lastpage=None,
@@ -1049,7 +1053,7 @@ class PdfArranger(Gtk.Application):
                 zoom_delta = -1
 
             if zoom_delta != 0:
-                self.zoom_change(zoom_delta)
+                self.zoom_set(self.zoom_level + zoom_delta)
                 return 1
 
     def zoom_set(self, level):
@@ -1060,17 +1064,9 @@ class PdfArranger(Gtk.Application):
             row[4] = self.zoom_scale
         self.reset_iv_width()
 
-    def zoom_change(self, step=5):
-        """Modifies the zoom level"""
-        self.zoom_set(self.zoom_level + step)
-
-    def zoom_in(self, widget=None):
-        """Increases the zoom level by 5 steps"""
-        self.zoom_change(5)
-
-    def zoom_out(self, widget=None, step=5):
-        """Reduces the zoom level by 5 steps"""
-        self.zoom_change(-5)
+    def zoom_change(self, action, step, unknown):
+        """ Action handle for zoom change """
+        self.zoom_set(self.zoom_level + step.get_int32())
 
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""

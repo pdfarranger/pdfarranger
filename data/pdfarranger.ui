@@ -88,12 +88,11 @@ Author: Konstantinos Poulios
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_quit">
                         <property name="label">gtk-quit</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="close_application" swapped="no"/>
+                        <property name="action_name">win.quit</property>
                       </object>
                     </child>
                   </object>
@@ -213,23 +212,23 @@ Author: Konstantinos Poulios
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_zoomin">
                         <property name="label" translatable="yes">Zoom in</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="zoom_in" swapped="no"/>
+                        <property name="action_name">win.zoom</property>
+                        <property name="action_target">5</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_zoomout">
                         <property name="label" translatable="yes">Zoom out</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="zoom_out" swapped="no"/>
+                        <property name="action_name">win.zoom</property>
+                        <property name="action_target">-5</property>
                       </object>
                     </child>
                   </object>
@@ -330,7 +329,6 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_zoom_in">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -338,7 +336,8 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Zoom in</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-zoom-in</property>
-                <signal name="clicked" handler="zoom_in" swapped="no"/>
+                <property name="action_name">win.zoom</property>
+                <property name="action_target">5</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -347,7 +346,6 @@ Author: Konstantinos Poulios
             </child>
             <child>
               <object class="GtkToolButton" id="toolbutton_zoom_out">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
@@ -355,7 +353,8 @@ Author: Konstantinos Poulios
                 <property name="label" translatable="yes">Zoom out</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-zoom-out</property>
-                <signal name="clicked" handler="zoom_out" swapped="no"/>
+                <property name="action_name">win.zoom</property>
+                <property name="action_target">-5</property>
               </object>
               <packing>
                 <property name="expand">False</property>
