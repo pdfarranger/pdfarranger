@@ -1324,3 +1324,6 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                                  priority=GObject.PRIORITY_LOW)
             except Exception as e:
                 traceback.print_exc()
+
+def main():
+    PdfArranger().run(sys.argv)
