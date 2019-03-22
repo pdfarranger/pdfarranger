@@ -32,6 +32,7 @@ import signal
 import pathlib
 import platform
 import configparser
+import warnings
 from urllib.request import url2pathname
 from copy import copy
 
@@ -143,6 +144,23 @@ class Config(object):
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
         with open(conffile, 'w') as f:
             self.data.write(f)
+
+
+def warn_dialog(func):
+    """ Decorator which redirect warnings module messages to a gkt MessageDialog """
+    def wrapper(*args, **kwargs):
+        self = args[0]
+        def _showwarning(message, category, filename, lineno, f=None, line=None):
+            s=warnings.formatwarning(message, category, filename, lineno, line)
+            sys.stderr.write(s+'\n')
+            self.error_message_dialog('Warning: '+str(message))
+        backup_showwarning=warnings.showwarning
+        warnings.showwarning=_showwarning
+        try:
+            func(*args, **kwargs)
+        finally:
+            warnings.showwarning=backup_showwarning
+    return wrapper
 
 
 class PdfArranger(Gtk.Application):
@@ -638,6 +656,7 @@ class PdfArranger(Gtk.Application):
     def choose_export_selection_pdf_name(self, action, target, unknown):
         self.choose_export_pdf_name(True)
 
+    @warn_dialog
     def export_to_file(self, file_out, only_selected=False):
         """Export to file"""
 
@@ -646,7 +665,7 @@ class PdfArranger(Gtk.Application):
         pdf_input = []
         metadata = None
         for pdfdoc in self.pdfqueue:
-            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'))
+            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict=False, overwriteWarnings=False)
             if pdfdoc_inp.getIsEncrypted():
                 try: # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
