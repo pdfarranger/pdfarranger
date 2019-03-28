@@ -42,7 +42,7 @@ msgstr "Reihenfolge _umkehren"
 
 #: pdfarranger/pdfarranger.py:317
 msgid "_Export selection..."
-msgstr "Markierte Seiten _Exportieren ..."
+msgstr "Markierte Seiten _exportieren ..."
 
 #: pdfarranger/pdfarranger.py:390
 msgid "No document"
