@@ -43,5 +43,5 @@ From a git clone:
 
 ```
 ./setup.py build
-python -m pdfarranger
+python3 -m pdfarranger
 ```
