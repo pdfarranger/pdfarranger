@@ -95,6 +95,24 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
+
+def _install_workaround_bug29():
+    """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
+    try:
+        gi.check_version('3.29.2')
+    except ValueError:
+        def func(self, entries):
+            # simplified version of https://gitlab.gnome.org/GNOME/pygobject/commit/d0b219c
+            for d in entries:
+                param_type = None if len(d) < 3 else GLib.VariantType.new(d[2])
+                action = Gio.SimpleAction(name=d[0], parameter_type=param_type)
+                action.connect("activate", d[1], None)
+                self.add_action(action)
+        Gtk.ApplicationWindow.add_action_entries = func
+
+_install_workaround_bug29()
+
+
 class Config(object):
     """ Wrap a ConfigParser object for PDFArranger """
     @staticmethod
