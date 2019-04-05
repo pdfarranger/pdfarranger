@@ -166,16 +166,22 @@ class Config(object):
 
 def warn_dialog(func):
     """ Decorator which redirect warnings module messages to a gkt MessageDialog """
-    def wrapper(*args, **kwargs):
-        self = args[0]
-        def _showwarning(message, category, filename, lineno, f=None, line=None):
+    class ShowWarning(object):
+        def __init__(self):
+            self.buffer=""
+
+        def __call__(self, message, category, filename, lineno, f=None, line=None):
             s=warnings.formatwarning(message, category, filename, lineno, line)
             sys.stderr.write(s+'\n')
-            self.error_message_dialog('Warning: '+str(message))
+            self.buffer+=str(message)+'\n'
+
+    def wrapper(*args, **kwargs):
+        self = args[0]
         backup_showwarning=warnings.showwarning
-        warnings.showwarning=_showwarning
+        warnings.showwarning=ShowWarning()
         try:
             func(*args, **kwargs)
+            self.error_message_dialog(warnings.showwarning.buffer, Gtk.MessageType.WARNING)
         finally:
             warnings.showwarning=backup_showwarning
     return wrapper
@@ -1292,10 +1298,9 @@ class PdfArranger(Gtk.Application):
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
 
-    def error_message_dialog(self, msg):
+    def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
-                                          type=Gtk.MessageType.ERROR,
-                                          parent=self.window,
+                                          type=msg_type, parent=self.window,
                                           message_format=str(msg),
                                           buttons=Gtk.ButtonsType.OK)
         response = error_msg_dlg.run()
