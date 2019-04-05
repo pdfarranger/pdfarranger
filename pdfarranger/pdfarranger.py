@@ -188,7 +188,6 @@ def warn_dialog(func):
 
 
 class PdfArranger(Gtk.Application):
-    INITIAL_THUMBNAIL_SIZE = 300
     MODEL_ROW_INTERN = 1001
     MODEL_ROW_EXTERN = 1002
     TEXT_URI_LIST = 1003
@@ -324,32 +323,14 @@ class PdfArranger(Gtk.Application):
                                    float)       # 13.Resampling factor
 
         self.zoom_set(self.config.zoom_level())
-        self.iv_col_width = self.INITIAL_THUMBNAIL_SIZE
 
         self.iconview = Gtk.IconView(self.model)
         self.iconview.clear()
-        self.iconview.set_item_width(-1) #self.iv_col_width + 12)
+        self.iconview.set_item_width(-1)
 
         self.cellthmb = CellRendererImage()
         self.iconview.pack_start(self.cellthmb, False)
         self.iconview.set_cell_data_func(self.cellthmb, self.set_cellrenderer_data, None)
-#        self.iconview.add_attribute(self.cellthmb, 'image', 1)
-#        self.iconview.add_attribute(self.cellthmb, 'scale', 4)
-#        self.iconview.add_attribute(self.cellthmb, 'rotation', 6)
-#        self.iconview.add_attribute(self.cellthmb, 'cropL', 7)
-#        self.iconview.add_attribute(self.cellthmb, 'cropR', 8)
-#        self.iconview.add_attribute(self.cellthmb, 'cropT', 9)
-#        self.iconview.add_attribute(self.cellthmb, 'cropB', 10)
-#        self.iconview.add_attribute(self.cellthmb, 'width', 11)
-#        self.iconview.add_attribute(self.cellthmb, 'height', 12)
-#        self.iconview.add_attribute(self.cellthmb, 'resample', 13)
-
-#        self.celltxt = Gtk.CellRendererText()
-#        self.celltxt.set_property('width', self.iv_col_width)
-#        self.celltxt.set_property('wrap-width', self.iv_col_width)
-#        self.celltxt.set_property('alignment', Pango.Alignment.CENTER)
-#        self.iconview.pack_start(self.celltxt, False)
-#        self.iconview.add_attribute(self.celltxt, 'text', 0)
         self.iconview.set_text_column(0)
 
         self.iconview.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
@@ -378,7 +359,7 @@ class PdfArranger(Gtk.Application):
         self.progress_bar_timeout_id = 0
 
         # Define window callback function and show window
-        self.window.connect('size_allocate', self.on_window_size_request)        # resize
+        self.window.connect('check_resize', self.on_window_size_request)
         self.window.show_all()
         self.progress_bar.hide()
 
@@ -489,14 +470,24 @@ class PdfArranger(Gtk.Application):
         row[4] = self.zoom_scale
         row[1] = thumbnail
 
-    def on_window_size_request(self, window, event):
+    def on_window_size_request(self, window):
         """Main Window resize - workaround for autosetting of
            iconview cols no."""
-
-        #add 12 because of: http://bugzilla.gnome.org/show_bug.cgi?id=570152
-        col_num = 9 * window.get_size()[0] \
-            / (10 * (self.iv_col_width + self.iconview.get_column_spacing() * 2))
-        self.iconview.set_columns(col_num)
+        if len(self.model) > 0:
+            # scale*page_width*(1-crop_left-crop_right)
+            item_width = int(max(row[4]*row[11]*(1.-row[7]-row[8]) \
+                             for row in self.model))
+            # FIXME: those are magic number found with my current GTK style. This might not be portable.
+            min_col_spacing=19
+            min_margin=14
+            iw_width = window.get_size()[0]
+            # 2 * min_margin + col_num * item_width + min_col_spacing * (col_num-1) = iw_width
+            # min_margin+margin = min_col_spacing+col_spacing = (iw_width - col_num * item_width) / (col_num+1)
+            col_num = (iw_width - 2 * min_margin - min_col_spacing) // (item_width + min_col_spacing)
+            spacing = (iw_width - col_num * item_width) // (col_num + 1)
+            self.iconview.set_columns(col_num)
+            self.iconview.set_column_spacing(spacing - min_col_spacing)
+            self.iconview.set_margin_left(spacing - min_margin)
 
     def update_geometry(self, iter):
         """Recomputes the width and height of the rotated page and saves
@@ -517,22 +508,6 @@ class PdfArranger(Gtk.Application):
             w1, h1 = w0, h0
 
         self.model.set(iter, 11, w1, 12, h1)
-
-    def reset_iv_width(self, renderer=None):
-        """Reconfigures the width of the iconview columns"""
-
-        if not self.model.get_iter_first(): #just checking if model is empty
-            return
-
-        max_w = 10 + int(max(row[4]*row[11]*(1.-row[7]-row[8]) \
-                             for row in self.model))
-        if max_w != self.iv_col_width:
-            self.iv_col_width = max_w
-#            self.celltxt.set_property('width', self.iv_col_width)
-#            self.celltxt.set_property('wrap-width', self.iv_col_width)
-            self.iconview.set_item_width(-1) #self.iv_col_width + 12) #-1)
-            self.on_window_size_request(self.window, None)
-        GObject.idle_add(self.render)
 
     def on_quit(self, action, param, unknown):
         self.close_application()
@@ -605,7 +580,6 @@ class PdfArranger(Gtk.Application):
             self.update_geometry(iter)
             res = True
 
-        self.reset_iv_width()
         GObject.idle_add(self.retitle)
         if res:
             GObject.idle_add(self.render)
@@ -1115,7 +1089,6 @@ class PdfArranger(Gtk.Application):
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
             row[4] = self.zoom_scale
-        self.reset_iv_width()
 
     def zoom_change(self, action, step, unknown):
         """ Action handle for zoom change """
@@ -1158,7 +1131,6 @@ class PdfArranger(Gtk.Application):
                 new_angle = new_angle % 360
                 model.set_value(iter, 6, new_angle)
                 self.update_geometry(iter)
-        self.reset_iv_width()
 
     def crop_page_dialog(self, action, parameter, unknown):
         """Opens a dialog box to define margins for page cropping"""
@@ -1235,7 +1207,6 @@ class PdfArranger(Gtk.Application):
                 self.update_geometry(pos)
             if modified:
                 self.set_unsaved(True)
-            self.reset_iv_width()
         dialog.destroy()
 
     def reverse_order_available(self, selection):

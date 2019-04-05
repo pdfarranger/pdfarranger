@@ -432,7 +432,6 @@ Author: Konstantinos Poulios
           <object class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">never</property>
             <child>
               <placeholder/>
             </child>
