@@ -38,7 +38,10 @@ from copy import copy
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
-if sys.argv[0]:
+if getattr(sys, 'frozen', False):
+    basedir = os.path.dirname(sys.executable)
+    sharedir = os.path.join(basedir, 'share')
+elif sys.argv[0]:
     execdir = os.path.dirname(os.path.realpath(sys.argv[0]))
     basedir = os.path.dirname(execdir)
     sharedir = os.path.join(basedir, 'share')

@@ -45,3 +45,5 @@ From a git clone:
 ./setup.py build
 python3 -m pdfarranger
 ```
+
+For Windows see [Win32.md](Win32.md).

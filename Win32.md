@@ -1,8 +1,6 @@
 # pdfarranger on Windows
 
-Tested on Windows 10.
-
-## Installation
+## Prerequisites
 
 Install [MSYS2](http://www.msys2.org) then upgrade it:
 
@@ -21,34 +19,39 @@ Install the required dependencies:
 ```
 pacman -S python3-pip python3-distutils-extra mingw-w64-x86_64-gtk3 \
  mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext \
- mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler
+ mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler \
+ git mingw-w64-python3-cx_Freeze
 ```
 
-Install pdfarranger:
+Edit `/mingw64/lib/python3.7/site-packages/cx_Freeze/freezer.py` to revert
+https://github.com/anthony-tuininga/cx_Freeze/commit/cebdef5 until
+https://github.com/anthony-tuininga/cx_Freeze/issues/366 get fixed.
+
+Get the pdfarranger sources from a MSYS2 shell:
 
 ```
-pip3 install --user -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
+git clone https://github.com/jeromerobert/pdfarranger.git
 ```
 
-## Running pdfarranger
-
-From a MSYS2 shell:
+## Building distributions
 
 ```
-/mingw64/bin/python3 ~/.local/bin/pdfarranger
+cd pdfarranger
+/mingw64/bin/python3 -m pip install --user PyPDF2
+./setup.py build
+/mingw64/bin/python3 setup_win32.py bdist_msi
+/mingw64/bin/python3 setup_win32.py bdist_zip
 ```
 
-## Example Bat file which lauches the app with windows integration (home folder etc.)
+## Wine
+
+MSYS2 no longer work in Wine (see https://github.com/msys2/MSYS2-packages/issues/682). To
+create a pdfarranger installer in Wine you must first install the required mingw-w64 packages
+on a real Windows box. Then copy the MSYS2 `/mingw64` to Linux and run installation process with
+`wine /path/to/mingw64/bin/python3` instead of `/mingw64/bin/python3`.
+
+To run the pdfarranger in Wine you may have to:
 
 ```
-@echo off
-set PYTHONPATH=C:\msys64\home\%USERNAME%\.local\lib\python3.7\site-packages;C:\msys64\mingw64\lib\python3.7
-set PATH=%PATH%;C:\msys64\mingw64\bin
-start C:\msys64\mingw64\bin\python3w C:\msys64\home\%USERNAME%\.local\bin\pdfarranger
+unset $(env |grep ^XDG_ | cut -d= -f1)
 ```
-Note: This might break if the username contains spaces!
-
-## TODO
-
-* fix about dialog (argv0 is python3w in some cases)
-* easier install
