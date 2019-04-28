@@ -485,6 +485,9 @@ class PdfArranger(Gtk.Application):
             # min_margin+margin = min_col_spacing+col_spacing = (iw_width - col_num * item_width) / (col_num+1)
             col_num = (iw_width - 2 * min_margin - min_col_spacing) // (item_width + min_col_spacing)
             spacing = (iw_width - col_num * item_width) // (col_num + 1)
+            if col_num==0:
+                col_num=1
+                spacing=min_margin
             self.iconview.set_columns(col_num)
             self.iconview.set_column_spacing(spacing - min_col_spacing)
             self.iconview.set_margin_left(spacing - min_margin)
