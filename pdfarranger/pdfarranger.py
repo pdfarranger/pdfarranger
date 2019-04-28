@@ -1088,7 +1088,7 @@ class PdfArranger(Gtk.Application):
 
     def zoom_set(self, level):
         """Sets the zoom level"""
-        self.zoom_level = max(min(level, 20), -6)
+        self.zoom_level = max(min(level, 40), -10)
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
             row[4] = self.zoom_scale
