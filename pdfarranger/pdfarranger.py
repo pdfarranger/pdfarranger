@@ -181,7 +181,8 @@ def warn_dialog(func):
         warnings.showwarning=ShowWarning()
         try:
             func(*args, **kwargs)
-            self.error_message_dialog(warnings.showwarning.buffer, Gtk.MessageType.WARNING)
+            if len(warnings.showwarning.buffer) > 0:
+                self.error_message_dialog(warnings.showwarning.buffer, Gtk.MessageType.WARNING)
         finally:
             warnings.showwarning=backup_showwarning
     return wrapper
