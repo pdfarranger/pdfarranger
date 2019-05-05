@@ -452,7 +452,7 @@ class PdfArranger(Gtk.Application):
             cnt_all += 1
             if row[1]:
                 cnt_finished += 1
-        fraction = float(cnt_finished) / float(cnt_all)
+        fraction = 1 if cnt_all == 0 else cnt_finished / cnt_all
 
         self.progress_bar.set_fraction(fraction)
         self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
