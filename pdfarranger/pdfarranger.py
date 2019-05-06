@@ -64,9 +64,6 @@ if os.name == 'nt':
     del libintl
 else:
     locale.bindtextdomain(DOMAIN, localedir)
-gettext.bindtextdomain(DOMAIN, localedir)
-gettext.textdomain(DOMAIN)
-_ = gettext.gettext
 
 APPNAME = 'PDF Arranger'
 VERSION = '1.2.0'
@@ -98,6 +95,11 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
+if os.name == 'nt' and GLib.get_language_names():
+    os.environ['LANG']=GLib.get_language_names()[0]
+gettext.bindtextdomain(DOMAIN, localedir)
+gettext.textdomain(DOMAIN)
+_ = gettext.gettext
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
