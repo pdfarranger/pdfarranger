@@ -5,6 +5,7 @@ import subprocess
 import zipfile
 import distutils
 import shutil
+import glob
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
@@ -15,6 +16,12 @@ include_files = [
 def addfile(relpath):
     global include_files
     include_files.append((os.path.join(sys.prefix, relpath) , relpath))
+
+def addlocale(name):
+    for path in glob.glob(os.path.join(sys.prefix, "share/locale/*/LC_MESSAGES/{}.mo".format(name))):
+        addfile(os.path.relpath(path, sys.prefix))
+
+addlocale("gtk30")
 
 def addicons():
     addfile("share/icons/hicolor/index.theme")
