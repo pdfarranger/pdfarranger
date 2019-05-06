@@ -490,7 +490,7 @@ Author: Konstantinos Poulios
     </child>
     <child>
       <object class="GtkMenuItem">
-        <property name="label">_Delete</property>
+        <property name="label" translatable="yes">_Delete</property>
         <property name="use_underline">True</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>

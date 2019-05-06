@@ -4,77 +4,52 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# David VANTYGHEM <david.vantyghem@free.fr>, 2014
+# David VANTYGHEM <david.vantyghem@free.fr>, 2014.
+# Jérôme Robert <jeromerobert@gmx.com>, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
-"PO-Revision-Date: 2019-02-03 17:28+0100\n"
-"Last-Translator: David VANTYGHEM <david.vantyghem@free.fr>\n"
-"Language-Team: Emmanuel <emmanuel@simple-linux.com>\n"
+"POT-Creation-Date: 2019-05-06 22:01+0200\n"
+"PO-Revision-Date: 2019-05-06 22:08+0100\n"
+"Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr "Rotation à _droite"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr "Rotation à _gauche"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr "_Rogner..."
-
-#: pdfarranger/pdfarranger.py:317
-#, fuzzy
-msgid "_Delete"
-msgstr "Supprimer"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
-msgstr "Inverser l'ordre"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "_Export selection..."
-msgstr "_Exporter la sélection..."
-
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger/pdfarranger.py:444
 msgid "No document"
 msgstr "Pas de document"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger/pdfarranger.py:446
 msgid "Several documents"
 msgstr "Plusieurs documents"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger/pdfarranger.py:463
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Création des miniatures... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
+#: pdfarranger/pdfarranger.py:575
 msgid "page"
 msgstr "page"
 
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger/pdfarranger.py:600
 msgid "Export ..."
 msgstr "Exporter..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger/pdfarranger.py:609 pdfarranger/pdfarranger.py:755
 msgid "PDF files"
 msgstr "Fichiers PDF"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger/pdfarranger.py:614 pdfarranger/pdfarranger.py:750
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: pdfarranger/pdfarranger.py:647
+#: pdfarranger/pdfarranger.py:682
 #, python-format
 msgid ""
 "File %s is encrypted.\n"
@@ -85,53 +60,53 @@ msgstr ""
 "Les fichiers chiffrés ne sont pas encore supportés.\n"
 "L'export du fichier a échoué."
 
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger/pdfarranger.py:739
 msgid "Import..."
 msgstr "Importer ..."
 
-#: pdfarranger/pdfarranger.py:735
+#: pdfarranger/pdfarranger.py:774
 msgid "OpenDocument not supported yet!"
 msgstr "OpenDocument n'est pas encore supporté !"
 
-#: pdfarranger/pdfarranger.py:737
+#: pdfarranger/pdfarranger.py:776
 msgid "Image file not supported yet!"
 msgstr "Le fichier image n'est pas encore supporté !"
 
-#: pdfarranger/pdfarranger.py:739
+#: pdfarranger/pdfarranger.py:778
 #, python-format
 msgid "File type \"%s\" not supported!"
 msgstr "Les fichiers de type \"%s\" ne sont pas encore supportés"
 
-#: pdfarranger/pdfarranger.py:741
+#: pdfarranger/pdfarranger.py:780
 #, python-format
 msgid "File %s does not exist"
 msgstr "Le fichier %s n'existe pas"
 
-#: pdfarranger/pdfarranger.py:747
+#: pdfarranger/pdfarranger.py:786
 msgid "Closed, no files selected"
 msgstr "Fermé, aucun fichier sélectionné"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1149
 msgid "Left"
 msgstr "À gauche"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1149
 msgid "Right"
 msgstr "À droite"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1150
 msgid "Top"
 msgstr "En haut"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1150
 msgid "Bottom"
 msgstr "En bas"
 
-#: pdfarranger/pdfarranger.py:1147
+#: pdfarranger/pdfarranger.py:1168
 msgid "Crop Selected Pages"
 msgstr "Rogner les pages sélectionnées"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger/pdfarranger.py:1175
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -139,23 +114,21 @@ msgstr ""
 "Le contenu rogné reste présent dans le\n"
 "fichier PDF. Il est simplement caché."
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger/pdfarranger.py:1177
 msgid "Crop Margins"
 msgstr "Rogner les marges"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1187
+#, python-format
 msgid "% of width"
 msgstr "% de la largeur"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1187
+#, python-format
 msgid "% of height"
 msgstr "% de la hauteur"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "Fenêtre de dialogue fermée"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1270
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -223,3 +196,29 @@ msgstr "Enregistrer sous"
 #: data/pdfarranger.ui.h:15
 msgid "Delete"
 msgstr "Supprimer"
+
+#: data/pdfarranger.ui.h:16
+msgid "Rotate _Left"
+msgstr "Rotation à _gauche"
+
+#: data/pdfarranger.ui.h:17
+msgid "_Rotate Right"
+msgstr "Rotation à _droite"
+
+#: data/pdfarranger.ui.h:18
+msgid "C_rop"
+msgstr "_Rogner"
+
+#: data/pdfarranger.ui.h:19
+msgid "_Delete"
+msgstr "_Supprimer"
+
+#: data/pdfarranger.ui.h:20
+msgid "Re_verse Order"
+msgstr "Inverser l'ordre"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Export selection..."
+msgstr "_Exporter la sélection..."
+
+
