@@ -20,7 +20,7 @@ Install the required dependencies:
 pacman -S python3-pip python3-distutils-extra mingw-w64-x86_64-gtk3 \
  mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext \
  mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler \
- git mingw-w64-python3-cx_Freeze
+ git mingw-w64-x86_64-python3-cx_Freeze
 ```
 
 Edit `/mingw64/lib/python3.7/site-packages/cx_Freeze/freezer.py` to revert
