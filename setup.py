@@ -26,9 +26,12 @@ import re
 from setuptools import setup
 from DistUtilsExtra.command import *
 
-data_files=[('share/applications', ['data/pdfarranger.desktop']),
-            ('share/pdfarranger', ['data/pdfarranger.ui']),
-            ('share/man/man1', ['doc/pdfarranger.1'])]
+data_files = [
+    ('share/applications', ['data/pdfarranger.desktop']),
+    ('share/pdfarranger', ['data/pdfarranger.ui']),
+    ('share/man/man1', ['doc/pdfarranger.1']),
+    ('share/appdata', ['data/pdfarranger.appdata.xml']),
+]
 
 setup(name='pdfarranger',
       version='1.2.0',
