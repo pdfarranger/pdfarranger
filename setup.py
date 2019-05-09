@@ -26,9 +26,17 @@ import re
 from setuptools import setup
 from DistUtilsExtra.command import *
 
-data_files=[('share/applications', ['data/pdfarranger.desktop']),
-            ('share/pdfarranger', ['data/pdfarranger.ui']),
-            ('share/man/man1', ['doc/pdfarranger.1'])]
+data_files = [
+    ('share/applications', ['data/pdfarranger.desktop']),
+    ('share/pdfarranger', ['data/pdfarranger.ui']),
+    ('share/man/man1', ['doc/pdfarranger.1']),
+    ('share/appdata', ['data/pdfarranger.appdata.xml']),
+    ('share/icons/hicolor/16x16', ['data/icons/hicolor/16x16/apps/pdfarranger.png']),
+    ('share/icons/hicolor/256x256', ['data/icons/hicolor/256x256/apps/pdfarranger.png']),
+    ('share/icons/hicolor/32x32', ['data/icons/hicolor/32x32/apps/pdfarranger.png']),
+    ('share/icons/hicolor/48x48', ['data/icons/hicolor/48x48/apps/pdfarranger.png']),
+    ('share/icons/hicolor/scalable', ['data/icons/hicolor/scalable/apps/pdfarranger.svg']),
+]
 
 setup(name='pdfarranger',
       version='1.2.0',
