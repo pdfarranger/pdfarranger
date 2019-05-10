@@ -728,7 +728,8 @@ class PdfArranger(Gtk.Application):
                 current_page.mediaBox.upperRight = (x2_new, y2_new)
 
             pdf_output.addPage(current_page)
-
+        metadata = {k: v for k, v in metadata.items()
+            if isinstance(v, (str, bytes))}
         pdf_output.addMetadata(metadata)
         # finally, write "output" to document-output.pdf
         pdf_output.write(open(file_out, 'wb'))
