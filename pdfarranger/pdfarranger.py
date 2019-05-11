@@ -64,6 +64,10 @@ if os.name == 'nt':
     del libintl
 else:
     locale.bindtextdomain(DOMAIN, localedir)
+    try:
+        locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
+    except AttributeError:
+        pass
 
 APPNAME = 'PDF Arranger'
 VERSION = '1.2.0'
