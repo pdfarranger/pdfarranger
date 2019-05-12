@@ -128,7 +128,7 @@ class bdist_zip(distutils.cmd.Command):
         shutil.rmtree(build_exe.build_exe)
 
 setup(name='pdfarranger',
-    version = '1.2.0',
+    version = '1.2.1',
     description = 'A simple application for PDF Merging, Rearranging, and Splitting',
     options = dict(build_exe = buildOptions, bdist_msi = msi_options),
     cmdclass={ 'bdist_zip': bdist_zip },
