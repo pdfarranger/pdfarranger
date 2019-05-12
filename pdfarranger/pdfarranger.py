@@ -238,7 +238,7 @@ class PdfArranger(Gtk.Application):
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
         self.window.add_action_entries([
-            ('rotate', self.rotate_page, 'i'),
+            ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.clear_selected),
             ('crop', self.crop_page_dialog),
             ('export-selection', self.choose_export_selection_pdf_name),
@@ -1121,29 +1121,31 @@ class PdfArranger(Gtk.Application):
             path = path[5:]  # 5 is len('file:')
         return path
 
-    def rotate_page(self, action, angle, unknown):
+    def rotate_page_action(self, action, angle, unknown):
         """Rotates the selected page in the IconView"""
         angle = angle.get_int32()
-        model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-        if len(selection) > 0:
+        if self.rotate_page(selection, angle):
             self.set_unsaved(True)
-        rotate_times = int(round(((-angle) % 360) / 90) % 4)
-        if rotate_times is not 0:
-            for path in selection:
-                iter = model.get_iter(path)
-                perm = [0, 2, 1, 3]
-                for it in range(rotate_times):
-                    perm.append(perm.pop(0))
-                perm.insert(1, perm.pop(2))
-                crop = [model.get_value(iter, 7 + perm[side]) for side in range(4)]
-                for side in range(4):
-                    model.set_value(iter, 7 + side, crop[side])
 
-                new_angle = model.get_value(iter, 6) + int(angle)
-                new_angle = new_angle % 360
-                model.set_value(iter, 6, new_angle)
-                self.update_geometry(iter)
+    def rotate_page(self, selection, angle):
+        rotate_times = int(round(((-angle) % 360) / 90) % 4)
+        model = self.iconview.get_model()
+        for path in selection:
+            iter = model.get_iter(path)
+            perm = [0, 2, 1, 3]
+            for it in range(rotate_times):
+                perm.append(perm.pop(0))
+            perm.insert(1, perm.pop(2))
+            crop = [model.get_value(iter, 7 + perm[side]) for side in range(4)]
+            for side in range(4):
+                model.set_value(iter, 7 + side, crop[side])
+
+            new_angle = model.get_value(iter, 6) + int(angle)
+            new_angle = new_angle % 360
+            model.set_value(iter, 6, new_angle)
+            self.update_geometry(iter)
+        return rotate_times is not 0 and len(selection) > 0
 
     def crop_page_dialog(self, action, parameter, unknown):
         """Opens a dialog box to define margins for page cropping"""
@@ -1207,19 +1209,23 @@ class PdfArranger(Gtk.Application):
         result = dialog.run()
 
         if result == Gtk.ResponseType.OK:
-            modified = False
             crop = [spin.get_value() / 100. for spin in spin_list]
-            for path in selection:
-                pos = model.get_iter(path)
-                for it in range(4):
-                    old_val = model.get_value(pos, 7 + it)
-                    model.set_value(pos, 7 + it, crop[it])
-                    if crop[it] != old_val:
-                        modified = True
-                self.update_geometry(pos)
-            if modified:
+            crop = [crop] * len(selection)
+            oldcrop = self.crop(selection, crop)
+            if oldcrop != crop:
                 self.set_unsaved(True)
         dialog.destroy()
+
+    def crop(self, selection, newcrop):
+        oldcrop = [[0] * 4 for x in range(len(selection))]
+        model = self.iconview.get_model()
+        for id_sel, path in enumerate(selection):
+            pos = model.get_iter(path)
+            for it in range(4):
+                oldcrop[id_sel][it] = model.get_value(pos, 7 + it)
+                model.set_value(pos, 7 + it, newcrop[id_sel][it])
+            self.update_geometry(pos)
+        return oldcrop
 
     def reverse_order_available(self, selection):
         """Determine whether the selection is suitable for the
