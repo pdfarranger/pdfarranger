@@ -198,13 +198,14 @@ def warn_dialog(func):
 
 
 class PdfArranger(Gtk.Application):
+    # Drag and drop ID for pages coming from the same pdfarranger instance
     MODEL_ROW_INTERN = 1001
+    # Drag and drop ID for pages coming from an other pdfarranger instance
     MODEL_ROW_EXTERN = 1002
+    # Drag and drop ID for pages coming from a non-pdfarranger application
     TEXT_URI_LIST = 1003
-    MODEL_ROW_MOTION = 1004
     TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET, MODEL_ROW_INTERN),
-                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN),
-                  Gtk.TargetEntry.new('MODEL_ROW_MOTION', 0, MODEL_ROW_MOTION)]
+                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
     TARGETS_SW = [Gtk.TargetEntry.new('text/uri-list', 0, TEXT_URI_LIST),
                   Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
 
@@ -915,15 +916,14 @@ class PdfArranger(Gtk.Application):
                                     context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, widget, context):
-        """Deletes dnd items after a successful move operation"""
+        """ Delete pages from a pdfarranger instance after they have been moved to another instance """
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         ref_del_list = [Gtk.TreeRowReference.new(model, path) for path in selection]
         for ref_del in ref_del_list:
             path = ref_del.get_path()
-            iter = model.get_iter(path)
-            model.remove(iter)
+            model.remove(model.get_iter(path))
 
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles the drag-motion signal in order to auto-scroll the view"""
@@ -1049,20 +1049,7 @@ class PdfArranger(Gtk.Application):
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
-
-        if target_id == self.MODEL_ROW_EXTERN:
-            data = selection_data.get_data().decode()
-            if data:
-                data = data.split('\n;\n')
-            while data:
-                tmp = data.pop(0).split('\n')
-                filename = tmp[0]
-                npage, angle = [int(k) for k in tmp[1:3]]
-                crop = [float(side) for side in tmp[3:7]]
-                if self.add_pdf_pages(filename, npage, npage, angle, crop):
-                    if context.get_actions() & Gdk.DragAction.MOVE:
-                        context.finish(True, True, etime)
-        elif target_id == self.TEXT_URI_LIST:
+        if target_id == self.TEXT_URI_LIST:
             for uri in selection_data.get_uris():
                 filename = self.get_file_path_from_dnd_dropped_uri(uri)
                 try:
