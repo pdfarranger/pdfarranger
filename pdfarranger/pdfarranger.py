@@ -224,15 +224,17 @@ class PdfArranger(Gtk.Application):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, application_id="com.github.jeromerobert.pdfarranger",
-                         flags=Gio.ApplicationFlags.HANDLES_OPEN|Gio.ApplicationFlags.NON_UNIQUE,
+                         flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE,
                          **kwargs)
 
     def do_open(self, files, n, hints):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
         self.activate()
         # Importing documents passed as command line arguments
+        a = PageAdder(self)
         for f in files:
-            self.add_pdf_pages(f.get_path())
+            a.addpages(f.get_path())
+        a.commit()
 
     def __create_actions(self):
         # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
@@ -557,61 +559,6 @@ class PdfArranger(Gtk.Application):
             shutil.rmtree(self.tmp_dir)
         self.quit()
 
-    def add_pdf_pages(self, filename,
-                      firstpage=None, lastpage=None,
-                      angle=0, crop=[0., 0., 0., 0.]):
-        """Add pages of a pdf document to the model"""
-
-        res = False
-        # Check if the document has already been loaded
-        pdfdoc = None
-        for it_pdfdoc in self.pdfqueue:
-            if os.path.isfile(it_pdfdoc.filename) and \
-                    os.path.samefile(filename, it_pdfdoc.filename) and \
-                    os.path.getmtime(filename) is it_pdfdoc.mtime:
-                pdfdoc = it_pdfdoc
-                break
-
-        if not pdfdoc:
-            pdfdoc = PDFDoc(filename, self.nfile, self.tmp_dir)
-            self.import_directory = os.path.split(filename)[0]
-            self.export_directory = self.import_directory
-            if pdfdoc.nfile != 0 and pdfdoc != []:
-                self.nfile = pdfdoc.nfile
-                self.pdfqueue.append(pdfdoc)
-            else:
-                return res
-
-        n_start = 1
-        n_end = pdfdoc.npage
-        if firstpage:
-            n_start = min(n_end, max(1, firstpage))
-        if lastpage:
-            n_end = max(n_start, min(n_end, lastpage))
-
-        for npage in range(n_start, n_end + 1):
-            descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
-            page = pdfdoc.document.get_page(npage - 1)
-            w, h = page.get_size()
-            iter = self.model.append((descriptor,         # 0
-                                      None,               # 1
-                                      pdfdoc.nfile,       # 2
-                                      npage,              # 3
-                                      self.zoom_scale,    # 4
-                                      pdfdoc.filename,    # 5
-                                      angle,              # 6
-                                      crop[0],crop[1],    # 7-8
-                                      crop[2],crop[3],    # 9-10
-                                      w,h,                # 11-12
-                                      2.              ))  # 13 FIXME
-            self.update_geometry(iter)
-            res = True
-
-        GObject.idle_add(self.retitle)
-        if res:
-            GObject.idle_add(self.render)
-        return res
-
     def choose_export_pdf_name(self, only_selected=False):
         """Handles choosing a name for exporting """
 
@@ -782,33 +729,19 @@ class PdfArranger(Gtk.Application):
 
         response = chooser.run()
         if response == Gtk.ResponseType.OK:
+            adder = PageAdder(self)
             for filename in chooser.get_filenames():
                 try:
-                    if os.path.isfile(filename):
-                        # FIXME
-                        f = Gio.File.new_for_path(filename)
-                        f_info = f.query_info('standard::content-type', 0, None)
-                        mime_type = f_info.get_content_type()
-                        expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
-
-                        if mime_type == expected_mime_type:
-                            self.add_pdf_pages(filename)
-                        elif mime_type[:34] == 'application/vnd.oasis.opendocument':
-                            print(_('OpenDocument not supported yet!'))
-                        elif mime_type[:5] == 'image':
-                            print(_('Image file not supported yet!'))
-                        else:
-                            print(_('File type "%s" not supported!') % mime_type)
-                    else:
-                        print(_('File %s does not exist') % filename)
+                    warnmsg = adder.addpages(filename)
+                    if warnmsg:
+                        print(warnmsg)
                 except Exception as e:
+                    traceback.print_exc()
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
-        elif response == Gtk.ResponseType.CANCEL:
-            print(_('Closed, no files selected'))
+            adder.commit()
         chooser.destroy()
-        GObject.idle_add(self.retitle)
 
     def clear_selected(self, action, parameter, unknown):
         """Removes the selected elements in the IconView"""
@@ -882,33 +815,25 @@ class PdfArranger(Gtk.Application):
             if ref_to:
                 before = (position == Gtk.IconViewDropPosition.DROP_LEFT
                           or position == Gtk.IconViewDropPosition.DROP_ABOVE)
-                target = str(selection_data.get_target())
-                #if target_id == 'MODEL_ROW_INTERN':
+                target = selection_data.get_target().name()
                 if target == 'MODEL_ROW_INTERN':
-                    if before:
-                        data.sort(key=int)
-                    else:
-                        data.sort(key=int, reverse=True)
+                    data.sort(key=int, reverse=not before)
                     ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
                                      for p in data]
+                    iter_to = self.model.get_iter(ref_to.get_path())
                     for ref_from in ref_from_list:
-                        path = ref_to.get_path()
-                        iter_to = model.get_iter(path)
-                        path = ref_from.get_path()
-                        iter_from = model.get_iter(path)
-                        row = model[iter_from]
+                        row = model[model.get_iter(ref_from.get_path())]
                         if before:
                             model.insert_before(iter_to, row[:])
                         else:
                             model.insert_after(iter_to, row[:])
                     if context.get_actions() & Gdk.DragAction.MOVE:
                         for ref_from in ref_from_list:
-                            path = ref_from.get_path()
-                            iter_from = model.get_iter(path)
-                            model.remove(iter_from)
+                            model.remove(model.get_iter(ref_from.get_path()))
 
-                #elif target_id == 'MODEL_ROW_EXTERN':
                 elif target == 'MODEL_ROW_EXTERN':
+                    pageadder = PageAdder(self)
+                    pageadder.move(ref_to, before)
                     if not before:
                         data.reverse()
                     while data:
@@ -916,20 +841,9 @@ class PdfArranger(Gtk.Application):
                         filename = tmp[0]
                         npage, angle = [int(k) for k in tmp[1:3]]
                         crop = [float(side) for side in tmp[3:7]]
-                        if self.add_pdf_pages(filename, npage, npage,
-                                              angle, crop):
-                            if len(model) > 0:
-                                path = ref_to.get_path()
-                                iter_to = model.get_iter(path)
-                                row = model[-1]  # the last row
-                                path = row.path
-                                iter_from = model.get_iter(path)
-                                if before:
-                                    model.move_before(iter_from, iter_to)
-                                else:
-                                    model.move_after(iter_from, iter_to)
-                                if context.get_actions() & Gdk.DragAction.MOVE:
-                                    context.finish(True, True, etime)
+                        pageadder.addpages(filename, npage, angle, crop)
+                    if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
+                        context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, widget, context):
         """ Delete pages from a pdfarranger instance after they have been moved to another instance """
@@ -1065,13 +979,13 @@ class PdfArranger(Gtk.Application):
                              selection_data, target_id, etime):
         """Handles received data by drag and drop in scrolledwindow"""
         if target_id == self.TEXT_URI_LIST:
+            pageadder = PageAdder(self)
             for uri in selection_data.get_uris():
                 filename = self.get_file_path_from_dnd_dropped_uri(uri)
-                try:
-                    if os.path.isfile(filename):  # is it a file?
-                        self.add_pdf_pages(filename)
-                except Exception as e:
-                    self.error_message_dialog(e)
+                msg = pageadder.addpages(filename)
+                if msg:
+                    self.error_message_dialog(msg)
+            pageadder.commit()
 
     def sw_button_press_event(self, scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -1304,27 +1218,111 @@ class PdfArranger(Gtk.Application):
 class PDFDoc:
     """Class handling PDF documents"""
 
-    def __init__(self, filename, nfile, tmp_dir):
+    def __init__(self, filename, tmp_dir):
 
         self.filename = os.path.abspath(filename)
-        (self.path, self.shortname) = os.path.split(self.filename)
-        (self.shortname, self.ext) = os.path.splitext(self.shortname)
+        x, shortname = os.path.split(self.filename)
+        self.shortname, x = os.path.splitext(shortname)
+        self.mtime = os.path.getmtime(filename)
+        fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+        os.close(fd)
+        shutil.copy(self.filename, self.copyname)
+        uri = pathlib.Path(self.copyname).as_uri()
+        self.document = Poppler.Document.new_from_file(uri, None)
+
+
+class PageAdder(object):
+    """ Helper class to add pages to the current model """
+
+    def __init__(self, app):
+        #: A PdfArranger instance
+        self.app = app
+        #: The pages which will be added by the commit method
+        self.pages = []
+        #: Where to insert pages relatively to treerowref
+        self.before = False
+        #: Where to insert pages. If None pages are inserted at the end
+        self.treerowref = None
+
+    @staticmethod
+    def __validate(filename):
+        if not os.path.isfile(filename):
+            return _('File %s does not exist') % filename
         f = Gio.File.new_for_path(filename)
         mime_type = f.query_info('standard::content-type', 0, None).get_content_type()
         expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
-
         if mime_type == expected_mime_type:
-            self.nfile = nfile + 1
-            self.mtime = os.path.getmtime(filename)
-            self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
-                                         self.shortname + '.pdf')
-            shutil.copy(self.filename, self.copyname)
-            uri = pathlib.Path(self.copyname).as_uri()
-            self.document = Poppler.Document.new_from_file(uri, None)
-            self.npage = self.document.get_n_pages()
+            return ""
+        elif mime_type[:34] == 'application/vnd.oasis.opendocument':
+            return _('OpenDocument not supported yet!')
+        elif mime_type[:5] == 'image':
+            return _('Image file not supported yet!')
         else:
-            self.nfile = 0
-            self.npage = 0
+            return _('File type "%s" not supported!') % mime_type
+
+    def move(self, treerowref, before):
+        """ Insert pages at the given location """
+        self.before = before
+        self.treerowref = treerowref
+
+    def addpages(self, filename, page=-1, angle=0, crop=None):
+        warnmsg = self.__validate(filename)
+        if warnmsg:
+            return warnmsg
+        crop = [0] * 4 if crop is None else crop
+        pdfdoc = None
+        for i, it_pdfdoc in enumerate(self.app.pdfqueue):
+            if os.path.isfile(it_pdfdoc.filename) and \
+                    os.path.samefile(filename, it_pdfdoc.filename) and \
+                    os.path.getmtime(filename) is it_pdfdoc.mtime:
+                pdfdoc = it_pdfdoc
+                nfile = i + 1
+                break
+
+        if not pdfdoc:
+            pdfdoc = PDFDoc(filename, self.app.tmp_dir)
+            self.app.import_directory = os.path.split(filename)[0]
+            self.app.export_directory = self.app.import_directory
+            self.app.pdfqueue.append(pdfdoc)
+            nfile = len(self.app.pdfqueue)
+
+        n_end = pdfdoc.document.get_n_pages()
+        n_start = min(n_end, max(1, page))
+        if page != -1:
+            n_end = max(n_start, min(n_end, page))
+
+        for npage in range(n_start, n_end + 1):
+            descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
+            page = pdfdoc.document.get_page(npage - 1)
+            w, h = page.get_size()
+            self.pages.append((descriptor,          # 0
+                               None,                # 1
+                               nfile,               # 2
+                               npage,               # 3
+                               self.app.zoom_scale, # 4
+                               pdfdoc.filename,     # 5
+                               angle,               # 6
+                               crop[0], crop[1],     # 7-8
+                               crop[2], crop[3],     # 9-10
+                               w,h,                 # 11-12
+                               2.))                 # 13 FIXME
+        return ""
+
+    def commit(self):
+        if len(self.pages) == 0:
+            return False
+        for p in self.pages:
+            it = self.app.model.append(p)
+            if self.treerowref:
+                iter_to = self.app.model.get_iter(self.treerowref.get_path())
+                if self.before:
+                    self.app.model.move_before(it, iter_to)
+                else:
+                    self.app.model.move_after(it, iter_to)
+            self.app.update_geometry(it)
+        GObject.idle_add(self.app.retitle)
+        GObject.idle_add(self.app.render)
+        return True
 
 
 class PDFRenderer(threading.Thread, GObject.GObject):
