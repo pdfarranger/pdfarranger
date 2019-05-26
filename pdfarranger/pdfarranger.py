@@ -23,8 +23,8 @@
 """
 
 import os
-import shutil       # for file operations like whole directory deletion
-import sys          # for processing of command line args
+import shutil  # for file operations like whole directory deletion
+import sys  # for processing of command line args
 import threading
 import tempfile
 import time
@@ -52,12 +52,14 @@ if not os.path.exists(localedir):
     # Assume we are in development mode
     localedir = os.path.join(basedir, 'build', 'mo')
 
-import locale       # for multilanguage support
+import locale  # for multilanguage support
 import gettext
+
 locale.setlocale(locale.LC_ALL, '')
 DOMAIN = 'pdfarranger'
 if os.name == 'nt':
     from ctypes import cdll
+
     libintl = cdll['libintl-8']
     libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
@@ -75,35 +77,40 @@ WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
 import gi
+
 # check that we don't need GObject.threads_init()
 gi.check_version('3.10.2')
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-if Gtk.check_version(3,4,0):
+
+if Gtk.check_version(3, 4, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
-          'Installed GTK+ version is ' +
-          '.'.join([str(Gtk.get_major_version()),
-                    str(Gtk.get_minor_version()),
-                    str(Gtk.get_micro_version())]) +
-          '. Required GTK+ version is 3.4 or higher.')
+                    'Installed GTK+ version is ' +
+                    '.'.join([str(Gtk.get_major_version()),
+                              str(Gtk.get_minor_version()),
+                              str(Gtk.get_micro_version())]) +
+                    '. Required GTK+ version is 3.4 or higher.')
 
 from gi.repository import Gdk
-from gi.repository import GObject      # for using custom signals
-from gi.repository import Gio          # for inquiring mime types information
+from gi.repository import GObject  # for using custom signals
+from gi.repository import Gio  # for inquiring mime types information
 from gi.repository import GLib
+
 gi.require_version('Poppler', '0.18')
-from gi.repository import Poppler      #for the rendering of pdf pages
+from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
 from .iconview import CellRendererImage
+
 GObject.type_register(CellRendererImage)
 
 if os.name == 'nt' and GLib.get_language_names():
-    os.environ['LANG']=GLib.get_language_names()[0]
+    os.environ['LANG'] = GLib.get_language_names()[0]
 gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
+
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
@@ -117,13 +124,16 @@ def _install_workaround_bug29():
                 action = Gio.SimpleAction(name=d[0], parameter_type=param_type)
                 action.connect("activate", d[1], None)
                 self.add_action(action)
+
         Gtk.ApplicationWindow.add_action_entries = func
+
 
 _install_workaround_bug29()
 
 
 class Config(object):
     """ Wrap a ConfigParser object for PDFArranger """
+
     @staticmethod
     def _config_file():
         """ Return the location of the configuration file """
@@ -175,25 +185,27 @@ class Config(object):
 
 def warn_dialog(func):
     """ Decorator which redirect warnings module messages to a gkt MessageDialog """
+
     class ShowWarning(object):
         def __init__(self):
-            self.buffer=""
+            self.buffer = ""
 
         def __call__(self, message, category, filename, lineno, f=None, line=None):
-            s=warnings.formatwarning(message, category, filename, lineno, line)
-            sys.stderr.write(s+'\n')
-            self.buffer+=str(message)+'\n'
+            s = warnings.formatwarning(message, category, filename, lineno, line)
+            sys.stderr.write(s + '\n')
+            self.buffer += str(message) + '\n'
 
     def wrapper(*args, **kwargs):
         self = args[0]
-        backup_showwarning=warnings.showwarning
-        warnings.showwarning=ShowWarning()
+        backup_showwarning = warnings.showwarning
+        warnings.showwarning = ShowWarning()
         try:
             func(*args, **kwargs)
             if len(warnings.showwarning.buffer) > 0:
                 self.error_message_dialog(warnings.showwarning.buffer, Gtk.MessageType.WARNING)
         finally:
-            warnings.showwarning=backup_showwarning
+            warnings.showwarning = backup_showwarning
+
     return wrapper
 
 
@@ -376,13 +388,13 @@ class PdfArranger(Gtk.Application):
 
         # Change iconview color background
         style_context_sw = self.sw.get_style_context()
-        color_selected = self.iconview.get_style_context()\
-                             .get_background_color(Gtk.StateFlags.SELECTED)
+        color_selected = self.iconview.get_style_context() \
+            .get_background_color(Gtk.StateFlags.SELECTED)
         color_prelight = color_selected.copy()
         color_prelight.alpha = 0.3
         for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.ACTIVE):
-           self.iconview.override_background_color \
-              (state, style_context_sw.get_background_color(state))
+            self.iconview.override_background_color \
+                (state, style_context_sw.get_background_color(state))
         self.iconview.override_background_color(Gtk.StateFlags.SELECTED,
                                                 color_selected)
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
@@ -412,16 +424,16 @@ class PdfArranger(Gtk.Application):
         self.__create_actions()
 
     def set_cellrenderer_data(self, column, cell, model, iter, data=None):
-        cell.set_property('image', model.get_value(iter,1))
-        cell.set_property('scale', model.get_value(iter,4))
-        cell.set_property('rotation', model.get_value(iter,6))
-        cell.set_property('cropL', model.get_value(iter,7))
-        cell.set_property('cropR', model.get_value(iter,8))
-        cell.set_property('cropT', model.get_value(iter,9))
-        cell.set_property('cropB', model.get_value(iter,10))
-        cell.set_property('width', model.get_value(iter,11))
-        cell.set_property('height', model.get_value(iter,12))
-        cell.set_property('resample', model.get_value(iter,13))
+        cell.set_property('image', model.get_value(iter, 1))
+        cell.set_property('scale', model.get_value(iter, 4))
+        cell.set_property('rotation', model.get_value(iter, 6))
+        cell.set_property('cropL', model.get_value(iter, 7))
+        cell.set_property('cropR', model.get_value(iter, 8))
+        cell.set_property('cropT', model.get_value(iter, 9))
+        cell.set_property('cropB', model.get_value(iter, 10))
+        cell.set_property('width', model.get_value(iter, 11))
+        cell.set_property('height', model.get_value(iter, 12))
+        cell.set_property('resample', model.get_value(iter, 13))
 
     def render(self):
         if self.rendering_thread:
@@ -466,7 +478,7 @@ class PdfArranger(Gtk.Application):
 
         self.progress_bar.set_fraction(fraction)
         self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
-                                   % {'i1' : cnt_finished, 'i2' : cnt_all})
+                                   % {'i1': cnt_finished, 'i2': cnt_all})
         if fraction >= 0.999:
             self.progress_bar.hide()
             return False
@@ -474,7 +486,7 @@ class PdfArranger(Gtk.Application):
             self.progress_bar.show()
 
         return True
-  
+
     def update_thumbnail(self, object, num, thumbnail, resample):
         row = self.model[num]
         row[13] = resample
@@ -486,19 +498,19 @@ class PdfArranger(Gtk.Application):
            iconview cols no."""
         if len(self.model) > 0:
             # scale*page_width*(1-crop_left-crop_right)
-            item_width = int(max(row[4]*row[11]*(1.-row[7]-row[8]) \
-                             for row in self.model))
+            item_width = int(max(row[4] * row[11] * (1. - row[7] - row[8]) \
+                                 for row in self.model))
             # FIXME: those are magic number found with my current GTK style. This might not be portable.
-            min_col_spacing=19
-            min_margin=14
+            min_col_spacing = 19
+            min_margin = 14
             iw_width = window.get_size()[0]
             # 2 * min_margin + col_num * item_width + min_col_spacing * (col_num-1) = iw_width
             # min_margin+margin = min_col_spacing+col_spacing = (iw_width - col_num * item_width) / (col_num+1)
             col_num = (iw_width - 2 * min_margin - min_col_spacing) // (item_width + min_col_spacing)
             spacing = (iw_width - col_num * item_width) // (col_num + 1)
-            if col_num==0:
-                col_num=1
-                spacing=min_margin
+            if col_num == 0:
+                col_num = 1
+                spacing = min_margin
             self.iconview.set_columns(col_num)
             self.iconview.set_column_spacing(spacing - min_col_spacing)
             self.iconview.set_margin_left(spacing - min_margin)
@@ -545,8 +557,8 @@ class PdfArranger(Gtk.Application):
         self.quit()
 
     def add_pdf_pages(self, filename,
-                            firstpage=None, lastpage=None,
-                            angle=0, crop=[0.,0.,0.,0.]):
+                      firstpage=None, lastpage=None,
+                      angle=0, crop=[0., 0., 0., 0.]):
         """Add pages of a pdf document to the model"""
 
         res = False
@@ -554,8 +566,8 @@ class PdfArranger(Gtk.Application):
         pdfdoc = None
         for it_pdfdoc in self.pdfqueue:
             if os.path.isfile(it_pdfdoc.filename) and \
-               os.path.samefile(filename, it_pdfdoc.filename) and \
-               os.path.getmtime(filename) is it_pdfdoc.mtime:
+                    os.path.samefile(filename, it_pdfdoc.filename) and \
+                    os.path.getmtime(filename) is it_pdfdoc.mtime:
                 pdfdoc = it_pdfdoc
                 break
 
@@ -572,9 +584,9 @@ class PdfArranger(Gtk.Application):
         n_start = 1
         n_end = pdfdoc.npage
         if firstpage:
-           n_start = min(n_end, max(1, firstpage))
+            n_start = min(n_end, max(1, firstpage))
         if lastpage:
-           n_end = max(n_start, min(n_end, lastpage))
+            n_end = max(n_start, min(n_end, lastpage))
 
         for npage in range(n_start, n_end + 1):
             descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
@@ -679,7 +691,7 @@ class PdfArranger(Gtk.Application):
         for pdfdoc in self.pdfqueue:
             pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict=False, overwriteWarnings=False)
             if pdfdoc_inp.getIsEncrypted():
-                try: # Workaround for lp:#355479
+                try:  # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
                 except:
                     stat = 0
@@ -688,8 +700,8 @@ class PdfArranger(Gtk.Application):
                                'Support for encrypted files has not been implemented yet.\n'
                                'File export failed.') % pdfdoc.filename
                     raise Exception(errmsg)
-                #FIXME
-                #else
+                # FIXME
+                # else
                 #   ask for password and decrypt file
             if metadata is None:
                 # get the metadata of the first imported document
@@ -723,10 +735,10 @@ class PdfArranger(Gtk.Application):
                 #(x2, y2) = current_page.cropBox.upperRight
                 (x1, y1) = [float(xy) for xy in current_page.mediaBox.lowerLeft]
                 (x2, y2) = [float(xy) for xy in current_page.mediaBox.upperRight]
-                x1_new = int(x1 + (x2-x1) * crop[0])
-                x2_new = int(x2 - (x2-x1) * crop[1])
-                y1_new = int(y1 + (y2-y1) * crop[3])
-                y2_new = int(y2 - (y2-y1) * crop[2])
+                x1_new = int(x1 + (x2 - x1) * crop[0])
+                x2_new = int(x2 - (x2 - x1) * crop[1])
+                y1_new = int(y1 + (y2 - y1) * crop[3])
+                y2_new = int(y2 - (y2 - y1) * crop[2])
                 #current_page.cropBox.lowerLeft = (x1_new, y1_new)
                 #current_page.cropBox.upperRight = (x2_new, y2_new)
                 current_page.mediaBox.lowerLeft = (x1_new, y1_new)
@@ -735,7 +747,7 @@ class PdfArranger(Gtk.Application):
             pdf_output.addPage(current_page)
         if metadata is not None:
             metadata = {k: v for k, v in metadata.items()
-                if isinstance(v, (str, bytes))}
+                        if isinstance(v, (str, bytes))}
             pdf_output.addMetadata(metadata)
         # finally, write "output" to document-output.pdf
         pdf_output.write(open(file_out, 'wb'))
@@ -807,7 +819,7 @@ class PdfArranger(Gtk.Application):
         path = selection[-1]
         self.iconview.select_path(path)
         if not self.iconview.path_is_selected(path):
-            if len(model) > 0:	# select the last row
+            if len(model) > 0:  # select the last row
                 row = model[-1]
                 path = row.path
                 self.iconview.select_path(path)
@@ -840,7 +852,7 @@ class PdfArranger(Gtk.Application):
                 data.append('\n'.join([pdfdoc.filename,
                                        str(npage),
                                        str(angle)] +
-                                       [str(side) for side in crop]))
+                                      [str(side) for side in crop]))
         if data:
             data = '\n;\n'.join(data)
             selection_data.set(selection_data.get_target(), 8, data.encode())
@@ -860,7 +872,7 @@ class PdfArranger(Gtk.Application):
             else:
                 ref_to = None
                 position = Gtk.IconViewDropPosition.DROP_RIGHT
-                if len(model) > 0:  #find the iterator of the last row
+                if len(model) > 0:  # find the iterator of the last row
                     row = model[-1]
                     ref_to = Gtk.TreeRowReference.new(model, row.path)
             if ref_to:
@@ -901,11 +913,11 @@ class PdfArranger(Gtk.Application):
                         npage, angle = [int(k) for k in tmp[1:3]]
                         crop = [float(side) for side in tmp[3:7]]
                         if self.add_pdf_pages(filename, npage, npage,
-                                                        angle, crop):
+                                              angle, crop):
                             if len(model) > 0:
                                 path = ref_to.get_path()
                                 iter_to = model.get_iter(path)
-                                row = model[-1] #the last row
+                                row = model[-1]  # the last row
                                 path = row.path
                                 iter_from = model.get_iter(path)
                                 if before:
@@ -963,7 +975,7 @@ class PdfArranger(Gtk.Application):
         elif self.iv_auto_scroll_direction == Gtk.DirectionType.DOWN:
             sw_vpos += sw_vadj.get_step_increment()
             sw_vadj.set_value(min(sw_vpos, sw_vadj.get_upper() - sw_vadj.get_page_size()))
-        return True  #call me again
+        return True  # call me again
 
     def iv_motion(self, iconview, event):
         """Manages mouse movement on the iconview to detect drag and drop events"""
@@ -1029,21 +1041,20 @@ class PdfArranger(Gtk.Application):
 
         # Display right click menu
         if event.button == 3:
-            time = event.time
             selection = iconview.get_selected_items()
             if click_path:
                 if click_path not in selection:
                     iconview.unselect_all()
                 iconview.select_path(click_path)
                 iconview.grab_focus()
-                self.popup.popup(None, None, None, None, event.button, time)
+                self.popup.popup(None, None, None, None, event.button, event.time)
             return 1
 
     def iv_selection_changed_event(self, user_data=None):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
-        for a, e in [ ("reverse-order", self.reverse_order_available(selection)),
-            ("delete", ne), ("crop", ne), ("rotate", ne) ]:
+        for a, e in [("reverse-order", self.reverse_order_available(selection)),
+                     ("delete", ne), ("crop", ne), ("rotate", ne)]:
             self.window.lookup_action(a).set_enabled(e)
 
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
@@ -1053,11 +1064,10 @@ class PdfArranger(Gtk.Application):
             for uri in selection_data.get_uris():
                 filename = self.get_file_path_from_dnd_dropped_uri(uri)
                 try:
-                    if os.path.isfile(filename): # is it a file?
+                    if os.path.isfile(filename):  # is it a file?
                         self.add_pdf_pages(filename)
                 except Exception as e:
                     self.error_message_dialog(e)
-                
 
     def sw_button_press_event(self, scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -1099,15 +1109,15 @@ class PdfArranger(Gtk.Application):
 
     def get_file_path_from_dnd_dropped_uri(self, uri):
         """Extracts the path from an uri"""
-        path = url2pathname(uri) # escape special chars
-        path = path.strip('\r\n\x00')   # remove \r\n and NULL
+        path = url2pathname(uri)  # escape special chars
+        path = path.strip('\r\n\x00')  # remove \r\n and NULL
 
         # get the path to file
-        if path.startswith('file:\\\\\\'): # windows
+        if path.startswith('file:\\\\\\'):  # windows
             path = path[8:]  # 8 is len('file:///')
-        elif path.startswith('file://'):   # nautilus, rox
+        elif path.startswith('file://'):  # nautilus, rox
             path = path[7:]  # 7 is len('file://')
-        elif path.startswith('file:'):     # xffm
+        elif path.startswith('file:'):  # xffm
             path = path[5:]  # 5 is len('file:')
         return path
 
@@ -1139,15 +1149,14 @@ class PdfArranger(Gtk.Application):
         """Opens a dialog box to define margins for page cropping"""
 
         sides = ('L', 'R', 'T', 'B')
-        side_names = {'L':_('Left'), 'R':_('Right'),
-                      'T':_('Top'), 'B':_('Bottom') }
-        opposite_sides = {'L':'R', 'R':'L', 'T':'B', 'B':'T' }
+        side_names = {'L': _('Left'), 'R': _('Right'),
+                      'T': _('Top'), 'B': _('Bottom')}
+        opposite_sides = {'L': 'R', 'R': 'L', 'T': 'B', 'B': 'T'}
 
         def set_crop_value(spinbutton, side):
-           opp_side = opposite_sides[side]
-           pos = sides.index(opp_side)
-           adj = spin_list[pos].get_adjustment()
-           adj.set_upper(99.0 - spinbutton.get_value())
+            opp_side = opposite_sides[side]
+            adjustment = spin_list[sides.index(opp_side)].get_adjustment()
+            adjustment.set_upper(99.0 - spinbutton.get_value())
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
@@ -1165,7 +1174,7 @@ class PdfArranger(Gtk.Application):
                                      Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_default_response(Gtk.ResponseType.OK)
         margin = 12
-        label= Gtk.Label(label=_('Cropping does not remove any content\nfrom the PDF file, it only hides it.'))
+        label = Gtk.Label(label=_('Cropping does not remove any content\nfrom the PDF file, it only hides it.'))
         dialog.vbox.pack_start(label, False, False, 0)
         frame = Gtk.Frame(label=_('Crop Margins'))
         frame.props.margin = margin
@@ -1298,7 +1307,7 @@ class PDFDoc:
             self.nfile = nfile + 1
             self.mtime = os.path.getmtime(filename)
             self.copyname = os.path.join(tmp_dir, '%02d_' % self.nfile +
-                                                  self.shortname + '.pdf')
+                                         self.shortname + '.pdf')
             shutil.copy(self.filename, self.copyname)
             uri = pathlib.Path(self.copyname).as_uri()
             self.document = Poppler.Document.new_from_file(uri, None)
@@ -1340,6 +1349,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                                  priority=GObject.PRIORITY_LOW)
             except Exception as e:
                 traceback.print_exc()
+
 
 def main():
     PdfArranger().run(sys.argv)

@@ -29,33 +29,32 @@ from math import pi as M_PI
 
 class CellRendererImage(Gtk.CellRenderer):
     __gproperties__ = {
-            "image": (GObject.TYPE_PYOBJECT, "Image", "Image",
-                      GObject.PARAM_READWRITE),
-            "width": (GObject.TYPE_FLOAT, "Width", "Width",
-                      0., 1.e4, 0., GObject.PARAM_READWRITE),
-            "height": (GObject.TYPE_FLOAT, "Height", "Height",
-                       0., 1.e4, 0., GObject.PARAM_READWRITE),
-            "rotation": (GObject.TYPE_INT, "Rotation", "Rotation",
-                         0, 360, 0, GObject.PARAM_READWRITE),
-            "scale": (GObject.TYPE_FLOAT, "Scale", "Scale",
-                      0.01, 100., 1., GObject.PARAM_READWRITE),
-            "resample": (GObject.TYPE_FLOAT,
-                     "Resample", "Resample Coefficient",
-                      0., 100., 1., GObject.PARAM_READWRITE),
-            "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropT": (GObject.TYPE_FLOAT, "CropT", "CropT",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropB": (GObject.TYPE_FLOAT, "CropB", "CropB",
-                      0., 1., 0., GObject.PARAM_READWRITE),
+        "image": (GObject.TYPE_PYOBJECT, "Image", "Image",
+                  GObject.PARAM_READWRITE),
+        "width": (GObject.TYPE_FLOAT, "Width", "Width",
+                  0., 1.e4, 0., GObject.PARAM_READWRITE),
+        "height": (GObject.TYPE_FLOAT, "Height", "Height",
+                   0., 1.e4, 0., GObject.PARAM_READWRITE),
+        "rotation": (GObject.TYPE_INT, "Rotation", "Rotation",
+                     0, 360, 0, GObject.PARAM_READWRITE),
+        "scale": (GObject.TYPE_FLOAT, "Scale", "Scale",
+                  0.01, 100., 1., GObject.PARAM_READWRITE),
+        "resample": (GObject.TYPE_FLOAT, "Resample", "Resample Coefficient",
+                     0., 100., 1., GObject.PARAM_READWRITE),
+        "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropT": (GObject.TYPE_FLOAT, "CropT", "CropT",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropB": (GObject.TYPE_FLOAT, "CropB", "CropB",
+                  0., 1., 0., GObject.PARAM_READWRITE),
     }
 
     def __init__(self):
         Gtk.CellRenderer.__init__(self)
-        self.th1 = 2. # border thickness
-        self.th2 = 3. # shadow thickness
+        self.th1 = 2.  # border thickness
+        self.th2 = 3.  # shadow thickness
 
     def get_geometry(self):
 
@@ -96,10 +95,10 @@ class CellRendererImage(Gtk.CellRenderer):
         x = cell_area.x
         y = cell_area.y
         if cell_area and w > 0 and h > 0:
-            x += self.get_property('xalign') * \
-                 (cell_area.width - w - self.get_property('xpad'))
-            y += self.get_property('yalign') * \
-                 (cell_area.height - h - self.get_property('ypad'))
+            x += self.get_property('xalign') * (
+                    cell_area.width - w - self.get_property('xpad'))
+            y += self.get_property('yalign') * (
+                    cell_area.height - h - self.get_property('ypad'))
 
         window.translate(x, y)
 
@@ -142,12 +141,10 @@ class CellRendererImage(Gtk.CellRenderer):
         h = h2 + th
 
         if cell_area and w > 0 and h > 0:
-            x = self.get_property('xalign') * \
-                (cell_area.width - w - self.get_property('xpad'))
-            y = self.get_property('yalign') * \
-                (cell_area.height - h - self.get_property('ypad'))
+            x = self.get_property('xalign') * (
+                    cell_area.width - w - self.get_property('xpad'))
+            y = self.get_property('yalign') * (
+                    cell_area.height - h - self.get_property('ypad'))
         w += 2 * self.get_property('xpad')
         h += 2 * self.get_property('ypad')
         return int(x), int(y), w, h
-
-

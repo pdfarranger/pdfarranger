@@ -46,8 +46,8 @@ setup(
         "build": build_extra.build_extra,
         "build_i18n": build_i18n.build_i18n,
         "clean_i18n": clean_i18n.clean_i18n,
-        "build_icons":  build_icons.build_icons,
-      },
+        "build_icons": build_icons.build_icons,
+    },
     entry_points={
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     }

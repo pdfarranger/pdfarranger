@@ -13,22 +13,26 @@ include_files = [
     ('build/mo', 'share/locale'),
 ]
 
+
 def addfile(relpath):
     global include_files
-    include_files.append((os.path.join(sys.prefix, relpath) , relpath))
+    include_files.append((os.path.join(sys.prefix, relpath), relpath))
+
 
 def addlocale(name):
     for path in glob.glob(os.path.join(sys.prefix, "share/locale/*/LC_MESSAGES/{}.mo".format(name))):
         addfile(os.path.relpath(path, sys.prefix))
 
+
 addlocale("gtk30")
+
 
 def addicons():
     addfile("share/icons/hicolor/index.theme")
     addfile("share/icons/Adwaita/index.theme")
     for i in ['places/folder', 'mimetypes/text-x-generic', 'status/image-missing']:
-        addfile(os.path.join('share/icons/Adwaita/16x16/', i+'.png'))
-    icons=[
+        addfile(os.path.join('share/icons/Adwaita/16x16/', i + '.png'))
+    icons = [
         'places/user-desktop',
         'places/user-home',
         'actions/bookmark-new',
@@ -50,11 +54,11 @@ def addicons():
         'places/user-trash',
     ]
     for i in icons:
-        addfile(os.path.join('share/icons/Adwaita/16x16/', i+'-symbolic.symbolic.png'))
-    icons24=['document-save-as', 'edit-delete', 'list-add', 'object-rotate-left',
-        'object-rotate-right', 'zoom-in', 'zoom-out']
+        addfile(os.path.join('share/icons/Adwaita/16x16/', i + '-symbolic.symbolic.png'))
+    icons24 = ['document-save-as', 'edit-delete', 'list-add', 'object-rotate-left',
+               'object-rotate-right', 'zoom-in', 'zoom-out']
     for i in icons24:
-        addfile(os.path.join('share/icons/Adwaita/24x24/actions', i+'.png'))
+        addfile(os.path.join('share/icons/Adwaita/24x24/actions', i + '.png'))
 
 
 required_dlls = [
@@ -73,7 +77,7 @@ required_dlls = [
 ]
 
 for dll in required_dlls:
-    fn='lib'+dll+'.dll'
+    fn = 'lib' + dll + '.dll'
     include_files.append((os.path.join(sys.prefix, 'bin', fn), fn))
 
 required_gi_namespaces = [
@@ -100,22 +104,27 @@ addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
 buildOptions = dict(
-    packages = ['gi', 'PyPDF2'],
-    excludes = [],
-    include_files = include_files
+    packages=['gi', 'PyPDF2'],
+    excludes=[],
+    include_files=include_files
 )
 
 msi_options = dict(
-    initial_target_dir = os.environ['ProgramW6432'] + '\\pdfarranger'
+    initial_target_dir=os.environ['ProgramW6432'] + '\\pdfarranger'
 )
+
+
 class bdist_zip(distutils.cmd.Command):
     """ Minimalist command to create a Windows portable .zip distribution """
     description = "create a \"zip\" distribution"
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         build_base = self.get_finalized_command('build').build_base
         build_exe = self.get_finalized_command('build_exe')
@@ -123,19 +132,20 @@ class bdist_zip(distutils.cmd.Command):
         build_exe.build_exe = os.path.join(build_base, fullname)
         build_exe.run()
         dist_dir = self.get_finalized_command('bdist').dist_dir
-        archname = os.path.join(dist_dir, fullname+'-mingw')
+        archname = os.path.join(dist_dir, fullname + '-mingw')
         self.make_archive(archname, 'zip', root_dir=build_base, base_dir=fullname)
         shutil.rmtree(build_exe.build_exe)
 
+
 setup(name='pdfarranger',
-    version = '1.2.1',
-    description = 'A simple application for PDF Merging, Rearranging, and Splitting',
-    options = dict(build_exe = buildOptions, bdist_msi = msi_options),
-    cmdclass={ 'bdist_zip': bdist_zip },
-    executables = [Executable('pdfarranger/__main__.py',
-        base = 'Win32GUI' if sys.platform=='win32' else None,
-        targetName = 'pdfarranger.exe',
-        icon='data/pdfarranger.ico',
-        shortcutName='PDF Arranger',
-        shortcutDir='StartMenuFolder'
-    )])
+      version='1.2.1',
+      description='A simple application for PDF Merging, Rearranging, and Splitting',
+      options=dict(build_exe=buildOptions, bdist_msi=msi_options),
+      cmdclass={'bdist_zip': bdist_zip},
+      executables=[Executable('pdfarranger/__main__.py',
+                              base='Win32GUI' if sys.platform == 'win32' else None,
+                              targetName='pdfarranger.exe',
+                              icon='data/pdfarranger.ico',
+                              shortcutName='PDF Arranger',
+                              shortcutDir='StartMenuFolder'
+                              )])
