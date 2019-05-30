@@ -105,6 +105,7 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from .iconview import CellRendererImage
 
 GObject.type_register(CellRendererImage)
+from . import undo
 
 if os.name == 'nt' and GLib.get_language_names():
     os.environ['LANG'] = GLib.get_language_names()[0]
@@ -251,6 +252,8 @@ class PdfArranger(Gtk.Application):
             ('import', self.on_action_add_doc_activate),
             ('zoom', self.zoom_change, 'i'),
             ('quit', self.on_quit),
+            ('undo', self.undomanager.undo),
+            ('redo', self.undomanager.redo),
         ])
         accels = [
             ('delete', 'Delete'),
@@ -263,6 +266,8 @@ class PdfArranger(Gtk.Application):
             ('import', 'Insert'),
             ('zoom(5)', 'plus'),
             ('zoom(-5)', 'minus'),
+            ('undo', '<Ctrl>z'),
+            ('redo', '<Ctrl>y'),
         ]
         for a, k in accels:
             self.set_accels_for_action("win." + a, [k])
@@ -275,6 +280,8 @@ class PdfArranger(Gtk.Application):
                 a = self.get_accels_for_action(an)
                 if len(a) > 0:
                     o.get_child().set_accel(*Gtk.accelerator_parse(a[0]))
+        self.undomanager.set_actions(self.window.lookup_action('undo'),
+                                     self.window.lookup_action('redo'))
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
@@ -347,7 +354,7 @@ class PdfArranger(Gtk.Application):
                                    float,       # 11.Page width
                                    float,       # 12.Page height
                                    float)       # 13.Resampling factor
-
+        self.undomanager = undo.Manager(self.model)
         self.zoom_set(self.config.zoom_level())
 
         self.iconview = Gtk.IconView(self.model)
@@ -746,6 +753,7 @@ class PdfArranger(Gtk.Application):
     def clear_selected(self, action, parameter, unknown):
         """Removes the selected elements in the IconView"""
 
+        self.undomanager.commit("Delete")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
@@ -817,6 +825,8 @@ class PdfArranger(Gtk.Application):
                           or position == Gtk.IconViewDropPosition.DROP_ABOVE)
                 target = selection_data.get_target().name()
                 if target == 'MODEL_ROW_INTERN':
+                    move = context.get_actions() & Gdk.DragAction.MOVE
+                    self.undomanager.commit("Move" if move else "Copy")
                     data.sort(key=int, reverse=not before)
                     ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
                                      for p in data]
@@ -827,7 +837,7 @@ class PdfArranger(Gtk.Application):
                             model.insert_before(iter_to, row[:])
                         else:
                             model.insert_after(iter_to, row[:])
-                    if context.get_actions() & Gdk.DragAction.MOVE:
+                    if move:
                         for ref_from in ref_from_list:
                             model.remove(model.get_iter(ref_from.get_path()))
 
@@ -848,6 +858,7 @@ class PdfArranger(Gtk.Application):
     def iv_dnd_data_delete(self, widget, context):
         """ Delete pages from a pdfarranger instance after they have been moved to another instance """
 
+        self.undomanager.commit("Move")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         ref_del_list = [Gtk.TreeRowReference.new(model, path) for path in selection]
@@ -1041,6 +1052,7 @@ class PdfArranger(Gtk.Application):
 
     def rotate_page_action(self, action, angle, unknown):
         """Rotates the selected page in the IconView"""
+        self.undomanager.commit("Rotate")
         angle = angle.get_int32()
         selection = self.iconview.get_selected_items()
         if self.rotate_page(selection, angle):
@@ -1129,6 +1141,7 @@ class PdfArranger(Gtk.Application):
         if result == Gtk.ResponseType.OK:
             crop = [spin.get_value() / 100. for spin in spin_list]
             crop = [crop] * len(selection)
+            self.undomanager.commit("Crop")
             oldcrop = self.crop(selection, crop)
             if oldcrop != crop:
                 self.set_unsaved(True)
@@ -1179,6 +1192,7 @@ class PdfArranger(Gtk.Application):
         self.set_unsaved(True)
         indices.reverse()
         new_order = list(range(first)) + indices + list(range(last + 1, len(model)))
+        self.undomanager.commit("Reorder")
         model.reorder(new_order)
 
     def about_dialog(self, widget, data=None):
@@ -1311,6 +1325,7 @@ class PageAdder(object):
     def commit(self):
         if len(self.pages) == 0:
             return False
+        self.app.undomanager.commit("Add")
         for p in self.pages:
             it = self.app.model.append(p)
             if self.treerowref:
