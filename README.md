@@ -11,7 +11,12 @@ python-pyPdf.
 It's a humble attempt to make the project a bit more active.
 
 
-# Install
+# Binary distribution
+
+See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages).
+
+
+# Install from source
 
 On Debian based distributions:
 
