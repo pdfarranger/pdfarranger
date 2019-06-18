@@ -639,6 +639,7 @@ class PdfArranger(Gtk.Application):
                 try:
                     self.save(only_selected, file_out)
                 except Exception as e:
+                    traceback.print_exc()
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
@@ -719,6 +720,8 @@ class PdfArranger(Gtk.Application):
             current_page = copy(pdf_input[nfile - 1].getPage(npage - 1))
             angle = row[6]
             angle0 = current_page.get("/Rotate", 0)
+            # Workaround for https://github.com/mstamy2/PyPDF2/issues/337
+            angle0 = angle0 if isinstance(angle0, int) else angle0.getObject()
             crop = [row[7], row[8], row[9], row[10]]
             if angle != 0:
                 current_page.rotateClockwise(angle)
