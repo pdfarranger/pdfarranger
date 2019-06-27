@@ -29,7 +29,7 @@ class Manager(object):
         Must be called *BEFORE* each undoable actions
         :param label: label of the action
         """
-        self.states = self.states[:self.current + 1]
+        self.states = self.states[:self.current]
         self.states.append(([list(row) for row in self.model], self.label,))
         self.current += 1
         self.label = label
@@ -38,13 +38,13 @@ class Manager(object):
     def undo(self, action, param, unused):
         if self.current == len(self.states):
             self.states.append(([list(row) for row in self.model], self.label,))
-        state, label = self.states[self.current - 1]
+        state, self.label = self.states[self.current - 1]
         self.__set_state(state)
         self.current -= 1
         self.__refresh()
 
     def redo(self, action, param, unused):
-        state, label = self.states[self.current + 1]
+        state, self.label = self.states[self.current + 1]
         self.__set_state(state)
         self.current += 1
         self.__refresh()
