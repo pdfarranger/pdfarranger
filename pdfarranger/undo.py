@@ -13,8 +13,9 @@ class Manager(object):
     Stack of GtkListStore models (Memento design pattern)
     """
 
-    def __init__(self, model):
-        self.model = model
+    def __init__(self, app):
+        self.app = app
+        self.model = app.model
         self.states = []
         #: label of the previous undoable action
         self.label = None
@@ -29,14 +30,14 @@ class Manager(object):
         :param label: label of the action
         """
         self.states = self.states[:self.current + 1]
-        self.states.append(([tuple(row) for row in self.model], self.label,))
+        self.states.append(([list(row) for row in self.model], self.label,))
         self.current += 1
         self.label = label
         self.__refresh()
 
     def undo(self, action, param, unused):
         if self.current == len(self.states):
-            self.states.append((list([tuple(row) for row in self.model]), self.label,))
+            self.states.append(([list(row) for row in self.model], self.label,))
         state, label = self.states[self.current - 1]
         self.__set_state(state)
         self.current -= 1
@@ -56,6 +57,8 @@ class Manager(object):
     def __set_state(self, state):
         self.model.clear()
         for row in state:
+            # Do not reset the zoom level
+            row[4] = self.app.zoom_scale
             self.model.append(row)
 
     def __refresh(self):

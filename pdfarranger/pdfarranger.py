@@ -354,7 +354,7 @@ class PdfArranger(Gtk.Application):
                                    float,       # 11.Page width
                                    float,       # 12.Page height
                                    float)       # 13.Resampling factor
-        self.undomanager = undo.Manager(self.model)
+        self.undomanager = undo.Manager(self)
         self.zoom_set(self.config.zoom_level())
 
         self.iconview = Gtk.IconView(self.model)
