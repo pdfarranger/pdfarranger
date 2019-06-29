@@ -576,6 +576,8 @@ class PdfArranger(Gtk.Application):
                                                  Gtk.STOCK_SAVE,
                                                  Gtk.ResponseType.OK))
         chooser.set_do_overwrite_confirmation(True)
+        if len(self.pdfqueue) > 0:
+            chooser.set_filename(self.pdfqueue[0].filename)
         chooser.set_current_folder(self.export_directory)
         filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
