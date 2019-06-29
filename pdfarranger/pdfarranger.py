@@ -569,12 +569,8 @@ class PdfArranger(Gtk.Application):
     def choose_export_pdf_name(self, only_selected=False):
         """Handles choosing a name for exporting """
 
-        chooser = Gtk.FileChooserDialog(title=_('Export ...'),
-                                        action=Gtk.FileChooserAction.SAVE,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_SAVE,
-                                                 Gtk.ResponseType.OK))
+        chooser = Gtk.FileChooserNative(title=_('Export ...'),
+                                        action=Gtk.FileChooserAction.SAVE)
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             chooser.set_filename(self.pdfqueue[0].filename)
