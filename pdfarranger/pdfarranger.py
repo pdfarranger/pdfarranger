@@ -27,7 +27,6 @@ import configparser
 import warnings
 import traceback
 from urllib.request import url2pathname
-from copy import copy
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -92,12 +91,12 @@ from gi.repository import GLib
 gi.require_version('Poppler', '0.18')
 from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
-from PyPDF2 import PdfFileWriter, PdfFileReader
 
 from .iconview import CellRendererImage
 
 GObject.type_register(CellRendererImage)
 from . import undo
+from . import exporter
 
 if os.name == 'nt' and GLib.get_language_names():
     os.environ['LANG'] = GLib.get_language_names()[0]
@@ -612,93 +611,24 @@ class PdfArranger(Gtk.Application):
     def on_action_save_as(self, action, param, unknown):
         self.choose_export_pdf_name()
 
+    @warn_dialog
     def save(self, only_selected, file_out):
         """Saves to the specified file.  May throw exceptions."""
         (path, shortname) = os.path.split(file_out)
         (shortname, ext) = os.path.splitext(shortname)
         if ext.lower() != '.pdf':
             file_out = file_out + '.pdf'
-        self.export_to_file(file_out, only_selected)
+        to_export = self.model
+        if only_selected:
+            selection = self.iconview.get_selected_items()
+            to_export = [row for row in self.model if row.path in selection]
+        exporter.pypdf2(self.pdfqueue, to_export, file_out)
         self.export_directory = path
         self.export_file = file_out
         self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, action, target, unknown):
         self.choose_export_pdf_name(True)
-
-    @warn_dialog
-    def export_to_file(self, file_out, only_selected=False):
-        """Export to file"""
-
-        selection = self.iconview.get_selected_items()
-        pdf_output = PdfFileWriter()
-        pdf_input = []
-        metadata = None
-        for pdfdoc in self.pdfqueue:
-            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict=False, overwriteWarnings=False)
-            if pdfdoc_inp.getIsEncrypted():
-                try:  # Workaround for lp:#355479
-                    stat = pdfdoc_inp.decrypt('')
-                except:
-                    stat = 0
-                if stat != 1:
-                    errmsg = _('File %s is encrypted.\n'
-                               'Support for encrypted files has not been implemented yet.\n'
-                               'File export failed.') % pdfdoc.filename
-                    raise Exception(errmsg)
-                # FIXME
-                # else
-                #   ask for password and decrypt file
-            if metadata is None:
-                # get the metadata of the first imported document
-                metadata = pdfdoc_inp.getDocumentInfo()
-            pdf_input.append(pdfdoc_inp)
-
-        for row in self.model:
-
-            if only_selected and row.path not in selection:
-                continue
-
-            # add pages from input to output document
-            nfile = row[2]
-            npage = row[3]
-            current_page = copy(pdf_input[nfile - 1].getPage(npage - 1))
-            angle = row[6]
-            angle0 = current_page.get("/Rotate", 0)
-            # Workaround for https://github.com/mstamy2/PyPDF2/issues/337
-            angle0 = angle0 if isinstance(angle0, int) else angle0.getObject()
-            crop = [row[7], row[8], row[9], row[10]]
-            if angle != 0:
-                current_page.rotateClockwise(angle)
-            if crop != [0., 0., 0., 0.]:
-                rotate_times = int(round(((angle + angle0) % 360) / 90) % 4)
-                crop_init = crop
-                if rotate_times != 0:
-                    perm = [0, 2, 1, 3]
-                    for it in range(rotate_times):
-                        perm.append(perm.pop(0))
-                    perm.insert(1, perm.pop(2))
-                    crop = [crop_init[perm[side]] for side in range(4)]
-                #(x1, y1) = current_page.cropBox.lowerLeft
-                #(x2, y2) = current_page.cropBox.upperRight
-                (x1, y1) = [float(xy) for xy in current_page.mediaBox.lowerLeft]
-                (x2, y2) = [float(xy) for xy in current_page.mediaBox.upperRight]
-                x1_new = int(x1 + (x2 - x1) * crop[0])
-                x2_new = int(x2 - (x2 - x1) * crop[1])
-                y1_new = int(y1 + (y2 - y1) * crop[3])
-                y2_new = int(y2 - (y2 - y1) * crop[2])
-                #current_page.cropBox.lowerLeft = (x1_new, y1_new)
-                #current_page.cropBox.upperRight = (x2_new, y2_new)
-                current_page.mediaBox.lowerLeft = (x1_new, y1_new)
-                current_page.mediaBox.upperRight = (x2_new, y2_new)
-
-            pdf_output.addPage(current_page)
-        if metadata is not None:
-            metadata = {k: v for k, v in metadata.items()
-                        if isinstance(v, (str, bytes))}
-            pdf_output.addMetadata(metadata)
-        # finally, write "output" to document-output.pdf
-        pdf_output.write(open(file_out, 'wb'))
 
     def on_action_add_doc_activate(self, action, param, unknown):
         """Import doc"""
