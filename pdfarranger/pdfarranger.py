@@ -587,7 +587,7 @@ class PdfArranger(Gtk.Application):
 
         while True:
             response = chooser.run()
-            if response == Gtk.ResponseType.OK:
+            if response == Gtk.ResponseType.ACCEPT:
                 file_out = chooser.get_filename()
                 try:
                     self.save(only_selected, file_out)
