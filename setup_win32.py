@@ -1,8 +1,6 @@
 from cx_Freeze import setup, Executable
 import os
 import sys
-import subprocess
-import zipfile
 import distutils
 import shutil
 import glob
@@ -103,7 +101,7 @@ addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders.cache")
 addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
-buildOptions = dict(
+build_options = dict(
     packages=['gi', 'PyPDF2'],
     excludes=[],
     include_files=include_files
@@ -140,7 +138,7 @@ class bdist_zip(distutils.cmd.Command):
 setup(name='pdfarranger',
       version='1.2.1',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
-      options=dict(build_exe=buildOptions, bdist_msi=msi_options),
+      options=dict(build_exe=build_options, bdist_msi=msi_options),
       cmdclass={'bdist_zip': bdist_zip},
       executables=[Executable('pdfarranger/__main__.py',
                               base='Win32GUI' if sys.platform == 'win32' else None,

@@ -19,7 +19,6 @@ import shutil  # for file operations like whole directory deletion
 import sys  # for processing of command line args
 import threading
 import tempfile
-import time
 import signal
 import pathlib
 import platform
@@ -424,17 +423,18 @@ class PdfArranger(Gtk.Application):
         self.export_file = None
         self.__create_actions()
 
-    def set_cellrenderer_data(self, column, cell, model, iter, data=None):
-        cell.set_property('image', model.get_value(iter, 1))
-        cell.set_property('scale', model.get_value(iter, 4))
-        cell.set_property('rotation', model.get_value(iter, 6))
-        cell.set_property('cropL', model.get_value(iter, 7))
-        cell.set_property('cropR', model.get_value(iter, 8))
-        cell.set_property('cropT', model.get_value(iter, 9))
-        cell.set_property('cropB', model.get_value(iter, 10))
-        cell.set_property('width', model.get_value(iter, 11))
-        cell.set_property('height', model.get_value(iter, 12))
-        cell.set_property('resample', model.get_value(iter, 13))
+    @staticmethod
+    def set_cellrenderer_data(column, cell, model, it, data=None):
+        cell.set_property('image', model.get_value(it, 1))
+        cell.set_property('scale', model.get_value(it, 4))
+        cell.set_property('rotation', model.get_value(it, 6))
+        cell.set_property('cropL', model.get_value(it, 7))
+        cell.set_property('cropR', model.get_value(it, 8))
+        cell.set_property('cropT', model.get_value(it, 9))
+        cell.set_property('cropB', model.get_value(it, 10))
+        cell.set_property('width', model.get_value(it, 11))
+        cell.set_property('height', model.get_value(it, 12))
+        cell.set_property('resample', model.get_value(it, 13))
 
     def render(self):
         if self.rendering_thread:
@@ -488,7 +488,7 @@ class PdfArranger(Gtk.Application):
 
         return True
 
-    def update_thumbnail(self, object, num, thumbnail, resample):
+    def update_thumbnail(self, obj, num, thumbnail, resample):
         row = self.model[num]
         row[13] = resample
         row[4] = self.zoom_scale
@@ -516,14 +516,14 @@ class PdfArranger(Gtk.Application):
             self.iconview.set_column_spacing(spacing - min_col_spacing)
             self.iconview.set_margin_left(spacing - min_margin)
 
-    def update_geometry(self, iter):
+    def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
            the result in the ListStore"""
 
-        if not self.model.iter_is_valid(iter):
+        if not self.model.iter_is_valid(treeiter):
             return
 
-        nfile, npage, rotation = self.model.get(iter, 2, 3, 6)
+        nfile, npage, rotation = self.model.get(treeiter, 2, 3, 6)
         page = self.pdfqueue[nfile - 1].document.get_page(npage - 1)
         w0, h0 = page.get_size()
 
@@ -534,7 +534,7 @@ class PdfArranger(Gtk.Application):
         else:
             w1, h1 = w0, h0
 
-        self.model.set(iter, 11, w1, 12, h1)
+        self.model.set(treeiter, 11, w1, 12, h1)
 
     def on_quit(self, action, param, unknown):
         self.close_application()
@@ -679,8 +679,7 @@ class PdfArranger(Gtk.Application):
         selection.sort(reverse=True)
         self.set_unsaved(True)
         for path in selection:
-            iter = model.get_iter(path)
-            model.remove(iter)
+            model.remove(model.get_iter(path))
         path = selection[-1]
         self.iconview.select_path(path)
         if not self.iconview.path_is_selected(path):
@@ -710,9 +709,9 @@ class PdfArranger(Gtk.Application):
             if target == 'MODEL_ROW_INTERN':
                 data.append(str(path[0]))
             elif target == 'MODEL_ROW_EXTERN':
-                iter = model.get_iter(path)
-                nfile, npage, angle = model.get(iter, 2, 3, 6)
-                crop = model.get(iter, 7, 8, 9, 10)
+                it = model.get_iter(path)
+                nfile, npage, angle = model.get(it, 2, 3, 6)
+                crop = model.get(it, 7, 8, 9, 10)
                 pdfdoc = self.pdfqueue[nfile - 1]
                 data.append('\n'.join([pdfdoc.filename,
                                        str(npage),
@@ -982,19 +981,19 @@ class PdfArranger(Gtk.Application):
         rotate_times = int(round(((-angle) % 360) / 90) % 4)
         model = self.iconview.get_model()
         for path in selection:
-            iter = model.get_iter(path)
+            treeiter = model.get_iter(path)
             perm = [0, 2, 1, 3]
             for it in range(rotate_times):
                 perm.append(perm.pop(0))
             perm.insert(1, perm.pop(2))
-            crop = [model.get_value(iter, 7 + perm[side]) for side in range(4)]
+            crop = [model.get_value(treeiter, 7 + perm[side]) for side in range(4)]
             for side in range(4):
-                model.set_value(iter, 7 + side, crop[side])
+                model.set_value(treeiter, 7 + side, crop[side])
 
-            new_angle = model.get_value(iter, 6) + int(angle)
+            new_angle = model.get_value(treeiter, 6) + int(angle)
             new_angle = new_angle % 360
-            model.set_value(iter, 6, new_angle)
-            self.update_geometry(iter)
+            model.set_value(treeiter, 6, new_angle)
+            self.update_geometry(treeiter)
         return rotate_times is not 0 and len(selection) > 0
 
     def crop_page_dialog(self, action, parameter, unknown):
@@ -1078,7 +1077,8 @@ class PdfArranger(Gtk.Application):
             self.update_geometry(pos)
         return oldcrop
 
-    def reverse_order_available(self, selection):
+    @staticmethod
+    def reverse_order_available(selection):
         """Determine whether the selection is suitable for the
            reverse-order command: the selection must be a multiple and
            contiguous range of pages.
@@ -1290,7 +1290,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 GObject.idle_add(self.emit, 'update_thumbnail',
                                  idx, thumbnail, self.resample,
                                  priority=GObject.PRIORITY_LOW)
-            except Exception as e:
+            except:
                 traceback.print_exc()
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# pdfarranger - GTK+ based utility for splitting, rearrangement and 
+# pdfarranger - GTK+ based utility for splitting, rearrangement and
 # modification of PDF documents.
 # Copyright (C) 2008-2017 Konstantinos Poulios
 #
