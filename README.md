@@ -1,4 +1,4 @@
-# About
+## About
 
 *pdfarranger* is a small python-gtk application, which helps the user to merge
 or split pdf documents and rotate, crop and rearrange their pages using an
@@ -10,13 +10,11 @@ python-pyPdf.
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It's a humble attempt to make the project a bit more active.
 
-
-# Binary distribution
+## Binary distribution
 
 See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages).
 
-
-# Install from source
+## Install from source
 
 On Debian based distributions:
 
@@ -42,7 +40,7 @@ Then:
 pip3 install --user --upgrade -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
 
-# For developers
+## For developers
 
 From a git clone:
 

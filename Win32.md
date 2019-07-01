@@ -24,8 +24,8 @@ pacman -S python3-pip python3-distutils-extra mingw-w64-x86_64-gtk3 \
 ```
 
 Edit `/mingw64/lib/python3.7/site-packages/cx_Freeze/freezer.py` to revert
-https://github.com/anthony-tuininga/cx_Freeze/commit/cebdef5 until
-https://github.com/anthony-tuininga/cx_Freeze/issues/366 get fixed.
+<https://github.com/anthony-tuininga/cx_Freeze/commit/cebdef5> until
+<https://github.com/anthony-tuininga/cx_Freeze/issues/366> get fixed.
 
 Get the pdfarranger sources from a MSYS2 shell:
 
@@ -45,7 +45,7 @@ cd pdfarranger
 
 ## Wine
 
-MSYS2 no longer work in Wine (see https://github.com/msys2/MSYS2-packages/issues/682). To
+MSYS2 no longer work in Wine (see <https://github.com/msys2/MSYS2-packages/issues/682>). To
 create a pdfarranger installer in Wine you must first install the required mingw-w64 packages
 on a real Windows box. Then copy the MSYS2 `/mingw64` to Linux and run installation process with
 `wine /path/to/mingw64/bin/python3` instead of `/mingw64/bin/python3`.
