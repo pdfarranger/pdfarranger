@@ -689,9 +689,9 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
         self.iconview.grab_focus()
 
-    def iv_drag_begin(self, iconview, context):
+    @staticmethod
+    def iv_drag_begin(iconview, context):
         """Sets custom icon on drag begin for multiple items selected"""
-
         if len(iconview.get_selected_items()) > 1:
             iconview.stop_emission('drag_begin')
             Gtk.drag_set_icon_name(context, "gtk-dnd-multiple", 0, 0)
@@ -1155,8 +1155,7 @@ class PDFDoc:
     def __init__(self, filename, tmp_dir):
 
         self.filename = os.path.abspath(filename)
-        x, shortname = os.path.split(self.filename)
-        self.shortname, x = os.path.splitext(shortname)
+        self.shortname = os.path.splitext(os.path.split(self.filename)[1])[0]
         self.mtime = os.path.getmtime(filename)
         fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
         os.close(fd)
