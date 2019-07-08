@@ -21,6 +21,7 @@ import threading
 import tempfile
 import signal
 import pathlib
+import pkg_resources
 import platform
 import configparser
 import warnings
@@ -281,13 +282,11 @@ class PdfArranger(Gtk.Application):
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
         os.chmod(self.tmp_dir, 0o700)
-
         iconsdir = os.path.join(sharedir, 'icons')
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
         Gtk.Window.set_default_icon_name(DOMAIN)
-
         # Import the user interface file, trying different possible locations
         ui_path = os.path.join(basedir, 'share', DOMAIN, DOMAIN + '.ui')
         if not os.path.exists(ui_path):
@@ -296,6 +295,10 @@ class PdfArranger(Gtk.Application):
             ui_path = '/usr/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
         if not os.path.exists(ui_path):
             ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
+        if not os.path.exists(ui_path):
+            dist = pkg_resources.get_distribution('pdfarranger')
+            ui_path = os.path.join(dist.location, "share", DOMAIN,
+                                  DOMAIN + ".ui")
 
         self.config = Config()
         self.uiXML = Gtk.Builder()
