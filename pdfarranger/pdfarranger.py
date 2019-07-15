@@ -86,6 +86,7 @@ from gi.repository import Gdk
 from gi.repository import GObject  # for using custom signals
 from gi.repository import Gio  # for inquiring mime types information
 from gi.repository import GLib
+from gi.repository import Pango
 
 gi.require_version('Poppler', '0.18')
 from gi.repository import Poppler  # for the rendering of pdf pages
@@ -355,6 +356,8 @@ class PdfArranger(Gtk.Application):
         self.iconview.pack_start(self.cellthmb, False)
         self.iconview.set_cell_data_func(self.cellthmb, self.set_cellrenderer_data, None)
         self.iconview.set_text_column(0)
+        cell_text_renderer = self.iconview.get_cells()[1]
+        cell_text_renderer.props.ellipsize = Pango.EllipsizeMode.MIDDLE
 
         self.iconview.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
         self.iconview.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK,
