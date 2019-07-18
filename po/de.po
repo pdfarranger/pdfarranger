@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-03 17:29+0100\n"
-"PO-Revision-Date: 2017-02-26 16:16+0000\n"
-"Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
+"PO-Revision-Date: 2019-07-18 20:51+0200\n"
+"Last-Translator: O. Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/logari81/pdfshuffler/"
 "language/de/)\n"
 "Language: de\n"
@@ -19,14 +19,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: pdfarranger/pdfarranger.py:316
 msgid "_Rotate Right"
-msgstr "_Rechts drehen"
+msgstr "Nach _rechts drehen"
 
 #: pdfarranger/pdfarranger.py:316
 msgid "Rotate _Left"
-msgstr "_Links drehen"
+msgstr "Nach _links drehen"
 
 #: pdfarranger/pdfarranger.py:316
 msgid "C_rop..."
@@ -34,7 +35,7 @@ msgstr "_Zuschneiden..."
 
 #: pdfarranger/pdfarranger.py:317
 msgid "_Delete"
-msgstr "Εntfernen"
+msgstr "Entfernen"
 
 #: pdfarranger/pdfarranger.py:317
 msgid "Re_verse Order"
@@ -55,7 +56,7 @@ msgstr "Mehrere Dateien"
 #: pdfarranger/pdfarranger.py:409
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Vorschau Rendern... [%(i1)s/%(i2)s]"
+msgstr "Vorschauen werden erstellt... [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:544
 msgid "page"
@@ -67,7 +68,7 @@ msgstr "Exportieren ..."
 
 #: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
 msgid "PDF files"
-msgstr "PDF Dateien"
+msgstr "PDF-Dateien"
 
 #: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
 msgid "All files"
@@ -80,8 +81,9 @@ msgid ""
 "Support for encrypted files has not been implemented yet.\n"
 "File export failed."
 msgstr ""
-"Verschlüsselte Dateien werden noch nicht unterstützt.Exportieren der Datei "
-"fehlgeschlagen."
+"Datei %s ist verschlüsselt.\n"
+"Verschlüsselte Dateien werden noch nicht unterstützt.\n"
+"Exportieren der Datei fehlgeschlagen."
 
 #: pdfarranger/pdfarranger.py:700
 msgid "Import..."
@@ -134,6 +136,8 @@ msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"Das Zuschneiden entfernt keinen Inhalt\n"
+"aus der PDF-Datei, es blendet ihn nur aus."
 
 #: pdfarranger/pdfarranger.py:1156
 msgid "Crop Margins"
@@ -141,11 +145,11 @@ msgstr "Seitenränder zuschneiden"
 
 #: pdfarranger/pdfarranger.py:1166
 msgid "% of width"
-msgstr "% der Seitenbreite"
+msgstr "% der Breite"
 
 #: pdfarranger/pdfarranger.py:1166
 msgid "% of height"
-msgstr "% der Seitenhöhe"
+msgstr "% der Höhe"
 
 #: pdfarranger/pdfarranger.py:1201
 msgid "Dialog closed"
@@ -157,8 +161,8 @@ msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s ist ein Programm für das umstellen und modifizieren von PDF Dokumenten. "
-"Geschrieben mit GTK+ und Python"
+"%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
+"Geschrieben in GTK+ und Python."
 
 #: data/pdfarranger.ui.h:1
 msgid "_File"
@@ -170,11 +174,11 @@ msgstr "Bearbeiten"
 
 #: data/pdfarranger.ui.h:3
 msgid "Rotate left"
-msgstr "Links drehen"
+msgstr "Nach links drehen"
 
 #: data/pdfarranger.ui.h:4
 msgid "Rotate right"
-msgstr "Rechts drehen"
+msgstr "Nach rechts drehen"
 
 #: data/pdfarranger.ui.h:5
 msgid "Crop"
@@ -202,7 +206,7 @@ msgstr "_Hilfe"
 
 #: data/pdfarranger.ui.h:11
 msgid "Open a file and append it to the current document"
-msgstr "Dokument öffnen und zum bereits geöffneten Dokument hinzufügen"
+msgstr "Eine Datei öffnen und zum bereits geöffneten Dokument hinzufügen"
 
 #: data/pdfarranger.ui.h:12
 msgid "Import"
@@ -218,4 +222,4 @@ msgstr "Speichern als"
 
 #: data/pdfarranger.ui.h:15
 msgid "Delete"
-msgstr "Εntfernen"
+msgstr "Löschen"
