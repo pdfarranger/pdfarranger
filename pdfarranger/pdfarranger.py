@@ -635,14 +635,8 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, action, param, unknown):
         """Import doc"""
-
-        chooser = Gtk.FileChooserDialog(title=_('Import...'),
-                                        parent=self.window,
-                                        action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
-                                                 Gtk.ResponseType.OK))
+        chooser = Gtk.FileChooserNative(title=_('Import...'),
+                                        action=Gtk.FileChooserAction.OPEN)
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
@@ -658,7 +652,7 @@ class PdfArranger(Gtk.Application):
         chooser.set_filter(filter_pdf)
 
         response = chooser.run()
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             adder = PageAdder(self)
             for filename in chooser.get_filenames():
                 try:
