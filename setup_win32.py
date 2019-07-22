@@ -12,9 +12,13 @@ include_files = [
 ]
 
 
-def addfile(relpath):
+def addfile(relpath, warn_missing=False):
     global include_files
-    include_files.append((os.path.join(sys.prefix, relpath), relpath))
+    f = os.path.join(sys.prefix, relpath)
+    if warn_missing and not os.path.isfile(f):
+        print("{} cannot be found.".format(f), file=sys.stderr)
+    else:
+        include_files.append((f, relpath))
 
 
 def addlocale(name):
