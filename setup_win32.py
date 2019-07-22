@@ -42,10 +42,10 @@ def addicons():
         'actions/list-add',
         'actions/list-remove',
         'actions/media-eject',
-        'actions/pan-down',
-        'actions/pan-end',
-        'actions/pan-start',
-        'actions/pan-up',
+        'ui/pan-down',
+        'ui/pan-end',
+        'ui/pan-start',
+        'ui/pan-up',
         'devices/drive-harddisk',
         'devices/drive-optical',
         'places/folder-documents',
@@ -60,7 +60,7 @@ def addicons():
     icons24 = ['document-save-as', 'edit-delete', 'list-add', 'object-rotate-left',
                'object-rotate-right', 'zoom-in', 'zoom-out']
     for i in icons24:
-        addfile(os.path.join('share/icons/Adwaita/24x24/actions', i + '.png'))
+        addfile(os.path.join('share/icons/Adwaita/24x24/legacy', i + '.png'))
 
 
 required_dlls = [
