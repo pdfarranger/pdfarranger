@@ -253,6 +253,7 @@ class PdfArranger(Gtk.Application):
             ('rotate(-90)', '<Ctrl>Left'),
             ('save', '<Ctrl>s'),
             ('save-as', '<Ctrl><Shift>s'),
+            ('export-selection', '<Ctrl>e'),
             ('quit', '<Ctrl>q'),
             ('import', 'Insert'),
             ('zoom(5)', 'plus'),
@@ -905,7 +906,8 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
-                     ("delete", ne), ("crop", ne), ("rotate", ne)]:
+                     ("delete", ne), ("crop", ne), ("rotate", ne),
+                     ("export-selection", ne)]:
             self.window.lookup_action(a).set_enabled(e)
 
     def sw_dnd_received_data(self, scrolledwindow, context, x, y,
