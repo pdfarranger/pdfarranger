@@ -80,6 +80,15 @@ Author: Konstantinos Poulios
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem">
+                        <property name="label" translatable="yes">_Export selection...</property>
+                        <property name="use_underline">True</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="action_name">win.export-selection</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem_file">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
