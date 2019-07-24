@@ -779,10 +779,13 @@ class PdfArranger(Gtk.Application):
 
     def iv_dnd_data_delete(self, widget, context):
         """ Delete pages from a pdfarranger instance after they have been moved to another instance """
-
+        selection = self.iconview.get_selected_items()
+        if len(selection) == 0:
+            # On Windows this method is triggered even for drag & drop within the same
+            # pdfarranger instance
+            return
         self.undomanager.commit("Move")
         model = self.iconview.get_model()
-        selection = self.iconview.get_selected_items()
         ref_del_list = [Gtk.TreeRowReference.new(model, path) for path in selection]
         for ref_del in ref_del_list:
             path = ref_del.get_path()
