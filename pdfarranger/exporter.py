@@ -16,6 +16,7 @@
 
 try:
     import pikepdf
+    import re
 except:
     pikepdf = None
     from PyPDF2 import PdfFileWriter, PdfFileReader
@@ -43,6 +44,21 @@ def _mediabox(row, angle, angle0, box):
         return [x1_new, y1_new, x2_new, y2_new]
 
 
+def _pikepdf_meta_is_valid(meta):
+    """
+    Return true if m is a valid PikePDF meta data value.
+    PikePDF pass meta data to re.sub which only accept str or byte-like object.
+    """
+    if not isinstance(meta, list):
+        meta = [meta]
+    for s in meta:
+        try:
+            re.sub('', '', s)
+        except TypeError:
+            return False
+    return True
+
+
 def _pikepdf(input_files, pages, file_out):
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
@@ -58,7 +74,9 @@ def _pikepdf(input_files, pages, file_out):
         pdf_output.pages.append(current_page)
     with pdf_output.open_metadata() as outmeta:
         outmeta.load_from_docinfo(pdf_input[0].docinfo)
-        outmeta.update(pdf_input[0].open_metadata())
+        for k, v in pdf_input[0].open_metadata().items():
+            if _pikepdf_meta_is_valid(v):
+                outmeta[k] = v
     pdf_output.save(file_out)
 
 
