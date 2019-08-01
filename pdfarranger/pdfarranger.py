@@ -297,7 +297,7 @@ class PdfArranger(Gtk.Application):
             ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
         if not os.path.exists(ui_path):
             dist = pkg_resources.get_distribution('pdfarranger')
-            ui_path = os.path.join(dist.location, "share", DOMAIN,
+            ui_path = os.path.join(dist.location, "data",
                                   DOMAIN + ".ui")
 
         self.config = Config()
