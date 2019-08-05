@@ -636,8 +636,18 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, action, param, unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserNative(title=_('Import...'),
-                                        action=Gtk.FileChooserAction.OPEN)
+        try:
+            # Available since GTK+ 3.20.
+            chooser = Gtk.FileChooserNative(title=_('Import...'),
+                                            action=Gtk.FileChooserAction.OPEN)
+        except AttributeError:
+            chooser = Gtk.FileChooserDialog(title=_('Import...'),
+                                            parent=self.window,
+                                            action=Gtk.FileChooserAction.OPEN,
+                                            buttons=(Gtk.STOCK_CANCEL,
+                                                     Gtk.ResponseType.CANCEL, 
+                                                     Gtk.STOCK_OPEN, 
+                                                     Gtk.ResponseType.ACCEPT))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
