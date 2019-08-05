@@ -564,8 +564,13 @@ class PdfArranger(Gtk.Application):
     def choose_export_pdf_name(self, only_selected=False):
         """Handles choosing a name for exporting """
 
-        chooser = Gtk.FileChooserNative(title=_('Export ...'),
-                                        action=Gtk.FileChooserAction.SAVE)
+        chooser = Gtk.FileChooserDialog(title=_('Export ...'),
+                                        parent=self.window,
+                                        action=Gtk.FileChooserAction.SAVE,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_SAVE,
+                                                 Gtk.ResponseType.ACCEPT))
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             chooser.set_filename(self.pdfqueue[0].filename)
@@ -636,8 +641,13 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, action, param, unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserNative(title=_('Import...'),
-                                        action=Gtk.FileChooserAction.OPEN)
+        chooser = Gtk.FileChooserDialog(title=_('Import...'),
+                                        parent=self.window,
+                                        action=Gtk.FileChooserAction.OPEN,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_OPEN,
+                                                 Gtk.ResponseType.ACCEPT))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
 
