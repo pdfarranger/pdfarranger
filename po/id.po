@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-06 22:01+0200\n"
+"PO-Revision-Date: 2019-09-06 14:54+0700\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"Last-Translator: Abdul Munif Hanafi <amunifhanafi@gmail.com>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: id\n"
+
+#: pdfarranger/pdfarranger.py:444
+msgid "No document"
+msgstr "Tidak ada dokumen"
+
+#: pdfarranger/pdfarranger.py:446
+msgid "Several documents"
+msgstr "Beberapa dokumen"
+
+#: pdfarranger/pdfarranger.py:463
+#, python-format
+msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
+msgstr "Merender thumbnail... [%(i1)s/%(i2)s]"
+
+#: pdfarranger/pdfarranger.py:575
+msgid "page"
+msgstr "halaman"
+
+#: pdfarranger/pdfarranger.py:600
+msgid "Export ..."
+msgstr "Ekspor ..."
+
+#: pdfarranger/pdfarranger.py:609 pdfarranger/pdfarranger.py:755
+msgid "PDF files"
+msgstr "Berkas PDF"
+
+#: pdfarranger/pdfarranger.py:614 pdfarranger/pdfarranger.py:750
+msgid "All files"
+msgstr "Semua berkas"
+
+#: pdfarranger/pdfarranger.py:682
+#, python-format
+msgid ""
+"File %s is encrypted.\n"
+"Support for encrypted files has not been implemented yet.\n"
+"File export failed."
+msgstr ""
+"Berkas %s dienkripsi.\n"
+"Dukungan untuk berkas yang dienkripsi belum diimplementasikan.\n"
+"Gagal mengekspor berkas."
+
+#: pdfarranger/pdfarranger.py:739
+msgid "Import..."
+msgstr "Impor..."
+
+#: pdfarranger/pdfarranger.py:774
+msgid "OpenDocument not supported yet!"
+msgstr "OpenDocument belum didukung!"
+
+#: pdfarranger/pdfarranger.py:776
+msgid "Image file not supported yet!"
+msgstr "Berkas gambar belum didukung!"
+
+#: pdfarranger/pdfarranger.py:778
+#, python-format
+msgid "File type \"%s\" not supported!"
+msgstr "Jenis berkas \"%s\" tidak didukung!"
+
+#: pdfarranger/pdfarranger.py:780
+#, python-format
+msgid "File %s does not exist"
+msgstr "Berkas %s tidak ada"
+
+#: pdfarranger/pdfarranger.py:786
+msgid "Closed, no files selected"
+msgstr "Ditutup, tidak ada berkas yang dipilih"
+
+#: pdfarranger/pdfarranger.py:1149
+msgid "Left"
+msgstr "Kiri"
+
+#: pdfarranger/pdfarranger.py:1149
+msgid "Right"
+msgstr "Kanan"
+
+#: pdfarranger/pdfarranger.py:1150
+msgid "Top"
+msgstr "Atas"
+
+#: pdfarranger/pdfarranger.py:1150
+msgid "Bottom"
+msgstr "Bawah"
+
+#: pdfarranger/pdfarranger.py:1168
+msgid "Crop Selected Pages"
+msgstr "Pangkas Halaman Terpilih"
+
+#: pdfarranger/pdfarranger.py:1175
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+"Pemangkasan tidak menghapus konten apa pun\n"
+"dari berkas PDF, melainkan hanya menyembunyikannya."
+
+#: pdfarranger/pdfarranger.py:1177
+msgid "Crop Margins"
+msgstr "Pangkas Margin"
+
+#: pdfarranger/pdfarranger.py:1187
+#, python-format
+msgid "% of width"
+msgstr "% dari lebar"
+
+#: pdfarranger/pdfarranger.py:1187
+#, python-format
+msgid "% of height"
+msgstr "% dari tinggi"
+
+#: pdfarranger/pdfarranger.py:1270
+#, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"%s adalah alat untuk menata ulang dan memodifikasi berkas PDF. "
+"Dikembangkan menggunakan GTK+ dan Python"
+
+#: data/pdfarranger.ui.h:1
+msgid "_File"
+msgstr "_Berkas"
+
+#: data/pdfarranger.ui.h:2
+msgid "_Edit"
+msgstr "_Sunting"
+
+#: data/pdfarranger.ui.h:3
+msgid "Rotate left"
+msgstr "Putar ke kiri"
+
+#: data/pdfarranger.ui.h:4
+msgid "Rotate right"
+msgstr "Putar ke kanan"
+
+#: data/pdfarranger.ui.h:5
+msgid "Crop"
+msgstr "Pangkas"
+
+#: data/pdfarranger.ui.h:6
+msgid "Reverse Order"
+msgstr "Balikkan Urutan"
+
+#: data/pdfarranger.ui.h:7
+msgid "_View"
+msgstr "_Tampilan"
+
+#: data/pdfarranger.ui.h:8
+msgid "Zoom in"
+msgstr "Zoom masuk"
+
+#: data/pdfarranger.ui.h:9
+msgid "Zoom out"
+msgstr "Zoom keluar"
+
+#: data/pdfarranger.ui.h:10
+msgid "_Help"
+msgstr "Ba_ntuan"
+
+#: data/pdfarranger.ui.h:11
+msgid "Open a file and append it to the current document"
+msgstr "Buka berkas dan tambahkan ke dokumen saat ini"
+
+#: data/pdfarranger.ui.h:12
+msgid "Import"
+msgstr "Impor"
+
+#: data/pdfarranger.ui.h:13
+msgid "Save"
+msgstr "Simpan"
+
+#: data/pdfarranger.ui.h:14
+msgid "Save as"
+msgstr "Simpan sebagai"
+
+#: data/pdfarranger.ui.h:15
+msgid "Delete"
+msgstr "Hapus"
+
+#: data/pdfarranger.ui.h:16
+msgid "Rotate _Left"
+msgstr "Putar ke K_iri"
+
+#: data/pdfarranger.ui.h:17
+msgid "_Rotate Right"
+msgstr "Putar ke K_anan"
+
+#: data/pdfarranger.ui.h:18
+msgid "C_rop"
+msgstr "Pang_kas"
+
+#: data/pdfarranger.ui.h:19
+msgid "_Delete"
+msgstr "_Hapus"
+
+#: data/pdfarranger.ui.h:20
+msgid "Re_verse Order"
+msgstr "_Balikkan Urutan"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Export selection..."
+msgstr "_Ekspor terpilih..."
