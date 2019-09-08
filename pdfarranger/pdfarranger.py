@@ -235,6 +235,7 @@ class PdfArranger(Gtk.Application):
         self.window.add_action_entries([
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.clear_selected),
+            ('duplicate', self.duplicate),
             ('crop', self.crop_page_dialog),
             ('export-selection', self.choose_export_selection_pdf_name),
             ('reverse-order', self.reverse_order),
@@ -914,7 +915,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
-                     ("delete", ne), ("crop", ne), ("rotate", ne),
+                     ("delete", ne), ("duplicate", ne), ("crop", ne), ("rotate", ne),
                      ("export-selection", ne)]:
             self.window.lookup_action(a).set_enabled(e)
 
@@ -1089,6 +1090,22 @@ class PdfArranger(Gtk.Application):
                 model.set_value(pos, 7 + it, newcrop[id_sel][it])
             self.update_geometry(pos)
         return oldcrop
+
+    def duplicate(self, action, parameter, unknown):
+        """Duplicates the selected elements"""
+
+        self.set_unsaved(True)
+        self.undomanager.commit("Duplicate")
+
+        model = self.iconview.get_model()
+        # selection is a list of 1-tuples, not in order
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        for ref in ref_list:
+            iterator = model.get_iter(ref.get_path())
+            model.insert_after(iterator, model[iterator][:])
 
     @staticmethod
     def reverse_order_available(selection):
