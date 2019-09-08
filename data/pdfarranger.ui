@@ -191,6 +191,17 @@ Author: Konstantinos Poulios
                       </object>
                     </child>
                     <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_duplicate">
+                        <property name="label" translatable="yes">Du_plicate</property>
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
+                        <property name="action_name">win.duplicate</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem_reverse_order">
                         <property name="label" translatable="yes">Reverse Order</property>
                         <property name="visible">True</property>
@@ -501,6 +512,15 @@ Author: Konstantinos Poulios
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="action_name">win.delete</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">Du_plicate</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.duplicate</property>
       </object>
     </child>
     <child>
