@@ -17,10 +17,11 @@ pacman -Su
 Install the required dependencies:
 
 ```
-pacman -S python3-pip python3-distutils-extra mingw-w64-x86_64-gtk3 \
- mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-gettext \
+pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject \
  mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler \
- git mingw-w64-x86_64-python3-cx_Freeze
+ mingw-w64-x86_64-python3-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
+ mingw-w64-x86_64-gettext mingw-w64-x86_64-python3-cx_Freeze \
+ python3-pip python3-distutils-extra git
 ```
 
 Edit `/mingw64/lib/python3.7/site-packages/cx_Freeze/freezer.py` to revert
@@ -37,7 +38,7 @@ git clone https://github.com/jeromerobert/pdfarranger.git
 
 ```
 cd pdfarranger
-/mingw64/bin/python3 -m pip install --user PyPDF2
+/mingw64/bin/python3 -m pip install --user pikepdf
 ./setup.py build
 /mingw64/bin/python3 setup_win32.py bdist_msi
 /mingw64/bin/python3 setup_win32.py bdist_zip

@@ -106,7 +106,7 @@ addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
 build_options = dict(
-    packages=['gi', 'PyPDF2'],
+    packages=['gi', 'packaging', 'pikepdf'],
     excludes=[],
     include_files=include_files
 )
