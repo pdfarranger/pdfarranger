@@ -1004,7 +1004,7 @@ class PdfArranger(Gtk.Application):
             new_angle = new_angle % 360
             model.set_value(treeiter, 6, new_angle)
             self.update_geometry(treeiter)
-        return rotate_times is not 0 and len(selection) > 0
+        return rotate_times != 0 and len(selection) > 0
 
     def crop_page_dialog(self, action, parameter, unknown):
         """Opens a dialog box to define margins for page cropping"""
