@@ -35,7 +35,9 @@ def _mediabox(row, angle, angle0, box):
             for it in range(rotate_times):
                 perm.append(perm.pop(0))
             perm.insert(1, perm.pop(2))
-            crop = [Decimal(crop_init[perm[side]]) for side in range(4)]
+            crop = [crop_init[perm[side]] for side in range(4)]
+        # PyPDF2 FloatObject instances are decimal.Decimal objects
+        crop = [Decimal(x) for x in crop]
         x1, y1, x2, y2 = box
         x1_new = x1 + (x2 - x1) * crop[0]
         x2_new = x2 - (x2 - x1) * crop[1]
