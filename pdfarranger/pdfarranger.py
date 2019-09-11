@@ -667,9 +667,7 @@ class PdfArranger(Gtk.Application):
             adder = PageAdder(self)
             for filename in chooser.get_filenames():
                 try:
-                    warnmsg = adder.addpages(filename)
-                    if warnmsg:
-                        print(warnmsg)
+                    adder.addpages(filename)
                 except Exception as e:
                     traceback.print_exc()
                     chooser.destroy()
@@ -1189,31 +1187,12 @@ class PageAdder(object):
         #: Where to insert pages. If None pages are inserted at the end
         self.treerowref = None
 
-    @staticmethod
-    def __validate(filename):
-        if not os.path.isfile(filename):
-            return _('File %s does not exist') % filename
-        f = Gio.File.new_for_path(filename)
-        mime_type = f.query_info('standard::content-type', 0, None).get_content_type()
-        expected_mime_type = 'application/pdf' if os.name != 'nt' else '.pdf'
-        if mime_type == expected_mime_type:
-            return ""
-        elif mime_type[:34] == 'application/vnd.oasis.opendocument':
-            return _('OpenDocument not supported yet!')
-        elif mime_type[:5] == 'image':
-            return _('Image file not supported yet!')
-        else:
-            return _('File type "%s" not supported!') % mime_type
-
     def move(self, treerowref, before):
         """ Insert pages at the given location """
         self.before = before
         self.treerowref = treerowref
 
     def addpages(self, filename, page=-1, angle=0, crop=None):
-        warnmsg = self.__validate(filename)
-        if warnmsg:
-            return warnmsg
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
@@ -1251,7 +1230,6 @@ class PageAdder(object):
                                crop[2], crop[3],     # 9-10
                                w,h,                 # 11-12
                                2.))                 # 13 FIXME
-        return ""
 
     def commit(self):
         if len(self.pages) == 0:
