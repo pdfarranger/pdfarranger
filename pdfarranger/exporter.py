@@ -97,7 +97,9 @@ def _pypdf2(input_files, pages, file_out):
         # Workaround for https://github.com/mstamy2/PyPDF2/issues/337
         angle0 = angle0 if isinstance(angle0, int) else angle0.getObject()
         if angle != 0:
-            current_page.rotateClockwise(angle)
+            # rotateClockwise does not work if current angle is an IndirectObject
+            a = generic.NumberObject(angle0 + angle)
+            current_page[generic.NameObject("/Rotate")] = a
 
         cropped = _mediabox(row, angle, angle0, list(current_page.mediaBox.lowerLeft) +
                             list(current_page.mediaBox.upperRight))
