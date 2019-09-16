@@ -19,7 +19,7 @@ try:
     import re
 except:
     pikepdf = None
-    from PyPDF2 import PdfFileWriter, PdfFileReader
+    from PyPDF2 import PdfFileWriter, PdfFileReader, generic
     from copy import copy
 
 from decimal import Decimal
