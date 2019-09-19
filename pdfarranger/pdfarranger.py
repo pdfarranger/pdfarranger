@@ -546,6 +546,9 @@ class PdfArranger(Gtk.Application):
     def close_application(self, widget=None, event=None, data=None):
         """Termination"""
 
+        # Prevent gtk errors when closing with everything selected
+        self.iconview.unselect_all()
+
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
