@@ -580,7 +580,7 @@ class PdfArranger(Gtk.Application):
         chooser.set_current_folder(self.export_directory)
         filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_mime_type('application/pdf')
+        filter_pdf.add_pattern('*.pdf')
         chooser.add_filter(filter_pdf)
 
         filter_all = Gtk.FileFilter()
@@ -653,7 +653,7 @@ class PdfArranger(Gtk.Application):
                                                  Gtk.ResponseType.ACCEPT))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
-
+        # TODO: Factorize, file filters are the same in choose_export_pdf_name
         filter_all = Gtk.FileFilter()
         filter_all.set_name(_('All files'))
         filter_all.add_pattern('*')
@@ -661,7 +661,7 @@ class PdfArranger(Gtk.Application):
 
         filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_mime_type('application/pdf')
+        filter_pdf.add_pattern('*.pdf')
         chooser.add_filter(filter_pdf)
         chooser.set_filter(filter_pdf)
 
