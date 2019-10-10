@@ -6,23 +6,27 @@
 # Translators:
 # David VANTYGHEM <david.vantyghem@free.fr>, 2014.
 # Jérôme Robert <jeromerobert@gmx.com>, 2019.
+# Charles Monzat <charles.monzat@free.fr>, 2019.
+#
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-06 22:01+0200\n"
-"PO-Revision-Date: 2019-05-06 22:08+0100\n"
-"Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
-"Language: fr_FR\n"
+"PO-Revision-Date: 2019-10-10 19:47+0200\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Lokalize 2.0\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 3.32.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Project-Id-Version: unnamed project\n"
+"Language-Team: French - France <>\n"
 
 #: pdfarranger/pdfarranger.py:444
 msgid "No document"
-msgstr "Pas de document"
+msgstr "Aucun document"
 
 #: pdfarranger/pdfarranger.py:446
 msgid "Several documents"
@@ -31,7 +35,7 @@ msgstr "Plusieurs documents"
 #: pdfarranger/pdfarranger.py:463
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Création des miniatures... [%(i1)s/%(i2)s]"
+msgstr "Création des miniatures… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:575
 msgid "page"
@@ -39,7 +43,7 @@ msgstr "page"
 
 #: pdfarranger/pdfarranger.py:600
 msgid "Export ..."
-msgstr "Exporter..."
+msgstr "Exporter…"
 
 #: pdfarranger/pdfarranger.py:609 pdfarranger/pdfarranger.py:755
 msgid "PDF files"
@@ -57,30 +61,30 @@ msgid ""
 "File export failed."
 msgstr ""
 "Le fichier %s est chiffré.\n"
-"Les fichiers chiffrés ne sont pas encore supportés.\n"
-"L'export du fichier a échoué."
+"Les fichiers chiffrés ne sont pas encore pris en charge.\n"
+"L’export du fichier a échoué."
 
 #: pdfarranger/pdfarranger.py:739
 msgid "Import..."
-msgstr "Importer ..."
+msgstr "Importer…"
 
 #: pdfarranger/pdfarranger.py:774
 msgid "OpenDocument not supported yet!"
-msgstr "OpenDocument n'est pas encore supporté !"
+msgstr "OpenDocument n’est pas encore pris en charge !"
 
 #: pdfarranger/pdfarranger.py:776
 msgid "Image file not supported yet!"
-msgstr "Le fichier image n'est pas encore supporté !"
+msgstr "Le fichier image n’est pas encore pris en charge !"
 
 #: pdfarranger/pdfarranger.py:778
 #, python-format
 msgid "File type \"%s\" not supported!"
-msgstr "Les fichiers de type \"%s\" ne sont pas encore supportés"
+msgstr "Les fichiers de type « %s » ne sont pas encore pris en charge !"
 
 #: pdfarranger/pdfarranger.py:780
 #, python-format
 msgid "File %s does not exist"
-msgstr "Le fichier %s n'existe pas"
+msgstr "Le fichier %s n’existe pas"
 
 #: pdfarranger/pdfarranger.py:786
 msgid "Closed, no files selected"
@@ -143,15 +147,15 @@ msgstr "_Fichier"
 
 #: data/pdfarranger.ui.h:2
 msgid "_Edit"
-msgstr "Édition (_E)"
+msgstr "É_dition"
 
 #: data/pdfarranger.ui.h:3
 msgid "Rotate left"
-msgstr "Rotation à gauche"
+msgstr "Rotation vers la gauche"
 
 #: data/pdfarranger.ui.h:4
 msgid "Rotate right"
-msgstr "Rotation à droite"
+msgstr "Rotation vers la droite"
 
 #: data/pdfarranger.ui.h:5
 msgid "Crop"
@@ -159,7 +163,7 @@ msgstr "Rogner"
 
 #: data/pdfarranger.ui.h:6
 msgid "Reverse Order"
-msgstr "Inverser l'ordre"
+msgstr "Inverser l’ordre"
 
 #: data/pdfarranger.ui.h:7
 msgid "_View"
@@ -175,11 +179,11 @@ msgstr "Zoom arrière"
 
 #: data/pdfarranger.ui.h:10
 msgid "_Help"
-msgstr "_Aide"
+msgstr "Aid_e"
 
 #: data/pdfarranger.ui.h:11
 msgid "Open a file and append it to the current document"
-msgstr "Ouvrir un fichier et l'ajouter au document actuel"
+msgstr "Ouvrir un fichier et l’ajouter au document actuel"
 
 #: data/pdfarranger.ui.h:12
 msgid "Import"
@@ -199,11 +203,11 @@ msgstr "Supprimer"
 
 #: data/pdfarranger.ui.h:16
 msgid "Rotate _Left"
-msgstr "Rotation à _gauche"
+msgstr "Rotation vers la _gauche"
 
 #: data/pdfarranger.ui.h:17
 msgid "_Rotate Right"
-msgstr "Rotation à _droite"
+msgstr "Rotation vers la _droite"
 
 #: data/pdfarranger.ui.h:18
 msgid "C_rop"
@@ -215,10 +219,8 @@ msgstr "_Supprimer"
 
 #: data/pdfarranger.ui.h:20
 msgid "Re_verse Order"
-msgstr "Inverser l'ordre"
+msgstr "In_verser l’ordre"
 
 #: data/pdfarranger.ui.h:21
 msgid "_Export selection..."
-msgstr "_Exporter la sélection..."
-
-
+msgstr "_Exporter la sélection…"
