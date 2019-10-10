@@ -16,7 +16,7 @@
 
 from gi.repository import Gtk
 from gi.repository import GObject
-from math import pi as M_PI
+from math import pi
 
 
 class CellRendererImage(Gtk.CellRenderer):
@@ -119,7 +119,7 @@ class CellRendererImage(Gtk.CellRenderer):
         window.translate(-x, -y)
         if rotation > 0:
             window.translate(w1 / 2, h1 / 2)
-            window.rotate(rotation * M_PI / 180)
+            window.rotate(rotation * pi / 180)
             window.translate(-w0 / 2, -h0 / 2)
 
         window.set_source_surface(self.image)
@@ -127,7 +127,7 @@ class CellRendererImage(Gtk.CellRenderer):
 
     def do_get_size(self, widget, cell_area=None):
         x = y = 0
-        w0, h0, w1, h1, w2, h2, rotation = self.get_geometry()
+        w0, h0, w1, h1, w2, h2, _rotation = self.get_geometry()
         th = int(2 * self.th1 + self.th2)
         w = w2 + th
         h = h2 + th
