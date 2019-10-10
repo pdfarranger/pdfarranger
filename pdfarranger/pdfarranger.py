@@ -1152,12 +1152,8 @@ class PdfArranger(Gtk.Application):
 
     def about_dialog(self, _widget, _data=None):
         about_dialog = Gtk.AboutDialog()
-        try:
-            about_dialog.set_transient_for(self.window)
-            about_dialog.set_modal(True)
-        except:
-            pass
-        # FIXME
+        about_dialog.set_transient_for(self.window)
+        about_dialog.set_modal(True)
         about_dialog.set_name(APPNAME)
         about_dialog.set_program_name(APPNAME)
         about_dialog.set_version(VERSION)
