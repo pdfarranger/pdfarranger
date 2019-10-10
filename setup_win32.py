@@ -22,7 +22,8 @@ def addfile(relpath, warn_missing=False):
 
 
 def addlocale(name):
-    for path in glob.glob(os.path.join(sys.prefix, "share/locale/*/LC_MESSAGES/{}.mo".format(name))):
+    for path in glob.glob(os.path.join(sys.prefix,
+                                       "share/locale/*/LC_MESSAGES/{}.mo".format(name))):
         addfile(os.path.relpath(path, sys.prefix))
 
 
