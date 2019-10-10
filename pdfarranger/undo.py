@@ -51,7 +51,7 @@ class Manager(object):
         self.label = label
         self.__refresh()
 
-    def undo(self, action, param, unused):
+    def undo(self, _action, _param, _unused):
         if self.current == len(self.states):
             self.states.append(([list(row) for row in self.model], self.label,))
         state, self.label = self.states[self.current - 1]
@@ -59,7 +59,7 @@ class Manager(object):
         self.current -= 1
         self.__refresh()
 
-    def redo(self, action, param, unused):
+    def redo(self, _action, _param, _unused):
         state, self.label = self.states[self.current + 1]
         self.__set_state(state)
         self.current += 1

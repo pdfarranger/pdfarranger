@@ -24,6 +24,7 @@ except:
 
 from decimal import Decimal
 
+
 def _mediabox(row, angle, angle0, box):
     """ Return the cropped media box for a given page """
     crop = row[7:11]
