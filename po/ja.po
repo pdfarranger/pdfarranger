@@ -1,4 +1,4 @@
-# Japanese translations for pdfarranger.
+# Japanese translation for pdfarranger.
 # Copyright (C) 2008-2017 Konstantinos Poulios
 # Copyright (C) 2018-2019 pdfarranger's COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
