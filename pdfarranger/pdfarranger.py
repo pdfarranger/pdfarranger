@@ -202,6 +202,21 @@ def warn_dialog(func):
     return wrapper
 
 
+def get_file_path_from_dnd_dropped_uri(uri):
+    """Extracts the path from an uri"""
+    path = url2pathname(uri)  # escape special chars
+    path = path.strip('\r\n\x00')  # remove \r\n and NULL
+
+    # get the path to file
+    if path.startswith('file:\\\\\\'):  # windows
+        path = path[8:]  # 8 is len('file:///')
+    elif path.startswith('file://'):  # nautilus, rox
+        path = path[7:]  # 7 is len('file://')
+    elif path.startswith('file:'):  # xffm
+        path = path[5:]  # 5 is len('file:')
+    return path
+
+
 class PdfArranger(Gtk.Application):
     # Drag and drop ID for pages coming from the same pdfarranger instance
     MODEL_ROW_INTERN = 1001
@@ -925,7 +940,7 @@ class PdfArranger(Gtk.Application):
         if target_id == self.TEXT_URI_LIST:
             pageadder = PageAdder(self)
             for uri in selection_data.get_uris():
-                filename = self.get_file_path_from_dnd_dropped_uri(uri)
+                filename = get_file_path_from_dnd_dropped_uri(uri)
                 msg = pageadder.addpages(filename)
                 if msg:
                     self.error_message_dialog(msg)
@@ -968,20 +983,6 @@ class PdfArranger(Gtk.Application):
     def zoom_change(self, _action, step, _unknown):
         """ Action handle for zoom change """
         self.zoom_set(self.zoom_level + step.get_int32())
-
-    def get_file_path_from_dnd_dropped_uri(self, uri):
-        """Extracts the path from an uri"""
-        path = url2pathname(uri)  # escape special chars
-        path = path.strip('\r\n\x00')  # remove \r\n and NULL
-
-        # get the path to file
-        if path.startswith('file:\\\\\\'):  # windows
-            path = path[8:]  # 8 is len('file:///')
-        elif path.startswith('file://'):  # nautilus, rox
-            path = path[7:]  # 7 is len('file://')
-        elif path.startswith('file:'):  # xffm
-            path = path[5:]  # 5 is len('file:')
-        return path
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
