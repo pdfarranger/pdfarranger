@@ -1,222 +1,226 @@
-# PDF-Shuffler translation files.
+# Japanese translations for pdfarranger.
 # Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
-# Public License version 3 or later.
-# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
-# Translators:
-# Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010
+# Copyright (C) 2018-2019 pdfarranger's COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdfarranger package.
+# Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010.
+# sicklylife <translation@sicklylife.jp>, 2019.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.5.1\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
-"PO-Revision-Date: 2010-11-20 01:48+JST\n"
-"Last-Translator: Toshiharu Kudoh <toshi.kd2@gmail.com>\n"
-"Language-Team: Japanese <LL@li.org>\n"
+"POT-Creation-Date: 2019-10-15 19:31+0900\n"
+"PO-Revision-Date: 2019-10-15 20:05+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
+"Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr ""
+#: pdfarranger.ui:46
+msgid "_File"
+msgstr "ファイル(_F)"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:317
-#, fuzzy
-msgid "_Delete"
-msgstr "ページの削除"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:317
-#, fuzzy
+#: pdfarranger.ui:84 pdfarranger.ui:537
 msgid "_Export selection..."
-msgstr "エクスポート..."
+msgstr "選択したものをエクスポート(_E)..."
 
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger.ui:116
+msgid "_Edit"
+msgstr "編集(_E)"
+
+#: pdfarranger.ui:150 pdfarranger.ui:396 pdfarranger.ui:397
+msgid "Rotate left"
+msgstr "左に回転"
+
+#: pdfarranger.ui:160 pdfarranger.ui:413 pdfarranger.ui:414
+msgid "Rotate right"
+msgstr "右に回転"
+
+#: pdfarranger.ui:176
+msgid "Crop"
+msgstr "トリミング"
+
+#: pdfarranger.ui:195 pdfarranger.ui:519
+msgid "Du_plicate"
+msgstr "複製(_P)"
+
+#: pdfarranger.ui:206
+msgid "Reverse Order"
+msgstr "逆順"
+
+#: pdfarranger.ui:223
+msgid "_View"
+msgstr "表示(_V)"
+
+#: pdfarranger.ui:231 pdfarranger.ui:352 pdfarranger.ui:353
+msgid "Zoom in"
+msgstr "拡大"
+
+#: pdfarranger.ui:242 pdfarranger.ui:369 pdfarranger.ui:370
+msgid "Zoom out"
+msgstr "縮小"
+
+#: pdfarranger.ui:260
+msgid "_Help"
+msgstr "ヘルプ(_H)"
+
+#: pdfarranger.ui:297
+msgid "Open a file and append it to the current document"
+msgstr "ファイルを開いて現在のドキュメントに追加します"
+
+#: pdfarranger.ui:298
+msgid "Import"
+msgstr "インポート"
+
+#: pdfarranger.ui:314
+msgid "Save"
+msgstr "保存"
+
+#: pdfarranger.ui:327
+msgid "Save as"
+msgstr "名前を付けて保存"
+
+#: pdfarranger.ui:430 pdfarranger.ui:431
+msgid "Delete"
+msgstr "削除"
+
+#: pdfarranger.ui:481
+msgid "Rotate _Left"
+msgstr "左に回転(_L)"
+
+#: pdfarranger.ui:491
+msgid "_Rotate Right"
+msgstr "右に回転(_R)"
+
+#: pdfarranger.ui:501
+msgid "C_rop"
+msgstr "トリミング(_R)"
+
+#: pdfarranger.ui:510
+msgid "_Delete"
+msgstr "削除(_D)"
+
+#: pdfarranger.ui:528
+msgid "Re_verse Order"
+msgstr "逆順(_V)"
+
+#: pdfarranger.py:467
 msgid "No document"
-msgstr ""
+msgstr "ドキュメントなし"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger.py:469
 msgid "Several documents"
-msgstr ""
+msgstr "複数のドキュメント"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger.py:486
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr ""
+msgstr "サムネイルを描画中... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
-msgid "page"
-msgstr "ページ"
-
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger.py:571
 msgid "Export ..."
-msgstr "エクスポート..."
+msgstr "エクスポート ..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger.py:583 pdfarranger.py:664
 msgid "PDF files"
 msgstr "PDF ファイル"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger.py:588 pdfarranger.py:659
 msgid "All files"
-msgstr "全てのファイル"
+msgstr "すべてのファイル"
 
-#: pdfarranger/pdfarranger.py:647
-#, fuzzy, python-format
-msgid ""
-"File %s is encrypted.\n"
-"Support for encrypted files has not been implemented yet.\n"
-"File export failed."
-msgstr "そのファイルのサポートはまだ実装されていません。"
-
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger.py:648
 msgid "Import..."
 msgstr "インポート..."
 
-#: pdfarranger/pdfarranger.py:735
-msgid "OpenDocument not supported yet!"
-msgstr "OpenDocument はまだサポートされていません！"
-
-#: pdfarranger/pdfarranger.py:737
-msgid "Image file not supported yet!"
-msgstr "画像ファイルはまだサポートされていません！"
-
-#: pdfarranger/pdfarranger.py:739
-#, fuzzy, python-format
-msgid "File type \"%s\" not supported!"
-msgstr "サポートされていないファイル形式です！"
-
-#: pdfarranger/pdfarranger.py:741
-#, python-format
-msgid "File %s does not exist"
-msgstr "%s は存在しません"
-
-#: pdfarranger/pdfarranger.py:747
-msgid "Closed, no files selected"
-msgstr "ファイルが選択されていませんので閉じられました"
-
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger.py:1017
 msgid "Left"
 msgstr "左"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger.py:1017
 msgid "Right"
 msgstr "右"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger.py:1018
 msgid "Top"
 msgstr "上"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger.py:1018
 msgid "Bottom"
 msgstr "下"
 
-#: pdfarranger/pdfarranger.py:1147
-#, fuzzy
+#: pdfarranger.py:1035
 msgid "Crop Selected Pages"
-msgstr "選択されたページのトリミング"
+msgstr "選択したページのトリミング"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger.py:1042
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"トリミングは PDF ファイルから内容自体は\n"
+"削除せずに、指定部分を見えなくします。"
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger.py:1044
 msgid "Crop Margins"
 msgstr "余白のトリミング"
 
-#: pdfarranger/pdfarranger.py:1166
-#, fuzzy
+#: pdfarranger.py:1054
+#, python-format
 msgid "% of width"
-msgstr "% の幅"
+msgstr "% (幅)"
 
-#: pdfarranger/pdfarranger.py:1166
-#, fuzzy
+#: pdfarranger.py:1054
+#, python-format
 msgid "% of height"
-msgstr "% の高さ"
+msgstr "% (高さ)"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "ダイアログが閉じられました"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger.py:1160
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
+"%s は PDF ファイルの内容の追加や削除、順序の入れ替えやその他のちょっとした"
+"変更を行うための、GTK+ と Python で作成されたツールです"
 
-#: data/pdfarranger.ui.h:1
-msgid "_File"
+#: pdfarranger.py:1239
+msgid "page"
+msgstr "ページ"
+
+#: pdfarranger.appdata.xml:13(id)
+msgid "pdfarranger.desktop"
+msgstr "pdfarranger.desktop"
+
+#: pdfarranger.appdata.xml:14(metadata_license)
+msgid "CC0-1.0"
+msgstr "CC0-1.0"
+
+#: pdfarranger.appdata.xml:16(p)
+msgid ""
+"pdfarranger is a small application, which helps the user to merge or split "
+"pdf documents and rotate, crop and rearrange their pages using an "
+"interactive and intuitive graphical interface. It is a frontend for python-"
+"pyPdf."
 msgstr ""
+"pdfarranger は、PDF ドキュメント自体の分割や結合、PDF 内のページの回転、トリ"
+"ミング、配置換えなどをグラフィカルインターフェースで対話的直感的に行うことが"
+"できる、python-pyPdf のフロントエンドアプリケーションです。"
 
-#: data/pdfarranger.ui.h:2
-msgid "_Edit"
+#: pdfarranger.appdata.xml:24(url)
+msgid "https://github.com/jeromerobert/pdfarranger"
+msgstr "https://github.com/jeromerobert/pdfarranger"
+
+#: pdfarranger.appdata.xml:28(updatecontact)
+msgid "jeromerobert@gmx.com"
+msgstr "jeromerobert@gmx.com"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: pdfarranger.appdata.xml:0(None)
+msgid "translator-credits"
 msgstr ""
-
-#: data/pdfarranger.ui.h:3
-msgid "Rotate left"
-msgstr ""
-
-#: data/pdfarranger.ui.h:4
-msgid "Rotate right"
-msgstr ""
-
-#: data/pdfarranger.ui.h:5
-msgid "Crop"
-msgstr ""
-
-#: data/pdfarranger.ui.h:6
-msgid "Reverse Order"
-msgstr ""
-
-#: data/pdfarranger.ui.h:7
-msgid "_View"
-msgstr ""
-
-#: data/pdfarranger.ui.h:8
-msgid "Zoom in"
-msgstr ""
-
-#: data/pdfarranger.ui.h:9
-msgid "Zoom out"
-msgstr ""
-
-#: data/pdfarranger.ui.h:10
-msgid "_Help"
-msgstr ""
-
-#: data/pdfarranger.ui.h:11
-msgid "Open a file and append it to the current document"
-msgstr ""
-
-#: data/pdfarranger.ui.h:12
-#, fuzzy
-msgid "Import"
-msgstr "インポート..."
-
-#: data/pdfarranger.ui.h:13
-msgid "Save"
-msgstr ""
-
-#: data/pdfarranger.ui.h:14
-msgid "Save as"
-msgstr ""
-
-#: data/pdfarranger.ui.h:15
-#, fuzzy
-msgid "Delete"
-msgstr "ページの削除"
+"sicklylife <translation@sicklylife.jp>\n"
+"Toshiharu Kudoh <toshi.kd2@gmail.com>"
