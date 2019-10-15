@@ -87,7 +87,8 @@ def _pypdf2(input_files, pages, file_out):
     pdf_input = []
     pdf_output = PdfFileWriter()
     for pdfdoc in input_files:
-        pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict=False, overwriteWarnings=False)
+        pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'),
+                                   strict=False, overwriteWarnings=False)
         pdf_input.append(pdfdoc_inp)
 
     for row in pages:

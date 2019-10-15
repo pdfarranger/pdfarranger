@@ -224,10 +224,13 @@ class PdfArranger(Gtk.Application):
     MODEL_ROW_EXTERN = 1002
     # Drag and drop ID for pages coming from a non-pdfarranger application
     TEXT_URI_LIST = 1003
-    TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET, MODEL_ROW_INTERN),
-                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
+    TARGETS_IV = [Gtk.TargetEntry.new('MODEL_ROW_INTERN', Gtk.TargetFlags.SAME_WIDGET,
+                                      MODEL_ROW_INTERN),
+                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP,
+                                      MODEL_ROW_EXTERN)]
     TARGETS_SW = [Gtk.TargetEntry.new('text/uri-list', 0, TEXT_URI_LIST),
-                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP, MODEL_ROW_EXTERN)]
+                  Gtk.TargetEntry.new('MODEL_ROW_EXTERN', Gtk.TargetFlags.OTHER_APP,
+                                      MODEL_ROW_EXTERN)]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, application_id="com.github.jeromerobert.pdfarranger",
@@ -284,7 +287,8 @@ class PdfArranger(Gtk.Application):
         # Display accelerators in the menus
         for o in self.uiXML.get_objects():
             if isinstance(o, Gtk.MenuItem) and o.get_action_name() is not None:
-                an = Gio.Action.print_detailed_name(o.get_action_name(), o.get_action_target_value())
+                an = Gio.Action.print_detailed_name(o.get_action_name(),
+                                                    o.get_action_target_value())
                 a = self.get_accels_for_action(an)
                 if len(a) > 0:
                     o.get_child().set_accel(*Gtk.accelerator_parse(a[0]))
@@ -521,13 +525,17 @@ class PdfArranger(Gtk.Application):
             # scale*page_width*(1-crop_left-crop_right)
             item_width = int(max(row[4] * row[11] * (1. - row[7] - row[8])
                                  for row in self.model))
-            # FIXME: those are magic number found with my current GTK style. This might not be portable.
+            # FIXME: those are magic number found with my current GTK
+            #  style. This might not be portable.
             min_col_spacing = 19
             min_margin = 14
             iw_width = window.get_size()[0]
-            # 2 * min_margin + col_num * item_width + min_col_spacing * (col_num-1) = iw_width
-            # min_margin+margin = min_col_spacing+col_spacing = (iw_width - col_num * item_width) / (col_num+1)
-            col_num = (iw_width - 2 * min_margin - min_col_spacing) // (item_width + min_col_spacing)
+            # 2 * min_margin + col_num * item_width
+            #  + min_col_spacing * (col_num-1) = iw_width
+            # min_margin+margin = min_col_spacing+col_spacing
+            #  = (iw_width - col_num * item_width) / (col_num+1)
+            col_num = (iw_width - 2 * min_margin - min_col_spacing) //\
+                      (item_width + min_col_spacing)
             spacing = (iw_width - col_num * item_width) // (col_num + 1)
             if col_num == 0:
                 col_num = 1
@@ -800,7 +808,8 @@ class PdfArranger(Gtk.Application):
                         context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, _widget, _context):
-        """ Delete pages from a pdfarranger instance after they have been moved to another instance """
+        """Delete pages from a pdfarranger instance after they have
+        been moved to another instance."""
         selection = self.iconview.get_selected_items()
         if len(selection) == 0:
             # On Windows this method is triggered even for drag & drop within the same
@@ -1040,7 +1049,8 @@ class PdfArranger(Gtk.Application):
                                      Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_default_response(Gtk.ResponseType.OK)
         margin = 12
-        label = Gtk.Label(label=_('Cropping does not remove any content\nfrom the PDF file, it only hides it.'))
+        label = Gtk.Label(label=_('Cropping does not remove any content\n'
+                                  'from the PDF file, it only hides it.'))
         dialog.vbox.pack_start(label, False, False, 0)
         frame = Gtk.Frame(label=_('Crop Margins'))
         frame.props.margin = margin
