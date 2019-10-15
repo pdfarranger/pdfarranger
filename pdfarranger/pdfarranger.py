@@ -1286,24 +1286,21 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         for idx, row in enumerate(self.model):
             if self.quit:
                 return
-            try:
-                nfile = row[2]
-                npage = row[3]
-                pdfdoc = self.pdfqueue[nfile - 1]
-                page = pdfdoc.document.get_page(npage - 1)
-                w, h = page.get_size()
-                thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
-                                               int(w / self.resample),
-                                               int(h / self.resample))
-                cr = cairo.Context(thumbnail)
-                if self.resample != 1.:
-                    cr.scale(1. / self.resample, 1. / self.resample)
-                page.render(cr)
-                GObject.idle_add(self.emit, 'update_thumbnail',
-                                 idx, thumbnail, self.resample,
-                                 priority=GObject.PRIORITY_LOW)
-            except:
-                traceback.print_exc()
+            nfile = row[2]
+            npage = row[3]
+            pdfdoc = self.pdfqueue[nfile - 1]
+            page = pdfdoc.document.get_page(npage - 1)
+            w, h = page.get_size()
+            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                           int(w / self.resample),
+                                           int(h / self.resample))
+            cr = cairo.Context(thumbnail)
+            if self.resample != 1.:
+                cr.scale(1. / self.resample, 1. / self.resample)
+            page.render(cr)
+            GObject.idle_add(self.emit, 'update_thumbnail',
+                             idx, thumbnail, self.resample,
+                             priority=GObject.PRIORITY_LOW)
 
 
 def main():
