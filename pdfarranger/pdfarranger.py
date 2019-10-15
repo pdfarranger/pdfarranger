@@ -998,7 +998,7 @@ class PdfArranger(Gtk.Application):
         for path in selection:
             treeiter = model.get_iter(path)
             perm = [0, 2, 1, 3]
-            for it in range(rotate_times):
+            for _ in range(rotate_times):
                 perm.append(perm.pop(0))
             perm.insert(1, perm.pop(2))
             crop = [model.get_value(treeiter, 7 + perm[side]) for side in range(4)]
