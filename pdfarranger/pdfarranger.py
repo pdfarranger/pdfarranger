@@ -965,9 +965,7 @@ class PdfArranger(Gtk.Application):
             pageadder = PageAdder(self)
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_dnd_dropped_uri(uri)
-                msg = pageadder.addpages(filename)
-                if msg:
-                    self.error_message_dialog(msg)
+                pageadder.addpages(filename)
             pageadder.commit()
 
     def sw_button_press_event(self, _scrolledwindow, event):
