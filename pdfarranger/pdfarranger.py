@@ -1057,7 +1057,12 @@ class PdfArranger(Gtk.Application):
             label.set_alignment(0, 0)
             grid.attach(label, 0, row, 1, 1)
 
-            adj = Gtk.Adjustment(100. * crop.pop(0), 0.0, 99.0, 1.0, 5.0, 0.0)
+            adj = Gtk.Adjustment(value=100. * crop.pop(0),
+                                 lower=0.0,
+                                 upper=99.0,
+                                 step_increment=1.0,
+                                 page_increment=5.0,
+                                 page_size=0.0)
             spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
             spin.set_activates_default(True)
             spin.connect('value-changed', set_crop_value, side)
