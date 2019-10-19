@@ -237,6 +237,38 @@ class PdfArranger(Gtk.Application):
                          flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE,
                          **kwargs)
 
+        # Create the temporary directory
+        self.tmp_dir = tempfile.mkdtemp(DOMAIN)
+        os.chmod(self.tmp_dir, 0o700)
+
+        # Defining instance attributes
+
+        # The None values will be set later in do_activate
+        self.config = Config()
+        self.uiXML = None
+        self.window = None
+        self.sw = None
+        self.model = None
+        self.undomanager = None
+        self.iconview = None
+        self.cellthmb = None
+        self.progress_bar = None
+        self.progress_bar_timeout_id = 0
+        self.popup = None
+        self.is_unsaved = False
+        self.zoom_level = None
+        self.zoom_scale = None
+
+        self.export_directory = os.path.expanduser('~')
+        self.import_directory = self.export_directory
+        self.nfile = 0
+        self.iv_auto_scroll_direction = 0
+        self.iv_auto_scroll_timer = None
+        self.pdfqueue = []
+        self.pressed_button = None
+        self.rendering_thread = None
+        self.export_file = None
+
     def do_open(self, files, _n, _hints):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
         self.activate()
@@ -298,9 +330,6 @@ class PdfArranger(Gtk.Application):
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
         # TODO: huge method that should be splitted
-        # Create the temporary directory
-        self.tmp_dir = tempfile.mkdtemp(DOMAIN)
-        os.chmod(self.tmp_dir, 0o700)
 
         iconsdir = os.path.join(sharedir, 'icons')
         if not os.path.exists(iconsdir):
@@ -317,7 +346,6 @@ class PdfArranger(Gtk.Application):
         if not os.path.exists(ui_path):
             ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
 
-        self.config = Config()
         self.uiXML = Gtk.Builder()
         self.uiXML.set_translation_domain(DOMAIN)
         self.uiXML.add_from_file(ui_path)
@@ -403,7 +431,6 @@ class PdfArranger(Gtk.Application):
 
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
-        self.progress_bar_timeout_id = 0
 
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
@@ -427,24 +454,12 @@ class PdfArranger(Gtk.Application):
         self.popup = self.uiXML.get_object('popup_menu')
         self.popup.attach_to_widget(self.window, None)
 
-        # Initializing variables
-        self.export_directory = os.path.expanduser('~')
-        self.import_directory = self.export_directory
-        self.nfile = 0
-        self.iv_auto_scroll_direction = 0
-        self.iv_auto_scroll_timer = None
-        self.pdfqueue = []
-        self.pressed_button = None
-
         GObject.type_register(PDFRenderer)
         GObject.signal_new('update_thumbnail', PDFRenderer,
                            GObject.SignalFlags.RUN_FIRST, None,
                            [GObject.TYPE_INT, GObject.TYPE_PYOBJECT,
                             GObject.TYPE_FLOAT])
-        self.rendering_thread = None
-
         self.set_unsaved(False)
-        self.export_file = None
         self.__create_actions()
 
     @staticmethod
@@ -470,7 +485,7 @@ class PdfArranger(Gtk.Application):
 
         if self.progress_bar_timeout_id:
             GObject.source_remove(self.progress_bar_timeout_id)
-        self.progress_bar_timout_id = \
+        self.progress_bar_timeout_id = \
             GObject.timeout_add(50, self.progress_bar_timeout)
 
     def set_unsaved(self, flag):
