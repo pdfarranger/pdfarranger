@@ -970,7 +970,7 @@ class PdfArranger(Gtk.Application):
                     self.error_message_dialog(msg)
             pageadder.commit()
 
-    def sw_button_press_event(self, scrolledwindow, event):
+    def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
         # TODO most likely unreachable code
 
