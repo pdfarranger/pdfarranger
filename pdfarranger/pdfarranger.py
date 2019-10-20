@@ -1020,7 +1020,7 @@ class PdfArranger(Gtk.Application):
         for path in selection:
             treeiter = model.get_iter(path)
             perm = [0, 2, 1, 3]
-            for _ in range(rotate_times):
+            for __ in range(rotate_times):
                 perm.append(perm.pop(0))
             perm.insert(1, perm.pop(2))
             crop = [model.get_value(treeiter, 7 + perm[side]) for side in range(4)]
@@ -1110,7 +1110,7 @@ class PdfArranger(Gtk.Application):
         dialog.destroy()
 
     def crop(self, selection, newcrop):
-        oldcrop = [[0] * 4 for _ in range(len(selection))]
+        oldcrop = [[0] * 4 for __ in range(len(selection))]
         model = self.iconview.get_model()
         for id_sel, path in enumerate(selection):
             pos = model.get_iter(path)
