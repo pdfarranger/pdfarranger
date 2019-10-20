@@ -17,12 +17,13 @@
 try:
     import pikepdf
     import re
-except:
+except ModuleNotFoundError:
     pikepdf = None
     from PyPDF2 import PdfFileWriter, PdfFileReader, generic
     from copy import copy
 
 from decimal import Decimal
+
 
 def _mediabox(row, angle, angle0, box):
     """ Return the cropped media box for a given page """
@@ -32,7 +33,7 @@ def _mediabox(row, angle, angle0, box):
         crop_init = crop
         if rotate_times != 0:
             perm = [0, 2, 1, 3]
-            for it in range(rotate_times):
+            for _ in range(rotate_times):
                 perm.append(perm.pop(0))
             perm.insert(1, perm.pop(2))
             crop = [crop_init[perm[side]] for side in range(4)]
@@ -84,9 +85,10 @@ def _pikepdf(input_files, pages, file_out):
 
 def _pypdf2(input_files, pages, file_out):
     pdf_input = []
+    pdf_output = PdfFileWriter()
     for pdfdoc in input_files:
-        pdf_output = PdfFileWriter()
-        pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'), strict=False, overwriteWarnings=False)
+        pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'),
+                                   strict=False, overwriteWarnings=False)
         pdf_input.append(pdfdoc_inp)
 
     for row in pages:
@@ -118,4 +120,5 @@ def _pypdf2(input_files, pages, file_out):
     with open(file_out, 'wb') as f:
         pdf_output.write(f)
 
-export=_pypdf2 if pikepdf is None else _pikepdf
+
+export = _pypdf2 if pikepdf is None else _pikepdf
