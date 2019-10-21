@@ -70,7 +70,7 @@ def _pikepdf(input_files, pages, file_out):
         angle = row[6]
         angle0 = current_page.Rotate if '/Rotate' in current_page else 0
         if angle != 0:
-            current_page.Rotate = angle
+            current_page.Rotate = angle + angle0
         cropped = _mediabox(row, angle, angle0, current_page.MediaBox)
         if cropped:
             current_page.MediaBox = cropped
