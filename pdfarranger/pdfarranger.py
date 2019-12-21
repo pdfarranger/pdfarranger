@@ -296,6 +296,7 @@ class PdfArranger(Gtk.Application):
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
+            ('split', self.split_pages),
         ])
         accels = [
             ('delete', 'Delete'),
@@ -957,7 +958,7 @@ class PdfArranger(Gtk.Application):
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
                      ("delete", ne), ("duplicate", ne), ("crop", ne), ("rotate", ne),
-                     ("export-selection", ne)]:
+                     ("export-selection", ne), ("split", ne)]:
             self.window.lookup_action(a).set_enabled(e)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
@@ -1035,6 +1036,26 @@ class PdfArranger(Gtk.Application):
             model.set_value(treeiter, 6, new_angle)
             self.update_geometry(treeiter)
         return rotate_times != 0 and len(selection) > 0
+
+    def split_pages(self, _action, _parameter, _unknown):
+        """ Split selected pages """
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+        self.set_unsaved(True)
+        self.undomanager.commit("Split")
+        # selection is a list of 1-tuples, not in order
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        for ref in ref_list:
+            iterator = model.get_iter(ref.get_path())
+            newit = model.insert_after(iterator, model[iterator][:])
+            left = model.get_value(iterator, 7)
+            right = model.get_value(iterator, 8)
+            newcrop = (1 + left - right) / 2
+            model.set_value(newit, 7, newcrop)
+            model.set_value(iterator, 8, 1 - newcrop)
 
     def crop_page_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping"""
