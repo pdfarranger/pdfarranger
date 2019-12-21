@@ -5,7 +5,7 @@
 *pdfarranger* is a small python-gtk application, which helps the user to merge
 or split pdf documents and rotate, crop and rearrange their pages using an
 interactive and intuitive graphical interface. It is a frontend for
-[PyPDF2](https://github.com/mstamy2/PyPDF2) or [pikepdf](https://github.com/pikepdf/pikepdf).
+[pikepdf](https://github.com/pikepdf/pikepdf).
 
 *pdfarranger* is a fork of Konstantinos Poulios's pdfshuffler
 (see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
@@ -33,7 +33,7 @@ sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk
 On Fedora
 
 ```
-sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo intltool python3-wheel python3-PyPDF2
+sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo intltool python3-wheel
 ```
 
 Then:
@@ -41,14 +41,6 @@ Then:
 ```
 pip3 install --user --upgrade -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
 ```
-
-or
-
-```
-pip3 install --user --upgrade -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt[pikepdf]
-```
-
-to use [pikepdf](https://github.com/pikepdf/pikepdf) instead of [PyPDF2](https://github.com/mstamy2/PyPDF2)
 
 ## For developers
 

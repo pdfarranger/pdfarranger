@@ -1,10 +1,16 @@
 ---
 id: com.github.jeromerobert.pdfarranger
 runtime: org.gnome.Platform
-runtime-version: '3.30'
+runtime-version: '3.34'
 sdk: org.gnome.Sdk
 command: pdfarranger
 modules:
+- name: intltool
+  cleanup: [ "*" ]
+  sources:
+  - type: archive
+    url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+    sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
 - name: openjpeg
   buildsystem: cmake
   sources:
@@ -19,14 +25,6 @@ modules:
     sha256: badbecd2dddf63352fd85ec08a9c2ed122fdadacf2a34fcb4cc227c4d01f2cf9
     type: archive
     config-opts: [ "-DENABLE_UTILS=OFF", "-DENABLE_CPP=OFF" ]
-- name: PyPDF2
-  buildsystem: simple
-  sources:
-  - url: https://github.com/mstamy2/PyPDF2/archive/1.26.0.tar.gz
-    sha256: 140b1fed792f487f2fd814eb0e832a5b6ef5ae362da302c1fc5a9786d5acb469
-    type: archive
-  build-commands:
-  - pip3 install --prefix=/app .
 - name: python-distutils-extra
   buildsystem: simple
   sources:

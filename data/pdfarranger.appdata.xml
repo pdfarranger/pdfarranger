@@ -17,7 +17,7 @@ SentUpstream: 2014-09-17
       pdfarranger is a small application, which helps the user to merge or split pdf
       documents and rotate, crop and rearrange their pages using an interactive and
       intuitive graphical interface.
-      It is a frontend for python-pyPdf.
+      It is a frontend for pikepdf.
     </p>
     <!-- FIXME: Probably needs another paragraph or two -->
   </description>

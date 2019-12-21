@@ -14,13 +14,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-try:
-    import pikepdf
-    import re
-except ModuleNotFoundError:
-    pikepdf = None
-    from PyPDF2 import PdfFileWriter, PdfFileReader, generic
-    from copy import copy
+
+import pikepdf
+import re
 
 from decimal import Decimal
 
@@ -62,7 +58,7 @@ def _pikepdf_meta_is_valid(meta):
     return True
 
 
-def _pikepdf(input_files, pages, file_out):
+def export(input_files, pages, file_out):
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
     for row in pages:
@@ -81,44 +77,3 @@ def _pikepdf(input_files, pages, file_out):
             if _pikepdf_meta_is_valid(v):
                 outmeta[k] = v
     pdf_output.save(file_out)
-
-
-def _pypdf2(input_files, pages, file_out):
-    pdf_input = []
-    pdf_output = PdfFileWriter()
-    for pdfdoc in input_files:
-        pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'),
-                                   strict=False, overwriteWarnings=False)
-        pdf_input.append(pdfdoc_inp)
-
-    for row in pages:
-        # add pages from input to output document
-        current_page = copy(pdf_input[row[2] - 1].getPage(row[3] - 1))
-        angle = row[6]
-        angle0 = current_page.get("/Rotate", 0)
-        # Workaround for https://github.com/mstamy2/PyPDF2/issues/337
-        angle0 = angle0 if isinstance(angle0, int) else angle0.getObject()
-        if angle != 0:
-            # rotateClockwise does not work if current angle is an IndirectObject
-            a = generic.NumberObject(angle0 + angle)
-            current_page[generic.NameObject("/Rotate")] = a
-
-        cropped = _mediabox(row, angle, angle0, list(current_page.mediaBox.lowerLeft) +
-                            list(current_page.mediaBox.upperRight))
-        if cropped:
-            current_page.mediaBox.lowerLeft = cropped[:2]
-            current_page.mediaBox.upperRight = cropped[2:]
-        pdf_output.addPage(current_page)
-
-    # get the metadata of the first imported document
-    metadata = pdf_input[0].getDocumentInfo()
-    if metadata is not None:
-        metadata = {k: v for k, v in metadata.items()
-                    if isinstance(v, (str, bytes))}
-        pdf_output.addMetadata(metadata)
-    # finally, write "output" to document-output.pdf
-    with open(file_out, 'wb') as f:
-        pdf_output.write(f)
-
-
-export = _pypdf2 if pikepdf is None else _pikepdf
