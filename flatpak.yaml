@@ -33,6 +33,17 @@ modules:
     type: archive
   build-commands:
   - pip3 install --prefix=/app .
+- name: pikepdf
+  buildsystem: simple
+  build-commands:
+  - pip3 install --no-index --prefix=$FLATPAK_DEST lxml-*.whl pikepdf-*.whl
+  sources:
+  - type: file
+    url: https://files.pythonhosted.org/packages/25/a0/816397f097ec58af4a9959130c0f748861ecf29d71e1f184b868738aa203/pikepdf-1.8.1-cp37-cp37m-manylinux2010_x86_64.whl
+    sha256: ce43742788e5757877b6d83134f8a554aef8fc90990a844075464b757bc57cd8
+  - type: file
+    url: https://files.pythonhosted.org/packages/95/60/552fc6e027bc1158ba4691cccfdf6eb77f206f2f21d3c1c5f23b89f68a0e/lxml-4.4.2-cp37-cp37m-manylinux1_x86_64.whl
+    sha256: 61409bd745a265a742f2693e4600e4dbd45cc1daebe1d5fad6fcb22912d44145
 - name: pdfarranger
   buildsystem: simple
   sources:
