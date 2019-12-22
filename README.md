@@ -39,7 +39,7 @@ sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobjec
 Then:
 
 ```
-pip3 install --user --upgrade -r https://raw.githubusercontent.com/jeromerobert/pdfarranger/master/requirements.txt
+pip3 install --user --upgrade https://github.com/jeromerobert/pdfarranger/zipball/master
 ```
 
 ## For developers

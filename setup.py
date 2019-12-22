@@ -51,7 +51,5 @@ setup(
     entry_points={
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     },
-    extras_require={
-        'pikepdf':  ['pikepdf'],
-    }
+    install_requires=['pikepdf'],
 )
