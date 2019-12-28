@@ -221,6 +221,16 @@ Author: Konstantinos Poulios
                         <property name="action_name">win.split</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_metadata">
+                        <property name="label" translatable="yes">Edit properties</property>
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_stock">False</property>
+                        <property name="action_name">win.metadata</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

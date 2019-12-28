@@ -97,6 +97,7 @@ from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 from . import undo
 from . import exporter
+from . import metadata
 
 if os.name == 'nt' and GLib.get_language_names():
     os.environ['LANG'] = GLib.get_language_names()[0]
@@ -265,6 +266,7 @@ class PdfArranger(Gtk.Application):
         self.iv_auto_scroll_direction = 0
         self.iv_auto_scroll_timer = None
         self.pdfqueue = []
+        self.metadata = {}
         self.pressed_button = None
         self.rendering_thread = None
         self.export_file = None
@@ -297,6 +299,7 @@ class PdfArranger(Gtk.Application):
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
             ('split', self.split_pages),
+            ('metadata', self.edit_metadata),
         ])
         accels = [
             ('delete', 'Delete'),
@@ -675,7 +678,8 @@ class PdfArranger(Gtk.Application):
         if only_selected:
             selection = self.iconview.get_selected_items()
             to_export = [row for row in self.model if row.path in selection]
-        exporter.export(self.pdfqueue, to_export, file_out)
+        m = metadata.merge(self.metadata, self.pdfqueue)
+        exporter.export(self.pdfqueue, to_export, file_out, m)
         self.export_directory = path
         self.export_file = file_out
         self.set_unsaved(False)
@@ -1057,6 +1061,9 @@ class PdfArranger(Gtk.Application):
             model.set_value(newit, 7, newcrop)
             model.set_value(iterator, 8, 1 - newcrop)
 
+    def edit_metadata(self, _action, _parameter, _unknown):
+        metadata.edit(self.metadata, self.pdfqueue, self.window)
+
     def crop_page_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping"""
 
@@ -1085,6 +1092,7 @@ class PdfArranger(Gtk.Application):
                             buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                                      Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_default_response(Gtk.ResponseType.OK)
+        dialog.set_resizable(False)
         margin = 12
         label = Gtk.Label(label=_('Cropping does not remove any content\n'
                                   'from the PDF file, it only hides it.'))
