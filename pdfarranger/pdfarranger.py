@@ -92,19 +92,17 @@ gi.require_version('Poppler', '0.18')
 from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
 
-from .iconview import CellRendererImage
-
-GObject.type_register(CellRendererImage)
-from . import undo
-from . import exporter
-from . import metadata
-
 if os.name == 'nt' and GLib.get_language_names():
     os.environ['LANG'] = GLib.get_language_names()[0]
 gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
 
+from . import undo
+from . import exporter
+from . import metadata
+from .iconview import CellRendererImage
+GObject.type_register(CellRendererImage)
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
