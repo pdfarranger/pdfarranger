@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
+"POT-Creation-Date: 2020-01-12 10:16+0100\n"
 "PO-Revision-Date: 2019-07-18 20:51+0200\n"
 "Last-Translator: O. Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/logari81/pdfshuffler/"
@@ -21,117 +21,84 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.3\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr "Nach _rechts drehen"
+#: pdfarranger/metadata.py:30
+msgid "Title"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr "Nach _links drehen"
+#: pdfarranger/metadata.py:31
+msgid "Creator"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr "_Zuschneiden..."
+#: pdfarranger/metadata.py:32
+msgid "Producer"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-msgid "_Delete"
-msgstr "Entfernen"
+#: pdfarranger/metadata.py:33
+msgid "Creator tool"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
-msgstr "Reihenfolge _umkehren"
+#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+msgid "Edit properties"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-msgid "_Export selection..."
-msgstr "Markierte Seiten _exportieren ..."
+#: pdfarranger/metadata.py:104
+msgid "Property"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger/metadata.py:104
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:506
 msgid "No document"
 msgstr "Keine Datei"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger/pdfarranger.py:508
 msgid "Several documents"
 msgstr "Mehrere Dateien"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger/pdfarranger.py:525
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Vorschauen werden erstellt... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
-msgid "page"
-msgstr "Seite"
-
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger/pdfarranger.py:614
 msgid "Export ..."
 msgstr "Exportieren ..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
 msgid "PDF files"
 msgstr "PDF-Dateien"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfarranger/pdfarranger.py:647
-#, python-format
-msgid ""
-"File %s is encrypted.\n"
-"Support for encrypted files has not been implemented yet.\n"
-"File export failed."
-msgstr ""
-"Datei %s ist verschlüsselt.\n"
-"Verschlüsselte Dateien werden noch nicht unterstützt.\n"
-"Exportieren der Datei fehlgeschlagen."
-
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger/pdfarranger.py:693
 msgid "Import..."
 msgstr "Importieren..."
 
-#: pdfarranger/pdfarranger.py:735
-msgid "OpenDocument not supported yet!"
-msgstr "OpenDocument-Dateien werden noch nicht unterstützt!"
-
-#: pdfarranger/pdfarranger.py:737
-msgid "Image file not supported yet!"
-msgstr "Bilddateien werden noch nicht unterstützt!"
-
-#: pdfarranger/pdfarranger.py:739
-#, python-format
-msgid "File type \"%s\" not supported!"
-msgstr "Dateityp \"%s\" wird nicht unterstützt!"
-
-#: pdfarranger/pdfarranger.py:741
-#, python-format
-msgid "File %s does not exist"
-msgstr "Die Datei %s existiert nicht"
-
-#: pdfarranger/pdfarranger.py:747
-msgid "Closed, no files selected"
-msgstr "Geschlossen, keine Datei wurde ausgewählt "
-
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Left"
 msgstr "Links"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Top"
 msgstr "Oben"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Bottom"
 msgstr "Unten"
 
-#: pdfarranger/pdfarranger.py:1147
+#: pdfarranger/pdfarranger.py:1090
 msgid "Crop Selected Pages"
 msgstr "Markierte Seiten zuschneiden"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger/pdfarranger.py:1098
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -139,23 +106,21 @@ msgstr ""
 "Das Zuschneiden entfernt keinen Inhalt\n"
 "aus der PDF-Datei, es blendet ihn nur aus."
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger/pdfarranger.py:1101
 msgid "Crop Margins"
 msgstr "Seitenränder zuschneiden"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, python-format
 msgid "% of width"
 msgstr "% der Breite"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, python-format
 msgid "% of height"
 msgstr "% der Höhe"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "Dialogfenster wurde geschlossen"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1218
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -164,62 +129,99 @@ msgstr ""
 "%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
 "Geschrieben in GTK+ und Python."
 
+#: pdfarranger/pdfarranger.py:1298
+msgid "page"
+msgstr "Seite"
+
 #: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "_Datei"
 
 #: data/pdfarranger.ui.h:2
+msgid "_Export selection..."
+msgstr "Markierte Seiten _exportieren ..."
+
+#: data/pdfarranger.ui.h:3
 msgid "_Edit"
 msgstr "Bearbeiten"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Rotate left"
 msgstr "Nach links drehen"
 
-#: data/pdfarranger.ui.h:4
+#: data/pdfarranger.ui.h:5
 msgid "Rotate right"
 msgstr "Nach rechts drehen"
 
-#: data/pdfarranger.ui.h:5
+#: data/pdfarranger.ui.h:6
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui.h:7
+msgid "Du_plicate"
+msgstr ""
+
+#: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
 msgstr "Reihenfolge umkehren"
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui.h:9
+msgid "Split pages"
+msgstr ""
+
+#: data/pdfarranger.ui.h:11
 msgid "_View"
 msgstr "Ansicht"
 
-#: data/pdfarranger.ui.h:8
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Vergrössern"
 
-#: data/pdfarranger.ui.h:9
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Verkleinern"
 
-#: data/pdfarranger.ui.h:10
+#: data/pdfarranger.ui.h:14
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: data/pdfarranger.ui.h:11
+#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr "Eine Datei öffnen und zum bereits geöffneten Dokument hinzufügen"
 
-#: data/pdfarranger.ui.h:12
+#: data/pdfarranger.ui.h:16
 msgid "Import"
 msgstr "Importieren"
 
-#: data/pdfarranger.ui.h:13
+#: data/pdfarranger.ui.h:17
 msgid "Save"
 msgstr "Speichern"
 
-#: data/pdfarranger.ui.h:14
+#: data/pdfarranger.ui.h:18
 msgid "Save as"
 msgstr "Speichern als"
 
-#: data/pdfarranger.ui.h:15
+#: data/pdfarranger.ui.h:19
 msgid "Delete"
 msgstr "Löschen"
+
+#: data/pdfarranger.ui.h:20
+msgid "Rotate _Left"
+msgstr "Nach _links drehen"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Rotate Right"
+msgstr "Nach _rechts drehen"
+
+#: data/pdfarranger.ui.h:22
+#, fuzzy
+msgid "C_rop"
+msgstr "_Zuschneiden..."
+
+#: data/pdfarranger.ui.h:23
+msgid "_Delete"
+msgstr "Entfernen"
+
+#: data/pdfarranger.ui.h:24
+msgid "Re_verse Order"
+msgstr "Reihenfolge _umkehren"

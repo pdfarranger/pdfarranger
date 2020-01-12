@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
+"POT-Creation-Date: 2020-01-12 10:16+0100\n"
 "PO-Revision-Date: 2017-02-26 16:16+0000\n"
 "Last-Translator: fri\n"
 "Language-Team: Czech (http://www.transifex.com/logari81/pdfshuffler/language/"
@@ -21,139 +21,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr "_Otočit vpravo"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr "Otočit _vlevo"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr "Oř_ezat..."
-
-#: pdfarranger/pdfarranger.py:317
-msgid "_Delete"
-msgstr "_Smazat"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
+#: pdfarranger/metadata.py:30
+msgid "Title"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-msgid "_Export selection..."
-msgstr "_Vyvést výběr..."
+#: pdfarranger/metadata.py:31
+msgid "Creator"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger/metadata.py:32
+msgid "Producer"
+msgstr ""
+
+#: pdfarranger/metadata.py:33
+msgid "Creator tool"
+msgstr ""
+
+#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+msgid "Edit properties"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Property"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:506
 msgid "No document"
 msgstr "Žádný dokument"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger/pdfarranger.py:508
 msgid "Several documents"
 msgstr "Několik dokumentů"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger/pdfarranger.py:525
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Vykreslují se náhledy... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
-msgid "page"
-msgstr "stránka"
-
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger/pdfarranger.py:614
 msgid "Export ..."
 msgstr "Vyvést..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
 msgid "PDF files"
 msgstr "Soubory PDF"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: pdfarranger/pdfarranger.py:647
-#, python-format
-msgid ""
-"File %s is encrypted.\n"
-"Support for encrypted files has not been implemented yet.\n"
-"File export failed."
-msgstr ""
-"Soubor %s je zašifrován.\n"
-"Podpora pro šifrované soubory ještě nebyla udělána.\n"
-"Soubor se nepodařilo vyvést.."
-
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger/pdfarranger.py:693
 msgid "Import..."
 msgstr "Zavést..."
 
-#: pdfarranger/pdfarranger.py:735
-msgid "OpenDocument not supported yet!"
-msgstr "OpenDocument ještě není podporován!"
-
-#: pdfarranger/pdfarranger.py:737
-msgid "Image file not supported yet!"
-msgstr "Soubory obrázků ještě nejsou podporovány!"
-
-#: pdfarranger/pdfarranger.py:739
-#, fuzzy, python-format
-msgid "File type \"%s\" not supported!"
-msgstr "Tento typ souboru není podporován!"
-
-#: pdfarranger/pdfarranger.py:741
-#, python-format
-msgid "File %s does not exist"
-msgstr "Soubor %s neexistuje"
-
-#: pdfarranger/pdfarranger.py:747
-msgid "Closed, no files selected"
-msgstr "Zavírá se, nebyly zvolený žádné soubory"
-
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Left"
 msgstr "Levý"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Right"
 msgstr "Pravý"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Top"
 msgstr "Horní"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Bottom"
 msgstr "Dolní"
 
-#: pdfarranger/pdfarranger.py:1147
+#: pdfarranger/pdfarranger.py:1090
 msgid "Crop Selected Pages"
 msgstr "Oříznout vybrané stránky"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger/pdfarranger.py:1098
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger/pdfarranger.py:1101
 msgid "Crop Margins"
 msgstr "Oříznout okraje"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of width"
 msgstr "% šířky"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of height"
 msgstr "% výšky"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "Dialog uzavřen"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1218
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -162,62 +127,99 @@ msgstr ""
 "%s je nástroj na přeuspořádání a měnění souborů PDF. Vyvíjeno za použití GTK"
 "+ a Pythonu"
 
+#: pdfarranger/pdfarranger.py:1298
+msgid "page"
+msgstr "stránka"
+
 #: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "So_ubor"
 
 #: data/pdfarranger.ui.h:2
+msgid "_Export selection..."
+msgstr "_Vyvést výběr..."
+
+#: data/pdfarranger.ui.h:3
 msgid "_Edit"
 msgstr "Ú_pravy"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Rotate left"
 msgstr "Otočit vlevo"
 
-#: data/pdfarranger.ui.h:4
+#: data/pdfarranger.ui.h:5
 msgid "Rotate right"
 msgstr "Otočit vpravo"
 
-#: data/pdfarranger.ui.h:5
+#: data/pdfarranger.ui.h:6
 msgid "Crop"
 msgstr "Ořezat"
 
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui.h:7
+msgid "Du_plicate"
+msgstr ""
+
+#: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
 msgstr ""
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui.h:9
+msgid "Split pages"
+msgstr ""
+
+#: data/pdfarranger.ui.h:11
 msgid "_View"
 msgstr "Po_hled"
 
-#: data/pdfarranger.ui.h:8
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: data/pdfarranger.ui.h:9
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: data/pdfarranger.ui.h:10
+#: data/pdfarranger.ui.h:14
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: data/pdfarranger.ui.h:11
+#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr "Otevřít soubor a připojit jej k nynějšímu dokumentu"
 
-#: data/pdfarranger.ui.h:12
+#: data/pdfarranger.ui.h:16
 msgid "Import"
 msgstr "Zavést"
 
-#: data/pdfarranger.ui.h:13
+#: data/pdfarranger.ui.h:17
 msgid "Save"
 msgstr "Uložit"
 
-#: data/pdfarranger.ui.h:14
+#: data/pdfarranger.ui.h:18
 msgid "Save as"
 msgstr "Uložit jako"
 
-#: data/pdfarranger.ui.h:15
+#: data/pdfarranger.ui.h:19
 msgid "Delete"
 msgstr "Smazat"
+
+#: data/pdfarranger.ui.h:20
+msgid "Rotate _Left"
+msgstr "Otočit _vlevo"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Rotate Right"
+msgstr "_Otočit vpravo"
+
+#: data/pdfarranger.ui.h:22
+#, fuzzy
+msgid "C_rop"
+msgstr "Oř_ezat..."
+
+#: data/pdfarranger.ui.h:23
+msgid "_Delete"
+msgstr "_Smazat"
+
+#: data/pdfarranger.ui.h:24
+msgid "Re_verse Order"
+msgstr ""

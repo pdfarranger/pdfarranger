@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
+"POT-Creation-Date: 2020-01-12 10:16+0100\n"
 "PO-Revision-Date: 2011-11-25 18:26+0100\n"
 "Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: SuliX Support Team <support@sulix.hu>\n"
@@ -21,141 +21,105 @@ msgstr ""
 "X-Poedit-Country: HUNGARY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr "Forgatás _Jobbra"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr "Forgatás _Balra"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr "_Vágás..."
-
-#: pdfarranger/pdfarranger.py:317
-#, fuzzy
-msgid "_Delete"
-msgstr "Törlés"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
+#: pdfarranger/metadata.py:30
+msgid "Title"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-#, fuzzy
-msgid "_Export selection..."
-msgstr "Exportálás..."
+#: pdfarranger/metadata.py:31
+msgid "Creator"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger/metadata.py:32
+msgid "Producer"
+msgstr ""
+
+#: pdfarranger/metadata.py:33
+msgid "Creator tool"
+msgstr ""
+
+#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+msgid "Edit properties"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Property"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:506
 msgid "No document"
 msgstr "Nincs dokumentum"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger/pdfarranger.py:508
 msgid "Several documents"
 msgstr "Néhány dokumentum"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger/pdfarranger.py:525
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Bélyegképek előállítása... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
-msgid "page"
-msgstr "oldal"
-
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger/pdfarranger.py:614
 msgid "Export ..."
 msgstr "Exportálás..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
 msgid "PDF files"
 msgstr "PDF fájlok"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
 msgid "All files"
 msgstr "Minden fájl"
 
-#: pdfarranger/pdfarranger.py:647
-#, fuzzy, python-format
-msgid ""
-"File %s is encrypted.\n"
-"Support for encrypted files has not been implemented yet.\n"
-"File export failed."
-msgstr "Az ilyen típusú fájlok jelenleg még nem támogatottak."
-
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger/pdfarranger.py:693
 #, fuzzy
 msgid "Import..."
 msgstr "_Importálás..."
 
-#: pdfarranger/pdfarranger.py:735
-msgid "OpenDocument not supported yet!"
-msgstr "Az OpenDocument formátum még nem támogatott!"
-
-#: pdfarranger/pdfarranger.py:737
-msgid "Image file not supported yet!"
-msgstr "A képfájl még nem támogatott!"
-
-#: pdfarranger/pdfarranger.py:739
-#, fuzzy, python-format
-msgid "File type \"%s\" not supported!"
-msgstr "A fájltípus nem támogatott!"
-
-#: pdfarranger/pdfarranger.py:741
-#, python-format
-msgid "File %s does not exist"
-msgstr "A fájl nem létezik: %s"
-
-#: pdfarranger/pdfarranger.py:747
-msgid "Closed, no files selected"
-msgstr "Bezárva, nincs fájl kiválasztva"
-
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Left"
 msgstr "Balra"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Right"
 msgstr "Jobbra"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Top"
 msgstr "Fent"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Bottom"
 msgstr "Lent"
 
-#: pdfarranger/pdfarranger.py:1147
+#: pdfarranger/pdfarranger.py:1090
 msgid "Crop Selected Pages"
 msgstr "A kiválasztott oldalak levágása"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger/pdfarranger.py:1098
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger/pdfarranger.py:1101
 msgid "Crop Margins"
 msgstr "Margók levágása"
 
-#: pdfarranger/pdfarranger.py:1166
-#, fuzzy
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of width"
 msgstr "% szélesség"
 
-#: pdfarranger/pdfarranger.py:1166
-#, fuzzy
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of height"
 msgstr "% magasság"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "Párbeszédablak bezárva"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1218
 #, fuzzy, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -164,63 +128,102 @@ msgstr ""
 "A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. "
 "GTK+ és Python segítségével írták"
 
+#: pdfarranger/pdfarranger.py:1298
+msgid "page"
+msgstr "oldal"
+
 #: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "_Fájl"
 
 #: data/pdfarranger.ui.h:2
+#, fuzzy
+msgid "_Export selection..."
+msgstr "Exportálás..."
+
+#: data/pdfarranger.ui.h:3
 msgid "_Edit"
 msgstr "_Szerkesztés"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Rotate left"
 msgstr "Forgatás balra"
 
-#: data/pdfarranger.ui.h:4
+#: data/pdfarranger.ui.h:5
 msgid "Rotate right"
 msgstr "Forgatás jobbra"
 
-#: data/pdfarranger.ui.h:5
+#: data/pdfarranger.ui.h:6
 msgid "Crop"
 msgstr "Levágás"
 
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui.h:7
+msgid "Du_plicate"
+msgstr ""
+
+#: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
 msgstr ""
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui.h:9
+msgid "Split pages"
+msgstr ""
+
+#: data/pdfarranger.ui.h:11
 msgid "_View"
 msgstr "_Nézet"
 
-#: data/pdfarranger.ui.h:8
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: data/pdfarranger.ui.h:9
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: data/pdfarranger.ui.h:10
+#: data/pdfarranger.ui.h:14
 msgid "_Help"
 msgstr "_Súgó"
 
-#: data/pdfarranger.ui.h:11
+#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr ""
 
-#: data/pdfarranger.ui.h:12
+#: data/pdfarranger.ui.h:16
 #, fuzzy
 msgid "Import"
 msgstr "_Importálás..."
 
-#: data/pdfarranger.ui.h:13
+#: data/pdfarranger.ui.h:17
 msgid "Save"
 msgstr "Mentés"
 
-#: data/pdfarranger.ui.h:14
+#: data/pdfarranger.ui.h:18
 msgid "Save as"
 msgstr "Mentés másként"
 
-#: data/pdfarranger.ui.h:15
+#: data/pdfarranger.ui.h:19
 msgid "Delete"
 msgstr "Törlés"
+
+#: data/pdfarranger.ui.h:20
+msgid "Rotate _Left"
+msgstr "Forgatás _Balra"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Rotate Right"
+msgstr "Forgatás _Jobbra"
+
+#: data/pdfarranger.ui.h:22
+#, fuzzy
+msgid "C_rop"
+msgstr "_Vágás..."
+
+#: data/pdfarranger.ui.h:23
+#, fuzzy
+msgid "_Delete"
+msgstr "Törlés"
+
+#: data/pdfarranger.ui.h:24
+msgid "Re_verse Order"
+msgstr ""

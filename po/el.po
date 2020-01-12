@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 17:29+0100\n"
+"POT-Creation-Date: 2020-01-12 10:16+0100\n"
 "PO-Revision-Date: 2017-02-26 16:16+0000\n"
 "Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/logari81/pdfshuffler/language/"
@@ -20,139 +20,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfarranger/pdfarranger.py:316
-msgid "_Rotate Right"
-msgstr "Περιστροφή  _Δεξιά"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "Rotate _Left"
-msgstr "Περιστροφή  _Αριστερά"
-
-#: pdfarranger/pdfarranger.py:316
-msgid "C_rop..."
-msgstr "_Περικοπή"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "_Delete"
-msgstr "Διαγραφή"
-
-#: pdfarranger/pdfarranger.py:317
-msgid "Re_verse Order"
+#: pdfarranger/metadata.py:30
+msgid "Title"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:317
-msgid "_Export selection..."
-msgstr "Εξαγωγή επιλεγμένων..."
+#: pdfarranger/metadata.py:31
+msgid "Creator"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:390
+#: pdfarranger/metadata.py:32
+msgid "Producer"
+msgstr ""
+
+#: pdfarranger/metadata.py:33
+msgid "Creator tool"
+msgstr ""
+
+#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+msgid "Edit properties"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Property"
+msgstr ""
+
+#: pdfarranger/metadata.py:104
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:506
 msgid "No document"
 msgstr "Κανένα έγγραφο"
 
-#: pdfarranger/pdfarranger.py:392
+#: pdfarranger/pdfarranger.py:508
 msgid "Several documents"
 msgstr "Διάφορα έγγραφα"
 
-#: pdfarranger/pdfarranger.py:409
+#: pdfarranger/pdfarranger.py:525
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Απεικόνιση μικρογραφιών... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:544
-msgid "page"
-msgstr "σελίδα"
-
-#: pdfarranger/pdfarranger.py:570
+#: pdfarranger/pdfarranger.py:614
 msgid "Export ..."
 msgstr "Εξαγωγή ..."
 
-#: pdfarranger/pdfarranger.py:579 pdfarranger/pdfarranger.py:716
+#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
 msgid "PDF files"
 msgstr "Αρχεία PDF"
 
-#: pdfarranger/pdfarranger.py:584 pdfarranger/pdfarranger.py:711
+#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: pdfarranger/pdfarranger.py:647
-#, python-format
-msgid ""
-"File %s is encrypted.\n"
-"Support for encrypted files has not been implemented yet.\n"
-"File export failed."
-msgstr ""
-"Το αρχείο e %s είναι κρυπτογραφημένο.\n"
-"Η υποστήριξη για κρυπτογραφημένα αρχεία δεν έχει υλοποιηθεί ακόμα.Η εξαγωγή "
-"του αρχείου απέτυχε."
-
-#: pdfarranger/pdfarranger.py:700
+#: pdfarranger/pdfarranger.py:693
 msgid "Import..."
 msgstr "Εισαγωγή ..."
 
-#: pdfarranger/pdfarranger.py:735
-msgid "OpenDocument not supported yet!"
-msgstr "Αρχεία τύπου OpenDocument δεν υποστηρίζονται!"
-
-#: pdfarranger/pdfarranger.py:737
-msgid "Image file not supported yet!"
-msgstr "Αρχεία εικόνων δεν υποστηρίζονται ακόμα!"
-
-#: pdfarranger/pdfarranger.py:739
-#, fuzzy, python-format
-msgid "File type \"%s\" not supported!"
-msgstr "Αυτός ο τύπος αρχείου δεν υποστηρίζεται!"
-
-#: pdfarranger/pdfarranger.py:741
-#, python-format
-msgid "File %s does not exist"
-msgstr "Το αρχείο %s δεν υπάρχει"
-
-#: pdfarranger/pdfarranger.py:747
-msgid "Closed, no files selected"
-msgstr "Κλείσιμο χωρίς επιλογή αρχείου"
-
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Left"
 msgstr "Αριστερά"
 
-#: pdfarranger/pdfarranger.py:1128
+#: pdfarranger/pdfarranger.py:1072
 msgid "Right"
 msgstr "Δεξιά"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Top"
 msgstr "Πάνω"
 
-#: pdfarranger/pdfarranger.py:1129
+#: pdfarranger/pdfarranger.py:1073
 msgid "Bottom"
 msgstr "Κάτω"
 
-#: pdfarranger/pdfarranger.py:1147
+#: pdfarranger/pdfarranger.py:1090
 msgid "Crop Selected Pages"
 msgstr "Περικοπή επιλεγμένων σελίδων"
 
-#: pdfarranger/pdfarranger.py:1154
+#: pdfarranger/pdfarranger.py:1098
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1156
+#: pdfarranger/pdfarranger.py:1101
 msgid "Crop Margins"
 msgstr "Αποκοπή περιθωρίων"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of width"
 msgstr "% του πλάτους"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1111
+#, fuzzy, python-format
 msgid "% of height"
 msgstr "% του ύψους"
 
-#: pdfarranger/pdfarranger.py:1201
-msgid "Dialog closed"
-msgstr "Κλείσιμο διαλόγου"
-
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1218
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -161,62 +126,99 @@ msgstr ""
 "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF. Είναι "
 "γραμμένο σε GTK+ και Python"
 
+#: pdfarranger/pdfarranger.py:1298
+msgid "page"
+msgstr "σελίδα"
+
 #: data/pdfarranger.ui.h:1
 msgid "_File"
 msgstr "_Αρχείο"
 
 #: data/pdfarranger.ui.h:2
+msgid "_Export selection..."
+msgstr "Εξαγωγή επιλεγμένων..."
+
+#: data/pdfarranger.ui.h:3
 msgid "_Edit"
 msgstr "_Επεξεργασία"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Rotate left"
 msgstr "Περιστροφή  αριστερά"
 
-#: data/pdfarranger.ui.h:4
+#: data/pdfarranger.ui.h:5
 msgid "Rotate right"
 msgstr "Περιστροφή  δεξιά"
 
-#: data/pdfarranger.ui.h:5
+#: data/pdfarranger.ui.h:6
 msgid "Crop"
 msgstr "Περικοπή"
 
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui.h:7
+msgid "Du_plicate"
+msgstr ""
+
+#: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
 msgstr ""
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui.h:9
+msgid "Split pages"
+msgstr ""
+
+#: data/pdfarranger.ui.h:11
 msgid "_View"
 msgstr "_Προβολή"
 
-#: data/pdfarranger.ui.h:8
+#: data/pdfarranger.ui.h:12
 msgid "Zoom in"
 msgstr "Μεγέθυνση"
 
-#: data/pdfarranger.ui.h:9
+#: data/pdfarranger.ui.h:13
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: data/pdfarranger.ui.h:10
+#: data/pdfarranger.ui.h:14
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: data/pdfarranger.ui.h:11
+#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr "Άνοιγμα ενός αρχείου και προσάρτηση στο τρέχον έγγραφο"
 
-#: data/pdfarranger.ui.h:12
+#: data/pdfarranger.ui.h:16
 msgid "Import"
 msgstr "Εισαγωγή"
 
-#: data/pdfarranger.ui.h:13
+#: data/pdfarranger.ui.h:17
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: data/pdfarranger.ui.h:14
+#: data/pdfarranger.ui.h:18
 msgid "Save as"
 msgstr "Αποθήκευση ως"
 
-#: data/pdfarranger.ui.h:15
+#: data/pdfarranger.ui.h:19
 msgid "Delete"
 msgstr "Διαγραφή"
+
+#: data/pdfarranger.ui.h:20
+msgid "Rotate _Left"
+msgstr "Περιστροφή  _Αριστερά"
+
+#: data/pdfarranger.ui.h:21
+msgid "_Rotate Right"
+msgstr "Περιστροφή  _Δεξιά"
+
+#: data/pdfarranger.ui.h:22
+#, fuzzy
+msgid "C_rop"
+msgstr "_Περικοπή"
+
+#: data/pdfarranger.ui.h:23
+msgid "_Delete"
+msgstr "Διαγραφή"
+
+#: data/pdfarranger.ui.h:24
+msgid "Re_verse Order"
+msgstr ""
