@@ -23,31 +23,32 @@ msgstr ""
 
 #: pdfarranger/metadata.py:30
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: pdfarranger/metadata.py:31
 msgid "Creator"
-msgstr ""
+msgstr "Ersteller"
 
 #: pdfarranger/metadata.py:32
 msgid "Producer"
-msgstr ""
+msgstr "Hersteller"
 
 #: pdfarranger/metadata.py:33
 msgid "Creator tool"
-msgstr ""
+# not sure what that is and how to translate it
+msgstr "Erstellungswerkzeug"
 
 #: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
 msgid "Edit properties"
-msgstr ""
+msgstr "Eigenschaften ändern"
 
 #: pdfarranger/metadata.py:104
 msgid "Property"
-msgstr ""
+msgstr "Eigenschaft"
 
 #: pdfarranger/metadata.py:104
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: pdfarranger/pdfarranger.py:506
 msgid "No document"
@@ -159,7 +160,7 @@ msgstr "Zuschneiden"
 
 #: data/pdfarranger.ui.h:7
 msgid "Du_plicate"
-msgstr ""
+msgstr "Duplizieren"
 
 #: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
@@ -167,7 +168,7 @@ msgstr "Reihenfolge umkehren"
 
 #: data/pdfarranger.ui.h:9
 msgid "Split pages"
-msgstr ""
+msgstr "Seiten teilen"
 
 #: data/pdfarranger.ui.h:11
 msgid "_View"
