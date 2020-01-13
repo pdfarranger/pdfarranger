@@ -1,6 +1,6 @@
 # Japanese translation for pdfarranger.
 # Copyright (C) 2008-2017 Konstantinos Poulios
-# Copyright (C) 2018-2019 pdfarranger's COPYRIGHT HOLDER
+# Copyright (C) 2018-2020 pdfarranger's COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010.
 # sicklylife <translation@sicklylife.jp>, 2019-2020.
