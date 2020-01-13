@@ -1,16 +1,16 @@
 # Japanese translation for pdfarranger.
 # Copyright (C) 2008-2017 Konstantinos Poulios
-# Copyright (C) 2018-2019 pdfarranger's COPYRIGHT HOLDER
+# Copyright (C) 2018-2020 pdfarranger's COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010.
-# sicklylife <translation@sicklylife.jp>, 2019.
+# sicklylife <translation@sicklylife.jp>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 10:16+0100\n"
-"PO-Revision-Date: 2019-10-15 20:05+0900\n"
+"PO-Revision-Date: 2020-01-13 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -21,31 +21,31 @@ msgstr ""
 
 #: pdfarranger/metadata.py:30
 msgid "Title"
-msgstr ""
+msgstr "タイトル"
 
 #: pdfarranger/metadata.py:31
 msgid "Creator"
-msgstr ""
+msgstr "作成"
 
 #: pdfarranger/metadata.py:32
 msgid "Producer"
-msgstr ""
+msgstr "変換"
 
 #: pdfarranger/metadata.py:33
 msgid "Creator tool"
-msgstr ""
+msgstr "作成ツール"
 
 #: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
 msgid "Edit properties"
-msgstr ""
+msgstr "プロパティを編集"
 
 #: pdfarranger/metadata.py:104
 msgid "Property"
-msgstr ""
+msgstr "プロパティ"
 
 #: pdfarranger/metadata.py:104
 msgid "Value"
-msgstr ""
+msgstr "値"
 
 #: pdfarranger/pdfarranger.py:506
 msgid "No document"
@@ -165,7 +165,7 @@ msgstr "逆順"
 
 #: data/pdfarranger.ui.h:9
 msgid "Split pages"
-msgstr ""
+msgstr "ページを分割"
 
 #: data/pdfarranger.ui.h:11
 msgid "_View"
