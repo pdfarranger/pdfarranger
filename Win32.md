@@ -17,16 +17,18 @@ pacman -Su
 Install the required dependencies:
 
 ```
-pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject \
- mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-poppler \
- mingw-w64-x86_64-python3-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
- mingw-w64-x86_64-gettext mingw-w64-x86_64-python3-cx_Freeze \
- python3-pip python3-distutils-extra git
+pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
+ mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler \
+ mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
+ mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls \
+ mingw-w64-x86_64-python-pip python3-distutils-extra git
 ```
 
-Edit `/mingw64/lib/python3.7/site-packages/cx_Freeze/freezer.py` to revert
-<https://github.com/anthony-tuininga/cx_Freeze/commit/cebdef5> until
-<https://github.com/anthony-tuininga/cx_Freeze/issues/366> get fixed.
+and
+
+```
+/mingw64/bin/python3 -m pip install --user pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
+```
 
 Get the pdfarranger sources from a MSYS2 shell:
 
@@ -38,7 +40,6 @@ git clone https://github.com/jeromerobert/pdfarranger.git
 
 ```
 cd pdfarranger
-/mingw64/bin/python3 -m pip install --user pikepdf
 ./setup.py build
 /mingw64/bin/python3 setup_win32.py bdist_msi
 /mingw64/bin/python3 setup_win32.py bdist_zip

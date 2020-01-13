@@ -108,8 +108,8 @@ addicons()
 
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
-    excludes=[],
-    include_files=include_files
+    excludes=['tkinter', 'test', 'distutils'],
+    include_files=include_files,
 )
 
 msi_options = dict(
