@@ -35,7 +35,6 @@ msgstr "Hersteller"
 
 #: pdfarranger/metadata.py:33
 msgid "Creator tool"
-# not sure what that is and how to translate it
 msgstr "Erstellungswerkzeug"
 
 #: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
