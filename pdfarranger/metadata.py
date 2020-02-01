@@ -23,13 +23,14 @@ import json
 from gi.repository import Gtk
 _ = gettext.gettext
 
+PRODUCER = '{http://ns.adobe.com/pdf/1.3/}Producer'
 # List of supported meta data with their user representation
 # see https://wwwimages2.adobe.com/content/dam/acom/en/devnet/xmp/pdfs/XMP%20SDK%20Release%20cc-2016-08/XMPSpecificationPart1.pdf
 # if you want to add more
 _LABELS = {
     '{http://purl.org/dc/elements/1.1/}title': _('Title'),
     '{http://purl.org/dc/elements/1.1/}creator': _('Creator'),
-    '{http://ns.adobe.com/pdf/1.3/}Producer': _('Producer'),
+    PRODUCER: _('Producer'),
     '{http://ns.adobe.com/xap/1.0/}CreatorTool': _('Creator tool')
 }
 

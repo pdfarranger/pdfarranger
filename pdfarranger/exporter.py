@@ -17,6 +17,7 @@
 
 import pikepdf
 import re
+from . import metadata
 
 from decimal import Decimal
 
@@ -43,7 +44,7 @@ def _mediabox(row, angle, angle0, box):
         return [Decimal(v) for v in [x1_new, y1_new, x2_new, y2_new]]
 
 
-def export(input_files, pages, file_out, metadata):
+def export(input_files, pages, file_out, mdata):
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
     for row in pages:
@@ -56,8 +57,9 @@ def export(input_files, pages, file_out, metadata):
         if cropped:
             current_page.MediaBox = cropped
         pdf_output.pages.append(current_page)
-    with pdf_output.open_metadata() as outmeta:
+    ppae = not metadata.PRODUCER in mdata
+    with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
         outmeta.load_from_docinfo(pdf_input[0].docinfo)
-        for k, v in metadata.items():
+        for k, v in mdata.items():
             outmeta[k] = v
     pdf_output.save(file_out)
