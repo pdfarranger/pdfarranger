@@ -1060,7 +1060,8 @@ class PdfArranger(Gtk.Application):
             model.set_value(iterator, 8, 1 - newcrop)
 
     def edit_metadata(self, _action, _parameter, _unknown):
-        metadata.edit(self.metadata, self.pdfqueue, self.window)
+        if metadata.edit(self.metadata, self.pdfqueue, self.window):
+            self.set_unsaved(True)
 
     def crop_page_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping"""
