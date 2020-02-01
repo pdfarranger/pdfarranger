@@ -34,13 +34,13 @@ def _mediabox(row, angle, angle0, box):
             perm.insert(1, perm.pop(2))
             crop = [crop_init[perm[side]] for side in range(4)]
         # PyPDF2 FloatObject instances are decimal.Decimal objects
-        crop = [Decimal(x) for x in crop]
-        x1, y1, x2, y2 = box
+        x1, y1, x2, y2 = [float(x) for x in box]
         x1_new = x1 + (x2 - x1) * crop[0]
         x2_new = x2 - (x2 - x1) * crop[1]
         y1_new = y1 + (y2 - y1) * crop[3]
         y2_new = y2 - (y2 - y1) * crop[2]
-        return [x1_new, y1_new, x2_new, y2_new]
+        # TODO: check if Decimal is still needed now that we dropped PyPDF2
+        return [Decimal(v) for v in [x1_new, y1_new, x2_new, y2_new]]
 
 
 def export(input_files, pages, file_out, metadata):
