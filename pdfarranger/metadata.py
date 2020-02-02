@@ -23,13 +23,17 @@ import json
 from gi.repository import Gtk
 _ = gettext.gettext
 
+# The producer property can be overriden by pikepdf
 PRODUCER = '{http://ns.adobe.com/pdf/1.3/}Producer'
+# Currently the only property which support lists as values. If you add more
+# please implement a generic mecanism.
+_CREATOR = '{http://purl.org/dc/elements/1.1/}creator'
 # List of supported meta data with their user representation
 # see https://wwwimages2.adobe.com/content/dam/acom/en/devnet/xmp/pdfs/XMP%20SDK%20Release%20cc-2016-08/XMPSpecificationPart1.pdf
 # if you want to add more
 _LABELS = {
     '{http://purl.org/dc/elements/1.1/}title': _('Title'),
-    '{http://purl.org/dc/elements/1.1/}creator': _('Creator'),
+    _CREATOR: _('Creator'),
     PRODUCER: _('Producer'),
     '{http://ns.adobe.com/xap/1.0/}CreatorTool': _('Creator tool')
 }
@@ -63,14 +67,31 @@ def merge(metadata, input_files):
     return r
 
 
-def _metatostr(meta):
+def _metatostr(value, name):
     """ Convert a meta data value from list to string if it's not a string """
-    if isinstance(meta, str):
-        return meta, False
-    elif isinstance(meta, list):
-        return json.dumps(meta), True
-    else:
-        None, None
+    if isinstance(value, str) and len(value) > 0:
+        return value
+    elif isinstance(value, list) and len(value) > 0 and name == _CREATOR:
+        if len(value) == 1:
+            return _metatostr(value[0], name)
+        else:
+            return json.dumps(value)
+    return None
+
+
+def _strtometa(value, name):
+    if len(value) == 0:
+        return None
+    try:
+        r = json.loads(value) if name == _CREATOR else value
+        if isinstance(r, list):
+            return None if len(r) == 0 else r
+        else:
+            # r is a dict which is not supported so we revert back
+            # to a plain string
+            return value
+    except json.decoder.JSONDecodeError:
+        return value
 
 
 class _EditedEventHandler(object):
@@ -95,12 +116,12 @@ def edit(metadata, pdffiles, parent):
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                                  Gtk.STOCK_OK, Gtk.ResponseType.OK))
     dialog.set_default_response(Gtk.ResponseType.OK)
-    # Property, Value, is json (hidden), XMP name (hidden)
-    liststore = Gtk.ListStore(str, str, bool, str)
+    # Property, Value, XMP name (hidden)
+    liststore = Gtk.ListStore(str, str, str)
     mergedmetadata = merge(metadata, pdffiles)
     for xlabel, label in _LABELS.items():
-        metastr, isjson = _metatostr(mergedmetadata.get(xlabel, ''))
-        liststore.append([label, metastr, isjson, xlabel])
+        metastr = _metatostr(mergedmetadata.get(xlabel, ''), xlabel)
+        liststore.append([label, metastr, xlabel])
     treeview = Gtk.TreeView.new_with_model(liststore)
     for i, v in enumerate([(_("Property"), False), (_("Value")+" "*30, True)]):
         title, editable = v
@@ -118,6 +139,10 @@ def edit(metadata, pdffiles, parent):
     dialog.destroy()
     if r:
         for row in liststore:
-            value = json.loads(row[1]) if row[2] else row[1]
-            metadata[row[3]] = value
+            value = _strtometa(row[1], row[2])
+            if value is None:
+                if row[2] in metadata:
+                    del metadata[row[2]]
+            else:
+                metadata[row[2]] = value
     return r
