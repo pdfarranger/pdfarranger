@@ -56,7 +56,7 @@ def export(input_files, pages, file_out, mdata):
         cropped = _mediabox(row, angle, angle0, current_page.MediaBox)
         if cropped:
             current_page.MediaBox = cropped
-        pdf_output.pages.append(current_page)
+        pdf_output.pages.append(pdf_output.copy_foreign(current_page))
     ppae = not metadata.PRODUCER in mdata
     with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
         outmeta.load_from_docinfo(pdf_input[0].docinfo)
