@@ -16,7 +16,6 @@
 
 
 import pikepdf
-import re
 from . import metadata
 
 from decimal import Decimal
@@ -57,7 +56,7 @@ def export(input_files, pages, file_out, mdata):
         if cropped:
             current_page.MediaBox = cropped
         pdf_output.pages.append(pdf_output.copy_foreign(current_page))
-    ppae = not metadata.PRODUCER in mdata
+    ppae = metadata.PRODUCER not in mdata
     with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
         outmeta.load_from_docinfo(pdf_input[0].docinfo)
         for k, v in mdata.items():
