@@ -676,11 +676,12 @@ class PdfArranger(Gtk.Application):
         if only_selected:
             selection = self.iconview.get_selected_items()
             to_export = [row for row in self.model if row.path in selection]
+        else:
+            self.export_directory = path
+            self.export_file = file_out
+            self.set_unsaved(False)
         m = metadata.merge(self.metadata, self.pdfqueue)
         exporter.export(self.pdfqueue, to_export, file_out, m)
-        self.export_directory = path
-        self.export_file = file_out
-        self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, _action, _target, _unknown):
         self.choose_export_pdf_name(True)
