@@ -80,7 +80,7 @@ def _metatostr(value, name):
 
 
 def _strtometa(value, name):
-    if len(value) == 0:
+    if value is None or len(value) == 0:
         return None
     try:
         r = json.loads(value) if name == _CREATOR else value
