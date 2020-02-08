@@ -95,11 +95,36 @@ def _strtometa(value, name):
 
 
 class _EditedEventHandler(object):
+    """
+    Callbacks to save the data entered into the "Edit properties" fields.
+
+    For basic saving just the edited method would be needed. The rest is a
+    workaround for Gtk interpreting a lost focus (including clicking "Apply")
+    as a cancelled edit and therefore discarding the edit currently in progress.
+    To avoid that, we need to save the text on each changed event to
+    self.new_text and then save it to the liststore on canceled. We can not
+    save it directly to the liststore since that stops editing after each
+    keypress.
+    """
+
     def __init__(self, liststore):
         self.liststore = liststore
+        self.path = None
+        self.new_text = None
 
-    def __call__(self, renderer, path, newtext):
-        self.liststore[path][1] = newtext
+    def started(self, _renderer, editable, path):
+        self.path = path
+        editable.connect("changed", self.editable_changed)
+
+    def editable_changed(self, editable):
+        self.new_text = editable.get_text()
+
+    def edited(self, _renderer, path, new_text):
+        self.liststore[path][1] = new_text
+
+    def canceled(self, _renderer):
+        if self.new_text is not None:
+            self.liststore[self.path][1] = self.new_text
 
 
 def edit(metadata, pdffiles, parent):
@@ -128,7 +153,10 @@ def edit(metadata, pdffiles, parent):
         renderer = Gtk.CellRendererText()
         if editable:
             renderer.set_property("editable", True)
-            renderer.connect("edited", _EditedEventHandler(liststore))
+            handler = _EditedEventHandler(liststore)
+            renderer.connect("editing-started", handler.started)
+            renderer.connect("edited", handler.edited)
+            renderer.connect("editing-canceled", handler.canceled)
         column = Gtk.TreeViewColumn(title, renderer, text=i)
         treeview.append_column(column)
     treeview.props.margin = 12
