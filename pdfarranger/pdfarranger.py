@@ -277,6 +277,8 @@ class PdfArranger(Gtk.Application):
         for f in files:
             a.addpages(f.get_path())
         a.commit()
+        if len(files) == 1:
+            self.set_unsaved(False)
 
     def __create_actions(self):
         # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
@@ -799,6 +801,7 @@ class PdfArranger(Gtk.Application):
                 if target == 'MODEL_ROW_INTERN':
                     move = context.get_actions() & Gdk.DragAction.MOVE
                     self.undomanager.commit("Move" if move else "Copy")
+                    self.set_unsaved(True)
                     data.sort(key=int, reverse=not before)
                     ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
                                      for p in data]
@@ -836,6 +839,7 @@ class PdfArranger(Gtk.Application):
             # pdfarranger instance
             return
         self.undomanager.commit("Move")
+        self.set_unsaved(True)
         model = self.iconview.get_model()
         ref_del_list = [Gtk.TreeRowReference.new(model, path) for path in selection]
         for ref_del in ref_del_list:
@@ -1312,6 +1316,7 @@ class PageAdder(object):
         if len(self.pages) == 0:
             return False
         self.app.undomanager.commit("Add")
+        self.app.set_unsaved(True)
         for p in self.pages:
             it = self.app.model.append(p)
             if self.treerowref:
