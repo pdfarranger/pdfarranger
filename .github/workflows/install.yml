@@ -1,0 +1,10 @@
+name: pdfarranger
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: jeromerobert/pdfarranger-docker-ci
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install
+      run: pip3 install .

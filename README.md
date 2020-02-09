@@ -1,6 +1,7 @@
 ## About
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f30fcd52c2fe4d438542275876221ecd)](https://app.codacy.com/app/jeromerobert/pdfarranger?utm_source=github.com&utm_medium=referral&utm_content=jeromerobert/pdfarranger&utm_campaign=Badge_Grade_Settings)
+![pdfarranger](https://github.com/jeromerobert/pdfarranger/workflows/pdfarranger/badge.svg)
 
 *pdfarranger* is a small python-gtk application, which helps the user to merge
 or split pdf documents and rotate, crop and rearrange their pages using an
