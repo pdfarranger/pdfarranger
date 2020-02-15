@@ -850,7 +850,7 @@ class PdfArranger(Gtk.Application):
     def iv_dnd_motion(self, _iconview, _context, _x, y, _etime):
         """Handles the drag-motion signal in order to auto-scroll the view"""
 
-        autoscroll_area = 40
+        autoscroll_area = 80
         sw_vadj = self.sw.get_vadjustment()
         sw_height = self.sw.get_allocation().height
         if y - sw_vadj.get_value() < autoscroll_area:
