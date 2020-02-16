@@ -43,6 +43,7 @@ msgstr "Eigenschaften ändern"
 
 #: pdfarranger/metadata.py:104
 msgid "Property"
+# no comments here
 msgstr "Eigenschaft"
 
 #: pdfarranger/metadata.py:104
