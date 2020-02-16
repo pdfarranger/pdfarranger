@@ -830,6 +830,22 @@ class PdfArranger(Gtk.Application):
                         pageadder.addpages(filename, npage, angle, crop)
                     if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
+                        
+            else:  #if no document open in received instance
+                target = selection_data.get_target().name()
+                
+                if target == 'MODEL_ROW_EXTERN':
+                    pageadder = PageAdder(self)
+                
+                    while data:
+                        tmp = data.pop(0).split('\n')
+                        filename = tmp[0]
+                        npage, angle = [int(k) for k in tmp[1:3]]
+                        crop = [float(side) for side in tmp[3:7]]
+                        pageadder.addpages(filename, npage, angle, crop)
+                    if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
+                        context.finish(True, True, etime)
+            
 
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
