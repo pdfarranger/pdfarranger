@@ -798,54 +798,41 @@ class PdfArranger(Gtk.Application):
             if ref_to:
                 before = (position == Gtk.IconViewDropPosition.DROP_LEFT
                           or position == Gtk.IconViewDropPosition.DROP_ABOVE)
-                target = selection_data.get_target().name()
-                if target == 'MODEL_ROW_INTERN':
-                    move = context.get_actions() & Gdk.DragAction.MOVE
-                    self.undomanager.commit("Move" if move else "Copy")
-                    self.set_unsaved(True)
-                    data.sort(key=int, reverse=not before)
-                    ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
-                                     for p in data]
-                    iter_to = self.model.get_iter(ref_to.get_path())
+            target = selection_data.get_target().name()
+                
+            if target == 'MODEL_ROW_INTERN':
+                move = context.get_actions() & Gdk.DragAction.MOVE
+                self.undomanager.commit("Move" if move else "Copy")
+                self.set_unsaved(True)
+                data.sort(key=int, reverse=not before)
+                ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
+                                 for p in data]
+                iter_to = self.model.get_iter(ref_to.get_path())
+                for ref_from in ref_from_list:
+                    row = model[model.get_iter(ref_from.get_path())]
+                    if before:
+                        model.insert_before(iter_to, row[:])
+                    else:
+                        model.insert_after(iter_to, row[:])
+                if move:
                     for ref_from in ref_from_list:
-                        row = model[model.get_iter(ref_from.get_path())]
-                        if before:
-                            model.insert_before(iter_to, row[:])
-                        else:
-                            model.insert_after(iter_to, row[:])
-                    if move:
-                        for ref_from in ref_from_list:
-                            model.remove(model.get_iter(ref_from.get_path()))
+                        model.remove(model.get_iter(ref_from.get_path()))
 
-                elif target == 'MODEL_ROW_EXTERN':
-                    pageadder = PageAdder(self)
+            elif target == 'MODEL_ROW_EXTERN':
+                pageadder = PageAdder(self)
+                if ref_to:
                     pageadder.move(ref_to, before)
                     if not before:
                         data.reverse()
-                    while data:
-                        tmp = data.pop(0).split('\n')
-                        filename = tmp[0]
-                        npage, angle = [int(k) for k in tmp[1:3]]
-                        crop = [float(side) for side in tmp[3:7]]
-                        pageadder.addpages(filename, npage, angle, crop)
-                    if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
-                        context.finish(True, True, etime)
+                while data:
+                    tmp = data.pop(0).split('\n')
+                    filename = tmp[0]
+                    npage, angle = [int(k) for k in tmp[1:3]]
+                    crop = [float(side) for side in tmp[3:7]]
+                    pageadder.addpages(filename, npage, angle, crop)
+                if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
+                    context.finish(True, True, etime)
                         
-            else:  #if no document open in received instance.
-                target = selection_data.get_target().name()
-                
-                if target == 'MODEL_ROW_EXTERN':
-                    pageadder = PageAdder(self)
-                
-                    while data:
-                        tmp = data.pop(0).split('\n')
-                        filename = tmp[0]
-                        npage, angle = [int(k) for k in tmp[1:3]]
-                        crop = [float(side) for side in tmp[3:7]]
-                        pageadder.addpages(filename, npage, angle, crop)
-                    if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
-                        context.finish(True, True, etime)
-    
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
         been moved to another instance."""
