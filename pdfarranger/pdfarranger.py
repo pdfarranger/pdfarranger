@@ -845,8 +845,7 @@ class PdfArranger(Gtk.Application):
                         pageadder.addpages(filename, npage, angle, crop)
                     if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
-            
-
+    
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
         been moved to another instance."""
