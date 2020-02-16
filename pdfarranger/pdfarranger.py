@@ -831,7 +831,7 @@ class PdfArranger(Gtk.Application):
                     if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
                         
-            else:  #if no document open in received instance
+            else:  #if no document open in received instance.
                 target = selection_data.get_target().name()
                 
                 if target == 'MODEL_ROW_EXTERN':
