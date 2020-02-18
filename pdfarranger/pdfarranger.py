@@ -795,11 +795,10 @@ class PdfArranger(Gtk.Application):
                 if len(model) > 0:  # find the iterator of the last row
                     row = model[-1]
                     ref_to = Gtk.TreeRowReference.new(model, row.path)
-            if ref_to:
-                before = (position == Gtk.IconViewDropPosition.DROP_LEFT
-                          or position == Gtk.IconViewDropPosition.DROP_ABOVE)
+            before = (position == Gtk.IconViewDropPosition.DROP_LEFT
+                      or position == Gtk.IconViewDropPosition.DROP_ABOVE)
             target = selection_data.get_target().name()
-                
+
             if target == 'MODEL_ROW_INTERN':
                 move = context.get_actions() & Gdk.DragAction.MOVE
                 self.undomanager.commit("Move" if move else "Copy")
@@ -820,10 +819,9 @@ class PdfArranger(Gtk.Application):
 
             elif target == 'MODEL_ROW_EXTERN':
                 pageadder = PageAdder(self)
-                if ref_to:
-                    pageadder.move(ref_to, before)
-                    if not before:
-                        data.reverse()
+                pageadder.move(ref_to, before)
+                if not before:
+                    data.reverse()
                 while data:
                     tmp = data.pop(0).split('\n')
                     filename = tmp[0]
@@ -832,7 +830,7 @@ class PdfArranger(Gtk.Application):
                     pageadder.addpages(filename, npage, angle, crop)
                 if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
                     context.finish(True, True, etime)
-                        
+
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
         been moved to another instance."""
