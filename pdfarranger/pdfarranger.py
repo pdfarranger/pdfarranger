@@ -75,13 +75,13 @@ gi.check_version('3.10.2')
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-if Gtk.check_version(3, 4, 0):
+if Gtk.check_version(3, 12, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
                     'Installed GTK+ version is ' +
                     '.'.join([str(Gtk.get_major_version()),
                               str(Gtk.get_minor_version()),
                               str(Gtk.get_micro_version())]) +
-                    '. Required GTK+ version is 3.4 or higher.')
+                    '. Required GTK+ version is 3.12 or higher.')
 
 from gi.repository import Gdk
 from gi.repository import GObject  # for using custom signals
@@ -284,6 +284,31 @@ class PdfArranger(Gtk.Application):
         if len(files) == 1:
             self.set_unsaved(False)
 
+    def __build_from_file(self, path):
+        """ Return the path of a resource file """
+	# TODO: May be we could use Application.set_resource_base_path and
+	# get_menu_by_id in place of that
+        # Trying different possible locations
+        f = os.path.join(basedir, 'share', DOMAIN, path)
+        if not os.path.exists(f):
+            f = os.path.join(basedir, 'data', path)
+        if not os.path.exists(f):
+            f = '/usr/share/{}/{}'.format(DOMAIN, path)
+        if not os.path.exists(f):
+            f = '/usr/local/share/{}/{}'.format(DOMAIN, path)
+        b = Gtk.Builder()
+        b.set_translation_domain(DOMAIN)
+        b.add_from_file(f)
+        b.connect_signals(self)
+        return b
+
+    def __create_menus(self):
+        b = self.__build_from_file("menu.ui")
+        self.popup = Gtk.Menu.new_from_model(b.get_object("popup_menu"))
+        self.popup.attach_to_widget(self.window, None)
+        main_menu = self.uiXML.get_object("main_menu_button")
+        main_menu.set_menu_model(b.get_object("main_menu"))
+
     def __create_actions(self):
         # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
         # related some other are application related. As pdfarrager is a single window app does not
@@ -307,6 +332,7 @@ class PdfArranger(Gtk.Application):
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
             ('paste', self.on_action_paste, 'i'),
+            ('about', self.about_dialog),
         ])
         accels = [
             ('delete', 'Delete'),
@@ -331,14 +357,6 @@ class PdfArranger(Gtk.Application):
             self.set_accels_for_action("win." + a, [k])
         # Disable actions
         self.iv_selection_changed_event()
-        # Display accelerators in the menus
-        for o in self.uiXML.get_objects():
-            if isinstance(o, Gtk.MenuItem) and o.get_action_name() is not None:
-                an = Gio.Action.print_detailed_name(o.get_action_name(),
-                                                    o.get_action_target_value())
-                a = self.get_accels_for_action(an)
-                if len(a) > 0:
-                    o.get_child().set_accel(*Gtk.accelerator_parse(a[0]))
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
 
@@ -351,21 +369,7 @@ class PdfArranger(Gtk.Application):
             iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
         Gtk.Window.set_default_icon_name(ICON_ID)
-
-        # Import the user interface file, trying different possible locations
-        ui_path = os.path.join(basedir, 'share', DOMAIN, DOMAIN + '.ui')
-        if not os.path.exists(ui_path):
-            ui_path = os.path.join(basedir, 'data', DOMAIN + '.ui')
-        if not os.path.exists(ui_path):
-            ui_path = '/usr/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
-        if not os.path.exists(ui_path):
-            ui_path = '/usr/local/share/{}/{}.ui'.format(DOMAIN, DOMAIN)
-
-        self.uiXML = Gtk.Builder()
-        self.uiXML.set_translation_domain(DOMAIN)
-        self.uiXML.add_from_file(ui_path)
-        self.uiXML.connect_signals(self)
-
+        self.uiXML = self.__build_from_file(DOMAIN + '.ui')
         # Create the main window, and attach delete_event signal to terminating
         # the application
         self.window = self.uiXML.get_object('main_window')
@@ -466,9 +470,6 @@ class PdfArranger(Gtk.Application):
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
                                                 color_prelight)
 
-        self.popup = self.uiXML.get_object('popup_menu')
-        self.popup.attach_to_widget(self.window, None)
-
         GObject.type_register(PDFRenderer)
         GObject.signal_new('update_thumbnail', PDFRenderer,
                            GObject.SignalFlags.RUN_FIRST, None,
@@ -476,6 +477,7 @@ class PdfArranger(Gtk.Application):
                             GObject.TYPE_FLOAT])
         self.set_unsaved(False)
         self.__create_actions()
+        self.__create_menus()
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
@@ -1348,7 +1350,7 @@ class PdfArranger(Gtk.Application):
         self.undomanager.commit("Reorder")
         model.reorder(new_order)
 
-    def about_dialog(self, _widget, _data=None):
+    def about_dialog(self, _action, _parameter, _unknown):
         about_dialog = Gtk.AboutDialog()
         about_dialog.set_transient_for(self.window)
         about_dialog.set_modal(True)

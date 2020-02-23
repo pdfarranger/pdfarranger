@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2020 Jerome Robert
+
+This file is part of PDF-Arranger.
+
+PDF-Arranger is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PDF-Arranger is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<interface>
+  <menu id="main_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Add</attribute>
+        <attribute name="action">win.import</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Save</attribute>
+        <attribute name="action">win.save</attribute>
+        <attribute name="verb-icon">document-save-symbolic</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Save as</attribute>
+        <attribute name="action">win.save-as</attribute>
+        <attribute name="verb-icon">document-save-as-symbolic</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Export selection...</attribute>
+        <attribute name="action">win.export-selection</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Undo</attribute>
+        <attribute name="action">win.undo</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Redo</attribute>
+        <attribute name="action">win.redo</attribute>
+      </item>
+    </section>
+    <submenu>
+      <attribute name="label" translatable="yes">_Edit</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Rotate _Left</attribute>
+          <attribute name="action">win.rotate</attribute>
+          <attribute name="target" type="i">-90</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Rotate Right</attribute>
+          <attribute name="action">win.rotate</attribute>
+          <attribute name="target" type="i">90</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">C_rop</attribute>
+          <attribute name="action">win.crop</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Delete</attribute>
+          <attribute name="action">win.delete</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Du_plicate</attribute>
+          <attribute name="action">win.duplicate</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Re_verse Order</attribute>
+          <attribute name="action">win.reverse-order</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Split pages</attribute>
+          <attribute name="action">win.split</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Cut</attribute>
+          <attribute name="action">win.cut</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Copy</attribute>
+          <attribute name="action">win.copy</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste After</attribute>
+          <attribute name="action">win.paste</attribute>
+          <attribute name="target" type="i">0</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste Before</attribute>
+          <attribute name="action">win.paste</attribute>
+          <attribute name="target" type="i">1</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste Interleave Odd</attribute>
+          <attribute name="action">win.paste</attribute>
+          <attribute name="target" type="i">2</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste Interleave Even</attribute>
+          <attribute name="action">win.paste</attribute>
+          <attribute name="target" type="i">3</attribute>
+        </item>
+      </section>
+    </submenu>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom in</attribute>
+        <attribute name="action">win.zoom</attribute>
+        <attribute name="target" type="i">5</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Zoom out</attribute>
+        <attribute name="action">win.zoom</attribute>
+        <attribute name="target" type="i">-5</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Edit properties</attribute>
+        <attribute name="action">win.metadata</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">About</attribute>
+        <attribute name="action">win.about</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Quit</attribute>
+        <attribute name="action">win.quit</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="popup_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Delete</attribute>
+        <attribute name="action">win.delete</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Cut</attribute>
+        <attribute name="action">win.cut</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Copy</attribute>
+        <attribute name="action">win.copy</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Paste After</attribute>
+        <attribute name="action">win.paste</attribute>
+        <attribute name="target" type="i">0</attribute>
+      </item>
+      <submenu>
+        <attribute name="label" translatable="yes">Paste Special</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">Paste Before</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">1</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste Interleave Odd</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">2</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste Interleave Even</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">3</attribute>
+          </item>
+        </section>
+      </submenu>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Rotate _Left</attribute>
+        <attribute name="action">win.rotate</attribute>
+        <attribute name="target" type="i">-90</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Rotate Right</attribute>
+        <attribute name="action">win.rotate</attribute>
+        <attribute name="target" type="i">90</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">C_rop</attribute>
+        <attribute name="action">win.crop</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Du_plicate</attribute>
+        <attribute name="action">win.duplicate</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Re_verse Order</attribute>
+        <attribute name="action">win.reverse-order</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Split pages</attribute>
+        <attribute name="action">win.split</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Export selection...</attribute>
+        <attribute name="action">win.export-selection</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
