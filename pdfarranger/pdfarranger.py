@@ -252,7 +252,7 @@ class PdfArranger(Gtk.Application):
         self.iconview = None
         self.cellthmb = None
         self.progress_bar = None
-        self.progress_bar_timeout_id = 0
+        self.progress_bar_timeout_id = None
         self.popup = None
         self.is_unsaved = False
         self.zoom_level = None
@@ -487,7 +487,7 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
-        if self.progress_bar_timeout_id:
+        if self.progress_bar_timeout_id is not None:
             GObject.source_remove(self.progress_bar_timeout_id)
         self.progress_bar_timeout_id = \
             GObject.timeout_add(50, self.progress_bar_timeout)
@@ -525,6 +525,7 @@ class PdfArranger(Gtk.Application):
                                    % {'i1': cnt_finished, 'i2': cnt_all})
         if fraction >= 0.999:
             self.progress_bar.hide()
+            self.progress_bar_timeout_id = None
             return False
         elif not self.progress_bar.get_visible():
             self.progress_bar.show()
