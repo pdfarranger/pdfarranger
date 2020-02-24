@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
+import copy
 import pikepdf
 from . import metadata
 
@@ -50,12 +51,15 @@ def export(input_files, pages, file_out, mdata):
         current_page = pdf_input[row[2] - 1].pages[row[3] - 1]
         angle = row[6]
         angle0 = current_page.Rotate if '/Rotate' in current_page else 0
+        # Workaround for pikepdf <= 1.10.1
+        # https://github.com/pikepdf/pikepdf/issues/80#issuecomment-590533474
+        new_page = copy.copy(pdf_output.copy_foreign(current_page))
         if angle != 0:
-            current_page.Rotate = angle + angle0
+            new_page.Rotate = angle + angle0
         cropped = _mediabox(row, angle, angle0, current_page.MediaBox)
         if cropped:
-            current_page.MediaBox = cropped
-        pdf_output.pages.append(pdf_output.copy_foreign(current_page))
+            new_page.MediaBox = cropped
+        pdf_output.pages.append(new_page)
     ppae = metadata.PRODUCER not in mdata
     with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
         outmeta.load_from_docinfo(pdf_input[0].docinfo)
