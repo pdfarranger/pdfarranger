@@ -63,7 +63,7 @@ else:
         pass
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.4.1'
+VERSION = '1.4.2'
 WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
