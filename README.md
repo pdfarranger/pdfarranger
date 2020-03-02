@@ -13,6 +13,7 @@ interactive and intuitive graphical interface. It is a frontend for
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It's a humble attempt to make the project a bit more active.
 
+![screenshot of pdfarranger](http://screenshots.debian.net/screenshots/000/017/031/large.png)
 ## Binary distribution
 
 See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages).
