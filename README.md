@@ -20,25 +20,25 @@ See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-pac
 
 ## Install from source
 
-On Debian based distributions:
+**On Debian based distributions**
 
 ```
 sudo apt-get install python3-distutils-extra python3-wheel python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18 python3-setuptools
 ```
 
-On Arch Linux:
+**On Arch Linux**
 
 ```
 sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk3 python-cairo
 ```
 
-On Fedora
+**On Fedora**
 
 ```
 sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo intltool python3-wheel
 ```
 
-Then:
+**Then**
 
 ```
 pip3 install --user --upgrade https://github.com/jeromerobert/pdfarranger/zipball/master
