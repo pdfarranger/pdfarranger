@@ -35,7 +35,7 @@ sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk
 **On Fedora**
 
 ```
-sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo intltool python3-wheel
+sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo python3-wheel
 ```
 
 **Then**
