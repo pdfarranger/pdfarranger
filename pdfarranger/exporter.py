@@ -40,7 +40,7 @@ def _mediabox(row, angle, angle0, box):
         x2_new = x2 - (x2 - x1) * crop[1]
         y1_new = y1 + (y2 - y1) * crop[3]
         y2_new = y2 - (y2 - y1) * crop[2]
-        # TODO: check if Decimal is still needed now that we dropped PyPDF2
+        # pikepdf converts float to Decimal in most cases
         return [Decimal(v) for v in [x1_new, y1_new, x2_new, y2_new]]
 
 
