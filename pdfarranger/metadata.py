@@ -62,7 +62,10 @@ def merge(metadata, input_files):
         with doc.open_metadata() as meta:
             meta.load_from_docinfo(doc.docinfo)
             for k, v in meta.items():
-                if k not in metadata and _pikepdf_meta_is_valid(v):
+                if not _pikepdf_meta_is_valid(v):
+                    # workaround for https://github.com/pikepdf/pikepdf/issues/84
+                    del meta[k]
+                elif k not in metadata:
                     r[k] = v
     return r
 
