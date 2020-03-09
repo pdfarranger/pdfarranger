@@ -17,6 +17,8 @@
 
 import copy
 import pikepdf
+import traceback
+import sys
 from . import metadata
 
 from decimal import Decimal
@@ -44,16 +46,30 @@ def _mediabox(row, angle, angle0, box):
         return [Decimal(v) for v in [x1_new, y1_new, x2_new, y2_new]]
 
 
+_report_pikepdf_err = True
+
+
 def export(input_files, pages, file_out, mdata):
+    global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
     for row in pages:
         current_page = pdf_input[row[2] - 1].pages[row[3] - 1]
         angle = row[6]
         angle0 = current_page.Rotate if '/Rotate' in current_page else 0
+        new_page = pdf_output.copy_foreign(current_page)
         # Workaround for pikepdf <= 1.10.1
         # https://github.com/pikepdf/pikepdf/issues/80#issuecomment-590533474
-        new_page = copy.copy(pdf_output.copy_foreign(current_page))
+        try:
+            new_page = copy.copy(new_page)
+        except TypeError:
+            if _report_pikepdf_err:
+                _report_pikepdf_err = False
+                traceback.print_exc()
+                print("Current pikepdf version {}, required pikepdf version "
+                      "1.7.0 or greater. Continuing but pdfarranger will not "
+                      "work properly.".format(pikepdf.__version__),
+                      file=sys.stderr)
         if angle != 0:
             new_page.Rotate = angle + angle0
         cropped = _mediabox(row, angle, angle0, current_page.MediaBox)
