@@ -9,7 +9,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
 BugReportURL: https://sourceforge.net/p/pdfshuffler/feature-requests/34/
 SentUpstream: 2014-09-17
 -->
-<application>
+<component>
   <id type="desktop">pdfarranger.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <description>
@@ -26,4 +26,4 @@ SentUpstream: 2014-09-17
     <screenshot type="default">http://screenshots.debian.net/screenshots/000/017/031/large.png</screenshot>
   </screenshots>
   <updatecontact>jeromerobert@gmx.com</updatecontact>
-</application>
+</component>
