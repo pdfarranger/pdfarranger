@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 
+<!-- Generated with glade 3.22.0 
 
 Copyright (C) 2008-2017 Konstantinos Poulios
 
@@ -229,6 +229,70 @@ Author: Konstantinos Poulios
                         <property name="can_focus">False</property>
                         <property name="use_stock">False</property>
                         <property name="action_name">win.metadata</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem_edit">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_cut">
+                        <property name="label" translatable="yes">Cut</property>
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
+                        <property name="action_name">win.cut</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_copy">
+                        <property name="label" translatable="yes">Copy</property>
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
+                        <property name="action_name">win.copy</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem_paste_after">
+                        <property name="label" translatable="yes">Paste after</property>
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_stock">False</property>
+                        <property name="action_name">win.paste</property>
+                        <property name="action_target">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="imagemenuitem_paste_special">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Paste special</property>
+                        <property name="use_underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem_paste_before">
+                                <property name="label" translatable="yes">before</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">False</property>
+                                <property name="use_stock">False</property>
+                                <property name="action_name">win.paste</property>
+                                <property name="action_target">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -559,6 +623,64 @@ Author: Konstantinos Poulios
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="action_name">win.export-selection</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">_Cut</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.cut</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">_Copy</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.copy</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">_Paste after</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="action_name">win.paste</property>
+        <property name="action_target">0</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label" translatable="yes">Paste special</property>
+        <property name="use_underline">True</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="label" translatable="yes">before</property>
+                <property name="use_underline">True</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="action_name">win.paste</property>
+                <property name="action_target">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </object>
