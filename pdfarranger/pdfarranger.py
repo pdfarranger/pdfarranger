@@ -865,25 +865,21 @@ class PdfArranger(Gtk.Application):
                         selection_data, _target_id, _etime):
         """Handles requests for data by drag and drop in iconview"""
 
-        model = iconview.get_model()
-        selection = self.iconview.get_selected_items()
-        selection.sort(key=lambda x: x.get_indices()[0])
-        data = []
-        for path in selection:
-            target = str(selection_data.get_target())
-            if target == 'MODEL_ROW_INTERN':
+        target = str(selection_data.get_target())
+        if target == 'MODEL_ROW_INTERN':
+            model = iconview.get_model()
+            selection = self.iconview.get_selected_items()
+            selection.sort(key=lambda x: x.get_indices()[0])
+            data = []
+            for path in selection:
                 data.append(str(path[0]))
-            elif target == 'MODEL_ROW_EXTERN':
-                it = model.get_iter(path)
-                nfile, npage, angle = model.get(it, 2, 3, 6)
-                crop = model.get(it, 7, 8, 9, 10)
-                pdfdoc = self.pdfqueue[nfile - 1]
-                data.append('\n'.join([pdfdoc.filename,
-                                       str(npage),
-                                       str(angle)] +
-                                      [str(side) for side in crop]))
+            if data:
+                data = '\n;\n'.join(data)
+
+        elif target == 'MODEL_ROW_EXTERN':
+            data = self.copy_pages()
+
         if data:
-            data = '\n;\n'.join(data)
             selection_data.set(selection_data.get_target(), 8, data.encode())
 
     def iv_dnd_received_data(self, iconview, context, x, y,
@@ -904,40 +900,32 @@ class PdfArranger(Gtk.Application):
                 if len(model) > 0:  # find the iterator of the last row
                     row = model[-1]
                     ref_to = Gtk.TreeRowReference.new(model, row.path)
-            if ref_to:
-                before = (position == Gtk.IconViewDropPosition.DROP_LEFT
-                          or position == Gtk.IconViewDropPosition.DROP_ABOVE)
-                target = selection_data.get_target().name()
-                if target == 'MODEL_ROW_INTERN':
-                    move = context.get_actions() & Gdk.DragAction.MOVE
-                    self.undomanager.commit("Move" if move else "Copy")
-                    self.set_unsaved(True)
-                    data.sort(key=int, reverse=not before)
-                    ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
-                                     for p in data]
-                    iter_to = self.model.get_iter(ref_to.get_path())
+            before = (position == Gtk.IconViewDropPosition.DROP_LEFT
+                      or position == Gtk.IconViewDropPosition.DROP_ABOVE)
+            target = selection_data.get_target().name()
+            if target == 'MODEL_ROW_INTERN':
+                move = context.get_actions() & Gdk.DragAction.MOVE
+                self.undomanager.commit("Move" if move else "Copy")
+                self.set_unsaved(True)
+                data.sort(key=int, reverse=not before)
+                ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
+                                 for p in data]
+                iter_to = self.model.get_iter(ref_to.get_path())
+                for ref_from in ref_from_list:
+                    row = model[model.get_iter(ref_from.get_path())]
+                    if before:
+                        model.insert_before(iter_to, row[:])
+                    else:
+                        model.insert_after(iter_to, row[:])
+                if move:
                     for ref_from in ref_from_list:
-                        row = model[model.get_iter(ref_from.get_path())]
-                        if before:
-                            model.insert_before(iter_to, row[:])
-                        else:
-                            model.insert_after(iter_to, row[:])
-                    if move:
-                        for ref_from in ref_from_list:
-                            model.remove(model.get_iter(ref_from.get_path()))
+                        model.remove(model.get_iter(ref_from.get_path()))
 
-                elif target == 'MODEL_ROW_EXTERN':
-                    pageadder = PageAdder(self)
-                    pageadder.move(ref_to, before)
-                    if not before:
+            elif target == 'MODEL_ROW_EXTERN':
+                    if not ref_to:
                         data.reverse()
-                    while data:
-                        tmp = data.pop(0).split('\n')
-                        filename = tmp[0]
-                        npage, angle = [int(k) for k in tmp[1:3]]
-                        crop = [float(side) for side in tmp[3:7]]
-                        pageadder.addpages(filename, npage, angle, crop)
-                    if pageadder.commit() and context.get_actions() & Gdk.DragAction.MOVE:
+
+                    if self.paste_pages(data, before, ref_to) and context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, _widget, _context):
