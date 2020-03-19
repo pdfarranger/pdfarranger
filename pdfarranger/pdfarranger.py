@@ -803,6 +803,37 @@ class PdfArranger(Gtk.Application):
                 return False
         return pageadder.commit(add_to_undomanager = True)
 
+    def paste_pages_interleave(self, data, before, ref_to):
+        """Paste pages interleved to iconview"""
+
+        pageadder = PageAdder(self)
+        model = self.iconview.get_model()
+        iter_to = None
+
+        self.undomanager.commit("Paste")
+        self.set_unsaved(True)
+
+        while data:
+            try:  # Clipboard can contain not expected data
+                self.data_to_pageadder(data, pageadder)
+            except:
+                return
+
+            pageadder.move(ref_to, before)
+            pageadder.commit(add_to_undomanager = False)
+
+            if ref_to:
+                path = ref_to.get_path()
+                iter_to = model.get_iter(path)
+                iter_to = model.iter_next(iter_to)
+                if not before:
+                    iter_to = model.iter_next(iter_to)
+            if iter_to:
+                path = model.get_path(iter_to)
+                ref_to = Gtk.TreeRowReference.new(model, path)
+            else:
+                ref_to = None
+
     def on_action_delete(self, _action, _parameter, _unknown):
         """Removes the selected elements in the IconView"""
 
@@ -832,6 +863,8 @@ class PdfArranger(Gtk.Application):
 
         # mode = 0 paste after
         # mode = 1 paste before
+        # mode = 2 paste interleave odd
+        # mode = 3 paste interveave even
         mode = mode.get_int32()
         if len(model) == 0:
             before = True
@@ -843,7 +876,10 @@ class PdfArranger(Gtk.Application):
             else:
                 ref_to = Gtk.TreeRowReference.new(model, selection[-1])
         else:
-            before = True
+            if mode == 3:
+                before = False
+            else:
+                before = True
             if len(selection) == 0:
                 ref_to = Gtk.TreeRowReference.new(model, Gtk.TreePath(0))
             else:
@@ -852,7 +888,10 @@ class PdfArranger(Gtk.Application):
         data = self.clipboard.wait_for_text()
         if data:
             data = data.split('\n;\n')
-            self.paste_pages(data, before, ref_to)
+            if mode == 0 or mode == 1:
+                self.paste_pages(data, before, ref_to)
+            elif mode == 2 or mode == 3:
+                self.paste_pages_interleave(data, before, ref_to)
 
     @staticmethod
     def iv_drag_begin(iconview, context):
@@ -1428,6 +1467,7 @@ class PageAdder(object):
             self.app.update_geometry(it)
         GObject.idle_add(self.app.retitle)
         GObject.idle_add(self.app.render)
+        self.pages = []
         return True
 
 

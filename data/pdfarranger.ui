@@ -291,6 +291,28 @@ Author: Konstantinos Poulios
                                 <property name="action_target">1</property>
                               </object>
                             </child>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem_paste_interleave_odd">
+                                <property name="label" translatable="yes">interleave odd</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">False</property>
+                                <property name="use_stock">False</property>
+                                <property name="action_name">win.paste</property>
+                                <property name="action_target">2</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem_paste_interleave_even">
+                                <property name="label" translatable="yes">interleave even</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">False</property>
+                                <property name="use_stock">False</property>
+                                <property name="action_name">win.paste</property>
+                                <property name="action_target">3</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -677,6 +699,26 @@ Author: Konstantinos Poulios
                 <property name="can_focus">False</property>
                 <property name="action_name">win.paste</property>
                 <property name="action_target">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="label" translatable="yes">interleave odd</property>
+                <property name="use_underline">True</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="action_name">win.paste</property>
+                <property name="action_target">2</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="label" translatable="yes">interleave even</property>
+                <property name="use_underline">True</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="action_name">win.paste</property>
+                <property name="action_target">3</property>
               </object>
             </child>
           </object>
