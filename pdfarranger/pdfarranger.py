@@ -269,6 +269,9 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread = None
         self.export_file = None
 
+        # Clipboard for cut copy paste
+        self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+
     def do_open(self, files, _n, _hints):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
         self.activate()
@@ -286,7 +289,7 @@ class PdfArranger(Gtk.Application):
         # matter that much.
         self.window.add_action_entries([
             ('rotate', self.rotate_page_action, 'i'),
-            ('delete', self.clear_selected),
+            ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
             ('crop', self.crop_page_dialog),
             ('export-selection', self.choose_export_selection_pdf_name),
@@ -300,6 +303,9 @@ class PdfArranger(Gtk.Application):
             ('redo', self.undomanager.redo),
             ('split', self.split_pages),
             ('metadata', self.edit_metadata),
+            ('cut', self.on_action_cut),
+            ('copy', self.on_action_copy),
+            ('paste', self.on_action_paste, 'i'),
         ])
         accels = [
             ('delete', 'Delete'),
@@ -315,6 +321,10 @@ class PdfArranger(Gtk.Application):
             ('zoom(-5)', 'minus'),
             ('undo', '<Ctrl>z'),
             ('redo', '<Ctrl>y'),
+            ('cut', '<Ctrl>x'),
+            ('copy', '<Ctrl>c'),
+            ('paste(0)', '<Ctrl>v'),
+            ('paste(1)', '<Ctrl><Shift>v'),
         ]
         for a, k in accels:
             self.set_accels_for_action("win." + a, [k])
@@ -727,7 +737,7 @@ class PdfArranger(Gtk.Application):
             adder.commit()
         chooser.destroy()
 
-    def clear_selected(self, _action, _parameter, _unknown):
+    def clear_selected(self):
         """Removes the selected elements in the IconView"""
 
         self.undomanager.commit("Delete")
@@ -745,6 +755,104 @@ class PdfArranger(Gtk.Application):
                 path = row.path
                 self.iconview.select_path(path)
         self.iconview.grab_focus()
+
+    def copy_pages(self):
+        """Collect data from selected pages"""
+
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+
+        data = []
+        for path in selection:
+            it = model.get_iter(path)
+            nfile, npage, angle = model.get(it, 2, 3, 6)
+            crop = model.get(it, 7, 8, 9, 10)
+            pdfdoc = self.pdfqueue[nfile - 1]
+            data.append('\n'.join([pdfdoc.filename,
+                                   str(npage),
+                                   str(angle)] +
+                                  [str(side) for side in crop]))
+        if data:
+            data = '\n;\n'.join(data)
+
+        return data
+
+    def data_to_pageadder(self, data, pageadder):
+        """Data to pageadder"""
+
+        tmp = data.pop(0).split('\n')
+        filename = tmp[0]
+        npage, angle = [int(k) for k in tmp[1:3]]
+        crop = [float(side) for side in tmp[3:7]]
+        pageadder.addpages(filename, npage, angle, crop)
+
+    def paste_pages(self, data, before, ref_to):
+        """Paste pages to iconview"""
+
+        pageadder = PageAdder(self)
+        if ref_to:
+            pageadder.move(ref_to, before)
+
+        if not before:
+            data.reverse()
+        while data:
+            try:  # Clipboard can contain not expected data
+                self.data_to_pageadder(data, pageadder)
+            except:
+                return False
+        return pageadder.commit()
+
+    def on_action_delete(self, _action, _parameter, _unknown):
+        """Removes the selected elements in the IconView"""
+
+        self.clear_selected()
+
+    def on_action_cut(self, _action, _param, _unknown):
+        """Cut selected pages to clipboard"""
+
+        data = self.copy_pages()
+        self.clipboard.set_text(data, -1)
+
+        self.clear_selected()
+
+    def on_action_copy(self, _action, _param, _unknown):
+        """Copy selected pages to clipboard"""
+
+        data = self.copy_pages()
+        self.clipboard.set_text(data, -1)
+
+    def on_action_paste(self, _action, mode, _unknown):
+        """Paste pages from clipboard"""
+
+        model = self.iconview.get_model()
+
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+
+        # mode = 0 paste after
+        # mode = 1 paste before
+        mode = mode.get_int32()
+        if len(model) == 0:
+            before = True
+            ref_to = None
+        elif mode == 0:
+            before = False
+            if len(selection) == 0:
+                ref_to = None
+            else:
+                ref_to = Gtk.TreeRowReference.new(model, selection[-1])
+        else:
+            before = True
+            if len(selection) == 0:
+                ref_to = Gtk.TreeRowReference.new(model, Gtk.TreePath(0))
+            else:
+                ref_to = Gtk.TreeRowReference.new(model, selection[0])
+
+        data = self.clipboard.wait_for_text()
+        if data:
+            data = data.split('\n;\n')
+            self.paste_pages(data, before, ref_to)
 
     @staticmethod
     def iv_drag_begin(iconview, context):
@@ -966,7 +1074,8 @@ class PdfArranger(Gtk.Application):
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
                      ("delete", ne), ("duplicate", ne), ("crop", ne), ("rotate", ne),
-                     ("export-selection", ne), ("split", ne)]:
+                     ("export-selection", ne), ("cut", ne), ("copy", ne),
+                     ("split", ne)]:
             self.window.lookup_action(a).set_enabled(e)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
