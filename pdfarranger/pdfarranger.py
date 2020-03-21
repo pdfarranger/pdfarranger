@@ -279,7 +279,7 @@ class PdfArranger(Gtk.Application):
         a = PageAdder(self)
         for f in files:
             a.addpages(f.get_path())
-        a.commit()
+        a.commit(add_to_undomanager = True)
         if len(files) == 1:
             self.set_unsaved(False)
 
@@ -734,7 +734,7 @@ class PdfArranger(Gtk.Application):
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
-            adder.commit()
+            adder.commit(add_to_undomanager = True)
         chooser.destroy()
 
     def clear_selected(self):
@@ -801,7 +801,7 @@ class PdfArranger(Gtk.Application):
                 self.data_to_pageadder(data, pageadder)
             except:
                 return False
-        return pageadder.commit()
+        return pageadder.commit(add_to_undomanager = True)
 
     def on_action_delete(self, _action, _parameter, _unknown):
         """Removes the selected elements in the IconView"""
@@ -1074,7 +1074,7 @@ class PdfArranger(Gtk.Application):
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_dnd_dropped_uri(uri)
                 pageadder.addpages(filename)
-            pageadder.commit()
+            pageadder.commit(add_to_undomanager = True)
 
     def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -1411,11 +1411,12 @@ class PageAdder(object):
                                w, h,                 # 11-12
                                2.))                  # 13 FIXME
 
-    def commit(self):
+    def commit(self, add_to_undomanager):
         if len(self.pages) == 0:
             return False
-        self.app.undomanager.commit("Add")
-        self.app.set_unsaved(True)
+        if add_to_undomanager:
+            self.app.undomanager.commit("Add")
+            self.app.set_unsaved(True)
         for p in self.pages:
             it = self.app.model.append(p)
             if self.treerowref:
