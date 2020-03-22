@@ -5,13 +5,12 @@ This file is part of pdfarranger which is released under the GNU General Public
 License version 3 or later.
 See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 -->
-<!--
-BugReportURL: https://sourceforge.net/p/pdfshuffler/feature-requests/34/
-SentUpstream: 2014-09-17
--->
-<component>
+<component type="desktop-application">
   <id type="desktop">pdfarranger.desktop</id>
+  <name>PDF Arranger</name>
+  <summary>PDF file merging, rearranging, and splitting</summary>
   <metadata_license>CC0-1.0</metadata_license>
+  <content_rating type="oars-1.1"/>
   <description>
     <p>
       pdfarranger is a small application, which helps the user to merge or split pdf
@@ -19,11 +18,20 @@ SentUpstream: 2014-09-17
       intuitive graphical interface.
       It is a frontend for pikepdf.
     </p>
-    <!-- FIXME: Probably needs another paragraph or two -->
   </description>
   <url type="homepage">https://github.com/jeromerobert/pdfarranger</url>
   <screenshots>
-    <screenshot type="default">http://screenshots.debian.net/screenshots/000/017/031/large.png</screenshot>
+    <screenshot type="default">
+      <image>http://screenshots.debian.net/screenshots/000/017/031/large.png</image>
+      <caption/>
+    </screenshot>
   </screenshots>
-  <updatecontact>jeromerobert@gmx.com</updatecontact>
+  <update_contact>jeromerobert@gmx.com</update_contact>
+  <releases>
+    <release date="2020-03-16" version="1.4.2"/>
+    <release date="2020-02-09" version="1.4.1"/>
+    <release date="2020-01-26" version="1.4.0"/>
+  </releases>
+  <project_license>GPL-3.0-or-later</project_license>
+  <url type="bugtracker">https://github.com/jeromerobert/pdfarranger/issues</url>
 </component>
