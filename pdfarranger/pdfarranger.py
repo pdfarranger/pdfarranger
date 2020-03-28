@@ -48,6 +48,7 @@ if not os.path.exists(localedir):
 
 locale.setlocale(locale.LC_ALL, '')
 DOMAIN = 'pdfarranger'
+ICON_ID = 'com.github.jeromerobert.' + DOMAIN
 if os.name == 'nt':
     from ctypes import cdll
 
@@ -349,7 +350,7 @@ class PdfArranger(Gtk.Application):
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
-        Gtk.Window.set_default_icon_name(DOMAIN)
+        Gtk.Window.set_default_icon_name(ICON_ID)
 
         # Import the user interface file, trying different possible locations
         ui_path = os.path.join(basedir, 'share', DOMAIN, DOMAIN + '.ui')
@@ -1361,7 +1362,7 @@ class PdfArranger(Gtk.Application):
         about_dialog.add_credit_section('Maintainers and contributors', [
             'https://github.com/jeromerobert/pdfarranger/graphs/contributors'])
         about_dialog.set_website_label(WEBSITE)
-        about_dialog.set_logo_icon_name(DOMAIN)
+        about_dialog.set_logo_icon_name(ICON_ID)
         about_dialog.set_license(LICENSE)
         about_dialog.connect('response', lambda w, *args: w.destroy())
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
