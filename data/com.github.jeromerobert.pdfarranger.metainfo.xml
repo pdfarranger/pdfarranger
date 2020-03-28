@@ -6,9 +6,11 @@ License version 3 or later.
 See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 -->
 <component type="desktop-application">
+  <id>com.github.jeromerobert.pdfarranger</id>
   <id type="desktop">pdfarranger.desktop</id>
   <name>PDF Arranger</name>
   <summary>PDF file merging, rearranging, and splitting</summary>
+  <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1"/>
   <description>

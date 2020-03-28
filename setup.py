@@ -25,10 +25,10 @@ from DistUtilsExtra.command import (
     build_i18n, clean_i18n, build_extra, build_icons)
 
 data_files = [
-    ('share/applications', ['data/pdfarranger.desktop']),
+    ('share/applications', ['data/com.github.jeromerobert.pdfarranger.desktop']),
     ('share/pdfarranger', ['data/pdfarranger.ui']),
     ('share/man/man1', ['doc/pdfarranger.1']),
-    ('share/metainfo', ['data/pdfarranger.appdata.xml']),
+    ('share/metainfo', ['data/com.github.jeromerobert.pdfarranger.metainfo.xml']),
 ]
 
 setup(
