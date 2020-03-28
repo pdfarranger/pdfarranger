@@ -258,6 +258,7 @@ class PdfArranger(Gtk.Application):
         self.is_unsaved = False
         self.zoom_level = None
         self.zoom_scale = None
+        self.target_is_intern = True
 
         self.export_directory = os.path.expanduser('~')
         self.import_directory = self.export_directory
@@ -280,7 +281,7 @@ class PdfArranger(Gtk.Application):
         a = PageAdder(self)
         for f in files:
             a.addpages(f.get_path())
-        a.commit(add_to_undomanager = True)
+        a.commit(select_added = False, add_to_undomanager = True)
         if len(files) == 1:
             self.set_unsaved(False)
 
@@ -737,7 +738,7 @@ class PdfArranger(Gtk.Application):
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
-            adder.commit(add_to_undomanager = True)
+            adder.commit(select_added = False, add_to_undomanager = True)
         chooser.destroy()
 
     def clear_selected(self):
@@ -790,7 +791,7 @@ class PdfArranger(Gtk.Application):
         crop = [float(side) for side in tmp[3:7]]
         pageadder.addpages(filename, npage, angle, crop)
 
-    def paste_pages(self, data, before, ref_to):
+    def paste_pages(self, data, before, ref_to, select_added):
         """Paste pages to iconview"""
 
         pageadder = PageAdder(self)
@@ -804,7 +805,7 @@ class PdfArranger(Gtk.Application):
                 self.data_to_pageadder(data, pageadder)
             except:
                 return False
-        return pageadder.commit(add_to_undomanager = True)
+        return pageadder.commit(select_added, add_to_undomanager = True)
 
     def paste_pages_interleave(self, data, before, ref_to):
         """Paste pages interleved to iconview"""
@@ -823,7 +824,7 @@ class PdfArranger(Gtk.Application):
                 return
 
             pageadder.move(ref_to, before)
-            pageadder.commit(add_to_undomanager = False)
+            pageadder.commit(select_added = False, add_to_undomanager = False)
 
             if ref_to:
                 path = ref_to.get_path()
@@ -892,7 +893,7 @@ class PdfArranger(Gtk.Application):
         if data:
             data = data.split('\n;\n')
             if mode == 0 or mode == 1:
-                self.paste_pages(data, before, ref_to)
+                self.paste_pages(data, before, ref_to, select_added = False)
             elif mode == 2 or mode == 3:
                 self.paste_pages_interleave(data, before, ref_to)
 
@@ -909,6 +910,7 @@ class PdfArranger(Gtk.Application):
 
         target = str(selection_data.get_target())
         if target == 'MODEL_ROW_INTERN':
+            self.target_is_intern = True
             model = iconview.get_model()
             selection = self.iconview.get_selected_items()
             selection.sort(key=lambda x: x.get_indices()[0])
@@ -919,6 +921,7 @@ class PdfArranger(Gtk.Application):
                 data = '\n;\n'.join(data)
 
         elif target == 'MODEL_ROW_EXTERN':
+            self.target_is_intern = False
             data = self.copy_pages()
 
         if data:
@@ -956,9 +959,11 @@ class PdfArranger(Gtk.Application):
                 for ref_from in ref_from_list:
                     row = model[model.get_iter(ref_from.get_path())]
                     if before:
-                        model.insert_before(iter_to, row[:])
+                        it = model.insert_before(iter_to, row[:])
                     else:
-                        model.insert_after(iter_to, row[:])
+                        it = model.insert_after(iter_to, row[:])
+                    path = model.get_path(it)
+                    iconview.select_path(path)
                 if move:
                     for ref_from in ref_from_list:
                         model.remove(model.get_iter(ref_from.get_path()))
@@ -967,17 +972,18 @@ class PdfArranger(Gtk.Application):
                     if not ref_to:
                         data.reverse()
 
-                    if self.paste_pages(data, before, ref_to) and context.get_actions() & Gdk.DragAction.MOVE:
+                    if self.paste_pages(data, before, ref_to, select_added = True) and context.get_actions() & Gdk.DragAction.MOVE:
                         context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
         been moved to another instance."""
-        selection = self.iconview.get_selected_items()
-        if len(selection) == 0:
+        if self.target_is_intern and os.name == 'nt':
+            # Workaround for windows
             # On Windows this method is triggered even for drag & drop within the same
             # pdfarranger instance
             return
+        selection = self.iconview.get_selected_items()
         self.undomanager.commit("Move")
         self.set_unsaved(True)
         model = self.iconview.get_model()
@@ -1116,7 +1122,7 @@ class PdfArranger(Gtk.Application):
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_dnd_dropped_uri(uri)
                 pageadder.addpages(filename)
-            pageadder.commit(add_to_undomanager = True)
+            pageadder.commit(select_added = False, add_to_undomanager = True)
 
     def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -1453,20 +1459,24 @@ class PageAdder(object):
                                w, h,                 # 11-12
                                2.))                  # 13 FIXME
 
-    def commit(self, add_to_undomanager):
+    def commit(self, select_added, add_to_undomanager):
         if len(self.pages) == 0:
             return False
         if add_to_undomanager:
             self.app.undomanager.commit("Add")
             self.app.set_unsaved(True)
         for p in self.pages:
-            it = self.app.model.append(p)
             if self.treerowref:
                 iter_to = self.app.model.get_iter(self.treerowref.get_path())
                 if self.before:
-                    self.app.model.move_before(it, iter_to)
+                    it = self.app.model.insert_before(iter_to, p)
                 else:
-                    self.app.model.move_after(it, iter_to)
+                    it = self.app.model.insert_after(iter_to, p)
+            else:
+                it = self.app.model.append(p)
+            if select_added:
+                path = self.app.model.get_path(it)
+                self.app.iconview.select_path(path)
             self.app.update_geometry(it)
         GObject.idle_add(self.app.retitle)
         GObject.idle_add(self.app.render)
