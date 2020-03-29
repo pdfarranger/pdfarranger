@@ -281,14 +281,14 @@ class PdfArranger(Gtk.Application):
         a = PageAdder(self)
         for f in files:
             a.addpages(f.get_path())
-        a.commit(select_added = False, add_to_undomanager = True)
+        a.commit(select_added=False, add_to_undomanager=True)
         if len(files) == 1:
             self.set_unsaved(False)
 
     def __build_from_file(self, path):
         """ Return the path of a resource file """
-	# TODO: May be we could use Application.set_resource_base_path and
-	# get_menu_by_id in place of that
+        # TODO: May be we could use Application.set_resource_base_path and
+        # get_menu_by_id in place of that
         # Trying different possible locations
         f = os.path.join(basedir, 'share', DOMAIN, path)
         if not os.path.exists(f):
@@ -738,7 +738,7 @@ class PdfArranger(Gtk.Application):
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
-            adder.commit(select_added = False, add_to_undomanager = True)
+            adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
     def clear_selected(self):
@@ -805,7 +805,7 @@ class PdfArranger(Gtk.Application):
                 self.data_to_pageadder(data, pageadder)
             except:
                 return False
-        return pageadder.commit(select_added, add_to_undomanager = True)
+        return pageadder.commit(select_added, add_to_undomanager=True)
 
     def paste_pages_interleave(self, data, before, ref_to):
         """Paste pages interleved to iconview"""
@@ -824,7 +824,7 @@ class PdfArranger(Gtk.Application):
                 return
 
             pageadder.move(ref_to, before)
-            pageadder.commit(select_added = False, add_to_undomanager = False)
+            pageadder.commit(select_added=False, add_to_undomanager=False)
 
             if ref_to:
                 path = ref_to.get_path()
@@ -893,7 +893,7 @@ class PdfArranger(Gtk.Application):
         if data:
             data = data.split('\n;\n')
             if mode == 0 or mode == 1:
-                self.paste_pages(data, before, ref_to, select_added = False)
+                self.paste_pages(data, before, ref_to, select_added=False)
             elif mode == 2 or mode == 3:
                 self.paste_pages_interleave(data, before, ref_to)
 
@@ -933,47 +933,48 @@ class PdfArranger(Gtk.Application):
 
         model = iconview.get_model()
         data = selection_data.get_data()
-        if data:
-            data = data.decode().split('\n;\n')
-            item = iconview.get_dest_item_at_pos(x, y)
-            if item:
-                path, position = item
-                ref_to = Gtk.TreeRowReference.new(model, path)
-            else:
-                ref_to = None
-                position = Gtk.IconViewDropPosition.DROP_RIGHT
-                if len(model) > 0:  # find the iterator of the last row
-                    row = model[-1]
-                    ref_to = Gtk.TreeRowReference.new(model, row.path)
-            before = (position == Gtk.IconViewDropPosition.DROP_LEFT
-                      or position == Gtk.IconViewDropPosition.DROP_ABOVE)
-            target = selection_data.get_target().name()
-            if target == 'MODEL_ROW_INTERN':
-                move = context.get_actions() & Gdk.DragAction.MOVE
-                self.undomanager.commit("Move" if move else "Copy")
-                self.set_unsaved(True)
-                data.sort(key=int, reverse=not before)
-                ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
-                                 for p in data]
-                iter_to = self.model.get_iter(ref_to.get_path())
+        if not data:
+            return
+        data = data.decode().split('\n;\n')
+        item = iconview.get_dest_item_at_pos(x, y)
+        if item:
+            path, position = item
+            ref_to = Gtk.TreeRowReference.new(model, path)
+        else:
+            ref_to = None
+            position = Gtk.IconViewDropPosition.DROP_RIGHT
+            if len(model) > 0:  # find the iterator of the last row
+                row = model[-1]
+                ref_to = Gtk.TreeRowReference.new(model, row.path)
+        before = (position == Gtk.IconViewDropPosition.DROP_LEFT
+                  or position == Gtk.IconViewDropPosition.DROP_ABOVE)
+        target = selection_data.get_target().name()
+        if target == 'MODEL_ROW_INTERN':
+            move = context.get_actions() & Gdk.DragAction.MOVE
+            self.undomanager.commit("Move" if move else "Copy")
+            self.set_unsaved(True)
+            data.sort(key=int, reverse=not before)
+            ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
+                             for p in data]
+            iter_to = self.model.get_iter(ref_to.get_path())
+            for ref_from in ref_from_list:
+                row = model[model.get_iter(ref_from.get_path())]
+                if before:
+                    it = model.insert_before(iter_to, row[:])
+                else:
+                    it = model.insert_after(iter_to, row[:])
+                path = model.get_path(it)
+                iconview.select_path(path)
+            if move:
                 for ref_from in ref_from_list:
-                    row = model[model.get_iter(ref_from.get_path())]
-                    if before:
-                        it = model.insert_before(iter_to, row[:])
-                    else:
-                        it = model.insert_after(iter_to, row[:])
-                    path = model.get_path(it)
-                    iconview.select_path(path)
-                if move:
-                    for ref_from in ref_from_list:
-                        model.remove(model.get_iter(ref_from.get_path()))
+                    model.remove(model.get_iter(ref_from.get_path()))
 
-            elif target == 'MODEL_ROW_EXTERN':
-                    if not ref_to:
-                        data.reverse()
-
-                    if self.paste_pages(data, before, ref_to, select_added = True) and context.get_actions() & Gdk.DragAction.MOVE:
-                        context.finish(True, True, etime)
+        elif target == 'MODEL_ROW_EXTERN':
+            if not ref_to:
+                data.reverse()
+            changed = self.paste_pages(data, before, ref_to, select_added=True)
+            if changed and context.get_actions() & Gdk.DragAction.MOVE:
+                context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
@@ -1122,7 +1123,7 @@ class PdfArranger(Gtk.Application):
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_dnd_dropped_uri(uri)
                 pageadder.addpages(filename)
-            pageadder.commit(select_added = False, add_to_undomanager = True)
+            pageadder.commit(select_added=False, add_to_undomanager=True)
 
     def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
