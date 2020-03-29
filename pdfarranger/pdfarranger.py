@@ -782,7 +782,8 @@ class PdfArranger(Gtk.Application):
 
         return data
 
-    def data_to_pageadder(self, data, pageadder):
+    @staticmethod
+    def data_to_pageadder(data, pageadder):
         """Data to pageadder"""
 
         tmp = data.pop(0).split('\n')
@@ -911,7 +912,6 @@ class PdfArranger(Gtk.Application):
         target = str(selection_data.get_target())
         if target == 'MODEL_ROW_INTERN':
             self.target_is_intern = True
-            model = iconview.get_model()
             selection = self.iconview.get_selected_items()
             selection.sort(key=lambda x: x.get_indices()[0])
             data = []
