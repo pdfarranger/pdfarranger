@@ -33,7 +33,7 @@ data_files = [
 
 setup(
     name='pdfarranger',
-    version='1.4.2',
+    version='1.5.0',
     author='Jerome Robert',
     author_email='jeromerobert@gmx.com',
     description='A simple application for PDF Merging, Rearranging, and Splitting',
