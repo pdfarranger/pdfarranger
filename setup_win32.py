@@ -113,7 +113,7 @@ build_options = dict(
 )
 
 msi_options = dict(
-    initial_target_dir=os.environ['ProgramW6432'] + '\\pdfarranger'
+    upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}'
 )
 
 
