@@ -900,10 +900,11 @@ class PdfArranger(Gtk.Application):
 
     @staticmethod
     def iv_drag_begin(iconview, context):
-        """Sets custom icon on drag begin for multiple items selected"""
-        if len(iconview.get_selected_items()) > 1:
-            iconview.stop_emission('drag_begin')
-            Gtk.drag_set_icon_name(context, "gtk-dnd-multiple", 0, 0)
+        """Sets custom drag icon."""
+        l = len(iconview.get_selected_items())
+        stock_icon = "gtk-dnd-multiple" if l > 1 else "gtk-dnd"
+        iconview.stop_emission('drag_begin')
+        Gtk.drag_set_icon_name(context, stock_icon, 0, 0)
 
     def iv_dnd_get_data(self, iconview, _context,
                         selection_data, _target_id, _etime):
