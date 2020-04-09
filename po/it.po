@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-12 10:16+0100\n"
-"PO-Revision-Date: 2015-12-04 12:00+0100\n"
-"Last-Translator: Marco Ciampa\n"
+"PO-Revision-Date: 2020-04-09 21:00+0100\n"
+"Last-Translator: Albano Battistella\n"
 "Language-Team: Italian\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -15,31 +15,31 @@ msgstr ""
 
 #: pdfarranger/metadata.py:30
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
 #: pdfarranger/metadata.py:31
 msgid "Creator"
-msgstr ""
+msgstr "Creatore"
 
 #: pdfarranger/metadata.py:32
 msgid "Producer"
-msgstr ""
+msgstr "Produttore"
 
 #: pdfarranger/metadata.py:33
 msgid "Creator tool"
-msgstr ""
+msgstr "Creatore Strumento"
 
 #: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
 msgid "Edit properties"
-msgstr ""
+msgstr "Modifica proprietà"
 
 #: pdfarranger/metadata.py:104
 msgid "Property"
-msgstr ""
+msgstr "Proprietà"
 
 #: pdfarranger/metadata.py:104
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #: pdfarranger/pdfarranger.py:506
 msgid "No document"
@@ -95,6 +95,8 @@ msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"Il ritaglio non rimuove alcun contenuto\n"
+"dal file PDF, lo nasconde solo."
 
 #: pdfarranger/pdfarranger.py:1101
 msgid "Crop Margins"
@@ -149,15 +151,15 @@ msgstr "Ritaglia"
 
 #: data/pdfarranger.ui.h:7
 msgid "Du_plicate"
-msgstr ""
+msgstr "Du_plicato"
 
 #: data/pdfarranger.ui.h:8
 msgid "Reverse Order"
-msgstr ""
+msgstr "Inverti Ordine"
 
 #: data/pdfarranger.ui.h:9
 msgid "Split pages"
-msgstr ""
+msgstr "Dividi pagine"
 
 #: data/pdfarranger.ui.h:11
 msgid "_View"
@@ -204,15 +206,13 @@ msgid "_Rotate Right"
 msgstr "_Ruota a destra"
 
 #: data/pdfarranger.ui.h:22
-#, fuzzy
 msgid "C_rop"
 msgstr "_Ritaglia..."
 
 #: data/pdfarranger.ui.h:23
-#, fuzzy
 msgid "_Delete"
 msgstr "Cancella"
 
 #: data/pdfarranger.ui.h:24
 msgid "Re_verse Order"
-msgstr ""
+msgstr "In_verti Ordine"
