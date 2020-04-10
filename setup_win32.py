@@ -7,6 +7,7 @@ import glob
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
+    ('data/menu.ui', 'share/pdfarranger/menu.ui'),
     ('data/icons/hicolor/scalable', 'share/icons/hicolor/scalable'),
     ('build/mo', 'share/locale'),
 ]
@@ -43,10 +44,22 @@ def addicons():
         'actions/list-add',
         'actions/list-remove',
         'actions/media-eject',
+        'actions/document-save',
+        'actions/document-save-as',
+        'actions/insert-image',
+        'actions/object-rotate-left',
+        'actions/object-rotate-right',
+        'actions/open-menu',
+        'actions/zoom-in',
+        'actions/zoom-out',
         'ui/pan-down',
         'ui/pan-end',
         'ui/pan-start',
         'ui/pan-up',
+        'ui/window-close',
+        'ui/window-maximize',
+        'ui/window-minimize',
+        'ui/window-restore',
         'devices/drive-harddisk',
         'devices/drive-optical',
         'places/folder-documents',
@@ -56,13 +69,9 @@ def addicons():
         'places/folder-videos',
         'places/user-trash',
     ]
+
     for i in icons:
         addfile(os.path.join('share/icons/Adwaita/16x16/', i + '-symbolic.symbolic.png'))
-    icons24 = ['document-save-as', 'edit-delete', 'list-add', 'object-rotate-left',
-               'object-rotate-right', 'zoom-in', 'zoom-out']
-    for i in icons24:
-        addfile(os.path.join('share/icons/Adwaita/24x24/legacy', i + '.png'))
-
 
 required_dlls = [
     'gtk-3-0',
