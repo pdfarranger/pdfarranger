@@ -22,4 +22,6 @@
 
 # Make translation files
 intltool-extract --type=gettext/glade data/pdfarranger.ui
-xgettext --language=Python --keyword=_ --keyword=N_ --output=po/pdfarranger.pot pdfarranger/*.py data/pdfarranger.ui.h
+intltool-extract --type=gettext/glade data/menu.ui
+xgettext --language=Python --keyword=_ --keyword=N_ --output=po/pdfarranger.pot \
+  pdfarranger/*.py data/pdfarranger.ui.h data/menu.ui.h
