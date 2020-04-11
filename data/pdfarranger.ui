@@ -83,7 +83,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Save as</property>
+                <property name="tooltip_text" translatable="yes">Save As</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -110,10 +110,10 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <property name="can_focus">False</property>
             <property name="editable">False</property>
             <property name="width_chars">3</property>
-            <property name="text" translatable="yes">0</property>
+            <property name="text">0</property>
             <property name="shadow_type">etched-out</property>
             <property name="input_purpose">digits</property>
-            <property name="tooltip_text" translatable="yes">Number of pages</property>
+            <property name="tooltip_text" translatable="yes">Number of Pages</property>
           </object>
           <packing>
             <property name="position">4</property>
@@ -125,7 +125,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
             <property name="use_popover">False</property>
-            <property name="tooltip_text" translatable="yes">Main menu</property>
+            <property name="tooltip_text" translatable="yes">Main Menu</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
@@ -150,7 +150,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Zoom in</property>
+                <property name="tooltip_text" translatable="yes">Zoom In</property>
                 <property name="action_name">win.zoom</property>
                 <property name="action_target">5</property>
                 <child>
@@ -176,7 +176,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Zoom out</property>
+                <property name="tooltip_text" translatable="yes">Zoom Out</property>
                 <property name="action_name">win.zoom</property>
                 <property name="action_target">-5</property>
                 <child>
@@ -216,7 +216,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Rotate left</property>
+                <property name="tooltip_text" translatable="yes">Rotate Left</property>
                 <property name="action_name">win.rotate</property>
                 <property name="action_target">-90</property>
                 <child>
@@ -242,7 +242,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Rotate right</property>
+                <property name="tooltip_text" translatable="yes">Rotate Right</property>
                 <property name="action_name">win.rotate</property>
                 <property name="action_target">90</property>
                 <child>
