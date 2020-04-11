@@ -474,6 +474,23 @@ class PdfArranger(Gtk.Application):
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
                                                 color_prelight)
 
+        # Set outline properties for iconview items i.e. cursor look
+        style_provider = Gtk.CssProvider()
+        css_data = """
+        * {
+            outline-color: alpha(currentColor, 0.8);
+            outline-style: dashed;
+            outline-offset: -2px;
+            outline-width: 2px;
+            -gtk-outline-radius: 2px;
+        }
+        """
+        style_provider.load_from_data(bytes(css_data.encode()));
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
         GObject.type_register(PDFRenderer)
         GObject.signal_new('update_thumbnail', PDFRenderer,
                            GObject.SignalFlags.RUN_FIRST, None,
