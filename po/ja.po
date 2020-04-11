@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 10:16+0100\n"
+"POT-Creation-Date: 2020-04-11 10:54+0200\n"
 "PO-Revision-Date: 2020-01-13 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
@@ -19,84 +19,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/metadata.py:30
+#: pdfarranger/metadata.py:35
 msgid "Title"
 msgstr "タイトル"
 
-#: pdfarranger/metadata.py:31
+#: pdfarranger/metadata.py:36
 msgid "Creator"
 msgstr "作成"
 
-#: pdfarranger/metadata.py:32
+#: pdfarranger/metadata.py:37
 msgid "Producer"
 msgstr "変換"
 
-#: pdfarranger/metadata.py:33
+#: pdfarranger/metadata.py:38
 msgid "Creator tool"
 msgstr "作成ツール"
 
-#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+#: pdfarranger/metadata.py:141
 msgid "Edit properties"
 msgstr "プロパティを編集"
 
-#: pdfarranger/metadata.py:104
+#: pdfarranger/metadata.py:154
 msgid "Property"
 msgstr "プロパティ"
 
-#: pdfarranger/metadata.py:104
+#: pdfarranger/metadata.py:154
 msgid "Value"
 msgstr "値"
 
-#: pdfarranger/pdfarranger.py:506
+#: pdfarranger/pdfarranger.py:520
 msgid "No document"
 msgstr "ドキュメントなし"
 
-#: pdfarranger/pdfarranger.py:508
+#: pdfarranger/pdfarranger.py:522
 msgid "Several documents"
 msgstr "複数のドキュメント"
 
-#: pdfarranger/pdfarranger.py:525
+#: pdfarranger/pdfarranger.py:539
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "サムネイルを描画中... [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:614
+#: pdfarranger/pdfarranger.py:629
 msgid "Export ..."
 msgstr "エクスポート ..."
 
-#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
 msgstr "PDF ファイル"
 
-#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
+#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: pdfarranger/pdfarranger.py:693
+#: pdfarranger/pdfarranger.py:709
 msgid "Import..."
 msgstr "インポート..."
 
-#: pdfarranger/pdfarranger.py:1072
+#: pdfarranger/pdfarranger.py:1223
 msgid "Left"
 msgstr "左"
 
-#: pdfarranger/pdfarranger.py:1072
+#: pdfarranger/pdfarranger.py:1223
 msgid "Right"
 msgstr "右"
 
-#: pdfarranger/pdfarranger.py:1073
+#: pdfarranger/pdfarranger.py:1224
 msgid "Top"
 msgstr "上"
 
-#: pdfarranger/pdfarranger.py:1073
+#: pdfarranger/pdfarranger.py:1224
 msgid "Bottom"
 msgstr "下"
 
-#: pdfarranger/pdfarranger.py:1090
+#: pdfarranger/pdfarranger.py:1241
 msgid "Crop Selected Pages"
 msgstr "選択したページのトリミング"
 
-#: pdfarranger/pdfarranger.py:1098
+#: pdfarranger/pdfarranger.py:1249
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -104,21 +104,21 @@ msgstr ""
 "トリミングは PDF ファイルから内容自体は\n"
 "削除せずに、指定部分を見えなくします。"
 
-#: pdfarranger/pdfarranger.py:1101
+#: pdfarranger/pdfarranger.py:1252
 msgid "Crop Margins"
 msgstr "余白のトリミング"
 
-#: pdfarranger/pdfarranger.py:1111
+#: pdfarranger/pdfarranger.py:1262
 #, python-format
 msgid "% of width"
 msgstr "% (幅)"
 
-#: pdfarranger/pdfarranger.py:1111
+#: pdfarranger/pdfarranger.py:1262
 #, python-format
 msgid "% of height"
 msgstr "% (高さ)"
 
-#: pdfarranger/pdfarranger.py:1218
+#: pdfarranger/pdfarranger.py:1369
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -127,98 +127,192 @@ msgstr ""
 "%s は PDF ファイルの内容の追加や削除、順序の入れ替えやその他のちょっとした変"
 "更を行うための、GTK+ と Python で作成されたツールです"
 
-#: pdfarranger/pdfarranger.py:1298
+#: pdfarranger/pdfarranger.py:1449
 msgid "page"
 msgstr "ページ"
 
 #: data/pdfarranger.ui.h:1
-msgid "_File"
-msgstr "ファイル(_F)"
-
-#: data/pdfarranger.ui.h:2
-msgid "_Export selection..."
-msgstr "選択したものをエクスポート(_E)..."
-
-#: data/pdfarranger.ui.h:3
-msgid "_Edit"
-msgstr "編集(_E)"
-
-#: data/pdfarranger.ui.h:4
-msgid "Rotate left"
-msgstr "左に回転"
-
-#: data/pdfarranger.ui.h:5
-msgid "Rotate right"
-msgstr "右に回転"
-
-#: data/pdfarranger.ui.h:6
-msgid "Crop"
-msgstr "トリミング"
-
-#: data/pdfarranger.ui.h:7
-msgid "Du_plicate"
-msgstr "複製(_P)"
-
-#: data/pdfarranger.ui.h:8
-msgid "Reverse Order"
-msgstr "逆順"
-
-#: data/pdfarranger.ui.h:9
-msgid "Split pages"
-msgstr "ページを分割"
-
-#: data/pdfarranger.ui.h:11
-msgid "_View"
-msgstr "表示(_V)"
-
-#: data/pdfarranger.ui.h:12
-msgid "Zoom in"
-msgstr "拡大"
-
-#: data/pdfarranger.ui.h:13
-msgid "Zoom out"
-msgstr "縮小"
-
-#: data/pdfarranger.ui.h:14
-msgid "_Help"
-msgstr "ヘルプ(_H)"
-
-#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr "ファイルを開いて現在のドキュメントに追加します"
 
-#: data/pdfarranger.ui.h:16
-msgid "Import"
-msgstr "インポート"
-
-#: data/pdfarranger.ui.h:17
+#: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "保存"
 
-#: data/pdfarranger.ui.h:18
-msgid "Save as"
+#: data/pdfarranger.ui.h:3
+#, fuzzy
+msgid "Save As"
 msgstr "名前を付けて保存"
 
-#: data/pdfarranger.ui.h:19
-msgid "Delete"
-msgstr "削除"
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
+msgstr ""
 
-#: data/pdfarranger.ui.h:20
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
+msgstr ""
+
+#: data/pdfarranger.ui.h:6
+#, fuzzy
+msgid "Zoom In"
+msgstr "拡大"
+
+#: data/pdfarranger.ui.h:7
+#, fuzzy
+msgid "Zoom Out"
+msgstr "縮小"
+
+#: data/pdfarranger.ui.h:8
+#, fuzzy
+msgid "Rotate Left"
+msgstr "左に回転(_L)"
+
+#: data/pdfarranger.ui.h:9
+#, fuzzy
+msgid "Rotate Right"
+msgstr "右に回転(_R)"
+
+#: data/menu.ui.h:1
+#, fuzzy
+msgid "_Import"
+msgstr "インポート"
+
+#: data/menu.ui.h:2
+#, fuzzy
+msgid "_Save"
+msgstr "保存"
+
+#: data/menu.ui.h:3
+#, fuzzy
+msgid "Save _As..."
+msgstr "名前を付けて保存"
+
+#: data/menu.ui.h:4
+#, fuzzy
+msgid "E_xport Selection..."
+msgstr "選択したものをエクスポート(_E)..."
+
+#: data/menu.ui.h:5
+msgid "_Undo"
+msgstr ""
+
+#: data/menu.ui.h:6
+msgid "_Redo"
+msgstr ""
+
+#: data/menu.ui.h:7
+msgid "_Edit"
+msgstr "編集(_E)"
+
+#: data/menu.ui.h:8
 msgid "Rotate _Left"
 msgstr "左に回転(_L)"
 
-#: data/pdfarranger.ui.h:21
+#: data/menu.ui.h:9
 msgid "_Rotate Right"
 msgstr "右に回転(_R)"
 
-#: data/pdfarranger.ui.h:22
-msgid "C_rop"
-msgstr "トリミング(_R)"
+#: data/menu.ui.h:10
+msgid "Cro_p"
+msgstr ""
 
-#: data/pdfarranger.ui.h:23
+#: data/menu.ui.h:11
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: data/pdfarranger.ui.h:24
+#: data/menu.ui.h:12
+#, fuzzy
+msgid "Dupl_icate"
+msgstr "複製(_P)"
+
+#: data/menu.ui.h:13
 msgid "Re_verse Order"
 msgstr "逆順(_V)"
+
+#: data/menu.ui.h:14
+#, fuzzy
+msgid "_Split pages"
+msgstr "ページを分割"
+
+#: data/menu.ui.h:15
+msgid "Cu_t"
+msgstr ""
+
+#: data/menu.ui.h:16
+msgid "_Copy"
+msgstr ""
+
+#: data/menu.ui.h:17
+msgid "Paste _After"
+msgstr ""
+
+#: data/menu.ui.h:18
+msgid "Paste _Before"
+msgstr ""
+
+#: data/menu.ui.h:19
+msgid "Paste Interleave _Odd"
+msgstr ""
+
+#: data/menu.ui.h:20
+msgid "Paste Interleave _Even"
+msgstr ""
+
+#: data/menu.ui.h:21
+#, fuzzy
+msgid "Zoom _In"
+msgstr "拡大"
+
+#: data/menu.ui.h:22
+#, fuzzy
+msgid "Zoom _Out"
+msgstr "縮小"
+
+#: data/menu.ui.h:23
+#, fuzzy
+msgid "Edit _Properties"
+msgstr "プロパティを編集"
+
+#: data/menu.ui.h:24
+msgid "_About"
+msgstr ""
+
+#: data/menu.ui.h:25
+msgid "_Quit"
+msgstr ""
+
+#: data/menu.ui.h:26
+msgid "Past_e Special"
+msgstr ""
+
+#: data/menu.ui.h:27
+#, fuzzy
+msgid "_Split Pages"
+msgstr "ページを分割"
+
+#~ msgid "_File"
+#~ msgstr "ファイル(_F)"
+
+#~ msgid "Rotate left"
+#~ msgstr "左に回転"
+
+#~ msgid "Rotate right"
+#~ msgstr "右に回転"
+
+#~ msgid "Crop"
+#~ msgstr "トリミング"
+
+#~ msgid "Reverse Order"
+#~ msgstr "逆順"
+
+#~ msgid "_View"
+#~ msgstr "表示(_V)"
+
+#~ msgid "_Help"
+#~ msgstr "ヘルプ(_H)"
+
+#~ msgid "Delete"
+#~ msgstr "削除"
+
+#~ msgid "C_rop"
+#~ msgstr "トリミング(_R)"

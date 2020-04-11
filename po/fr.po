@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 10:16+0100\n"
+"POT-Creation-Date: 2020-04-11 10:32+0200\n"
 "PO-Revision-Date: 2020-01-12 10:30+0100\n"
 "Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: French - France <>\n"
@@ -24,84 +24,84 @@ msgstr ""
 "X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: pdfarranger/metadata.py:30
+#: pdfarranger/metadata.py:35
 msgid "Title"
 msgstr "Titre"
 
-#: pdfarranger/metadata.py:31
+#: pdfarranger/metadata.py:36
 msgid "Creator"
 msgstr "Auteur"
 
-#: pdfarranger/metadata.py:32
+#: pdfarranger/metadata.py:37
 msgid "Producer"
 msgstr "Producteur"
 
-#: pdfarranger/metadata.py:33
+#: pdfarranger/metadata.py:38
 msgid "Creator tool"
 msgstr "Outil"
 
-#: pdfarranger/metadata.py:91 data/pdfarranger.ui.h:10
+#: pdfarranger/metadata.py:141
 msgid "Edit properties"
 msgstr "Éditer les propriétés"
 
-#: pdfarranger/metadata.py:104
+#: pdfarranger/metadata.py:154
 msgid "Property"
 msgstr "Propriété"
 
-#: pdfarranger/metadata.py:104
+#: pdfarranger/metadata.py:154
 msgid "Value"
 msgstr "Valeur"
 
-#: pdfarranger/pdfarranger.py:506
+#: pdfarranger/pdfarranger.py:520
 msgid "No document"
 msgstr "Aucun document"
 
-#: pdfarranger/pdfarranger.py:508
+#: pdfarranger/pdfarranger.py:522
 msgid "Several documents"
 msgstr "Plusieurs documents"
 
-#: pdfarranger/pdfarranger.py:525
+#: pdfarranger/pdfarranger.py:539
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
 msgstr "Création des miniatures… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:614
+#: pdfarranger/pdfarranger.py:629
 msgid "Export ..."
 msgstr "Exporter…"
 
-#: pdfarranger/pdfarranger.py:626 pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
 msgstr "Fichiers PDF"
 
-#: pdfarranger/pdfarranger.py:632 pdfarranger/pdfarranger.py:704
+#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: pdfarranger/pdfarranger.py:693
+#: pdfarranger/pdfarranger.py:709
 msgid "Import..."
 msgstr "Importer…"
 
-#: pdfarranger/pdfarranger.py:1072
+#: pdfarranger/pdfarranger.py:1223
 msgid "Left"
 msgstr "À gauche"
 
-#: pdfarranger/pdfarranger.py:1072
+#: pdfarranger/pdfarranger.py:1223
 msgid "Right"
 msgstr "À droite"
 
-#: pdfarranger/pdfarranger.py:1073
+#: pdfarranger/pdfarranger.py:1224
 msgid "Top"
 msgstr "En haut"
 
-#: pdfarranger/pdfarranger.py:1073
+#: pdfarranger/pdfarranger.py:1224
 msgid "Bottom"
 msgstr "En bas"
 
-#: pdfarranger/pdfarranger.py:1090
+#: pdfarranger/pdfarranger.py:1241
 msgid "Crop Selected Pages"
 msgstr "Rogner les pages sélectionnées"
 
-#: pdfarranger/pdfarranger.py:1098
+#: pdfarranger/pdfarranger.py:1249
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -109,21 +109,21 @@ msgstr ""
 "Le contenu rogné reste présent dans le\n"
 "fichier PDF. Il est simplement caché."
 
-#: pdfarranger/pdfarranger.py:1101
+#: pdfarranger/pdfarranger.py:1252
 msgid "Crop Margins"
 msgstr "Rogner les marges"
 
-#: pdfarranger/pdfarranger.py:1111
+#: pdfarranger/pdfarranger.py:1262
 #, python-format
 msgid "% of width"
 msgstr "% de la largeur"
 
-#: pdfarranger/pdfarranger.py:1111
+#: pdfarranger/pdfarranger.py:1262
 #, python-format
 msgid "% of height"
 msgstr "% de la hauteur"
 
-#: pdfarranger/pdfarranger.py:1218
+#: pdfarranger/pdfarranger.py:1369
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -132,98 +132,192 @@ msgstr ""
 "%s est un outil pour réorganiser et modifier les fichiers PDF. Développé "
 "avec GTK+ et Python"
 
-#: pdfarranger/pdfarranger.py:1298
+#: pdfarranger/pdfarranger.py:1449
 msgid "page"
 msgstr "page"
 
 #: data/pdfarranger.ui.h:1
-msgid "_File"
-msgstr "_Fichier"
-
-#: data/pdfarranger.ui.h:2
-msgid "_Export selection..."
-msgstr "_Exporter la sélection…"
-
-#: data/pdfarranger.ui.h:3
-msgid "_Edit"
-msgstr "É_dition"
-
-#: data/pdfarranger.ui.h:4
-msgid "Rotate left"
-msgstr "Rotation vers la gauche"
-
-#: data/pdfarranger.ui.h:5
-msgid "Rotate right"
-msgstr "Rotation vers la droite"
-
-#: data/pdfarranger.ui.h:6
-msgid "Crop"
-msgstr "Rogner"
-
-#: data/pdfarranger.ui.h:7
-msgid "Du_plicate"
-msgstr "Dupliquer"
-
-#: data/pdfarranger.ui.h:8
-msgid "Reverse Order"
-msgstr "Inverser l’ordre"
-
-#: data/pdfarranger.ui.h:9
-msgid "Split pages"
-msgstr "Séparer les pages"
-
-#: data/pdfarranger.ui.h:11
-msgid "_View"
-msgstr "_Affichage"
-
-#: data/pdfarranger.ui.h:12
-msgid "Zoom in"
-msgstr "Zoom avant"
-
-#: data/pdfarranger.ui.h:13
-msgid "Zoom out"
-msgstr "Zoom arrière"
-
-#: data/pdfarranger.ui.h:14
-msgid "_Help"
-msgstr "Aid_e"
-
-#: data/pdfarranger.ui.h:15
 msgid "Open a file and append it to the current document"
 msgstr "Ouvrir un fichier et l’ajouter au document actuel"
 
-#: data/pdfarranger.ui.h:16
-msgid "Import"
-msgstr "Importer"
-
-#: data/pdfarranger.ui.h:17
+#: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Enregistrer"
 
-#: data/pdfarranger.ui.h:18
-msgid "Save as"
+#: data/pdfarranger.ui.h:3
+#, fuzzy
+msgid "Save As"
 msgstr "Enregistrer sous"
 
-#: data/pdfarranger.ui.h:19
-msgid "Delete"
-msgstr "Supprimer"
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
+msgstr ""
 
-#: data/pdfarranger.ui.h:20
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
+msgstr ""
+
+#: data/pdfarranger.ui.h:6
+#, fuzzy
+msgid "Zoom In"
+msgstr "Zoom avant"
+
+#: data/pdfarranger.ui.h:7
+#, fuzzy
+msgid "Zoom Out"
+msgstr "Zoom arrière"
+
+#: data/pdfarranger.ui.h:8
+#, fuzzy
+msgid "Rotate Left"
+msgstr "Rotation vers la _gauche"
+
+#: data/pdfarranger.ui.h:9
+#, fuzzy
+msgid "Rotate Right"
+msgstr "Rotation vers la _droite"
+
+#: data/menu.ui.h:1
+#, fuzzy
+msgid "_Import"
+msgstr "Importer"
+
+#: data/menu.ui.h:2
+#, fuzzy
+msgid "_Save"
+msgstr "Enregistrer"
+
+#: data/menu.ui.h:3
+#, fuzzy
+msgid "Save _As"
+msgstr "Enregistrer sous"
+
+#: data/menu.ui.h:4
+#, fuzzy
+msgid "E_xport Selection..."
+msgstr "_Exporter la sélection…"
+
+#: data/menu.ui.h:5
+msgid "_Undo"
+msgstr ""
+
+#: data/menu.ui.h:6
+msgid "_Redo"
+msgstr ""
+
+#: data/menu.ui.h:7
+msgid "_Edit"
+msgstr "É_dition"
+
+#: data/menu.ui.h:8
 msgid "Rotate _Left"
 msgstr "Rotation vers la _gauche"
 
-#: data/pdfarranger.ui.h:21
+#: data/menu.ui.h:9
 msgid "_Rotate Right"
 msgstr "Rotation vers la _droite"
 
-#: data/pdfarranger.ui.h:22
-msgid "C_rop"
-msgstr "_Rogner"
+#: data/menu.ui.h:10
+msgid "Cro_p"
+msgstr ""
 
-#: data/pdfarranger.ui.h:23
+#: data/menu.ui.h:11
 msgid "_Delete"
 msgstr "_Supprimer"
 
-#: data/pdfarranger.ui.h:24
+#: data/menu.ui.h:12
+#, fuzzy
+msgid "Dupl_icate"
+msgstr "Dupliquer"
+
+#: data/menu.ui.h:13
 msgid "Re_verse Order"
 msgstr "In_verser l’ordre"
+
+#: data/menu.ui.h:14
+#, fuzzy
+msgid "_Split pages"
+msgstr "Séparer les pages"
+
+#: data/menu.ui.h:15
+msgid "Cu_t"
+msgstr ""
+
+#: data/menu.ui.h:16
+msgid "_Copy"
+msgstr ""
+
+#: data/menu.ui.h:17
+msgid "Paste _After"
+msgstr ""
+
+#: data/menu.ui.h:18
+msgid "Paste _Before"
+msgstr ""
+
+#: data/menu.ui.h:19
+msgid "Paste Interleave _Odd"
+msgstr ""
+
+#: data/menu.ui.h:20
+msgid "Paste Interleave _Even"
+msgstr ""
+
+#: data/menu.ui.h:21
+#, fuzzy
+msgid "Zoom _In"
+msgstr "Zoom avant"
+
+#: data/menu.ui.h:22
+#, fuzzy
+msgid "Zoom _Out"
+msgstr "Zoom arrière"
+
+#: data/menu.ui.h:23
+#, fuzzy
+msgid "Edit _Properties"
+msgstr "Éditer les propriétés"
+
+#: data/menu.ui.h:24
+msgid "_About"
+msgstr ""
+
+#: data/menu.ui.h:25
+msgid "_Quit"
+msgstr ""
+
+#: data/menu.ui.h:26
+msgid "Past_e Special"
+msgstr ""
+
+#: data/menu.ui.h:27
+#, fuzzy
+msgid "_Split Pages"
+msgstr "Séparer les pages"
+
+#~ msgid "_File"
+#~ msgstr "_Fichier"
+
+#~ msgid "Rotate left"
+#~ msgstr "Rotation vers la gauche"
+
+#~ msgid "Rotate right"
+#~ msgstr "Rotation vers la droite"
+
+#~ msgid "Crop"
+#~ msgstr "Rogner"
+
+#~ msgid "Reverse Order"
+#~ msgstr "Inverser l’ordre"
+
+#~ msgid "_View"
+#~ msgstr "_Affichage"
+
+#~ msgid "_Help"
+#~ msgstr "Aid_e"
+
+#~ msgid "Delete"
+#~ msgstr "Supprimer"
+
+#~ msgid "C_rop"
+#~ msgstr "_Rogner"
