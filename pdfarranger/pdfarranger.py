@@ -449,6 +449,9 @@ class PdfArranger(Gtk.Application):
 
         self.sw.add_with_viewport(self.iconview)
 
+        self.model.connect('row-inserted', self.__update_num_pages)
+        self.model.connect('row-deleted', self.__update_num_pages)
+
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
 
@@ -1376,6 +1379,9 @@ class PdfArranger(Gtk.Application):
         about_dialog.connect('response', lambda w, *args: w.destroy())
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
+
+    def __update_num_pages(self, model, _path, _itr=None, _user_data=None):
+        self.uiXML.get_object("num_pages").set_text(str(len(model)))
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
