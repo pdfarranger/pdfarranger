@@ -218,39 +218,39 @@ msgstr "_Supprimer"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr "Dupl_iquer"
+msgstr "D_upliquer"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr "In_verser l’ordre"
+msgstr "_Inverser l’ordre"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr "Séparer les pages"
+msgstr "S_éparer les pages"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr "Couper"
+msgstr "C_ouper"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr "Copier"
+msgstr "_Copier"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr "Coller après"
+msgstr "Co_ller après"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr "Coller avant"
+msgstr "Coller a_vant"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Collage entrelacé pair"
+msgstr "Collage entrelacé _pair"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Collage entrelacé impair"
+msgstr "Collage entrelacé i_mpair"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
@@ -274,35 +274,8 @@ msgstr "_Quitter"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr "Collage spécial"
+msgstr "Coll_age spécial"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "_Séparer les pages"
-
-#~ msgid "_File"
-#~ msgstr "_Fichier"
-
-#~ msgid "Rotate left"
-#~ msgstr "Rotation vers la gauche"
-
-#~ msgid "Rotate right"
-#~ msgstr "Rotation vers la droite"
-
-#~ msgid "Crop"
-#~ msgstr "Rogner"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Inverser l’ordre"
-
-#~ msgid "_View"
-#~ msgstr "_Affichage"
-
-#~ msgid "_Help"
-#~ msgstr "Aid_e"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "C_rop"
-#~ msgstr "_Rogner"
