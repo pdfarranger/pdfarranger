@@ -1,6 +1,6 @@
-# PDF-Shuffler translation files.
-# Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
+# pdfarranger translation files.
+# Copyright (C) 2020 Jérôme Robert
+# This file is part of pdfarranger which is released under the GNU General
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:32+0200\n"
-"PO-Revision-Date: 2020-01-12 10:30+0100\n"
-"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
+"POT-Creation-Date: 2020-04-11 10:54+0200\n"
+"PO-Revision-Date: 2020-04-11 11:19+0200\n"
+"Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
 "Language-Team: French - France <>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: pdfarranger/metadata.py:35
@@ -67,7 +67,7 @@ msgstr "Création des miniatures… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Export ..."
-msgstr "Exporter…"
+msgstr "Exporter …"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -145,65 +145,56 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "Enregistrer sous"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Nombre de pages"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu principal"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Zoom avant"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Rotation vers la _gauche"
+msgstr "Rotation vers la gauche"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "Rotation vers la _droite"
+msgstr "Rotation vers la droite"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Importer"
+msgstr "_Importer"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
-msgstr "Enregistrer"
+msgstr "_Enregistrer"
 
 #: data/menu.ui.h:3
-#, fuzzy
-msgid "Save _As"
-msgstr "Enregistrer sous"
+msgid "Save _As..."
+msgstr "Enregistrer _sous..."
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection..."
-msgstr "_Exporter la sélection…"
+msgstr "E_xporter la sélection..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "Ann_uler"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Rétablir"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -219,81 +210,75 @@ msgstr "Rotation vers la _droite"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "_Rogner"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
 msgstr "_Supprimer"
 
 #: data/menu.ui.h:12
-#, fuzzy
 msgid "Dupl_icate"
-msgstr "Dupliquer"
+msgstr "Dupl_iquer"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
 msgstr "In_verser l’ordre"
 
 #: data/menu.ui.h:14
-#, fuzzy
 msgid "_Split pages"
 msgstr "Séparer les pages"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "Couper"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "Copier"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Coller après"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Coller avant"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Collage entrelacé pair"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Collage entrelacé impair"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Zoom avant"
+msgstr "Zoom a_vant"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Zoom arrière"
+msgstr "Zoom _arrière"
 
 #: data/menu.ui.h:23
-#, fuzzy
 msgid "Edit _Properties"
-msgstr "Éditer les propriétés"
+msgstr "Éditer les _propriétés"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "Á pr_opos"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Quitter"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Collage spécial"
 
 #: data/menu.ui.h:27
-#, fuzzy
 msgid "_Split Pages"
-msgstr "Séparer les pages"
+msgstr "_Séparer les pages"
 
 #~ msgid "_File"
 #~ msgstr "_Fichier"
