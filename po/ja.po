@@ -233,19 +233,19 @@ msgstr "コピー(_C)"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr "後に張り付け(_A)"
+msgstr "後に貼り付け(_A)"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr "前に張り付け(_B)"
+msgstr "前に貼り付け(_B)"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "奇数ページに割り込み張り付け(_O)"
+msgstr "奇数ページに割り込み貼り付け(_O)"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "偶数ページに割り込み張り付け(_E)"
+msgstr "偶数ページに割り込み貼り付け(_E)"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
@@ -269,7 +269,7 @@ msgstr "終了(_Q)"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr "特殊張り付け(_E)"
+msgstr "特殊貼り付け(_E)"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
