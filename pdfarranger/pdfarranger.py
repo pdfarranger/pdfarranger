@@ -345,8 +345,8 @@ class PdfArranger(Gtk.Application):
             ('export-selection', '<Ctrl>e'),
             ('quit', '<Ctrl>q'),
             ('import', 'Insert'),
-            ('zoom(5)', 'plus'),
-            ('zoom(-5)', 'minus'),
+            ('zoom(5)', ['plus', 'KP_Add']),
+            ('zoom(-5)', ['minus', 'KP_Subtract']),
             ('undo', '<Ctrl>z'),
             ('redo', '<Ctrl>y'),
             ('cut', '<Ctrl>x'),
@@ -355,7 +355,7 @@ class PdfArranger(Gtk.Application):
             ('paste(1)', '<Ctrl><Shift>v'),
         ]
         for a, k in accels:
-            self.set_accels_for_action("win." + a, [k])
+            self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
         self.iv_selection_changed_event()
         self.undomanager.set_actions(self.window.lookup_action('undo'),
