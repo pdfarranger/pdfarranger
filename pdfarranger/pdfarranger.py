@@ -576,13 +576,13 @@ class PdfArranger(Gtk.Application):
             # scale*page_width*(1-crop_left-crop_right)
             item_width = int(max(row[4] * row[11] * (1. - row[7] - row[8])
                                  for row in self.model))
-            # FIXME: those are magic number found with my current GTK
-            #  style. This might not be portable.
-            min_col_spacing = 19
+            item_padding = self.iconview.get_item_padding()
+            cellthmb_xpad, _cellthmb_ypad = self.cellthmb.get_padding()
+            min_col_spacing = 7 + 2 * (item_padding + cellthmb_xpad)
             min_margin = 14
             iw_width = window.get_size()[0]
             # 2 * min_margin + col_num * item_width
-            #  + min_col_spacing * (col_num-1) = iw_width
+            #  + min_col_spacing * (col_num+1) = iw_width
             # min_margin+margin = min_col_spacing+col_spacing
             #  = (iw_width - col_num * item_width) / (col_num+1)
             col_num = (iw_width - 2 * min_margin - min_col_spacing) //\
