@@ -990,6 +990,9 @@ class PdfArranger(Gtk.Application):
                     model.remove(model.get_iter(ref_from.get_path()))
 
         elif target == 'MODEL_ROW_EXTERN':
+            if not item and self.is_between_items(iconview, x, y):
+                context.finish(False, False, etime)
+                return
             if not ref_to:
                 data.reverse()
             changed = self.paste_pages(data, before, ref_to, select_added=True)
@@ -1013,9 +1016,30 @@ class PdfArranger(Gtk.Application):
             path = ref_del.get_path()
             model.remove(model.get_iter(path))
 
-    def iv_dnd_motion(self, _iconview, _context, _x, y, _etime):
-        """Handles the drag-motion signal in order to auto-scroll the view"""
+    def is_between_items(self, iconview, x, y):
+        """Find out if drag location is between items."""
+        model = iconview.get_model()
+        if len(model) == 0:
+            return False
+        last_row = model[-1]
+        _x, _y, w, _h = self.cellthmb.do_get_size(iconview)
+        x_step =  w * 0.9
+        y_step = iconview.get_row_spacing() + 10
+        xy_test = [(x - x_step, y),             # left
+                   (x + x_step, y),             # right
+                   (x, y + y_step),             # down
+                   (x - x_step, y + y_step),    # left-down
+                   (x + x_step, y + y_step)]    # right-down
 
+        for x_t, y_t in xy_test:
+            if x_t < 0: x_t = 0
+            path = iconview.get_path_at_pos(x_t, y_t)
+            if path and not (path == last_row.path and x_t < x):
+                return True
+        return False
+
+    def iv_dnd_motion(self, iconview, _context, x, y, _etime):
+        """Handles auto-scroll when drag up/down. Also reject drop to location between items."""
         autoscroll_area = 40
         sw_vadj = self.sw.get_vadjustment()
         sw_height = self.sw.get_allocation().height
@@ -1032,6 +1056,10 @@ class PdfArranger(Gtk.Application):
         elif self.iv_auto_scroll_timer:
             GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
+
+        item = iconview.get_dest_item_at_pos(x, y)
+        if not item and self.is_between_items(iconview, x, y):
+            iconview.stop_emission('drag_motion')
 
     def iv_dnd_leave_end(self, _widget, _context, _ignored=None):
         """Ends the auto-scroll during DND"""
