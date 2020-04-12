@@ -11,9 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
 "PO-Revision-Date: 2019-07-18 20:51+0200\n"
-"Last-Translator: O. Giesmann <nutzer3105@gmail.com>\n"
-"Language-Team: German (http://www.transifex.com/logari81/pdfshuffler/"
-"language/de/)\n"
+"Last-Translator: David Auer <dreua@posteo.de>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,15 +142,15 @@ msgstr "Speichern"
 #: data/pdfarranger.ui.h:3
 #, fuzzy
 msgid "Save As"
-msgstr "Speichern als"
+msgstr "Speichern unter"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Anzahl Seiten"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Hauptmenü"
 
 #: data/pdfarranger.ui.h:6
 #, fuzzy
@@ -187,7 +185,7 @@ msgstr "Speichern"
 #: data/menu.ui.h:3
 #, fuzzy
 msgid "Save _As..."
-msgstr "Speichern als"
+msgstr "Speichern unter ..."
 
 #: data/menu.ui.h:4
 #, fuzzy
@@ -196,11 +194,11 @@ msgstr "Markierte Seiten _exportieren ..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "Rückgängig"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "Wiederholen"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -216,7 +214,7 @@ msgstr "Nach _rechts drehen"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "Zuschneiden"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
@@ -238,27 +236,27 @@ msgstr "Seiten teilen"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "Ausschneiden"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Einfügen nach Auswahl"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Einfügen vor Auswahl"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Verzahnt einfügen ungerade"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Verzahnt einfügen gerade"
 
 #: data/menu.ui.h:21
 #, fuzzy
@@ -277,15 +275,15 @@ msgstr "Eigenschaften ändern"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "Info zu PDF Arranger"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "Beenden"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Einfügen"
 
 #: data/menu.ui.h:27
 #, fuzzy
