@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2020-01-13 18:00+0900\n"
+"PO-Revision-Date: 2020-04-12 18:20+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -140,65 +140,56 @@ msgid "Save"
 msgstr "保存"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "名前を付けて保存"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "ページ数"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "メインメニュー"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "拡大"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "縮小"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "左に回転(_L)"
+msgstr "左に回転"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "右に回転(_R)"
+msgstr "右に回転"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "インポート"
+msgstr "インポート(_I)"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
-msgstr "保存"
+msgstr "保存(_S)"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As..."
-msgstr "名前を付けて保存"
+msgstr "名前を付けて保存(_A)..."
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection..."
-msgstr "選択したものをエクスポート(_E)..."
+msgstr "選択したものをエクスポート(_X)..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "元に戻す(_U)"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "やり直す(_R)"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -214,81 +205,75 @@ msgstr "右に回転(_R)"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "トリミング(_P)"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
 msgstr "削除(_D)"
 
 #: data/menu.ui.h:12
-#, fuzzy
 msgid "Dupl_icate"
-msgstr "複製(_P)"
+msgstr "複製(_I)"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
 msgstr "逆順(_V)"
 
 #: data/menu.ui.h:14
-#, fuzzy
 msgid "_Split pages"
-msgstr "ページを分割"
+msgstr "ページを分割(_S)"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "切り取り(_T)"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "コピー(_C)"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "後に貼り付け(_A)"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "前に貼り付け(_B)"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "奇数ページに割り込み貼り付け(_O)"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "偶数ページに割り込み貼り付け(_E)"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
-msgstr "拡大"
+msgstr "拡大(_I)"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "縮小"
+msgstr "縮小(_O)"
 
 #: data/menu.ui.h:23
-#, fuzzy
 msgid "Edit _Properties"
-msgstr "プロパティを編集"
+msgstr "プロパティを編集(_P)"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "情報(_A)"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "終了(_Q)"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "特殊貼り付け(_E)"
 
 #: data/menu.ui.h:27
-#, fuzzy
 msgid "_Split Pages"
-msgstr "ページを分割"
+msgstr "ページを分割(_S)"
 
 #~ msgid "_File"
 #~ msgstr "ファイル(_F)"
