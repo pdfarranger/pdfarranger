@@ -87,10 +87,8 @@ class CellRendererImage(Gtk.CellRenderer):
         x = cell_area.x
         y = cell_area.y
         if cell_area and w > 0 and h > 0:
-            x += self.get_property('xalign') * (
-                    cell_area.width - w - self.get_property('xpad'))
-            y += self.get_property('yalign') * (
-                    cell_area.height - h - self.get_property('ypad'))
+            x += self.get_property('xalign') * (cell_area.width - w)
+            y += self.get_property('yalign') * (cell_area.height - h)
 
         window.translate(x, y)
 
