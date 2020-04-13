@@ -1026,8 +1026,8 @@ class PdfArranger(Gtk.Application):
             return False
         last_row = model[-1]
         _x, _y, w, _h = self.cellthmb.do_get_size(iconview)
-        x_step =  w * 0.9
-        y_step = iconview.get_row_spacing() + 10
+        x_step = w
+        y_step = iconview.get_row_spacing() + 2 * iconview.get_item_padding()
         xy_test = [(x - x_step, y),             # left
                    (x + x_step, y),             # right
                    (x, y + y_step),             # down
