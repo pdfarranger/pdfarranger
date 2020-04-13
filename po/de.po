@@ -5,6 +5,7 @@
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
 # Konstantinos Poulios, 2008-2017
+# David Auer, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
@@ -140,7 +141,6 @@ msgid "Save"
 msgstr "Speichern"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "Speichern unter"
 
@@ -153,42 +153,34 @@ msgid "Main Menu"
 msgstr "Hauptmenü"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Vergrössern"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Nach _links drehen"
+msgstr "Nach links drehen"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "Nach _rechts drehen"
+msgstr "Nach rechts drehen"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
 msgstr "Importieren"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
 msgstr "Speichern"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As..."
 msgstr "Speichern unter ..."
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection..."
 msgstr "Markierte Seiten _exportieren ..."
 
@@ -221,7 +213,6 @@ msgid "_Delete"
 msgstr "Entfernen"
 
 #: data/menu.ui.h:12
-#, fuzzy
 msgid "Dupl_icate"
 msgstr "Duplizieren"
 
@@ -230,7 +221,6 @@ msgid "Re_verse Order"
 msgstr "Reihenfolge _umkehren"
 
 #: data/menu.ui.h:14
-#, fuzzy
 msgid "_Split pages"
 msgstr "Seiten teilen"
 
@@ -259,17 +249,14 @@ msgid "Paste Interleave _Even"
 msgstr "Verzahnt einfügen gerade"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
 msgstr "Vergrössern"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Verkleinern"
 
 #: data/menu.ui.h:23
-#, fuzzy
 msgid "Edit _Properties"
 msgstr "Eigenschaften ändern"
 
@@ -286,7 +273,6 @@ msgid "Past_e Special"
 msgstr "Einfügen"
 
 #: data/menu.ui.h:27
-#, fuzzy
 msgid "_Split Pages"
 msgstr "Seiten teilen"
 
@@ -314,6 +300,5 @@ msgstr "Seiten teilen"
 #~ msgid "Delete"
 #~ msgstr "Löschen"
 
-#, fuzzy
 #~ msgid "C_rop"
 #~ msgstr "_Zuschneiden..."
