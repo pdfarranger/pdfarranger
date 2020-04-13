@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2020-04-09 21:00+0100\n"
+"PO-Revision-Date: 2020-04-013 15:38+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -140,59 +140,51 @@ msgstr "Salva con nome"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Numero di Pagine"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu Principale"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Ingrandisci"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Rimpicciolisci"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Ruota a _sinistra"
+msgstr "Ruota a Sinistra"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "_Ruota a destra"
+msgstr "Ruota a Destra"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Importa"
+msgstr "_Importa"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
-msgstr "Salva"
+msgstr "_Salva"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As..."
-msgstr "Salva con nome"
+msgstr "Salva Come..."
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection..."
-msgstr "_Esporta selezione..."
+msgstr "_sporta Selezione..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "_Annulla"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Rifai"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -208,41 +200,39 @@ msgstr "_Ruota a destra"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "Ritaglia"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "Cancella"
+msgstr "_Cancella"
 
 #: data/menu.ui.h:12
-#, fuzzy
 msgid "Dupl_icate"
-msgstr "Du_plicato"
+msgstr "Duplicato"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr "In_verti Ordine"
+msgstr "Inverti Ordine"
 
 #: data/menu.ui.h:14
-#, fuzzy
 msgid "_Split pages"
-msgstr "Dividi pagine"
+msgstr "_Dividi pagine"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "Taglia"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "_Copia"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Incolla_Dopo"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Incolla_Prima"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
@@ -253,36 +243,32 @@ msgid "Paste Interleave _Even"
 msgstr ""
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
 msgstr "Ingrandisci"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Rimpicciolisci"
 
 #: data/menu.ui.h:23
-#, fuzzy
 msgid "Edit _Properties"
-msgstr "Modifica proprietà"
+msgstr "Modifica_proprietà"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "Informazioni su"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Esci"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Incolla Speciale"
 
 #: data/menu.ui.h:27
-#, fuzzy
 msgid "_Split Pages"
-msgstr "Dividi pagine"
+msgstr "_Dividi pagine"
 
 #~ msgid "_File"
 #~ msgstr "_File"
