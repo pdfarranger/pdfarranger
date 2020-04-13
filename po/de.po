@@ -170,31 +170,31 @@ msgstr "Nach rechts drehen"
 
 #: data/menu.ui.h:1
 msgid "_Import"
-msgstr "Importieren"
+msgstr "_Importieren"
 
 #: data/menu.ui.h:2
 msgid "_Save"
-msgstr "Speichern"
+msgstr "_Speichern"
 
 #: data/menu.ui.h:3
 msgid "Save _As..."
-msgstr "Speichern unter ..."
+msgstr "Speichern _unter ..."
 
 #: data/menu.ui.h:4
 msgid "E_xport Selection..."
-msgstr "Markierte Seiten _exportieren ..."
+msgstr "Markierte Seiten e_xportieren ..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr "Rückgängig"
+msgstr "_Rückgängig"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr "Wiederholen"
+msgstr "_Wiederholen"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "Bearbeiten"
+msgstr "_Bearbeiten"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
@@ -206,75 +206,75 @@ msgstr "Nach _rechts drehen"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr "Zuschneiden"
+msgstr "_Zuschneiden"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "Entfernen"
+msgstr "_Entfernen"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr "Duplizieren"
+msgstr "_Duplizieren"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr "Reihenfolge _umkehren"
+msgstr "Rei_henfolge umkehren"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr "Seiten teilen"
+msgstr "Seiten _teilen"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr "Ausschneiden"
+msgstr "_Ausschneiden"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr "Kopieren"
+msgstr "_Kopieren"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr "Einfügen nach Auswahl"
+msgstr "Einfügen _nach Auswahl"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr "Einfügen vor Auswahl"
+msgstr "Einfügen _vor Auswahl"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Verzahnt einfügen ungerade"
+msgstr "Verzahnt einfügen _ungerade"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Verzahnt einfügen gerade"
+msgstr "Verzahnt einfügen _gerade"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
-msgstr "Vergrössern"
+msgstr "Ver_grössern"
 
 #: data/menu.ui.h:22
 msgid "Zoom _Out"
-msgstr "Verkleinern"
+msgstr "Ver_kleinern"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr "Eigenschaften ändern"
+msgstr "Eige_nschaften ändern"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr "Info zu PDF Arranger"
+msgstr "Info zu _PDF Arranger"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr "Beenden"
+msgstr "Been_den"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr "Einfügen"
+msgstr "Ein_fügen"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr "Seiten teilen"
+msgstr "Seiten _teilen"
 
 #~ msgid "_File"
 #~ msgstr "_Datei"
