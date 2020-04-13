@@ -58,3 +58,13 @@ To run the pdfarranger in Wine you may have to:
 ```
 unset $(env |grep ^XDG_ | cut -d= -f1)
 ```
+
+## Docker
+
+```
+cd pdfarranger
+./setup.py build
+alias pythonwin32="docker run -v $PWD:/pdfarranger -w /pdfarranger -it jeromerobert/wine-mingw64 wine /mingw64/bin/python"
+pythonwin32 setup_win32.py bdist_msi
+pythonwin32 setup_win32.py bdist_zip
+```
