@@ -484,7 +484,7 @@ class PdfArranger(Gtk.Application):
         # Set outline properties for iconview items i.e. cursor look
         style_provider = Gtk.CssProvider()
         css_data = """
-        * {
+        iconview {
             outline-color: alpha(currentColor, 0.8);
             outline-style: dashed;
             outline-offset: -2px;
