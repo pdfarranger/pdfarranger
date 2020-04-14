@@ -335,6 +335,10 @@ class PdfArranger(Gtk.Application):
             ('paste', self.on_action_paste, 'i'),
             ('about', self.about_dialog),
         ])
+
+        main_menu = self.uiXML.get_object("main_menu_button")
+        self.window.add_action(Gio.PropertyAction.new("main-menu", main_menu, "active"))
+
         accels = [
             ('delete', 'Delete'),
             ('crop', 'c'),
@@ -353,6 +357,7 @@ class PdfArranger(Gtk.Application):
             ('copy', '<Ctrl>c'),
             ('paste(0)', '<Ctrl>v'),
             ('paste(1)', '<Ctrl><Shift>v'),
+            ('main-menu', 'F10'),
         ]
         for a, k in accels:
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
