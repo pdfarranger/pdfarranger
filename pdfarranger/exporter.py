@@ -78,7 +78,8 @@ def export(input_files, pages, file_out, mdata):
         pdf_output.pages.append(new_page)
     ppae = metadata.PRODUCER not in mdata
     with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
-        outmeta.load_from_docinfo(pdf_input[0].docinfo)
+        if len(pdf_input) > 0:
+            outmeta.load_from_docinfo(pdf_input[0].docinfo)
         for k, v in mdata.items():
             outmeta[k] = v
     pdf_output.save(file_out)
