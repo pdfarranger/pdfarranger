@@ -7,7 +7,6 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
 -->
 <component type="desktop-application">
   <id>com.github.jeromerobert.pdfarranger</id>
-  <id type="desktop">pdfarranger.desktop</id>
   <name>PDF Arranger</name>
   <summary>PDF file merging, rearranging, and splitting</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
