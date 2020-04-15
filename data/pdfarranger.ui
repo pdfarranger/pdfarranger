@@ -79,11 +79,12 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
               </packing>
             </child>
             <child>
-              <object class="GtkMenuButton" id="save_as_bar_button">
+              <object class="GtkButton" id="save_as_bar_button">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Save As</property>
+                <property name="action_name">win.save-as</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
