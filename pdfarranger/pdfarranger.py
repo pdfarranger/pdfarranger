@@ -1250,7 +1250,6 @@ class PdfArranger(Gtk.Application):
     def split_pages(self, _action, _parameter, _unknown):
         """ Split selected pages """
         model = self.iconview.get_model()
-        selection = self.iconview.get_selected_items()
         self.set_unsaved(True)
         self.undomanager.commit("Split")
         # selection is a list of 1-tuples, not in order
