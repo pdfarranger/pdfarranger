@@ -831,7 +831,7 @@ class PdfArranger(Gtk.Application):
         while data:
             try:  # Clipboard can contain not expected data
                 self.data_to_pageadder(data, pageadder)
-            except:
+            except (ValueError, FileNotFoundError):
                 return False
         return pageadder.commit(select_added, add_to_undomanager=True)
 
@@ -848,7 +848,7 @@ class PdfArranger(Gtk.Application):
         while data:
             try:  # Clipboard can contain not expected data
                 self.data_to_pageadder(data, pageadder)
-            except:
+            except (ValueError, FileNotFoundError):
                 return
 
             pageadder.move(ref_to, before)
