@@ -272,7 +272,10 @@ class PdfArranger(Gtk.Application):
         self.export_file = None
 
         # Clipboard for cut copy paste
-        self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        if os.name == 'nt':
+            self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        else:
+            self.clipboard = Gtk.Clipboard.get(Gdk.Atom.intern('_SELECTION_PDFARRANGER', False))
 
     def do_open(self, files, _n, _hints):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
