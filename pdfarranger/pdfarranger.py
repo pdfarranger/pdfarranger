@@ -204,16 +204,11 @@ def warn_dialog(func):
 
 def get_file_path_from_dnd_dropped_uri(uri):
     """Extracts the path from an uri"""
+    uri = uri[5:]  # remove 'file:'
     path = url2pathname(uri)  # escape special chars
-    path = path.strip('\r\n\x00')  # remove \r\n and NULL
-
-    # get the path to file
-    if path.startswith('file:\\\\\\'):  # windows
-        path = path[8:]  # 8 is len('file:///')
-    elif path.startswith('file://'):  # nautilus, rox
-        path = path[7:]  # 7 is len('file://')
-    elif path.startswith('file:'):  # xffm
-        path = path[5:]  # 5 is len('file:')
+    path = path.strip('\r\n\x00\x2F')  # remove \r\n and NULL and \
+    if os.name == 'posix':
+        path = '/' + path
     return path
 
 
