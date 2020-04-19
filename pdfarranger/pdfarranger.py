@@ -538,17 +538,22 @@ class PdfArranger(Gtk.Application):
         GObject.idle_add(self.retitle)
 
     def retitle(self):
-        all_files = self.active_file_names()
-        title = ''
-        if len(all_files) == 1:
-            title += all_files.pop()
-        elif len(all_files) == 0:
-            title += _("No document")
+        if self.export_file:
+            title = self.export_file
+            if self.is_unsaved:
+                title += '*'
         else:
-            title += _("Several documents")
-        if self.is_unsaved:
-            title += '*'
-        title += ' - ' + APPNAME
+            title = ''
+
+        all_files = self.active_file_names()
+        if len(all_files) > 0:
+            if title:
+                title += ' '
+            title += '[' + ', '.join(all_files) + ']'
+
+        if title:
+            title += ' – '
+        title += APPNAME
         self.window.set_title(title)
         return False
 
@@ -692,7 +697,8 @@ class PdfArranger(Gtk.Application):
         for row in self.model:
             nfile = row[2]
             f = self.pdfqueue[nfile - 1]
-            all_files.add(f.filename)
+            f = os.path.splitext(os.path.basename(f.filename))[0]
+            all_files.add(f)
         return all_files
 
     def on_action_save(self, _action, _param, _unknown):
