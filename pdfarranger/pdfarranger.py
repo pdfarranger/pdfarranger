@@ -456,6 +456,7 @@ class PdfArranger(Gtk.Application):
 
         self.model.connect('row-inserted', self.__update_num_pages)
         self.model.connect('row-deleted', self.__update_num_pages)
+        self.model.connect('row-deleted', self.reset_export_file)
 
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
@@ -1467,6 +1468,11 @@ class PdfArranger(Gtk.Application):
         about_dialog.connect('response', lambda w, *args: w.destroy())
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
+
+    def reset_export_file(self, model, _path, _itr=None, _user_data=None):
+        if len(model) == 0:
+            self.set_export_file(None)
+            self.set_unsaved(False)
 
     def __update_num_pages(self, model, _path, _itr=None, _user_data=None):
         self.uiXML.get_object("num_pages").set_text(str(len(model)))
