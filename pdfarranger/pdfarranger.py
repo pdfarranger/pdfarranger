@@ -160,14 +160,14 @@ class Config(object):
     def maximized(self):
         return self.data.getboolean('window', 'maximized', fallback=False)
 
-    def set_maximized(self, m):
-        self.data.set('window', 'maximized', str(m))
+    def set_maximized(self, maximized):
+        self.data.set('window', 'maximized', str(maximized))
 
     def zoom_level(self):
         return self.data.getint('DEFAULT', 'zoom-level', fallback=0)
 
-    def set_zoom_level(self, l):
-        self.data.set('DEFAULT', 'zoom-level', str(l))
+    def set_zoom_level(self, level):
+        self.data.set('DEFAULT', 'zoom-level', str(level))
 
     def save(self):
         conffile = Config._config_file()
@@ -490,7 +490,7 @@ class PdfArranger(Gtk.Application):
             -gtk-outline-radius: 2px;
         }
         """
-        style_provider.load_from_data(bytes(css_data.encode()));
+        style_provider.load_from_data(bytes(css_data.encode()))
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Screen.get_default(),
             style_provider,
@@ -926,12 +926,12 @@ class PdfArranger(Gtk.Application):
     @staticmethod
     def iv_drag_begin(iconview, context):
         """Sets custom drag icon."""
-        l = len(iconview.get_selected_items())
-        stock_icon = "gtk-dnd-multiple" if l > 1 else "gtk-dnd"
+        selected_count = len(iconview.get_selected_items())
+        stock_icon = "gtk-dnd-multiple" if selected_count > 1 else "gtk-dnd"
         iconview.stop_emission('drag_begin')
         Gtk.drag_set_icon_name(context, stock_icon, 0, 0)
 
-    def iv_dnd_get_data(self, iconview, _context,
+    def iv_dnd_get_data(self, _iconview, _context,
                         selection_data, _target_id, _etime):
         """Handles requests for data by drag and drop in iconview"""
 
@@ -945,13 +945,12 @@ class PdfArranger(Gtk.Application):
                 data.append(str(path[0]))
             if data:
                 data = '\n;\n'.join(data)
-
         elif target == 'MODEL_ROW_EXTERN':
             self.target_is_intern = False
             data = self.copy_pages()
-
-        if data:
-            selection_data.set(selection_data.get_target(), 8, data.encode())
+        else:
+            return
+        selection_data.set(selection_data.get_target(), 8, data.encode())
 
     def iv_dnd_received_data(self, iconview, context, x, y,
                              selection_data, _target_id, etime):
@@ -1038,7 +1037,8 @@ class PdfArranger(Gtk.Application):
                    (x + x_step, y + y_step)]    # right-down
 
         for x_t, y_t in xy_test:
-            if x_t < 0: x_t = 0
+            if x_t < 0:
+                x_t = 0
             path = iconview.get_path_at_pos(x_t, y_t)
             if path and not (path == last_row.path and x_t < x):
                 return True
