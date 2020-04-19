@@ -26,7 +26,7 @@ from DistUtilsExtra.command import (
 
 data_files = [
     ('share/applications', ['data/com.github.jeromerobert.pdfarranger.desktop']),
-    ('share/pdfarranger', ['data/pdfarranger.ui', 'data/menu.ui']),
+    ('share/pdfarranger', ['data/pdfarranger.ui', 'data/menu.ui', 'data/querysavedialog.ui']),
     ('share/man/man1', ['doc/pdfarranger.1']),
     ('share/metainfo', ['data/com.github.jeromerobert.pdfarranger.metainfo.xml']),
 ]

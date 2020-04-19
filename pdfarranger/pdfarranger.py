@@ -383,7 +383,7 @@ class PdfArranger(Gtk.Application):
         if self.config.maximized():
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
-        self.window.connect('delete_event', self.close_application)
+        self.window.connect('delete_event', self.on_quit)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -531,6 +531,11 @@ class PdfArranger(Gtk.Application):
         self.progress_bar_timeout_id = \
             GObject.timeout_add(50, self.progress_bar_timeout)
 
+    def set_export_file(self, file):
+        if file != self.export_file:
+            self.export_file = file
+            self.set_unsaved(True)
+
     def set_unsaved(self, flag):
         self.is_unsaved = flag
         GObject.idle_add(self.retitle)
@@ -623,7 +628,28 @@ class PdfArranger(Gtk.Application):
 
         self.model.set(treeiter, 11, w1, 12, h1)
 
-    def on_quit(self, _action, _param, _unknown):
+    def on_quit(self, _action, _param=None, _unknown=None):
+        if self.is_unsaved:
+            b = self.__build_from_file("querysavedialog.ui")
+            d = b.get_object("querysavedialog")
+            if self.export_file:
+                d.props.text = d.props.text.replace('$(FILE)', os.path.basename(self.export_file), 1)
+            else:
+                d.props.text = _('Save changes before closing?')
+            response = d.run()
+            d.destroy()
+
+            if response == -9:
+                pass
+            elif response == -8:
+                # Save.
+                self.save_or_choose()
+                # Quit only if it has been really saved.
+                if self.is_unsaved:
+                    return True
+            else:
+                return True
+
         self.close_application()
 
     def close_application(self, _widget=None, _event=None, _data=None):
@@ -696,6 +722,11 @@ class PdfArranger(Gtk.Application):
         return all_files
 
     def on_action_save(self, _action, _param, _unknown):
+        self.save_or_choose()
+
+    def save_or_choose(self):
+        """Saves to the previously exported file or shows the export dialog if
+        there was none."""
         try:
             if self.export_file:
                 self.save(False, self.export_file)
@@ -720,10 +751,11 @@ class PdfArranger(Gtk.Application):
             to_export = [row for row in self.model if row.path in selection]
         else:
             self.export_directory = path
-            self.export_file = file_out
-            self.set_unsaved(False)
+            self.set_export_file(file_out)
         m = metadata.merge(self.metadata, self.pdfqueue)
         exporter.export(self.pdfqueue, to_export, file_out, m)
+        if not only_selected:
+            self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, _action, _target, _unknown):
         self.choose_export_pdf_name(True)

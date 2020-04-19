@@ -8,6 +8,7 @@ import glob
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
     ('data/menu.ui', 'share/pdfarranger/menu.ui'),
+    ('data/querysavedialog.ui', 'share/pdfarranger/querysavedialog.ui'),
     ('data/icons/hicolor/scalable', 'share/icons/hicolor/scalable'),
     ('build/mo', 'share/locale'),
 ]
