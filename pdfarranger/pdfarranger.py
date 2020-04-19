@@ -756,13 +756,7 @@ class PdfArranger(Gtk.Application):
         if response == Gtk.ResponseType.ACCEPT:
             adder = PageAdder(self)
             for filename in chooser.get_filenames():
-                try:
-                    adder.addpages(filename)
-                except Exception as e:
-                    traceback.print_exc()
-                    chooser.destroy()
-                    self.error_message_dialog(e)
-                    return
+                adder.addpages(filename)
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
@@ -1489,7 +1483,13 @@ class PageAdder(object):
                 break
 
         if not pdfdoc:
-            pdfdoc = PDFDoc(filename, self.app.tmp_dir)
+            try:
+                pdfdoc = PDFDoc(filename, self.app.tmp_dir)
+            except GLib.Error as e:
+                message = e.message + ': ' + filename
+                print(message, file=sys.stderr)
+                self.app.error_message_dialog(message)
+                return
             self.app.import_directory = os.path.split(filename)[0]
             self.app.export_directory = self.app.import_directory
             self.app.pdfqueue.append(pdfdoc)
