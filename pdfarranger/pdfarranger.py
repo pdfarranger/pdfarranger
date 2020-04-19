@@ -533,6 +533,11 @@ class PdfArranger(Gtk.Application):
         self.progress_bar_timeout_id = \
             GObject.timeout_add(50, self.progress_bar_timeout)
 
+    def set_export_file(self, file):
+        if file != self.export_file:
+            self.export_file = file
+            self.set_unsaved(True)
+
     def set_unsaved(self, flag):
         self.is_unsaved = flag
         GObject.idle_add(self.retitle)
@@ -726,10 +731,11 @@ class PdfArranger(Gtk.Application):
             to_export = [row for row in self.model if row.path in selection]
         else:
             self.export_directory = path
-            self.export_file = file_out
-            self.set_unsaved(False)
+            self.set_export_file(file_out)
         m = metadata.merge(self.metadata, self.pdfqueue)
         exporter.export(self.pdfqueue, to_export, file_out, m)
+        if not only_selected:
+            self.set_unsaved(False)
 
     def choose_export_selection_pdf_name(self, _action, _target, _unknown):
         self.choose_export_pdf_name(True)
