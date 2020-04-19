@@ -394,7 +394,7 @@ class PdfArranger(Gtk.Application):
         if self.config.maximized():
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
-        self.window.connect('delete_event', self.close_application)
+        self.window.connect('delete_event', self.on_quit)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -659,7 +659,28 @@ class PdfArranger(Gtk.Application):
 
         self.model.set(treeiter, 11, w1, 12, h1)
 
-    def on_quit(self, _action, _param, _unknown):
+    def on_quit(self, _action, _param=None, _unknown=None):
+        if self.is_unsaved:
+            b = self.__build_from_file("querysavedialog.ui")
+            d = b.get_object("querysavedialog")
+            if self.export_file:
+                d.props.text = d.props.text.replace('$(FILE)', os.path.basename(self.export_file), 1)
+            else:
+                d.props.text = _('Save changes before closing?')
+            response = d.run()
+            d.destroy()
+
+            if response == -9:
+                pass
+            elif response == -8:
+                # Save.
+                self.save_or_choose()
+                # Quit only if it has been really saved.
+                if self.is_unsaved:
+                    return True
+            else:
+                return True
+
         self.close_application()
 
     def close_application(self, _widget=None, _event=None, _data=None):
@@ -731,6 +752,11 @@ class PdfArranger(Gtk.Application):
         return all_files
 
     def on_action_save(self, _action, _param, _unknown):
+        self.save_or_choose()
+
+    def save_or_choose(self):
+        """Saves to the previously exported file or shows the export dialog if
+        there was none."""
         try:
             if self.export_file:
                 self.save(False, self.export_file)
