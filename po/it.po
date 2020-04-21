@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2020-04-013 15:38+0100\n"
+"PO-Revision-Date: 2020-04-21 13:38+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -134,9 +134,8 @@ msgid "Save"
 msgstr "Salva"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
-msgstr "Salva con nome"
+msgstr "Salva Come"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
@@ -176,7 +175,7 @@ msgstr "Salva Come..."
 
 #: data/menu.ui.h:4
 msgid "E_xport Selection..."
-msgstr "_sporta Selezione..."
+msgstr "E_sporta Selezione..."
 
 #: data/menu.ui.h:5
 msgid "_Undo"
