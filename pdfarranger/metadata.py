@@ -20,6 +20,7 @@ import pikepdf
 import gettext
 import re
 import json
+import traceback
 from gi.repository import Gtk
 _ = gettext.gettext
 
@@ -54,13 +55,25 @@ def _pikepdf_meta_is_valid(meta):
     return True
 
 
+def load_from_docinfo(meta, doc):
+    """
+    wrapper of pikepdf.models.PdfMetadata.load_from_docinfo with a workaround
+    for https://github.com/pikepdf/pikepdf/issues/100
+    """
+    try:
+        meta.load_from_docinfo(doc.docinfo)
+    except NotImplementedError:
+        # DocumentInfo cannot be loaded and will be lost. Not a that big issue.
+        traceback.print_exc()
+
+
 def merge(metadata, input_files):
     """ Merge current global metadata and each imported files meta data """
     r = metadata.copy()
     for p in input_files:
         doc = pikepdf.open(p.copyname)
         with doc.open_metadata() as meta:
-            meta.load_from_docinfo(doc.docinfo)
+            load_from_docinfo(meta, doc)
             for k, v in meta.items():
                 if not _pikepdf_meta_is_valid(v):
                     # workaround for https://github.com/pikepdf/pikepdf/issues/84
