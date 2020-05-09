@@ -675,19 +675,16 @@ class PdfArranger(Gtk.Application):
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
-        while True:
-            response = chooser.run()
-            if response == Gtk.ResponseType.ACCEPT:
-                file_out = chooser.get_filename()
-                try:
-                    self.save(only_selected, file_out)
-                except Exception as e:
-                    traceback.print_exc()
-                    chooser.destroy()
-                    self.error_message_dialog(e)
-                    return
-            break
+        response = chooser.run()
+        file_out = chooser.get_filename()
         chooser.destroy()
+        if response == Gtk.ResponseType.ACCEPT:
+            try:
+                self.save(only_selected, file_out)
+            except Exception as e:
+                traceback.print_exc()
+                self.error_message_dialog(e)
+                return
 
     def active_file_names(self):
         """Returns the file names currently associated with pages in the model."""
