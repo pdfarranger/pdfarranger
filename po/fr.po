@@ -262,11 +262,11 @@ msgstr "Zoom _arrière"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr "Éditer les _propriétés"
+msgstr "Édi_ter les propriétés"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr "Á pr_opos"
+msgstr "À _propos"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
