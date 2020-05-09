@@ -55,12 +55,12 @@ msgstr "Diversos documents"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "S'estan renderitzant les miniatures... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "S'estan renderitzant les miniatures… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Exporta..."
+msgid "Export…"
+msgstr "Exporta…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -71,8 +71,8 @@ msgid "All files"
 msgstr "Tots els fitxers"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Importa..."
+msgid "Import…"
+msgstr "Importa…"
 
 # Netscape_4.7->Dialog Box Control:EDITOR32.DLL
 #: pdfarranger/pdfarranger.py:1223
@@ -184,13 +184,13 @@ msgstr "Guarda"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Guarda com"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "_Exporta la selecció..."
+msgid "E_xport Selection…"
+msgstr "_Exporta la selecció…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -309,4 +309,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "_Retalla..."
+#~ msgstr "_Retalla…"

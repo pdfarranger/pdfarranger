@@ -57,12 +57,12 @@ msgstr "複数のドキュメント"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "サムネイルを描画中... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "サムネイルを描画中… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "エクスポート ..."
+msgid "Export…"
+msgstr "エクスポート…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -73,8 +73,8 @@ msgid "All files"
 msgstr "すべてのファイル"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "インポート..."
+msgid "Import…"
+msgstr "インポート…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -176,12 +176,12 @@ msgid "_Save"
 msgstr "保存(_S)"
 
 #: data/menu.ui.h:3
-msgid "Save _As..."
-msgstr "名前を付けて保存(_A)..."
+msgid "Save _As…"
+msgstr "名前を付けて保存(_A)…"
 
 #: data/menu.ui.h:4
-msgid "E_xport Selection..."
-msgstr "選択したものをエクスポート(_X)..."
+msgid "E_xport Selection…"
+msgstr "選択したものをエクスポート(_X)…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"

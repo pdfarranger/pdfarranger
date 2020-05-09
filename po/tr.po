@@ -55,11 +55,11 @@ msgstr "Çeşitli belgeler"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "Küçük resimler işleniyor… [% (I2) s/% (I2) s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
+msgid "Export…"
 msgstr "Dışa Aktar …"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
@@ -71,7 +71,7 @@ msgid "All files"
 msgstr "Tüm dosyalar"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
+msgid "Import…"
 msgstr "İçe Aktar.."
 
 #: pdfarranger/pdfarranger.py:1223
@@ -180,12 +180,12 @@ msgstr "Kaydet"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Farklı kaydet"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
+msgid "E_xport Selection…"
 msgstr "Seçimi dışa aktar"
 
 #: data/menu.ui.h:5

@@ -60,12 +60,12 @@ msgstr "Kilka dokumentów"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Podgląd miniaturek... [%(i1)s/%(i2)s] "
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Podgląd miniaturek… [%(i1)s/%(i2)s] "
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Zapisz ..."
+msgid "Export…"
+msgstr "Zapisz…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -76,8 +76,8 @@ msgid "All files"
 msgstr "Wszystkie pliki"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Zaimportuj... "
+msgid "Import…"
+msgstr "Zaimportuj… "
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -185,12 +185,12 @@ msgstr "Zapisz"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Zapisz jako"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
+msgid "E_xport Selection…"
 msgstr "_Zapisz wybrany/wybrane "
 
 #: data/menu.ui.h:5
@@ -219,7 +219,7 @@ msgstr ""
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "_Usuń..."
+msgstr "_Usuń…"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
@@ -310,4 +310,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "P_rzytnij..."
+#~ msgstr "P_rzytnij…"

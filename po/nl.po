@@ -59,12 +59,12 @@ msgstr "Meerdere documenten"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Bezig met laden van miniaturen... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Bezig met laden van miniaturen… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Exporteren..."
+msgid "Export…"
+msgstr "Exporteren…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -75,8 +75,8 @@ msgid "All files"
 msgstr "Alle bestanden"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Importeren..."
+msgid "Import…"
+msgstr "Importeren…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -184,13 +184,13 @@ msgstr "Opslaan"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Opslaan als"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "Selectie _exporteren..."
+msgid "E_xport Selection…"
+msgstr "Selectie _exporteren…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -309,4 +309,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "Bij_snijden..."
+#~ msgstr "Bij_snijden…"

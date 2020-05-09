@@ -59,12 +59,12 @@ msgstr "Několik dokumentů"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Vykreslují se náhledy... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Vykreslují se náhledy… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Vyvést..."
+msgid "Export…"
+msgstr "Vyvést…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -75,8 +75,8 @@ msgid "All files"
 msgstr "Všechny soubory"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Zavést..."
+msgid "Import…"
+msgstr "Zavést…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -184,13 +184,13 @@ msgstr "Uložit"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Uložit jako"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "_Vyvést výběr..."
+msgid "E_xport Selection…"
+msgstr "_Vyvést výběr…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -309,4 +309,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "Oř_ezat..."
+#~ msgstr "Oř_ezat…"

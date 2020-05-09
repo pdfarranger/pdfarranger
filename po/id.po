@@ -56,12 +56,12 @@ msgstr "Beberapa dokumen"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Merender thumbnail... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Merender thumbnail… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Ekspor ..."
+msgid "Export…"
+msgstr "Ekspor…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -72,8 +72,8 @@ msgid "All files"
 msgstr "Semua berkas"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Impor..."
+msgid "Import…"
+msgstr "Impor…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -183,13 +183,13 @@ msgstr "Simpan"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Simpan sebagai"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "_Ekspor terpilih..."
+msgid "E_xport Selection…"
+msgstr "_Ekspor terpilih…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"

@@ -58,12 +58,12 @@ msgstr "多个文档"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "正在渲染缩略图... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "正在渲染缩略图… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "导出..."
+msgid "Export…"
+msgstr "导出…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -74,8 +74,8 @@ msgid "All files"
 msgstr "所有文件"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "导入..."
+msgid "Import…"
+msgstr "导入…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -181,13 +181,13 @@ msgstr "保存"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "另存为"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "导出所选(_E)..."
+msgid "E_xport Selection…"
+msgstr "导出所选(_E)…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -306,4 +306,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "裁剪(_R)..."
+#~ msgstr "裁剪(_R)…"

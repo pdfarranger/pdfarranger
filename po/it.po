@@ -51,12 +51,12 @@ msgstr "Diversi documenti"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Disegno miniature... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Disegno miniature… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Esporta ..."
+msgid "Export…"
+msgstr "Esporta…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -67,8 +67,8 @@ msgid "All files"
 msgstr "Tutti i file"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Importa..."
+msgid "Import…"
+msgstr "Importa…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -170,12 +170,12 @@ msgid "_Save"
 msgstr "_Salva"
 
 #: data/menu.ui.h:3
-msgid "Save _As..."
-msgstr "Salva Come..."
+msgid "Save _As…"
+msgstr "Salva Come…"
 
 #: data/menu.ui.h:4
-msgid "E_xport Selection..."
-msgstr "E_sporta Selezione..."
+msgid "E_xport Selection…"
+msgstr "E_sporta Selezione…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -294,4 +294,4 @@ msgstr "_Dividi pagine"
 #~ msgstr "Cancella"
 
 #~ msgid "C_rop"
-#~ msgstr "_Ritaglia..."
+#~ msgstr "_Ritaglia…"

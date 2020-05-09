@@ -560,7 +560,7 @@ class PdfArranger(Gtk.Application):
         fraction = 1 if cnt_all == 0 else cnt_finished / cnt_all
 
         self.progress_bar.set_fraction(fraction)
-        self.progress_bar.set_text(_('Rendering thumbnails... [%(i1)s/%(i2)s]')
+        self.progress_bar.set_text(_('Rendering thumbnails… [%(i1)s/%(i2)s]')
                                    % {'i1': cnt_finished, 'i2': cnt_all})
         if fraction >= 0.999:
             self.progress_bar.hide()
@@ -650,7 +650,7 @@ class PdfArranger(Gtk.Application):
     def choose_export_pdf_name(self, only_selected=False):
         """Handles choosing a name for exporting """
 
-        chooser = Gtk.FileChooserDialog(title=_('Export ...'),
+        chooser = Gtk.FileChooserDialog(title=_('Export…'),
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.SAVE,
                                         buttons=(Gtk.STOCK_CANCEL,
@@ -730,7 +730,7 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, _action, _param, _unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserDialog(title=_('Import...'),
+        chooser = Gtk.FileChooserDialog(title=_('Import…'),
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
                                         buttons=(Gtk.STOCK_CANCEL,

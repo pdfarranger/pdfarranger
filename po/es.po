@@ -59,12 +59,12 @@ msgstr "Varios documentos"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Renderizando las miniaturas... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Renderizando las miniaturas… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Exportar ..."
+msgid "Export…"
+msgstr "Exportar…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -75,8 +75,8 @@ msgid "All files"
 msgstr "Todos los archivos"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Importar..."
+msgid "Import…"
+msgstr "Importar…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -184,13 +184,13 @@ msgstr "Guardar"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Guardar como"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "E_xportar las páginas seleccionadas..."
+msgid "E_xport Selection…"
+msgstr "E_xportar las páginas seleccionadas…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"

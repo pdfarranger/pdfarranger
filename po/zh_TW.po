@@ -55,12 +55,12 @@ msgstr "一些文件"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "縮圖成像中... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "縮圖成像中… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "匯出..."
+msgid "Export…"
+msgstr "匯出…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -71,8 +71,8 @@ msgid "All files"
 msgstr "所有檔案"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "匯入..."
+msgid "Import…"
+msgstr "匯入…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -178,13 +178,13 @@ msgstr "儲存"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "另存新檔"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "匯出選取項目(_E)..."
+msgid "E_xport Selection…"
+msgstr "匯出選取項目(_E)…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"

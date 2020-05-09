@@ -58,12 +58,12 @@ msgstr "Διάφορα έγγραφα"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Απεικόνιση μικρογραφιών... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Απεικόνιση μικρογραφιών… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Εξαγωγή ..."
+msgid "Export…"
+msgstr "Εξαγωγή…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -74,8 +74,8 @@ msgid "All files"
 msgstr "Όλα τα αρχεία"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Εισαγωγή ..."
+msgid "Import…"
+msgstr "Εισαγωγή…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -183,13 +183,13 @@ msgstr "Αποθήκευση"
 
 #: data/menu.ui.h:3
 #, fuzzy
-msgid "Save _As..."
+msgid "Save _As…"
 msgstr "Αποθήκευση ως"
 
 #: data/menu.ui.h:4
 #, fuzzy
-msgid "E_xport Selection..."
-msgstr "Εξαγωγή επιλεγμένων..."
+msgid "E_xport Selection…"
+msgstr "Εξαγωγή επιλεγμένων…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"

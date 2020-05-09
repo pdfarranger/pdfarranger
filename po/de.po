@@ -58,12 +58,12 @@ msgstr "Mehrere Dateien"
 
 #: pdfarranger/pdfarranger.py:539
 #, python-format
-msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Vorschauen werden erstellt... [%(i1)s/%(i2)s]"
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Vorschauen werden erstellt… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
-msgid "Export ..."
-msgstr "Exportieren ..."
+msgid "Export…"
+msgstr "Exportieren…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -74,8 +74,8 @@ msgid "All files"
 msgstr "Alle Dateien"
 
 #: pdfarranger/pdfarranger.py:709
-msgid "Import..."
-msgstr "Importieren..."
+msgid "Import…"
+msgstr "Importieren…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -177,12 +177,12 @@ msgid "_Save"
 msgstr "_Speichern"
 
 #: data/menu.ui.h:3
-msgid "Save _As..."
-msgstr "Speichern _unter ..."
+msgid "Save _As…"
+msgstr "Speichern _unter…"
 
 #: data/menu.ui.h:4
-msgid "E_xport Selection..."
-msgstr "Markierte Seiten e_xportieren ..."
+msgid "E_xport Selection…"
+msgstr "Markierte Seiten e_xportieren…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -301,4 +301,4 @@ msgstr "Seiten _teilen"
 #~ msgstr "Löschen"
 
 #~ msgid "C_rop"
-#~ msgstr "_Zuschneiden..."
+#~ msgstr "_Zuschneiden…"
