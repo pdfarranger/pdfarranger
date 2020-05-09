@@ -27,6 +27,7 @@ import warnings
 import traceback
 import locale  # for multilanguage support
 import gettext
+import gc
 from urllib.request import url2pathname
 
 sharedir = os.path.join(sys.prefix, 'share')
@@ -640,6 +641,7 @@ class PdfArranger(Gtk.Application):
 
         # Release Poppler.Document instances to unlock all temporay files
         self.pdfqueue = []
+        gc.collect()
         self.config.set_window_size(self.window.get_size())
         self.config.set_maximized(self.window.is_maximized())
         self.config.set_zoom_level(self.zoom_level)
