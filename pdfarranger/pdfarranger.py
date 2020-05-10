@@ -261,6 +261,7 @@ class PdfArranger(Gtk.Application):
         self.nfile = 0
         self.iv_auto_scroll_direction = 0
         self.iv_auto_scroll_timer = None
+        self.vp_css_margin = 0
         self.pdfqueue = []
         self.metadata = {}
         self.pressed_button = None
@@ -611,13 +612,23 @@ class PdfArranger(Gtk.Application):
                       (padded_cell_width + min_col_spacing)
             spacing = (iw_width - col_num * padded_cell_width - 2 * min_margin) // (col_num + 1)
             margin = (iw_width - col_num * (padded_cell_width + spacing) + spacing) // 2
-            margin -= self.iconview.get_margin()
             if col_num == 0:
                 col_num = 1
-                margin = 0
+                margin = 6
             self.iconview.set_columns(col_num)
             self.iconview.set_column_spacing(spacing)
-            self.iconview.set_margin_left(margin)
+            self.iconview.set_margin(margin)
+            if self.vp_css_margin != 6 - margin:
+                # remove margin on top and bottom
+                self.vp_css_margin = 6 - margin
+                css_data = 'viewport {margin-top:' + str(self.vp_css_margin) + 'px;\
+                margin-bottom:' + str(self.vp_css_margin) + 'px;}'
+                style_provider = Gtk.CssProvider()
+                style_provider.load_from_data(bytes(css_data.encode()))
+                Gtk.StyleContext.add_provider_for_screen(
+                    Gdk.Screen.get_default(),
+                    style_provider,
+                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
     def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
@@ -1059,12 +1070,12 @@ class PdfArranger(Gtk.Application):
         autoscroll_area = 40
         sw_vadj = self.sw.get_vadjustment()
         sw_height = self.sw.get_allocation().height
-        if y - sw_vadj.get_value() < autoscroll_area:
+        if y - sw_vadj.get_value() < autoscroll_area - self.vp_css_margin:
             if not self.iv_auto_scroll_timer:
                 self.iv_auto_scroll_direction = Gtk.DirectionType.UP
                 self.iv_auto_scroll_timer = GObject.timeout_add(150,
                                                                 self.iv_auto_scroll)
-        elif y - sw_vadj.get_value() > sw_height - autoscroll_area:
+        elif y - sw_vadj.get_value() > sw_height - autoscroll_area - self.vp_css_margin:
             if not self.iv_auto_scroll_timer:
                 self.iv_auto_scroll_direction = Gtk.DirectionType.DOWN
                 self.iv_auto_scroll_timer = GObject.timeout_add(150,
