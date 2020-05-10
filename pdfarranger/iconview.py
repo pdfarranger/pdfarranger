@@ -64,8 +64,8 @@ class CellRendererImage(Gtk.CellRenderer):
                 w1, h1 = w0, h0
 
         scale = self.resample * self.scale
-        w2 = int(scale * (1. - self.cropL - self.cropR) * w1)
-        h2 = int(scale * (1. - self.cropT - self.cropB) * h1)
+        w2 = int(0.5 + scale * (1. - self.cropL - self.cropR) * w1)
+        h2 = int(0.5 + scale * (1. - self.cropT - self.cropB) * h1)
 
         return w0, h0, w1, h1, w2, h2, rotation
 
