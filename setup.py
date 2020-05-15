@@ -52,4 +52,7 @@ setup(
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     },
     install_requires=['pikepdf>=1.7.0'],
+    extras_require={
+        'image': ['img2pdf>=0.3.3'],
+    },
 )

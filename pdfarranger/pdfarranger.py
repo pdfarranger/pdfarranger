@@ -20,6 +20,7 @@ import sys  # for processing of command line args
 import threading
 import tempfile
 import signal
+import mimetypes
 import pathlib
 import platform
 import configparser
@@ -29,6 +30,13 @@ import locale  # for multilanguage support
 import gettext
 import gc
 from urllib.request import url2pathname
+
+try:
+    import img2pdf
+    img2pdf.Image.init()
+    img2pdf_supported_img = [i for i in img2pdf.Image.MIME.values() if i.split('/')[0] == 'image']
+except ImportError:
+    img2pdf = None
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -772,6 +780,15 @@ class PdfArranger(Gtk.Application):
         filter_all.add_pattern('*')
         chooser.add_filter(filter_all)
 
+        if img2pdf:
+            filter_image = Gtk.FileFilter()
+            filter_image.set_name(_('Supported image files'))
+            for mime in img2pdf_supported_img:
+                filter_image.add_mime_type(mime)
+                for extension in mimetypes.guess_all_extensions(mime):
+                    filter_image.add_pattern('*' + extension)
+            chooser.add_filter(filter_image)
+
         filter_pdf = Gtk.FileFilter()
         filter_pdf.set_name(_('PDF files'))
         filter_pdf.add_pattern('*.pdf')
@@ -1469,19 +1486,47 @@ class PdfArranger(Gtk.Application):
             error_msg_dlg.destroy()
 
 
+class PDFDocError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
 class PDFDoc:
     """Class handling PDF documents"""
 
     def __init__(self, filename, tmp_dir):
-
         self.filename = os.path.abspath(filename)
         self.shortname = os.path.splitext(os.path.split(self.filename)[1])[0]
         self.mtime = os.path.getmtime(filename)
-        fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
-        os.close(fd)
-        shutil.copy(self.filename, self.copyname)
-        uri = pathlib.Path(self.copyname).as_uri()
-        self.document = Poppler.Document.new_from_file(uri, None)
+        filemime = mimetypes.guess_type(self.filename)[0]
+        if not filemime:
+            raise PDFDocError(_('Unknown file format'))
+        if filemime == 'application/pdf':
+            try:
+                fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+                os.close(fd)
+                shutil.copy(self.filename, self.copyname)
+                uri = pathlib.Path(self.copyname).as_uri()
+                self.document = Poppler.Document.new_from_file(uri, None)
+            except GLib.Error as e:
+                raise PDFDocError(e.message + ': ' + filename)
+        elif filemime.split('/')[0] == 'image':
+            if not img2pdf:
+                raise PDFDocError(_('Image files are only supported with img2pdf'))
+            if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
+                try:
+                    fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+                    os.close(fd)
+                    with open(self.copyname, 'wb') as f:
+                        f.write(img2pdf.convert(filename))
+                    uri = pathlib.Path(self.copyname).as_uri()
+                    self.document = Poppler.Document.new_from_file(uri, None)
+                except img2pdf.AlphaChannelError as e:
+                    raise PDFDocError(e)
+            else:
+                raise PDFDocError(_('Image format is not supported by img2pdf'))
+        else:
+            raise PDFDocError(_('File is neither pdf nor image'))
 
 
 class PageAdder(object):
@@ -1517,10 +1562,9 @@ class PageAdder(object):
         if not pdfdoc:
             try:
                 pdfdoc = PDFDoc(filename, self.app.tmp_dir)
-            except GLib.Error as e:
-                message = e.message + ': ' + filename
-                print(message, file=sys.stderr)
-                self.app.error_message_dialog(message)
+            except PDFDocError as e:
+                print(e.message, file=sys.stderr)
+                self.app.error_message_dialog(e.message)
                 return
             self.app.import_directory = os.path.split(filename)[0]
             self.app.export_directory = self.app.import_directory
