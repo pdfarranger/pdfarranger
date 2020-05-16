@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-09 10:08+0200\n"
+"POT-Creation-Date: 2020-05-16 18:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,83 +17,75 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../pdfarranger/pdfarranger.py:546
-msgid "No document"
-msgstr ""
-
-#: ../pdfarranger/pdfarranger.py:548
-msgid "Several documents"
-msgstr ""
-
-#: ../pdfarranger/pdfarranger.py:565
+#: ../pdfarranger/pdfarranger.py:570
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:656
+#: ../pdfarranger/pdfarranger.py:661
 msgid "Export…"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:668 ../pdfarranger/pdfarranger.py:752
+#: ../pdfarranger/pdfarranger.py:673 ../pdfarranger/pdfarranger.py:755
 msgid "PDF files"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:674 ../pdfarranger/pdfarranger.py:747
+#: ../pdfarranger/pdfarranger.py:679 ../pdfarranger/pdfarranger.py:750
 msgid "All files"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:736
+#: ../pdfarranger/pdfarranger.py:739
 msgid "Import…"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1272
+#: ../pdfarranger/pdfarranger.py:1275
 msgid "Left"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1272
+#: ../pdfarranger/pdfarranger.py:1275
 msgid "Right"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1273
+#: ../pdfarranger/pdfarranger.py:1276
 msgid "Top"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1273
+#: ../pdfarranger/pdfarranger.py:1276
 msgid "Bottom"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1290
+#: ../pdfarranger/pdfarranger.py:1293
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1298
+#: ../pdfarranger/pdfarranger.py:1301
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1301
+#: ../pdfarranger/pdfarranger.py:1304
 msgid "Crop Margins"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1311
+#: ../pdfarranger/pdfarranger.py:1314
 #, python-format
 msgid "% of width"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1311
+#: ../pdfarranger/pdfarranger.py:1314
 #, python-format
 msgid "% of height"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1418
+#: ../pdfarranger/pdfarranger.py:1421
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1512
+#: ../pdfarranger/pdfarranger.py:1515
 msgid "page"
 msgstr ""
 
