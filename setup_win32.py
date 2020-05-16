@@ -150,7 +150,7 @@ class bdist_zip(distutils.cmd.Command):
 
 
 setup(name='pdfarranger',
-      version='1.5.2',
+      version='1.5.3',
       description='A simple application for PDF Merging, Rearranging, and Splitting',
       options=dict(build_exe=build_options, bdist_msi=msi_options),
       cmdclass={'bdist_zip': bdist_zip},
