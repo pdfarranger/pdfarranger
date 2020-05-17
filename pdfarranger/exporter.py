@@ -83,3 +83,13 @@ def export(input_files, pages, file_out, mdata):
         for k, v in mdata.items():
             outmeta[k] = v
     pdf_output.save(file_out)
+
+def num_pages(filepath):
+    """Get number of pages for filepath."""
+    try:
+        pdf = pikepdf.Pdf.open(filepath)
+    except pikepdf._qpdf.PdfError:
+        return None
+    npages = len(pdf.pages)
+    pdf.close()
+    return npages
