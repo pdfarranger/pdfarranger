@@ -117,7 +117,7 @@ addicons()
 
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
-    excludes=['tkinter', 'test', 'distutils'],
+    excludes=['tkinter', 'test'],
     include_files=include_files,
 )
 
