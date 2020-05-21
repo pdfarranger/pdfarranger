@@ -611,6 +611,7 @@ class PdfArranger(Gtk.Application):
             border_and_shadow = 7  # 2*th1+th2 set in iconview.py
             # cell width min limit 50 is set in gtkiconview.c
             cell_width = max(item_width + 2 * cellthmb_xpad + border_and_shadow, 50)
+            self.cellthmb.set_fixed_size(cell_width, -1)
             padded_cell_width = cell_width + 2 * item_padding
             min_col_spacing = 5
             min_margin = 11
