@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-16 21:37+0200\n"
+"POT-Creation-Date: 2020-05-24 17:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,102 +17,294 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../pdfarranger/pdfarranger.py:575
+#: pdfarranger/metadata.py:36
+msgid "Title"
+msgstr ""
+
+#: pdfarranger/metadata.py:37
+msgid "Creator"
+msgstr ""
+
+#: pdfarranger/metadata.py:38
+msgid "Producer"
+msgstr ""
+
+#: pdfarranger/metadata.py:39
+msgid "Creator tool"
+msgstr ""
+
+#: pdfarranger/metadata.py:154
+msgid "Edit properties"
+msgstr ""
+
+#: pdfarranger/metadata.py:167
+msgid "Property"
+msgstr ""
+
+#: pdfarranger/metadata.py:167
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:585
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:666
+#: pdfarranger/pdfarranger.py:665
+msgid "Save changes to “{}” before closing?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:667
+msgid "Save changes before closing?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:669
+msgid "Your changes will be lost if you don’t save them."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:670
+msgid "Do_n’t Save"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:670
+msgid "_Cancel"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+msgid "_Save"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:710
 msgid "Export…"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:678 ../pdfarranger/pdfarranger.py:761
+#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
 msgid "PDF files"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:684 ../pdfarranger/pdfarranger.py:756
+#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
 msgid "All files"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:745
+#: pdfarranger/pdfarranger.py:794
 msgid "Import…"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1281
+#: pdfarranger/pdfarranger.py:811
+msgid "Supported image files"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:908
+msgid "Pasted data not valid. Aborting paste."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1012
+msgid "PDF document is damaged: "
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1442
 msgid "Left"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1281
+#: pdfarranger/pdfarranger.py:1442
 msgid "Right"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1282
+#: pdfarranger/pdfarranger.py:1443
 msgid "Top"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1282
+#: pdfarranger/pdfarranger.py:1443
 msgid "Bottom"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1299
+#: pdfarranger/pdfarranger.py:1460
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1307
+#: pdfarranger/pdfarranger.py:1468
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1310
+#: pdfarranger/pdfarranger.py:1471
 msgid "Crop Margins"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1320
+#: pdfarranger/pdfarranger.py:1481
 #, python-format
 msgid "% of width"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1320
+#: pdfarranger/pdfarranger.py:1481
 #, python-format
 msgid "% of height"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1427
+#: pdfarranger/pdfarranger.py:1588
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 
-#: ../pdfarranger/pdfarranger.py:1521
+#: pdfarranger/pdfarranger.py:1632
+msgid "Unknown file format"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1644
+msgid "Image files are only supported with img2pdf"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1656
+msgid "Image format is not supported by img2pdf"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1658
+msgid "File is neither pdf nor image"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1709
 msgid "page"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:36
-msgid "Title"
+#: data/pdfarranger.ui.h:1
+msgid "Open a file and append it to the current document"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:37
-msgid "Creator"
+#: data/pdfarranger.ui.h:2
+msgid "Save"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:38
-msgid "Producer"
+#: data/pdfarranger.ui.h:3
+msgid "Save As"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:39
-msgid "Creator tool"
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:154
-msgid "Edit properties"
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:167
-msgid "Property"
+#: data/pdfarranger.ui.h:6
+msgid "Zoom In"
 msgstr ""
 
-#: ../pdfarranger/metadata.py:167
-msgid "Value"
+#: data/pdfarranger.ui.h:7
+msgid "Zoom Out"
+msgstr ""
+
+#: data/pdfarranger.ui.h:8
+msgid "Rotate Left"
+msgstr ""
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr ""
+
+#: data/menu.ui.h:1
+msgid "_Import"
+msgstr ""
+
+#: data/menu.ui.h:3
+msgid "Save _As…"
+msgstr ""
+
+#: data/menu.ui.h:4
+msgid "E_xport Selection…"
+msgstr ""
+
+#: data/menu.ui.h:5
+msgid "_Undo"
+msgstr ""
+
+#: data/menu.ui.h:6
+msgid "_Redo"
+msgstr ""
+
+#: data/menu.ui.h:7
+msgid "_Edit"
+msgstr ""
+
+#: data/menu.ui.h:8
+msgid "Rotate _Left"
+msgstr ""
+
+#: data/menu.ui.h:9
+msgid "_Rotate Right"
+msgstr ""
+
+#: data/menu.ui.h:10
+msgid "Cro_p"
+msgstr ""
+
+#: data/menu.ui.h:11
+msgid "_Delete"
+msgstr ""
+
+#: data/menu.ui.h:12
+msgid "Dupl_icate"
+msgstr ""
+
+#: data/menu.ui.h:13
+msgid "Re_verse Order"
+msgstr ""
+
+#: data/menu.ui.h:14
+msgid "_Split pages"
+msgstr ""
+
+#: data/menu.ui.h:15
+msgid "Cu_t"
+msgstr ""
+
+#: data/menu.ui.h:16
+msgid "_Copy"
+msgstr ""
+
+#: data/menu.ui.h:17
+msgid "Paste _After"
+msgstr ""
+
+#: data/menu.ui.h:18
+msgid "Paste _Before"
+msgstr ""
+
+#: data/menu.ui.h:19
+msgid "Paste Interleave _Odd"
+msgstr ""
+
+#: data/menu.ui.h:20
+msgid "Paste Interleave _Even"
+msgstr ""
+
+#: data/menu.ui.h:21
+msgid "Zoom _In"
+msgstr ""
+
+#: data/menu.ui.h:22
+msgid "Zoom _Out"
+msgstr ""
+
+#: data/menu.ui.h:23
+msgid "Edit _Properties"
+msgstr ""
+
+#: data/menu.ui.h:24
+msgid "_About"
+msgstr ""
+
+#: data/menu.ui.h:25
+msgid "_Quit"
+msgstr ""
+
+#: data/menu.ui.h:26
+msgid "Past_e Special"
+msgstr ""
+
+#: data/menu.ui.h:27
+msgid "_Split Pages"
 msgstr ""
