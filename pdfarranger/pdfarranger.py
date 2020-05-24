@@ -606,12 +606,16 @@ class PdfArranger(Gtk.Application):
             # scale*page_width*(1-crop_left-crop_right)
             item_width = int(max(0.5 + int(row[4] * row[11]) * (1. - row[7] - row[8])
                                  for row in self.model))
+            # scale*page_height*(1-crop_top-crop_bottom)
+            item_height = int(max(0.5 + int(row[4] * row[12]) * (1. - row[9] - row[10])
+                                 for row in self.model))
             item_padding = self.iconview.get_item_padding()
-            cellthmb_xpad, _cellthmb_ypad = self.cellthmb.get_padding()
+            cellthmb_xpad, cellthmb_ypad = self.cellthmb.get_padding()
             border_and_shadow = 7  # 2*th1+th2 set in iconview.py
             # cell width min limit 50 is set in gtkiconview.c
             cell_width = max(item_width + 2 * cellthmb_xpad + border_and_shadow, 50)
-            self.cellthmb.set_fixed_size(cell_width, -1)
+            cell_height = item_height + 2 * cellthmb_ypad + border_and_shadow
+            self.cellthmb.set_fixed_size(cell_width, cell_height)
             padded_cell_width = cell_width + 2 * item_padding
             min_col_spacing = 5
             min_margin = 11
