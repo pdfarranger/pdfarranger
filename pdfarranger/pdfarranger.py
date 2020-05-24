@@ -661,25 +661,24 @@ class PdfArranger(Gtk.Application):
 
     def on_quit(self, _action, _param=None, _unknown=None):
         if self.is_unsaved:
-            b = self.__build_from_file("querysavedialog.ui")
-            d = b.get_object("querysavedialog")
             if self.export_file:
-                d.props.text = d.props.text.replace('$(FILE)', os.path.basename(self.export_file), 1)
+                msg = _('Save changes to “{}” before closing?').format(os.path.basename(self.export_file))
             else:
-                d.props.text = _('Save changes before closing?')
+                msg = _('Save changes before closing?')
+            d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+            d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
+            d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
             response = d.run()
             d.destroy()
 
-            if response == -9:
-                pass
-            elif response == -8:
+            if response == 2:
+                return
+            elif response == 3:
                 # Save.
                 self.save_or_choose()
                 # Quit only if it has been really saved.
                 if self.is_unsaved:
-                    return True
-            else:
-                return True
+                    return
 
         self.close_application()
 
