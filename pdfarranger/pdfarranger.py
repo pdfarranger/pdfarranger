@@ -602,7 +602,7 @@ class PdfArranger(Gtk.Application):
     def on_window_size_request(self, window):
         """Main Window resize - workaround for autosetting of
            iconview cols no."""
-        if len(self.model) > 0:
+        if len(self.model) > 0 and not self.progress_bar.get_visible():
             # scale*page_width*(1-crop_left-crop_right)
             item_width = int(max(0.5 + int(row[4] * row[11]) * (1. - row[7] - row[8])
                                  for row in self.model))
