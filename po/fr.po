@@ -99,15 +99,15 @@ msgstr "Importer…"
 
 #: pdfarranger/pdfarranger.py:811
 msgid "Supported image files"
-msgstr ""
+msgstr "Fichiers image pris en charge"
 
 #: pdfarranger/pdfarranger.py:908
 msgid "Pasted data not valid. Aborting paste."
-msgstr ""
+msgstr "Données collées invalides. Annulation du collage."
 
 #: pdfarranger/pdfarranger.py:1012
 msgid "PDF document is damaged: "
-msgstr ""
+msgstr "Le document PDF est endommage : "
 
 #: pdfarranger/pdfarranger.py:1442
 msgid "Left"
@@ -166,15 +166,15 @@ msgstr "Format de fichier inconnu"
 
 #: pdfarranger/pdfarranger.py:1644
 msgid "Image files are only supported with img2pdf"
-msgstr ""
+msgstr "Les fichiers images sont seulement pris en charge avec img2pdf"
 
 #: pdfarranger/pdfarranger.py:1656
 msgid "Image format is not supported by img2pdf"
-msgstr ""
+msgstr "Le format d’image n’est pas pris en charge par img2pdf"
 
 #: pdfarranger/pdfarranger.py:1658
 msgid "File is neither pdf nor image"
-msgstr ""
+msgstr "Le fichier n'est pas un PDF ni une image"
 
 #: pdfarranger/pdfarranger.py:1709
 msgid "page"
