@@ -1111,7 +1111,7 @@ class PdfArranger(Gtk.Application):
         selected_count = len(iconview.get_selected_items())
         stock_icon = "gtk-dnd-multiple" if selected_count > 1 else "gtk-dnd"
         iconview.stop_emission('drag_begin')
-        Gtk.drag_set_icon_name(context, stock_icon, 0, 0)
+        Gtk.drag_set_icon_name(context, stock_icon, 16, 16)
 
     def iv_dnd_get_data(self, _iconview, _context,
                         selection_data, _target_id, _etime):
