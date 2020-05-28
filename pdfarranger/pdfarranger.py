@@ -1360,6 +1360,18 @@ class PdfArranger(Gtk.Application):
         """Handles received data by drag and drop in scrolledwindow"""
         if target_id == self.TEXT_URI_LIST:
             pageadder = PageAdder(self)
+            model = self.iconview.get_model()
+            ref_to = None
+            before = True
+            if len(model) > 0 and os.name != 'nt':
+                last_row = model[-1]
+                if self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT:
+                    ref_to = Gtk.TreeRowReference.new(model, self.drag_path)
+                elif self.drag_path != last_row.path:
+                    iter_next = model.iter_next(model.get_iter(self.drag_path))
+                    path_next = model.get_path(iter_next)
+                    ref_to = Gtk.TreeRowReference.new(model, path_next)
+            pageadder.move(ref_to, before)
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_uri(uri)
                 pageadder.addpages(filename)
