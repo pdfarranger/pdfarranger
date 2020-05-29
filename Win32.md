@@ -28,7 +28,7 @@ and
 
 ```
 pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
-/mingw64/bin/python3 -m pip install --user img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
+/mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 ```
 
 Get the pdfarranger sources from a MSYS2 shell:

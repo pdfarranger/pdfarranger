@@ -77,6 +77,11 @@ VERSION = '1.5.3'
 WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
 
+# Add support for dnd to other instance and insert file at drop location in Windows
+if os.name == 'nt':
+    import keyboard  # to get control key state when drag to other instance
+    os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
+
 import gi
 
 # check that we don't need GObject.threads_init()
@@ -1145,7 +1150,7 @@ class PdfArranger(Gtk.Application):
         before = self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT
         target = selection_data.get_target().name()
         if target == 'MODEL_ROW_INTERN':
-            move = context.get_actions() & Gdk.DragAction.MOVE
+            move = context.get_selected_action() & Gdk.DragAction.MOVE
             self.undomanager.commit("Move" if move else "Copy")
             self.set_unsaved(True)
             data.sort(key=int, reverse=not before)
@@ -1166,7 +1171,7 @@ class PdfArranger(Gtk.Application):
 
         elif target == 'MODEL_ROW_EXTERN':
             changed = self.paste_pages(data, before, ref_to, select_added=True)
-            if changed and context.get_actions() & Gdk.DragAction.MOVE:
+            if changed and context.get_selected_action() & Gdk.DragAction.MOVE:
                 context.finish(True, True, etime)
 
     def iv_dnd_data_delete(self, _widget, _context):
@@ -1174,8 +1179,8 @@ class PdfArranger(Gtk.Application):
         been moved to another instance."""
         if self.target_is_intern and os.name == 'nt':
             # Workaround for windows
-            # On Windows this method is triggered even for drag & drop within the same
-            # pdfarranger instance
+            # On Windows this method is in some situations triggered even for drag & drop
+            # within the same pdfarranger instance
             return
         selection = self.iconview.get_selected_items()
         self.undomanager.commit("Move")
@@ -1207,7 +1212,9 @@ class PdfArranger(Gtk.Application):
             self.iv_auto_scroll_timer = None
 
         # Select move or copy dragAction
-        if context.get_actions() & Gdk.DragAction.MOVE:
+        drag_move_posix = os.name == 'posix' and context.get_actions() & Gdk.DragAction.MOVE
+        drag_move_nt = os.name == 'nt' and not keyboard.is_pressed('control')
+        if drag_move_posix or drag_move_nt:
             Gdk.drag_status(context, Gdk.DragAction.MOVE, etime)
         else:
             Gdk.drag_status(context, Gdk.DragAction.COPY, etime)
@@ -1363,7 +1370,7 @@ class PdfArranger(Gtk.Application):
             model = self.iconview.get_model()
             ref_to = None
             before = True
-            if len(model) > 0 and os.name != 'nt':
+            if len(model) > 0:
                 last_row = model[-1]
                 if self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT:
                     ref_to = Gtk.TreeRowReference.new(model, self.drag_path)
