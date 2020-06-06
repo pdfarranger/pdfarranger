@@ -1002,20 +1002,27 @@ class PdfArranger(Gtk.Application):
                 self.paste_pages(data, before, ref_to, select_added=False)
         elif pastemode in ['ODD', 'EVEN']:
             if data_is_filepaths:
-                filepaths = []
                 # Generate data to send to paste_pages_interleave
-                for filepath in data:
-                    if mimetypes.guess_type(filepath)[0] in img2pdf_supported_img:
-                        filepaths.append('\n'.join([filepath, str(1)]))
-                    else:
-                        num_pages = exporter.num_pages(filepath)
-                        if num_pages is None:
-                            message = _('PDF document is damaged: ') + filepath
-                            print(message, file=sys.stderr)
-                            self.error_message_dialog(message)
-                            return
-                        for page in range(1, num_pages + 1):
-                            filepaths.append('\n'.join([filepath, str(page)]))
+                filepaths = []
+                try:
+                    for filepath in data:
+                        filemime = mimetypes.guess_type(filepath)[0]
+                        if not filemime:
+                            raise PDFDocError(filepath + ':\n' + _('Unknown file format'))
+                        if filemime == 'application/pdf':
+                            num_pages = exporter.num_pages(filepath)
+                            if num_pages is None:
+                                raise PDFDocError(filepath + ':\n' + _('PDF document is damaged'))
+                            for page in range(1, num_pages + 1):
+                                filepaths.append('\n'.join([filepath, str(page)]))
+                        elif filemime.split('/')[0] == 'image':
+                            filepaths.append('\n'.join([filepath, str(1)]))
+                        else:
+                            raise PDFDocError(filepath + ':\n' + _('File is neither pdf nor image'))
+                except PDFDocError as e:
+                    print(e.message, file=sys.stderr)
+                    self.error_message_dialog(e.message)
+                    return
                 data = filepaths
             self.paste_pages_interleave(data, before, ref_to)
 
