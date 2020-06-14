@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2020-04-12 18:20+0900\n"
+"POT-Creation-Date: 2020-05-24 17:01+0200\n"
+"PO-Revision-Date: 2020-06-14 20:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -19,84 +19,112 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/metadata.py:35
+#: pdfarranger/metadata.py:36
 msgid "Title"
 msgstr "タイトル"
 
-#: pdfarranger/metadata.py:36
+#: pdfarranger/metadata.py:37
 msgid "Creator"
 msgstr "作成"
 
-#: pdfarranger/metadata.py:37
+#: pdfarranger/metadata.py:38
 msgid "Producer"
 msgstr "変換"
 
-#: pdfarranger/metadata.py:38
+#: pdfarranger/metadata.py:39
 msgid "Creator tool"
 msgstr "作成ツール"
 
-#: pdfarranger/metadata.py:141
+#: pdfarranger/metadata.py:154
 msgid "Edit properties"
 msgstr "プロパティを編集"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Property"
 msgstr "プロパティ"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Value"
 msgstr "値"
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "ドキュメントなし"
-
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "複数のドキュメント"
-
-#: pdfarranger/pdfarranger.py:539
+#: pdfarranger/pdfarranger.py:585
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "サムネイルを描画中… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:665
+msgid "Save changes to “{}” before closing?"
+msgstr "閉じる前に変更内容を“{}”に保存しますか?"
+
+#: pdfarranger/pdfarranger.py:667
+msgid "Save changes before closing?"
+msgstr "閉じる前に変更内容を保存しますか?"
+
+#: pdfarranger/pdfarranger.py:669
+msgid "Your changes will be lost if you don’t save them."
+msgstr "保存しないと変更内容は失われます。"
+
+#: pdfarranger/pdfarranger.py:670
+msgid "Do_n’t Save"
+msgstr "保存しない(_N)"
+
+#: pdfarranger/pdfarranger.py:670
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: pdfarranger/pdfarranger.py:710
 msgid "Export…"
 msgstr "エクスポート…"
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
+#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
 msgid "PDF files"
 msgstr "PDF ファイル"
 
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
+#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:794
 msgid "Import…"
 msgstr "インポート…"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:811
+msgid "Supported image files"
+msgstr "サポートしている画像ファイル"
+
+#: pdfarranger/pdfarranger.py:908
+msgid "Pasted data not valid. Aborting paste."
+msgstr "不正なデータが貼り付けられました。貼り付けを中止します。"
+
+#: pdfarranger/pdfarranger.py:1012
+msgid "PDF document is damaged: "
+msgstr "PDF 文書が破損しています: "
+
+#: pdfarranger/pdfarranger.py:1442
 msgid "Left"
 msgstr "左"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:1442
 msgid "Right"
 msgstr "右"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Top"
 msgstr "上"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Bottom"
 msgstr "下"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1460
 msgid "Crop Selected Pages"
 msgstr "選択したページのトリミング"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1468
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -104,21 +132,21 @@ msgstr ""
 "トリミングは PDF ファイルから内容自体は\n"
 "削除せずに、指定部分を見えなくします。"
 
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1471
 msgid "Crop Margins"
 msgstr "余白のトリミング"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1481
 #, python-format
 msgid "% of width"
 msgstr "% (幅)"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1481
 #, python-format
 msgid "% of height"
 msgstr "% (高さ)"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/pdfarranger.py:1588
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -127,7 +155,23 @@ msgstr ""
 "%s は PDF ファイルの内容の追加や削除、順序の入れ替えやその他のちょっとした変"
 "更を行うための、GTK+ と Python で作成されたツールです"
 
-#: pdfarranger/pdfarranger.py:1449
+#: pdfarranger/pdfarranger.py:1632
+msgid "Unknown file format"
+msgstr "不明なファイル形式です"
+
+#: pdfarranger/pdfarranger.py:1644
+msgid "Image files are only supported with img2pdf"
+msgstr "画像ファイルは img2pdf でのみサポートしています"
+
+#: pdfarranger/pdfarranger.py:1656
+msgid "Image format is not supported by img2pdf"
+msgstr "img2pdf がサポートしていない画像形式です"
+
+#: pdfarranger/pdfarranger.py:1658
+msgid "File is neither pdf nor image"
+msgstr "ファイルが PDF でも画像でもありません"
+
+#: pdfarranger/pdfarranger.py:1709
 msgid "page"
 msgstr "ページ"
 
@@ -170,10 +214,6 @@ msgstr "右に回転"
 #: data/menu.ui.h:1
 msgid "_Import"
 msgstr "インポート(_I)"
-
-#: data/menu.ui.h:2
-msgid "_Save"
-msgstr "保存(_S)"
 
 #: data/menu.ui.h:3
 msgid "Save _As…"
@@ -274,6 +314,12 @@ msgstr "特殊貼り付け(_E)"
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "ページを分割(_S)"
+
+#~ msgid "No document"
+#~ msgstr "ドキュメントなし"
+
+#~ msgid "Several documents"
+#~ msgstr "複数のドキュメント"
 
 #~ msgid "_File"
 #~ msgstr "ファイル(_F)"
