@@ -23,7 +23,7 @@ See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-pac
 ## Install from source
 
 *pdfarranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0. Older versions may work
-but are not supported.
+but are not supported. [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.15.1 is highly recommended.
 
 **On Debian based distributions**
 
