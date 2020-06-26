@@ -678,13 +678,14 @@ class PdfArranger(Gtk.Application):
             d.destroy()
 
             if response == 2:
-                return
+                # Returning True to stop self.window delete_event propagation.
+                return True
             elif response == 3:
                 # Save.
                 self.save_or_choose()
                 # Quit only if it has been really saved.
                 if self.is_unsaved:
-                    return
+                    return True
 
         self.close_application()
 
