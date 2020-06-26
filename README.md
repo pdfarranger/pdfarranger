@@ -50,6 +50,8 @@ or `sudo dnf builddep pdfarranger`
 pip3 install --user --upgrade https://github.com/jeromerobert/pdfarranger/zipball/master
 ```
 
+In addition, *pdfarranger* support image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
+
 ## For developers
 
 From a git clone:
