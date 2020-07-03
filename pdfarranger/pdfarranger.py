@@ -379,6 +379,7 @@ class PdfArranger(Gtk.Application):
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
         self.iv_selection_changed_event()
+        self.__update_num_pages(self.iconview.get_model())
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
 
@@ -1641,8 +1642,11 @@ class PdfArranger(Gtk.Application):
             self.set_export_file(None)
             self.set_unsaved(False)
 
-    def __update_num_pages(self, model, _path, _itr=None, _user_data=None):
-        self.uiXML.get_object("num_pages").set_text(str(len(model)))
+    def __update_num_pages(self, model, _path=None, _itr=None, _user_data=None):
+        num_pages = len(model)
+        self.uiXML.get_object("num_pages").set_text(str(num_pages))
+        for a in ["save", "save-as"]:
+            self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
