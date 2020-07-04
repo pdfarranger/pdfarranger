@@ -199,7 +199,8 @@ def warn_dialog(func):
 
         def __call__(self, message, category, filename, lineno, f=None, line=None):
             s = warnings.formatwarning(message, category, filename, lineno, line)
-            sys.stderr.write(s + '\n')
+            if sys.stderr is not None:
+                sys.stderr.write(s + '\n')
             self.buffer += str(message) + '\n'
 
     def wrapper(*args, **kwargs):
