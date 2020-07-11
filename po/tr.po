@@ -1,309 +1,316 @@
-# SOME DESCRIPTIVE TITLE.
+# Turkish translation of pdfarranger
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <murathan.bostanci@profelis.com.tr>, 2018.
+# This file is distributed under the same license as the pdfarranger package.
+# Murathan BOSTANCI <murathan.bostanci@profelis.com.tr>, 2018
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.5\n"
+"Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Murathan BOSTANCI <murathan.bostanci@profelis.com.tr>\n"
-"Language-Team: Turkish\n"
+"POT-Creation-Date: 2020-05-24 17:01+0200\n"
+"PO-Revision-Date: 2020-07-11 19:33+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
-
-#: pdfarranger/metadata.py:35
-msgid "Title"
-msgstr ""
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: pdfarranger/metadata.py:36
-msgid "Creator"
-msgstr ""
+msgid "Title"
+msgstr "Başlık"
 
 #: pdfarranger/metadata.py:37
-msgid "Producer"
-msgstr ""
+msgid "Creator"
+msgstr "Oluşturucu"
 
 #: pdfarranger/metadata.py:38
+msgid "Producer"
+msgstr "Üretici"
+
+#: pdfarranger/metadata.py:39
 msgid "Creator tool"
-msgstr ""
+msgstr "Oluşturucu araç"
 
-#: pdfarranger/metadata.py:141
+#: pdfarranger/metadata.py:154
 msgid "Edit properties"
-msgstr ""
+msgstr "Özellikleri düzenle"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Property"
-msgstr ""
+msgstr "Özellik"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "belge yok"
-
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "Çeşitli belgeler"
-
-#: pdfarranger/pdfarranger.py:539
+#: pdfarranger/pdfarranger.py:585
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
-msgstr "Küçük resimler işleniyor… [% (I2) s/% (I2) s]"
+msgstr "Küçük resimler çiziliyor… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:665
+msgid "Save changes to “{}” before closing?"
+msgstr "Kapatmadan önce değişiklikler “{}” dosyasına kaydedilsin mi?"
+
+#: pdfarranger/pdfarranger.py:667
+msgid "Save changes before closing?"
+msgstr "Kapatmadan önce değişiklikler kaydedilsin mi?"
+
+#: pdfarranger/pdfarranger.py:669
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Kaydetmezseniz değişiklikleriniz kaybolacaktır."
+
+#: pdfarranger/pdfarranger.py:670
+msgid "Do_n’t Save"
+msgstr "Kaydet_me"
+
+#: pdfarranger/pdfarranger.py:670
+msgid "_Cancel"
+msgstr "_İptal"
+
+#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+msgid "_Save"
+msgstr "_Kaydet"
+
+#: pdfarranger/pdfarranger.py:710
 msgid "Export…"
-msgstr "Dışa Aktar …"
+msgstr "Dışa Aktar…"
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
+#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
 msgid "PDF files"
 msgstr "PDF dosyaları"
 
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
+#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:794
 msgid "Import…"
-msgstr "İçe Aktar.."
+msgstr "İçe Aktar…"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:811
+msgid "Supported image files"
+msgstr "Desteklenen resim dosyaları"
+
+#: pdfarranger/pdfarranger.py:908
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Yapıştırılan veri geçersiz. Yapıştırılmıyor."
+
+#: pdfarranger/pdfarranger.py:1012
+msgid "PDF document is damaged: "
+msgstr "PDF belgesi hasarlı: "
+
+#: pdfarranger/pdfarranger.py:1442
 msgid "Left"
 msgstr "Sol"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:1442
 msgid "Right"
 msgstr "Sağ"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Top"
 msgstr "Üst"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Bottom"
 msgstr "Alt"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1460
 msgid "Crop Selected Pages"
-msgstr "Seçilen sayfaları kırp"
+msgstr "Seçili Sayfaları Kırp"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1468
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"Kırparak PDF dosyasından herhangi bir\n"
+"veri kaldırılmaz, yalnızca gizlenir."
 
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1471
 msgid "Crop Margins"
-msgstr "Kenar boşluklarını kırp"
+msgstr "Kenarları Kırp"
 
-#: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
 msgid "% of width"
-msgstr "% genişlik"
+msgstr "% olarak genişlik"
 
-#: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
 msgid "% of height"
-msgstr "% yükseklik"
+msgstr "% olarak yükselik"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/pdfarranger.py:1588
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s PDF dosyalarını değiştirme ve yeniden ayarlama aracıdır. GTK+ and Python "
+"%s, PDF dosyalarını yeniden sıralama ve düzenleme aracıdır. GTK+ ve Python "
 "kullanılarak geliştirilmiştir"
 
-#: pdfarranger/pdfarranger.py:1449
+#: pdfarranger/pdfarranger.py:1632
+msgid "Unknown file format"
+msgstr "Bilinmeyen dosya biçimi"
+
+#: pdfarranger/pdfarranger.py:1644
+msgid "Image files are only supported with img2pdf"
+msgstr "Resim dosyaları yalnızca img2pdf ile desteklenir"
+
+#: pdfarranger/pdfarranger.py:1656
+msgid "Image format is not supported by img2pdf"
+msgstr "Resim dosyası, img2pdf tarafından desteklenmiyor"
+
+#: pdfarranger/pdfarranger.py:1658
+msgid "File is neither pdf nor image"
+msgstr "Dosya ne pdf ne de resimdir"
+
+#: pdfarranger/pdfarranger.py:1709
 msgid "page"
 msgstr "sayfa"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr "Bir dosya açın ve mevcut dokümana ekleyin"
+msgstr "Dosya aç ve geçerli belgenin sonuna iliştir"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Kaydet"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
-msgstr "Farklı kaydet"
+msgstr "Farklı Kaydet"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Sayfa Sayısı"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Ana Menü"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
 msgstr "Sola Döndür"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
 msgstr "Sağa Döndür"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "İçe aktar"
-
-#: data/menu.ui.h:2
-#, fuzzy
-msgid "_Save"
-msgstr "Kaydet"
+msgstr "İ_çe Aktar"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As…"
-msgstr "Farklı kaydet"
+msgstr "_Farklı Kaydet…"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection…"
-msgstr "Seçimi dışa aktar"
+msgstr "Seçimi Dı_şa Aktar…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "_Geri Al"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Yinele"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "Düzenle"
+msgstr "_Düzenle"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
-msgstr "Sola Döndür"
+msgstr "So_la Döndür"
 
 #: data/menu.ui.h:9
 msgid "_Rotate Right"
-msgstr "Sağa Döndür"
+msgstr "Sağa Döndü_r"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "_Kırp"
 
 #: data/menu.ui.h:11
-#, fuzzy
 msgid "_Delete"
-msgstr "Sil"
+msgstr "_Sil"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr ""
+msgstr "_Çoğalt"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr ""
+msgstr "Sırayı Tersine Çe_vir"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr ""
+msgstr "Sayfaları _böl"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "_Kes"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "K_opyala"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "_Sonrasına Yapıştır"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "_Öncesine Yapıştır"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "_Tek Aralıkta Yapıştır"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "_Çift Aralıkta Yapıştır"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Yakınlaştır"
+msgstr "_Yakınlaştır"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Uzaklaş"
+msgstr "_Uzaklaştır"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr ""
+msgstr "_Özellikleri Düzenle"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "_Hakkında"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Çık"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Öz_el Yapıştır"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "Dosya"
-
-#~ msgid "Rotate left"
-#~ msgstr "Sola döndür"
-
-#~ msgid "Rotate right"
-#~ msgstr "Sağa döndür"
-
-#~ msgid "Crop"
-#~ msgstr "Kırp"
-
-#~ msgid "_View"
-#~ msgstr "Görünüm"
-
-#~ msgid "_Help"
-#~ msgstr "Yardım"
-
-#~ msgid "Delete"
-#~ msgstr "Sil"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "Kırp"
+msgstr "Sayfaları _Böl"
