@@ -41,6 +41,7 @@ def addicons():
         'places/user-home',
         'actions/bookmark-new',
         'actions/document-open-recent',
+        'actions/folder-new',
         'actions/list-add',
         'actions/list-remove',
         'actions/media-eject',
