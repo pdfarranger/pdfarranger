@@ -4,14 +4,14 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# Peter Bojtos <ptr@ulx.hu>, 2011
+# Péter Bojtos <ptr@ulx.hu>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
 "PO-Revision-Date: 2011-11-25 18:26+0100\n"
-"Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
+"Last-Translator: Péter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: SuliX Support Team <support@sulix.hu>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
