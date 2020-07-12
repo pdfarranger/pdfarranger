@@ -4,14 +4,14 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# Peter Bojtos <ptr@ulx.hu>, 2011
+# Péter Bojtos <ptr@ulx.hu>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
 "PO-Revision-Date: 2011-11-25 18:26+0100\n"
-"Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
+"Last-Translator: Péter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: SuliX Support Team <support@sulix.hu>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -23,31 +23,31 @@ msgstr ""
 
 #: pdfarranger/metadata.py:35
 msgid "Title"
-msgstr ""
+msgstr "Cím"
 
 #: pdfarranger/metadata.py:36
 msgid "Creator"
-msgstr ""
+msgstr "Készítő"
 
 #: pdfarranger/metadata.py:37
 msgid "Producer"
-msgstr ""
+msgstr "Gyártó"
 
 #: pdfarranger/metadata.py:38
 msgid "Creator tool"
-msgstr ""
+msgstr "Készítő eszköz"
 
 #: pdfarranger/metadata.py:141
 msgid "Edit properties"
-msgstr ""
+msgstr "Tulajdonságok szerkesztése"
 
 #: pdfarranger/metadata.py:154
 msgid "Property"
-msgstr ""
+msgstr "Tulajdonság"
 
 #: pdfarranger/metadata.py:154
 msgid "Value"
-msgstr ""
+msgstr "Érték"
 
 #: pdfarranger/pdfarranger.py:520
 msgid "No document"
@@ -75,7 +75,6 @@ msgid "All files"
 msgstr "Minden fájl"
 
 #: pdfarranger/pdfarranger.py:709
-#, fuzzy
 msgid "Import…"
 msgstr "_Importálás…"
 
@@ -97,30 +96,29 @@ msgstr "Lent"
 
 #: pdfarranger/pdfarranger.py:1241
 msgid "Crop Selected Pages"
-msgstr "A kiválasztott oldalak levágása"
+msgstr "Kijelölt oldalak körülvágása"
 
 #: pdfarranger/pdfarranger.py:1249
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"A körülvágás nem távolít el tartalmat\n"
+"a PDF-fájlból, csak elrejti."
 
 #: pdfarranger/pdfarranger.py:1252
 msgid "Crop Margins"
-msgstr "Margók levágása"
+msgstr "Margók körülvágása"
 
 #: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
 msgid "% of width"
 msgstr "% szélesség"
 
 #: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
 msgid "% of height"
 msgstr "% magasság"
 
 #: pdfarranger/pdfarranger.py:1369
-#, fuzzy, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
@@ -134,72 +132,63 @@ msgstr "oldal"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr ""
+msgstr "Fájl megnyitása és hozzáfűzése a jelenlegi dokumentumhoz"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Mentés"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
-msgstr "Mentés másként"
+msgstr "Mentés másként…"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Oldalak száma"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Főmenü"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Nagyítás"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
 msgstr "Forgatás _Balra"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
 msgstr "Forgatás _Jobbra"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
 msgstr "_Importálás…"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
 msgstr "Mentés"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As…"
-msgstr "Mentés másként"
+msgstr "Mentés másként…"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection…"
-msgstr "Exportálás…"
+msgstr "Kijelölés exportálása…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "_Visszavonás"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Ismét"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -215,78 +204,75 @@ msgstr "Forgatás _Jobbra"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "_Körülvágás"
 
 #: data/menu.ui.h:11
-#, fuzzy
 msgid "_Delete"
 msgstr "Törlés"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr ""
+msgstr "Megkettő_zés"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr ""
+msgstr "Sorrend meg_fordítása"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr ""
+msgstr "Oldalak fel_osztása"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "_Kivágás"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "_Másolás"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Beillesztés _után"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Beillesztés _előtt"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Összefűzés beillesztése párat_lan"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Összefűzés beillesztése _páros"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
 msgstr "Nagyítás"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Kicsinyítés"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr ""
+msgstr "_Tulajdonságok szerkesztése"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "_Névjegy"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Kilépés"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Irá_nyított beillesztés"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr ""
+msgstr "Oldalak fel_osztása"
 
 #~ msgid "_File"
 #~ msgstr "_Fájl"
@@ -298,7 +284,7 @@ msgstr ""
 #~ msgstr "Forgatás jobbra"
 
 #~ msgid "Crop"
-#~ msgstr "Levágás"
+#~ msgstr "Körülvágás"
 
 #~ msgid "_View"
 #~ msgstr "_Nézet"
@@ -309,6 +295,5 @@ msgstr ""
 #~ msgid "Delete"
 #~ msgstr "Törlés"
 
-#, fuzzy
 #~ msgid "C_rop"
-#~ msgstr "_Vágás…"
+#~ msgstr "Körül_vágás…"
