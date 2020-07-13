@@ -76,7 +76,7 @@ msgstr "Minden fájl"
 
 #: pdfarranger/pdfarranger.py:709
 msgid "Import…"
-msgstr "_Importálás…"
+msgstr "Importálás…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
@@ -160,11 +160,11 @@ msgstr "Kicsinyítés"
 
 #: data/pdfarranger.ui.h:8
 msgid "Rotate Left"
-msgstr "Forgatás _Balra"
+msgstr "Forgatás Balra"
 
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
-msgstr "Forgatás _Jobbra"
+msgstr "Forgatás Jobbra"
 
 #: data/menu.ui.h:1
 msgid "_Import"
