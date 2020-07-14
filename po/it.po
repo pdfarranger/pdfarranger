@@ -1,96 +1,128 @@
+# Italian translation of pdfarranger
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdfarranger package.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.4\n"
+"Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2020-04-21 13:38+0100\n"
-"Last-Translator: Albano Battistella\n"
-"Language-Team: Italian\n"
-"Language: it\n"
+"POT-Creation-Date: 2020-05-24 17:01+0200\n"
+"PO-Revision-Date: 2020-07-14 08:38+0200\n"
+"Language-Team: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Italian\n"
-"X-Poedit-Country: ITALY\n"
+"X-Generator: Poedit 2.3.1\n"
+"Last-Translator: Michele Pezza\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
 
-#: pdfarranger/metadata.py:35
+#: pdfarranger/metadata.py:36
 msgid "Title"
 msgstr "Titolo"
 
-#: pdfarranger/metadata.py:36
+#: pdfarranger/metadata.py:37
 msgid "Creator"
 msgstr "Creatore"
 
-#: pdfarranger/metadata.py:37
+#: pdfarranger/metadata.py:38
 msgid "Producer"
 msgstr "Produttore"
 
-#: pdfarranger/metadata.py:38
+#: pdfarranger/metadata.py:39
 msgid "Creator tool"
-msgstr "Creatore Strumento"
+msgstr "Strumento di creazione"
 
-#: pdfarranger/metadata.py:141
+#: pdfarranger/metadata.py:154
 msgid "Edit properties"
 msgstr "Modifica proprietà"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Property"
 msgstr "Proprietà"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Value"
 msgstr "Valore"
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "Nessun documento"
-
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "Diversi documenti"
-
-#: pdfarranger/pdfarranger.py:539
+#: pdfarranger/pdfarranger.py:585
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "Disegno miniature… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:629
-msgid "Export…"
-msgstr "Esporta…"
+#: pdfarranger/pdfarranger.py:665
+msgid "Save changes to “{}” before closing?"
+msgstr "Salvare le modifiche apportate a “{}”prima di chiudere?"
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
+#: pdfarranger/pdfarranger.py:667
+msgid "Save changes before closing?"
+msgstr "Salvare le modifiche prima di chiudere?"
+
+#: pdfarranger/pdfarranger.py:669
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Le modifiche andranno perse se non le salvi."
+
+#: pdfarranger/pdfarranger.py:670
+msgid "Do_n’t Save"
+msgstr "_Non salvare"
+
+#: pdfarranger/pdfarranger.py:670
+msgid "_Cancel"
+msgstr "Annulla"
+
+#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+msgid "_Save"
+msgstr "Salva"
+
+#: pdfarranger/pdfarranger.py:710
+msgid "Export…"
+msgstr "Esporta..."
+
+#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
 msgid "PDF files"
 msgstr "File PDF"
 
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
+#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
 msgid "All files"
 msgstr "Tutti i file"
 
-#: pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:794
 msgid "Import…"
-msgstr "Importa…"
+msgstr "Importa..."
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:811
+msgid "Supported image files"
+msgstr "File di immagine supportati"
+
+#: pdfarranger/pdfarranger.py:908
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Dati incollati non validi. Incolla annullato."
+
+#: pdfarranger/pdfarranger.py:1012
+msgid "PDF document is damaged: "
+msgstr "Il documento PDF è danneggiato:"
+
+#: pdfarranger/pdfarranger.py:1442
 msgid "Left"
 msgstr "Sinistra"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:1442
 msgid "Right"
 msgstr "Destra"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Top"
 msgstr "Alto"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1443
 msgid "Bottom"
 msgstr "Basso"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1460
 msgid "Crop Selected Pages"
 msgstr "Taglia pagine selezionate"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1468
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -98,36 +130,52 @@ msgstr ""
 "Il ritaglio non rimuove alcun contenuto\n"
 "dal file PDF, lo nasconde solo."
 
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1471
 msgid "Crop Margins"
 msgstr "Taglia margini"
 
-#: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
 msgid "% of width"
 msgstr "% in larghezza"
 
-#: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
 msgid "% of height"
 msgstr "% in altezza"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/pdfarranger.py:1588
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s è uno strumento per riordinare e modificare file PDF. Sviluppato usando "
-"GTK+ e Python"
+"%s è uno strumento per riordinare e modificare file PDF. Sviluppato con GTK"
+"+ e Python"
 
-#: pdfarranger/pdfarranger.py:1449
+#: pdfarranger/pdfarranger.py:1632
+msgid "Unknown file format"
+msgstr "Formato file sconosciuto"
+
+#: pdfarranger/pdfarranger.py:1644
+msgid "Image files are only supported with img2pdf"
+msgstr "I file di immagine sono supportati solo con img2pdf"
+
+#: pdfarranger/pdfarranger.py:1656
+msgid "Image format is not supported by img2pdf"
+msgstr "Il formato dell'immagine non è supportato da img2pdf"
+
+#: pdfarranger/pdfarranger.py:1658
+msgid "File is neither pdf nor image"
+msgstr "Il file non è un pdf o una immagine"
+
+#: pdfarranger/pdfarranger.py:1709
 msgid "page"
 msgstr "pagina"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr "Apri un file e accodalo al documento corrente"
+msgstr "Apri un file e aggiungilo al documento corrente"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
@@ -135,7 +183,7 @@ msgstr "Salva"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save As"
-msgstr "Salva Come"
+msgstr "Salva come"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
@@ -143,59 +191,55 @@ msgstr "Numero di Pagine"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr "Menu Principale"
+msgstr "Menù Principale"
 
 #: data/pdfarranger.ui.h:6
 msgid "Zoom In"
-msgstr "Ingrandisci"
+msgstr "Zoom avanti"
 
 #: data/pdfarranger.ui.h:7
 msgid "Zoom Out"
-msgstr "Rimpicciolisci"
+msgstr "Zoom indietro"
 
 #: data/pdfarranger.ui.h:8
 msgid "Rotate Left"
-msgstr "Ruota a Sinistra"
+msgstr "Ruota a sinistra"
 
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
-msgstr "Ruota a Destra"
+msgstr "Ruota a destra"
 
 #: data/menu.ui.h:1
 msgid "_Import"
 msgstr "_Importa"
 
-#: data/menu.ui.h:2
-msgid "_Save"
-msgstr "_Salva"
-
 #: data/menu.ui.h:3
 msgid "Save _As…"
-msgstr "Salva Come…"
+msgstr "Save come…"
 
 #: data/menu.ui.h:4
 msgid "E_xport Selection…"
-msgstr "E_sporta Selezione…"
+msgstr "Esporta Selezione…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr "_Annulla"
+msgstr "Annulla"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr "_Rifai"
+msgstr "_Ripristina"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "_Modifica"
+msgstr "Modifica"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
-msgstr "Ruota a _sinistra"
+msgstr "Ruota a sinistra"
 
 #: data/menu.ui.h:9
 msgid "_Rotate Right"
-msgstr "_Ruota a destra"
+msgstr "Ruota a destra"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
@@ -203,11 +247,11 @@ msgstr "Ritaglia"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "_Cancella"
+msgstr "Cancella"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr "Duplicato"
+msgstr "Duplica"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
@@ -215,11 +259,11 @@ msgstr "Inverti Ordine"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr "_Dividi pagine"
+msgstr "Dividi Pagine"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr "Taglia"
+msgstr "_Taglia"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
@@ -227,31 +271,31 @@ msgstr "_Copia"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr "Incolla_Dopo"
+msgstr "Incolla prima"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr "Incolla_Prima"
+msgstr "Incolla dopo"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Incolla inserendo pagine dispari"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Incolla inserendo pagine pari"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
-msgstr "Ingrandisci"
+msgstr "Zoom avanti"
 
 #: data/menu.ui.h:22
 msgid "Zoom _Out"
-msgstr "Rimpicciolisci"
+msgstr "Zoom indietro"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr "Modifica_proprietà"
+msgstr "Modifica _proprietà"
 
 #: data/menu.ui.h:24
 msgid "_About"
@@ -259,7 +303,7 @@ msgstr "Informazioni su"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr "_Esci"
+msgstr "Esci"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
@@ -267,31 +311,4 @@ msgstr "Incolla Speciale"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr "_Dividi pagine"
-
-#~ msgid "_File"
-#~ msgstr "_File"
-
-#~ msgid "Rotate left"
-#~ msgstr "Routa a sinistra"
-
-#~ msgid "Rotate right"
-#~ msgstr "Ruota a destra"
-
-#~ msgid "Crop"
-#~ msgstr "Ritaglia"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Inverti Ordine"
-
-#~ msgid "_View"
-#~ msgstr "_Visualizza"
-
-#~ msgid "_Help"
-#~ msgstr "_Aiuto"
-
-#~ msgid "Delete"
-#~ msgstr "Cancella"
-
-#~ msgid "C_rop"
-#~ msgstr "_Ritaglia…"
+msgstr "Dividi pagine"
