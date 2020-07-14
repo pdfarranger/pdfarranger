@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 17:01+0200\n"
-"PO-Revision-Date: 2020-07-14 08:38+0200\n"
+"PO-Revision-Date: 2020-07-14 13:54+0200\n"
 "Language-Team: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,15 +68,15 @@ msgstr "_Non salvare"
 
 #: pdfarranger/pdfarranger.py:670
 msgid "_Cancel"
-msgstr "Annulla"
+msgstr "_Annulla"
 
 #: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
 msgid "_Save"
-msgstr "Salva"
+msgstr "_Salva"
 
 #: pdfarranger/pdfarranger.py:710
 msgid "Export…"
-msgstr "Esporta..."
+msgstr "Esporta…"
 
 #: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
 msgid "PDF files"
@@ -88,7 +88,7 @@ msgstr "Tutti i file"
 
 #: pdfarranger/pdfarranger.py:794
 msgid "Import…"
-msgstr "Importa..."
+msgstr "Importa…"
 
 #: pdfarranger/pdfarranger.py:811
 msgid "Supported image files"
@@ -100,7 +100,7 @@ msgstr "Dati incollati non validi. Incolla annullato."
 
 #: pdfarranger/pdfarranger.py:1012
 msgid "PDF document is damaged: "
-msgstr "Il documento PDF è danneggiato:"
+msgstr "Il documento PDF è danneggiato: "
 
 #: pdfarranger/pdfarranger.py:1442
 msgid "Left"
@@ -211,19 +211,19 @@ msgstr "Ruota a destra"
 
 #: data/menu.ui.h:1
 msgid "_Import"
-msgstr "_Importa"
+msgstr "Impor_ta"
 
 #: data/menu.ui.h:3
 msgid "Save _As…"
-msgstr "Save come…"
+msgstr "Save _come…"
 
 #: data/menu.ui.h:4
 msgid "E_xport Selection…"
-msgstr "Esporta Selezione…"
+msgstr "Esporta Sele_zione…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr "Annulla"
+msgstr "_Annulla"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
@@ -231,35 +231,35 @@ msgstr "_Ripristina"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "Modifica"
+msgstr "_Modifica"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
-msgstr "Ruota a sinistra"
+msgstr "Ruota a _sinistra"
 
 #: data/menu.ui.h:9
 msgid "_Rotate Right"
-msgstr "Ruota a destra"
+msgstr "Ruota a _destra"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr "Ritaglia"
+msgstr "_Ritaglia"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "Cancella"
+msgstr "_Elimina"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr "Duplica"
+msgstr "D_uplica"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr "Inverti Ordine"
+msgstr "_Inverti Ordine"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr "Dividi Pagine"
+msgstr "_Dividi Pagine"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
@@ -271,27 +271,27 @@ msgstr "_Copia"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr "Incolla prima"
+msgstr "Incolla _prima"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr "Incolla dopo"
+msgstr "Incolla _dopo"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Incolla inserendo pagine dispari"
+msgstr "Incolla inserendo pagine _dispari"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Incolla inserendo pagine pari"
+msgstr "Incolla inserendo pagine _pari"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
-msgstr "Zoom avanti"
+msgstr "Zoom _avanti"
 
 #: data/menu.ui.h:22
 msgid "Zoom _Out"
-msgstr "Zoom indietro"
+msgstr "Zoom _indietro"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
@@ -299,16 +299,16 @@ msgstr "Modifica _proprietà"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr "Informazioni su"
+msgstr "Informazioni _su"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr "Esci"
+msgstr "_Esci"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr "Incolla Speciale"
+msgstr "Incolla Specia_le"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr "Dividi pagine"
+msgstr "Di_vidi pagine"
