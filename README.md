@@ -10,10 +10,10 @@ or split pdf documents and rotate, crop and rearrange their pages using an
 interactive and intuitive graphical interface. It is a frontend for
 [pikepdf](https://github.com/pikepdf/pikepdf).
 
-*pdfarranger* is a fork of Konstantinos Poulios's pdfshuffler
+*pdfarranger* is a fork of Konstantinos Poulios’s pdfshuffler
 (see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
-It's a humble attempt to make the project a bit more active.
+It’s a humble attempt to make the project a bit more active.
 
 ![screenshot of pdfarranger](https://github.com/jeromerobert/pdfarranger/raw/master/data/screenshot.png)
 ## Binary distribution
