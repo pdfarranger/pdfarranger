@@ -68,7 +68,7 @@ msgstr "Exportálás…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
-msgstr "PDF fájlok"
+msgstr "PDF-fájlok"
 
 #: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
 msgid "All files"
@@ -160,11 +160,11 @@ msgstr "Kicsinyítés"
 
 #: data/pdfarranger.ui.h:8
 msgid "Rotate Left"
-msgstr "Forgatás Balra"
+msgstr "Forgatás balra"
 
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
-msgstr "Forgatás Jobbra"
+msgstr "Forgatás jobbra"
 
 #: data/menu.ui.h:1
 msgid "_Import"
@@ -172,15 +172,15 @@ msgstr "_Importálás…"
 
 #: data/menu.ui.h:2
 msgid "_Save"
-msgstr "Mentés"
+msgstr "_Mentés"
 
 #: data/menu.ui.h:3
 msgid "Save _As…"
-msgstr "Mentés másként…"
+msgstr "Menté_s másként…"
 
 #: data/menu.ui.h:4
 msgid "E_xport Selection…"
-msgstr "Kijelölés exportálása…"
+msgstr "Kijelölés e_xportálása…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
@@ -188,27 +188,27 @@ msgstr "_Visszavonás"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr "_Ismét"
+msgstr "Új_ra"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "_Szerkesztés"
+msgstr "S_zerkesztés"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
-msgstr "Forgatás _Balra"
+msgstr "Forgatás _balra"
 
 #: data/menu.ui.h:9
 msgid "_Rotate Right"
-msgstr "Forgatás _Jobbra"
+msgstr "Forgatás _jobbra"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr "_Körülvágás"
+msgstr "Körül_vágás"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "Törlés"
+msgstr "_Törlés"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
@@ -248,11 +248,11 @@ msgstr "Összefűzés beillesztése _páros"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
-msgstr "Nagyítás"
+msgstr "Na_gyítás"
 
 #: data/menu.ui.h:22
 msgid "Zoom _Out"
-msgstr "Kicsinyítés"
+msgstr "Ki_csinyítés"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
