@@ -62,3 +62,11 @@ python3 -m pdfarranger
 ```
 
 For Windows see [Win32.md](Win32.md).
+
+## Translations
+
+*pdfarranger* has been translated into several languages already:
+
+ca@valencia, cs, de, el, es, fr, hr, hu, id, it, ja, nl, pl_PL, pt_BR, tr, zh_CN, zh_TW.po
+
+If your language is missing or incomplete, please help translate *pdfarranger*.
