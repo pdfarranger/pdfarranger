@@ -1,0 +1,316 @@
+# Croatian translation for pdfarranger.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdfarranger package.
+# Milo Ivir <mail@milotype.de>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdfarranger\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-24 17:01+0200\n"
+"PO-Revision-Date: 2020-07-19 17:31+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: hr\n"
+
+#: pdfarranger/metadata.py:36
+msgid "Title"
+msgstr "Naslov"
+
+#: pdfarranger/metadata.py:37
+msgid "Creator"
+msgstr "Autor"
+
+#: pdfarranger/metadata.py:38
+msgid "Producer"
+msgstr "Stvaralac"
+
+#: pdfarranger/metadata.py:39
+msgid "Creator tool"
+msgstr "Alat"
+
+#: pdfarranger/metadata.py:154
+msgid "Edit properties"
+msgstr "Uredi svojstva"
+
+#: pdfarranger/metadata.py:167
+msgid "Property"
+msgstr "Svojstvo"
+
+#: pdfarranger/metadata.py:167
+msgid "Value"
+msgstr "Vrijednost"
+
+#: pdfarranger/pdfarranger.py:585
+#, python-format
+msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
+msgstr "Iscrtavanje sličica … [%(i1)s/%(i2)s]"
+
+#: pdfarranger/pdfarranger.py:665
+msgid "Save changes to “{}” before closing?"
+msgstr "Spremiti promjene u „{}” prije zatvaranja?"
+
+#: pdfarranger/pdfarranger.py:667
+msgid "Save changes before closing?"
+msgstr "Spremiti promjene prije zatvaranja?"
+
+#: pdfarranger/pdfarranger.py:669
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Ako promjene ne spremiš, izgubit ćeš ih."
+
+#: pdfarranger/pdfarranger.py:670
+msgid "Do_n’t Save"
+msgstr "Nemoj spremiti"
+
+#: pdfarranger/pdfarranger.py:670
+msgid "_Cancel"
+msgstr "O_dustani"
+
+#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+msgid "_Save"
+msgstr "_Spremi"
+
+#: pdfarranger/pdfarranger.py:710
+msgid "Export…"
+msgstr "Izvezi …"
+
+#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
+msgid "PDF files"
+msgstr "PDF datoteke"
+
+#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
+msgid "All files"
+msgstr "Sve datoteke"
+
+#: pdfarranger/pdfarranger.py:794
+msgid "Import…"
+msgstr "Uvezi …"
+
+#: pdfarranger/pdfarranger.py:811
+msgid "Supported image files"
+msgstr "Podržane slikovne datoteke"
+
+#: pdfarranger/pdfarranger.py:908
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Umetnuti podaci nisu ispravni. Umetanje se prekida."
+
+#: pdfarranger/pdfarranger.py:1012
+msgid "PDF document is damaged: "
+msgstr "PDF dokument je oštećen: "
+
+#: pdfarranger/pdfarranger.py:1442
+msgid "Left"
+msgstr "Lijevo"
+
+#: pdfarranger/pdfarranger.py:1442
+msgid "Right"
+msgstr "Desno"
+
+#: pdfarranger/pdfarranger.py:1443
+msgid "Top"
+msgstr "Gore"
+
+#: pdfarranger/pdfarranger.py:1443
+msgid "Bottom"
+msgstr "Dolje"
+
+#: pdfarranger/pdfarranger.py:1460
+msgid "Crop Selected Pages"
+msgstr "Obreži odabrane stranice"
+
+#: pdfarranger/pdfarranger.py:1468
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+"Obrezivanje ne uklanja sadržaj\n"
+"PDF datoteke, već ga samo skriva."
+
+#: pdfarranger/pdfarranger.py:1471
+msgid "Crop Margins"
+msgstr "Margine obrezivanja"
+
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
+msgid "% of width"
+msgstr "% širine"
+
+#: pdfarranger/pdfarranger.py:1481
+#, python-format
+msgid "% of height"
+msgstr "% visine"
+
+#: pdfarranger/pdfarranger.py:1588
+#, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"%s je alat za preraspoređivanje i mijenjenje stranica PDF datoteka. "
+"Razvijen je pomoću GTK+ i Pythona"
+
+#: pdfarranger/pdfarranger.py:1632
+msgid "Unknown file format"
+msgstr "Nepoznat datotečni format"
+
+#: pdfarranger/pdfarranger.py:1644
+msgid "Image files are only supported with img2pdf"
+msgstr "Slikovne datoteke su podržane samo s img2pdf"
+
+#: pdfarranger/pdfarranger.py:1656
+msgid "Image format is not supported by img2pdf"
+msgstr "img2pdf ne podržava format slike"
+
+#: pdfarranger/pdfarranger.py:1658
+msgid "File is neither pdf nor image"
+msgstr "Datoteka nije pdf niti slika"
+
+#: pdfarranger/pdfarranger.py:1709
+msgid "page"
+msgstr "stranica"
+
+#: data/pdfarranger.ui.h:1
+msgid "Open a file and append it to the current document"
+msgstr "Otvori datoteku i dodaj je trenutačnom dokumentu"
+
+#: data/pdfarranger.ui.h:2
+msgid "Save"
+msgstr "Spremi"
+
+#: data/pdfarranger.ui.h:3
+msgid "Save As"
+msgstr "Spremi kao"
+
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
+msgstr "Broj stranica"
+
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
+msgstr "Glavni izbornik"
+
+#: data/pdfarranger.ui.h:6
+msgid "Zoom In"
+msgstr "Uvećaj"
+
+#: data/pdfarranger.ui.h:7
+msgid "Zoom Out"
+msgstr "Umanji"
+
+#: data/pdfarranger.ui.h:8
+msgid "Rotate Left"
+msgstr "Okreni lijevo"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Okreni desno"
+
+#: data/menu.ui.h:1
+msgid "_Import"
+msgstr "_Uvezi"
+
+#: data/menu.ui.h:3
+msgid "Save _As…"
+msgstr "Spremi k_ao …"
+
+#: data/menu.ui.h:4
+msgid "E_xport Selection…"
+msgstr "_Izvezi odabir …"
+
+#: data/menu.ui.h:5
+msgid "_Undo"
+msgstr "_Vrati"
+
+#: data/menu.ui.h:6
+msgid "_Redo"
+msgstr "_Ponovi"
+
+#: data/menu.ui.h:7
+msgid "_Edit"
+msgstr "Ur_edi"
+
+#: data/menu.ui.h:8
+msgid "Rotate _Left"
+msgstr "Okreni _lijevo"
+
+#: data/menu.ui.h:9
+msgid "_Rotate Right"
+msgstr "Okreni _desno"
+
+#: data/menu.ui.h:10
+msgid "Cro_p"
+msgstr "_Obreži"
+
+#: data/menu.ui.h:11
+msgid "_Delete"
+msgstr "Iz_briši"
+
+#: data/menu.ui.h:12
+msgid "Dupl_icate"
+msgstr "Dupli_ciraj"
+
+#: data/menu.ui.h:13
+msgid "Re_verse Order"
+msgstr "Preo_kreni redoslijed"
+
+#: data/menu.ui.h:14
+msgid "_Split pages"
+msgstr "_Rastavi stranice"
+
+#: data/menu.ui.h:15
+msgid "Cu_t"
+msgstr "_Izreži"
+
+#: data/menu.ui.h:16
+msgid "_Copy"
+msgstr "_Kopiraj"
+
+#: data/menu.ui.h:17
+msgid "Paste _After"
+msgstr "Umetni i_za"
+
+#: data/menu.ui.h:18
+msgid "Paste _Before"
+msgstr "Umetni i_spred"
+
+#: data/menu.ui.h:19
+msgid "Paste Interleave _Odd"
+msgstr "Umetni prazne _neparne stranice"
+
+#: data/menu.ui.h:20
+msgid "Paste Interleave _Even"
+msgstr "Umetni prazne _parne stranice"
+
+#: data/menu.ui.h:21
+msgid "Zoom _In"
+msgstr "U_većaj"
+
+#: data/menu.ui.h:22
+msgid "Zoom _Out"
+msgstr "U_manji"
+
+#: data/menu.ui.h:23
+msgid "Edit _Properties"
+msgstr "Uredi _svojstva"
+
+#: data/menu.ui.h:24
+msgid "_About"
+msgstr "_Informacije"
+
+#: data/menu.ui.h:25
+msgid "_Quit"
+msgstr "_Zatvori program"
+
+#: data/menu.ui.h:26
+msgid "Past_e Special"
+msgstr "Um_etni"
+
+#: data/menu.ui.h:27
+msgid "_Split Pages"
+msgstr "Ras_tavi stranice"
