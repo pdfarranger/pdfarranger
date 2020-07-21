@@ -188,7 +188,7 @@ msgstr "_Visszavonás"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr "Uj_ra"
+msgstr "Új_ra"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
