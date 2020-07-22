@@ -284,30 +284,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "_Berkas"
-
-#~ msgid "Rotate left"
-#~ msgstr "Putar ke kiri"
-
-#~ msgid "Rotate right"
-#~ msgstr "Putar ke kanan"
-
-#~ msgid "Crop"
-#~ msgstr "Pangkas"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Balikkan Urutan"
-
-#~ msgid "_View"
-#~ msgstr "_Tampilan"
-
-#~ msgid "_Help"
-#~ msgstr "Ba_ntuan"
-
-#~ msgid "Delete"
-#~ msgstr "Hapus"
-
-#~ msgid "C_rop"
-#~ msgstr "Pang_kas"
