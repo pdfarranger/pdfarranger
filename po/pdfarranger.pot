@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 17:01+0200\n"
+"POT-Creation-Date: 2020-07-22 06:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,127 +45,135 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:585
+#: pdfarranger/pdfarranger.py:591
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:665
+#: pdfarranger/pdfarranger.py:672
 msgid "Save changes to “{}” before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:667
+#: pdfarranger/pdfarranger.py:674
 msgid "Save changes before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:669
+#: pdfarranger/pdfarranger.py:676
 msgid "Your changes will be lost if you don’t save them."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:677
 msgid "Do_n’t Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:677
 msgid "_Cancel"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+#: pdfarranger/pdfarranger.py:677 data/menu.ui.h:2
 msgid "_Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:710
+#: pdfarranger/pdfarranger.py:718
 msgid "Export…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
+#: pdfarranger/pdfarranger.py:730 pdfarranger/pdfarranger.py:827
 msgid "PDF files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
+#: pdfarranger/pdfarranger.py:736 pdfarranger/pdfarranger.py:813
 msgid "All files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:794
+#: pdfarranger/pdfarranger.py:802
 msgid "Import…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:811
+#: pdfarranger/pdfarranger.py:819
 msgid "Supported image files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:908
+#: pdfarranger/pdfarranger.py:916
 msgid "Pasted data not valid. Aborting paste."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1012
-msgid "PDF document is damaged: "
+#: pdfarranger/pdfarranger.py:1018 pdfarranger/pdfarranger.py:1675
+msgid "Unknown file format"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1442
+#: pdfarranger/pdfarranger.py:1022
+msgid "PDF document is damaged"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1701
+msgid "File is neither pdf nor image"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1482
 msgid "Left"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1442
+#: pdfarranger/pdfarranger.py:1482
 msgid "Right"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1443
+#: pdfarranger/pdfarranger.py:1483
 msgid "Top"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1443
+#: pdfarranger/pdfarranger.py:1483
 msgid "Bottom"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1460
+#: pdfarranger/pdfarranger.py:1500
 msgid "Crop Selected Pages"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1468
+#: pdfarranger/pdfarranger.py:1508
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1471
+#: pdfarranger/pdfarranger.py:1511
 msgid "Crop Margins"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1481
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of width"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1481
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of height"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1588
+#: pdfarranger/pdfarranger.py:1628
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1632
-msgid "Unknown file format"
+#: pdfarranger/pdfarranger.py:1631
+msgid "Maintainers and contributors"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1644
+#: pdfarranger/pdfarranger.py:1635
+msgid "GNU General Public License (GPL) Version 3."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1687
 msgid "Image files are only supported with img2pdf"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1656
+#: pdfarranger/pdfarranger.py:1699
 msgid "Image format is not supported by img2pdf"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1658
-msgid "File is neither pdf nor image"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1709
+#: pdfarranger/pdfarranger.py:1752
 msgid "page"
 msgstr ""
 
