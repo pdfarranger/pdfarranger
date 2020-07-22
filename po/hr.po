@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 17:01+0200\n"
-"PO-Revision-Date: 2020-07-19 17:31+0200\n"
+"POT-Creation-Date: 2020-07-22 06:04+0200\n"
+"PO-Revision-Date: 2020-07-22 13:12+0200\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3.1\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"Language: hr\n"
 
 #: pdfarranger/metadata.py:36
 msgid "Title"
@@ -47,84 +47,92 @@ msgstr "Svojstvo"
 msgid "Value"
 msgstr "Vrijednost"
 
-#: pdfarranger/pdfarranger.py:585
+#: pdfarranger/pdfarranger.py:591
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "Iscrtavanje sličica … [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:665
+#: pdfarranger/pdfarranger.py:672
 msgid "Save changes to “{}” before closing?"
 msgstr "Spremiti promjene u „{}” prije zatvaranja?"
 
-#: pdfarranger/pdfarranger.py:667
+#: pdfarranger/pdfarranger.py:674
 msgid "Save changes before closing?"
 msgstr "Spremiti promjene prije zatvaranja?"
 
-#: pdfarranger/pdfarranger.py:669
+#: pdfarranger/pdfarranger.py:676
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Ako promjene ne spremiš, izgubit ćeš ih."
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:677
 msgid "Do_n’t Save"
 msgstr "Nemoj spremiti"
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:677
 msgid "_Cancel"
 msgstr "O_dustani"
 
-#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+#: pdfarranger/pdfarranger.py:677 data/menu.ui.h:2
 msgid "_Save"
 msgstr "_Spremi"
 
-#: pdfarranger/pdfarranger.py:710
+#: pdfarranger/pdfarranger.py:718
 msgid "Export…"
 msgstr "Izvezi …"
 
-#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
+#: pdfarranger/pdfarranger.py:730 pdfarranger/pdfarranger.py:827
 msgid "PDF files"
 msgstr "PDF datoteke"
 
-#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
+#: pdfarranger/pdfarranger.py:736 pdfarranger/pdfarranger.py:813
 msgid "All files"
 msgstr "Sve datoteke"
 
-#: pdfarranger/pdfarranger.py:794
+#: pdfarranger/pdfarranger.py:802
 msgid "Import…"
 msgstr "Uvezi …"
 
-#: pdfarranger/pdfarranger.py:811
+#: pdfarranger/pdfarranger.py:819
 msgid "Supported image files"
 msgstr "Podržane slikovne datoteke"
 
-#: pdfarranger/pdfarranger.py:908
+#: pdfarranger/pdfarranger.py:916
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Umetnuti podaci nisu ispravni. Umetanje se prekida."
 
-#: pdfarranger/pdfarranger.py:1012
-msgid "PDF document is damaged: "
-msgstr "PDF dokument je oštećen: "
+#: pdfarranger/pdfarranger.py:1018 pdfarranger/pdfarranger.py:1675
+msgid "Unknown file format"
+msgstr "Nepoznat datotečni format"
 
-#: pdfarranger/pdfarranger.py:1442
+#: pdfarranger/pdfarranger.py:1022
+msgid "PDF document is damaged"
+msgstr "PDF dokument je oštećen"
+
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1701
+msgid "File is neither pdf nor image"
+msgstr "Datoteka nije pdf niti slika"
+
+#: pdfarranger/pdfarranger.py:1482
 msgid "Left"
 msgstr "Lijevo"
 
-#: pdfarranger/pdfarranger.py:1442
+#: pdfarranger/pdfarranger.py:1482
 msgid "Right"
 msgstr "Desno"
 
-#: pdfarranger/pdfarranger.py:1443
+#: pdfarranger/pdfarranger.py:1483
 msgid "Top"
 msgstr "Gore"
 
-#: pdfarranger/pdfarranger.py:1443
+#: pdfarranger/pdfarranger.py:1483
 msgid "Bottom"
 msgstr "Dolje"
 
-#: pdfarranger/pdfarranger.py:1460
+#: pdfarranger/pdfarranger.py:1500
 msgid "Crop Selected Pages"
 msgstr "Obreži odabrane stranice"
 
-#: pdfarranger/pdfarranger.py:1468
+#: pdfarranger/pdfarranger.py:1508
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -132,46 +140,46 @@ msgstr ""
 "Obrezivanje ne uklanja sadržaj\n"
 "PDF datoteke, već ga samo skriva."
 
-#: pdfarranger/pdfarranger.py:1471
+#: pdfarranger/pdfarranger.py:1511
 msgid "Crop Margins"
 msgstr "Margine obrezivanja"
 
-#: pdfarranger/pdfarranger.py:1481
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of width"
 msgstr "% širine"
 
-#: pdfarranger/pdfarranger.py:1481
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of height"
 msgstr "% visine"
 
-#: pdfarranger/pdfarranger.py:1588
+#: pdfarranger/pdfarranger.py:1628
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s je alat za preraspoređivanje i mijenjenje stranica PDF datoteka. "
-"Razvijen je pomoću GTK+ i Pythona"
+"%s je alat za preraspoređivanje i mijenjenje stranica PDF datoteka. Razvijen "
+"je pomoću GTK+ i Pythona"
 
-#: pdfarranger/pdfarranger.py:1632
-msgid "Unknown file format"
-msgstr "Nepoznat datotečni format"
+#: pdfarranger/pdfarranger.py:1631
+msgid "Maintainers and contributors"
+msgstr "Održavatelji i doprinositelji"
 
-#: pdfarranger/pdfarranger.py:1644
+#: pdfarranger/pdfarranger.py:1635
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU opća javna licenca, verzija 3."
+
+#: pdfarranger/pdfarranger.py:1687
 msgid "Image files are only supported with img2pdf"
 msgstr "Slikovne datoteke su podržane samo s img2pdf"
 
-#: pdfarranger/pdfarranger.py:1656
+#: pdfarranger/pdfarranger.py:1699
 msgid "Image format is not supported by img2pdf"
 msgstr "img2pdf ne podržava format slike"
 
-#: pdfarranger/pdfarranger.py:1658
-msgid "File is neither pdf nor image"
-msgstr "Datoteka nije pdf niti slika"
-
-#: pdfarranger/pdfarranger.py:1709
+#: pdfarranger/pdfarranger.py:1752
 msgid "page"
 msgstr "stranica"
 

@@ -1,103 +1,139 @@
-# PDF-Shuffler translation files.
-# Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
-# Public License version 3 or later.
-# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
+# German translation for pdfarranger.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdfarranger package.
 # Translators:
 # Konstantinos Poulios, 2008-2017
 # David Auer, 2020
+# Milo Ivir <mail@milotype.de>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.7\n"
+"Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2019-07-18 20:51+0200\n"
-"Last-Translator: David Auer <dreua@posteo.de>\n"
+"POT-Creation-Date: 2020-07-22 06:04+0200\n"
+"PO-Revision-Date: 2020-07-22 13:12+0200\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
-#: pdfarranger/metadata.py:35
+#: pdfarranger/metadata.py:36
 msgid "Title"
 msgstr "Titel"
 
-#: pdfarranger/metadata.py:36
+#: pdfarranger/metadata.py:37
 msgid "Creator"
 msgstr "Ersteller"
 
-#: pdfarranger/metadata.py:37
+#: pdfarranger/metadata.py:38
 msgid "Producer"
 msgstr "Hersteller"
 
-#: pdfarranger/metadata.py:38
+#: pdfarranger/metadata.py:39
 msgid "Creator tool"
 msgstr "Erstellungswerkzeug"
 
-#: pdfarranger/metadata.py:141
+#: pdfarranger/metadata.py:154
 msgid "Edit properties"
 msgstr "Eigenschaften ändern"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Property"
 msgstr "Eigenschaft"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Value"
 msgstr "Wert"
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "Keine Datei"
-
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "Mehrere Dateien"
-
-#: pdfarranger/pdfarranger.py:539
+#: pdfarranger/pdfarranger.py:591
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
-msgstr "Vorschauen werden erstellt… [%(i1)s/%(i2)s]"
+msgstr "Miniaturbilder werden erstellt… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:672
+msgid "Save changes to “{}” before closing?"
+msgstr "Änderungen an „{}“ vor dem Schließen speichern?"
+
+#: pdfarranger/pdfarranger.py:674
+msgid "Save changes before closing?"
+msgstr "Änderungen vor dem Schließen speichern?"
+
+#: pdfarranger/pdfarranger.py:676
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Änderungen gehen verloren, wenn sie nicht gespeichert werden."
+
+#: pdfarranger/pdfarranger.py:677
+msgid "Do_n’t Save"
+msgstr "Nicht speicher_n"
+
+#: pdfarranger/pdfarranger.py:677
+msgid "_Cancel"
+msgstr "_Abbrechen"
+
+#: pdfarranger/pdfarranger.py:677 data/menu.ui.h:2
+msgid "_Save"
+msgstr "_Speichern"
+
+#: pdfarranger/pdfarranger.py:718
 msgid "Export…"
 msgstr "Exportieren…"
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
+#: pdfarranger/pdfarranger.py:730 pdfarranger/pdfarranger.py:827
 msgid "PDF files"
 msgstr "PDF-Dateien"
 
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
+#: pdfarranger/pdfarranger.py:736 pdfarranger/pdfarranger.py:813
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:802
 msgid "Import…"
 msgstr "Importieren…"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:819
+msgid "Supported image files"
+msgstr "Unterstützte Bilddateien"
+
+#: pdfarranger/pdfarranger.py:916
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Eingefügte Daten nicht gültig. Einfügen wird abgebrochen."
+
+#: pdfarranger/pdfarranger.py:1018 pdfarranger/pdfarranger.py:1675
+msgid "Unknown file format"
+msgstr "Unbekanntes Dateiformat"
+
+#: pdfarranger/pdfarranger.py:1022
+msgid "PDF document is damaged"
+msgstr "PDF-Dokument ist beschädigt"
+
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1701
+msgid "File is neither pdf nor image"
+msgstr "Datei ist weder ein pdf noch ein Bild"
+
+#: pdfarranger/pdfarranger.py:1482
 msgid "Left"
 msgstr "Links"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:1482
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1483
 msgid "Top"
 msgstr "Oben"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1483
 msgid "Bottom"
 msgstr "Unten"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1500
 msgid "Crop Selected Pages"
 msgstr "Markierte Seiten zuschneiden"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1508
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
@@ -105,21 +141,21 @@ msgstr ""
 "Das Zuschneiden entfernt keinen Inhalt\n"
 "aus der PDF-Datei, es blendet ihn nur aus."
 
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1511
 msgid "Crop Margins"
 msgstr "Seitenränder zuschneiden"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of width"
 msgstr "% der Breite"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1521
 #, python-format
 msgid "% of height"
 msgstr "% der Höhe"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/pdfarranger.py:1628
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -128,7 +164,23 @@ msgstr ""
 "%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
 "Geschrieben in GTK+ und Python."
 
-#: pdfarranger/pdfarranger.py:1449
+#: pdfarranger/pdfarranger.py:1631
+msgid "Maintainers and contributors"
+msgstr "Verwalter und Mitwirkende"
+
+#: pdfarranger/pdfarranger.py:1635
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
+
+#: pdfarranger/pdfarranger.py:1687
+msgid "Image files are only supported with img2pdf"
+msgstr "Bilddateien werden nur mit img2pdf unterstützt"
+
+#: pdfarranger/pdfarranger.py:1699
+msgid "Image format is not supported by img2pdf"
+msgstr "Bildformat wird von img2pdf nicht unterstützt"
+
+#: pdfarranger/pdfarranger.py:1752
 msgid "page"
 msgstr "Seite"
 
@@ -171,10 +223,6 @@ msgstr "Nach rechts drehen"
 #: data/menu.ui.h:1
 msgid "_Import"
 msgstr "_Importieren"
-
-#: data/menu.ui.h:2
-msgid "_Save"
-msgstr "_Speichern"
 
 #: data/menu.ui.h:3
 msgid "Save _As…"
@@ -242,11 +290,11 @@ msgstr "Einfügen _vor Auswahl"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Verzahnt einfügen _ungerade"
+msgstr "Leere _ungerade Seiten einfügen"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Verzahnt einfügen _gerade"
+msgstr "Leere _gerade Seiten einfügen"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
@@ -275,30 +323,3 @@ msgstr "Ein_fügen"
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "Seiten _teilen"
-
-#~ msgid "_File"
-#~ msgstr "_Datei"
-
-#~ msgid "Rotate left"
-#~ msgstr "Nach links drehen"
-
-#~ msgid "Rotate right"
-#~ msgstr "Nach rechts drehen"
-
-#~ msgid "Crop"
-#~ msgstr "Zuschneiden"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Reihenfolge umkehren"
-
-#~ msgid "_View"
-#~ msgstr "Ansicht"
-
-#~ msgid "_Help"
-#~ msgstr "_Hilfe"
-
-#~ msgid "Delete"
-#~ msgstr "Löschen"
-
-#~ msgid "C_rop"
-#~ msgstr "_Zuschneiden…"
