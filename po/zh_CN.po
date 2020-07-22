@@ -282,28 +282,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "文件(_F)"
-
-#~ msgid "Rotate left"
-#~ msgstr "向左旋转"
-
-#~ msgid "Rotate right"
-#~ msgstr "向右旋转"
-
-#~ msgid "Crop"
-#~ msgstr "裁剪"
-
-#~ msgid "_View"
-#~ msgstr "查看(_V)"
-
-#~ msgid "_Help"
-#~ msgstr "帮助(_H)"
-
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "裁剪(_R)…"
