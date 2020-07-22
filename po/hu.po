@@ -1,19 +1,10 @@
-# PDF-Shuffler translation files.
-# Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
+# This file is part of PDF-Arranger which is released under the GNU General
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
 # Péter Bojtos <ptr@ulx.hu>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.6.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2011-11-25 18:26+0100\n"
-"Last-Translator: Péter Bojtos <ptr@ulx.hu>\n"
-"Language-Team: SuliX Support Team <support@sulix.hu>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -273,27 +264,3 @@ msgstr "Irá_nyított beillesztés"
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "Oldalak fel_osztása"
-
-#~ msgid "_File"
-#~ msgstr "_Fájl"
-
-#~ msgid "Rotate left"
-#~ msgstr "Forgatás balra"
-
-#~ msgid "Rotate right"
-#~ msgstr "Forgatás jobbra"
-
-#~ msgid "Crop"
-#~ msgstr "Körülvágás"
-
-#~ msgid "_View"
-#~ msgstr "_Nézet"
-
-#~ msgid "_Help"
-#~ msgstr "_Súgó"
-
-#~ msgid "Delete"
-#~ msgstr "Törlés"
-
-#~ msgid "C_rop"
-#~ msgstr "Körül_vágás…"
