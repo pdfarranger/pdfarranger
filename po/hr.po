@@ -289,11 +289,11 @@ msgstr "Umetni i_spred"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Umetni prazne _neparne stranice"
+msgstr "Umetni naizmjenično _neparno"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Umetni prazne _parne stranice"
+msgstr "Umetni naizmjenično _parno"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
