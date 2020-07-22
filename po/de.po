@@ -275,30 +275,3 @@ msgstr "Ein_fügen"
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "Seiten _teilen"
-
-#~ msgid "_File"
-#~ msgstr "_Datei"
-
-#~ msgid "Rotate left"
-#~ msgstr "Nach links drehen"
-
-#~ msgid "Rotate right"
-#~ msgstr "Nach rechts drehen"
-
-#~ msgid "Crop"
-#~ msgstr "Zuschneiden"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Reihenfolge umkehren"
-
-#~ msgid "_View"
-#~ msgstr "Ansicht"
-
-#~ msgid "_Help"
-#~ msgstr "_Hilfe"
-
-#~ msgid "Delete"
-#~ msgstr "Löschen"
-
-#~ msgid "C_rop"
-#~ msgstr "_Zuschneiden…"
