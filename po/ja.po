@@ -314,36 +314,3 @@ msgstr "特殊貼り付け(_E)"
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr "ページを分割(_S)"
-
-#~ msgid "No document"
-#~ msgstr "ドキュメントなし"
-
-#~ msgid "Several documents"
-#~ msgstr "複数のドキュメント"
-
-#~ msgid "_File"
-#~ msgstr "ファイル(_F)"
-
-#~ msgid "Rotate left"
-#~ msgstr "左に回転"
-
-#~ msgid "Rotate right"
-#~ msgstr "右に回転"
-
-#~ msgid "Crop"
-#~ msgstr "トリミング"
-
-#~ msgid "Reverse Order"
-#~ msgstr "逆順"
-
-#~ msgid "_View"
-#~ msgstr "表示(_V)"
-
-#~ msgid "_Help"
-#~ msgstr "ヘルプ(_H)"
-
-#~ msgid "Delete"
-#~ msgstr "削除"
-
-#~ msgid "C_rop"
-#~ msgstr "トリミング(_R)"

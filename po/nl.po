@@ -285,28 +285,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "_Bestand"
-
-#~ msgid "Rotate left"
-#~ msgstr "Naar links draaien"
-
-#~ msgid "Rotate right"
-#~ msgstr "Naar rechts draaien"
-
-#~ msgid "Crop"
-#~ msgstr "Bijsnijden"
-
-#~ msgid "_View"
-#~ msgstr "_Beeld"
-
-#~ msgid "_Help"
-#~ msgstr "_Hulp"
-
-#~ msgid "Delete"
-#~ msgstr "Verwijderen"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "Bij_snijden…"

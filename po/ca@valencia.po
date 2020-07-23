@@ -285,28 +285,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "_Fitxer"
-
-#~ msgid "Rotate left"
-#~ msgstr "Gira cap a l'esquerra"
-
-#~ msgid "Rotate right"
-#~ msgstr "Gira cap a la dreta"
-
-#~ msgid "Crop"
-#~ msgstr "Retalla"
-
-#~ msgid "_View"
-#~ msgstr "_Visualitza"
-
-#~ msgid "_Help"
-#~ msgstr "A_juda"
-
-#~ msgid "Delete"
-#~ msgstr "Esborra"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "_Retalla…"

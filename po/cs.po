@@ -285,28 +285,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "So_ubor"
-
-#~ msgid "Rotate left"
-#~ msgstr "Otočit vlevo"
-
-#~ msgid "Rotate right"
-#~ msgstr "Otočit vpravo"
-
-#~ msgid "Crop"
-#~ msgstr "Ořezat"
-
-#~ msgid "_View"
-#~ msgstr "Po_hled"
-
-#~ msgid "_Help"
-#~ msgstr "_Nápověda"
-
-#~ msgid "Delete"
-#~ msgstr "Smazat"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "Oř_ezat…"

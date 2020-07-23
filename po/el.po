@@ -284,28 +284,3 @@ msgstr ""
 #: data/menu.ui.h:27
 msgid "_Split Pages"
 msgstr ""
-
-#~ msgid "_File"
-#~ msgstr "_Αρχείο"
-
-#~ msgid "Rotate left"
-#~ msgstr "Περιστροφή  αριστερά"
-
-#~ msgid "Rotate right"
-#~ msgstr "Περιστροφή  δεξιά"
-
-#~ msgid "Crop"
-#~ msgstr "Περικοπή"
-
-#~ msgid "_View"
-#~ msgstr "_Προβολή"
-
-#~ msgid "_Help"
-#~ msgstr "_Βοήθεια"
-
-#~ msgid "Delete"
-#~ msgstr "Διαγραφή"
-
-#, fuzzy
-#~ msgid "C_rop"
-#~ msgstr "_Περικοπή"
