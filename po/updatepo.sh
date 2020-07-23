@@ -21,4 +21,8 @@
 #
 
 # Update translation files
-find ./po -type f -iname "*.po" -exec msgmerge -U {} po/pdfarranger.pot \;
+cd $(dirname $0)/..
+for po in po/*.po
+do
+  msgmerge --backup none -U $po po/pdfarranger.pot
+done

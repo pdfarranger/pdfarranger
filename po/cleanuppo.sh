@@ -20,6 +20,9 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Update translation files
-find ./po -type f -iname "*.po" -exec msgattrib --output-file={} --no-obsolete {} \;
-
+cd $(dirname $0)/..
+for po in po/*.po
+do
+  # Remove #~ lines
+  msgattrib --no-obsolete -o $po $po
+done

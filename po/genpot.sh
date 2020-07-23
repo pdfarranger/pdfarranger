@@ -21,6 +21,7 @@
 #
 
 # Make translation files
+cd $(dirname $0)/..
 intltool-extract --type=gettext/glade data/pdfarranger.ui
 intltool-extract --type=gettext/glade data/menu.ui
 xgettext --from-code=utf-8 --language=Python --keyword=_ --keyword=N_ --output=po/pdfarranger.pot \
