@@ -290,11 +290,11 @@ msgstr "Einfügen _vor Auswahl"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr "Leere _ungerade Seiten einfügen"
+msgstr "Abwechselnd einfügen _ungerade"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr "Leere _gerade Seiten einfügen"
+msgstr "Abwechselnd einfügen _gerade"
 
 #: data/menu.ui.h:21
 msgid "Zoom _In"
