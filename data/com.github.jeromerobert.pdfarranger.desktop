@@ -7,6 +7,7 @@ Comment[de]=PDFs zusammenfügen, umsortieren, trennen, rotieren und zuschneiden
 Comment[es]=Mezcle, reordene, divida, rote y recorte documentos PDF
 Comment[hu]=PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása
 Comment[sk]=Grafický nástroj na manipuláciu s PDF
+Comment[sv]=Slå samman, arrangera om, dela, rotera och beskär PDF filer
 Type=Application
 Exec=pdfarranger %U
 Icon=com.github.jeromerobert.pdfarranger
