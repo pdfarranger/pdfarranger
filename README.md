@@ -19,7 +19,7 @@ It’s a humble attempt to make the project a bit more active.
 
 ## Downloads
 
-|[Microsoft® Windows®](https://github.com/jeromerobert/pdfarranger/releases) | <a href='https://flathub.org/apps/details/com.github.jeromerobert.pdfarranger'><img width='120' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a> |[More...](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages) |
+|[Microsoft® Windows®](https://github.com/jeromerobert/pdfarranger/releases) | <a href='https://flathub.org/apps/details/com.github.jeromerobert.pdfarranger'><img width='120' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a> |[More…](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages) |
 |-|-|-|
 
 ### Linux packages
@@ -56,7 +56,7 @@ or `sudo dnf builddep pdfarranger`
 pip3 install --user --upgrade https://github.com/jeromerobert/pdfarranger/zipball/master
 ```
 
-In addition, *pdfarranger* support image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
+In addition, *pdfarranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
 
 ## For developers
 
@@ -76,7 +76,7 @@ For Windows see [Win32.md](Win32.md).
 * Download the master branch (see [For developers](#for-developers))
 * Run `po/genpot.sh`. The `pot` is an automatically generated file and as such
   should not be in the repository. It is to make life of some translators
-  easier, but it may be often not synchronised with the source code. If you can
+  easier, but it may be often not synchronized with the source code. If you can
   regenerate it before adding or updating a translation, then do it.
 * Translations are in the following files:
     * [`po`](po)`/*.po`
@@ -89,6 +89,6 @@ For Windows see [Win32.md](Win32.md).
 * Do not include `pdfarranger.pot` (or any `*.po` file which was just
   automatically regenerated) in your pull request. Submit only the translations
   you actually updated or added.
-* If you don't want or can't use the developers toolling (`git`,
-  `po/genpot.sh`, `python`, ...) you can edit, download or upload the `*.po`
-  files from the Github web pages.
+* If you don’t want or can’t use the developers tooling (`git`,
+  `po/genpot.sh`, `python`, …) you can edit, download or upload the `*.po`
+  files from the GitHub web pages.
