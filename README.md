@@ -82,8 +82,12 @@ For Windows see [Win32.md](Win32.md).
     * [`po`](po)`/*.po`
     * [data/com.github.jeromerobert.pdfarranger.metainfo.xml](data/com.github.jeromerobert.pdfarranger.metainfo.xml)
     * [data/com.github.jeromerobert.pdfarranger.desktop](data/com.github.jeromerobert.pdfarranger.desktop)
-* Pay attention to `_` (underscore) characters. They are mnemonics accelerators
-  and should be adapted to each language.
+* For mnemonics accelerators (letters preceded by an underscore) try to follow
+  those rules by priority order:
+    * be consistent with other GTK/GNOME software
+    * pick a unique letter **within that given menu** if possible
+    * pick the same letter as the original string if available
+    * pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
 * If possible test your translation to see it in context (see [For developers](#for-developers))
 * You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
 * Do not include `pdfarranger.pot` (or any `*.po` file which was just
