@@ -16,9 +16,15 @@ interactive and intuitive graphical interface. It is a frontend for
 It’s a humble attempt to make the project a bit more active.
 
 ![screenshot of pdfarranger](https://github.com/jeromerobert/pdfarranger/raw/master/data/screenshot.png)
-## Binary distribution
 
-See this [wiki page](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages).
+## Downloads
+
+|[Microsoft® Windows®](https://github.com/jeromerobert/pdfarranger/releases) | <a href='https://flathub.org/apps/details/com.github.jeromerobert.pdfarranger'><img width='120' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a> |[More...](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages) |
+|-|-|-|
+
+### Linux packages
+
+[![Linux packages](https://repology.org/badge/vertical-allrepos/pdfarranger.svg?columns=4)](https://repology.org/project/pdfarranger/versions)
 
 ## Install from source
 
