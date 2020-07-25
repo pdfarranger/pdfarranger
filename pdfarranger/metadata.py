@@ -85,19 +85,17 @@ def merge(metadata, input_files):
 
 def _metatostr(value, name):
     """ Convert a meta data value from list to string if it's not a string """
-    if isinstance(value, str) and len(value) > 0:
+    if isinstance(value, str):
         return value
-    elif isinstance(value, list) and len(value) > 0 and name == _CREATOR:
+    elif isinstance(value, list) and name == _CREATOR:
         if len(value) == 1:
             return _metatostr(value[0], name)
         else:
             return json.dumps(value)
-    return None
+    return ''
 
 
 def _strtometa(value, name):
-    if value is None or len(value) == 0:
-        return None
     try:
         r = json.loads(value) if name == _CREATOR else value
         if isinstance(r, list):
@@ -183,10 +181,5 @@ def edit(metadata, pdffiles, parent):
     dialog.destroy()
     if r:
         for row in liststore:
-            value = _strtometa(row[1], row[2])
-            if value is None:
-                if row[2] in metadata:
-                    del metadata[row[2]]
-            else:
-                metadata[row[2]] = value
+            metadata[row[2]] = _strtometa(row[1], row[2])
     return r
