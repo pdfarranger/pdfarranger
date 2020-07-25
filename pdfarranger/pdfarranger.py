@@ -379,6 +379,7 @@ class PdfArranger(Gtk.Application):
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
         self.iv_selection_changed_event()
+        self.window_focus_in_out_event()
         self.__update_num_pages(self.iconview.get_model())
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
@@ -403,6 +404,8 @@ class PdfArranger(Gtk.Application):
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
         self.window.connect('delete_event', self.on_quit)
+        self.window.connect('focus_in_event', self.window_focus_in_out_event)
+        self.window.connect('focus_out_event', self.window_focus_in_out_event)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -981,6 +984,7 @@ class PdfArranger(Gtk.Application):
             self.clipboard_default.set_text('pdfarranger-clipboard\n' + data, -1)
 
         self.clear_selected()
+        self.window.lookup_action("paste").set_enabled(True)
 
     def on_action_copy(self, _action, _param, _unknown):
         """Copy selected pages to clipboard."""
@@ -990,6 +994,7 @@ class PdfArranger(Gtk.Application):
             self.clipboard_default.set_text('', -1)
         if os.name == 'nt':
             self.clipboard_default.set_text('pdfarranger-clipboard\n' + data, -1)
+        self.window.lookup_action("paste").set_enabled(True)
 
     def on_action_paste(self, _action, mode, _unknown):
         """Paste pages or files from clipboard."""
@@ -1363,6 +1368,13 @@ class PdfArranger(Gtk.Application):
                      ("export-selection", ne), ("cut", ne), ("copy", ne),
                      ("split", ne)]:
             self.window.lookup_action(a).set_enabled(e)
+
+    def window_focus_in_out_event(self, _widget=None, _event=None):
+        """Enable or disable paste actions based on clipboard content."""
+        cb_d_data = self.clipboard_default.wait_for_text()
+        cb_p_data = os.name == 'posix' and self.clipboard_pdfarranger.wait_for_text()
+        data_available = True if cb_d_data or cb_p_data else False
+        self.window.lookup_action("paste").set_enabled(data_available)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
                              selection_data, target_id, _etime):
