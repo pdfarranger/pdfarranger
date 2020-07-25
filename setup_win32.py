@@ -1,3 +1,5 @@
+VERSION='1.6.0'
+
 from cx_Freeze import setup, Executable
 import os
 import sys
@@ -122,7 +124,13 @@ build_options = dict(
     include_files=include_files,
 )
 
+
+def get_target_name(suffix):
+    return 'pdfarranger-{}-windows-{}'.format(VERSION, suffix)
+
+
 msi_options = dict(
+    target_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}'
 )
 
@@ -145,13 +153,13 @@ class bdist_zip(distutils.cmd.Command):
         build_exe.build_exe = os.path.join(build_base, fullname)
         build_exe.run()
         dist_dir = self.get_finalized_command('bdist').dist_dir
-        archname = os.path.join(dist_dir, fullname + '-mingw')
+        archname = os.path.join(dist_dir, get_target_name('portable'))
         self.make_archive(archname, 'zip', root_dir=build_base, base_dir=fullname)
         shutil.rmtree(build_exe.build_exe)
 
 
 setup(name='pdfarranger',
-      version='1.6.0',
+      version=VERSION,
       description='A simple application for PDF Merging, Rearranging, and Splitting',
       options=dict(build_exe=build_options, bdist_msi=msi_options),
       cmdclass={'bdist_zip': bdist_zip},
