@@ -349,6 +349,7 @@ class PdfArranger(Gtk.Application):
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
             ('paste', self.on_action_paste, 'i'),
+            ('select', self.on_action_select, 'i'),
             ('about', self.about_dialog),
         ])
 
@@ -373,6 +374,8 @@ class PdfArranger(Gtk.Application):
             ('copy', '<Ctrl>c'),
             ('paste(0)', '<Ctrl>v'),
             ('paste(1)', '<Ctrl><Shift>v'),
+            ('select(0)', '<Ctrl>a'),
+            ('select(1)', '<Ctrl><Shift>a'),
             ('main-menu', 'F10'),
         ]
         for a, k in accels:
@@ -1112,6 +1115,36 @@ class PdfArranger(Gtk.Application):
                 ref_to = Gtk.TreeRowReference.new(model, selection[0])
         return ref_to, before
 
+    def on_action_select(self, _action, option, _unknown):
+        """Selects items according to selected option."""
+        selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN', 4: 'INVERT'}
+        selectoption = selectoptions[option.get_int32()]
+        model = self.iconview.get_model()
+        if selectoption == 'ALL':
+            self.iconview.select_all()
+        elif selectoption == 'DESELECT':
+            self.iconview.unselect_all()
+        elif selectoption == 'ODD':
+            for row in model:
+                page_number = row[3]
+                if page_number % 2:
+                    self.iconview.select_path(row.path)
+                else:
+                    self.iconview.unselect_path(row.path)
+        elif selectoption == 'EVEN':
+            for row in model:
+                page_number = row[3]
+                if page_number % 2:
+                    self.iconview.unselect_path(row.path)
+                else:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'INVERT':
+            for row in model:
+                if self.iconview.path_is_selected(row.path):
+                    self.iconview.unselect_path(row.path)
+                else:
+                    self.iconview.select_path(row.path)
+
     @staticmethod
     def iv_drag_begin(iconview, context):
         """Sets custom drag icon."""
@@ -1657,7 +1690,7 @@ class PdfArranger(Gtk.Application):
     def __update_num_pages(self, model, _path=None, _itr=None, _user_data=None):
         num_pages = len(model)
         self.uiXML.get_object("num_pages").set_text(str(num_pages))
-        for a in ["save", "save-as"]:
+        for a in ["save", "save-as", "select"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
