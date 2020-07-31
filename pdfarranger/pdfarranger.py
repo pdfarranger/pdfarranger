@@ -1337,11 +1337,15 @@ class PdfArranger(Gtk.Application):
 
         if self.pressed_button:
             # Button was pressed and released on a previously selected item
-            # without causing a drag and drop: Deselect everything except
-            # the clicked item.
-            iconview.unselect_all()
+            # without causing a drag and drop.
             path = iconview.get_path_at_pos(event.x, event.y)
-            iconview.select_path(path)
+            if event.state & Gdk.ModifierType.CONTROL_MASK:
+                # Deselect the clicked item.
+                iconview.unselect_path(path)
+            else:
+                # Deselect everything except the clicked item.
+                iconview.unselect_all()
+                iconview.select_path(path)
             iconview.set_cursor(path, None, False)  # for consistent shift+click selection
         self.pressed_button = None
 
