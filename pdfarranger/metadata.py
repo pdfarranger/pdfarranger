@@ -34,9 +34,11 @@ _CREATOR = '{http://purl.org/dc/elements/1.1/}creator'
 # if you want to add more
 _LABELS = {
     '{http://purl.org/dc/elements/1.1/}title': _('Title'),
-    _CREATOR: _('Creator'),
+    '{http://purl.org/dc/elements/1.1/}description': _('Subject'),
+    '{http://ns.adobe.com/pdf/1.3/}Keywords': _('Keywords'),
     PRODUCER: _('Producer'),
-    '{http://ns.adobe.com/xap/1.0/}CreatorTool': _('Creator tool')
+    _CREATOR: _('Creator'),
+    '{http://ns.adobe.com/xap/1.0/}CreatorTool': _('Creator tool'),
 }
 
 
