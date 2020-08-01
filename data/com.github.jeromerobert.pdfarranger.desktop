@@ -13,7 +13,6 @@ Exec=pdfarranger %U
 Icon=com.github.jeromerobert.pdfarranger
 MimeType=application/pdf;
 Categories=Office;
-Categories[hu]=Iroda;Office;
 Terminal=false
 StartupNotify=false
 Keywords=pdfarranger;pdfshuffler;PDF Shuffler;
