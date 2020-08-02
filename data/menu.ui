@@ -69,6 +69,10 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.crop</attribute>
         </item>
         <item>
+          <attribute name="label" translatable="yes">Crop White Borders</attribute>
+          <attribute name="action">win.crop-white-borders</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">_Delete</attribute>
           <attribute name="action">win.delete</attribute>
         </item>
@@ -261,6 +265,10 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <item>
         <attribute name="label" translatable="yes">Cro_p</attribute>
         <attribute name="action">win.crop</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Crop White Borders</attribute>
+        <attribute name="action">win.crop-white-borders</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Dupl_icate</attribute>

@@ -335,6 +335,7 @@ class PdfArranger(Gtk.Application):
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
             ('crop', self.crop_page_dialog),
+            ('crop-white-borders', self.crop_white_borders),
             ('export-selection', self.choose_export_selection_pdf_name),
             ('reverse-order', self.reverse_order),
             ('save', self.on_action_save),
@@ -1600,6 +1601,78 @@ class PdfArranger(Gtk.Application):
             if oldcrop != crop:
                 self.set_unsaved(True)
         dialog.destroy()
+
+    def crop_white_borders(self, _action, _parameter, _unknown):
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+
+        crop = []
+        for path in selection:
+            it = model.get_iter(path)
+            nfile, npage = model.get(it, 2, 3,)
+            pdfdoc = self.pdfqueue[nfile - 1]
+
+            page = pdfdoc.document.get_page(npage - 1)
+            w, h = page.get_size()
+            w = int(w)
+            h = int(h)
+            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
+            cr = cairo.Context(thumbnail)
+            page.render(cr)
+            data = thumbnail.get_data().cast("i", shape=[h,w]).tolist()
+
+            crop_this_page = [0.0, 0.0, 0.0, 0.0]
+
+            #Left
+            allwhite = True
+            for col in range(w-1):
+                for row in range(h-1):
+                    if data[row][col] != 0:
+                        allwhite = False
+                        crop_this_page[0] = (col)/w
+                        break
+                if not allwhite:
+                    break
+
+            #Right
+            allwhite = True
+            for col in range(w-1, 0, -1):
+                for row in range(h-1):
+                    if data[row][col] != 0:
+                        allwhite = False
+                        crop_this_page[1] = (w-col)/w
+                        break
+                if not allwhite:
+                    break
+
+            #Top
+            allwhite = True
+            for row in range(h-1):
+                for col in range(w-1):
+                    if data[row][col] != 0:
+                        allwhite = False
+                        crop_this_page[2] = (row)/h
+                        break
+                if not allwhite:
+                    break
+
+            #Bottom
+            allwhite = True
+            for row in range(h-1, 0, -1):
+                for col in range(w-1):
+                    if data[row][col] != 0:
+                        allwhite = False
+                        crop_this_page[3] = (h-row)/h
+                        break
+                if not allwhite:
+                    break
+
+            crop.append(crop_this_page)
+        
+        self.undomanager.commit("Crop white Borders")
+        oldcrop = self.crop(selection, crop)
+        if oldcrop != crop:
+            self.set_unsaved(True)
 
     def crop(self, selection, newcrop):
         oldcrop = [[0] * 4 for __ in range(len(selection))]
