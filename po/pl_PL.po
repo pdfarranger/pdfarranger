@@ -10,45 +10,46 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2017-02-26 16:16+0000\n"
+"PO-Revision-Date: 2020-07-15 21:22+0200\n"
 "Last-Translator: Toratora <darex7@o2.pl>\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/logari81/"
-"pdfshuffler/language/pl_PL/)\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/logari81/pdfshuffler/language/pl_PL/)\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Language: pl_PL\n"
+"X-Source-Language: C\n"
 
 #: pdfarranger/metadata.py:35
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: pdfarranger/metadata.py:36
 msgid "Creator"
-msgstr ""
+msgstr "Kreator"
 
 #: pdfarranger/metadata.py:37
 msgid "Producer"
-msgstr ""
+msgstr "Producent"
 
 #: pdfarranger/metadata.py:38
 msgid "Creator tool"
-msgstr ""
+msgstr "Narzędzie kreatora"
 
 #: pdfarranger/metadata.py:141
 msgid "Edit properties"
-msgstr ""
+msgstr "Edytuj właściwości"
 
 #: pdfarranger/metadata.py:154
+#, fuzzy
 msgid "Property"
-msgstr ""
+msgstr "Właściwości"
 
 #: pdfarranger/metadata.py:154
 msgid "Value"
-msgstr ""
+msgstr "Wartość"
 
 #: pdfarranger/pdfarranger.py:520
 msgid "No document"
@@ -61,11 +62,11 @@ msgstr "Kilka dokumentów"
 #: pdfarranger/pdfarranger.py:539
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
-msgstr "Podgląd miniaturek… [%(i1)s/%(i2)s] "
+msgstr "Podgląd miniaturek… [%(i1)s/%(i2)s]"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Export…"
-msgstr "Zapisz…"
+msgstr "Eksportuj…"
 
 #: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
 msgid "PDF files"
@@ -77,19 +78,19 @@ msgstr "Wszystkie pliki"
 
 #: pdfarranger/pdfarranger.py:709
 msgid "Import…"
-msgstr "Zaimportuj… "
+msgstr "Importuj…"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Left"
-msgstr "Lewo"
+msgstr "Lewa"
 
 #: pdfarranger/pdfarranger.py:1223
 msgid "Right"
-msgstr "Prawo"
+msgstr "Prawa"
 
 #: pdfarranger/pdfarranger.py:1224
 msgid "Top"
-msgstr "Górę "
+msgstr "Góra"
 
 #: pdfarranger/pdfarranger.py:1224
 msgid "Bottom"
@@ -104,20 +105,22 @@ msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"Przycinanie nie usuwa żadnej zawartości\n"
+"z pliku PDF, ukrywa tylko."
 
 #: pdfarranger/pdfarranger.py:1252
 msgid "Crop Margins"
 msgstr "Przytnij margines"
 
 #: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#, python-format
 msgid "% of width"
-msgstr "% szerokość"
+msgstr "szerokość %"
 
 #: pdfarranger/pdfarranger.py:1262
-#, fuzzy, python-format
+#, python-format
 msgid "% of height"
-msgstr "% wysokości"
+msgstr "wysokość %"
 
 #: pdfarranger/pdfarranger.py:1369
 #, python-format
@@ -125,8 +128,8 @@ msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s jest narzędziem do układania i modyfikowania plików PDF. Opracowanym przy "
-"użyciu GTK i Python"
+"%s to narzędzie do zmiany kolejności i modyfikacji plików PDF. Opracowany "
+"przy użyciu GTK + i Python"
 
 #: pdfarranger/pdfarranger.py:1449
 msgid "page"
@@ -134,76 +137,67 @@ msgstr "strona"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr "Otwórz plik i dołączyć go do bieżącego dokumentu"
+msgstr "Otwórz plik i dołącz go do bieżącego dokumentu"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Zapisz"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "Zapisz jako"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Numer strony"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu główne"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
-msgstr "Powiększ "
+msgstr "Powiększ"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Pomniejsz"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Obróć w_lewo"
+msgstr "Obrót w_lewo"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "_Obróć w prawo"
+msgstr "_Obrót w prawo"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Zaimportuj "
+msgstr "_Importuj"
 
 #: data/menu.ui.h:2
-#, fuzzy
 msgid "_Save"
-msgstr "Zapisz"
+msgstr "_Zapisz"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As…"
-msgstr "Zapisz jako"
+msgstr "Zapisz _jako…"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection…"
-msgstr "_Zapisz wybrany/wybrane "
+msgstr "E_ksport wybranej…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "_Cofnij"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Ponów"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
-msgstr "_Edytuj "
+msgstr "_Edycja"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
@@ -215,74 +209,97 @@ msgstr "_Obróć w prawo"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "Przyt_nij"
 
 #: data/menu.ui.h:11
 msgid "_Delete"
-msgstr "_Usuń…"
+msgstr "_Usuń"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr ""
+msgstr "Zdu_plikowane"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr ""
+msgstr "Od_wrotna kolejność"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr ""
+msgstr "_Podziel strony"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "Wy_tnij"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopiuj"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Wklej _po"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Wklej _przed"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Wklej Pomiędzy Kartki _Nieparzyste"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Wklej Pomiędzy Kartki _Parzyste"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Powiększ "
+msgstr "Powiększ"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Pomniejsz"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr ""
+msgstr "Edytuj _właściwości"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "_O programie"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Wyjście"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Wkle_j specjalne"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr ""
+msgstr "_Podziel strony"
+
+#~ msgid "_File"
+#~ msgstr "_Plik"
+
+#~ msgid "Rotate left"
+#~ msgstr "Obróć w lewo"
+
+#~ msgid "Rotate right"
+#~ msgstr "Obróć w prawo"
+
+#~ msgid "Crop"
+#~ msgstr "Przytnij "
+
+#~ msgid "_View"
+#~ msgstr "_Widok"
+
+#~ msgid "_Help"
+#~ msgstr "_Pomoc"
+
+#~ msgid "Delete"
+#~ msgstr "Usuń"
+
+#, fuzzy
+#~ msgid "C_rop"
+#~ msgstr "P_rzytnij…"
