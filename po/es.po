@@ -1,124 +1,171 @@
-# PDF-Shuffler translation files.
-# Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
-# Public License version 3 or later.
+# Spanish translation for pdfarranger.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdfarranger package.
+# This file is an extended version of the PDF-Shuffler translation file
+# released under the GNU General Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
-# Translators:
+# Original translators:
 # Konstantinos Poulios, 2008-2017
 # Rafael Jesús García Perdigón, 2012
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.7\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
-"PO-Revision-Date: 2017-02-26 16:16+0000\n"
-"Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/logari81/pdfshuffler/"
-"language/es/)\n"
+"POT-Creation-Date: 2020-08-10 16:45+0200\n"
+"PO-Revision-Date: 2020-08-10 16:45+0200\n"
+"Last-Translator: angsch\n"
+"Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfarranger/metadata.py:35
-msgid "Title"
-msgstr ""
-
 #: pdfarranger/metadata.py:36
-msgid "Creator"
-msgstr ""
+msgid "Title"
+msgstr "Título"
 
 #: pdfarranger/metadata.py:37
-msgid "Producer"
-msgstr ""
+msgid "Subject"
+msgstr "Tema"
 
 #: pdfarranger/metadata.py:38
+msgid "Keywords"
+msgstr "palabras claves"
+
+#: pdfarranger/metadata.py:39
+msgid "Producer"
+msgstr "Productor"
+
+#: pdfarranger/metadata.py:40
+msgid "Creator"
+msgstr "Creador"
+
+#: pdfarranger/metadata.py:41
 msgid "Creator tool"
-msgstr ""
+msgstr "Herramienta de creador"
 
-#: pdfarranger/metadata.py:141
+#: pdfarranger/metadata.py:154
 msgid "Edit properties"
-msgstr ""
+msgstr "Editar las propiedades"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Property"
-msgstr ""
+msgstr "Propiedad"
 
-#: pdfarranger/metadata.py:154
+#: pdfarranger/metadata.py:167
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "No hay documento seleccionado"
-
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "Varios documentos"
-
-#: pdfarranger/pdfarranger.py:539
+#: pdfarranger/pdfarranger.py:594
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "Renderizando las miniaturas… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:675
+msgid "Save changes to “{}” before closing?"
+msgstr "¿Desea guardar los cambios efectuados en “{}” antes de cerrarlo?"
+
+#: pdfarranger/pdfarranger.py:677
+msgid "Save changes before closing?"
+msgstr "¿Desea guardar los cambios efectuados antes de cerrar pdfarranger?"
+
+#: pdfarranger/pdfarranger.py:679
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Se perderán sus cambios si no los guarda."
+
+#: pdfarranger/pdfarranger.py:680
+msgid "Do_n’t Save"
+msgstr "_No guardar"
+
+#: pdfarranger/pdfarranger.py:680
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: pdfarranger/pdfarranger.py:680 data/menu.ui.h:2
+msgid "_Save"
+msgstr "_Guardar"
+
+#: pdfarranger/pdfarranger.py:721
 msgid "Export…"
 msgstr "Exportar…"
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
+#: pdfarranger/pdfarranger.py:733 pdfarranger/pdfarranger.py:830
 msgid "PDF files"
 msgstr "Archivos PDF"
 
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
+#: pdfarranger/pdfarranger.py:739 pdfarranger/pdfarranger.py:816
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: pdfarranger/pdfarranger.py:709
+#: pdfarranger/pdfarranger.py:805
 msgid "Import…"
 msgstr "Importar…"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:822
+msgid "Supported image files"
+msgstr "Formatos de imagen compatibles"
+
+#: pdfarranger/pdfarranger.py:919
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Los datos pegados no son válidos. Cancelar el pegado."
+
+#: pdfarranger/pdfarranger.py:1023 pdfarranger/pdfarranger.py:1687
+msgid "Unknown file format"
+msgstr "El formato del archivo es desconocido"
+
+#: pdfarranger/pdfarranger.py:1027
+msgid "PDF document is damaged"
+msgstr "El archivo PDF está dañado"
+
+#: pdfarranger/pdfarranger.py:1033 pdfarranger/pdfarranger.py:1713
+msgid "File is neither pdf nor image"
+msgstr "El archivo es ni pdf ni imagen"
+
+#: pdfarranger/pdfarranger.py:1494
 msgid "Left"
 msgstr "Izquierdo"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/pdfarranger.py:1494
 msgid "Right"
 msgstr "Derecho"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1495
 msgid "Top"
 msgstr "Superior"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/pdfarranger.py:1495
 msgid "Bottom"
 msgstr "Inferior"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1512
 msgid "Crop Selected Pages"
 msgstr "Recortar las páginas seleccionadas"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1520
 msgid ""
 "Cropping does not remove any content\n"
 "from the PDF file, it only hides it."
 msgstr ""
+"Recortar no elimina ningún contenido\n"
+"del archivo PDF, solo lo oculta."
 
-#: pdfarranger/pdfarranger.py:1252
+#: pdfarranger/pdfarranger.py:1523
 msgid "Crop Margins"
 msgstr "Recortar los márgenes"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1533
 #, python-format
 msgid "% of width"
 msgstr "% de la anchura"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/pdfarranger.py:1533
 #, python-format
 msgid "% of height"
 msgstr "% de la altura"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/pdfarranger.py:1640
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -127,78 +174,81 @@ msgstr ""
 "%s es una herramienta para reordenar y modificar ficheros PDF. Desarrollado "
 "usando GTK+ y Python"
 
-#: pdfarranger/pdfarranger.py:1449
+#: pdfarranger/pdfarranger.py:1643
+msgid "Maintainers and contributors"
+msgstr "Mantenedores y contribuyentes"
+
+#: pdfarranger/pdfarranger.py:1647
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public License (GPL) Version 3."
+
+#: pdfarranger/pdfarranger.py:1699
+msgid "Image files are only supported with img2pdf"
+msgstr "Los archivos de imagen sólo están disponsibles con img2pdf"
+
+#: pdfarranger/pdfarranger.py:1711
+msgid "Image format is not supported by img2pdf"
+msgstr "El formato de imagen no es compatible con img2pdf"
+
+#: pdfarranger/pdfarranger.py:1764
 msgid "page"
 msgstr "página"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr "Abrir un fichero y añadirlo al documento actual"
+msgstr "Abrir un archivo y añadirlo al documento actual"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Guardar"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "Guardar como"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Número de páginas"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menú Principal"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Acercar"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Alejar"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Rotar a la _izquierda"
+msgstr "Rotar a la izquierda"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "_Rotar a la derecha"
+msgstr "Rotar a la derecha"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Importar"
-
-#: data/menu.ui.h:2
-#, fuzzy
-msgid "_Save"
-msgstr "Guardar"
+msgstr "_Importar"
 
 #: data/menu.ui.h:3
-#, fuzzy
 msgid "Save _As…"
-msgstr "Guardar como"
+msgstr "G_uardar como"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "E_xport Selection…"
 msgstr "E_xportar las páginas seleccionadas…"
 
 #: data/menu.ui.h:5
 msgid "_Undo"
-msgstr ""
+msgstr "Des_hacer"
 
 #: data/menu.ui.h:6
 msgid "_Redo"
-msgstr ""
+msgstr "_Rehacer"
 
 #: data/menu.ui.h:7
 msgid "_Edit"
@@ -206,83 +256,80 @@ msgstr "_Editar"
 
 #: data/menu.ui.h:8
 msgid "Rotate _Left"
-msgstr "Rotar a la _izquierda"
+msgstr "Rotar a la izquierda"
 
 #: data/menu.ui.h:9
 msgid "_Rotate Right"
-msgstr "_Rotar a la derecha"
+msgstr "Rotar a la derecha"
 
 #: data/menu.ui.h:10
 msgid "Cro_p"
-msgstr ""
+msgstr "Recortar"
 
 #: data/menu.ui.h:11
-#, fuzzy
 msgid "_Delete"
-msgstr "Borrar"
+msgstr "E_liminar"
 
 #: data/menu.ui.h:12
 msgid "Dupl_icate"
-msgstr ""
+msgstr "Duplicar"
 
 #: data/menu.ui.h:13
 msgid "Re_verse Order"
-msgstr ""
+msgstr "In_vertir el orden"
 
 #: data/menu.ui.h:14
 msgid "_Split pages"
-msgstr ""
+msgstr "_Dividir las páginas"
 
 #: data/menu.ui.h:15
 msgid "Cu_t"
-msgstr ""
+msgstr "_Cortar"
 
 #: data/menu.ui.h:16
 msgid "_Copy"
-msgstr ""
+msgstr "Copi_ar"
 
 #: data/menu.ui.h:17
 msgid "Paste _After"
-msgstr ""
+msgstr "Pegar detrás"
 
 #: data/menu.ui.h:18
 msgid "Paste _Before"
-msgstr ""
+msgstr "Pegar delante"
 
 #: data/menu.ui.h:19
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Pegar como páginas impares"
 
 #: data/menu.ui.h:20
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Pegar como páginas pares"
 
 #: data/menu.ui.h:21
-#, fuzzy
 msgid "Zoom _In"
 msgstr "Acercar"
 
 #: data/menu.ui.h:22
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Alejar"
 
 #: data/menu.ui.h:23
 msgid "Edit _Properties"
-msgstr ""
+msgstr "Editar las propiedades"
 
 #: data/menu.ui.h:24
 msgid "_About"
-msgstr ""
+msgstr "A_cerca"
 
 #: data/menu.ui.h:25
 msgid "_Quit"
-msgstr ""
+msgstr "_Salir"
 
 #: data/menu.ui.h:26
 msgid "Past_e Special"
-msgstr ""
+msgstr "Pegado especial"
 
 #: data/menu.ui.h:27
 msgid "_Split Pages"
-msgstr ""
+msgstr "_Dividir las páginas"
