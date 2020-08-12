@@ -115,6 +115,7 @@ _ = gettext.gettext
 from . import undo
 from . import exporter
 from . import metadata
+from . import croputils
 from .iconview import CellRendererImage
 GObject.type_register(CellRendererImage)
 
@@ -335,6 +336,7 @@ class PdfArranger(Gtk.Application):
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
             ('crop', self.crop_page_dialog),
+            ('crop-white-borders', self.crop_white_borders),
             ('export-selection', self.choose_export_selection_pdf_name),
             ('reverse-order', self.reverse_order),
             ('save', self.on_action_save),
@@ -1526,80 +1528,21 @@ class PdfArranger(Gtk.Application):
 
     def crop_page_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping"""
-
-        sides = ('L', 'R', 'T', 'B')
-        side_names = {'L': _('Left'), 'R': _('Right'),
-                      'T': _('Top'), 'B': _('Bottom')}
-        opposite_sides = {'L': 'R', 'R': 'L', 'T': 'B', 'B': 'T'}
-
-        def set_crop_value(spinbutton, side):
-            opp_side = opposite_sides[side]
-            adjustment = spin_list[sides.index(opp_side)].get_adjustment()
-            adjustment.set_upper(99.0 - spinbutton.get_value())
-
-        model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-
-        crop = [0., 0., 0., 0.]
-        if selection:
-            path = selection[0]
-            pos = model.get_iter(path)
-            crop = [model.get_value(pos, 7 + side) for side in range(4)]
-
-        dialog = Gtk.Dialog(title=(_('Crop Selected Pages')),
-                            parent=self.window,
-                            flags=Gtk.DialogFlags.MODAL,
-                            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                                     Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        dialog.set_default_response(Gtk.ResponseType.OK)
-        dialog.set_resizable(False)
-        margin = 12
-        label = Gtk.Label(label=_('Cropping does not remove any content\n'
-                                  'from the PDF file, it only hides it.'))
-        dialog.vbox.pack_start(label, False, False, 0)
-        frame = Gtk.Frame(label=_('Crop Margins'))
-        frame.props.margin = margin
-        dialog.vbox.pack_start(frame, True, True, 0)
-        grid = Gtk.Grid()
-        grid.set_column_spacing(margin)
-        grid.set_row_spacing(margin)
-        grid.props.margin = margin
-        frame.add(grid)
-
-        spin_list = []
-        units = 2 * [_('% of width')] + 2 * [_('% of height')]
-        for row, side in enumerate(sides):
-            label = Gtk.Label(label=side_names[side])
-            label.set_alignment(0, 0)
-            grid.attach(label, 0, row, 1, 1)
-
-            adj = Gtk.Adjustment(value=100. * crop.pop(0),
-                                 lower=0.0,
-                                 upper=99.0,
-                                 step_increment=1.0,
-                                 page_increment=5.0,
-                                 page_size=0.0)
-            spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
-            spin.set_activates_default(True)
-            spin.connect('value-changed', set_crop_value, side)
-            spin_list.append(spin)
-            grid.attach(spin, 1, row, 1, 1)
-
-            label = Gtk.Label(label=units.pop(0))
-            label.set_alignment(0, 0)
-            grid.attach(label, 2, row, 1, 1)
-
-        dialog.show_all()
-        result = dialog.run()
-
-        if result == Gtk.ResponseType.OK:
-            crop = [spin.get_value() / 100. for spin in spin_list]
-            crop = [crop] * len(selection)
+        crop = croputils.dialog(self.iconview.get_model(), selection, self.window)
+        if crop is not None:
             self.undomanager.commit("Crop")
             oldcrop = self.crop(selection, crop)
             if oldcrop != crop:
                 self.set_unsaved(True)
-        dialog.destroy()
+
+    def crop_white_borders(self, _action, _parameter, _unknown):
+        selection = self.iconview.get_selected_items()
+        crop = croputils.white_borders(self.iconview.get_model(), selection, self.pdfqueue)
+        self.undomanager.commit("Crop white Borders")
+        oldcrop = self.crop(selection, crop)
+        if oldcrop != crop:
+            self.set_unsaved(True)
 
     def crop(self, selection, newcrop):
         oldcrop = [[0] * 4 for __ in range(len(selection))]
