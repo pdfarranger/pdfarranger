@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 16:06+0200\n"
+"POT-Creation-Date: 2020-08-12 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,46 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: pdfarranger/croputils.py:29
+msgid "Left"
+msgstr ""
+
+#: pdfarranger/croputils.py:29
+msgid "Right"
+msgstr ""
+
+#: pdfarranger/croputils.py:29
+msgid "Top"
+msgstr ""
+
+#: pdfarranger/croputils.py:29
+msgid "Bottom"
+msgstr ""
+
+#: pdfarranger/croputils.py:44
+msgid "Crop Selected Pages"
+msgstr ""
+
+#: pdfarranger/croputils.py:59
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+
+#: pdfarranger/croputils.py:64
+msgid "Crop Margins"
+msgstr ""
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of width"
+msgstr ""
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of height"
+msgstr ""
 
 #: pdfarranger/metadata.py:36
 msgid "Title"
@@ -53,135 +93,95 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:595
+#: pdfarranger/pdfarranger.py:599
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:676
+#: pdfarranger/pdfarranger.py:680
 msgid "Save changes to “{}” before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:678
+#: pdfarranger/pdfarranger.py:682
 msgid "Save changes before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:680
+#: pdfarranger/pdfarranger.py:684
 msgid "Your changes will be lost if you don’t save them."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:681
+#: pdfarranger/pdfarranger.py:685
 msgid "Do_n’t Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:681
+#: pdfarranger/pdfarranger.py:685
 msgid "_Cancel"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:681 data/menu.ui.h:2
+#: pdfarranger/pdfarranger.py:685 data/menu.ui.h:2
 msgid "_Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:722
+#: pdfarranger/pdfarranger.py:726
 msgid "Export…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:734 pdfarranger/pdfarranger.py:831
+#: pdfarranger/pdfarranger.py:738 pdfarranger/pdfarranger.py:835
 msgid "PDF files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:740 pdfarranger/pdfarranger.py:817
+#: pdfarranger/pdfarranger.py:744 pdfarranger/pdfarranger.py:821
 msgid "All files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:806
+#: pdfarranger/pdfarranger.py:810
 msgid "Import…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:823
+#: pdfarranger/pdfarranger.py:827
 msgid "Supported image files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:920
+#: pdfarranger/pdfarranger.py:924
 msgid "Pasted data not valid. Aborting paste."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1024 pdfarranger/pdfarranger.py:1688
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1667
 msgid "Unknown file format"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1028
+#: pdfarranger/pdfarranger.py:1032
 msgid "PDF document is damaged"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1034 pdfarranger/pdfarranger.py:1714
+#: pdfarranger/pdfarranger.py:1038 pdfarranger/pdfarranger.py:1693
 msgid "File is neither pdf nor image"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1495
-msgid "Left"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1495
-msgid "Right"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1496
-msgid "Top"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1496
-msgid "Bottom"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1513
-msgid "Crop Selected Pages"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1521
-msgid ""
-"Cropping does not remove any content\n"
-"from the PDF file, it only hides it."
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1524
-msgid "Crop Margins"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1534
-#, python-format
-msgid "% of width"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1534
-#, python-format
-msgid "% of height"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1641
+#: pdfarranger/pdfarranger.py:1620
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1644
+#: pdfarranger/pdfarranger.py:1623
 msgid "Maintainers and contributors"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1648
+#: pdfarranger/pdfarranger.py:1627
 msgid "GNU General Public License (GPL) Version 3."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1700
+#: pdfarranger/pdfarranger.py:1679
 msgid "Image files are only supported with img2pdf"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1712
+#: pdfarranger/pdfarranger.py:1691
 msgid "Image format is not supported by img2pdf"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1765
+#: pdfarranger/pdfarranger.py:1744
 msgid "page"
 msgstr ""
 
@@ -258,69 +258,97 @@ msgid "Cro_p"
 msgstr ""
 
 #: data/menu.ui.h:11
-msgid "_Delete"
+msgid "Crop White Borders"
 msgstr ""
 
 #: data/menu.ui.h:12
-msgid "Dupl_icate"
+msgid "_Delete"
 msgstr ""
 
 #: data/menu.ui.h:13
-msgid "Re_verse Order"
+msgid "Dupl_icate"
 msgstr ""
 
 #: data/menu.ui.h:14
-msgid "_Split pages"
+msgid "Re_verse Order"
 msgstr ""
 
 #: data/menu.ui.h:15
-msgid "Cu_t"
+msgid "_Split pages"
 msgstr ""
 
 #: data/menu.ui.h:16
-msgid "_Copy"
+msgid "Cu_t"
 msgstr ""
 
 #: data/menu.ui.h:17
-msgid "Paste _After"
+msgid "_Copy"
 msgstr ""
 
 #: data/menu.ui.h:18
-msgid "Paste _Before"
+msgid "Paste _After"
 msgstr ""
 
 #: data/menu.ui.h:19
-msgid "Paste Interleave _Odd"
+msgid "Paste _Before"
 msgstr ""
 
 #: data/menu.ui.h:20
-msgid "Paste Interleave _Even"
+msgid "Paste Interleave _Odd"
 msgstr ""
 
 #: data/menu.ui.h:21
-msgid "Zoom _In"
+msgid "Paste Interleave _Even"
 msgstr ""
 
 #: data/menu.ui.h:22
-msgid "Zoom _Out"
+msgid "_Select"
 msgstr ""
 
 #: data/menu.ui.h:23
-msgid "Edit _Properties"
+msgid "Select _All"
 msgstr ""
 
 #: data/menu.ui.h:24
-msgid "_About"
+msgid "_Deselect All"
 msgstr ""
 
 #: data/menu.ui.h:25
-msgid "_Quit"
+msgid "Select _Odd Pages"
 msgstr ""
 
 #: data/menu.ui.h:26
-msgid "Past_e Special"
+msgid "Select _Even Pages"
 msgstr ""
 
 #: data/menu.ui.h:27
+msgid "_Invert Selection"
+msgstr ""
+
+#: data/menu.ui.h:28
+msgid "Zoom _In"
+msgstr ""
+
+#: data/menu.ui.h:29
+msgid "Zoom _Out"
+msgstr ""
+
+#: data/menu.ui.h:30
+msgid "Edit _Properties"
+msgstr ""
+
+#: data/menu.ui.h:31
+msgid "_About"
+msgstr ""
+
+#: data/menu.ui.h:32
+msgid "_Quit"
+msgstr ""
+
+#: data/menu.ui.h:33
+msgid "Past_e Special"
+msgstr ""
+
+#: data/menu.ui.h:34
 msgid "_Split Pages"
 msgstr ""
