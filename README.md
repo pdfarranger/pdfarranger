@@ -19,7 +19,7 @@ It’s a humble attempt to make the project a bit more active.
 
 ## Downloads
 
-| [Microsoft® Windows®](https://github.com/jeromerobert/pdfarranger/releases) | <a href='https://flathub.org/apps/details/com.github.jeromerobert.pdfarranger'><img width='120' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a> | [More…](https://github.com/jeromerobert/pdfarranger/wiki/Binary-packages) |
+| [Microsoft® Windows®](https://github.com/pdfarranger/pdfarranger/releases) | <a href='https://flathub.org/apps/details/com.github.jeromerobert.pdfarranger'><img width='120' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a> | [More…](https://github.com/pdfarranger/pdfarranger/wiki/Binary-packages) |
 | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 
 ### Linux packages
@@ -53,7 +53,7 @@ or `sudo dnf builddep pdfarranger`
 **Then**
 
 ```
-pip3 install --user --upgrade https://github.com/jeromerobert/pdfarranger/zipball/master
+pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/master
 ```
 
 In addition, *pdfarranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
@@ -61,7 +61,7 @@ In addition, *pdfarranger* supports image file import if [img2pdf](https://gitla
 ## For developers
 
 ```
-git clone https://github.com/jeromerobert/pdfarranger.git
+git clone https://github.com/pdfarranger/pdfarranger.git
 cd pdfarranger
 pip install -e .
 ./setup.py build

@@ -74,7 +74,7 @@ else:
 
 APPNAME = 'PDF Arranger'
 VERSION = '1.6.1'
-WEBSITE = 'https://github.com/jeromerobert/pdfarranger'
+WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 # Add support for dnd to other instance and insert file at drop location in Windows
 if os.name == 'nt':
@@ -1619,7 +1619,7 @@ class PdfArranger(Gtk.Application):
             'Developed using GTK+ and Python') % APPNAME)
         about_dialog.set_authors(['Konstantinos Poulios'])
         about_dialog.add_credit_section(_('Maintainers and contributors'), [
-            'https://github.com/jeromerobert/pdfarranger/graphs/contributors'])
+            'https://github.com/pdfarranger/pdfarranger/graphs/contributors'])
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name(ICON_ID)
         about_dialog.set_license(_('GNU General Public License (GPL) Version 3.'))

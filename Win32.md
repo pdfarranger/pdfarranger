@@ -34,7 +34,7 @@ pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+down
 Get the pdfarranger sources from a MSYS2 shell:
 
 ```
-git clone https://github.com/jeromerobert/pdfarranger.git
+git clone https://github.com/pdfarranger/pdfarranger.git
 ```
 
 ## Building distributions
