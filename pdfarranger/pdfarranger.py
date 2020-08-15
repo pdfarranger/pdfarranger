@@ -572,7 +572,7 @@ class PdfArranger(Gtk.Application):
             if self.is_unsaved:
                 title += '*'
         else:
-            title = ''
+            title = _('untitled')
 
         all_files = self.active_file_names()
         if len(all_files) > 0:
