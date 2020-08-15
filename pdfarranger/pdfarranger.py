@@ -1127,15 +1127,13 @@ class PdfArranger(Gtk.Application):
         elif selectoption == 'DESELECT':
             self.iconview.unselect_all()
         elif selectoption == 'ODD':
-            for row in model:
-                page_number = row[3]
+            for page_number, row in enumerate(model):
                 if page_number % 2:
                     self.iconview.select_path(row.path)
                 else:
                     self.iconview.unselect_path(row.path)
         elif selectoption == 'EVEN':
-            for row in model:
-                page_number = row[3]
+            for page_number, row in enumerate(model):
                 if page_number % 2:
                     self.iconview.unselect_path(row.path)
                 else:
