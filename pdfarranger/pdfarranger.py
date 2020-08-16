@@ -1249,22 +1249,7 @@ class PdfArranger(Gtk.Application):
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles drag motion: autoscroll, select move or copy, select drag cursor location."""
         # Auto-scroll when drag up/down
-        autoscroll_area = 40
-        sw_vadj = self.sw.get_vadjustment()
-        sw_height = self.sw.get_allocation().height
-        if y - sw_vadj.get_value() < autoscroll_area - self.vp_css_margin:
-            if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = Gtk.DirectionType.UP
-                self.iv_auto_scroll_timer = GObject.timeout_add(150,
-                                                                self.iv_auto_scroll)
-        elif y - sw_vadj.get_value() > sw_height - autoscroll_area - self.vp_css_margin:
-            if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = Gtk.DirectionType.DOWN
-                self.iv_auto_scroll_timer = GObject.timeout_add(150,
-                                                                self.iv_auto_scroll)
-        elif self.iv_auto_scroll_timer:
-            GObject.source_remove(self.iv_auto_scroll_timer)
-            self.iv_auto_scroll_timer = None
+        self.iv_autoscroll(x, y, autoscroll_area=40)
 
         # Select move or copy dragAction
         drag_move_posix = os.name == 'posix' and context.get_actions() & Gdk.DragAction.MOVE
@@ -1315,6 +1300,24 @@ class PdfArranger(Gtk.Application):
         iconview.set_drag_dest_item(self.drag_path, self.drag_pos)
         return True
 
+    def iv_autoscroll(self, x, y, autoscroll_area):
+        """Iconview auto-scrolling."""
+        sw_vadj = self.sw.get_vadjustment()
+        sw_height = self.sw.get_allocation().height
+        if y - sw_vadj.get_value() < autoscroll_area - self.vp_css_margin:
+            if not self.iv_auto_scroll_timer:
+                self.iv_auto_scroll_direction = Gtk.DirectionType.UP
+                self.iv_auto_scroll_timer = GObject.timeout_add(150,
+                                                                self.iv_auto_scroll)
+        elif y - sw_vadj.get_value() > sw_height - autoscroll_area - self.vp_css_margin:
+            if not self.iv_auto_scroll_timer:
+                self.iv_auto_scroll_direction = Gtk.DirectionType.DOWN
+                self.iv_auto_scroll_timer = GObject.timeout_add(150,
+                                                                self.iv_auto_scroll)
+        elif self.iv_auto_scroll_timer:
+            GObject.source_remove(self.iv_auto_scroll_timer)
+            self.iv_auto_scroll_timer = None
+
     def iv_dnd_leave_end(self, _widget, _context, _ignored=None):
         """Ends the auto-scroll during DND"""
 
@@ -1336,8 +1339,8 @@ class PdfArranger(Gtk.Application):
         return True  # call me again
 
     def iv_motion(self, iconview, event):
-        """Manages mouse movement on the iconview to detect drag and drop events"""
-
+        """Manages mouse movement on the iconview."""
+        # Detect drag and drop events
         if self.pressed_button:
             if iconview.drag_check_threshold(self.pressed_button.x,
                                              self.pressed_button.y,
@@ -1346,6 +1349,10 @@ class PdfArranger(Gtk.Application):
                                                      Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
                                                      self.pressed_button.button, event, -1, -1)
                 self.pressed_button = None
+
+        # Detect if rubberband selecting is in progress
+        if event.state & Gdk.ModifierType.BUTTON1_MASK:
+            self.iv_autoscroll(event.x, event.y, autoscroll_area=4)
 
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
@@ -1363,6 +1370,11 @@ class PdfArranger(Gtk.Application):
                 iconview.select_path(path)
             iconview.set_cursor(path, None, False)  # for consistent shift+click selection
         self.pressed_button = None
+
+        # Stop rubberband autoscrolling when mouse button is released
+        if self.iv_auto_scroll_timer:
+            GObject.source_remove(self.iv_auto_scroll_timer)
+            self.iv_auto_scroll_timer = None
 
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
