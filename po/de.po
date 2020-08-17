@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-22 06:04+0200\n"
+"POT-Creation-Date: 2020-08-17 23:49+0200\n"
 "PO-Revision-Date: 2020-07-22 13:12+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
@@ -20,19 +20,69 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3.1\n"
 
+#: pdfarranger/croputils.py:29
+msgid "Left"
+msgstr "Links"
+
+#: pdfarranger/croputils.py:29
+msgid "Right"
+msgstr "Rechts"
+
+#: pdfarranger/croputils.py:29
+msgid "Top"
+msgstr "Oben"
+
+#: pdfarranger/croputils.py:29
+msgid "Bottom"
+msgstr "Unten"
+
+#: pdfarranger/croputils.py:44
+msgid "Crop Selected Pages"
+msgstr "Markierte Seiten zuschneiden"
+
+#: pdfarranger/croputils.py:59
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+"Das Zuschneiden entfernt keinen Inhalt\n"
+"aus der PDF-Datei, es blendet ihn nur aus."
+
+#: pdfarranger/croputils.py:64
+msgid "Crop Margins"
+msgstr "Seitenränder zuschneiden"
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of width"
+msgstr "% der Breite"
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of height"
+msgstr "% der Höhe"
+
 #: pdfarranger/metadata.py:36
 msgid "Title"
 msgstr "Titel"
 
 #: pdfarranger/metadata.py:37
-msgid "Creator"
-msgstr "Ersteller"
+msgid "Subject"
+msgstr "Thema"
 
 #: pdfarranger/metadata.py:38
+msgid "Keywords"
+msgstr "Schlagworte"
+
+#: pdfarranger/metadata.py:39
 msgid "Producer"
 msgstr "Hersteller"
 
-#: pdfarranger/metadata.py:39
+#: pdfarranger/metadata.py:40
+msgid "Creator"
+msgstr "Ersteller"
+
+#: pdfarranger/metadata.py:41
 msgid "Creator tool"
 msgstr "Erstellungswerkzeug"
 
@@ -48,114 +98,76 @@ msgstr "Eigenschaft"
 msgid "Value"
 msgstr "Wert"
 
-#: pdfarranger/pdfarranger.py:591
+#: pdfarranger/pdfarranger.py:575
+msgid "untitled"
+msgstr "unbenannt"
+
+#: pdfarranger/pdfarranger.py:599
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "Miniaturbilder werden erstellt… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:680
 msgid "Save changes to “{}” before closing?"
 msgstr "Änderungen an „{}“ vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:674
+#: pdfarranger/pdfarranger.py:682
 msgid "Save changes before closing?"
 msgstr "Änderungen vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:676
+#: pdfarranger/pdfarranger.py:684
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Änderungen gehen verloren, wenn sie nicht gespeichert werden."
 
-#: pdfarranger/pdfarranger.py:677
+#: pdfarranger/pdfarranger.py:685
 msgid "Do_n’t Save"
 msgstr "Nicht speicher_n"
 
-#: pdfarranger/pdfarranger.py:677
+#: pdfarranger/pdfarranger.py:685
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: pdfarranger/pdfarranger.py:677 data/menu.ui.h:2
+#: pdfarranger/pdfarranger.py:685 data/menu.ui.h:2
 msgid "_Save"
 msgstr "_Speichern"
 
-#: pdfarranger/pdfarranger.py:718
+#: pdfarranger/pdfarranger.py:726
 msgid "Export…"
 msgstr "Exportieren…"
 
-#: pdfarranger/pdfarranger.py:730 pdfarranger/pdfarranger.py:827
+#: pdfarranger/pdfarranger.py:738 pdfarranger/pdfarranger.py:835
 msgid "PDF files"
 msgstr "PDF-Dateien"
 
-#: pdfarranger/pdfarranger.py:736 pdfarranger/pdfarranger.py:813
+#: pdfarranger/pdfarranger.py:744 pdfarranger/pdfarranger.py:821
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfarranger/pdfarranger.py:802
+#: pdfarranger/pdfarranger.py:810
 msgid "Import…"
 msgstr "Importieren…"
 
-#: pdfarranger/pdfarranger.py:819
+#: pdfarranger/pdfarranger.py:827
 msgid "Supported image files"
 msgstr "Unterstützte Bilddateien"
 
-#: pdfarranger/pdfarranger.py:916
+#: pdfarranger/pdfarranger.py:924
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Eingefügte Daten nicht gültig. Einfügen wird abgebrochen."
 
-#: pdfarranger/pdfarranger.py:1018 pdfarranger/pdfarranger.py:1675
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1666
 msgid "Unknown file format"
 msgstr "Unbekanntes Dateiformat"
 
-#: pdfarranger/pdfarranger.py:1022
+#: pdfarranger/pdfarranger.py:1032
 msgid "PDF document is damaged"
 msgstr "PDF-Dokument ist beschädigt"
 
-#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1701
+#: pdfarranger/pdfarranger.py:1038 pdfarranger/pdfarranger.py:1692
 msgid "File is neither pdf nor image"
 msgstr "Datei ist weder ein pdf noch ein Bild"
 
-#: pdfarranger/pdfarranger.py:1482
-msgid "Left"
-msgstr "Links"
-
-#: pdfarranger/pdfarranger.py:1482
-msgid "Right"
-msgstr "Rechts"
-
-#: pdfarranger/pdfarranger.py:1483
-msgid "Top"
-msgstr "Oben"
-
-#: pdfarranger/pdfarranger.py:1483
-msgid "Bottom"
-msgstr "Unten"
-
-#: pdfarranger/pdfarranger.py:1500
-msgid "Crop Selected Pages"
-msgstr "Markierte Seiten zuschneiden"
-
-#: pdfarranger/pdfarranger.py:1508
-msgid ""
-"Cropping does not remove any content\n"
-"from the PDF file, it only hides it."
-msgstr ""
-"Das Zuschneiden entfernt keinen Inhalt\n"
-"aus der PDF-Datei, es blendet ihn nur aus."
-
-#: pdfarranger/pdfarranger.py:1511
-msgid "Crop Margins"
-msgstr "Seitenränder zuschneiden"
-
-#: pdfarranger/pdfarranger.py:1521
-#, python-format
-msgid "% of width"
-msgstr "% der Breite"
-
-#: pdfarranger/pdfarranger.py:1521
-#, python-format
-msgid "% of height"
-msgstr "% der Höhe"
-
-#: pdfarranger/pdfarranger.py:1628
+#: pdfarranger/pdfarranger.py:1619
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -164,23 +176,23 @@ msgstr ""
 "%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
 "Geschrieben in GTK+ und Python."
 
-#: pdfarranger/pdfarranger.py:1631
+#: pdfarranger/pdfarranger.py:1622
 msgid "Maintainers and contributors"
 msgstr "Verwalter und Mitwirkende"
 
-#: pdfarranger/pdfarranger.py:1635
+#: pdfarranger/pdfarranger.py:1626
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
 
-#: pdfarranger/pdfarranger.py:1687
+#: pdfarranger/pdfarranger.py:1678
 msgid "Image files are only supported with img2pdf"
 msgstr "Bilddateien werden nur mit img2pdf unterstützt"
 
-#: pdfarranger/pdfarranger.py:1699
+#: pdfarranger/pdfarranger.py:1690
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformat wird von img2pdf nicht unterstützt"
 
-#: pdfarranger/pdfarranger.py:1752
+#: pdfarranger/pdfarranger.py:1743
 msgid "page"
 msgstr "Seite"
 
@@ -257,69 +269,97 @@ msgid "Cro_p"
 msgstr "_Zuschneiden"
 
 #: data/menu.ui.h:11
+msgid "Crop White Borders"
+msgstr "_Weiße Ränder abschneiden"
+
+#: data/menu.ui.h:12
 msgid "_Delete"
 msgstr "_Entfernen"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:13
 msgid "Dupl_icate"
 msgstr "_Duplizieren"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:14
 msgid "Re_verse Order"
 msgstr "Rei_henfolge umkehren"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:15
 msgid "_Split pages"
 msgstr "Seiten _teilen"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:16
 msgid "Cu_t"
 msgstr "_Ausschneiden"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:17
 msgid "_Copy"
 msgstr "_Kopieren"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:18
 msgid "Paste _After"
 msgstr "Einfügen _nach Auswahl"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:19
 msgid "Paste _Before"
 msgstr "Einfügen _vor Auswahl"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:20
 msgid "Paste Interleave _Odd"
 msgstr "Abwechselnd einfügen _ungerade"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:21
 msgid "Paste Interleave _Even"
 msgstr "Abwechselnd einfügen _gerade"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:22
+msgid "_Select"
+msgstr "_Auswählen"
+
+#: data/menu.ui.h:23
+msgid "Select _All"
+msgstr "_Alles auswählen"
+
+#: data/menu.ui.h:24
+msgid "_Deselect All"
+msgstr "Auswahl au_fheben"
+
+#: data/menu.ui.h:25
+msgid "Select _Odd Pages"
+msgstr "_Ungerade Seiten auswählen"
+
+#: data/menu.ui.h:26
+msgid "Select _Even Pages"
+msgstr "_Gerade Seiten auswählen"
+
+#: data/menu.ui.h:27
+msgid "_Invert Selection"
+msgstr "Auswahl _umkehren"
+
+#: data/menu.ui.h:28
 msgid "Zoom _In"
 msgstr "Ver_grössern"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:29
 msgid "Zoom _Out"
 msgstr "Ver_kleinern"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:30
 msgid "Edit _Properties"
 msgstr "Eige_nschaften ändern"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:31
 msgid "_About"
 msgstr "Info zu _PDF Arranger"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:32
 msgid "_Quit"
 msgstr "Been_den"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:33
 msgid "Past_e Special"
 msgstr "Ein_fügen"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:34
 msgid "_Split Pages"
 msgstr "Seiten _teilen"
