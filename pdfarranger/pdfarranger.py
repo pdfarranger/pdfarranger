@@ -337,7 +337,8 @@ class PdfArranger(Gtk.Application):
             ('duplicate', self.duplicate),
             ('crop', self.crop_page_dialog),
             ('crop-white-borders', self.crop_white_borders),
-            ('export-selection', self.choose_export_selection_pdf_name),
+            ('export-selection', self.choose_export_selection_pdf_name, 'i'),
+            ('export-all', self.on_action_export_all),
             ('reverse-order', self.reverse_order),
             ('save', self.on_action_save),
             ('save-as', self.on_action_save_as),
@@ -365,7 +366,9 @@ class PdfArranger(Gtk.Application):
             ('rotate(-90)', '<Ctrl>Left'),
             ('save', '<Ctrl>s'),
             ('save-as', '<Ctrl><Shift>s'),
-            ('export-selection', '<Ctrl>e'),
+            ('export-selection(3)', '<Ctrl>f'),
+            ('export-selection(2)', '<Ctrl>e'),
+            ('export-all', '<Ctrl><Shift>e'),
             ('quit', '<Ctrl>q'),
             ('import', 'Insert'),
             ('zoom(5)', ['plus', 'KP_Add']),
@@ -720,7 +723,7 @@ class PdfArranger(Gtk.Application):
             shutil.rmtree(self.tmp_dir)
         self.quit()
 
-    def choose_export_pdf_name(self, only_selected=False):
+    def choose_export_pdf_name(self, mode):
         """Handles choosing a name for exporting """
 
         chooser = Gtk.FileChooserDialog(title=_('Export…'),
@@ -750,7 +753,7 @@ class PdfArranger(Gtk.Application):
         chooser.destroy()
         if response == Gtk.ResponseType.ACCEPT:
             try:
-                self.save(only_selected, file_out)
+                self.save(mode, file_out)
             except Exception as e:
                 traceback.print_exc()
                 self.error_message_dialog(e)
@@ -772,38 +775,51 @@ class PdfArranger(Gtk.Application):
     def save_or_choose(self):
         """Saves to the previously exported file or shows the export dialog if
         there was none."""
+        savemode = GLib.Variant('i', 0) # Save all pages in a single document.
         try:
             if self.export_file:
-                self.save(False, self.export_file)
+                self.save(savemode, self.export_file)
             else:
-                self.choose_export_pdf_name()
+                self.choose_export_pdf_name(savemode)
         except Exception as e:
             self.error_message_dialog(e)
 
     def on_action_save_as(self, _action, _param, _unknown):
-        self.choose_export_pdf_name()
+        self.choose_export_pdf_name(GLib.Variant('i', 0))
 
     @warn_dialog
-    def save(self, only_selected, file_out):
+    def save(self, mode, file_out):
         """Saves to the specified file.  May throw exceptions."""
         (path, shortname) = os.path.split(file_out)
         (shortname, ext) = os.path.splitext(shortname)
         if ext.lower() != '.pdf':
             file_out = file_out + '.pdf'
         to_export = self.model
-        if only_selected:
+
+        exportmodes = {0: 'ALL_TO_SINGLE',
+                       1: 'ALL_TO_MULTIPLE',
+                       2: 'SELECTED_TO_SINGLE',
+                       3: 'SELECTED_TO_MULTIPLE'}
+        exportmode = exportmodes[mode.get_int32()]
+
+        if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
             selection = self.iconview.get_selected_items()
             to_export = [row for row in self.model if row.path in selection]
         else:
             self.export_directory = path
             self.set_export_file(file_out)
+
         m = metadata.merge(self.metadata, self.pdfqueue)
-        exporter.export(self.pdfqueue, to_export, file_out, m)
-        if not only_selected:
+        exporter.export(self.pdfqueue, to_export, file_out, mode, m)
+
+        if exportmode == 'ALL_TO_SINGLE':
             self.set_unsaved(False)
 
-    def choose_export_selection_pdf_name(self, _action, _target, _unknown):
-        self.choose_export_pdf_name(True)
+    def choose_export_selection_pdf_name(self, _action, mode, _unknown):
+        self.choose_export_pdf_name(mode)
+
+    def on_action_export_all(self, _action, _param, _unknown):
+        self.choose_export_pdf_name(GLib.Variant('i', 1))
 
     def on_action_add_doc_activate(self, _action, _param, _unknown):
         """Import doc"""
@@ -1636,7 +1652,7 @@ class PdfArranger(Gtk.Application):
     def __update_num_pages(self, model, _path=None, _itr=None, _user_data=None):
         num_pages = len(model)
         self.uiXML.get_object("num_pages").set_text(str(num_pages))
-        for a in ["save", "save-as", "select"]:
+        for a in ["save", "save-as", "select", "export-all"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):

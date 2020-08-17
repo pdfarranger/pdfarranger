@@ -49,7 +49,22 @@ def _mediabox(row, angle, angle0, box):
 _report_pikepdf_err = True
 
 
-def export(input_files, pages, file_out, mdata):
+def _set_meta(mdata, pdf_input, pdf_output):
+    ppae = metadata.PRODUCER not in mdata
+    with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
+        if len(pdf_input) > 0:
+            metadata.load_from_docinfo(outmeta, pdf_input[0])
+        for k, v in mdata.items():
+            outmeta[k] = v
+
+
+def export(input_files, pages, file_out, mode, mdata):
+    exportmodes = {0: 'ALL_TO_SINGLE',
+                   1: 'ALL_TO_MULTIPLE',
+                   2: 'SELECTED_TO_SINGLE',
+                   3: 'SELECTED_TO_MULTIPLE'}
+    exportmode = exportmodes[mode.get_int32()]
+
     global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
@@ -76,13 +91,21 @@ def export(input_files, pages, file_out, mdata):
         if cropped:
             new_page.MediaBox = cropped
         pdf_output.pages.append(new_page)
-    ppae = metadata.PRODUCER not in mdata
-    with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
-        if len(pdf_input) > 0:
-            metadata.load_from_docinfo(outmeta, pdf_input[0])
-        for k, v in mdata.items():
-            outmeta[k] = v
-    pdf_output.save(file_out)
+
+    if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
+        for n, page in enumerate(pdf_output.pages):
+            outpdf = pikepdf.Pdf.new()
+            _set_meta(mdata, pdf_input, outpdf)
+            outpdf.pages.append(page)
+            outname = file_out
+            parts = file_out.rsplit('.', 1)
+            if n > 0:
+                # Add page number to filename
+                outname = "".join(parts[:-1]) + str(n + 1) + '.' + parts[-1]
+            outpdf.save(outname)
+    else:
+        _set_meta(mdata, pdf_input, pdf_output)
+        pdf_output.save(file_out)
 
 def num_pages(filepath):
     """Get number of pages for filepath."""
