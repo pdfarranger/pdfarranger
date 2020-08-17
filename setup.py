@@ -37,7 +37,7 @@ setup(
     author='Jerome Robert',
     author_email='jeromerobert@gmx.com',
     description='A simple application for PDF Merging, Rearranging, and Splitting',
-    url='https://github.com/jeromerobert/pdfarranger',
+    url='https://github.com/pdfarranger/pdfarranger',
     license='GNU GPL-3',
     packages=['pdfarranger'],
     data_files=data_files,

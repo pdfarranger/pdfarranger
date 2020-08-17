@@ -20,10 +20,10 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       It is a frontend for pikepdf.
     </p>
   </description>
-  <url type="homepage">https://github.com/jeromerobert/pdfarranger</url>
+  <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/jeromerobert/pdfarranger/raw/master/data/screenshot.png</image>
+      <image>https://github.com/pdfarranger/pdfarranger/raw/master/data/screenshot.png</image>
       <caption/>
     </screenshot>
   </screenshots>
@@ -40,5 +40,5 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <release date="2020-01-26" version="1.4.0"/>
   </releases>
   <project_license>GPL-3.0-or-later</project_license>
-  <url type="bugtracker">https://github.com/jeromerobert/pdfarranger/issues</url>
+  <url type="bugtracker">https://github.com/pdfarranger/pdfarranger/issues</url>
 </component>
