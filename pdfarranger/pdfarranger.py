@@ -1411,7 +1411,8 @@ class PdfArranger(Gtk.Application):
         cb_d_data = self.clipboard_default.wait_for_text()
         cb_p_data = os.name == 'posix' and self.clipboard_pdfarranger.wait_for_text()
         data_available = True if cb_d_data or cb_p_data else False
-        self.window.lookup_action("paste").set_enabled(data_available)
+        if self.window.lookup_action("paste"):  # Prevent error when closing with Alt+F4
+            self.window.lookup_action("paste").set_enabled(data_available)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
                              selection_data, target_id, _etime):
