@@ -366,7 +366,6 @@ class PdfArranger(Gtk.Application):
             ('rotate(-90)', '<Ctrl>Left'),
             ('save', '<Ctrl>s'),
             ('save-as', '<Ctrl><Shift>s'),
-            ('export-selection(3)', '<Ctrl>f'),
             ('export-selection(2)', '<Ctrl>e'),
             ('export-all', '<Ctrl><Shift>e'),
             ('quit', '<Ctrl>q'),
