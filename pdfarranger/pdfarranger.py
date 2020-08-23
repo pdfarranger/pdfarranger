@@ -479,6 +479,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.connect('motion_notify_event', self.iv_motion)
         self.iconview.connect('button_release_event', self.iv_button_release_event)
         self.iconview.connect('selection_changed', self.iv_selection_changed_event)
+        self.iconview.connect('key_press_event', self.iv_key_press_event)
 
         self.sw.add_with_viewport(self.iconview)
 
@@ -1427,6 +1428,52 @@ class PdfArranger(Gtk.Application):
                 iconview.grab_focus()
                 self.popup.popup(None, None, None, None, event.button, event.time)
             return 1
+
+    def iv_key_press_event(self, iconview, event):
+        """Scroll iconview with keyboard keys."""
+        sw_vadj = self.sw.get_vadjustment()
+        sw_vpos = sw_vadj.get_value()
+        columns_nr = iconview.get_columns()
+        model = iconview.get_model()
+        if event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
+                            Gdk.KEY_Home, Gdk.KEY_End]:
+            # Scroll in order to keep cursor visible in window
+            cursor_path = iconview.get_cursor()[1]
+            cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0] if cursor_path else 0
+            if event.keyval == Gdk.KEY_Up:
+                cursor_page_nr_new = max(cursor_page_nr - columns_nr, 0)
+            elif event.keyval == Gdk.KEY_Down:
+                cursor_page_nr_new = min(cursor_page_nr + columns_nr, len(model) - 1)
+            elif event.keyval in [Gdk.KEY_Left, Gdk.KEY_Right]:
+                cursor_page_nr_new = cursor_page_nr
+            elif event.keyval == Gdk.KEY_Home:
+                cursor_page_nr_new = 0
+            elif event.keyval == Gdk.KEY_End:
+                cursor_page_nr_new = len(model) - 1
+            cursor_path_new = Gtk.TreePath.new_from_indices([cursor_page_nr_new])
+            cell_height = iconview.get_cell_rect(cursor_path_new)[1].height
+            cell_y = iconview.get_cell_rect(cursor_path_new)[1].y
+            sw_height = self.sw.get_allocated_height()
+            sw_vpos = min(sw_vpos, cell_y + self.vp_css_margin - 6)
+            sw_vpos = max(sw_vpos, cell_y + self.vp_css_margin + 6 - sw_height + cell_height)
+            sw_vadj.set_value(sw_vpos)
+        elif event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
+                              Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
+            # Scroll to next/previous page row
+            path_last_page = Gtk.TreePath.new_from_indices([len(model) - 1])
+            last_cell_y = iconview.get_cell_rect(path_last_page)[1].y
+            sw_vpos_up = sw_vpos_down = page_nr = 0
+            extra = 0 if event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up] else 1
+            while sw_vpos_down < sw_vpos + extra:
+                path = Gtk.TreePath.new_from_indices([page_nr])
+                sw_vpos_up = sw_vpos_down
+                sw_vpos_down += iconview.get_cell_rect(path)[1].height + iconview.get_row_spacing()
+                page_nr += columns_nr
+            if event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up]:
+                sw_vadj.set_value(min(sw_vpos_up, last_cell_y + self.vp_css_margin - 6))
+            else:
+                sw_vadj.set_value(min(sw_vpos_down, last_cell_y + self.vp_css_margin - 6))
+            return True  # Prevent propagation ie don't set cursor at first or last item
 
     def iv_selection_changed_event(self, _user_data=None):
         selection = self.iconview.get_selected_items()
