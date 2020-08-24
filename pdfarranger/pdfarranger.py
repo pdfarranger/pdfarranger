@@ -264,6 +264,7 @@ class PdfArranger(Gtk.Application):
         self.cellthmb = None
         self.progress_bar = None
         self.progress_bar_timeout_id = None
+        self.status_bar = None
         self.popup = None
         self.is_unsaved = False
         self.zoom_level = None
@@ -487,6 +488,9 @@ class PdfArranger(Gtk.Application):
 
         # Progress bar
         self.progress_bar = self.uiXML.get_object('progressbar')
+
+        # Status bar.
+        self.status_bar = self.uiXML.get_object('statusbar')
 
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
@@ -1432,6 +1436,7 @@ class PdfArranger(Gtk.Application):
                      ("export-selection", ne), ("cut", ne), ("copy", ne),
                      ("split", ne)]:
             self.window.lookup_action(a).set_enabled(e)
+        self.__update_statusbar()
 
     def window_focus_in_out_event(self, _widget=None, _event=None):
         """Enable or disable paste actions based on clipboard content."""
@@ -1548,6 +1553,8 @@ class PdfArranger(Gtk.Application):
             model.set_value(newit, 7, newcrop)
             model.set_value(iterator, 8, 1 - newcrop)
 
+        self.__update_statusbar()
+
     def edit_metadata(self, _action, _parameter, _unknown):
         if metadata.edit(self.metadata, self.pdfqueue, self.window):
             self.set_unsaved(True)
@@ -1596,6 +1603,8 @@ class PdfArranger(Gtk.Application):
         for ref in ref_list:
             iterator = model.get_iter(ref.get_path())
             model.insert_after(iterator, model[iterator][:])
+
+        self.__update_statusbar()
 
     @staticmethod
     def reverse_order_available(selection):
@@ -1665,6 +1674,22 @@ class PdfArranger(Gtk.Application):
         self.uiXML.get_object("num_pages").set_text(str(num_pages))
         for a in ["save", "save-as", "select", "export-all"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
+
+    def __update_statusbar(self):
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+        selected_pages = [page for page, row in enumerate(model, start=1)
+                          if row.path in selection]
+        # Compact the representation of the selected page range
+        jumps = [[l, r] for l, r in zip(selected_pages, selected_pages[1:])
+                 if l + 1 < r]
+        ranges = list(selected_pages[0:1] + sum(jumps, []) + selected_pages[-1:])
+        display = []
+        for lo, hi in zip(ranges[::2], ranges[1::2]):
+            range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
+            display.append(range_str)
+        ctxt_id = self.status_bar.get_context_id("selected_pages")
+        self.status_bar.push(ctxt_id, 'Selected pages: ' + ', '.join(display))
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
