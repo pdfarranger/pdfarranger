@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 17:01+0200\n"
-"PO-Revision-Date: 2020-06-14 20:00+0900\n"
+"POT-Creation-Date: 2020-08-31 06:10+0900\n"
+"PO-Revision-Date: 2020-08-31 06:10+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -19,19 +19,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: pdfarranger/croputils.py:29
+msgid "Left"
+msgstr "左"
+
+#: pdfarranger/croputils.py:29
+msgid "Right"
+msgstr "右"
+
+#: pdfarranger/croputils.py:29
+msgid "Top"
+msgstr "上"
+
+#: pdfarranger/croputils.py:29
+msgid "Bottom"
+msgstr "下"
+
+#: pdfarranger/croputils.py:44
+msgid "Crop Selected Pages"
+msgstr "選択したページのトリミング"
+
+#: pdfarranger/croputils.py:59
+msgid ""
+"Cropping does not remove any content\n"
+"from the PDF file, it only hides it."
+msgstr ""
+"トリミングは PDF ファイルから内容自体は\n"
+"削除せずに、指定部分を見えなくします。"
+
+#: pdfarranger/croputils.py:64
+msgid "Crop Margins"
+msgstr "余白のトリミング"
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of width"
+msgstr "% (幅)"
+
+#: pdfarranger/croputils.py:74
+#, python-format
+msgid "% of height"
+msgstr "% (高さ)"
+
 #: pdfarranger/metadata.py:36
 msgid "Title"
 msgstr "タイトル"
 
 #: pdfarranger/metadata.py:37
-msgid "Creator"
-msgstr "作成"
+msgid "Subject"
+msgstr "サブタイトル"
 
 #: pdfarranger/metadata.py:38
+msgid "Keywords"
+msgstr "キーワード"
+
+#: pdfarranger/metadata.py:39
 msgid "Producer"
 msgstr "変換"
 
-#: pdfarranger/metadata.py:39
+#: pdfarranger/metadata.py:40
+msgid "Creator"
+msgstr "作成"
+
+#: pdfarranger/metadata.py:41
 msgid "Creator tool"
 msgstr "作成ツール"
 
@@ -47,106 +97,76 @@ msgstr "プロパティ"
 msgid "Value"
 msgstr "値"
 
-#: pdfarranger/pdfarranger.py:585
+#: pdfarranger/pdfarranger.py:581
+msgid "untitled"
+msgstr "タイトルなし"
+
+#: pdfarranger/pdfarranger.py:605
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
 msgstr "サムネイルを描画中… [%(i1)s/%(i2)s]"
 
-#: pdfarranger/pdfarranger.py:665
+#: pdfarranger/pdfarranger.py:686
 msgid "Save changes to “{}” before closing?"
 msgstr "閉じる前に変更内容を“{}”に保存しますか?"
 
-#: pdfarranger/pdfarranger.py:667
+#: pdfarranger/pdfarranger.py:688
 msgid "Save changes before closing?"
 msgstr "閉じる前に変更内容を保存しますか?"
 
-#: pdfarranger/pdfarranger.py:669
+#: pdfarranger/pdfarranger.py:690
 msgid "Your changes will be lost if you don’t save them."
 msgstr "保存しないと変更内容は失われます。"
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:691
 msgid "Do_n’t Save"
 msgstr "保存しない(_N)"
 
-#: pdfarranger/pdfarranger.py:670
+#: pdfarranger/pdfarranger.py:691
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
-#: pdfarranger/pdfarranger.py:670 data/menu.ui.h:2
+#: pdfarranger/pdfarranger.py:691 data/menu.ui.h:2
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: pdfarranger/pdfarranger.py:710
+#: pdfarranger/pdfarranger.py:732
 msgid "Export…"
 msgstr "エクスポート…"
 
-#: pdfarranger/pdfarranger.py:722 pdfarranger/pdfarranger.py:819
+#: pdfarranger/pdfarranger.py:744 pdfarranger/pdfarranger.py:854
 msgid "PDF files"
 msgstr "PDF ファイル"
 
-#: pdfarranger/pdfarranger.py:728 pdfarranger/pdfarranger.py:805
+#: pdfarranger/pdfarranger.py:750 pdfarranger/pdfarranger.py:840
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: pdfarranger/pdfarranger.py:794
+#: pdfarranger/pdfarranger.py:829
 msgid "Import…"
 msgstr "インポート…"
 
-#: pdfarranger/pdfarranger.py:811
+#: pdfarranger/pdfarranger.py:846
 msgid "Supported image files"
 msgstr "サポートしている画像ファイル"
 
-#: pdfarranger/pdfarranger.py:908
+#: pdfarranger/pdfarranger.py:943
 msgid "Pasted data not valid. Aborting paste."
 msgstr "不正なデータが貼り付けられました。貼り付けを中止します。"
 
-#: pdfarranger/pdfarranger.py:1012
-msgid "PDF document is damaged: "
-msgstr "PDF 文書が破損しています: "
+#: pdfarranger/pdfarranger.py:1047 pdfarranger/pdfarranger.py:1716
+msgid "Unknown file format"
+msgstr "不明なファイル形式です"
 
-#: pdfarranger/pdfarranger.py:1442
-msgid "Left"
-msgstr "左"
+#: pdfarranger/pdfarranger.py:1051
+msgid "PDF document is damaged"
+msgstr "PDF 文書が破損しています"
 
-#: pdfarranger/pdfarranger.py:1442
-msgid "Right"
-msgstr "右"
+#: pdfarranger/pdfarranger.py:1057 pdfarranger/pdfarranger.py:1742
+msgid "File is neither pdf nor image"
+msgstr "ファイルが PDF でも画像でもありません"
 
-#: pdfarranger/pdfarranger.py:1443
-msgid "Top"
-msgstr "上"
-
-#: pdfarranger/pdfarranger.py:1443
-msgid "Bottom"
-msgstr "下"
-
-#: pdfarranger/pdfarranger.py:1460
-msgid "Crop Selected Pages"
-msgstr "選択したページのトリミング"
-
-#: pdfarranger/pdfarranger.py:1468
-msgid ""
-"Cropping does not remove any content\n"
-"from the PDF file, it only hides it."
-msgstr ""
-"トリミングは PDF ファイルから内容自体は\n"
-"削除せずに、指定部分を見えなくします。"
-
-#: pdfarranger/pdfarranger.py:1471
-msgid "Crop Margins"
-msgstr "余白のトリミング"
-
-#: pdfarranger/pdfarranger.py:1481
-#, python-format
-msgid "% of width"
-msgstr "% (幅)"
-
-#: pdfarranger/pdfarranger.py:1481
-#, python-format
-msgid "% of height"
-msgstr "% (高さ)"
-
-#: pdfarranger/pdfarranger.py:1588
+#: pdfarranger/pdfarranger.py:1655
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -155,23 +175,23 @@ msgstr ""
 "%s は PDF ファイルの内容の追加や削除、順序の入れ替えやその他のちょっとした変"
 "更を行うための、GTK+ と Python で作成されたツールです"
 
-#: pdfarranger/pdfarranger.py:1632
-msgid "Unknown file format"
-msgstr "不明なファイル形式です"
+#: pdfarranger/pdfarranger.py:1658
+msgid "Maintainers and contributors"
+msgstr "メンテナーと貢献者"
 
-#: pdfarranger/pdfarranger.py:1644
+#: pdfarranger/pdfarranger.py:1662
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public License (GPL) Version 3."
+
+#: pdfarranger/pdfarranger.py:1728
 msgid "Image files are only supported with img2pdf"
 msgstr "画像ファイルは img2pdf でのみサポートしています"
 
-#: pdfarranger/pdfarranger.py:1656
+#: pdfarranger/pdfarranger.py:1740
 msgid "Image format is not supported by img2pdf"
 msgstr "img2pdf がサポートしていない画像形式です"
 
-#: pdfarranger/pdfarranger.py:1658
-msgid "File is neither pdf nor image"
-msgstr "ファイルが PDF でも画像でもありません"
-
-#: pdfarranger/pdfarranger.py:1709
+#: pdfarranger/pdfarranger.py:1793
 msgid "page"
 msgstr "ページ"
 
@@ -220,97 +240,137 @@ msgid "Save _As…"
 msgstr "名前を付けて保存(_A)…"
 
 #: data/menu.ui.h:4
-msgid "E_xport Selection…"
-msgstr "選択したものをエクスポート(_X)…"
+msgid "E_xport"
+msgstr "エクスポート(_X)"
 
 #: data/menu.ui.h:5
+msgid "E_xport Selection to a Single File…"
+msgstr "選択したものを単一のファイルにエクスポート(_X)…"
+
+#: data/menu.ui.h:6
+msgid "Export Selection to _Individual Files…"
+msgstr "選択したものを個別のファイルにエクスポート(_I)…"
+
+#: data/menu.ui.h:7
+msgid "Export _All Pages to Individual Files…"
+msgstr "すべてのページを個別のファイルにエクスポート(_A)…"
+
+#: data/menu.ui.h:8
 msgid "_Undo"
 msgstr "元に戻す(_U)"
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:9
 msgid "_Redo"
 msgstr "やり直す(_R)"
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:10
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:11
 msgid "Rotate _Left"
 msgstr "左に回転(_L)"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:12
 msgid "_Rotate Right"
 msgstr "右に回転(_R)"
 
-#: data/menu.ui.h:10
+#: data/menu.ui.h:13
 msgid "Cro_p"
 msgstr "トリミング(_P)"
 
-#: data/menu.ui.h:11
+#: data/menu.ui.h:14
+msgid "Crop White Borders"
+msgstr "白枠をトリミング"
+
+#: data/menu.ui.h:15
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:16
 msgid "Dupl_icate"
 msgstr "複製(_I)"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:17
 msgid "Re_verse Order"
 msgstr "逆順(_V)"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:18
 msgid "_Split pages"
 msgstr "ページを分割(_S)"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:19
 msgid "Cu_t"
 msgstr "切り取り(_T)"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:20
 msgid "_Copy"
 msgstr "コピー(_C)"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:21
 msgid "Paste _After"
 msgstr "後に貼り付け(_A)"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:22
 msgid "Paste _Before"
 msgstr "前に貼り付け(_B)"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:23
 msgid "Paste Interleave _Odd"
 msgstr "奇数ページに割り込み貼り付け(_O)"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:24
 msgid "Paste Interleave _Even"
 msgstr "偶数ページに割り込み貼り付け(_E)"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:25
+msgid "_Select"
+msgstr "選択(_S)"
+
+#: data/menu.ui.h:26
+msgid "Select _All"
+msgstr "すべて選択(_A)"
+
+#: data/menu.ui.h:27
+msgid "_Deselect All"
+msgstr "すべて選択解除(_D)"
+
+#: data/menu.ui.h:28
+msgid "Select _Odd Pages"
+msgstr "奇数ページを選択(_O)"
+
+#: data/menu.ui.h:29
+msgid "Select _Even Pages"
+msgstr "偶数ページを選択(_E)"
+
+#: data/menu.ui.h:30
+msgid "_Invert Selection"
+msgstr "選択を反転(_I)"
+
+#: data/menu.ui.h:31
 msgid "Zoom _In"
 msgstr "拡大(_I)"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:32
 msgid "Zoom _Out"
 msgstr "縮小(_O)"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:33
 msgid "Edit _Properties"
 msgstr "プロパティを編集(_P)"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:34
 msgid "_About"
 msgstr "情報(_A)"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:35
 msgid "_Quit"
 msgstr "終了(_Q)"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:36
 msgid "Past_e Special"
 msgstr "特殊貼り付け(_E)"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:37
 msgid "_Split Pages"
 msgstr "ページを分割(_S)"
