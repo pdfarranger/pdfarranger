@@ -1676,7 +1676,6 @@ class PdfArranger(Gtk.Application):
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def __update_statusbar(self):
-        model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         selected_pages = sorted([p.get_indices()[0] + 1 for p in selection])
         # Compact the representation of the selected page range
