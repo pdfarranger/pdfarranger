@@ -35,7 +35,6 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="label" translatable="yes">Save _As…</attribute>
         <attribute name="action">win.save-as</attribute>
         <attribute name="verb-icon">document-save-as-symbolic</attribute>
-        <attribute name="target" type="i">0</attribute>
       </item>
       <submenu>
         <attribute name="label" translatable="yes">E_xport</attribute>
