@@ -1727,15 +1727,21 @@ class PDFDoc:
             if not img2pdf:
                 raise PDFDocError(_('Image files are only supported with img2pdf'))
             if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
-                try:
-                    fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
-                    os.close(fd)
-                    with open(self.copyname, 'wb') as f:
+                fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+                os.close(fd)
+                with open(self.copyname, 'wb') as f:
+                    try:
                         f.write(img2pdf.convert(filename))
-                    uri = pathlib.Path(self.copyname).as_uri()
-                    self.document = Poppler.Document.new_from_file(uri, None)
-                except img2pdf.AlphaChannelError as e:
-                    raise PDFDocError(e)
+                    except img2pdf.AlphaChannelError as e:
+                        img = img2pdf.Image.open(filename)
+                        bg = img2pdf.Image.new('RGB', img.size, (255, 255, 255))
+                        bg.paste(img, mask=img.split()[-1])
+                        imgio = img2pdf.BytesIO()
+                        bg.save(imgio, 'PNG')
+                        imgio.seek(0)
+                        f.write(img2pdf.convert(imgio))
+                uri = pathlib.Path(self.copyname).as_uri()
+                self.document = Poppler.Document.new_from_file(uri, None)
             else:
                 raise PDFDocError(_('Image format is not supported by img2pdf'))
         else:
