@@ -29,6 +29,7 @@ import traceback
 import locale  # for multilanguage support
 import gettext
 import gc
+import copy
 from urllib.request import url2pathname
 
 try:
@@ -136,6 +137,72 @@ def _install_workaround_bug29():
 
 
 _install_workaround_bug29()
+
+
+class Page(object):
+    def __init__(self, nfile, npage, zoom, filename, angle, crop, size):
+        #: The ID (from 1 to n) of the PDF file owning the page
+        self.nfile = nfile
+        #: The ID (from 1 to n) of the page in its owner PDF document
+        self.npage = npage
+        self.zoom = zoom
+        self.filename = filename
+        #: Left, right, top, bottom crop
+        self.crop = list(crop)
+        #: width and height
+        self.size = list(size)
+        self.angle = angle
+        self.thumbnail = None
+        self.resample = 2
+
+    def description(self):
+        shortname = os.path.split(self.filename)[1]
+        shortname = os.path.splitext(shortname)[0]
+        return ''.join([shortname, '\n', _('page'), ' ', str(self.npage)])
+
+    def width_in_pixel(self):
+        """ scale*page_width*(1-crop_left-crop_right) """
+        return int(0.5 + int(self.zoom * self.size[0]) * (1. - self.crop[0] - self.crop[1]))
+
+    def rotate(self, angle):
+        rotate_times = int(round(((-angle) % 360) / 90) % 4)
+        if rotate_times == 0:
+            return False
+        perm = [0, 2, 1, 3]
+        for __ in range(rotate_times):
+            perm.append(perm.pop(0))
+        perm.insert(1, perm.pop(2))
+        self.crop = [self.crop[x] for x in perm]
+        self.angle = (self.angle + int(angle)) % 360
+        return True
+
+    def serialize(self):
+        """ Convert to string for copy/past operations """
+        ts = [self.filename, self.npage, self.angle] + list(self.crop)
+        return '\n'.join([str(v) for v in ts])
+
+    def duplicate(self):
+        r = copy.copy(self)
+        r.crop = list(r.crop)
+        r.size = list(r.size)
+        return r
+
+    def set_size(self, size):
+        """ set this page size from the Poppler page """
+        self.size = list(size)
+        rotation = int(self.angle) % 360
+        rotation = round(rotation / 90) * 90
+        if rotation == 90 or rotation == 270:
+            self.size.reverse()
+
+    def split(self):
+        """ Split this page and return the result right page """
+        newpage = self.duplicate()
+        left, right = self.crop[:2]
+        newcrop = (1 + left - right) / 2
+        newpage.crop[0] = newcrop
+        self.crop[1] = newcrop
+        return newpage
 
 
 class Config(object):
@@ -429,21 +496,7 @@ class PdfArranger(Gtk.Application):
         self.sw.connect('scroll_event', self.sw_scroll_event)
 
         # Create ListStore model and IconView
-        self.model = Gtk.ListStore(str,         # 0.Text descriptor
-                                   GObject.TYPE_PYOBJECT,
-                                                # 1.Cached page image
-                                   int,         # 2.Document number
-                                   int,         # 3.Page number
-                                   float,       # 4.Scale
-                                   str,         # 5.Document filename
-                                   int,         # 6.Rotation angle
-                                   float,       # 7.Crop left
-                                   float,       # 8.Crop right
-                                   float,       # 9.Crop top
-                                   float,       # 10.Crop bottom
-                                   float,       # 11.Page width
-                                   float,       # 12.Page height
-                                   float)       # 13.Resampling factor
+        self.model = Gtk.ListStore(GObject.TYPE_PYOBJECT, str)
         self.undomanager = undo.Manager(self)
         self.zoom_set(self.config.zoom_level())
 
@@ -456,7 +509,7 @@ class PdfArranger(Gtk.Application):
         self.cellthmb.set_alignment(0.5, 0.5)
         self.iconview.pack_start(self.cellthmb, False)
         self.iconview.set_cell_data_func(self.cellthmb, self.set_cellrenderer_data, None)
-        self.iconview.set_text_column(0)
+        self.iconview.set_text_column(1)
         cell_text_renderer = self.iconview.get_cells()[1]
         cell_text_renderer.props.ellipsize = Pango.EllipsizeMode.MIDDLE
 
@@ -539,16 +592,7 @@ class PdfArranger(Gtk.Application):
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
-        cell.set_property('image', model.get_value(it, 1))
-        cell.set_property('scale', model.get_value(it, 4))
-        cell.set_property('rotation', model.get_value(it, 6))
-        cell.set_property('cropL', model.get_value(it, 7))
-        cell.set_property('cropR', model.get_value(it, 8))
-        cell.set_property('cropT', model.get_value(it, 9))
-        cell.set_property('cropB', model.get_value(it, 10))
-        cell.set_property('width', model.get_value(it, 11))
-        cell.set_property('height', model.get_value(it, 12))
-        cell.set_property('resample', model.get_value(it, 13))
+        cell.set_page(model.get_value(it, 0))
 
     def render(self):
         if self.rendering_thread:
@@ -614,18 +658,17 @@ class PdfArranger(Gtk.Application):
         return True
 
     def update_thumbnail(self, _obj, num, thumbnail, resample):
-        row = self.model[num]
-        row[13] = resample
-        row[4] = self.zoom_scale
-        row[1] = thumbnail
+        page, _ = self.model[num]
+        page.resample = resample
+        page.zoom = self.zoom_scale
+        page.thumbnail = thumbnail
+        self.model[num][0] = page
 
     def on_window_size_request(self, window):
         """Main Window resize - workaround for autosetting of
            iconview cols no."""
         if len(self.model) > 0:
-            # scale*page_width*(1-crop_left-crop_right)
-            item_width = int(max(0.5 + int(row[4] * row[11]) * (1. - row[7] - row[8])
-                                 for row in self.model))
+            item_width = max(row[0].width_in_pixel() for row in self.model)
             item_padding = self.iconview.get_item_padding()
             cellthmb_xpad, _cellthmb_ypad = self.cellthmb.get_padding()
             border_and_shadow = 7  # 2*th1+th2 set in iconview.py
@@ -667,18 +710,10 @@ class PdfArranger(Gtk.Application):
         if not self.model.iter_is_valid(treeiter):
             return
 
-        nfile, npage, rotation = self.model.get(treeiter, 2, 3, 6)
-        page = self.pdfqueue[nfile - 1].document.get_page(npage - 1)
-        w0, h0 = page.get_size()
-
-        rotation = int(rotation) % 360
-        rotation = round(rotation / 90) * 90
-        if rotation == 90 or rotation == 270:
-            w1, h1 = h0, w0
-        else:
-            w1, h1 = w0, h0
-
-        self.model.set(treeiter, 11, w1, 12, h1)
+        p = self.model.get(treeiter, 0)[0]
+        page = self.pdfqueue[p.nfile - 1].document.get_page(p.npage - 1)
+        p.set_size(page.get_size())
+        self.model.set(treeiter, 0, p)
 
     def on_quit(self, _action, _param=None, _unknown=None):
         if self.is_unsaved:
@@ -766,8 +801,7 @@ class PdfArranger(Gtk.Application):
         """Returns the file names currently associated with pages in the model."""
         all_files = set()
         for row in self.model:
-            nfile = row[2]
-            f = self.pdfqueue[nfile - 1]
+            f = self.pdfqueue[row[0].nfile - 1]
             f = os.path.splitext(os.path.basename(f.filename))[0]
             all_files.add(f)
         return all_files
@@ -797,7 +831,6 @@ class PdfArranger(Gtk.Application):
         (shortname, ext) = os.path.splitext(shortname)
         if ext.lower() != '.pdf':
             file_out = file_out + '.pdf'
-        to_export = self.model
 
         exportmodes = {0: 'ALL_TO_SINGLE',
                        1: 'ALL_TO_MULTIPLE',
@@ -807,10 +840,11 @@ class PdfArranger(Gtk.Application):
 
         if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
             selection = self.iconview.get_selected_items()
-            to_export = [row for row in self.model if row.path in selection]
+            to_export = [row[0] for row in self.model if row.path in selection]
         else:
             self.export_directory = path
             self.set_export_file(file_out)
+            to_export = [row[0] for row in self.model]
 
         m = metadata.merge(self.metadata, self.pdfqueue)
         exporter.export(self.pdfqueue, to_export, file_out, mode, m)
@@ -894,13 +928,8 @@ class PdfArranger(Gtk.Application):
         data = []
         for path in selection:
             it = model.get_iter(path)
-            nfile, npage, angle = model.get(it, 2, 3, 6)
-            crop = model.get(it, 7, 8, 9, 10)
-            pdfdoc = self.pdfqueue[nfile - 1]
-            data.append('\n'.join([pdfdoc.filename,
-                                   str(npage),
-                                   str(angle)] +
-                                  [str(side) for side in crop]))
+            data.append(model.get_value(it, 0).serialize())
+
         if data:
             data = '\n;\n'.join(data)
 
@@ -1499,7 +1528,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_level = max(min(level, 40), -10)
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
-            row[4] = self.zoom_scale
+            row[0].zoom = self.zoom_scale
         if len(self.model) > 0:
             GObject.idle_add(self.render)
 
@@ -1516,23 +1545,16 @@ class PdfArranger(Gtk.Application):
             self.set_unsaved(True)
 
     def rotate_page(self, selection, angle):
-        rotate_times = int(round(((-angle) % 360) / 90) % 4)
         model = self.iconview.get_model()
+        rotated = False
         for path in selection:
             treeiter = model.get_iter(path)
-            perm = [0, 2, 1, 3]
-            for __ in range(rotate_times):
-                perm.append(perm.pop(0))
-            perm.insert(1, perm.pop(2))
-            crop = [model.get_value(treeiter, 7 + perm[side]) for side in range(4)]
-            for side in range(4):
-                model.set_value(treeiter, 7 + side, crop[side])
-
-            new_angle = model.get_value(treeiter, 6) + int(angle)
-            new_angle = new_angle % 360
-            model.set_value(treeiter, 6, new_angle)
+            p = model.get_value(treeiter, 0)
+            if p.rotate(angle):
+                rotated = True
+                model.set_value(treeiter, 0, p)
             self.update_geometry(treeiter)
-        return rotate_times != 0 and len(selection) > 0
+        return rotated
 
     def split_pages(self, _action, _parameter, _unknown):
         """ Split selected pages """
@@ -1546,12 +1568,10 @@ class PdfArranger(Gtk.Application):
                     for path in selection]
         for ref in ref_list:
             iterator = model.get_iter(ref.get_path())
-            newit = model.insert_after(iterator, model[iterator][:])
-            left = model.get_value(iterator, 7)
-            right = model.get_value(iterator, 8)
-            newcrop = (1 + left - right) / 2
-            model.set_value(newit, 7, newcrop)
-            model.set_value(iterator, 8, 1 - newcrop)
+            page = model.get_value(iterator, 0)
+            newpage = page.split()
+            model.insert_after(iterator, [newpage, newpage.description()])
+            model.set_value(iterator, 0, page)
 
         self.__update_statusbar()
 
@@ -1578,13 +1598,14 @@ class PdfArranger(Gtk.Application):
             self.set_unsaved(True)
 
     def crop(self, selection, newcrop):
-        oldcrop = [[0] * 4 for __ in range(len(selection))]
+        oldcrop = []
         model = self.iconview.get_model()
         for id_sel, path in enumerate(selection):
             pos = model.get_iter(path)
-            for it in range(4):
-                oldcrop[id_sel][it] = model.get_value(pos, 7 + it)
-                model.set_value(pos, 7 + it, newcrop[id_sel][it])
+            page = model.get_value(pos, 0)
+            oldcrop.append(page.crop)
+            page.crop = list(newcrop[id_sel])
+            model.set_value(pos, 0, page)
             self.update_geometry(pos)
         return oldcrop
 
@@ -1602,7 +1623,8 @@ class PdfArranger(Gtk.Application):
                     for path in selection]
         for ref in ref_list:
             iterator = model.get_iter(ref.get_path())
-            model.insert_after(iterator, model[iterator][:])
+            page = model.get_value(iterator, 0).duplicate()
+            model.insert_after(iterator, [page, page.description()])
 
         self.__update_statusbar()
 
@@ -1709,7 +1731,6 @@ class PDFDoc:
 
     def __init__(self, filename, tmp_dir):
         self.filename = os.path.abspath(filename)
-        self.shortname = os.path.splitext(os.path.split(self.filename)[1])[0]
         self.mtime = os.path.getmtime(filename)
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
@@ -1796,20 +1817,9 @@ class PageAdder(object):
             n_end = max(n_start, min(n_end, page))
 
         for npage in range(n_start, n_end + 1):
-            descriptor = ''.join([pdfdoc.shortname, '\n', _('page'), ' ', str(npage)])
             page = pdfdoc.document.get_page(npage - 1)
-            w, h = page.get_size()
-            self.pages.append((descriptor,           # 0
-                               None,                 # 1
-                               nfile,                # 2
-                               npage,                # 3
-                               self.app.zoom_scale,  # 4
-                               pdfdoc.filename,      # 5
-                               angle,                # 6
-                               crop[0], crop[1],     # 7-8
-                               crop[2], crop[3],     # 9-10
-                               w, h,                 # 11-12
-                               2.))                  # 13 FIXME
+            self.pages.append(Page(nfile, npage, self.app.zoom_scale,
+                              pdfdoc.filename, angle, crop, page.get_size()))
 
     def commit(self, select_added, add_to_undomanager):
         if len(self.pages) == 0:
@@ -1818,14 +1828,15 @@ class PageAdder(object):
             self.app.undomanager.commit("Add")
             self.app.set_unsaved(True)
         for p in self.pages:
+            m = [p, p.description()]
             if self.treerowref:
                 iter_to = self.app.model.get_iter(self.treerowref.get_path())
                 if self.before:
-                    it = self.app.model.insert_before(iter_to, p)
+                    it = self.app.model.insert_before(iter_to, m)
                 else:
-                    it = self.app.model.insert_after(iter_to, p)
+                    it = self.app.model.insert_after(iter_to, m)
             else:
-                it = self.app.model.append(p)
+                it = self.app.model.append(m)
             if select_added:
                 path = self.app.model.get_path(it)
                 self.app.iconview.select_path(path)
@@ -1848,12 +1859,11 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
     def run(self):
         for idx, row in enumerate(self.model):
+            p = row[0]
             if self.quit:
                 return
-            nfile = row[2]
-            npage = row[3]
-            pdfdoc = self.pdfqueue[nfile - 1]
-            page = pdfdoc.document.get_page(npage - 1)
+            pdfdoc = self.pdfqueue[p.nfile - 1]
+            page = pdfdoc.document.get_page(p.npage - 1)
             w, h = page.get_size()
             thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
                                            int(w / self.resample),

@@ -46,14 +46,14 @@ class Manager(object):
         :param label: label of the action
         """
         self.states = self.states[:self.current]
-        self.states.append(([list(row) for row in self.model], self.label,))
+        self.states.append(([row[0].duplicate() for row in self.model], self.label,))
         self.current += 1
         self.label = label
         self.__refresh()
 
     def undo(self, _action, _param, _unused):
         if self.current == len(self.states):
-            self.states.append(([list(row) for row in self.model], self.label,))
+            self.states.append(([row[0].duplicate() for row in self.model], self.label,))
         state, self.label = self.states[self.current - 1]
         self.__set_state(state)
         self.current -= 1
@@ -72,10 +72,10 @@ class Manager(object):
 
     def __set_state(self, state):
         self.model.clear()
-        for row in state:
+        for page in state:
             # Do not reset the zoom level
-            row[4] = self.app.zoom_scale
-            self.model.append(row)
+            page.zoom = self.app.zoom_scale
+            self.model.append([page, page.description()])
 
     def __refresh(self):
         if self.undoaction:

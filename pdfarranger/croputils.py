@@ -36,9 +36,8 @@ def dialog(model, selection, window):
 
     crop = [0.0, 0.0, 0.0, 0.0]
     if selection:
-        path = selection[0]
-        pos = model.get_iter(path)
-        crop = [model.get_value(pos, 7 + side) for side in range(4)]
+        pos = model.get_iter(selection[0])
+        crop = list(model.get_value(pos, 0).crop)
 
     dialog = Gtk.Dialog(
         title=(_('Crop Selected Pages')),
@@ -110,10 +109,10 @@ def white_borders(model, selection, pdfqueue):
     crop = []
     for path in selection:
         it = model.get_iter(path)
-        nfile, npage = model.get(it, 2, 3,)
-        pdfdoc = pdfqueue[nfile - 1]
+        p = model.get_value(it, 0)
+        pdfdoc = pdfqueue[p.nfile - 1]
 
-        page = pdfdoc.document.get_page(npage - 1)
+        page = pdfdoc.document.get_page(p.npage - 1)
         w, h = page.get_size()
         w = int(w)
         h = int(h)

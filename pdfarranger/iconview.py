@@ -20,63 +20,41 @@ from math import pi
 
 
 class CellRendererImage(Gtk.CellRenderer):
-    __gproperties__ = {
-        "image": (GObject.TYPE_PYOBJECT, "Image", "Image",
-                  GObject.PARAM_READWRITE),
-        "width": (GObject.TYPE_FLOAT, "Width", "Width",
-                  0., 1.e4, 0., GObject.PARAM_READWRITE),
-        "height": (GObject.TYPE_FLOAT, "Height", "Height",
-                   0., 1.e4, 0., GObject.PARAM_READWRITE),
-        "rotation": (GObject.TYPE_INT, "Rotation", "Rotation",
-                     0, 360, 0, GObject.PARAM_READWRITE),
-        "scale": (GObject.TYPE_FLOAT, "Scale", "Scale",
-                  0.01, 100., 1., GObject.PARAM_READWRITE),
-        "resample": (GObject.TYPE_FLOAT, "Resample", "Resample Coefficient",
-                     0., 100., 1., GObject.PARAM_READWRITE),
-        "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
-                  0., 1., 0., GObject.PARAM_READWRITE),
-        "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
-                  0., 1., 0., GObject.PARAM_READWRITE),
-        "cropT": (GObject.TYPE_FLOAT, "CropT", "CropT",
-                  0., 1., 0., GObject.PARAM_READWRITE),
-        "cropB": (GObject.TYPE_FLOAT, "CropB", "CropB",
-                  0., 1., 0., GObject.PARAM_READWRITE),
-    }
-
     def __init__(self):
         Gtk.CellRenderer.__init__(self)
         self.th1 = 2.  # border thickness
         self.th2 = 3.  # shadow thickness
+        self.page = None
+
+    def set_page(self, page):
+        self.page = page
 
     def get_geometry(self):
 
-        rotation = int(self.rotation) % 360
+        rotation = int(self.page.angle) % 360
         rotation = round(rotation / 90) * 90
-        if not self.image:
-            w0 = w1 = self.width / self.resample
-            h0 = h1 = self.height / self.resample
+        if not self.page.thumbnail:
+            s = self.page.size
+            r = self.page.resample
+            w0 = w1 = s[0] / r
+            h0 = h1 = s[1] / r
         else:
-            w0 = self.image.get_width()
-            h0 = self.image.get_height()
+            w0 = self.page.thumbnail.get_width()
+            h0 = self.page.thumbnail.get_height()
             if rotation == 90 or rotation == 270:
                 w1, h1 = h0, w0
             else:
                 w1, h1 = w0, h0
 
-        scale = self.resample * self.scale
-        w2 = int(0.5 + scale * (1. - self.cropL - self.cropR) * w1)
-        h2 = int(0.5 + scale * (1. - self.cropT - self.cropB) * h1)
+        scale = self.page.resample * self.page.zoom
+        c = self.page.crop
+        w2 = int(0.5 + scale * (1. - c[0] - c[1]) * w1)
+        h2 = int(0.5 + scale * (1. - c[2] - c[3]) * h1)
 
         return w0, h0, w1, h1, w2, h2, rotation
 
-    def do_set_property(self, pspec, value):
-        setattr(self, pspec.name, value)
-
-    def do_get_property(self, pspec):
-        return getattr(self, pspec.name)
-
     def do_render(self, window, _widget, _background_area, cell_area, _expose_area):
-        if not self.image:
+        if not self.page.thumbnail:
             return
 
         w0, h0, w1, h1, w2, h2, rotation = self.get_geometry()
@@ -92,8 +70,8 @@ class CellRendererImage(Gtk.CellRenderer):
 
         window.translate(x, y)
 
-        x = self.cropL * w1
-        y = self.cropT * h1
+        x = self.page.crop[0] * w1
+        y = self.page.crop[2] * h1
 
         # shadow
         window.set_source_rgb(0.5, 0.5, 0.5)
@@ -112,7 +90,7 @@ class CellRendererImage(Gtk.CellRenderer):
         window.clip()
 
         window.translate(self.th1, self.th1)
-        scale = self.resample * self.scale
+        scale = self.page.resample * self.page.zoom
         window.scale(scale, scale)
         window.translate(-x, -y)
         if rotation > 0:
@@ -120,7 +98,7 @@ class CellRendererImage(Gtk.CellRenderer):
             window.rotate(rotation * pi / 180)
             window.translate(-w0 / 2, -h0 / 2)
 
-        window.set_source_surface(self.image)
+        window.set_source_surface(self.page.thumbnail)
         window.paint()
 
     def do_get_size(self, _widget, cell_area=None):

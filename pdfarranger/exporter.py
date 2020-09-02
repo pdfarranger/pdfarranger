@@ -24,10 +24,9 @@ from . import metadata
 from decimal import Decimal
 
 
-def _mediabox(row, angle, angle0, box):
+def _mediabox(crop, angle, angle0, box):
     """ Return the cropped media box for a given page """
-    crop = row[7:11]
-    if crop != [0., 0., 0., 0.]:
+    if crop != (0., 0., 0., 0.):
         rotate_times = int(round(((angle + angle0) % 360) / 90) % 4)
         crop_init = crop
         if rotate_times != 0:
@@ -69,8 +68,8 @@ def export(input_files, pages, file_out, mode, mdata):
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname) for p in input_files]
     for row in pages:
-        current_page = pdf_input[row[2] - 1].pages[row[3] - 1]
-        angle = row[6]
+        current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
+        angle = row.angle
         angle0 = current_page.Rotate if '/Rotate' in current_page else 0
         new_page = pdf_output.copy_foreign(current_page)
         # Workaround for pikepdf <= 1.10.1
@@ -87,7 +86,7 @@ def export(input_files, pages, file_out, mode, mdata):
                       file=sys.stderr)
         if angle != 0:
             new_page.Rotate = angle + angle0
-        cropped = _mediabox(row, angle, angle0, current_page.MediaBox)
+        cropped = _mediabox(row.crop, angle, angle0, current_page.MediaBox)
         if cropped:
             new_page.MediaBox = cropped
         pdf_output.pages.append(new_page)
