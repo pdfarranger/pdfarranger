@@ -1730,16 +1730,20 @@ class PDFDoc:
                 fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
                 os.close(fd)
                 with open(self.copyname, 'wb') as f:
-                    try:
-                        f.write(img2pdf.convert(filename))
-                    except img2pdf.AlphaChannelError as e:
-                        img = img2pdf.Image.open(filename)
+                    img = img2pdf.Image.open(filename)
+                    if img.mode != 'RGBA' and 'transparency' in img.info:
+                        # TODO: Find a way to keep image in P or L format and remove transparency.
+                        # This will work but converting from 1, L, P to RGB is not optimal.
+                        img = img.convert('RGBA')
+                    if img.mode == 'RGBA':
                         bg = img2pdf.Image.new('RGB', img.size, (255, 255, 255))
                         bg.paste(img, mask=img.split()[-1])
                         imgio = img2pdf.BytesIO()
                         bg.save(imgio, 'PNG')
                         imgio.seek(0)
                         f.write(img2pdf.convert(imgio))
+                    else:
+                        f.write(img2pdf.convert(filename))
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
