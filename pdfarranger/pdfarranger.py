@@ -330,7 +330,6 @@ class PdfArranger(Gtk.Application):
         self.iconview = None
         self.cellthmb = None
         self.progress_bar = None
-        self.progress_bar_timeout_id = None
         self.status_bar = None
         self.popup = None
         self.is_unsaved = False
@@ -603,11 +602,6 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
 
-        if self.progress_bar_timeout_id is not None:
-            GObject.source_remove(self.progress_bar_timeout_id)
-        self.progress_bar_timeout_id = \
-            GObject.timeout_add(50, self.progress_bar_timeout)
-
     def set_export_file(self, file):
         if file != self.export_file:
             self.export_file = file
@@ -637,26 +631,13 @@ class PdfArranger(Gtk.Application):
         self.window.set_title(title)
         return False
 
-    def progress_bar_timeout(self):
-        cnt_finished = 0
-        cnt_all = 0
-        for row in self.model:
-            cnt_all += 1
-            if row[1]:
-                cnt_finished += 1
-        fraction = 1 if cnt_all == 0 else cnt_finished / cnt_all
-
+    def update_progress_bar(self, num):
+        fraction = float(num + 1) / len(self.model)
         self.progress_bar.set_fraction(fraction)
-        self.progress_bar.set_text(_('Rendering thumbnails… [%(i1)s/%(i2)s]')
-                                   % {'i1': cnt_finished, 'i2': cnt_all})
         if fraction >= 0.999:
             self.progress_bar.hide()
-            self.progress_bar_timeout_id = None
-            return False
         elif not self.progress_bar.get_visible():
             self.progress_bar.show()
-
-        return True
 
     def update_thumbnail(self, _obj, num, thumbnail, resample):
         page, _ = self.model[num]
@@ -664,6 +645,7 @@ class PdfArranger(Gtk.Application):
         page.zoom = self.zoom_scale
         page.thumbnail = thumbnail
         self.model[num][0] = page
+        self.update_progress_bar(num)
 
     def on_window_size_request(self, window):
         """Main Window resize - workaround for autosetting of
