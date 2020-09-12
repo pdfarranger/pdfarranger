@@ -638,6 +638,7 @@ class PdfArranger(Gtk.Application):
         self.progress_bar.set_fraction(fraction)
         if fraction >= 0.999:
             self.progress_bar.hide()
+            GObject.timeout_add(200, self.scroll_to_cursor)
         elif not self.progress_bar.get_visible():
             self.progress_bar.show()
 
@@ -1614,6 +1615,18 @@ class PdfArranger(Gtk.Application):
         self.zoom_level = -10
         while self.zoom_scale > 0.2 * (1.1 ** self.zoom_level):
             self.zoom_level += 1
+
+    def scroll_to_cursor(self):
+        """Scroll iconview so that thumbnail at cursor is in center of window."""
+        cursor_path = self.iconview.get_cursor()[1]
+        if not cursor_path:
+            return False
+        sw_vadj = self.sw.get_vadjustment()
+        cell_y = self.iconview.get_cell_rect(cursor_path)[1].y
+        cell_height = self.iconview.get_cell_rect(cursor_path)[1].height
+        sw_height = self.sw.get_allocated_height()
+        sw_vadj.set_value(cell_y + self.vp_css_margin + cell_height / 2 - sw_height / 2)
+        return False
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
