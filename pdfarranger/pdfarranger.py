@@ -334,7 +334,9 @@ class PdfArranger(Gtk.Application):
         self.popup = None
         self.is_unsaved = False
         self.zoom_level = None
+        self.zoom_level_old = 0
         self.zoom_scale = None
+        self.zoom_full_page = False
         self.target_is_intern = True
 
         self.export_directory = os.path.expanduser('~')
@@ -1377,6 +1379,8 @@ class PdfArranger(Gtk.Application):
             # Button was pressed and released on a previously selected item
             # without causing a drag and drop.
             path = iconview.get_path_at_pos(event.x, event.y)
+            if not path:
+                return
             if event.state & Gdk.ModifierType.CONTROL_MASK:
                 # Deselect the clicked item.
                 iconview.unselect_path(path)
@@ -1394,6 +1398,15 @@ class PdfArranger(Gtk.Application):
 
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
+        # Toggle full page zoom / set zoom level on double-click
+        if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS:
+            self.pressed_button = None
+            if self.zoom_full_page:
+                self.zoom_set(self.zoom_level_old)
+            else:
+                self.zoom_level_old = self.zoom_level
+                self.zoom_to_full_page()
+            return True
 
         x = int(event.x)
         y = int(event.y)
@@ -1441,7 +1454,16 @@ class PdfArranger(Gtk.Application):
             return 1
 
     def iv_key_press_event(self, iconview, event):
-        """Scroll iconview with keyboard keys."""
+        """Manages keyboard press events on the iconview."""
+        # Toggle full page zoom / set zoom level on key f
+        if event.keyval == Gdk.KEY_f:
+            if self.zoom_full_page:
+                self.zoom_set(self.zoom_level_old)
+            else:
+                self.zoom_level_old = self.zoom_level
+                self.zoom_to_full_page()
+
+        # Scroll iconview with keyboard keys
         sw_vadj = self.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
         columns_nr = iconview.get_columns()
@@ -1554,6 +1576,7 @@ class PdfArranger(Gtk.Application):
 
     def zoom_set(self, level):
         """Sets the zoom level"""
+        self.zoom_full_page = False
         self.zoom_level = max(min(level, 40), -10)
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
@@ -1564,6 +1587,33 @@ class PdfArranger(Gtk.Application):
     def zoom_change(self, _action, step, _unknown):
         """ Action handle for zoom change """
         self.zoom_set(self.zoom_level + step.get_int32())
+
+    def zoom_to_full_page(self):
+        """Zoom the thumbnail at cursor to full page."""
+        cursor_path = self.iconview.get_cursor()[1]
+        if not cursor_path:
+            return
+        self.zoom_full_page = True
+        cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0]
+        page, _ = self.model[cursor_page_nr]
+        sw_width = self.sw.get_allocated_width()
+        sw_height = self.sw.get_allocated_height()
+        page_width = max(page.size[0] for page, _ in self.model)
+        page_height = page.size[1]
+        cr = page.crop
+        cell_extraY = 78  # margins, border, shadow, text area..
+        cell_extraX = 36  # margins, border, shadow..
+        zoom_scaleX_new = (sw_width - cell_extraX) / ((page_width + 0.5) * (1. - cr[0] - cr[1]))
+        zoom_scaleY_new = (sw_height - cell_extraY) / ((page_height + 0.5) * (1. - cr[2] - cr[3]))
+        self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
+        for page, _ in self.model:
+            page.zoom = self.zoom_scale
+        GObject.idle_add(self.render)
+
+        # Set zoom level to nearest possible so zoom in/out works right
+        self.zoom_level = -10
+        while self.zoom_scale > 0.2 * (1.1 ** self.zoom_level):
+            self.zoom_level += 1
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
