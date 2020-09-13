@@ -337,6 +337,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_level_old = 0
         self.zoom_scale = None
         self.zoom_full_page = False
+        self.scroll_to_selection_request = False
         self.target_is_intern = True
 
         self.export_directory = os.path.expanduser('~')
@@ -638,7 +639,8 @@ class PdfArranger(Gtk.Application):
         self.progress_bar.set_fraction(fraction)
         if fraction >= 0.999:
             self.progress_bar.hide()
-            GObject.timeout_add(200, self.scroll_to_cursor)
+            if self.scroll_to_selection_request:
+                GObject.timeout_add(200, self.scroll_to_selection)
         elif not self.progress_bar.get_visible():
             self.progress_bar.show()
 
@@ -1578,6 +1580,7 @@ class PdfArranger(Gtk.Application):
     def zoom_set(self, level):
         """Sets the zoom level"""
         self.zoom_full_page = False
+        self.scroll_to_selection_request = True
         self.zoom_level = max(min(level, 40), -10)
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
@@ -1616,16 +1619,20 @@ class PdfArranger(Gtk.Application):
         while self.zoom_scale > 0.2 * (1.1 ** self.zoom_level):
             self.zoom_level += 1
 
-    def scroll_to_cursor(self):
-        """Scroll iconview so that thumbnail at cursor is in center of window."""
-        cursor_path = self.iconview.get_cursor()[1]
-        if not cursor_path:
+    def scroll_to_selection(self):
+        """Scroll iconview so that selection is in center of window."""
+        self.scroll_to_selection_request = False
+        selection = self.iconview.get_selected_items()
+        if not selection:
             return False
+        selection.sort(key=lambda x: x.get_indices()[0])
         sw_vadj = self.sw.get_vadjustment()
-        cell_y = self.iconview.get_cell_rect(cursor_path)[1].y
-        cell_height = self.iconview.get_cell_rect(cursor_path)[1].height
+        first_cell_y = self.iconview.get_cell_rect(selection[0])[1].y
+        last_cell_y = self.iconview.get_cell_rect(selection[-1])[1].y
+        last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
+        selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
         sw_height = self.sw.get_allocated_height()
-        sw_vadj.set_value(cell_y + self.vp_css_margin + cell_height / 2 - sw_height / 2)
+        sw_vadj.set_value(first_cell_y + selection_center + self.vp_css_margin - sw_height / 2)
         return False
 
     def rotate_page_action(self, _action, angle, _unknown):
