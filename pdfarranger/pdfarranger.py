@@ -164,6 +164,10 @@ class Page(object):
         """ scale*page_width*(1-crop_left-crop_right) """
         return int(0.5 + int(self.zoom * self.size[0]) * (1. - self.crop[0] - self.crop[1]))
 
+    def height_in_pixel(self):
+        """ scale*page_height*(1-crop_top-crop_bottom) """
+        return int(0.5 + int(self.zoom * self.size[1]) * (1. - self.crop[2] - self.crop[3]))
+
     def rotate(self, angle):
         rotate_times = int(round(((-angle) % 360) / 90) % 4)
         if rotate_times == 0:
@@ -1593,22 +1597,25 @@ class PdfArranger(Gtk.Application):
         self.zoom_set(self.zoom_level + step.get_int32())
 
     def zoom_to_full_page(self):
-        """Zoom the thumbnail at cursor to full page."""
-        cursor_path = self.iconview.get_cursor()[1]
-        if not cursor_path:
+        """Zoom selected thumbnail to full page."""
+        selection = self.iconview.get_selected_items()
+        if len(selection) != 1 or self.progress_bar.get_visible():
             return
         self.zoom_full_page = True
-        cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0]
-        page, _ = self.model[cursor_page_nr]
+        self.scroll_to_selection_request = True
+        selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
+        page, _ = self.model[selected_page_nr]
         sw_width = self.sw.get_allocated_width()
         sw_height = self.sw.get_allocated_height()
-        page_width = max(page.size[0] for page, _ in self.model)
-        page_height = page.size[1]
-        cr = page.crop
-        cell_extraY = 78  # margins, border, shadow, text area..
-        cell_extraX = 36  # margins, border, shadow..
-        zoom_scaleX_new = (sw_width - cell_extraX) / ((page_width + 0.5) * (1. - cr[0] - cr[1]))
-        zoom_scaleY_new = (sw_height - cell_extraY) / ((page_height + 0.5) * (1. - cr[2] - cr[3]))
+        page_width = max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model)
+        page_height = page.size[1] * (1. - page.crop[2] - page.crop[3])
+        max_page_height, i = max((p.height_in_pixel(), i) for i, (p, _) in enumerate(self.model))
+        path = Gtk.TreePath.new_from_indices([i])
+        max_cell_height = self.iconview.get_cell_rect(path)[1].height
+        cell_extraY = max_cell_height - max_page_height
+        cell_extraX = 24  # margins, padding, border, shadow..
+        zoom_scaleX_new = (sw_width - cell_extraX - 12) / (page_width + 0.5)  # 12 = margins
+        zoom_scaleY_new = (sw_height - cell_extraY - 12) / (page_height - 0.5)  # 12 = margins
         self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
         for page, _ in self.model:
             page.zoom = self.zoom_scale
