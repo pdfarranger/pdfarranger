@@ -1653,6 +1653,7 @@ class PdfArranger(Gtk.Application):
     def rotate_page(self, selection, angle):
         model = self.iconview.get_model()
         rotated = False
+        page_width_old = max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model)
         for path in selection:
             treeiter = model.get_iter(path)
             p = model.get_value(treeiter, 0)
@@ -1660,6 +1661,8 @@ class PdfArranger(Gtk.Application):
                 rotated = True
                 model.set_value(treeiter, 0, p)
             self.update_geometry(treeiter)
+        if page_width_old != max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model):
+            GObject.timeout_add(200, self.scroll_to_selection)
         return rotated
 
     def split_pages(self, _action, _parameter, _unknown):
