@@ -101,9 +101,11 @@ def export(input_files, pages, file_out, mode, mdata):
             if n > 0:
                 # Add page number to filename
                 outname = "".join(parts[:-1]) + str(n + 1) + '.' + parts[-1]
+            outpdf.remove_unreferenced_resources()
             outpdf.save(outname)
     else:
         _set_meta(mdata, pdf_input, pdf_output)
+        pdf_output.remove_unreferenced_resources()
         pdf_output.save(file_out)
 
 def num_pages(filepath):
