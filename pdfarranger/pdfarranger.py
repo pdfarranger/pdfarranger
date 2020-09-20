@@ -1483,7 +1483,8 @@ class PdfArranger(Gtk.Application):
             if event.keyval == Gdk.KEY_Up:
                 cursor_page_nr_new = max(cursor_page_nr - columns_nr, 0)
             elif event.keyval == Gdk.KEY_Down:
-                cursor_page_nr_new = min(cursor_page_nr + columns_nr, len(model) - 1)
+                step = 0 if cursor_page_nr + columns_nr > len(model) - 1 else columns_nr
+                cursor_page_nr_new = cursor_page_nr + step
             elif event.keyval in [Gdk.KEY_Left, Gdk.KEY_Right]:
                 cursor_page_nr_new = cursor_page_nr
             elif event.keyval == Gdk.KEY_Home:
