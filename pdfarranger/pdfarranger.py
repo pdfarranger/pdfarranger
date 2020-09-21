@@ -341,6 +341,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_level_old = 0
         self.zoom_scale = None
         self.zoom_full_page = False
+        self.zoom_change_render = None
         self.scroll_to_selection_request = False
         self.target_is_intern = True
 
@@ -602,12 +603,14 @@ class PdfArranger(Gtk.Application):
         cell.set_page(model.get_value(it, 0))
 
     def render(self):
+        self.zoom_change_render = None
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
         self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1 / self.zoom_scale)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
+        return False
 
     def set_export_file(self, file):
         if file != self.export_file:
@@ -656,9 +659,12 @@ class PdfArranger(Gtk.Application):
         self.model[num][0] = page
         self.update_progress_bar(num)
 
-    def on_window_size_request(self, window):
-        """Main Window resize - workaround for autosetting of
-           iconview cols no."""
+    def on_window_size_request(self, _window):
+        """Main Window resize."""
+        self.update_iconview_geometry()
+
+    def update_iconview_geometry(self):
+        """Set iconview cell size, margins, number of columns and spacing."""
         if len(self.model) > 0:
             item_width = max(row[0].width_in_pixel() for row in self.model)
             item_padding = self.iconview.get_item_padding()
@@ -670,7 +676,7 @@ class PdfArranger(Gtk.Application):
             padded_cell_width = cell_width + 2 * item_padding
             min_col_spacing = 5
             min_margin = 11
-            iw_width = window.get_size()[0]
+            iw_width = self.sw.get_allocation().width
             # 2 * min_margin + col_num * padded_cell_width
             #  + min_col_spacing * (col_num+1) = iw_width
             col_num = (iw_width - 2 * min_margin - min_col_spacing) //\
@@ -1586,6 +1592,9 @@ class PdfArranger(Gtk.Application):
         """Sets the zoom level"""
         if level < -10 or level > 40:
             return
+        if self.zoom_change_render:
+            GObject.source_remove(self.zoom_change_render)
+            self.zoom_change_render = None
         self.zoom_full_page = False
         self.scroll_to_selection_request = True
         self.zoom_level = level
@@ -1593,7 +1602,8 @@ class PdfArranger(Gtk.Application):
         for row in self.model:
             row[0].zoom = self.zoom_scale
         if len(self.model) > 0:
-            GObject.idle_add(self.render)
+            self.update_iconview_geometry()
+            self.zoom_change_render = GObject.timeout_add(400, self.render)
 
     def zoom_change(self, _action, step, _unknown):
         """ Action handle for zoom change """
