@@ -1584,9 +1584,11 @@ class PdfArranger(Gtk.Application):
 
     def zoom_set(self, level):
         """Sets the zoom level"""
+        if level < -10 or level > 40:
+            return
         self.zoom_full_page = False
         self.scroll_to_selection_request = True
-        self.zoom_level = max(min(level, 40), -10)
+        self.zoom_level = level
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
             row[0].zoom = self.zoom_scale
