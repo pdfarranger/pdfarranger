@@ -1485,6 +1485,10 @@ class PdfArranger(Gtk.Application):
         if event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                             Gdk.KEY_Home, Gdk.KEY_End]:
             # Scroll in order to keep cursor visible in window
+            selection = iconview.get_selected_items()
+            if selection and not iconview.get_cursor()[1] in selection:
+                selection.sort(key=lambda x: x.get_indices()[0])
+                iconview.set_cursor(selection[-1], None, False)
             cursor_path = iconview.get_cursor()[1]
             cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0] if cursor_path else 0
             if event.keyval == Gdk.KEY_Up:
