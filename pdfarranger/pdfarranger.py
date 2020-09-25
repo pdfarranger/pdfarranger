@@ -1704,7 +1704,7 @@ class PdfArranger(Gtk.Application):
     def crop_page_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping"""
         selection = self.iconview.get_selected_items()
-        crop = croputils.dialog(self.iconview.get_model(), selection, self.window)
+        crop = croputils.Dialog(self.iconview.get_model(), selection, self.window).run_get()
         if crop is not None:
             self.undomanager.commit("Crop")
             oldcrop = self.crop(selection, crop)
