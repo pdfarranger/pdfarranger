@@ -1088,6 +1088,7 @@ class PdfArranger(Gtk.Application):
                     return
                 data = filepaths
             self.paste_pages_interleave(data, before, ref_to)
+            self.iv_selection_changed_event()
 
     def read_from_clipboard(self):
         """Read data from clipboards. Check if data is copied pages or files."""
@@ -1694,8 +1695,7 @@ class PdfArranger(Gtk.Application):
             newpage = page.split()
             model.insert_after(iterator, [newpage, newpage.description()])
             model.set_value(iterator, 0, page)
-
-        self.__update_statusbar()
+        self.iv_selection_changed_event()
 
     def edit_metadata(self, _action, _parameter, _unknown):
         if metadata.edit(self.metadata, self.pdfqueue, self.window):
@@ -1747,8 +1747,8 @@ class PdfArranger(Gtk.Application):
             iterator = model.get_iter(ref.get_path())
             page = model.get_value(iterator, 0).duplicate()
             model.insert_after(iterator, [page, page.description()])
+        self.iv_selection_changed_event()
 
-        self.__update_statusbar()
 
     @staticmethod
     def reverse_order_available(selection):
