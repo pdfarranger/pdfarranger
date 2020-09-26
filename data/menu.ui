@@ -157,9 +157,14 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">3</attribute>
         </item>
         <item>
+          <attribute name="label" translatable="yes">All From _Same File</attribute>
+          <attribute name="action">win.select-same-file</attribute>
+          <attribute name="target" type="i">4</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">_Invert Selection</attribute>
           <attribute name="action">win.select</attribute>
-          <attribute name="target" type="i">4</attribute>
+          <attribute name="target" type="i">5</attribute>
         </item>
       </section>
     </submenu>
@@ -259,9 +264,14 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="target" type="i">3</attribute>
           </item>
           <item>
+            <attribute name="label" translatable="yes">All From _Same File</attribute>
+            <attribute name="action">win.select-same-file</attribute>
+            <attribute name="target" type="i">4</attribute>
+          </item>
+          <item>
             <attribute name="label" translatable="yes">_Invert Selection</attribute>
             <attribute name="action">win.select</attribute>
-            <attribute name="target" type="i">4</attribute>
+            <attribute name="target" type="i">5</attribute>
           </item>
         </section>
       </submenu>
