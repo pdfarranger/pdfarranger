@@ -428,6 +428,7 @@ class PdfArranger(Gtk.Application):
             ('copy', self.on_action_copy),
             ('paste', self.on_action_paste, 'i'),
             ('select', self.on_action_select, 'i'),
+            ('select-same-file', self.on_action_select, 'i'),
             ('about', self.about_dialog),
         ])
 
@@ -1166,7 +1167,7 @@ class PdfArranger(Gtk.Application):
 
     def on_action_select(self, _action, option, _unknown):
         """Selects items according to selected option."""
-        selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN', 4: 'INVERT'}
+        selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN', 4: 'SAME_FILE', 5:'INVERT'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
         if selectoption == 'ALL':
@@ -1184,6 +1185,12 @@ class PdfArranger(Gtk.Application):
                 if page_number % 2:
                     self.iconview.unselect_path(row.path)
                 else:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'SAME_FILE':
+            selection = self.iconview.get_selected_items()
+            filenames = set(model[row][0].filename for row in selection)
+            for page_number, row in enumerate(model):
+                if model[page_number][0].filename in filenames:
                     self.iconview.select_path(row.path)
         elif selectoption == 'INVERT':
             for row in model:
@@ -1533,7 +1540,7 @@ class PdfArranger(Gtk.Application):
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
                      ("delete", ne), ("duplicate", ne), ("crop", ne), ("rotate", ne),
                      ("export-selection", ne), ("cut", ne), ("copy", ne),
-                     ("split", ne)]:
+                     ("split", ne), ("select-same-file", ne)]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()
 
