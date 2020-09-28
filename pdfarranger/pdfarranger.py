@@ -466,6 +466,29 @@ class PdfArranger(Gtk.Application):
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
 
+    def __create_filters(self, file_type_list):
+        filter_list = []
+        if 'pdf' in file_type_list:
+            f = Gtk.FileFilter()
+            f.set_name(_('PDF files'))
+            f.add_pattern('*.pdf')
+            f.add_mime_type('application/pdf')
+            filter_list.append(f)
+        if 'all' in file_type_list:
+            f = Gtk.FileFilter()
+            f.set_name(_('All files'))
+            f.add_pattern('*')
+            filter_list.append(f)
+        if 'img2pdf' in file_type_list:
+            f = Gtk.FileFilter()
+            f.set_name(_('Supported image files'))
+            for mime in img2pdf_supported_img:
+                f.add_mime_type(mime)
+                for extension in mimetypes.guess_all_extensions(mime):
+                    f.add_pattern('*' + extension)
+            filter_list.append(f)
+        return filter_list
+
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
         # TODO: huge method that should be splitted
@@ -773,16 +796,9 @@ class PdfArranger(Gtk.Application):
         if len(self.pdfqueue) > 0:
             chooser.set_filename(self.pdfqueue[0].filename)
         chooser.set_current_folder(self.export_directory)
-        filter_pdf = Gtk.FileFilter()
-        filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_pattern('*.pdf')
-        filter_pdf.add_mime_type('application/pdf')
-        chooser.add_filter(filter_pdf)
-
-        filter_all = Gtk.FileFilter()
-        filter_all.set_name(_('All files'))
-        filter_all.add_pattern('*')
-        chooser.add_filter(filter_all)
+        filter_list = self.__create_filters(['pdf', 'all'])
+        for f in filter_list:
+            chooser.add_filter(f)
 
         response = chooser.run()
         file_out = chooser.get_filename()
@@ -793,7 +809,6 @@ class PdfArranger(Gtk.Application):
             except Exception as e:
                 traceback.print_exc()
                 self.error_message_dialog(e)
-                return
 
     def active_file_names(self):
         """Returns the file names currently associated with pages in the model."""
@@ -867,27 +882,12 @@ class PdfArranger(Gtk.Application):
                                                  Gtk.ResponseType.ACCEPT))
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
-        # TODO: Factorize, file filters are the same in choose_export_pdf_name
-        filter_all = Gtk.FileFilter()
-        filter_all.set_name(_('All files'))
-        filter_all.add_pattern('*')
-        chooser.add_filter(filter_all)
-
+        file_type_list = ['all', 'pdf']
         if img2pdf:
-            filter_image = Gtk.FileFilter()
-            filter_image.set_name(_('Supported image files'))
-            for mime in img2pdf_supported_img:
-                filter_image.add_mime_type(mime)
-                for extension in mimetypes.guess_all_extensions(mime):
-                    filter_image.add_pattern('*' + extension)
-            chooser.add_filter(filter_image)
-
-        filter_pdf = Gtk.FileFilter()
-        filter_pdf.set_name(_('PDF files'))
-        filter_pdf.add_pattern('*.pdf')
-        filter_pdf.add_mime_type('application/pdf')
-        chooser.add_filter(filter_pdf)
-        chooser.set_filter(filter_pdf)
+            file_type_list = ['all', 'img2pdf', 'pdf']
+        filter_list = self.__create_filters(file_type_list)
+        for f in filter_list:
+            chooser.add_filter(f)
 
         response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
