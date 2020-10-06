@@ -445,7 +445,7 @@ class PdfArranger(Gtk.Application):
             ('export-selection(2)', '<Ctrl>e'),
             ('export-all', '<Ctrl><Shift>e'),
             ('quit', '<Ctrl>q'),
-            ('import', 'Insert'),
+            ('import', '<Ctrl>o'),
             ('zoom(5)', ['plus', 'KP_Add']),
             ('zoom(-5)', ['minus', 'KP_Subtract']),
             ('undo', '<Ctrl>z'),
@@ -469,25 +469,30 @@ class PdfArranger(Gtk.Application):
 
     def __create_filters(self, file_type_list):
         filter_list = []
+        f_supported = Gtk.FileFilter()
+        f_supported.set_name(_('All supported files'))
+        filter_list.append(f_supported)
         if 'pdf' in file_type_list:
-            f = Gtk.FileFilter()
-            f.set_name(_('PDF files'))
-            f.add_pattern('*.pdf')
-            f.add_mime_type('application/pdf')
-            filter_list.append(f)
+            f_pdf = Gtk.FileFilter()
+            f_pdf.set_name(_('PDF files'))
+            for f in [f_pdf, f_supported]:
+                f.add_pattern('*.pdf')
+                f.add_mime_type('application/pdf')
+            filter_list.append(f_pdf)
         if 'all' in file_type_list:
             f = Gtk.FileFilter()
             f.set_name(_('All files'))
             f.add_pattern('*')
             filter_list.append(f)
         if 'img2pdf' in file_type_list:
-            f = Gtk.FileFilter()
-            f.set_name(_('Supported image files'))
-            for mime in img2pdf_supported_img:
-                f.add_mime_type(mime)
-                for extension in mimetypes.guess_all_extensions(mime):
-                    f.add_pattern('*' + extension)
-            filter_list.append(f)
+            f_img = Gtk.FileFilter()
+            f_img.set_name(_('Supported image files'))
+            for f in [f_img, f_supported]:
+                for mime in img2pdf_supported_img:
+                    f.add_mime_type(mime)
+                    for extension in mimetypes.guess_all_extensions(mime):
+                        f.add_pattern('*' + extension)
+            filter_list.append(f_img)
         return filter_list
 
     def do_activate(self):
@@ -798,7 +803,7 @@ class PdfArranger(Gtk.Application):
             chooser.set_filename(self.pdfqueue[0].filename)
         chooser.set_current_folder(self.export_directory)
         filter_list = self.__create_filters(['pdf', 'all'])
-        for f in filter_list:
+        for f in filter_list[1:]:
             chooser.add_filter(f)
 
         response = chooser.run()
