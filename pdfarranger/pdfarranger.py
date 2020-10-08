@@ -445,7 +445,7 @@ class PdfArranger(Gtk.Application):
             ('export-selection(2)', '<Ctrl>e'),
             ('export-all', '<Ctrl><Shift>e'),
             ('quit', '<Ctrl>q'),
-            ('import', 'Insert'),
+            ('import', '<Ctrl>o'),
             ('zoom(5)', ['plus', 'KP_Add']),
             ('zoom(-5)', ['minus', 'KP_Subtract']),
             ('undo', '<Ctrl>z'),
