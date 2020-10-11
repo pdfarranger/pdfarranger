@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 23:49+0200\n"
-"PO-Revision-Date: 2020-07-22 13:12+0200\n"
+"POT-Creation-Date: 2020-08-12 12:24+0200\n"
+"PO-Revision-Date: 2020-10-11 15:12+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: pdfarranger/croputils.py:29
 msgid "Left"
@@ -98,10 +98,6 @@ msgstr "Eigenschaft"
 msgid "Value"
 msgstr "Wert"
 
-#: pdfarranger/pdfarranger.py:575
-msgid "untitled"
-msgstr "unbenannt"
-
 #: pdfarranger/pdfarranger.py:599
 #, python-format
 msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
@@ -155,7 +151,7 @@ msgstr "Unterstützte Bilddateien"
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Eingefügte Daten nicht gültig. Einfügen wird abgebrochen."
 
-#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1666
+#: pdfarranger/pdfarranger.py:1028 pdfarranger/pdfarranger.py:1667
 msgid "Unknown file format"
 msgstr "Unbekanntes Dateiformat"
 
@@ -163,11 +159,11 @@ msgstr "Unbekanntes Dateiformat"
 msgid "PDF document is damaged"
 msgstr "PDF-Dokument ist beschädigt"
 
-#: pdfarranger/pdfarranger.py:1038 pdfarranger/pdfarranger.py:1692
+#: pdfarranger/pdfarranger.py:1038 pdfarranger/pdfarranger.py:1693
 msgid "File is neither pdf nor image"
 msgstr "Datei ist weder ein pdf noch ein Bild"
 
-#: pdfarranger/pdfarranger.py:1619
+#: pdfarranger/pdfarranger.py:1620
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -176,23 +172,23 @@ msgstr ""
 "%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
 "Geschrieben in GTK+ und Python."
 
-#: pdfarranger/pdfarranger.py:1622
+#: pdfarranger/pdfarranger.py:1623
 msgid "Maintainers and contributors"
 msgstr "Verwalter und Mitwirkende"
 
-#: pdfarranger/pdfarranger.py:1626
+#: pdfarranger/pdfarranger.py:1627
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
 
-#: pdfarranger/pdfarranger.py:1678
+#: pdfarranger/pdfarranger.py:1679
 msgid "Image files are only supported with img2pdf"
 msgstr "Bilddateien werden nur mit img2pdf unterstützt"
 
-#: pdfarranger/pdfarranger.py:1690
+#: pdfarranger/pdfarranger.py:1691
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformat wird von img2pdf nicht unterstützt"
 
-#: pdfarranger/pdfarranger.py:1743
+#: pdfarranger/pdfarranger.py:1744
 msgid "page"
 msgstr "Seite"
 
