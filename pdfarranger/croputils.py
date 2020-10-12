@@ -65,18 +65,6 @@ class _LinkedSpinButton(Gtk.SpinButton):
         self.get_buffer().set_text(s, len(s))
         return True
 
-    def connect_brother(self, brother, func):
-        """ Ensure a broher spinbutton have func(get_value()) value """
-        self.brother_func = func
-        self.connect("value-changed", self.__change_brother, brother)
-
-    @staticmethod
-    def __change_brother(self, brother):
-        if not self.changing_from_brother:
-            brother.changing_from_brother = True
-            brother.set_value(self.brother_func(self.get_value()))
-            brother.changing_from_brother = False
-
 
 class _RadioStackSwitcher(Gtk.VBox):
     """ Same as GtkStackSwitcher but with radio button (i.e different semantic) """
