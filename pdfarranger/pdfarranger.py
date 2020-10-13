@@ -721,7 +721,8 @@ class PdfArranger(Gtk.Application):
             if self.vp_css_margin != 6 - margin:
                 # remove margin on top and bottom
                 self.vp_css_margin = 6 - margin
-                css_data = 'viewport {margin-top:' + str(self.vp_css_margin) + 'px;\
+                css_data = 'window viewport {\
+                margin-top:' + str(self.vp_css_margin) + 'px;\
                 margin-bottom:' + str(self.vp_css_margin) + 'px;}'
                 style_provider = Gtk.CssProvider()
                 style_provider.load_from_data(bytes(css_data.encode()))
