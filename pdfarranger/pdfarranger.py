@@ -154,19 +154,26 @@ class Page(object):
         self.angle = angle
         self.thumbnail = None
         self.resample = 2
+        self.scale = 1
 
     def description(self):
         shortname = os.path.split(self.filename)[1]
         shortname = os.path.splitext(shortname)[0]
         return ''.join([shortname, '\n', _('page'), ' ', str(self.npage)])
 
+    def width_in_points(self):
+        """ Return the page width in PDF points """
+        return (self.scale * self.size[0]) * (1 - self.crop[0] - self.crop[1])
+
+    def height_in_points(self):
+        """ Return the page height in PDF points """
+        return (self.scale * self.size[1]) * (1 - self.crop[2] - self.crop[3])
+
     def width_in_pixel(self):
-        """ scale*page_width*(1-crop_left-crop_right) """
-        return int(0.5 + int(self.zoom * self.size[0]) * (1. - self.crop[0] - self.crop[1]))
+        return int(0.5 + self.zoom * self.width_in_points())
 
     def height_in_pixel(self):
-        """ scale*page_height*(1-crop_top-crop_bottom) """
-        return int(0.5 + int(self.zoom * self.size[1]) * (1. - self.crop[2] - self.crop[3]))
+        return int(0.5 + self.zoom * self.height_in_points())
 
     def rotate(self, angle):
         rotate_times = int(round(((-angle) % 360) / 90) % 4)
@@ -410,7 +417,7 @@ class PdfArranger(Gtk.Application):
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
-            ('crop', self.crop_page_dialog),
+            ('page-format', self.page_format_dialog),
             ('crop-white-borders', self.crop_white_borders),
             ('export-selection', self.choose_export_selection_pdf_name, 'i'),
             ('export-all', self.on_action_export_all),
@@ -437,7 +444,7 @@ class PdfArranger(Gtk.Application):
 
         accels = [
             ('delete', 'Delete'),
-            ('crop', 'c'),
+            ('page-format', 'c'),
             ('rotate(90)', '<Ctrl>Right'),
             ('rotate(-90)', '<Ctrl>Left'),
             ('save', '<Ctrl>s'),
@@ -1544,7 +1551,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
-                     ("delete", ne), ("duplicate", ne), ("crop", ne), ("rotate", ne),
+                     ("delete", ne), ("duplicate", ne), ("page-format", ne), ("rotate", ne),
                      ("export-selection", ne), ("cut", ne), ("copy", ne),
                      ("split", ne), ("select-same-file", ne)]:
             self.window.lookup_action(a).set_enabled(e)
@@ -1638,8 +1645,8 @@ class PdfArranger(Gtk.Application):
         page, _ = self.model[selected_page_nr]
         sw_width = self.sw.get_allocated_width()
         sw_height = self.sw.get_allocated_height()
-        page_width = max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model)
-        page_height = page.size[1] * (1. - page.crop[2] - page.crop[3])
+        page_width = max(p.width_in_points() for p, _ in self.model)
+        page_height = page.height_in_points()
         max_page_height, i = max((p.height_in_pixel(), i) for i, (p, _) in enumerate(self.model))
         path = Gtk.TreePath.new_from_indices([i])
         max_cell_height = self.iconview.get_cell_rect(path)[1].height
@@ -1718,15 +1725,21 @@ class PdfArranger(Gtk.Application):
         if metadata.edit(self.metadata, self.pdfqueue, self.window):
             self.set_unsaved(True)
 
-    def crop_page_dialog(self, _action, _parameter, _unknown):
-        """Opens a dialog box to define margins for page cropping"""
+    def page_format_dialog(self, _action, _parameter, _unknown):
+        """Opens a dialog box to define margins for page cropping and page size"""
         selection = self.iconview.get_selected_items()
-        crop = croputils.Dialog(self.iconview.get_model(), selection, self.window).run_get()
+        diag = croputils.Dialog(self.iconview.get_model(), selection, self.window)
+        crop, newscale = diag.run_get()
+        if crop is not None or newscale is not None:
+            self.undomanager.commit("Format")
         if crop is not None:
-            self.undomanager.commit("Crop")
             oldcrop = self.crop(selection, crop)
             if oldcrop != crop:
                 self.set_unsaved(True)
+        if newscale is not None:
+            if croputils.scale(self.model, selection, newscale):
+                self.set_unsaved(True)
+                GObject.idle_add(self.render)
 
     def crop_white_borders(self, _action, _parameter, _unknown):
         selection = self.iconview.get_selected_items()
@@ -2008,12 +2021,13 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             pdfdoc = self.pdfqueue[p.nfile - 1]
             page = pdfdoc.document.get_page(p.npage - 1)
             w, h = page.get_size()
+            scale = p.scale / self.resample
             thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
-                                           int(w / self.resample),
-                                           int(h / self.resample))
+                                           int(w * scale),
+                                           int(h * scale))
             cr = cairo.Context(thumbnail)
-            if self.resample != 1.:
-                cr.scale(1. / self.resample, 1. / self.resample)
+            if scale != 1.:
+                cr.scale(scale, scale)
             page.render(cr)
             GObject.idle_add(self.emit, 'update_thumbnail',
                              idx, thumbnail, self.resample,

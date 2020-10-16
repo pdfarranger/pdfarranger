@@ -57,6 +57,24 @@ def _set_meta(mdata, pdf_input, pdf_output):
             outmeta[k] = v
 
 
+def _scale(doc, page, factor):
+    """ Scale a page """
+    if factor == 1:
+        return page
+    page = doc.make_indirect(page)
+    page_id = len(doc.pages)
+    newmediabox = [factor * float(x) for x in page.MediaBox]
+    content = "q {} 0 0 {} 0 0 cm /p{} Do Q".format(factor, factor, page_id)
+    xobject = pikepdf.Page(page).as_form_xobject()
+    new_page = pikepdf.Dictionary(
+        Type=pikepdf.Name.Page,
+        MediaBox=newmediabox,
+        Contents=doc.make_stream(content.encode()),
+        Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
+    )
+    return new_page
+
+
 def export(input_files, pages, file_out, mode, mdata):
     exportmodes = {0: 'ALL_TO_SINGLE',
                    1: 'ALL_TO_MULTIPLE',
@@ -89,6 +107,7 @@ def export(input_files, pages, file_out, mode, mdata):
         cropped = _mediabox(row.crop, angle, angle0, current_page.MediaBox)
         if cropped:
             new_page.MediaBox = cropped
+        new_page = _scale(pdf_output, new_page, row.scale)
         pdf_output.pages.append(new_page)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
