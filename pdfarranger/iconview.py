@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 from gi.repository import Gtk
+from gi.repository import Gdk
 from math import pi
 
 
@@ -115,3 +116,124 @@ class CellRendererImage(Gtk.CellRenderer):
         w += 2 * self.get_property('xpad')
         h += 2 * self.get_property('ypad')
         return int(x), int(y), w, h
+
+
+class IconviewCursor(object):
+    """Move cursor, select pages and scroll with navigation keys."""
+    def __init__(self, app):
+        self.app = app
+        self.model = self.app.iconview.get_model()
+        self.move_cursor = True
+        self.event = None
+        self.iconview = None
+        self.sel_start_page = None
+        self.cursor_page_nr = 0
+        self.cursor_page_nr_new = 0
+        self.cursor_is_visible = False
+
+    def handler(self, iconview, event):
+        """Do all steps involved in cursor moving."""
+        self.iconview = iconview
+        self.event = event
+        self.set_initial()
+        self.set_selection_start_page()
+        self.move()
+        self.select()
+        self.scroll_iconview()
+
+    def set_initial(self):
+        """Cursor initial set."""
+        self.move_cursor = True
+        selection = self.iconview.get_selected_items()
+        if len(selection) == 0:
+            self.cursor_is_visible = False
+        if selection and not self.iconview.get_cursor()[1] in selection:
+            selection.sort(key=lambda x: x.get_indices()[0])
+            self.iconview.set_cursor(selection[-1], None, False)
+            if self.event.state & Gdk.ModifierType.SHIFT_MASK:
+                self.sel_start_page = Gtk.TreePath.get_indices(selection[-1])[0]
+                self.iconview.unselect_all()
+        elif not self.iconview.get_cursor()[0]:
+            if self.event.keyval == Gdk.KEY_End:
+                self.cursor_page_nr_new = len(self.model) - 1
+            else:
+                self.cursor_page_nr_new = 0
+            cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
+            self.iconview.set_cursor(cursor_path_new, None, False)
+            self.move_cursor = False
+            self.iconview.unselect_all()
+
+    def set_selection_start_page(self):
+        """Set selection start page when shift + navigation keys are used."""
+        if self.sel_start_page == None and self.event.state & Gdk.ModifierType.SHIFT_MASK:
+            self.sel_start_page = Gtk.TreePath.get_indices(self.iconview.get_cursor()[1])[0]
+            self.iconview.unselect_all()
+        elif not self.event.state & Gdk.ModifierType.SHIFT_MASK:
+            self.sel_start_page = None
+
+    def move(self):
+        """Move iconview cursor with navigation keys."""
+        columns_nr = self.iconview.get_columns()
+        if self.move_cursor:
+            cursor_path = self.iconview.get_cursor()[1]
+            self.cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0]
+            if self.event.keyval == Gdk.KEY_Up:
+                step = 0 if self.cursor_page_nr - columns_nr < 0 else columns_nr
+                self.cursor_page_nr_new = self.cursor_page_nr - step
+            elif self.event.keyval == Gdk.KEY_Down:
+                step = 0 if self.cursor_page_nr + columns_nr > len(self.model) - 1 else columns_nr
+                self.cursor_page_nr_new = self.cursor_page_nr + step
+            elif self.event.keyval == Gdk.KEY_Left:
+                self.cursor_page_nr_new = max(self.cursor_page_nr - 1, 0)
+            elif self.event.keyval == Gdk.KEY_Right:
+                self.cursor_page_nr_new = min(self.cursor_page_nr + 1, len(self.model) - 1)
+            elif self.event.keyval == Gdk.KEY_Home:
+                self.cursor_page_nr_new = 0
+            elif self.event.keyval == Gdk.KEY_End:
+                self.cursor_page_nr_new = len(self.model) - 1
+            cursor_path = Gtk.TreePath.new_from_indices([self.cursor_page_nr])
+            self.iconview.unselect_path(cursor_path)
+            if not self.cursor_is_visible:
+                self.iconview.emit('move-cursor', Gtk.MovementStep.DISPLAY_LINES, 0)
+                self.cursor_is_visible = True
+                self.iconview.unselect_all()
+            cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
+            self.iconview.set_cursor(cursor_path_new, None, False)
+
+    def select(self):
+        """Select iconview pages with shift + navigation keys."""
+        if self.event.state & Gdk.ModifierType.SHIFT_MASK:
+            if self.cursor_page_nr_new > self.sel_start_page > self.cursor_page_nr:
+                for page_nr in range(self.cursor_page_nr, self.sel_start_page):
+                    path = Gtk.TreePath.new_from_indices([page_nr])
+                    self.iconview.unselect_path(path)
+            elif self.cursor_page_nr_new < self.sel_start_page < self.cursor_page_nr:
+                for page_nr in range(self.sel_start_page, self.cursor_page_nr):
+                    path = Gtk.TreePath.new_from_indices([page_nr])
+                    self.iconview.unselect_path(path)
+            elif self.cursor_page_nr_new == self.sel_start_page:
+                self.iconview.unselect_all()
+            step = -1 if self.cursor_page_nr_new < self.sel_start_page else 1
+            for page_nr in range(self.cursor_page_nr_new, self.cursor_page_nr + step, step):
+                path = Gtk.TreePath.new_from_indices([page_nr])
+                self.iconview.unselect_path(path)
+            for page_nr in range(self.sel_start_page, self.cursor_page_nr_new + step, step):
+                path = Gtk.TreePath.new_from_indices([page_nr])
+                self.iconview.select_path(path)
+        else:
+            self.iconview.unselect_all()
+            cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
+            self.iconview.select_path(cursor_path_new)
+
+    def scroll_iconview(self):
+        """Scroll in order to keep cursor visible in window."""
+        sw_vadj = self.app.sw.get_vadjustment()
+        sw_vpos = sw_vadj.get_value()
+        columns_nr = self.iconview.get_columns()
+        cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
+        cell_height = self.iconview.get_cell_rect(cursor_path_new)[1].height
+        cell_y = self.iconview.get_cell_rect(cursor_path_new)[1].y
+        sw_height = self.app.sw.get_allocated_height()
+        sw_vpos = min(sw_vpos, cell_y + self.app.vp_css_margin - 6)
+        sw_vpos = max(sw_vpos, cell_y + self.app.vp_css_margin + 6 - sw_height + cell_height)
+        sw_vadj.set_value(sw_vpos)

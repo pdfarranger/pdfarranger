@@ -118,6 +118,7 @@ from . import exporter
 from . import metadata
 from . import croputils
 from .iconview import CellRendererImage
+from .iconview import IconviewCursor
 GObject.type_register(CellRendererImage)
 
 def _install_workaround_bug29():
@@ -574,7 +575,8 @@ class PdfArranger(Gtk.Application):
         self.iconview.connect('button_press_event', self.iv_button_press_event)
         self.iconview.connect('motion_notify_event', self.iv_motion)
         self.iconview.connect('button_release_event', self.iv_button_release_event)
-        self.iconview.connect('selection_changed', self.iv_selection_changed_event)
+        self.id_selection_changed_event = self.iconview.connect('selection_changed',
+                                                          self.iv_selection_changed_event)
         self.iconview.connect('key_press_event', self.iv_key_press_event)
 
         self.sw.add_with_viewport(self.iconview)
@@ -633,6 +635,8 @@ class PdfArranger(Gtk.Application):
         self.set_unsaved(False)
         self.__create_actions()
         self.__create_menus()
+
+        self.iv_cursor = IconviewCursor(self)
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
@@ -1469,6 +1473,10 @@ class PdfArranger(Gtk.Application):
                         iconview.select_path(path)
             return 1
 
+        # Forget where cursor was when shift was pressed
+        if event.button == 1 and not event.state & Gdk.ModifierType.SHIFT_MASK:
+            self.iv_cursor.sel_start_page = None
+
         # Do not deselect when clicking an already selected item for drag and drop
         if event.button == 1:
             selection = iconview.get_selected_items()
@@ -1497,41 +1505,20 @@ class PdfArranger(Gtk.Application):
                 self.zoom_level_old = self.zoom_level
                 self.zoom_to_full_page()
 
-        # Scroll iconview with keyboard keys
-        sw_vadj = self.sw.get_vadjustment()
-        sw_vpos = sw_vadj.get_value()
-        columns_nr = iconview.get_columns()
-        model = iconview.get_model()
-        if event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
+        elif event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                             Gdk.KEY_Home, Gdk.KEY_End]:
-            # Scroll in order to keep cursor visible in window
-            selection = iconview.get_selected_items()
-            if selection and not iconview.get_cursor()[1] in selection:
-                selection.sort(key=lambda x: x.get_indices()[0])
-                iconview.set_cursor(selection[-1], None, False)
-            cursor_path = iconview.get_cursor()[1]
-            cursor_page_nr = Gtk.TreePath.get_indices(cursor_path)[0] if cursor_path else 0
-            if event.keyval == Gdk.KEY_Up:
-                cursor_page_nr_new = max(cursor_page_nr - columns_nr, 0)
-            elif event.keyval == Gdk.KEY_Down:
-                step = 0 if cursor_page_nr + columns_nr > len(model) - 1 else columns_nr
-                cursor_page_nr_new = cursor_page_nr + step
-            elif event.keyval in [Gdk.KEY_Left, Gdk.KEY_Right]:
-                cursor_page_nr_new = cursor_page_nr
-            elif event.keyval == Gdk.KEY_Home:
-                cursor_page_nr_new = 0
-            elif event.keyval == Gdk.KEY_End:
-                cursor_page_nr_new = len(model) - 1
-            cursor_path_new = Gtk.TreePath.new_from_indices([cursor_page_nr_new])
-            cell_height = iconview.get_cell_rect(cursor_path_new)[1].height
-            cell_y = iconview.get_cell_rect(cursor_path_new)[1].y
-            sw_height = self.sw.get_allocated_height()
-            sw_vpos = min(sw_vpos, cell_y + self.vp_css_margin - 6)
-            sw_vpos = max(sw_vpos, cell_y + self.vp_css_margin + 6 - sw_height + cell_height)
-            sw_vadj.set_value(sw_vpos)
+            # Move cursor, select pages and scroll with navigation keys
+            with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
+                self.iv_cursor.handler(iconview, event)
+            self.iv_selection_changed_event(None, move_cursor_event=True)
+
         elif event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
                               Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
             # Scroll to next/previous page row
+            model = self.iconview.get_model()
+            sw_vadj = self.sw.get_vadjustment()
+            sw_vpos = sw_vadj.get_value()
+            columns_nr = self.iconview.get_columns()
             path_last_page = Gtk.TreePath.new_from_indices([len(model) - 1])
             last_cell_y = iconview.get_cell_rect(path_last_page)[1].y
             sw_vpos_up = sw_vpos_down = page_nr = 0
@@ -1545,9 +1532,9 @@ class PdfArranger(Gtk.Application):
                 sw_vadj.set_value(min(sw_vpos_up, last_cell_y + self.vp_css_margin - 6))
             else:
                 sw_vadj.set_value(min(sw_vpos_down, last_cell_y + self.vp_css_margin - 6))
-            return True  # Prevent propagation ie don't set cursor at first or last item
+        return True  # Prevent propagation
 
-    def iv_selection_changed_event(self, _user_data=None):
+    def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
@@ -1556,6 +1543,8 @@ class PdfArranger(Gtk.Application):
                      ("split", ne), ("select-same-file", ne)]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()
+        if selection and not move_cursor_event:
+            self.iv_cursor.cursor_is_visible = False
 
     def window_focus_in_out_event(self, _widget=None, _event=None):
         """Enable or disable paste actions based on clipboard content."""
