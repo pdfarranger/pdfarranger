@@ -74,7 +74,7 @@ def addicons():
     ]
 
     for i in icons:
-        addfile(os.path.join('share/icons/Adwaita/16x16/', i + '-symbolic.symbolic.png'))
+        addfile(os.path.join('share/icons/Adwaita/scalable/', i + '-symbolic.svg'))
 
 required_dlls = [
     'gtk-3-0',
