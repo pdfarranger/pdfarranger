@@ -106,7 +106,8 @@ required_gi_namespaces = [
     "GdkPixbuf-2.0",
     "GModule-2.0",
     "Atk-1.0",
-    "Poppler-0.18"
+    "Poppler-0.18",
+    "HarfBuzz-0.0"
 ]
 
 for ns in required_gi_namespaces:
