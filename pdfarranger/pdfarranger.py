@@ -356,6 +356,7 @@ class PdfArranger(Gtk.Application):
 
     def __create_menus(self):
         b = self.__build_from_file("menu.ui")
+        self.config.set_actions(b)
         self.popup = Gtk.Menu.new_from_model(b.get_object("popup_menu"))
         self.popup.attach_to_widget(self.window, None)
         main_menu = self.uiXML.get_object("main_menu_button")
@@ -393,31 +394,7 @@ class PdfArranger(Gtk.Application):
 
         main_menu = self.uiXML.get_object("main_menu_button")
         self.window.add_action(Gio.PropertyAction.new("main-menu", main_menu, "active"))
-
-        accels = [
-            ('delete', 'Delete'),
-            ('page-format', 'c'),
-            ('rotate(90)', '<Ctrl>Right'),
-            ('rotate(-90)', '<Ctrl>Left'),
-            ('save', '<Ctrl>s'),
-            ('save-as', '<Ctrl><Shift>s'),
-            ('export-selection(2)', '<Ctrl>e'),
-            ('export-all', '<Ctrl><Shift>e'),
-            ('quit', '<Ctrl>q'),
-            ('import', '<Ctrl>o'),
-            ('zoom(5)', ['plus', 'KP_Add']),
-            ('zoom(-5)', ['minus', 'KP_Subtract']),
-            ('undo', '<Ctrl>z'),
-            ('redo', '<Ctrl>y'),
-            ('cut', '<Ctrl>x'),
-            ('copy', '<Ctrl>c'),
-            ('paste(0)', '<Ctrl>v'),
-            ('paste(1)', '<Ctrl><Shift>v'),
-            ('select(0)', '<Ctrl>a'),
-            ('select(1)', '<Ctrl><Shift>a'),
-            ('main-menu', 'F10'),
-        ]
-        for a, k in accels:
+        for a, k in self.config.get_accels():
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
         self.iv_selection_changed_event()

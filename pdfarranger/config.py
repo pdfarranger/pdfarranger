@@ -19,8 +19,53 @@ import configparser
 import os
 from gi.repository import Gdk
 
+# See https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.23/gdk/keynames.txt for list of keys
+_DEFAULT_ACCELS=[
+    ('delete', 'Delete'),
+    ('page-format', 'c'),
+    ('rotate(90)', '<Ctrl>Right'),
+    ('rotate(-90)', '<Ctrl>Left'),
+    ('save', '<Ctrl>s'),
+    ('save-as', '<Ctrl><Shift>s'),
+    ('export-selection(2)', '<Ctrl>e'),
+    ('export-all', '<Ctrl><Shift>e'),
+    ('quit', '<Ctrl>q'),
+    ('import', '<Ctrl>o'),
+    ('zoom(5)', 'plus KP_Add'),
+    ('zoom(-5)', 'minus KP_Subtract'),
+    ('undo', '<Ctrl>z'),
+    ('redo', '<Ctrl>y'),
+    ('cut', '<Ctrl>x'),
+    ('copy', '<Ctrl>c'),
+    ('paste(0)', '<Ctrl>v'),
+    ('paste(1)', '<Ctrl><Shift>v'),
+    ('select(0)', '<Ctrl>a'),
+    ('select(1)', '<Ctrl><Shift>a'),
+    ('main-menu', 'F10'),
+]
+
 class Config(object):
     """ Wrap a ConfigParser object for PDFArranger """
+
+    @staticmethod
+    def __get_action_list(m, r):
+        for i in range(m.get_n_items()):
+             it = m.iterate_item_attributes(i)
+             target, action = None, None
+             while it.next():
+                 if it.get_name() == 'target':
+                     target = it.get_value()
+                 elif it.get_name() == 'action':
+                     action = it.get_value()
+             if action is not None:
+                 action = action.get_string()[4:]
+                 if target is not None:
+                     action += "({})".format(target)
+                 r.append(action)
+             it = m.iterate_item_links(i)
+             while it.next():
+                 Config.__get_action_list(it.get_value(), r)
+        return r
 
     @staticmethod
     def _config_file(domain):
@@ -43,6 +88,12 @@ class Config(object):
         self.data = configparser.ConfigParser()
         self.data.add_section('window')
         self.data.read(Config._config_file(domain))
+        if 'accelerators' not in self.data:
+            self.data.add_section('accelerators')
+        a = self.data['accelerators']
+        for k, v in _DEFAULT_ACCELS:
+            if k not in a:
+                a[k] = v
 
     def window_size(self):
         ds = Gdk.Screen.get_default()
@@ -70,3 +121,26 @@ class Config(object):
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
         with open(conffile, 'w') as f:
             self.data.write(f)
+
+    def set_actions(self, builder):
+        """
+        Set the list of actions to which shortcuts may be associated.
+
+        :param builder: A Gtk.Builder from which to get actions
+        """
+        actions = []
+        for m in builder.get_objects():
+            self.__get_action_list(m, actions)
+        actions = set(actions)
+        accels_section = self.data['accelerators']
+        for a in actions:
+            if a not in accels_section:
+                accels_section[a] = ""
+        # Have accelerators sorted in the .ini file (cosmetic)
+        sortedaccels = sorted(accels_section.items())
+        accels_section.clear()
+        accels_section.update(sortedaccels)
+
+    def get_accels(self):
+        """Return the accelerators for each actions."""
+        return [(k, v.split()) for k, v in self.data['accelerators'].items()]
