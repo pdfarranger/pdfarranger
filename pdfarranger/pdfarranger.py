@@ -228,13 +228,13 @@ class Config:
         """ Return the location of the configuration file """
         home = os.path.expanduser("~")
         if platform.system() == 'Darwin':
-            p = os.path.join(home, 'Library', 'Caches')
-        elif 'LOCALAPPDATA' in os.environ:
-            p = os.getenv('LOCALAPPDATA')
-        elif 'XDG_CACHE_HOME' in os.environ:
-            p = os.getenv('XDG_CACHE_HOME')
+            p = os.path.join(home, 'Library', 'Preferences')
+        elif 'APPDATA' in os.environ:
+            p = os.getenv('APPDATA')
+        elif 'XDG_CONFIG_HOME' in os.environ:
+            p = os.getenv('XDG_CONFIG_HOME')
         else:
-            p = os.path.join(home, '.cache')
+            p = os.path.join(home, '.config')
         p = os.path.join(p, DOMAIN)
         os.makedirs(p, exist_ok=True)
         return os.path.join(p, 'config.ini')
