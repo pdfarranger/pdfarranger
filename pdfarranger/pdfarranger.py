@@ -22,8 +22,6 @@ import tempfile
 import signal
 import mimetypes
 import pathlib
-import platform
-import configparser
 import warnings
 import traceback
 import locale  # for multilanguage support
@@ -122,7 +120,9 @@ from . import metadata
 from . import croputils
 from .iconview import CellRendererImage
 from .iconview import IconviewCursor
+from .config import Config
 GObject.type_register(CellRendererImage)
+
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
@@ -220,58 +220,6 @@ class Page:
         return newpage
 
 
-class Config:
-    """ Wrap a ConfigParser object for PDFArranger """
-
-    @staticmethod
-    def _config_file():
-        """ Return the location of the configuration file """
-        home = os.path.expanduser("~")
-        if platform.system() == 'Darwin':
-            p = os.path.join(home, 'Library', 'Preferences')
-        elif 'APPDATA' in os.environ:
-            p = os.getenv('APPDATA')
-        elif 'XDG_CONFIG_HOME' in os.environ:
-            p = os.getenv('XDG_CONFIG_HOME')
-        else:
-            p = os.path.join(home, '.config')
-        p = os.path.join(p, DOMAIN)
-        os.makedirs(p, exist_ok=True)
-        return os.path.join(p, 'config.ini')
-
-    def __init__(self):
-        self.data = configparser.ConfigParser()
-        self.data.add_section('window')
-        self.data.read(Config._config_file())
-
-    def window_size(self):
-        ds = Gdk.Screen.get_default()
-        return self.data.getint('window', 'width', fallback=int(min(700, ds.get_width() / 2))), \
-            self.data.getint('window', 'height', fallback=int(min(600, ds.get_height() - 50)))
-
-    def set_window_size(self, size):
-        self.data.set('window', 'width', str(size[0]))
-        self.data.set('window', 'height', str(size[1]))
-
-    def maximized(self):
-        return self.data.getboolean('window', 'maximized', fallback=False)
-
-    def set_maximized(self, maximized):
-        self.data.set('window', 'maximized', str(maximized))
-
-    def zoom_level(self):
-        return self.data.getint('DEFAULT', 'zoom-level', fallback=0)
-
-    def set_zoom_level(self, level):
-        self.data.set('DEFAULT', 'zoom-level', str(level))
-
-    def save(self):
-        conffile = Config._config_file()
-        os.makedirs(os.path.dirname(conffile), exist_ok=True)
-        with open(conffile, 'w') as f:
-            self.data.write(f)
-
-
 def warn_dialog(func):
     """ Decorator which redirect warnings module messages to a gkt MessageDialog """
 
@@ -336,7 +284,7 @@ class PdfArranger(Gtk.Application):
         # Defining instance attributes
 
         # The None values will be set later in do_activate
-        self.config = Config()
+        self.config = Config(DOMAIN)
         self.uiXML = None
         self.window = None
         self.sw = None
