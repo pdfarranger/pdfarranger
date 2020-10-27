@@ -21,6 +21,8 @@ import gettext
 import re
 import json
 import traceback
+from datetime import datetime
+from dateutil import parser
 from gi.repository import Gtk
 _ = gettext.gettext
 
@@ -29,6 +31,8 @@ PRODUCER = '{http://ns.adobe.com/pdf/1.3/}Producer'
 # Currently the only property which support lists as values. If you add more
 # please implement a generic mecanism.
 _CREATOR = '{http://purl.org/dc/elements/1.1/}creator'
+_CREATED = '{http://ns.adobe.com/xap/1.0/}CreateDate'
+_MODIFIED = '{http://ns.adobe.com/xap/1.0/}ModifyDate'
 # List of supported meta data with their user representation
 # see https://wwwimages2.adobe.com/content/dam/acom/en/devnet/xmp/pdfs/XMP%20SDK%20Release%20cc-2016-08/XMPSpecificationPart1.pdf
 # if you want to add more
@@ -39,6 +43,8 @@ _LABELS = {
     PRODUCER: _('Producer'),
     _CREATOR: _('Creator'),
     '{http://ns.adobe.com/xap/1.0/}CreatorTool': _('Creator tool'),
+    _CREATED: _('Created'),
+    _MODIFIED: _('Modified'),
 }
 
 
@@ -135,7 +141,26 @@ class _EditedEventHandler(object):
     def editable_changed(self, editable):
         self.new_text = editable.get_text()
 
-    def edited(self, _renderer, path, new_text):
+    def _parse_date(self, string, parent):
+        try:
+            date = parser.parse(string)
+            return datetime.isoformat(date) # ISO-8601 formatted date
+        except ValueError:
+            if string:
+                msg = _('Invalid date format. Discard input.')
+                d = Gtk.MessageDialog(parent=parent,
+                                      flags=Gtk.DialogFlags.MODAL,
+                                      type=Gtk.MessageType.ERROR,
+                                      buttons=Gtk.ButtonsType.OK,
+                                      message_format=msg)
+                d.run()
+                d.destroy()
+            return ''
+
+    def edited(self, _renderer, path, new_text, parent):
+        date_labels = [_LABELS[l] for l in [_CREATED, _MODIFIED]]
+        if self.liststore[path][0] in date_labels:
+            new_text = self._parse_date(new_text, parent)
         self.liststore[path][1] = new_text
 
     def canceled(self, _renderer):
@@ -171,7 +196,7 @@ def edit(metadata, pdffiles, parent):
             renderer.set_property("editable", True)
             handler = _EditedEventHandler(liststore)
             renderer.connect("editing-started", handler.started)
-            renderer.connect("edited", handler.edited)
+            renderer.connect("edited", handler.edited, parent)
             renderer.connect("editing-canceled", handler.canceled)
         column = Gtk.TreeViewColumn(title, renderer, text=i)
         treeview.append_column(column)
@@ -183,5 +208,10 @@ def edit(metadata, pdffiles, parent):
     dialog.destroy()
     if r:
         for row in liststore:
+            # Capture invalid input when the emission of the edited signal is
+            # bypassed by pressing OK while editing.
+            if row[2] in [_CREATED, _MODIFIED]:
+                row[1] = handler._parse_date(row[1], parent)
+
             metadata[row[2]] = _strtometa(row[1], row[2])
     return r
