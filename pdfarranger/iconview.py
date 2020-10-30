@@ -236,3 +236,122 @@ class IconviewCursor(object):
         sw_vpos = min(sw_vpos, cell_y + self.app.vp_css_margin - 6)
         sw_vpos = max(sw_vpos, cell_y + self.app.vp_css_margin + 6 - sw_height + cell_height)
         sw_vadj.set_value(sw_vpos)
+
+
+class IconviewDragSelect:
+    """
+    Drag-select when clicking between items and dragging mouse pointer.
+
+    Click + drag-select selects the range from click location to drag location.
+    Shift + click + drag-select adds more items to selection.
+    Control + click + drag-select toggles selection.
+    """
+    def __init__(self, app):
+        self.app = app
+        self.iconview = app.iconview
+        self.model = app.iconview.get_model()
+        self.range_start = 0
+        self.range_end = 0
+        self.click_location = None
+        self.cursor_name_old = 'default'
+
+    def click(self, event):
+        """Store the click location."""
+        if len(self.model) == 0:
+            return
+        self.last_cell = self.iconview.get_cell_rect(self.model[-1].path)[1]
+        self.click_location = self.get_location(event)
+        if self.click_location:
+            self.set_mouse_cursor('text')
+            self.range_start = int(self.click_location + 0.5)
+            self.range_end = self.range_start
+            self.control_is_pressed = event.state & Gdk.ModifierType.CONTROL_MASK
+            self.shift_is_pressed = event.state & Gdk.ModifierType.SHIFT_MASK
+            if self.control_is_pressed or self.shift_is_pressed:
+                self.selection_list = []
+                for row in self.model:
+                     self.selection_list.append(self.iconview.path_is_selected(row.path))
+
+    def motion(self, event):
+        """Get drag location and select or deselect items."""
+        if not self.click_location:
+            return
+        drag_location = self.get_location(event)
+        if drag_location is None:
+            return
+        if not event.state & Gdk.ModifierType.CONTROL_MASK:
+            self.control_is_pressed = False
+        if not event.state & Gdk.ModifierType.SHIFT_MASK:
+            self.shift_is_pressed = False
+        selection_changed = self.select(drag_location)
+        return selection_changed
+
+    def select(self, drag_location):
+        """Select or deselect items between click location and current mouse pointer location."""
+        range_start_old = self.range_start
+        range_end_old = self.range_end
+        if drag_location > self.click_location:
+            self.range_start = int(self.click_location + 0.5)
+            self.range_end = int(drag_location + 1)
+        else:
+            self.range_start = int(drag_location + 0.5)
+            self.range_end = int(self.click_location + 1)
+        if self.range_start == range_start_old and self.range_end == range_end_old:
+            return
+        changed_range_start = min(self.range_start, range_start_old)
+        changed_range_end = max(self.range_end, range_end_old)
+        for page_nr in range(changed_range_start, changed_range_end):
+            path = Gtk.TreePath.new_from_indices([page_nr])
+            if self.control_is_pressed:
+                if page_nr in range(self.range_start, self.range_end):
+                    if self.selection_list[page_nr]:
+                        self.iconview.unselect_path(path)
+                    else:
+                        self.iconview.select_path(path)
+                else:
+                    if self.selection_list[page_nr]:
+                        self.iconview.select_path(path)
+                    else:
+                        self.iconview.unselect_path(path)
+            elif self.shift_is_pressed:
+                if page_nr in range(self.range_start, self.range_end):
+                    self.iconview.select_path(path)
+                elif not self.selection_list[page_nr]:
+                    self.iconview.unselect_path(path)
+            else:
+                if page_nr in range(self.range_start, self.range_end):
+                    self.iconview.select_path(path)
+                else:
+                    self.iconview.unselect_path(path)
+        return True
+
+    def get_location(self, event):
+        """
+        Get mouse pointer location.
+
+        E.g. Location is 2.0 when pointer is on item 2.
+             Location is 2.5 when pointer is between item 2 and 3.
+        """
+        location = None
+        search_positions = [(event.x, event.y, 0),
+                            (event.x + self.last_cell.width / 2, event.y, -0.5),
+                            (event.x - self.last_cell.width / 2, event.y, 0.5)]
+        for x_s, y_s, offset in search_positions:
+            path = self.iconview.get_path_at_pos(x_s, y_s)
+            if path:
+                location = Gtk.TreePath.get_indices(path)[0] + offset
+                return location
+        if (event.y > self.last_cell.y + self.last_cell.height) or (
+            event.y > self.last_cell.y and event.x > self.last_cell.x + self.last_cell.width):
+            location = len(self.model) - 0.5
+        elif event.y < self.app.vp_css_margin * -1:
+            location = -0.5
+        return location
+
+    def set_mouse_cursor(self, cursor_name):
+        """Set the cursor type specified by cursor_name."""
+        if cursor_name == self.cursor_name_old:
+            return
+        cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), cursor_name)
+        self.iconview.get_window().set_cursor(cursor)
+        self.cursor_name_old = cursor_name
