@@ -120,6 +120,7 @@ from . import metadata
 from . import croputils
 from .iconview import CellRendererImage
 from .iconview import IconviewCursor
+from .iconview import IconviewDragSelect
 from .config import Config
 GObject.type_register(CellRendererImage)
 
@@ -317,6 +318,7 @@ class PdfArranger(Gtk.Application):
         self.pdfqueue = []
         self.metadata = {}
         self.pressed_button = None
+        self.click_path = None
         self.rendering_thread = None
         self.export_file = None
         self.drag_path = None
@@ -570,6 +572,7 @@ class PdfArranger(Gtk.Application):
         self.__create_menus()
 
         self.iv_cursor = IconviewCursor(self)
+        self.iv_drag_select = IconviewDragSelect(self)
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
@@ -1343,12 +1346,19 @@ class PdfArranger(Gtk.Application):
                                                      self.pressed_button.button, event, -1, -1)
                 self.pressed_button = None
 
-        # Detect if rubberband selecting is in progress
+        # Drag-select when clicking between items and dragging mouse
         if event.state & Gdk.ModifierType.BUTTON1_MASK:
             self.iv_autoscroll(event.x, event.y, autoscroll_area=4)
+            if not self.click_path:
+                with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
+                    selection_changed = self.iv_drag_select.motion(event)
+                if selection_changed:
+                    self.iv_selection_changed_event()
+                return True  # Don't use iconview's built-in rubberband-selecting
 
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
+        self.iv_drag_select.set_mouse_cursor('default')
 
         if self.pressed_button:
             # Button was pressed and released on a previously selected item
@@ -1366,7 +1376,7 @@ class PdfArranger(Gtk.Application):
             iconview.set_cursor(path, None, False)  # for consistent shift+click selection
         self.pressed_button = None
 
-        # Stop rubberband autoscrolling when mouse button is released
+        # Stop drag-select autoscrolling when button is released
         if self.iv_auto_scroll_timer:
             GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
@@ -1385,7 +1395,11 @@ class PdfArranger(Gtk.Application):
 
         x = int(event.x)
         y = int(event.y)
-        click_path = iconview.get_path_at_pos(x, y)
+        self.click_path = iconview.get_path_at_pos(x, y)
+
+        # Go into drag-select mode if clicked between items
+        if event.button == 1 and not self.click_path:
+            self.iv_drag_select.click(event)
 
         # On shift-click, select (or, with the Control key, toggle) items
         # from the item after the cursor up to the shift-clicked item,
@@ -1417,17 +1431,17 @@ class PdfArranger(Gtk.Application):
         # Do not deselect when clicking an already selected item for drag and drop
         if event.button == 1:
             selection = iconview.get_selected_items()
-            if click_path and click_path in selection:
+            if self.click_path and self.click_path in selection:
                 self.pressed_button = event
                 return 1  # prevent propagation i.e. (de-)selection
 
         # Display right click menu
         if event.button == 3:
             selection = iconview.get_selected_items()
-            if click_path:
-                if click_path not in selection:
+            if self.click_path:
+                if self.click_path not in selection:
                     iconview.unselect_all()
-                iconview.select_path(click_path)
+                iconview.select_path(self.click_path)
                 iconview.grab_focus()
                 self.popup.popup(None, None, None, None, event.button, event.time)
             return 1
