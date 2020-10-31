@@ -55,8 +55,11 @@ if not os.path.exists(localedir):
     # Assume we are in development mode
     localedir = os.path.join(basedir, 'build', 'mo')
 
+try:
+    locale.setlocale(locale.LC_ALL, '')
+except locale.Error:
+    pass  # Gtk already prints a warning
 
-locale.setlocale(locale.LC_ALL, '')
 DOMAIN = 'pdfarranger'
 ICON_ID = 'com.github.jeromerobert.' + DOMAIN
 if os.name == 'nt':
