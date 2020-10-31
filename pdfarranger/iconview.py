@@ -165,7 +165,7 @@ class IconviewCursor(object):
 
     def set_selection_start_page(self):
         """Set selection start page when shift + navigation keys are used."""
-        if self.sel_start_page == None and self.event.state & Gdk.ModifierType.SHIFT_MASK:
+        if self.sel_start_page is None and self.event.state & Gdk.ModifierType.SHIFT_MASK:
             self.sel_start_page = Gtk.TreePath.get_indices(self.iconview.get_cursor()[1])[0]
             self.iconview.unselect_all()
         elif not self.event.state & Gdk.ModifierType.SHIFT_MASK:
@@ -229,7 +229,6 @@ class IconviewCursor(object):
         """Scroll in order to keep cursor visible in window."""
         sw_vadj = self.app.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
-        columns_nr = self.iconview.get_columns()
         cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
         cell_height = self.iconview.get_cell_rect(cursor_path_new)[1].height
         cell_y = self.iconview.get_cell_rect(cursor_path_new)[1].y
