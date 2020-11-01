@@ -143,7 +143,7 @@ def _install_workaround_bug29():
 _install_workaround_bug29()
 
 
-class Page(object):
+class Page:
     def __init__(self, nfile, npage, zoom, filename, angle, crop, size):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
@@ -220,7 +220,7 @@ class Page(object):
         return newpage
 
 
-class Config(object):
+class Config:
     """ Wrap a ConfigParser object for PDFArranger """
 
     @staticmethod
@@ -275,7 +275,7 @@ class Config(object):
 def warn_dialog(func):
     """ Decorator which redirect warnings module messages to a gkt MessageDialog """
 
-    class ShowWarning(object):
+    class ShowWarning:
         def __init__(self):
             self.buffer = ""
 
@@ -674,13 +674,9 @@ class PdfArranger(Gtk.Application):
 
         all_files = self.active_file_names()
         if len(all_files) > 0:
-            if title:
-                title += ' '
-            title += '[' + ', '.join(all_files) + ']'
+            title += ' [' + ', '.join(all_files) + ']'
 
-        if title:
-            title += ' – '
-        title += APPNAME
+        title += ' – ' + APPNAME
         self.window.set_title(title)
         return False
 
@@ -1917,7 +1913,7 @@ class PDFDoc:
             raise PDFDocError(_('File is neither pdf nor image'))
 
 
-class PageAdder(object):
+class PageAdder:
     """ Helper class to add pages to the current model """
 
     def __init__(self, app):
