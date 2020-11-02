@@ -173,6 +173,10 @@ class Page:
         """ Return the page height in PDF points """
         return (self.scale * self.size[1]) * (1 - self.crop[2] - self.crop[3])
 
+    def size_in_points(self):
+        """ Return the page size in PDF points """
+        return (self.width_in_points(), self.height_in_points())
+
     def width_in_pixel(self):
         return int(0.5 + self.zoom * self.width_in_points())
 
@@ -440,6 +444,7 @@ class PdfArranger(Gtk.Application):
             ('paste', self.on_action_paste, 'i'),
             ('select', self.on_action_select, 'i'),
             ('select-same-file', self.on_action_select, 'i'),
+            ('select-same-format', self.on_action_select, 'i'),
             ('about', self.about_dialog),
         ])
 
@@ -1183,7 +1188,8 @@ class PdfArranger(Gtk.Application):
 
     def on_action_select(self, _action, option, _unknown):
         """Selects items according to selected option."""
-        selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN', 4: 'SAME_FILE', 5:'INVERT'}
+        selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN',
+                         4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
         if selectoption == 'ALL':
@@ -1207,6 +1213,13 @@ class PdfArranger(Gtk.Application):
             filenames = set(model[row][0].filename for row in selection)
             for page_number, row in enumerate(model):
                 if model[page_number][0].filename in filenames:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'SAME_FORMAT':
+            selection = self.iconview.get_selected_items()
+            formats = set(model[row][0].size_in_points() for row in selection)
+            for row in model:
+                page = model[row.path][0]
+                if page.size_in_points() in formats:
                     self.iconview.select_path(row.path)
         elif selectoption == 'INVERT':
             for row in model:
@@ -1539,7 +1552,7 @@ class PdfArranger(Gtk.Application):
         for a, e in [("reverse-order", self.reverse_order_available(selection)),
                      ("delete", ne), ("duplicate", ne), ("page-format", ne), ("rotate", ne),
                      ("export-selection", ne), ("cut", ne), ("copy", ne),
-                     ("split", ne), ("select-same-file", ne)]:
+                     ("split", ne), ("select-same-file", ne), ("select-same-format", ne)]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()
         if selection and not move_cursor_event:
