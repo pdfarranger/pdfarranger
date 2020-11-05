@@ -111,10 +111,10 @@ class Config(object):
         self.data.set('window', 'maximized', str(maximized))
 
     def zoom_level(self):
-        return self.data.getint('DEFAULT', 'zoom-level', fallback=0)
+        return self.data.getint('window', 'zoom-level', fallback=0)
 
     def set_zoom_level(self, level):
-        self.data.set('DEFAULT', 'zoom-level', str(level))
+        self.data.set('window', 'zoom-level', str(level))
 
     def save(self):
         conffile = Config._config_file(self.domain)
