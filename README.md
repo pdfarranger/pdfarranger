@@ -26,6 +26,12 @@ It’s a humble attempt to make the project a bit more active.
 
 [![Linux packages](https://repology.org/badge/vertical-allrepos/pdfarranger.svg?columns=4)](https://repology.org/project/pdfarranger/versions)
 
+## Customization of keyboard shortcuts
+
+In case you are not satisfied with the default keyboard shortcuts they can be
+changed. To do so, just edit the file `~/.config/pdfarranger/config.ini` or
+`C:\Users\username\AppData\Roaming\pdfarranger\config.ini`.
+
 ## Install from source
 
 *pdfarranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0. Older versions may work
