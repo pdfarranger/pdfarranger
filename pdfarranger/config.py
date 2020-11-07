@@ -30,6 +30,7 @@ _DEFAULT_ACCELS=[
     ('export-selection(2)', '<Primary>e'),
     ('export-all', '<Primary><Shift>e'),
     ('quit', '<Primary>q'),
+    ('new', '<Primary>n'),
     ('import', '<Primary>o'),
     ('zoom(5)', 'plus KP_Add <Primary>plus <Primary>KP_Add'),
     ('zoom(-5)', 'minus KP_Subtract <Primary>minus <Primary>KP_Subtract'),

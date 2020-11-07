@@ -28,6 +28,7 @@ import locale  # for multilanguage support
 import gettext
 import gc
 import copy
+import subprocess
 from urllib.request import url2pathname
 
 try:
@@ -383,6 +384,7 @@ class PdfArranger(Gtk.Application):
             ('reverse-order', self.reverse_order),
             ('save', self.on_action_save),
             ('save-as', self.on_action_save_as),
+            ('new', self.on_action_new),
             ('import', self.on_action_add_doc_activate),
             ('zoom', self.zoom_change, 'i'),
             ('quit', self.on_quit),
@@ -768,6 +770,19 @@ class PdfArranger(Gtk.Application):
             f = os.path.splitext(os.path.basename(f.filename))[0]
             all_files.add(f)
         return all_files
+
+    def exec_new_self(self):
+        subprocess.Popen([sys.executable, '-mpdfarranger'])
+
+    def on_action_new(self, _action, _param, _unknown):
+        display = Gdk.Display.get_default()
+        launch_context = display.get_app_launch_context()
+        desktop_file = "%s.desktop"%(self.get_application_id())
+        try:
+            app_info = Gio.DesktopAppInfo.new(desktop_file)
+            app_info.launch([], launch_context)
+        except TypeError as e:
+            self.exec_new_self()
 
     def on_action_save(self, _action, _param, _unknown):
         self.save_or_choose()
