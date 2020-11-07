@@ -1575,13 +1575,15 @@ class PdfArranger(Gtk.Application):
 
         # Display right click menu
         if event.button == 3:
-            selection = iconview.get_selected_items()
             if self.click_path:
+                selection = iconview.get_selected_items()
                 if self.click_path not in selection:
                     iconview.unselect_all()
-                iconview.select_path(self.click_path)
-                iconview.grab_focus()
-                self.popup.popup(None, None, None, None, event.button, event.time)
+                    iconview.select_path(self.click_path)
+            else:
+                iconview.unselect_all()
+            iconview.grab_focus()
+            self.popup.popup(None, None, None, None, event.button, event.time)
             return 1
 
     def iv_key_press_event(self, iconview, event):
