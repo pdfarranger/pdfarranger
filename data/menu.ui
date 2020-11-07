@@ -27,6 +27,12 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">_New Window</attribute>
+        <attribute name="action">win.new</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">_Save</attribute>
         <attribute name="action">win.save</attribute>
         <attribute name="verb-icon">document-save-symbolic</attribute>
