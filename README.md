@@ -29,8 +29,10 @@ It’s a humble attempt to make the project a bit more active.
 ## Customization of keyboard shortcuts
 
 In case you are not satisfied with the default keyboard shortcuts they can be
-changed. To do so, just edit the file `~/.config/pdfarranger/config.ini` or
-`C:\Users\username\AppData\Roaming\pdfarranger\config.ini`.
+changed. To do so, set `enable_custom` to `true` in
+`~/.config/pdfarranger/config.ini` or
+`C:\Users\username\AppData\Roaming\pdfarranger\config.ini` and edit other
+lines.
 
 ## Install from source
 
