@@ -21,7 +21,7 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
- mingw-w64-x86_64-python-pip git python-pip intltool
+ mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool
 ```
 
 and
