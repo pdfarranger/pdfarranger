@@ -91,8 +91,11 @@ class Config(object):
         if 'accelerators' not in self.data:
             self.data.add_section('accelerators')
         a = self.data['accelerators']
+        if 'enable_custom' not in a:
+            a['enable_custom'] = 'false'
+        enable_custom = a.getboolean('enable_custom')
         for k, v in _DEFAULT_ACCELS:
-            if k not in a:
+            if not enable_custom or k not in a:
                 a[k] = v
 
     def window_size(self):
@@ -137,10 +140,17 @@ class Config(object):
             if a not in accels_section:
                 accels_section[a] = ""
         # Have accelerators sorted in the .ini file (cosmetic)
-        sortedaccels = sorted(accels_section.items())
+        sortedaccels = [(k, v) for k, v in accels_section.items() if k != 'enable_custom']
+        sortedaccels = sorted(sortedaccels)
+        enable_custom = accels_section['enable_custom']
         accels_section.clear()
+        accels_section['enable_custom'] = enable_custom
         accels_section.update(sortedaccels)
 
     def get_accels(self):
         """Return the accelerators for each actions."""
-        return [(k, v.split()) for k, v in self.data['accelerators'].items()]
+        return [
+            (k, v.split())
+            for k, v in self.data["accelerators"].items()
+            if k != "enable_custom"
+        ]
