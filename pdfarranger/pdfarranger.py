@@ -1393,35 +1393,41 @@ class PdfArranger(Gtk.Application):
                 self.zoom_to_full_page()
             return True
 
-        x = int(event.x)
-        y = int(event.y)
-        self.click_path = iconview.get_path_at_pos(x, y)
+        click_path_old = self.click_path
+        self.click_path = iconview.get_path_at_pos(event.x, event.y)
 
         # Go into drag-select mode if clicked between items
         if event.button == 1 and not self.click_path:
             self.iv_drag_select.click(event)
+            if event.state & Gdk.ModifierType.SHIFT_MASK:
+                return 1
 
-        # On shift-click, select (or, with the Control key, toggle) items
-        # from the item after the cursor up to the shift-clicked item,
-        # inclusive, where 'after' means towards the shift-clicked item.
-        #
+        # On shift-click, select all items from cursor up to the shift-clicked item.
+        # On shift-ctrl-click, toggle selection for single items.
         # IconView's built-in multiple-selection mode performs rubber-band
         # (rectangular) selection, which is not what we want. We override
         # it by handling the shift-click here.
-        if event.button == 1 and event.state & Gdk.ModifierType.SHIFT_MASK:
+        if event.button == 1 and self.click_path and event.state & Gdk.ModifierType.SHIFT_MASK:
             cursor_path = iconview.get_cursor()[1]
-            click_path = iconview.get_path_at_pos(x, y)
-            if cursor_path and click_path:
+            if event.state & Gdk.ModifierType.CONTROL_MASK:
+                if iconview.path_is_selected(self.click_path):
+                    iconview.unselect_path(self.click_path)
+                else:
+                    iconview.select_path(self.click_path)
+            elif cursor_path:
                 i_cursor = cursor_path[0]
-                i_click = click_path[0]
-                step = 1 if i_cursor <= i_click else -1
-                for i in range(i_cursor + step, i_click + step, step):
-                    path = Gtk.TreePath.new_from_indices([i])
-                    if (event.state & Gdk.ModifierType.CONTROL_MASK and
-                            iconview.path_is_selected(path)):
-                        iconview.unselect_path(path)
-                    else:
-                        iconview.select_path(path)
+                i_click = self.click_path[0]
+                i_click_old = click_path_old[0] if click_path_old else i_click
+                range_start = min(i_cursor, i_click, i_click_old)
+                range_end = max(i_cursor, i_click, i_click_old)
+                with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
+                    for i in range(range_start, range_end + 1):
+                        path = Gtk.TreePath.new_from_indices([i])
+                        if min(i_cursor, i_click) <= i <= max(i_cursor, i_click):
+                            iconview.select_path(path)
+                        else:
+                            iconview.unselect_path(path)
+                self.iv_selection_changed_event()
             return 1
 
         # Forget where cursor was when shift was pressed
