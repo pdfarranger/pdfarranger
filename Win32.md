@@ -62,9 +62,10 @@ unset $(env |grep ^XDG_ | cut -d= -f1)
 ## Docker
 
 ```
+alias pythonwin32="docker run -v local:/root/.wine/drive_c/users/root/.local -v $PWD:/pdfarranger -w /pdfarranger -it jeromerobert/wine-mingw64 wine cmd /c z:/mingw64/bin/python"
 cd pdfarranger
 ./setup.py build
-alias pythonwin32="docker run -v $PWD:/pdfarranger -w /pdfarranger -it jeromerobert/wine-mingw64 wine cmd /c z:/mingw64/bin/python"
+pythonwin32 -m pip install --user pikepdf==1.19.3 img2pdf python-dateutil https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 pythonwin32 setup_win32.py bdist_msi
 pythonwin32 setup_win32.py bdist_zip
 ```
