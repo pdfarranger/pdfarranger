@@ -643,11 +643,15 @@ class PdfArranger(Gtk.Application):
         if len(self.model) > 0:
             item_width = max(row[0].width_in_pixel() for row in self.model)
             item_padding = self.iconview.get_item_padding()
-            cellthmb_xpad, _cellthmb_ypad = self.cellthmb.get_padding()
+            cellthmb_xpad, cellthmb_ypad = self.cellthmb.get_padding()
             border_and_shadow = 7  # 2*th1+th2 set in iconview.py
             # cell width min limit 50 is set in gtkiconview.c
             cell_width = max(item_width + 2 * cellthmb_xpad + border_and_shadow, 50)
-            self.cellthmb.set_fixed_size(cell_width, -1)
+            cell_height = -1
+            if self.zoom_full_page:
+                item_height = max(row[0].height_in_pixel() for row in self.model)
+                cell_height = item_height + 2 * cellthmb_ypad + border_and_shadow
+            self.cellthmb.set_fixed_size(cell_width, cell_height)
             padded_cell_width = cell_width + 2 * item_padding
             min_col_spacing = 5
             min_margin = 11
@@ -1609,11 +1613,10 @@ class PdfArranger(Gtk.Application):
         self.zoom_full_page = True
         self.scroll_to_selection_request = True
         selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
-        page, _ = self.model[selected_page_nr]
         sw_width = self.sw.get_allocated_width()
         sw_height = self.sw.get_allocated_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
-        page_height = page.height_in_points()
+        page_height = max(p.height_in_points() for p, _ in self.model)
         max_page_height, i = max((p.height_in_pixel(), i) for i, (p, _) in enumerate(self.model))
         path = Gtk.TreePath.new_from_indices([i])
         max_cell_height = self.iconview.get_cell_rect(path)[1].height
