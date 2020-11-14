@@ -581,12 +581,12 @@ class PdfArranger(Gtk.Application):
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
         cell.set_page(model.get_value(it, 0))
 
-    def render(self):
+    def render(self, start_p=0):
         self.zoom_change_render = None
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
-        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1 / self.zoom_scale)
+        self.rendering_thread = PDFRenderer(self.model, self.pdfqueue, 1 / self.zoom_scale, start_p)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
         return False
@@ -617,7 +617,10 @@ class PdfArranger(Gtk.Application):
         return False
 
     def update_progress_bar(self, num):
-        fraction = float(num + 1) / len(self.model)
+        if num == -1:  # rendering (re)started
+            fraction = 0
+        else:
+            fraction = self.progress_bar.get_fraction() + 1 / len(self.model)
         self.progress_bar.set_fraction(fraction)
         if fraction >= 0.999:
             self.progress_bar.hide()
@@ -627,11 +630,12 @@ class PdfArranger(Gtk.Application):
             self.progress_bar.show()
 
     def update_thumbnail(self, _obj, num, thumbnail, resample):
-        page, _ = self.model[num]
-        page.resample = resample
-        page.zoom = self.zoom_scale
-        page.thumbnail = thumbnail
-        self.model[num][0] = page
+        if num != -1:
+            page, _ = self.model[num]
+            page.resample = resample
+            page.zoom = self.zoom_scale
+            page.thumbnail = thumbnail
+            self.model[num][0] = page
         self.update_progress_bar(num)
 
     def on_window_size_request(self, _window):
@@ -1627,7 +1631,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
         for page, _ in self.model:
             page.zoom = self.zoom_scale
-        GObject.idle_add(self.render)
+        GObject.idle_add(self.render, selected_page_nr)
 
         # Set zoom level to nearest possible so zoom in/out works right
         self.zoom_level = -10
@@ -1975,33 +1979,54 @@ class PageAdder:
 
 class PDFRenderer(threading.Thread, GObject.GObject):
 
-    def __init__(self, model, pdfqueue, resample):
+    def __init__(self, model, pdfqueue, resample, start_p):
         threading.Thread.__init__(self)
         GObject.GObject.__init__(self)
         self.model = model
         self.pdfqueue = pdfqueue
         self.resample = resample
         self.quit = False
+        self.start_p = start_p
 
     def run(self):
-        for idx, row in enumerate(self.model):
-            p = row[0]
-            if self.quit:
-                return
-            pdfdoc = self.pdfqueue[p.nfile - 1]
-            page = pdfdoc.document.get_page(p.npage - 1)
-            w, h = page.get_size()
-            scale = p.scale / self.resample
-            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
-                                           int(w * scale),
-                                           int(h * scale))
-            cr = cairo.Context(thumbnail)
-            if scale != 1.:
-                cr.scale(scale, scale)
-            page.render(cr)
-            GObject.idle_add(self.emit, 'update_thumbnail',
-                             idx, thumbnail, self.resample,
-                             priority=GObject.PRIORITY_LOW)
+        idx = -1  # signal rendering (re)started for progressbar
+        GObject.idle_add(self.emit, 'update_thumbnail',
+                            idx, None, 0.0,
+                            priority=GObject.PRIORITY_LOW)
+        if self.start_p == 0:
+            for idx, row in enumerate(self.model):
+                self.update(idx, row)
+        else:
+            # Rendering order: begin from start_p, then expand around start_p
+            self.update(self.start_p, self.model[self.start_p])
+            for cnt in range(1, len(self.model)):
+                previous_p = self.start_p - cnt
+                next_p = self.start_p + cnt
+                if previous_p < 0 and next_p > len(self.model):
+                    return
+                if previous_p >= 0:
+                    self.update(previous_p, self.model[previous_p])
+                if next_p < len(self.model):
+                    self.update(next_p, self.model[next_p])
+
+    def update(self, idx, row):
+        p = row[0]
+        if self.quit:
+            return
+        pdfdoc = self.pdfqueue[p.nfile - 1]
+        page = pdfdoc.document.get_page(p.npage - 1)
+        w, h = page.get_size()
+        scale = p.scale / self.resample
+        thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                        int(w * scale),
+                                        int(h * scale))
+        cr = cairo.Context(thumbnail)
+        if scale != 1.:
+            cr.scale(scale, scale)
+        page.render(cr)
+        GObject.idle_add(self.emit, 'update_thumbnail',
+                            idx, thumbnail, self.resample,
+                            priority=GObject.PRIORITY_LOW)
 
 
 def main():
