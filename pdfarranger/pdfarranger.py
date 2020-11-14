@@ -307,7 +307,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_scale = None
         self.zoom_full_page = False
         self.zoom_change_render = None
-        self.scroll_to_selection_request = False
+        self.id_scroll_to_sel = None
         self.target_is_intern = True
 
         self.export_directory = os.path.expanduser('~')
@@ -623,8 +623,6 @@ class PdfArranger(Gtk.Application):
         self.progress_bar.set_fraction(fraction)
         if fraction >= 0.999:
             self.progress_bar.hide()
-            if self.scroll_to_selection_request:
-                GObject.timeout_add(200, self.scroll_to_selection)
         elif not self.progress_bar.get_visible():
             self.progress_bar.show()
 
@@ -1419,6 +1417,8 @@ class PdfArranger(Gtk.Application):
             else:
                 self.zoom_level_old = self.zoom_level
                 self.zoom_to_full_page()
+                self.update_iconview_geometry()
+                GObject.timeout_add(50, self.scroll_to_selection)
             return True
 
         click_path_old = self.click_path
@@ -1489,6 +1489,8 @@ class PdfArranger(Gtk.Application):
             else:
                 self.zoom_level_old = self.zoom_level
                 self.zoom_to_full_page()
+                self.update_iconview_geometry()
+                GObject.timeout_add(50, self.scroll_to_selection)
 
         elif event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                             Gdk.KEY_Home, Gdk.KEY_End]:
@@ -1594,8 +1596,10 @@ class PdfArranger(Gtk.Application):
         if self.zoom_change_render:
             GObject.source_remove(self.zoom_change_render)
             self.zoom_change_render = None
+        if self.id_scroll_to_sel:
+            GObject.source_remove(self.id_scroll_to_sel)
+            self.id_scroll_to_sel = None
         self.zoom_full_page = False
-        self.scroll_to_selection_request = True
         self.zoom_level = level
         self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         for row in self.model:
@@ -1603,6 +1607,7 @@ class PdfArranger(Gtk.Application):
         if len(self.model) > 0:
             self.update_iconview_geometry()
             self.zoom_change_render = GObject.timeout_add(400, self.render)
+            self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection)
 
     def zoom_change(self, _action, step, _unknown):
         """ Action handle for zoom change """
@@ -1614,7 +1619,6 @@ class PdfArranger(Gtk.Application):
         if len(selection) != 1 or self.progress_bar.get_visible():
             return
         self.zoom_full_page = True
-        self.scroll_to_selection_request = True
         selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
         sw_width = self.sw.get_allocated_width()
         sw_height = self.sw.get_allocated_height()
@@ -1639,11 +1643,19 @@ class PdfArranger(Gtk.Application):
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
-        self.scroll_to_selection_request = False
         selection = self.iconview.get_selected_items()
         if not selection:
-            return False
+            self.id_scroll_to_sel = None
+            return
         selection.sort(key=lambda x: x.get_indices()[0])
+        if self.zoom_full_page:
+            cell_image_renderer = self.iconview.get_cells()[0]
+            cell_rect = self.iconview.get_cell_rect(selection[-1], cell_image_renderer)
+            thmb_width, thmb_height = self.cellthmb.get_fixed_size()
+            if cell_rect[1].width != thmb_width or cell_rect[1].height != thmb_height:
+                # thmb_width and thmb_height is the wanted size. If cell_rect size is not
+                # yet equal, give it some time and then try again.
+                return True
         sw_vadj = self.sw.get_vadjustment()
         first_cell_y = self.iconview.get_cell_rect(selection[0])[1].y
         last_cell_y = self.iconview.get_cell_rect(selection[-1])[1].y
@@ -1651,7 +1663,7 @@ class PdfArranger(Gtk.Application):
         selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
         sw_height = self.sw.get_allocated_height()
         sw_vadj.set_value(first_cell_y + selection_center + self.vp_css_margin - sw_height / 2)
-        return False
+        self.id_scroll_to_sel = None
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
@@ -1673,7 +1685,7 @@ class PdfArranger(Gtk.Application):
                 model.set_value(treeiter, 0, p)
             self.update_geometry(treeiter)
         if page_width_old != max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model):
-            GObject.timeout_add(200, self.scroll_to_selection)
+            GObject.timeout_add(50, self.scroll_to_selection)
         return rotated
 
     def split_pages(self, _action, _parameter, _unknown):
