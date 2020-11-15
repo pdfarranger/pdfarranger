@@ -7,8 +7,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install
-      run: pip3 install .
-    - name: appstream
-      run: appstreamcli validate /usr/local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
-    - name: desktop-file-validate
-      run: desktop-file-validate /usr/local/share/applications/com.github.jeromerobert.pdfarranger.desktop
+      run: pip3 install .[image]
+    - name: AppStream
+      run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
+    - name: Validate Desktop File
+      run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
