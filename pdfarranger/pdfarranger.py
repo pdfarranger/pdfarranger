@@ -810,6 +810,11 @@ class PdfArranger(Gtk.Application):
             to_export = [row[0] for row in self.model]
 
         m = metadata.merge(self.metadata, self.pdfqueue)
+        if self.config.content_loss_warning():
+            res, enabled = exporter.check_content(self.window, self.pdfqueue)
+            self.config.set_content_loss_warning(enabled)
+            if res == Gtk.ResponseType.CANCEL:
+                return # Abort
         exporter.export(self.pdfqueue, to_export, file_out, mode, m)
 
         if exportmode == 'ALL_TO_SINGLE':

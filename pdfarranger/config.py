@@ -88,6 +88,8 @@ class Config(object):
         self.data = configparser.ConfigParser()
         self.data.add_section('window')
         self.data.read(Config._config_file(domain))
+        if 'preferences' not in self.data:
+            self.data.add_section('preferences')
         if 'accelerators' not in self.data:
             self.data.add_section('accelerators')
         a = self.data['accelerators']
@@ -118,6 +120,12 @@ class Config(object):
 
     def set_zoom_level(self, level):
         self.data.set('window', 'zoom-level', str(level))
+
+    def content_loss_warning(self):
+        return self.data.getboolean('preferences', 'content-loss-warning', fallback=True)
+
+    def set_content_loss_warning(self, enabled):
+        self.data.set('preferences', 'content-loss-warning', str(enabled))
 
     def save(self):
         conffile = Config._config_file(self.domain)
