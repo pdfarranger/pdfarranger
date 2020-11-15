@@ -1613,15 +1613,25 @@ class PdfArranger(Gtk.Application):
         """ Action handle for zoom change """
         self.zoom_set(self.zoom_level + step.get_int32())
 
+    def get_full_sw_height(self):
+        """Get scrolledwindow height as it will be when progressbar is hidden."""
+        box = self.sw.get_parent()
+        sw_height = box.get_allocated_height()
+        sw_height -= self.status_bar.get_allocated_height()
+        sw_height -= self.status_bar.get_margin_top()
+        sw_height -= self.status_bar.get_margin_bottom()
+        sw_height -= box.get_children()[2].get_allocated_height()  # separator
+        return sw_height
+
     def zoom_to_full_page(self):
         """Zoom selected thumbnail to full page."""
         selection = self.iconview.get_selected_items()
-        if len(selection) != 1 or self.progress_bar.get_visible():
+        if len(selection) != 1:
             return
         self.zoom_full_page = True
         selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
         sw_width = self.sw.get_allocated_width()
-        sw_height = self.sw.get_allocated_height()
+        sw_height = self.get_full_sw_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
         page_height = max(p.height_in_points() for p, _ in self.model)
         max_page_height, i = max((p.height_in_pixel(), i) for i, (p, _) in enumerate(self.model))
@@ -1661,7 +1671,7 @@ class PdfArranger(Gtk.Application):
         last_cell_y = self.iconview.get_cell_rect(selection[-1])[1].y
         last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
         selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
-        sw_height = self.sw.get_allocated_height()
+        sw_height = self.get_full_sw_height()
         sw_vadj.set_value(first_cell_y + selection_center + self.vp_css_margin - sw_height / 2)
         self.id_scroll_to_sel = None
 
