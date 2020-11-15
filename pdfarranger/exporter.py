@@ -20,6 +20,9 @@ import pikepdf
 import traceback
 import sys
 from . import metadata
+from gi.repository import Gtk
+import gettext
+_ = gettext.gettext
 
 from decimal import Decimal
 
@@ -73,6 +76,36 @@ def _scale(doc, page, factor):
         Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
     )
     return new_page
+
+def check_content(parent, pdf_list):
+    """ Warn about fillable forms or outlines that are lost on export."""
+    warn = False
+    for pdf in [pikepdf.open(p.copyname) for p in pdf_list]:
+        if "/AcroForm" in pdf.Root.keys(): # fillable form
+            warn = True
+            break
+        if pdf.open_outline().root: # table of contents
+            warn = True
+            break
+    if warn:
+        d = Gtk.Dialog(_('Warning'),
+                       parent=parent,
+                       flags=Gtk.DialogFlags.MODAL,
+                       buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        label = Gtk.Label(_('Forms and outlines are lost on saving.'))
+        d.vbox.pack_start(label, False, False, 6)
+        checkbutton = Gtk.CheckButton(_('Do not show this dialog again.'))
+        d.vbox.pack_start(checkbutton, False, False, 6)
+        buttonbox = d.get_action_area()
+        buttons = buttonbox.get_children()
+        d.set_focus(buttons[1])
+        d.show_all()
+        response = d.run()
+        enable_warnings = not checkbutton.get_active()
+        d.destroy()
+        return response, enable_warnings
+    return Gtk.ResponseType.OK, True
 
 
 def export(input_files, pages, file_out, mode, mdata):
