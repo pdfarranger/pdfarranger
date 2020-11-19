@@ -117,10 +117,10 @@ class Config(object):
         self.data.set('window', 'maximized', str(maximized))
 
     def zoom_level(self):
-        return self.data.getint('window', 'zoom-level', fallback=0)
+        return self.data.getint('preferences', 'zoom-level', fallback=0)
 
     def set_zoom_level(self, level):
-        self.data.set('window', 'zoom-level', str(level))
+        self.data.set('preferences', 'zoom-level', str(level))
 
     def content_loss_warning(self):
         return self.data.getboolean('preferences', 'content-loss-warning', fallback=True)
