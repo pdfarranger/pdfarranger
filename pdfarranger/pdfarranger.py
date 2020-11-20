@@ -61,19 +61,20 @@ except locale.Error:
 
 DOMAIN = 'pdfarranger'
 ICON_ID = 'com.github.jeromerobert.' + DOMAIN
-if os.name == 'nt':
-    from ctypes import cdll
-
-    libintl = cdll['libintl-8']
-    libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
-    libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
-    del libintl
-else:
+if hasattr(locale, 'bindtextdomain'):
+    # glibc
     locale.bindtextdomain(DOMAIN, localedir)
     try:
         locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
     except AttributeError:
         pass
+else:
+    from ctypes import cdll
+    # Windows or musl
+    libintl = cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
+    libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
+    libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
+    del libintl
 
 APPNAME = 'PDF Arranger'
 VERSION = '1.6.1'
