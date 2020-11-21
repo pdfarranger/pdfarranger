@@ -270,7 +270,7 @@ class IconviewDragSelect:
             if self.control_is_pressed or self.shift_is_pressed:
                 self.selection_list = []
                 for row in self.model:
-                     self.selection_list.append(self.iconview.path_is_selected(row.path))
+                    self.selection_list.append(self.iconview.path_is_selected(row.path))
 
     def motion(self, event):
         """Get drag location and select or deselect items."""

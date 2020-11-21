@@ -20,7 +20,7 @@ import os
 from gi.repository import Gdk
 
 # See https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.23/gdk/keynames.txt for list of keys
-_DEFAULT_ACCELS=[
+_DEFAULT_ACCELS = [
     ('delete', 'Delete'),
     ('page-format', 'c'),
     ('rotate(90)', '<Primary>Right'),
@@ -45,32 +45,33 @@ _DEFAULT_ACCELS=[
     ('main-menu', 'F10'),
 ]
 
+
 class Config(object):
-    """ Wrap a ConfigParser object for PDFArranger """
+    """Wrap a ConfigParser object for PDFArranger"""
 
     @staticmethod
     def __get_action_list(m, r):
         for i in range(m.get_n_items()):
-             it = m.iterate_item_attributes(i)
-             target, action = None, None
-             while it.next():
-                 if it.get_name() == 'target':
-                     target = it.get_value()
-                 elif it.get_name() == 'action':
-                     action = it.get_value()
-             if action is not None:
-                 action = action.get_string()[4:]
-                 if target is not None:
-                     action += "({})".format(target)
-                 r.append(action)
-             it = m.iterate_item_links(i)
-             while it.next():
-                 Config.__get_action_list(it.get_value(), r)
+            it = m.iterate_item_attributes(i)
+            target, action = None, None
+            while it.next():
+                if it.get_name() == 'target':
+                    target = it.get_value()
+                elif it.get_name() == 'action':
+                    action = it.get_value()
+            if action is not None:
+                action = action.get_string()[4:]
+                if target is not None:
+                    action += "({})".format(target)
+                r.append(action)
+            it = m.iterate_item_links(i)
+            while it.next():
+                Config.__get_action_list(it.get_value(), r)
         return r
 
     @staticmethod
     def _config_file(domain):
-        """ Return the location of the configuration file """
+        """Return the location of the configuration file"""
         home = os.path.expanduser("~")
         if platform.system() == 'Darwin':
             p = os.path.join(home, 'Library', 'Preferences')
