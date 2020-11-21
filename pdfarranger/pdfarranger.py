@@ -1687,7 +1687,8 @@ class PdfArranger(Gtk.Application):
     def rotate_page(self, selection, angle):
         model = self.iconview.get_model()
         rotated = False
-        page_width_old = max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model)
+        page_width_old = max(p.width_in_points() for p, _ in self.model)
+        page_height_old = max(p.height_in_points() for p, _ in self.model)
         for path in selection:
             treeiter = model.get_iter(path)
             p = model.get_value(treeiter, 0)
@@ -1695,7 +1696,9 @@ class PdfArranger(Gtk.Application):
                 rotated = True
                 model.set_value(treeiter, 0, p)
             self.update_geometry(treeiter)
-        if page_width_old != max(p.size[0] * (1. - p.crop[0] - p.crop[1]) for p, _ in self.model):
+        page_width_new = max(p.width_in_points() for p, _ in self.model)
+        page_height_new = max(p.height_in_points() for p, _ in self.model)
+        if page_width_old != page_width_new or page_height_old != page_height_new:
             GObject.timeout_add(50, self.scroll_to_selection)
         return rotated
 
