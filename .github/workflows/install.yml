@@ -12,3 +12,7 @@ jobs:
       run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
       run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
+    - name: Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest --verbose
+    - name: Codecov
+      run: curl -s https://codecov.io/bash | bash

@@ -29,6 +29,15 @@ treeview.typeText('qpdf-manual.pdf')
 filechooser.button('Open').click()
 """
 
+def group(title):
+    if 'GITHUB_ACTIONS' in os.environ:
+        print("::group::" + title)
+
+
+def endgroup():
+    if 'GITHUB_ACTIONS' in os.environ:
+        print("::endgroup::")
+
 
 class XvfbTest(unittest.TestCase):
     """Base class for running offscreen tests"""
@@ -115,6 +124,8 @@ class PdfArrangerTest(DogtailTest):
     def setUp(self):
         super().setUp()
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
+        # Comment this line to disable Coverage
+        cmd = cmd + ["-m", "coverage", "run"]
         self.process = subprocess.Popen(
             cmd + ["-m", "pdfarranger"] + self.args, env=self.environ
         )
@@ -127,6 +138,7 @@ class PdfArrangerTest(DogtailTest):
 
 class ImportQuitTest(PdfArrangerTest):
     def __init__(self, methodName="runTest"):
+        group("Init")
         super().__init__(methodName, ["data/screenshot.png"])
 
     def runTest(self):
@@ -137,8 +149,11 @@ class ImportQuitTest(PdfArrangerTest):
         app = root.application("__main__.py")
         from dogtail.config import config
         config.searchBackoffDuration = 0.1
+        endgroup()
+        group("Running "+self.id())
         mainmenu = app.child(roleName="toggle button", name="Menu")
         mainmenu.click()
         mainmenu.child(roleName="menu item", name="Quit", showingOnly=True).click()
         # check that process actually exit
         self.process.wait(timeout=0.5)
+        endgroup()
