@@ -1628,21 +1628,27 @@ class PdfArranger(Gtk.Application):
         if len(selection) != 1:
             return
         self.zoom_full_page = True
-        selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
+
+        item_padding = self.iconview.get_item_padding()
+        cell_image_renderer, cell_text_renderer = self.iconview.get_cells()
+        image_padding = cell_image_renderer.get_padding()
+        text_rect = self.iconview.get_cell_rect(selection[-1], cell_text_renderer)[1]
+        text_rect_height = text_rect.height  # cell_text_renderer padding is included here
+        border_and_shadow = 7  # 2*th1+th2 set in iconview.py
+        cell_extraX = 2 * (item_padding + image_padding[0]) + border_and_shadow
+        cell_extraY = 2 * (item_padding + image_padding[1]) + text_rect_height + border_and_shadow
+
         sw_width = self.sw.get_allocated_width()
         sw_height = self.get_full_sw_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
         page_height = max(p.height_in_points() for p, _ in self.model)
-        max_page_height, i = max((p.height_in_pixel(), i) for i, (p, _) in enumerate(self.model))
-        path = Gtk.TreePath.new_from_indices([i])
-        max_cell_height = self.iconview.get_cell_rect(path)[1].height
-        cell_extraY = max_cell_height - max_page_height
-        cell_extraX = 24  # margins, padding, border, shadow..
-        zoom_scaleX_new = (sw_width - cell_extraX - 12) / (page_width + 0.5)  # 12 = margins
-        zoom_scaleY_new = (sw_height - cell_extraY - 12) / (page_height - 0.5)  # 12 = margins
+        margins = 12  # leave 6 pixel at top and 6 pixel at bottom
+        zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
+        zoom_scaleY_new = (sw_height - cell_extraY - margins) / page_height
         self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
         for page, _ in self.model:
             page.zoom = self.zoom_scale
+        selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
         GObject.idle_add(self.render, selected_page_nr)
 
         # Set zoom level to nearest possible so zoom in/out works right
