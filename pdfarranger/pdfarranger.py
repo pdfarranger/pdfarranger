@@ -341,8 +341,6 @@ class PdfArranger(Gtk.Application):
         for f in files:
             a.addpages(f.get_path())
         a.commit(select_added=False, add_to_undomanager=True)
-        if len(files) == 1:
-            self.set_unsaved(False)
 
     def __build_from_file(self, path):
         """ Return the path of a resource file """
