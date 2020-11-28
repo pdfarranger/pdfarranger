@@ -776,18 +776,22 @@ class PdfArranger(Gtk.Application):
             all_files.add(f)
         return all_files
 
-    def exec_new_self(self):
-        subprocess.Popen([sys.executable, '-mpdfarranger'])
-
     def on_action_new(self, _action, _param, _unknown):
-        display = Gdk.Display.get_default()
-        launch_context = display.get_app_launch_context()
-        desktop_file = "%s.desktop"%(self.get_application_id())
-        try:
-            app_info = Gio.DesktopAppInfo.new(desktop_file)
-            app_info.launch([], launch_context)
-        except TypeError as e:
-            self.exec_new_self()
+        """Start a new instance."""
+        if os.name == 'nt':
+            if sys.executable.find('python3.exe') == -1:
+                subprocess.Popen(sys.executable)
+            else:
+                subprocess.Popen([sys.executable, '-mpdfarranger'])
+        else:
+            display = Gdk.Display.get_default()
+            launch_context = display.get_app_launch_context()
+            desktop_file = "%s.desktop"%(self.get_application_id())
+            try:
+                app_info = Gio.DesktopAppInfo.new(desktop_file)
+                app_info.launch([], launch_context)
+            except TypeError as e:
+                subprocess.Popen([sys.executable, '-mpdfarranger'])
 
     def on_action_save(self, _action, _param, _unknown):
         self.save_or_choose()
