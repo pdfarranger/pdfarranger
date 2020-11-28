@@ -1,9 +1,9 @@
-#! /usr/bin/env python3
-
 import os
 import subprocess
 import sys
 import unittest
+import time
+import tempfile
 
 """
 Thoses tests are using Dogtail https://gitlab.com/dogtail/dogtail
@@ -29,76 +29,52 @@ treeview.typeText('qpdf-manual.pdf')
 filechooser.button('Open').click()
 """
 
+
 def group(title):
-    if 'GITHUB_ACTIONS' in os.environ:
+    if "GITHUB_ACTIONS" in os.environ:
         print("::group::" + title)
 
 
 def endgroup():
-    if 'GITHUB_ACTIONS' in os.environ:
+    if "GITHUB_ACTIONS" in os.environ:
         print("::endgroup::")
 
 
-class XvfbTest(unittest.TestCase):
+class XvfbManager:
     """Base class for running offscreen tests"""
 
-    def __init__(self, methodName, display=":99"):
-        super().__init__(methodName)
+    def __init__(self, display=":99"):
         self.display = display
-        os.environ["DISPLAY"] = display
-        self.environ = os.environ.copy()
+        env = os.environ.copy()
+        env["DISPLAY"] = display
         self.xvfb_proc = None
         self.dbus_proc = None
-
-    def setUp(self):
         self.xvfb_proc = subprocess.Popen(["Xvfb", self.display])
+        cmd = ["dbus-daemon", "--print-address=1", "--session"]
         self.dbus_proc = subprocess.Popen(
-            ["dbus-daemon", "--print-address=1", "--session"],
-            stdout=subprocess.PIPE,
-            text=True,
-            env=self.environ,
+            cmd, stdout=subprocess.PIPE, text=True, env=env
         )
-        dbus_addr = self.dbus_proc.stdout.readline().strip()
+        self.dbus_addr = self.dbus_proc.stdout.readline().strip()
         self.dbus_proc.stdout.close()
-        self.environ["DBUS_SESSION_BUS_ADDRESS"] = dbus_addr
-        os.environ["DBUS_SESSION_BUS_ADDRESS"] = dbus_addr
-        print(dbus_addr)
+        os.environ["DISPLAY"] = display
+        os.environ["DBUS_SESSION_BUS_ADDRESS"] = self.dbus_addr
 
-    def tearDown(self):
+    def kill(self):
         self.dbus_proc.kill()
         self.dbus_proc.wait()
         self.xvfb_proc.kill()
         self.xvfb_proc.wait()
 
 
-class OnscreenTest(unittest.TestCase):
-    """Base class for onscreen test (to debug tests)"""
-
-    def __init__(self, methodName):
-        super().__init__(methodName)
-        self.environ = os.environ.copy()
-
-
-# Inherit OnscreenTest instead of XvfbTest to debug tests
-class DogtailTest(XvfbTest):
-    def __init__(self, methodName):
-        super().__init__(methodName)
-        self.environ["LC_MESSAGES"] = "C"
-        self.environ["GTK_MODULES"] = "gail:atk-bridge"
+class DogtailManager:
+    def __init__(self):
+        self.xvfb = None
+        if "DISPLAY" not in os.environ:
+            self.xvfb = XvfbManager()
+        os.environ["LC_MESSAGES"] = "C"
         os.environ["GTK_MODULES"] = "gail:atk-bridge"
-
-    def setUp(self):
-        super().setUp()
-        subprocess.check_call(
-            [
-                "gsettings",
-                "set",
-                "org.gnome.desktop.interface",
-                "toolkit-accessibility",
-                "true",
-            ],
-            env=self.environ,
-        )
+        cmd = "gsettings set org.gnome.desktop.interface toolkit-accessibility true"
+        subprocess.check_call(cmd.split())
         # dogtail must be imported after setting DBUS_SESSION_BUS_ADDRESS
         from dogtail.config import config
         config.debugSleep = True
@@ -106,54 +82,101 @@ class DogtailTest(XvfbTest):
         config.searchBackoffDuration = 1
         config.actionDelay = 0.01
         config.runInterval = 0.01
-        config.defaultDelay = 1
+        config.defaultDelay = 0.5
         config.debugSearching = True
         config.searchCutoffCount = 10
         config.runTimeout = 1
 
-    def tearDown(self):
-        super().tearDown()
+    def kill(self):
+        if self.xvfb is not None:
+            self.xvfb.kill()
 
 
-class PdfArrangerTest(DogtailTest):
-    def __init__(self, methodName, args=None):
-        super().__init__(methodName)
+class PdfArrangerManager:
+    def __init__(self, args=None, coverage=True):
+        self.dogtail = DogtailManager()
         self.process = None
-        self.args = [] if args is None else args
-
-    def setUp(self):
-        super().setUp()
+        args = [] if args is None else args
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
-        # Comment this line to disable Coverage
-        cmd = cmd + ["-m", "coverage", "run"]
-        self.process = subprocess.Popen(
-            cmd + ["-m", "pdfarranger"] + self.args, env=self.environ
-        )
+        if coverage:
+            cmd = cmd + ["-m", "coverage", "run"]
+        self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args)
 
-    def tearDown(self):
+    def kill(self):
         self.process.kill()
         self.process.wait()
-        super().tearDown()
+        self.dogtail.kill()
 
 
-class ImportQuitTest(PdfArrangerTest):
-    def __init__(self, methodName="runTest"):
-        group("Init")
-        super().__init__(methodName, ["data/screenshot.png"])
+class ImportQuitTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.pdfarranger = None
 
-    def runTest(self):
+    def setUp(self):
+        group("Running " + self.id())
+
+    def app(self):
         # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
         from dogtail.tree import root
+        return root.application("__main__.py")
+
+    def process(self):
+        return self.__class__.pdfarranger.process
+
+    def test_1_import_img(self):
+        self.__class__.pdfarranger = PdfArrangerManager(["data/screenshot.png"])
         # check that process is actually running
-        self.assertIsNone(self.process.poll())
-        app = root.application("__main__.py")
+        self.assertIsNone(self.process().poll())
+        self.app()
         from dogtail.config import config
+        # Now let's go faster
         config.searchBackoffDuration = 0.1
-        endgroup()
-        group("Running "+self.id())
-        mainmenu = app.child(roleName="toggle button", name="Menu")
+
+    def test_2_rotate_undo(self):
+        app = self.app()
+        statusbar = app.child(roleName="status bar")
+        self.assertEqual(statusbar.name, "Selected pages: ")
+        app.keyCombo("<ctrl>a")  # select all
+        self.assertEqual(statusbar.name, "Selected pages: 1")
+        app.keyCombo("<ctrl>Left")  # rotate left
+        app.keyCombo("<ctrl>z")  # undo
+        app.keyCombo("<ctrl>y")  # redo
+        app.keyCombo("<ctrl>a")
+        app.keyCombo("<ctrl>Right")  # rotate right
+
+    def __click_mainmenu(self, action):
+        mainmenu = self.app().child(roleName="toggle button", name="Menu")
         mainmenu.click()
-        mainmenu.child(roleName="menu item", name="Quit", showingOnly=True).click()
+        mainmenu.child(roleName="menu item", name=action, showingOnly=True).click()
+
+    def __wait_cond(self, cond):
+        c = 0
+        while not cond():
+            time.sleep(0.1)
+            self.assertLess(c, 10)
+            c += 1
+
+    def test_3_save_as(self):
+        self.__click_mainmenu("Save")
+        filechooser = self.app().child(roleName="file chooser")
+        with tempfile.TemporaryDirectory() as tmp:
+            filename = os.path.join(tmp, "foobar.pdf")
+            filechooser.child(roleName="text").text = filename
+            saveb = filechooser.button("Save")
+            self.__wait_cond(lambda: saveb.sensitive)
+            filechooser.button("Save").click()
+            self.__wait_cond(lambda: os.path.isfile(filename))
+
+    def test_4_quit(self):
+        self.__click_mainmenu("Quit")
         # check that process actually exit
-        self.process.wait(timeout=0.5)
+        self.process().wait(timeout=22)
+
+    def tearDown(self):
         endgroup()
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.pdfarranger:
+            cls.pdfarranger.kill()
