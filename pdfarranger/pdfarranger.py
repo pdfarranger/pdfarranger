@@ -751,7 +751,10 @@ class PdfArranger(Gtk.Application):
                                                  Gtk.ResponseType.ACCEPT))
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
-            chooser.set_filename(self.pdfqueue[0].filename)
+            f = self.pdfqueue[0].filename
+            # could be an image thanks to img2pdf
+            if f.endswith(".pdf"):
+                chooser.set_filename(f)
         chooser.set_current_folder(self.export_directory)
         filter_list = self.__create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
