@@ -77,13 +77,13 @@ class DogtailManager:
         subprocess.check_call(cmd.split())
         # dogtail must be imported after setting DBUS_SESSION_BUS_ADDRESS
         from dogtail.config import config
-        config.debugSleep = True
+        config.debugSleep = False
         # long duration at startup
         config.searchBackoffDuration = 1
         config.actionDelay = 0.01
         config.runInterval = 0.01
         config.defaultDelay = 0.5
-        config.debugSearching = True
+        config.debugSearching = False
         config.searchCutoffCount = 10
         config.runTimeout = 1
 
@@ -133,17 +133,53 @@ class ImportQuitTest(unittest.TestCase):
         # Now let's go faster
         config.searchBackoffDuration = 0.1
 
-    def test_2_rotate_undo(self):
+    def test_2_zoom(self):
+        app = self.app()
+        zoomoutb = app.child(roleName="push button", description="Zoom Out")
+        zoominb = app.child(roleName="push button", description="Zoom In")
+        # maximum dezoom whatever the initial zoom level
+        for i in range(10):
+            zoomoutb.click()
+        for i in range(3):
+            zoominb.click()
+
+    def __assert_selected(self, selection):
         app = self.app()
         statusbar = app.child(roleName="status bar")
-        self.assertEqual(statusbar.name, "Selected pages: ")
+        self.assertEqual(statusbar.name, "Selected pages: " + selection)
+
+    def test_3_rotate_undo(self):
+        app = self.app()
+        self.__assert_selected("")
         app.keyCombo("<ctrl>a")  # select all
-        self.assertEqual(statusbar.name, "Selected pages: 1")
+        self.__assert_selected("1")
         app.keyCombo("<ctrl>Left")  # rotate left
         app.keyCombo("<ctrl>z")  # undo
         app.keyCombo("<ctrl>y")  # redo
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>Right")  # rotate right
+        app.keyCombo("<ctrl>Right")  # rotate right
+
+    def test_4_duplicate(self):
+        from dogtail import predicate
+        app = self.app()
+        viewport = app.child(roleName="viewport")
+        page1 = viewport.child(roleName="icon")
+        page1.click(button=3)
+        popupmenu = app.child(roleName="window")
+        popupmenu.menuItem("Duplicate", showingOnly=None).click()
+        icons = viewport.findChildren(predicate.GenericPredicate(roleName="icon"))
+        self.assertEqual(len(icons), 2)
+        app.keyCombo("<ctrl>a")
+        app.keyCombo("<ctrl>c")
+        for __ in range(3):
+            app.keyCombo("<ctrl>v")
+        icons = viewport.findChildren(predicate.GenericPredicate(roleName="icon"))
+        self.assertEqual(len(icons), 8)
+        app.keyCombo("Right")
+        app.keyCombo("Left")
+        app.keyCombo("Down")
+        self.__assert_selected("5")
 
     def __click_mainmenu(self, action):
         mainmenu = self.app().child(roleName="toggle button", name="Menu")
@@ -157,7 +193,7 @@ class ImportQuitTest(unittest.TestCase):
             self.assertLess(c, 10)
             c += 1
 
-    def test_3_save_as(self):
+    def test_5_save_as(self):
         self.__click_mainmenu("Save")
         filechooser = self.app().child(roleName="file chooser")
         with tempfile.TemporaryDirectory() as tmp:
@@ -168,7 +204,7 @@ class ImportQuitTest(unittest.TestCase):
             filechooser.button("Save").click()
             self.__wait_cond(lambda: os.path.isfile(filename))
 
-    def test_4_quit(self):
+    def test_6_quit(self):
         self.__click_mainmenu("Quit")
         # check that process actually exit
         self.process().wait(timeout=22)
