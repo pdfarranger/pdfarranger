@@ -153,11 +153,13 @@ class _CropWidget(Gtk.Frame):
         self.add(grid)
         label = Gtk.Label(
             label=_(
-                'Cropping does not remove any content\n'
+                'Cropping does not remove any content '
                 'from the PDF file, it only hides it.'
             )
         )
         label.props.margin = margin
+        label.set_line_wrap(True)
+        label.set_max_width_chars(38)
         grid.attach(label, 0, 0, 3, 1)
         self.spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
@@ -168,7 +170,7 @@ class _CropWidget(Gtk.Frame):
 
         for row, side in enumerate(_CropWidget.sides):
             label = Gtk.Label(label=_CropWidget.side_names[side])
-            label.set_alignment(0, 0)
+            label.set_alignment(0.0, 0.5)
             grid.attach(label, 0, row + 1, 1, 1)
 
             adj = Gtk.Adjustment(
@@ -186,7 +188,7 @@ class _CropWidget(Gtk.Frame):
             grid.attach(spin, 1, row + 1, 1, 1)
 
             label = Gtk.Label(label=units.pop(0))
-            label.set_alignment(0, 0)
+            label.set_alignment(0.0, 0.5)
             grid.attach(label, 2, row + 1, 1, 1)
 
     @staticmethod
