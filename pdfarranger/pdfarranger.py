@@ -617,6 +617,8 @@ class PdfArranger(Gtk.Application):
     def update_progress_bar(self, num):
         if num == -1:  # rendering (re)started
             fraction = 0
+        elif len(self.model) == 0:
+            fraction = 1
         else:
             fraction = self.progress_bar.get_fraction() + 1 / len(self.model)
         self.progress_bar.set_fraction(fraction)
@@ -626,7 +628,7 @@ class PdfArranger(Gtk.Application):
             self.progress_bar.show()
 
     def update_thumbnail(self, _obj, num, thumbnail, resample):
-        if num != -1:
+        if 0 <= num < len(self.model):
             page, _ = self.model[num]
             page.resample = resample
             page.zoom = self.zoom_scale
@@ -881,7 +883,9 @@ class PdfArranger(Gtk.Application):
 
     def clear_selected(self):
         """Removes the selected elements in the IconView"""
-
+        if self.rendering_thread:
+            self.rendering_thread.quit = True
+            self.rendering_thread.join()
         self.undomanager.commit("Delete")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
@@ -897,6 +901,8 @@ class PdfArranger(Gtk.Application):
                 path = row.path
                 self.iconview.select_path(path)
         self.iconview.grab_focus()
+        if self.progress_bar.get_visible() and len(self.model) > 0:
+            self.render()
 
     def copy_pages(self):
         """Collect data from selected pages"""
