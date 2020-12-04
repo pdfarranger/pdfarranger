@@ -27,6 +27,14 @@ treeview = filechooser.child(roleName='table', name='Files')
 treeview.keyCombo('<ctrl>L')
 treeview.typeText('qpdf-manual.pdf')
 filechooser.button('Open').click()
+
+You may need to run the following commands to run thoses tests in your current session instead of Xvfb:
+
+* /usr/libexec/at-spi-bus-launcher --launch-immediately
+* setxkbmap -v fr
+* gsettings set org.gnome.desktop.interface toolkit-accessibility true
+
+Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/config.ini)
 """
 
 
@@ -86,6 +94,7 @@ class DogtailManager:
         config.debugSearching = False
         config.searchCutoffCount = 10
         config.runTimeout = 1
+        config.searchShowingOnly = True
 
     def kill(self):
         if self.xvfb is not None:
@@ -108,18 +117,52 @@ class PdfArrangerManager:
         self.dogtail.kill()
 
 
-class ImportQuitTest(unittest.TestCase):
+class PdfArrangerTest(unittest.TestCase):
+    @staticmethod
+    def app():
+        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
+        from dogtail.tree import root
+        return root.application("__main__.py")
+
+    def __click_mainmenu(self, action):
+        mainmenu = self.app().child(roleName="toggle button", name="Menu")
+        mainmenu.click()
+        mainmenu.menuItem(action).click()
+
+    def __wait_cond(self, cond):
+        c = 0
+        while not cond():
+            time.sleep(0.1)
+            self.assertLess(c, 10)
+            c += 1
+
+    def __assert_selected(self, selection):
+        app = self.app()
+        statusbar = app.child(roleName="status bar")
+        self.assertEqual(statusbar.name, "Selected pages: " + selection)
+
+    def __icons(self):
+        """Return the list of page icons"""
+        from dogtail import predicate
+        viewport = self.app().child(roleName="viewport")
+        return viewport.findChildren(predicate.GenericPredicate(roleName="icon"), showingOnly=False)
+
+    def __popupmenu(self, page, action):
+        """Run an action on a give page using the popup menu"""
+        self.__icons()[page].click(button=3)
+        popupmenu = self.app().child(roleName="window")
+        if not isinstance(action, str):
+            for submenu in action[:-1]:
+                popupmenu.menu(submenu).point()
+            action = action[-1]
+        popupmenu.menuItem(action).click()
+
     @classmethod
     def setUpClass(cls):
         cls.pdfarranger = None
 
     def setUp(self):
         group("Running " + self.id())
-
-    def app(self):
-        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
-        from dogtail.tree import root
-        return root.application("__main__.py")
 
     def process(self):
         return self.__class__.pdfarranger.process
@@ -138,15 +181,10 @@ class ImportQuitTest(unittest.TestCase):
         zoomoutb = app.child(roleName="push button", description="Zoom Out")
         zoominb = app.child(roleName="push button", description="Zoom In")
         # maximum dezoom whatever the initial zoom level
-        for i in range(10):
+        for _ in range(10):
             zoomoutb.click()
-        for i in range(3):
+        for _ in range(3):
             zoominb.click()
-
-    def __assert_selected(self, selection):
-        app = self.app()
-        statusbar = app.child(roleName="status bar")
-        self.assertEqual(statusbar.name, "Selected pages: " + selection)
 
     def test_3_rotate_undo(self):
         app = self.app()
@@ -161,39 +199,38 @@ class ImportQuitTest(unittest.TestCase):
         app.keyCombo("<ctrl>Right")  # rotate right
 
     def test_4_duplicate(self):
-        from dogtail import predicate
+        self.__popupmenu(0, "Duplicate")
         app = self.app()
-        viewport = app.child(roleName="viewport")
-        page1 = viewport.child(roleName="icon")
-        page1.click(button=3)
-        popupmenu = app.child(roleName="window")
-        popupmenu.menuItem("Duplicate", showingOnly=None).click()
-        icons = viewport.findChildren(predicate.GenericPredicate(roleName="icon"))
-        self.assertEqual(len(icons), 2)
+        self.assertEqual(len(self.__icons()), 2)
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>c")
         for __ in range(3):
             app.keyCombo("<ctrl>v")
-        icons = viewport.findChildren(predicate.GenericPredicate(roleName="icon"))
-        self.assertEqual(len(icons), 8)
+        self.assertEqual(len(self.__icons()), 8)
         app.keyCombo("Right")
         app.keyCombo("Left")
         app.keyCombo("Down")
         self.__assert_selected("5")
+        app.keyCombo("Up")
+        self.__assert_selected("2")
 
-    def __click_mainmenu(self, action):
-        mainmenu = self.app().child(roleName="toggle button", name="Menu")
-        mainmenu.click()
-        mainmenu.child(roleName="menu item", name=action, showingOnly=True).click()
+    def test_5_page_format(self):
+        self.__popupmenu(0, ["Select", "Select Odd Pages"])
+        self.__assert_selected("1, 3, 5, 7")
+        self.__popupmenu(0, "Page Format")
+        dialog = self.app().child(roleName="dialog")
+        croppanel = dialog.child(name="Crop Margins")
+        from dogtail import predicate
+        cropbuttons = croppanel.findChildren(predicate.GenericPredicate(roleName="spin button"))
+        for i in range(4):
+            cropbuttons[i].click()
+            cropbuttons[i].text = str((i+1)*4)
+        scalebutton = dialog.child(roleName="spin button")
+        scalebutton.click()
+        scalebutton.text = "120"
+        dialog.child(name="OK").click()
 
-    def __wait_cond(self, cond):
-        c = 0
-        while not cond():
-            time.sleep(0.1)
-            self.assertLess(c, 10)
-            c += 1
-
-    def test_5_save_as(self):
+    def test_6_save_as(self):
         self.__click_mainmenu("Save")
         filechooser = self.app().child(roleName="file chooser")
         with tempfile.TemporaryDirectory() as tmp:
@@ -204,7 +241,7 @@ class ImportQuitTest(unittest.TestCase):
             filechooser.button("Save").click()
             self.__wait_cond(lambda: os.path.isfile(filename))
 
-    def test_6_quit(self):
+    def test_7_quit(self):
         self.__click_mainmenu("Quit")
         # check that process actually exit
         self.process().wait(timeout=22)
