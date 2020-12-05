@@ -201,6 +201,8 @@ def edit(metadata, pdffiles, parent):
         column = Gtk.TreeViewColumn(title, renderer, text=i)
         treeview.append_column(column)
     treeview.props.margin = 12
+    treeview.set_enable_search(False)
+    treeview.set_cursor(Gtk.TreePath(0), treeview.get_column(1), True)
     dialog.vbox.pack_start(treeview, True, True, 0)
     dialog.show_all()
     result = dialog.run()
