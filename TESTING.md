@@ -63,5 +63,5 @@ possible. This list was created using
 ## Dogtail
 
 ```
-docker run -w /src -v $PWD:/src jeromerobert/pdfarranger-docker-ci sh -c "pip install .[image] ; python3 -m unittest"
+docker run -w /src -v $PWD:/src jeromerobert/pdfarranger-docker-ci sh -c "pip install .[image] ; python3 -X tracemalloc -u -m unittest -v -f"
 ```
