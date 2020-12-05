@@ -16,6 +16,8 @@ interactive and intuitive graphical interface. It is a frontend for
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It’s a humble attempt to make the project a bit more active.
 
+*NOTE:* You can think of *pdfarranger* as the more lightweight little brother to [PDFsam](https://github.com/torakiki/pdfsam) - with the two apps sharing most of their core features/functionality (but that is written in Java while *pdfarranger* is mostly written in Python3.x...).
+
 ![screenshot of pdfarranger](https://github.com/pdfarranger/pdfarranger/raw/master/data/screenshot.png)
 
 ## Downloads
