@@ -724,6 +724,7 @@ class PdfArranger(Gtk.Application):
 
         # Prevent gtk errors when closing with everything selected
         self.iconview.unselect_all()
+        self.iconview.get_model().clear()
 
         if self.rendering_thread:
             self.rendering_thread.quit = True
