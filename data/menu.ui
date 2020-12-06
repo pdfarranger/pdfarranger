@@ -106,7 +106,7 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.reverse-order</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Split pages</attribute>
+          <attribute name="label" translatable="yes">_Split Pages</attribute>
           <attribute name="action">win.split</attribute>
         </item>
         <item>
