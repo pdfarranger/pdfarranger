@@ -264,7 +264,7 @@ class PdfArrangerTest(unittest.TestCase):
         self.assertEqual(len(self.__icons()), lbefore + 4)
 
     def test_08_zoom_pages(self):
-        self.app().keyCombo("Home")
+        self.app().child(roleName="layered pane").keyCombo("Home")
         self.__assert_selected("1")
         self.app().keyCombo("f")
 
