@@ -168,15 +168,15 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">4</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Invert Selection</attribute>
-          <attribute name="action">win.select</attribute>
+          <attribute name="label" translatable="yes">Same Page _Format</attribute>
+          <attribute name="action">win.select-same-format</attribute>
           <attribute name="target" type="i">5</attribute>
         </item>
-          <item>
-            <attribute name="label" translatable="yes">_Invert Selection</attribute>
-            <attribute name="action">win.select</attribute>
-            <attribute name="target" type="i">6</attribute>
-          </item>
+        <item>
+          <attribute name="label" translatable="yes">_Invert Selection</attribute>
+          <attribute name="action">win.select</attribute>
+          <attribute name="target" type="i">6</attribute>
+        </item>
       </section>
     </submenu>
     <section>
