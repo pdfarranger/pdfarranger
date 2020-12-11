@@ -96,6 +96,7 @@ class DogtailManager:
         config.searchCutoffCount = 30
         config.runTimeout = 1
         config.searchShowingOnly = True
+        config.typingDelay = 0.05
 
     def kill(self):
         if self.xvfb is not None:
