@@ -120,14 +120,14 @@ class PdfArrangerManager:
 
 class PdfArrangerTest(unittest.TestCase):
     @staticmethod
-    def app():
+    def _app():
         # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
         from dogtail.tree import root
         return root.application("__main__.py")
 
-    def __mainmenu(self, action):
-        mainmenu = self.app().child(roleName="toggle button", name="Menu")
-        self.__wait_cond(lambda: mainmenu.sensitive)
+    def _mainmenu(self, action):
+        mainmenu = self._app().child(roleName="toggle button", name="Menu")
+        self._wait_cond(lambda: mainmenu.sensitive)
         mainmenu.click()
         if not isinstance(action, str):
             for submenu in action[:-1]:
@@ -135,35 +135,38 @@ class PdfArrangerTest(unittest.TestCase):
             action = action[-1]
         mainmenu.menuItem(action).click()
 
-    def __wait_cond(self, cond):
+    def _wait_cond(self, cond):
         c = 0
         while not cond():
             time.sleep(0.1)
             self.assertLess(c, 30)
             c += 1
 
-    def __assert_selected(self, selection):
-        app = self.app()
+    def _assert_selected(self, selection):
+        app = self._app()
         statusbar = app.child(roleName="status bar")
         self.assertEqual(statusbar.name, "Selected pages: " + selection)
 
-    def __icons(self):
+    def _icons(self):
         """Return the list of page icons"""
         from dogtail import predicate
-        viewport = self.app().child(roleName="viewport")
+        viewport = self._app().child(roleName="viewport")
         return viewport.findChildren(predicate.GenericPredicate(roleName="icon"), showingOnly=False)
 
-    def __popupmenu(self, page, action):
+    def _popupmenu(self, page, action):
         """Run an action on a give page using the popup menu"""
-        self.__icons()[page].click(button=3)
-        popupmenu = self.app().child(roleName="window")
+        self._icons()[page].click(button=3)
+        popupmenu = self._app().child(roleName="window")
         if not isinstance(action, str):
             for submenu in action[:-1]:
                 popupmenu.menu(submenu).point()
             action = action[-1]
         button = popupmenu.menuItem(action)
-        self.__wait_cond(lambda: button.sensitive)
+        self._wait_cond(lambda: button.sensitive)
         button.click()
+
+    def _process(self):
+        return self.__class__.pdfarranger.process
 
     @classmethod
     def setUpClass(cls):
@@ -173,21 +176,30 @@ class PdfArrangerTest(unittest.TestCase):
     def setUp(self):
         group("Running " + self.id())
 
-    def process(self):
-        return self.__class__.pdfarranger.process
+    def tearDown(self):
+        endgroup()
 
+    @classmethod
+    def tearDownClass(cls):
+        if cls.pdfarranger:
+            cls.pdfarranger.kill()
+        if cls.tmp:
+            shutil.rmtree(cls.tmp)
+
+
+class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
         self.__class__.pdfarranger = PdfArrangerManager(["data/screenshot.png"])
         # check that process is actually running
-        self.assertIsNone(self.process().poll())
-        self.app()
+        self.assertIsNone(self._process().poll())
+        self._app()
         from dogtail.config import config
         # Now let's go faster
         config.searchBackoffDuration = 0.1
 
     def test_02_properties(self):
-        self.__mainmenu("Edit Properties")
-        dialog = self.app().child(roleName="dialog")
+        self._mainmenu("Edit Properties")
+        dialog = self._app().child(roleName="dialog")
         creatorlab = dialog.child(roleName="table cell", name="Creator")
         creatorid = creatorlab.parent.children.index(creatorlab) + 1
         creatorval = creatorlab.parent.children[creatorid]
@@ -195,15 +207,15 @@ class PdfArrangerTest(unittest.TestCase):
         from dogtail import rawinput
         rawinput.typeText('["Frodo", "Sam"]')
         dialog.child(name="OK").click()
-        self.__mainmenu("Edit Properties")
-        dialog = self.app().child(roleName="dialog")
+        self._mainmenu("Edit Properties")
+        dialog = self._app().child(roleName="dialog")
         rawinput.keyCombo("enter")
         rawinput.typeText('Memories')
         rawinput.keyCombo("enter")
         dialog.child(name="OK").click()
 
     def test_03_zoom(self):
-        app = self.app()
+        app = self._app()
         zoomoutb = app.child(roleName="push button", description="Zoom Out")
         zoominb = app.child(roleName="push button", description="Zoom In")
         # maximum dezoom whatever the initial zoom level
@@ -213,10 +225,10 @@ class PdfArrangerTest(unittest.TestCase):
             zoominb.click()
 
     def test_04_rotate_undo(self):
-        app = self.app()
-        self.__assert_selected("")
+        app = self._app()
+        self._assert_selected("")
         app.keyCombo("<ctrl>a")  # select all
-        self.__assert_selected("1")
+        self._assert_selected("1")
         app.keyCombo("<ctrl>Left")  # rotate left
         app.keyCombo("<ctrl>z")  # undo
         app.keyCombo("<ctrl>y")  # redo
@@ -225,26 +237,26 @@ class PdfArrangerTest(unittest.TestCase):
         app.keyCombo("<ctrl>Right")  # rotate right
 
     def test_05_duplicate(self):
-        self.__popupmenu(0, "Duplicate")
-        app = self.app()
-        self.assertEqual(len(self.__icons()), 2)
+        self._popupmenu(0, "Duplicate")
+        app = self._app()
+        self.assertEqual(len(self._icons()), 2)
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>c")
         for __ in range(3):
             app.keyCombo("<ctrl>v")
-        self.assertEqual(len(self.__icons()), 8)
+        self.assertEqual(len(self._icons()), 8)
         app.keyCombo("Right")
         app.keyCombo("Left")
         app.keyCombo("Down")
-        self.__assert_selected("5")
+        self._assert_selected("5")
         app.keyCombo("Up")
-        self.__assert_selected("2")
+        self._assert_selected("2")
 
     def test_06_page_format(self):
-        self.__popupmenu(0, ["Select", "Select Odd Pages"])
-        self.__assert_selected("1, 3, 5, 7")
-        self.__popupmenu(0, "Page Format")
-        dialog = self.app().child(roleName="dialog")
+        self._popupmenu(0, ["Select", "Select Odd Pages"])
+        self._assert_selected("1, 3, 5, 7")
+        self._popupmenu(0, "Page Format")
+        dialog = self._app().child(roleName="dialog")
         croppanel = dialog.child(name="Crop Margins")
         from dogtail import predicate
         cropbuttons = croppanel.findChildren(predicate.GenericPredicate(roleName="spin button"))
@@ -257,55 +269,45 @@ class PdfArrangerTest(unittest.TestCase):
         dialog.child(name="OK").click()
 
     def test_07_split_page(self):
-        lbefore = len(self.__icons())
-        self.__popupmenu(0, ["Select", "Select Even Pages"])
-        self.__assert_selected("2, 4, 6, 8")
-        self.__mainmenu(["Edit", "Split Pages"])
-        self.assertEqual(len(self.__icons()), lbefore + 4)
+        lbefore = len(self._icons())
+        self._popupmenu(0, ["Select", "Select Even Pages"])
+        self._assert_selected("2, 4, 6, 8")
+        self._mainmenu(["Edit", "Split Pages"])
+        self.assertEqual(len(self._icons()), lbefore + 4)
 
     def test_08_zoom_pages(self):
-        self.app().child(roleName="layered pane").keyCombo("Home")
-        self.__assert_selected("1")
-        self.app().keyCombo("f")
+        self._app().child(roleName="layered pane").keyCombo("Home")
+        self._assert_selected("1")
+        self._app().keyCombo("f")
 
     def test_09_save_as(self):
-        self.__mainmenu("Save")
-        filechooser = self.app().child(roleName="file chooser")
+        self._mainmenu("Save")
+        filechooser = self._app().child(roleName="file chooser")
         tmp = self.__class__.tmp
         filename = os.path.join(tmp, "foobar.pdf")
         filechooser.child(roleName="text").text = filename
         saveb = filechooser.button("Save")
-        self.__wait_cond(lambda: saveb.sensitive)
+        self._wait_cond(lambda: saveb.sensitive)
         filechooser.button("Save").click()
-        self.__wait_cond(lambda: os.path.isfile(filename))
+        self._wait_cond(lambda: os.path.isfile(filename))
 
     def test_10_about(self):
-        self.__mainmenu("About")
-        dialog = self.app().child(roleName="dialog")
+        self._mainmenu("About")
+        dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
 
     def test_11_reverse(self):
-        self.__popupmenu(0, ["Select", "Same Page Format"])
-        self.__assert_selected("1, 4, 7, 10")
-        self.__popupmenu(0, ["Select", "All From Same File"])
-        self.__assert_selected("1-12")
-        self.__popupmenu(0, "Reverse Order")
+        self._popupmenu(0, ["Select", "Same Page Format"])
+        self._assert_selected("1, 4, 7, 10")
+        self._popupmenu(0, ["Select", "All From Same File"])
+        self._assert_selected("1-12")
+        self._popupmenu(0, "Reverse Order")
 
     def test_12_quit(self):
-        self.__mainmenu("Quit")
-        dialog = self.app().child(roleName="alert")
+        self._mainmenu("Quit")
+        dialog = self._app().child(roleName="alert")
         dialog.child(name="Cancel").click()
-        self.app().keyCombo("<ctrl>s")
-        self.app().keyCombo("<ctrl>q")
+        self._app().keyCombo("<ctrl>s")
+        self._app().keyCombo("<ctrl>q")
         # check that process actually exit
-        self.process().wait(timeout=22)
-
-    def tearDown(self):
-        endgroup()
-
-    @classmethod
-    def tearDownClass(cls):
-        if cls.pdfarranger:
-            cls.pdfarranger.kill()
-        if cls.tmp:
-            shutil.rmtree(cls.tmp)
+        self._process().wait(timeout=22)
