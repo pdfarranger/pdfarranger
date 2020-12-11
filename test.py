@@ -103,28 +103,31 @@ class DogtailManager:
             self.xvfb.kill()
 
 
+# dogtail does not support change of X11 server so it must be a singleton
+dogtail_manager = DogtailManager()
+
+
 class PdfArrangerManager:
     def __init__(self, args=None, coverage=True):
-        self.dogtail = DogtailManager()
         self.process = None
         args = [] if args is None else args
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if coverage:
-            cmd = cmd + ["-m", "coverage", "run"]
+            cmd = cmd + ["-m", "coverage", "run", "-a"]
         self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args)
 
     def kill(self):
         self.process.kill()
         self.process.wait()
-        self.dogtail.kill()
-
 
 class PdfArrangerTest(unittest.TestCase):
-    @staticmethod
-    def _app():
+    LAST=False
+    def _app(self):
         # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
         from dogtail.tree import root
-        return root.application("__main__.py")
+        a = root.application("__main__.py")
+        self.assertFalse(a.dead)
+        return a
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
@@ -186,6 +189,8 @@ class PdfArrangerTest(unittest.TestCase):
             cls.pdfarranger.kill()
         if cls.tmp:
             shutil.rmtree(cls.tmp)
+        if cls.LAST:
+            dogtail_manager.kill()
 
 
 class TestBatch1(PdfArrangerTest):
@@ -268,8 +273,13 @@ class TestBatch1(PdfArrangerTest):
         scalebutton.click()
         scalebutton.text = "120"
         dialog.child(name="OK").click()
+        # TODO: find the condition which could replace this ugly sleep
+        time.sleep(0.5)
+        self._wait_cond(lambda: dialog.dead)
 
     def test_07_split_page(self):
+        lp = self._app().child(roleName="layered pane")
+        lp.grabFocus()
         lbefore = len(self._icons())
         self._popupmenu(0, ["Select", "Select Even Pages"])
         self._assert_selected("2, 4, 6, 8")
@@ -292,23 +302,41 @@ class TestBatch1(PdfArrangerTest):
         filechooser.button("Save").click()
         self._wait_cond(lambda: os.path.isfile(filename))
 
-    def test_10_about(self):
-        self._mainmenu("About")
-        dialog = self._app().child(roleName="dialog")
-        dialog.child(name="Close").click()
-
-    def test_11_reverse(self):
+    def test_10_reverse(self):
         self._popupmenu(0, ["Select", "Same Page Format"])
         self._assert_selected("1, 4, 7, 10")
         self._popupmenu(0, ["Select", "All From Same File"])
         self._assert_selected("1-12")
         self._popupmenu(0, "Reverse Order")
 
-    def test_12_quit(self):
+    def test_11_quit(self):
         self._mainmenu("Quit")
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Cancel").click()
         self._app().keyCombo("<ctrl>s")
+        self._app().keyCombo("<ctrl>q")
+        # check that process actually exit
+        self._process().wait(timeout=22)
+
+
+class TestBatch2(PdfArrangerTest):
+    LAST=True
+    def test_01_open_empty(self):
+        from dogtail.config import config
+        config.searchBackoffDuration = 1
+        self.__class__.pdfarranger = PdfArrangerManager()
+        # check that process is actually running
+        self.assertIsNone(self._process().poll())
+        self._app()
+        # Now let's go faster
+        config.searchBackoffDuration = 0.1
+
+    def test_02_about(self):
+        self._mainmenu("About")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="Close").click()
+
+    def test_03_quit(self):
         self._app().keyCombo("<ctrl>q")
         # check that process actually exit
         self._process().wait(timeout=22)
