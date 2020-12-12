@@ -331,12 +331,26 @@ class TestBatch2(PdfArrangerTest):
         # Now let's go faster
         config.searchBackoffDuration = 0.1
 
-    def test_02_about(self):
+    def test_02_import(self):
+        self._mainmenu("Import")
+        filechooser = self._app().child(roleName='file chooser')
+        treeview = filechooser.child(roleName="table", name="Files")
+        treeview.keyCombo("<ctrl>L")
+        treeview.typeText(os.path.abspath("data/screenshot.png"))
+        ob = filechooser.button("Open")
+        self._wait_cond(lambda: ob.sensitive)
+        ob.click()
+        self._wait_cond(lambda: filechooser.dead)
+
+    def test_03_about(self):
         self._mainmenu("About")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
+        self._wait_cond(lambda: dialog.dead)
 
-    def test_03_quit(self):
-        self._app().keyCombo("<ctrl>q")
+    def test_04_quit(self):
+        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+        dialog = self._app().child(roleName="alert")
+        dialog.child(name="Don’t Save").click()
         # check that process actually exit
         self._process().wait(timeout=22)
