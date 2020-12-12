@@ -1,11 +1,22 @@
+# If you change this file, please inform @dreua since I most likely have to
+# apply these changes to the other pdfarranger spec files I maintain, too.
+
+# These must come from the calling environment
+%global repo %{getenv:GITHUB_REPOSITORY}
+%global sha %{getenv:GITHUB_SHA}
+
+
+%global shortcommit %(c=%{sha}; echo ${c:0:7})
+%define build_timestamp %(date +"%%Y%%m%%d")
+
 Name:           pdfarranger
-Version:        1.6.2
-Release:        1%{?dist}
+Version:        0
+Release:        %{build_timestamp}git%{shortcommit}%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
-URL:            https://github.com/jeromerobert/%{name}
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:            https://github.com/%{repo}
+Source0:        %{url}/archive/%{shortcommit}/%{name}-%{shortcommit}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
@@ -36,7 +47,7 @@ Obsoletes:      pdfshuffler < 0.6.1-1
 %endif
 
 %global app_id com.github.jeromerobert.pdfarranger
-%global python3_wheelname %{name}-%{version}-py3-none-any.whl
+%global python3_wheelname %{name}-*-py3-none-any.whl
 
 %description
 pdfarranger is a small Python GTK application, which helps the user to merge 
@@ -46,7 +57,7 @@ python-PyPDF2.
 pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n %{name}-%{sha}
 
 # py3_build / py3_install do not work with this setup.py but building
 # a wheel works just fine
@@ -68,7 +79,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %license COPYING
 %doc README.md
 %{python3_sitelib}/%{name}/
-%{python3_sitelib}/%{name}-%{version}.dist-info/
+%{python3_sitelib}/%{name}-*.dist-info/
 %{_mandir}/man*/*.*
 %{_datadir}/icons/hicolor/*/apps/%{app_id}.*
 %{_metainfodir}/%{app_id}.metainfo.xml
@@ -80,6 +91,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %endif
 
 %changelog
+* Sat Dec 12 2020 David Auer <dreua@posteo.de> - 0-20201212git%{shortcommmit}.0.1
+- Modified for pdfarranger-CI: Build given commit.
+
 * Sat Aug 01 2020 David Auer <dreua@posteo.de> - 1.6.2-1
 - Update to 1.6.2
 
