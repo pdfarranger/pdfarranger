@@ -16,3 +16,9 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest --verbose
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
+  rpmbuild:
+    runs-on: ubuntu-latest
+    container: dreua/pdfarranger-docker-rpm
+    steps:
+    - name: RPM Build
+      run: /pdfarranger/pdfarranger-build
