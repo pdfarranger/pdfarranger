@@ -13,7 +13,7 @@ jobs:
     - name: Validate Desktop File
       run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
     - name: Tests and Coverage
-      run: python3 -X tracemalloc -u -m unittest --verbose
+      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
   rpmbuild:

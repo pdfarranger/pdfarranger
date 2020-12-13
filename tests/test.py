@@ -336,19 +336,39 @@ class TestBatch2(PdfArrangerTest):
         filechooser = self._app().child(roleName='file chooser')
         treeview = filechooser.child(roleName="table", name="Files")
         treeview.keyCombo("<ctrl>L")
-        treeview.typeText(os.path.abspath("data/screenshot.png"))
+        treeview.typeText(os.path.abspath("tests/test.pdf"))
         ob = filechooser.button("Open")
         self._wait_cond(lambda: ob.sensitive)
         ob.click()
         self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 2)
 
-    def test_03_about(self):
+    def test_03_cropborder(self):
+        self._popupmenu(0, "Crop White Borders")
+
+    def test_04_export(self):
+        self._mainmenu(["Export", "Export All Pages to Individual Files…"])
+        filechooser = self._app().child(roleName="file chooser")
+        tmp = self.__class__.tmp
+        filename = os.path.join(tmp, "alltosingle.pdf")
+        filename2 = os.path.join(tmp, "alltosingle2.pdf")
+        filechooser.child(roleName="text").text = filename
+        saveb = filechooser.button("Save")
+        self._wait_cond(lambda: saveb.sensitive)
+        filechooser.button("Save").click()
+        self._wait_cond(lambda: os.path.isfile(filename) and os.path.isfile(filename2))
+
+    def test_05_clear(self):
+        self._popupmenu(1, "Delete")
+        self.assertEqual(len(self._icons()), 1)
+
+    def test_06_about(self):
         self._mainmenu("About")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_04_quit(self):
+    def test_07_quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Don’t Save").click()
