@@ -223,7 +223,7 @@ class Page:
         left, right = self.crop[:2]
         newcrop = (1 + left - right) / 2
         newpage.crop[0] = newcrop
-        self.crop[1] = newcrop
+        self.crop[1] = 1 - newcrop
         return newpage
 
 
