@@ -138,7 +138,7 @@ def export(input_files, pages, file_out, mode, mdata):
         if angle != 0:
             new_page.Rotate = angle + angle0
         # PDF files which do not have mediabox default to Portrait Letter / ANSI A
-        cmb = current_page.MediaBox if "\MediaBox" in current_page else [0, 0, 612, 792]
+        cmb = current_page.MediaBox if "/MediaBox" in current_page else [0, 0, 612, 792]
         cropped = _mediabox(row.crop, angle, angle0, cmb)
         if cropped:
             new_page.MediaBox = cropped
