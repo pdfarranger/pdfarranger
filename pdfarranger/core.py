@@ -103,10 +103,13 @@ class Page:
         ts = [self.filename, self.npage, self.angle, self.scale] + list(self.crop)
         return "\n".join([str(v) for v in ts])
 
-    def duplicate(self):
+    def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
         r.crop = list(r.crop)
         r.size = list(r.size)
+        if incl_thumbnail == False:
+            del r.thumbnail  # to save ram
+            r.thumbnail = None
         return r
 
     def set_size(self, size):
