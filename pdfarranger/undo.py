@@ -23,6 +23,8 @@ only store snapshots of the GtkListStore object, not of
 the whole PDF files.
 """
 
+from gi.repository import GObject
+
 
 class Manager(object):
     """
@@ -46,14 +48,14 @@ class Manager(object):
         :param label: label of the action
         """
         self.states = self.states[:self.current]
-        self.states.append(([row[0].duplicate() for row in self.model], self.label,))
+        self.states.append(([row[0].duplicate(False) for row in self.model], self.label,))
         self.current += 1
         self.label = label
         self.__refresh()
 
     def undo(self, _action, _param, _unused):
         if self.current == len(self.states):
-            self.states.append(([row[0].duplicate() for row in self.model], self.label,))
+            self.states.append(([row[0].duplicate(False) for row in self.model], self.label,))
         state, self.label = self.states[self.current - 1]
         self.__set_state(state)
         self.current -= 1
@@ -71,11 +73,15 @@ class Manager(object):
         self.__refresh()
 
     def __set_state(self, state):
+        if self.app.rendering_thread:
+            self.app.rendering_thread.quit = True
+            self.app.rendering_thread.join()
         self.model.clear()
         for page in state:
             # Do not reset the zoom level
             page.zoom = self.app.zoom_scale
             self.model.append([page, page.description()])
+        GObject.idle_add(self.app.render)
 
     def __refresh(self):
         if self.undoaction:
