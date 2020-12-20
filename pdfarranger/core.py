@@ -47,7 +47,7 @@ _ = gettext.gettext
 
 
 class Page:
-    def __init__(self, nfile, npage, zoom, filename, angle, crop, size):
+    def __init__(self, nfile, npage, zoom, filename, angle, scale, crop, size):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
         #: The ID (from 1 to n) of the page in its owner PDF document
@@ -61,7 +61,7 @@ class Page:
         self.angle = angle
         self.thumbnail = None
         self.resample = 2
-        self.scale = 1
+        self.scale = scale
 
     def description(self):
         shortname = os.path.split(self.filename)[1]
@@ -100,7 +100,7 @@ class Page:
 
     def serialize(self):
         """Convert to string for copy/past operations."""
-        ts = [self.filename, self.npage, self.angle] + list(self.crop)
+        ts = [self.filename, self.npage, self.angle, self.scale] + list(self.crop)
         return "\n".join([str(v) for v in ts])
 
     def duplicate(self):
@@ -197,7 +197,7 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def addpages(self, filename, page=-1, angle=0, crop=None):
+    def addpages(self, filename, page=-1, angle=0, scale=1.0, crop=None):
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         nfile = None
@@ -237,6 +237,7 @@ class PageAdder:
                     self.app.zoom_scale,
                     pdfdoc.filename,
                     angle,
+                    scale,
                     crop,
                     page.get_size(),
                 )

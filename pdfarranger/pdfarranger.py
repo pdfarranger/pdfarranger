@@ -840,8 +840,9 @@ class PdfArranger(Gtk.Application):
             pageadder.addpages(filename, npage)
         else:
             angle = int(tmp[2])
-            crop = [float(side) for side in tmp[3:7]]
-            pageadder.addpages(filename, npage, angle, crop)
+            scale = float(tmp[3])
+            crop = [float(side) for side in tmp[4:8]]
+            pageadder.addpages(filename, npage, angle, scale, crop)
 
     def is_data_valid(self, data):
         """Validate data to be pasted from clipboard. Only used in Windows."""
@@ -853,9 +854,11 @@ class PdfArranger(Gtk.Application):
                 filename = tmp[0]
                 npage = int(tmp[1])
                 angle = int(tmp[2])
-                crop = [float(side) for side in tmp[3:7]]
-                if not (os.path.isfile(filename) and len(tmp) == 7 and
+                scale = float(tmp[3])
+                crop = [float(side) for side in tmp[4:8]]
+                if not (os.path.isfile(filename) and len(tmp) == 8 and
                         npage > 0 and angle in [0, 90, 180, 270] and
+                        0 < scale <= 200.0 and
                         all((cr >= 0.0 and cr <= 0.99) for cr in crop) and
                         (crop[0] + crop[1] <= 0.99) and (crop[2] + crop[3] <= 0.99)):
                     data_valid = False
