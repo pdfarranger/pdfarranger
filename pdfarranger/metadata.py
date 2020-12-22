@@ -79,7 +79,7 @@ def merge(metadata, input_files):
     """ Merge current global metadata and each imported files meta data """
     r = metadata.copy()
     for p in input_files:
-        doc = pikepdf.open(p.copyname)
+        doc = pikepdf.open(p.copyname, password=p.password)
         with doc.open_metadata() as meta:
             load_from_docinfo(meta, doc)
             for k, v in meta.items():
