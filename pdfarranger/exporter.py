@@ -80,7 +80,7 @@ def _scale(doc, page, factor):
 def check_content(parent, pdf_list):
     """ Warn about fillable forms or outlines that are lost on export."""
     warn = False
-    for pdf in [pikepdf.open(p.copyname) for p in pdf_list]:
+    for pdf in [pikepdf.open(p.copyname, password=p.password) for p in pdf_list]:
         if "/AcroForm" in pdf.Root.keys(): # fillable form
             warn = True
             break
@@ -117,7 +117,7 @@ def export(input_files, pages, file_out, mode, mdata):
 
     global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
-    pdf_input = [pikepdf.open(p.copyname) for p in input_files]
+    pdf_input = [pikepdf.open(p.copyname, password=p.password) for p in input_files]
     for row in pages:
         current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
         angle = row.angle

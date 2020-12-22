@@ -35,7 +35,9 @@ import gettext
 import gi
 from gi.repository import GObject
 from gi.repository import GLib
-gi.require_version('Poppler', '0.18')
+from gi.repository import Gtk
+
+gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
 
@@ -144,12 +146,77 @@ class PDFDocError(Exception):
         self.message = message
 
 
+class _UnknownPasswordException(Exception):
+    pass
+
+
+class PasswordDialog(Gtk.Dialog):
+    def __init__(self, parent, filename):
+        super().__init__(
+            title=_("Password required"),
+            parent=parent,
+            flags=Gtk.DialogFlags.MODAL,
+            buttons=(
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK,
+                Gtk.ResponseType.OK,
+            ),
+        )
+        self.set_default_response(Gtk.ResponseType.OK)
+        bottommsg = _("The password will be remembered until you close PDF-Arranger.")
+        topmsg = _("The document “{}” is locked and requires a password before it can be opened.")
+        label = Gtk.Label(label=topmsg.format(filename))
+        label.set_max_width_chars(len(bottommsg)-6)
+        label.set_line_wrap(True)
+        label.set_size_request(0, -1)
+        self.vbox.pack_start(label, False, False, 12)
+        box = Gtk.HBox()
+        self.entry = Gtk.Entry()
+        self.entry.set_visibility(False)
+        self.entry.set_activates_default(True)
+        box.pack_start(Gtk.Label(label=_("Password")), False, False, 6)
+        box.pack_start(self.entry, True, True, 6)
+        self.vbox.pack_start(box, True, True, 0)
+        self.vbox.pack_start(Gtk.Label(label=bottommsg), False, False, 12)
+        self.set_resizable(True)
+
+    def get_password(self):
+        self.show_all()
+        r = self.run()
+        t = self.entry.props.text
+        self.destroy()
+        if r == Gtk.ResponseType.OK:
+            return t
+        else:
+            raise _UnknownPasswordException()
+
+
 class PDFDoc:
     """Class handling PDF documents."""
 
-    def __init__(self, filename, tmp_dir):
+    def __from_file(self, parent):
+        uri = pathlib.Path(self.copyname).as_uri()
+        askpass = False
+        while True:
+            try:
+                if askpass:
+                    bn = os.path.basename(self.filename)
+                    self.password = PasswordDialog(parent, bn).get_password()
+                self.document = Poppler.Document.new_from_file(uri, self.password)
+                # When there is no encryption Poppler want None as password
+                # while PikePDF want an empty string
+                self.password = "" if self.password is None else self.password
+                return
+            except GLib.Error as e:
+                askpass = e.message == "Document is encrypted"
+                if not askpass:
+                    raise e
+
+    def __init__(self, filename, tmp_dir, parent):
         self.filename = os.path.abspath(filename)
         self.mtime = os.path.getmtime(filename)
+        self.password = ""
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
@@ -158,8 +225,7 @@ class PDFDoc:
                 fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
                 os.close(fd)
                 shutil.copy(self.filename, self.copyname)
-                uri = pathlib.Path(self.copyname).as_uri()
-                self.document = Poppler.Document.new_from_file(uri, None)
+                self.__from_file(parent)
             except GLib.Error as e:
                 raise PDFDocError(e.message + ": " + filename)
         elif filemime.split("/")[0] == "image":
@@ -225,7 +291,9 @@ class PageAdder:
 
         if not pdfdoc:
             try:
-                pdfdoc = PDFDoc(filename, self.app.tmp_dir)
+                pdfdoc = PDFDoc(filename, self.app.tmp_dir, self.app.window)
+            except _UnknownPasswordException:
+                return
             except PDFDocError as e:
                 print(e.message, file=sys.stderr)
                 self.app.error_message_dialog(e.message)
