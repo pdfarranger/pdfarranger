@@ -107,6 +107,7 @@ from . import undo
 from . import exporter
 from . import metadata
 from . import croputils
+from . import splitter
 from .iconview import CellRendererImage
 from .iconview import IconviewCursor
 from .iconview import IconviewDragSelect
@@ -297,7 +298,7 @@ class PdfArranger(Gtk.Application):
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
-            ('split', self.split_pages),
+            ('split', self.split_pages, 'i'),
             ('metadata', self.edit_metadata),
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
@@ -1656,8 +1657,19 @@ class PdfArranger(Gtk.Application):
             GObject.timeout_add(50, self.scroll_to_selection)
         return rotated
 
-    def split_pages(self, _action, _parameter, _unknown):
+    def split_pages(self, _action, option, _unknown):
         """ Split selected pages """
+        splitoptions = {0: 'HALF', 1: 'GRID'}
+        splitoption = splitoptions[option.get_int32()]
+        if splitoption == 'GRID':
+            diag = splitter.Dialog(self.window)
+            leftcrops, topcrops = diag.run_get()
+            if leftcrops is None or topcrops is None:
+                return
+        else:
+            leftcrops = [0.0, 0.5, 1.0]
+            topcrops = [0.0, 1.0]
+
         model = self.iconview.get_model()
         self.set_unsaved(True)
         self.undomanager.commit("Split")
@@ -1669,8 +1681,9 @@ class PdfArranger(Gtk.Application):
         for ref in ref_list:
             iterator = model.get_iter(ref.get_path())
             page = model.get_value(iterator, 0)
-            newpage = page.split()
-            model.insert_after(iterator, [newpage, newpage.description()])
+            newpages = page.split(leftcrops, topcrops)
+            for p in newpages:
+                model.insert_after(iterator, [p, p.description()])
             model.set_value(iterator, 0, page)
         self.iv_selection_changed_event()
 

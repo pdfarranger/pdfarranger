@@ -131,14 +131,33 @@ class Page:
         if rotation == 90 or rotation == 270:
             self.size.reverse()
 
-    def split(self):
-        """Split this page and return the result right page."""
-        newpage = self.duplicate()
-        left, right = self.crop[:2]
-        newcrop = (1 + left - right) / 2
-        newpage.crop[0] = newcrop
-        self.crop[1] = 1 - newcrop
-        return newpage
+    def split(self, leftcrops, topcrops):
+        """Split this page into a grid and return all but the top-left page."""
+        newpages = []
+        left, right, top, bottom = self.crop
+        # If the page is cropped, adjust the new crop for the visible part of the page.
+        hscale = 1 - (left + right)
+        vscale = 1 - (top + bottom)
+        leftcrops = [l * hscale for l in leftcrops]
+        topcrops = [t * vscale for t in topcrops]
+        for i in reversed(range(len(topcrops)-1)):
+            topcrop = top + topcrops[i]
+            row_height = topcrops[i+1] - topcrops[i]
+            bottomcrop = 1 - (topcrop + row_height)
+            for j in reversed(range(len(leftcrops)-1)):
+                leftcrop = left + leftcrops[j]
+                col_width = leftcrops[j+1] - leftcrops[j]
+                rightcrop = 1 - (leftcrop + col_width)
+                crop = [leftcrop, rightcrop, topcrop, bottomcrop]
+                if i == 0 and j == 0:
+                    # Update the original page
+                    self.crop = crop
+                else:
+                    # Create a new cropped page
+                    new = self.duplicate()
+                    new.crop = crop
+                    newpages.append(new)
+        return newpages
 
 
 class PDFDocError(Exception):
