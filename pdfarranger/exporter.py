@@ -19,12 +19,27 @@ import copy
 import pikepdf
 import traceback
 import sys
+import os
+import tempfile
 from . import metadata
 from gi.repository import Gtk
 import gettext
 _ = gettext.gettext
 
 from decimal import Decimal
+
+
+def create_blank_page(tmpdir, size):
+    """
+    Create a temporary PDF file with a single empty page.
+    The size is in PDF unit (1/72 of inch).
+    """
+    fd, filename = tempfile.mkstemp(suffix=".pdf", dir=tmpdir)
+    os.close(fd)
+    f = pikepdf.Pdf.new()
+    f.add_blank_page(page_size=size)
+    f.save(filename)
+    return filename
 
 
 def _mediabox(crop, angle, angle0, box):

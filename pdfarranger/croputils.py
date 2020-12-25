@@ -21,6 +21,7 @@ import locale
 
 _ = gettext.gettext
 
+# TODO rename to pageutils
 
 def scale(model, selection, factor):
     """Set the scale factor of a selection of pages."""
@@ -319,3 +320,36 @@ def white_borders(model, selection, pdfqueue):
 
         crop.append(crop_this_page)
     return crop
+
+
+class BlankPageDialog(Gtk.Dialog):
+    def __init__(self, size, window):
+        super().__init__(
+            title=_("Insert Blank Page"),
+            parent=window,
+            flags=Gtk.DialogFlags.MODAL,
+            buttons=(
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK,
+                Gtk.ResponseType.OK,
+            ),
+        )
+        self.width_widget = _ScalingWidget(_("Width"), size[0])
+        self.height_widget = _ScalingWidget(_("Height"), size[1])
+        self.vbox.pack_start(self.width_widget, True, True, 6)
+        self.vbox.pack_start(self.height_widget, True, True, 6)
+        self.width_widget.props.spacing = 6
+        self.height_widget.props.spacing = 6
+        self.show_all()
+        self.set_resizable(False)
+        self.set_default_response(Gtk.ResponseType.OK)
+
+    def run_get(self):
+        result = self.run()
+        r = None
+        if result == Gtk.ResponseType.OK:
+            r = self.width_widget.get_value(), self.height_widget.get_value()
+        self.destroy()
+        return r
+
