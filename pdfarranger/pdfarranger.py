@@ -306,6 +306,7 @@ class PdfArranger(Gtk.Application):
             ('select-same-file', self.on_action_select, 'i'),
             ('select-same-format', self.on_action_select, 'i'),
             ('about', self.about_dialog),
+            ("insert-blank-page", self.insert_blank_page),
         ])
 
         main_menu = self.uiXML.get_object("main_menu_button")
@@ -318,6 +319,20 @@ class PdfArranger(Gtk.Application):
         self.__update_num_pages(self.iconview.get_model())
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
+
+    def insert_blank_page(self, _action, _option, _unknown):
+        size = (21 / 2.54 * 72, 29.7 / 2.54 * 72) # A4 by default
+        selection = self.iconview.get_selected_items()
+        model = self.iconview.get_model()
+        if len(selection) > 0:
+            size = model[selection[-1]][0].size
+        page_size = croputils.BlankPageDialog(size, self.window).run_get()
+        if page_size is not None:
+            adder = PageAdder(self)
+            if len(selection) > 0:
+                adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
+            adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
+            adder.commit(select_added=False, add_to_undomanager=True)
 
     def __create_filters(self, file_type_list):
         filter_list = []

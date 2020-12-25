@@ -137,6 +137,10 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.paste</attribute>
           <attribute name="target" type="i">3</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>
+          <attribute name="action">win.insert-blank-page</attribute>
+        </item>
       </section>
     </submenu>
     <submenu>
@@ -322,6 +326,10 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <item>
         <attribute name="label" translatable="yes">_Split Pages</attribute>
         <attribute name="action">win.split</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>
+        <attribute name="action">win.insert-blank-page</attribute>
       </item>
     </section>
     <section>

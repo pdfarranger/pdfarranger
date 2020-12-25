@@ -179,7 +179,7 @@ class PasswordDialog(Gtk.Dialog):
         box.pack_start(self.entry, True, True, 6)
         self.vbox.pack_start(box, True, True, 0)
         self.vbox.pack_start(Gtk.Label(label=bottommsg), False, False, 12)
-        self.set_resizable(True)
+        self.set_resizable(False)
 
     def get_password(self):
         self.show_all()
@@ -221,10 +221,14 @@ class PDFDoc:
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
         if filemime == "application/pdf":
-            try:
+            if self.filename.startswith(tmp_dir):
+                # In the "Insert Blank Page" we don't need to copy self.filename
+                self.copyname = self.filename
+            else:
                 fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
                 os.close(fd)
                 shutil.copy(self.filename, self.copyname)
+            try:
                 self.__from_file(parent)
             except GLib.Error as e:
                 raise PDFDocError(e.message + ": " + filename)
@@ -298,8 +302,9 @@ class PageAdder:
                 print(e.message, file=sys.stderr)
                 self.app.error_message_dialog(e.message)
                 return
-            self.app.import_directory = os.path.split(filename)[0]
-            self.app.export_directory = self.app.import_directory
+            if pdfdoc.copyname != pdfdoc.filename:
+                self.app.import_directory = os.path.split(filename)[0]
+                self.app.export_directory = self.app.import_directory
             self.app.pdfqueue.append(pdfdoc)
             nfile = len(self.app.pdfqueue)
 
