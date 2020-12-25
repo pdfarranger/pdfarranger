@@ -108,6 +108,12 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <item>
           <attribute name="label" translatable="yes">_Split Pages</attribute>
           <attribute name="action">win.split</attribute>
+          <attribute name="target" type="i">0</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Grid Split</attribute>
+          <attribute name="action">win.split</attribute>
+          <attribute name="target" type="i">1</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Cu_t</attribute>
@@ -322,6 +328,12 @@ along with PDF-Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <item>
         <attribute name="label" translatable="yes">_Split Pages</attribute>
         <attribute name="action">win.split</attribute>
+        <attribute name="target" type="i">0</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Grid Split</attribute>
+        <attribute name="action">win.split</attribute>
+        <attribute name="target" type="i">1</attribute>
       </item>
     </section>
     <section>
