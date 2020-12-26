@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 10:54+0200\n"
+"POT-Creation-Date: 2020-12-26 18:03+0100\n"
 "PO-Revision-Date: 2019-09-06 14:54+0700\n"
 "Last-Translator: Abdul Munif Hanafi <amunifhanafi@gmail.com>\n"
 "Language-Team: \n"
@@ -18,106 +18,243 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/metadata.py:35
-msgid "Title"
+#: pdfarranger/core.py:80
+msgid "page"
+msgstr "halaman"
+
+#: pdfarranger/core.py:175
+msgid "Password required"
 msgstr ""
 
-#: pdfarranger/metadata.py:36
-msgid "Creator"
+#: pdfarranger/core.py:186
+msgid "The password will be remembered until you close PDF-Arranger."
 msgstr ""
 
-#: pdfarranger/metadata.py:37
-msgid "Producer"
+#: pdfarranger/core.py:187
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
 
-#: pdfarranger/metadata.py:38
-msgid "Creator tool"
+#: pdfarranger/core.py:197
+msgid "Password"
 msgstr ""
 
-#: pdfarranger/metadata.py:141
-msgid "Edit properties"
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+msgid "Unknown file format"
 msgstr ""
 
-#: pdfarranger/metadata.py:154
-msgid "Property"
+#: pdfarranger/core.py:256
+msgid "Image files are only supported with img2pdf"
 msgstr ""
 
-#: pdfarranger/metadata.py:154
-msgid "Value"
+#: pdfarranger/core.py:278
+msgid "Image format is not supported by img2pdf"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:520
-msgid "No document"
-msgstr "Tidak ada dokumen"
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+msgid "File is neither pdf nor image"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:522
-msgid "Several documents"
-msgstr "Beberapa dokumen"
+#: pdfarranger/croputils.py:113
+msgid "Scale factor"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:539
-#, python-format
-msgid "Rendering thumbnails… [%(i1)s/%(i2)s]"
-msgstr "Merender thumbnail… [%(i1)s/%(i2)s]"
+#: pdfarranger/croputils.py:119
+msgid "%"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:629
-msgid "Export…"
-msgstr "Ekspor…"
+#: pdfarranger/croputils.py:135
+msgid "mm"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:641 pdfarranger/pdfarranger.py:725
-msgid "PDF files"
-msgstr "Berkas PDF"
-
-#: pdfarranger/pdfarranger.py:647 pdfarranger/pdfarranger.py:720
-msgid "All files"
-msgstr "Semua berkas"
-
-#: pdfarranger/pdfarranger.py:709
-msgid "Import…"
-msgstr "Impor…"
-
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/croputils.py:145
 msgid "Left"
 msgstr "Kiri"
 
-#: pdfarranger/pdfarranger.py:1223
+#: pdfarranger/croputils.py:145
 msgid "Right"
 msgstr "Kanan"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/croputils.py:145
 msgid "Top"
 msgstr "Atas"
 
-#: pdfarranger/pdfarranger.py:1224
+#: pdfarranger/croputils.py:145
 msgid "Bottom"
 msgstr "Bawah"
 
-#: pdfarranger/pdfarranger.py:1241
-msgid "Crop Selected Pages"
-msgstr "Pangkas Halaman Terpilih"
+#: pdfarranger/croputils.py:149
+msgid "Crop Margins"
+msgstr "Pangkas Margin"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/croputils.py:157
+#, fuzzy
 msgid ""
-"Cropping does not remove any content\n"
-"from the PDF file, it only hides it."
+"Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Pemangkasan tidak menghapus konten apa pun\n"
 "dari berkas PDF, melainkan hanya menyembunyikannya."
 
-#: pdfarranger/pdfarranger.py:1252
-msgid "Crop Margins"
-msgstr "Pangkas Margin"
-
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/croputils.py:166
 #, python-format
 msgid "% of width"
 msgstr "% dari lebar"
 
-#: pdfarranger/pdfarranger.py:1262
+#: pdfarranger/croputils.py:166
 #, python-format
 msgid "% of height"
 msgstr "% dari tinggi"
 
-#: pdfarranger/pdfarranger.py:1369
+#: pdfarranger/croputils.py:210
+msgid "Page format"
+msgstr ""
+
+#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
+#: pdfarranger/croputils.py:338
+msgid "Width"
+msgstr ""
+
+#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
+#: pdfarranger/croputils.py:339
+#, fuzzy
+msgid "Height"
+msgstr "Kanan"
+
+#: pdfarranger/croputils.py:228
+msgid "Relative"
+msgstr ""
+
+#: pdfarranger/croputils.py:231
+msgid "Page Size"
+msgstr ""
+
+#: pdfarranger/croputils.py:328
+msgid "Insert Blank Page"
+msgstr ""
+
+#: pdfarranger/exporter.py:106
+msgid "Warning"
+msgstr ""
+
+#: pdfarranger/exporter.py:111
+msgid "Forms and outlines are lost on saving."
+msgstr ""
+
+#: pdfarranger/exporter.py:113
+msgid "Do not show this dialog again."
+msgstr ""
+
+#: pdfarranger/metadata.py:40
+msgid "Title"
+msgstr ""
+
+#: pdfarranger/metadata.py:41
+msgid "Subject"
+msgstr ""
+
+#: pdfarranger/metadata.py:42
+msgid "Keywords"
+msgstr ""
+
+#: pdfarranger/metadata.py:43
+msgid "Producer"
+msgstr ""
+
+#: pdfarranger/metadata.py:44
+msgid "Creator"
+msgstr ""
+
+#: pdfarranger/metadata.py:45
+msgid "Creator tool"
+msgstr ""
+
+#: pdfarranger/metadata.py:46
+msgid "Created"
+msgstr ""
+
+#: pdfarranger/metadata.py:47
+msgid "Modified"
+msgstr ""
+
+#: pdfarranger/metadata.py:150
+msgid "Invalid date format. Discard input."
+msgstr ""
+
+#: pdfarranger/metadata.py:179
+msgid "Edit properties"
+msgstr ""
+
+#: pdfarranger/metadata.py:192
+msgid "Property"
+msgstr ""
+
+#: pdfarranger/metadata.py:192
+msgid "Value"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:341
+#, fuzzy
+msgid "All supported files"
+msgstr "Semua berkas"
+
+#: pdfarranger/pdfarranger.py:345
+msgid "PDF files"
+msgstr "Berkas PDF"
+
+#: pdfarranger/pdfarranger.py:352
+msgid "All files"
+msgstr "Semua berkas"
+
+#: pdfarranger/pdfarranger.py:357
+msgid "Supported image files"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:531
+msgid "untitled"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:625
+msgid "Save changes to “{}” before closing?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:627
+msgid "Save changes before closing?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:629
+msgid "Your changes will be lost if you don’t save them."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:630
+msgid "Do_n’t Save"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:630
+msgid "_Cancel"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
+#, fuzzy
+msgid "_Save"
+msgstr "Simpan"
+
+#: pdfarranger/pdfarranger.py:672
+msgid "Export…"
+msgstr "Ekspor…"
+
+#: pdfarranger/pdfarranger.py:785
+msgid "Import…"
+msgstr "Impor…"
+
+#: pdfarranger/pdfarranger.py:886
+msgid "Pasted data not valid. Aborting paste."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:994
+msgid "PDF document is damaged"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1795
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -126,9 +263,58 @@ msgstr ""
 "%s adalah alat untuk menata ulang dan memodifikasi berkas PDF. Dikembangkan "
 "menggunakan GTK+ dan Python"
 
-#: pdfarranger/pdfarranger.py:1449
-msgid "page"
-msgstr "halaman"
+#: pdfarranger/pdfarranger.py:1798
+msgid "Maintainers and contributors"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1802
+msgid "GNU General Public License (GPL) Version 3."
+msgstr ""
+
+#: pdfarranger/splitter.py:26
+msgid "Grid splitting"
+msgstr ""
+
+#: pdfarranger/splitter.py:58
+msgid "Columns"
+msgstr ""
+
+#: pdfarranger/splitter.py:58
+msgid "Rows"
+msgstr ""
+
+#: pdfarranger/splitter.py:59
+msgid "Vertical Splits"
+msgstr ""
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr ""
+
+#: pdfarranger/splitter.py:60
+msgid "Equal column width"
+msgstr ""
+
+#: pdfarranger/splitter.py:60
+#, fuzzy
+msgid "Equal row height"
+msgstr "% dari tinggi"
+
+#: pdfarranger/splitter.py:85
+msgid "#Col"
+msgstr ""
+
+#: pdfarranger/splitter.py:85
+msgid "#Row"
+msgstr ""
+
+#: pdfarranger/splitter.py:86
+msgid "Width in %"
+msgstr ""
+
+#: pdfarranger/splitter.py:86
+msgid "Height in %"
+msgstr ""
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -177,110 +363,166 @@ msgid "_Import"
 msgstr "Impor"
 
 #: data/menu.ui.h:2
-#, fuzzy
-msgid "_Save"
-msgstr "Simpan"
+msgid "_New Window"
+msgstr ""
 
-#: data/menu.ui.h:3
+#: data/menu.ui.h:4
 #, fuzzy
 msgid "Save _As…"
 msgstr "Simpan sebagai"
 
-#: data/menu.ui.h:4
+#: data/menu.ui.h:5
 #, fuzzy
-msgid "E_xport Selection…"
+msgid "E_xport"
+msgstr "Ekspor…"
+
+#: data/menu.ui.h:6
+#, fuzzy
+msgid "E_xport Selection to a Single File…"
 msgstr "_Ekspor terpilih…"
 
-#: data/menu.ui.h:5
+#: data/menu.ui.h:7
+#, fuzzy
+msgid "Export Selection to _Individual Files…"
+msgstr "_Ekspor terpilih…"
+
+#: data/menu.ui.h:8
+msgid "Export _All Pages to Individual Files…"
+msgstr ""
+
+#: data/menu.ui.h:9
 msgid "_Undo"
 msgstr ""
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:10
 msgid "_Redo"
 msgstr ""
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:11
 msgid "_Edit"
 msgstr "_Sunting"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:12
 msgid "Rotate _Left"
 msgstr "Putar ke K_iri"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:13
 msgid "_Rotate Right"
 msgstr "Putar ke K_anan"
 
-#: data/menu.ui.h:10
-msgid "Cro_p"
-msgstr ""
-
-#: data/menu.ui.h:11
-msgid "_Delete"
-msgstr "_Hapus"
-
-#: data/menu.ui.h:12
-msgid "Dupl_icate"
-msgstr ""
-
-#: data/menu.ui.h:13
-msgid "Re_verse Order"
-msgstr "_Balikkan Urutan"
-
 #: data/menu.ui.h:14
-msgid "_Split pages"
+msgid "_Page Format"
 msgstr ""
 
 #: data/menu.ui.h:15
-msgid "Cu_t"
+msgid "Crop White Borders"
 msgstr ""
 
 #: data/menu.ui.h:16
-msgid "_Copy"
-msgstr ""
+msgid "_Delete"
+msgstr "_Hapus"
 
 #: data/menu.ui.h:17
-msgid "Paste _After"
+msgid "Dupl_icate"
 msgstr ""
 
 #: data/menu.ui.h:18
-msgid "Paste _Before"
-msgstr ""
+msgid "Re_verse Order"
+msgstr "_Balikkan Urutan"
 
 #: data/menu.ui.h:19
-msgid "Paste Interleave _Odd"
+msgid "_Split Pages"
 msgstr ""
 
 #: data/menu.ui.h:20
-msgid "Paste Interleave _Even"
+msgid "_Grid Split"
 msgstr ""
 
 #: data/menu.ui.h:21
+msgid "Cu_t"
+msgstr ""
+
+#: data/menu.ui.h:22
+msgid "_Copy"
+msgstr ""
+
+#: data/menu.ui.h:23
+msgid "Paste _After"
+msgstr ""
+
+#: data/menu.ui.h:24
+msgid "Paste _Before"
+msgstr ""
+
+#: data/menu.ui.h:25
+msgid "Paste Interleave _Odd"
+msgstr ""
+
+#: data/menu.ui.h:26
+msgid "Paste Interleave _Even"
+msgstr ""
+
+#: data/menu.ui.h:27
+msgid "Insert Blan_k Page"
+msgstr ""
+
+#: data/menu.ui.h:28
+msgid "_Select"
+msgstr ""
+
+#: data/menu.ui.h:29
+msgid "Select _All"
+msgstr ""
+
+#: data/menu.ui.h:30
+msgid "_Deselect All"
+msgstr ""
+
+#: data/menu.ui.h:31
+#, fuzzy
+msgid "Select _Odd Pages"
+msgstr "Pangkas Halaman Terpilih"
+
+#: data/menu.ui.h:32
+#, fuzzy
+msgid "Select _Even Pages"
+msgstr "Pangkas Halaman Terpilih"
+
+#: data/menu.ui.h:33
+msgid "All From _Same File"
+msgstr ""
+
+#: data/menu.ui.h:34
+msgid "Same Page _Format"
+msgstr ""
+
+#: data/menu.ui.h:35
+#, fuzzy
+msgid "_Invert Selection"
+msgstr "_Ekspor terpilih…"
+
+#: data/menu.ui.h:36
 #, fuzzy
 msgid "Zoom _In"
 msgstr "Zoom masuk"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:37
 #, fuzzy
 msgid "Zoom _Out"
 msgstr "Zoom keluar"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:38
 msgid "Edit _Properties"
 msgstr ""
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:39
 msgid "_About"
 msgstr ""
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:40
 msgid "_Quit"
 msgstr ""
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:41
 msgid "Past_e Special"
-msgstr ""
-
-#: data/menu.ui.h:27
-msgid "_Split Pages"
 msgstr ""
