@@ -379,6 +379,10 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                     self.update(previous_p, self.model[previous_p])
                 if next_p < len(self.model):
                     self.update(next_p, self.model[next_p])
+        idx = -2  # signal rendering ended
+        GObject.idle_add(
+            self.emit, "update_thumbnail", idx, None, 0.0, priority=GObject.PRIORITY_LOW
+        )
 
     def update(self, idx, row):
         p = row[0]
