@@ -1463,10 +1463,20 @@ class PdfArranger(Gtk.Application):
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
-        for a, e in [("reverse-order", self.reverse_order_available(selection)),
-                     ("delete", ne), ("duplicate", ne), ("page-format", ne), ("rotate", ne),
-                     ("export-selection", ne), ("cut", ne), ("copy", ne),
-                     ("split", ne), ("select-same-file", ne), ("select-same-format", ne)]:
+        for a, e in [
+            ("reverse-order", self.reverse_order_available(selection)),
+            ("delete", ne),
+            ("duplicate", ne),
+            ("page-format", ne),
+            ("rotate", ne),
+            ("export-selection", ne),
+            ("cut", ne),
+            ("copy", ne),
+            ("split", ne),
+            ("select-same-file", ne),
+            ("select-same-format", ne),
+            ("crop-white-borders", ne),
+        ]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()
         if selection and not move_cursor_event:
