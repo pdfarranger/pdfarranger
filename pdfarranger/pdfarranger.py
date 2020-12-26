@@ -525,7 +525,7 @@ class PdfArranger(Gtk.Application):
     def update_progress_bar(self, num):
         if num == -1:  # rendering (re)started
             fraction = 0
-        elif len(self.model) == 0:
+        elif num == -2 or len(self.model) == 0:  # num = -2: rendering ended
             fraction = 1
         else:
             fraction = self.progress_bar.get_fraction() + 1 / len(self.model)
