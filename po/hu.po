@@ -20,48 +20,49 @@ msgstr "oldal"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Jelszó szükséges"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "A jelszó mindaddig emlékezetes marad, amíg bezárja a PDF-rendezőt"
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"A(z) „{}” dokumentum zárolva van és megnyitásához jelszó szükséges."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Jelszó"
 
 #: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
 msgid "Unknown file format"
-msgstr ""
+msgstr "Ismeretlen fájlformátum"
 
 #: pdfarranger/core.py:256
 msgid "Image files are only supported with img2pdf"
-msgstr ""
+msgstr "A képfájlokat csak az img2pdf támogatja"
 
 #: pdfarranger/core.py:278
 msgid "Image format is not supported by img2pdf"
-msgstr ""
+msgstr "Az img2pdf nem támogatja a képformátumot"
 
 #: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
 msgid "File is neither pdf nor image"
-msgstr ""
+msgstr "A fájl nem pdf vagy kép"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Nagyságrendi tényező"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -84,61 +85,56 @@ msgid "Crop Margins"
 msgstr "Margók körülvágása"
 
 #: pdfarranger/croputils.py:157
-#, fuzzy
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
-"A körülvágás nem távolít el tartalmat\n"
-"a PDF-fájlból, csak elrejti."
+"A körülvágás nem távolít el tartalmat a PDF-fájlból, csak elrejti."
 
 #: pdfarranger/croputils.py:166
-#, fuzzy, python-format
 msgid "% of width"
-msgstr "% szélesség"
+msgstr "a szélesség százaléka"
 
 #: pdfarranger/croputils.py:166
-#, fuzzy, python-format
 msgid "% of height"
-msgstr "% magasság"
+msgstr "a magasság százaléka"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Oldalformátum"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Szélesség"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Jobbra"
+msgstr "Magasság"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Viszonylagos"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Oldalméret"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Üres oldal beszúrása"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Figyelmeztetés"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Az űrlapok és a körvonalak elvesznek a mentéskor."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Ne jelenjen meg újra ez a párbeszédpanel."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
@@ -146,11 +142,11 @@ msgstr "Cím"
 
 #: pdfarranger/metadata.py:41
 msgid "Subject"
-msgstr ""
+msgstr "Tárgy"
 
 #: pdfarranger/metadata.py:42
 msgid "Keywords"
-msgstr ""
+msgstr "Kulcsszavak"
 
 #: pdfarranger/metadata.py:43
 msgid "Producer"
@@ -165,17 +161,16 @@ msgid "Creator tool"
 msgstr "Készítő eszköz"
 
 #: pdfarranger/metadata.py:46
-#, fuzzy
 msgid "Created"
-msgstr "Készítő"
+msgstr "Készült"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Módosítva"
 
 #: pdfarranger/metadata.py:150
 msgid "Invalid date format. Discard input."
-msgstr ""
+msgstr "Érvénytelen dátumformátum. A bevitelt elvetve."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -190,9 +185,8 @@ msgid "Value"
 msgstr "Érték"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Minden fájl"
+msgstr "Minden támogatott fájl"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -204,32 +198,31 @@ msgstr "Minden fájl"
 
 #: pdfarranger/pdfarranger.py:357
 msgid "Supported image files"
-msgstr ""
+msgstr "Támogatott képfájlok"
 
 #: pdfarranger/pdfarranger.py:531
-#, fuzzy
 msgid "untitled"
-msgstr "Cím"
+msgstr "névtelen"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
-msgstr ""
+msgstr "Menti a változásokat a(z) „{}” fájlba bezárás előtt?"
 
 #: pdfarranger/pdfarranger.py:627
 msgid "Save changes before closing?"
-msgstr ""
+msgstr "Menti a módosításokat a bezárás előtt?"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Your changes will be lost if you don’t save them."
-msgstr ""
+msgstr "A változtatások elvesznek, ha nem menti őket."
 
 #: pdfarranger/pdfarranger.py:630
 msgid "Do_n’t Save"
-msgstr ""
+msgstr "_Nincs mentés"
 
 #: pdfarranger/pdfarranger.py:630
 msgid "_Cancel"
-msgstr ""
+msgstr "_Mégse"
 
 #: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
 msgid "_Save"
@@ -245,11 +238,11 @@ msgstr "Importálás…"
 
 #: pdfarranger/pdfarranger.py:886
 msgid "Pasted data not valid. Aborting paste."
-msgstr ""
+msgstr "A beillesztett adatok érvénytelenek. A beillesztés megszakadt."
 
 #: pdfarranger/pdfarranger.py:994
 msgid "PDF document is damaged"
-msgstr ""
+msgstr "A PDF dokumentum sérült"
 
 #: pdfarranger/pdfarranger.py:1795
 #, python-format
@@ -262,56 +255,55 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1798
 msgid "Maintainers and contributors"
-msgstr ""
+msgstr "Fenntartók és közreműködők"
 
 #: pdfarranger/pdfarranger.py:1802
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
+msgstr "GNU GPL (General Public License - általános nyilvános engedély) 3. verzió."
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Rács felosztása"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Oszlopok"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Sorok"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Függőleges felosztása"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Vízszintes felosztása"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Azonos hasábszélesség"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% magasság"
+msgstr "Azonos sormagasság"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "Oszlop száma"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "Sor száma"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Szélesség százalékként"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Magasság százalékként"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -355,30 +347,27 @@ msgstr "_Importálás…"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "Új _ablak"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
 msgstr "Menté_s másként…"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
 msgstr "Exportálás…"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "Kijelölés e_xportálása…"
+msgstr "Kijelölés e_xportálása egyetlen fájlként…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "Kijelölés e_xportálása…"
+msgstr "Kijelölés exportálása _külön fájlokként…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "Összes _oldal exportálása külön fájlokként"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -402,11 +391,11 @@ msgstr "Forgatás _jobbra"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "_Oldalformátum"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
-msgstr ""
+msgstr "Fehér szegélyek körülvágása"
 
 #: data/menu.ui.h:16
 msgid "_Delete"
@@ -426,7 +415,7 @@ msgstr "Oldalak fel_osztása"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "_Rács felosztása"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
@@ -454,42 +443,39 @@ msgstr "Összefűzés beillesztése _páros"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "Üres oldal bes_zúrása"
 
 #: data/menu.ui.h:28
 msgid "_Select"
-msgstr ""
+msgstr "_Kijelölés"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
-msgstr ""
+msgstr "_Az összes kijelölése"
 
 #: data/menu.ui.h:30
 msgid "_Deselect All"
-msgstr ""
+msgstr "Öss_zes kijelölés törlése"
 
 #: data/menu.ui.h:31
-#, fuzzy
 msgid "Select _Odd Pages"
-msgstr "Kijelölt oldalak körülvágása"
+msgstr "Párat_lan oldalak kijelölése"
 
 #: data/menu.ui.h:32
-#, fuzzy
 msgid "Select _Even Pages"
-msgstr "Kijelölt oldalak körülvágása"
+msgstr "_Páros oldalak kijelölése"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Mindegyik _ugyanabból a fájlból"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Ugyanaz az oldal_formátum"
 
 #: data/menu.ui.h:35
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "Kijelölés e_xportálása…"
+msgstr "Kijelölés meg_fordítása"
 
 #: data/menu.ui.h:36
 msgid "Zoom _In"
