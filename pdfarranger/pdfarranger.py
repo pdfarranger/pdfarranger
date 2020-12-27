@@ -1827,7 +1827,7 @@ class PdfArranger(Gtk.Application):
             range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
             display.append(range_str)
         ctxt_id = self.status_bar.get_context_id("selected_pages")
-        self.status_bar.push(ctxt_id, 'Selected pages: ' + ', '.join(display))
+        self.status_bar.push(ctxt_id, _('Selected pages: ') + ', '.join(display))
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
