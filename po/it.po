@@ -33,7 +33,7 @@ msgstr "La password verrà ricordata fino alla chiusura di PDF-Arranger."
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Il documento" {} "è bloccato e richiede una password prima di poter essere aperto.
+"Il documento “{}”è bloccato e richiede una password prima di poter essere aperto."
 
 #: pdfarranger/core.py:197
 msgid "Password"
