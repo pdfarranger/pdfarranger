@@ -115,9 +115,8 @@ msgstr "Larghezza"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Destra"
+msgstr "Altezza"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
