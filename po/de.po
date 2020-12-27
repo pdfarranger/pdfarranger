@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
+"POT-Creation-Date: 2020-12-27 16:44+0100\n"
 "PO-Revision-Date: 2020-07-22 13:12+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
@@ -26,20 +26,21 @@ msgstr "Seite"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Passwort benötigt"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "Das Passwort wird gespeichert bis PDF-Arranger geschlossen wird."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"Das Dokument “{}” ist gesperrt und benötigt ein Passwort um es zu öffnen."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
 msgid "Unknown file format"
@@ -59,15 +60,15 @@ msgstr "Datei ist weder ein pdf noch ein Bild"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Skalierungsfaktor"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -90,7 +91,6 @@ msgid "Crop Margins"
 msgstr "Seitenränder zuschneiden"
 
 #: pdfarranger/croputils.py:157
-#, fuzzy
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
@@ -109,42 +109,41 @@ msgstr "% der Höhe"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Seitenformat"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Breite"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Rechts"
+msgstr "Höhe"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Relativ"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Seitengröße"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Leere Seite einfügen"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Formulare und Inhaltsverzeichnisse gehen beim speichern verloren."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Diesen Dialog nicht mehr anzeigen."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
@@ -171,17 +170,16 @@ msgid "Creator tool"
 msgstr "Erstellungswerkzeug"
 
 #: pdfarranger/metadata.py:46
-#, fuzzy
 msgid "Created"
-msgstr "Ersteller"
+msgstr "Erstellt"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Geändert"
 
 #: pdfarranger/metadata.py:150
 msgid "Invalid date format. Discard input."
-msgstr ""
+msgstr "Ungeültiges Datenformat. Eingabe verworfen."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -196,9 +194,8 @@ msgid "Value"
 msgstr "Wert"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Unterstützte Bilddateien"
+msgstr "Alle unterstützten Dateien"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -273,50 +270,53 @@ msgstr "Verwalter und Mitwirkende"
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
 
+#: pdfarranger/pdfarranger.py:1830
+msgid "Selected pages: "
+msgstr "Ausgewählte Seiten: "
+
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Raster zuschneiden"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Zeilen"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Spalten"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Vertikale Schnitte"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Horizonale Schnitte"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Gleiche Spaltenbreite"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% der Höhe"
+msgstr "Gleiche Zeilenhöhe"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "Spalte"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "Zeile"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Breite in %"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Höhe in %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -360,30 +360,27 @@ msgstr "_Importieren"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "_Neues Fenster"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
 msgstr "Speichern _unter…"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Exportieren…"
+msgstr "E_xportieren"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "Markierte Seiten e_xportieren…"
+msgstr "Markierung in eine Datei e_xportieren…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "Markierte Seiten e_xportieren…"
+msgstr "Markierung in Einzeldateien e_xportieren…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "_Alle Seiten in Einzeldateien exportieren…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -407,7 +404,7 @@ msgstr "Nach _rechts drehen"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "Seiten_format"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
@@ -431,7 +428,7 @@ msgstr "Seiten _teilen"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "_Raster zuschneiden"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
@@ -459,7 +456,7 @@ msgstr "Abwechselnd einfügen _gerade"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "_Leere Seite einfügen"
 
 #: data/menu.ui.h:28
 msgid "_Select"
@@ -483,11 +480,11 @@ msgstr "_Gerade Seiten auswählen"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Alle der _gleichen Datei"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Gleiches Seiten_format"
 
 #: data/menu.ui.h:35
 msgid "_Invert Selection"
