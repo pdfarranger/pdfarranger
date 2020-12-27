@@ -33,7 +33,7 @@ msgstr "La password verrà ricordata fino alla chiusura di PDF-Arranger."
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Il documento “{}”è bloccato e richiede una password prima di poter essere aperto."
+"Il documento “{}” è bloccato e richiede una password prima di poter essere aperto."
 
 #: pdfarranger/core.py:197
 msgid "Password"
@@ -450,7 +450,7 @@ msgstr "Incolla inserendo pagine _pari"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr "Inserisci pagina vuota"
+msgstr "Inserisci pagin_a vuota"
 
 #: data/menu.ui.h:28
 msgid "_Select"
@@ -458,7 +458,7 @@ msgstr "_Seleziona"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
-msgstr "_Seleziona_tutto"
+msgstr "Seleziona _Tutto"
 
 #: data/menu.ui.h:30
 msgid "_Deselect All"
@@ -466,15 +466,15 @@ msgstr "_Deseleziona Tutto"
 
 #: data/menu.ui.h:31
 msgid "Select _Odd Pages"
-msgstr "Seleziona_Pagine dispari"
+msgstr "Seleziona _Pagine dispari"
 
 #: data/menu.ui.h:32
 msgid "Select _Even Pages"
-msgstr "Seleziona_Pagine pari"
+msgstr "Seleziona _Pagine pari"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr "Tutto dallo_stesso file"
+msgstr "Tutto dallo _stesso file"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
@@ -482,7 +482,7 @@ msgstr "Stesso formato_di pagina"
 
 #: data/menu.ui.h:35
 msgid "_Invert Selection"
-msgstr "-Inverti Selezione"
+msgstr "_Inverti Selezione"
 
 #: data/menu.ui.h:36
 msgid "Zoom _In"
