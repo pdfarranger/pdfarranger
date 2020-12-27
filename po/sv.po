@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
-"PO-Revision-Date: 2020-07-24 18:48+0300\n"
+"POT-Creation-Date: 2020-12-27 19:49+0200\n"
+"PO-Revision-Date: 2020-12-27 20:00+0200\n"
 "Last-Translator: kbengs\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
@@ -24,20 +24,20 @@ msgstr "sida"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Lösenord krävs"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "Lösenordet kommer att vara sparat tills du stänger PDF Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr ""
+msgstr "Dokumentet “{}” är låst och ett lösenord krävs innan det kan öppnas."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Lösenord"
 
 #: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
 msgid "Unknown file format"
@@ -45,7 +45,7 @@ msgstr "Okänt filformat"
 
 #: pdfarranger/core.py:256
 msgid "Image files are only supported with img2pdf"
-msgstr "Bildfiler stöds endast om img2pdf är installerat"
+msgstr "Img2pdf krävs för stöd av bildfiler"
 
 #: pdfarranger/core.py:278
 msgid "Image format is not supported by img2pdf"
@@ -57,15 +57,15 @@ msgstr "Filen är varken en PDF eller en bildfil"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Skalningsfaktor"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -88,12 +88,10 @@ msgid "Crop Margins"
 msgstr "Beskär marginaler"
 
 #: pdfarranger/croputils.py:157
-#, fuzzy
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
-"Innehåll tas inte bort från PDF-filen vid\n"
-"beskärning, utan döljs endast."
+"Innehåll tas inte bort från PDF-filen vid beskärning, utan döljs endast."
 
 #: pdfarranger/croputils.py:166
 #, python-format
@@ -107,42 +105,41 @@ msgstr "% av höjd"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Sidformat"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Bredd"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Höger"
+msgstr "Höjd"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Relativt"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Sidstorlek"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Infoga tom sida"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Varning"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Formulär och bokmärken går förlorade när dokumentet sparas."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Visa inte detta meddelande igen."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
@@ -150,11 +147,11 @@ msgstr "Titel"
 
 #: pdfarranger/metadata.py:41
 msgid "Subject"
-msgstr ""
+msgstr "Ämne"
 
 #: pdfarranger/metadata.py:42
 msgid "Keywords"
-msgstr ""
+msgstr "Nyckelord"
 
 #: pdfarranger/metadata.py:43
 msgid "Producer"
@@ -169,17 +166,16 @@ msgid "Creator tool"
 msgstr "Program"
 
 #: pdfarranger/metadata.py:46
-#, fuzzy
 msgid "Created"
-msgstr "Författare"
+msgstr "Skapad"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Ändrad"
 
 #: pdfarranger/metadata.py:150
 msgid "Invalid date format. Discard input."
-msgstr ""
+msgstr "Ogiltigt datumformat. "
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -194,9 +190,8 @@ msgid "Value"
 msgstr "Innehåll"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Bildfiler som stöds"
+msgstr "Alla filer som stöds"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -211,9 +206,8 @@ msgid "Supported image files"
 msgstr "Bildfiler som stöds"
 
 #: pdfarranger/pdfarranger.py:531
-#, fuzzy
 msgid "untitled"
-msgstr "Titel"
+msgstr "Osparat dokument"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
@@ -272,50 +266,53 @@ msgstr "Administratörer och bidragsgivare"
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
+#: pdfarranger/pdfarranger.py:1830
+msgid "Selected pages: "
+msgstr "Markerade sidor: "
+
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Fri delning"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Kolumner"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Rader"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Vertikal delning"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Horisontell delning"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Samma kolumnbredd"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% av höjd"
+msgstr "Samma radhöjd"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "#Column"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "#Rad"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Bredd i %"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Höjd i %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -359,30 +356,27 @@ msgstr "Im_portera"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "_Nytt fönster"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
-msgstr "Spara s_om"
+msgstr "Spara s_om…"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Exportera…"
+msgstr "E_xportera"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "E_xportera markerade sidor"
+msgstr "E_xportera markerade sidor till en fil…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "E_xportera markerade sidor"
+msgstr "Exportera markerade sidor till _enskilda filer…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "Exportera _alla sidor till enskilda filer…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -406,11 +400,11 @@ msgstr "Rotera åt _höger"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "_Sidformat"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
-msgstr ""
+msgstr "_Beskär vita marginaler"
 
 #: data/menu.ui.h:16
 msgid "_Delete"
@@ -430,7 +424,7 @@ msgstr "_Dela sidor"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "Fri delnin_g"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
@@ -458,42 +452,39 @@ msgstr "Klistra in som _jämna sidor"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "_Infoga tom sida"
 
 #: data/menu.ui.h:28
 msgid "_Select"
-msgstr ""
+msgstr "_Markera"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
-msgstr ""
+msgstr "_Markera allt"
 
 #: data/menu.ui.h:30
 msgid "_Deselect All"
-msgstr ""
+msgstr "_Avmarkera allt"
 
 #: data/menu.ui.h:31
-#, fuzzy
 msgid "Select _Odd Pages"
-msgstr "Beskär markerade sidor"
+msgstr "Markera _udda sidor"
 
 #: data/menu.ui.h:32
-#, fuzzy
 msgid "Select _Even Pages"
-msgstr "Beskär markerade sidor"
+msgstr "Markera _jämna sidor"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Alla från samma _fil"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Alla med samma _sidformat"
 
 #: data/menu.ui.h:35
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "E_xportera markerade sidor"
+msgstr "_Invertera markeringen"
 
 #: data/menu.ui.h:36
 msgid "Zoom _In"
