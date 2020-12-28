@@ -24,12 +24,13 @@ msgstr "Jelszó szükséges"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "A jelszó mindaddig emlékezetes marad, amíg bezárja a PDF-rendezőt"
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"A(z) „{}” dokumentum zárolva van és megnyitásához jelszó szükséges."
 
 #: pdfarranger/core.py:197
 msgid "Password"
@@ -205,7 +206,7 @@ msgstr "névtelen"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
-msgstr ""
+msgstr "Menti a változásokat a(z) „{}” fájlba bezárás előtt?"
 
 #: pdfarranger/pdfarranger.py:627
 msgid "Save changes before closing?"
@@ -446,7 +447,7 @@ msgstr "Üres oldal bes_zúrása"
 
 #: data/menu.ui.h:28
 msgid "_Select"
-msgstr "&Kijelölés"
+msgstr "_Kijelölés"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
