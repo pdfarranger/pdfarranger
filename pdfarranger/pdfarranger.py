@@ -645,15 +645,14 @@ class PdfArranger(Gtk.Application):
 
     def close_application(self, _widget=None, _event=None, _data=None):
         """Termination"""
-
-        # Prevent gtk errors when closing with everything selected
-        self.iconview.unselect_all()
-        self.iconview.get_model().clear()
-
         if self.rendering_thread:
             self.rendering_thread.quit = True
             self.rendering_thread.join()
             self.rendering_thread.pdfqueue = []
+
+        # Prevent gtk errors when closing with everything selected
+        self.iconview.unselect_all()
+        self.iconview.get_model().clear()
 
         # Release Poppler.Document instances to unlock all temporay files
         self.pdfqueue = []
