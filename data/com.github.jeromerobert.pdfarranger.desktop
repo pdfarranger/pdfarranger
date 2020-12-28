@@ -10,6 +10,7 @@ Comment[hu]=PDF egyesítése, átrendezése, felosztása, elforgatása és kör�
 Comment[pt]=Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF
 Comment[sk]=Grafický nástroj na manipuláciu s PDF
 Comment[sv]=Slå samman, arrangera om, dela, rotera och beskär PDF filer
+Comment[fi]=Yhdistä, järjestele, jaa, käännä ja rajaa PDF-tiedostoja
 Type=Application
 Exec=pdfarranger %U
 Icon=com.github.jeromerobert.pdfarranger
