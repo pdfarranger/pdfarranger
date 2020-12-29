@@ -89,12 +89,12 @@ msgid ""
 msgstr "A körülvágás nem távolít el tartalmat a PDF-fájlból, csak elrejti."
 
 #: pdfarranger/croputils.py:166
-#, fuzzy, python-format
+#, python-format
 msgid "% of width"
 msgstr "a szélesség százaléka"
 
 #: pdfarranger/croputils.py:166
-#, fuzzy, python-format
+#, python-format
 msgid "% of height"
 msgstr "a magasság százaléka"
 
@@ -169,7 +169,6 @@ msgid "Modified"
 msgstr "Módosítva"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
 msgstr "Érvénytelen dátumformátum. A bevitelt elvetve."
 
@@ -264,9 +263,8 @@ msgstr ""
 "GNU GPL (General Public License - általános nyilvános engedély) 3. verzió."
 
 #: pdfarranger/pdfarranger.py:1829
-#, fuzzy
 msgid "Selected pages: "
-msgstr "Párat_lan oldalak kijelölése"
+msgstr "Kiválasztott oldalak: "
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
