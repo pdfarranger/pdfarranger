@@ -178,9 +178,8 @@ msgid "Modified"
 msgstr "Geändert"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
-msgstr "Ungeültiges Datenformat. Eingabe verworfen."
+msgstr "Ungültiges Datumsformat. Eingabe verworfen."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
