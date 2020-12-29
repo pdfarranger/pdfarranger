@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2020-11-08 18:28+0000\n"
+"PO-Revision-Date: 2020-12-29 20:08+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Source-Locale: pt_PT\n"
 "X-Generator: Poedit 2.3\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Loco-Parser: loco_parse_po\n"
 
 #: pdfarranger/core.py:80
 msgid "page"
@@ -24,20 +26,22 @@ msgstr "página"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Requer palavra-passe"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "PDF-Arranger apenas irá memorizar a palavra-passe para esta sessão."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"O documento “{}” está bloqueado e requer uma palavra-passe para poder ser "
+"aberto."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Palavra-passe"
 
 #: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
@@ -57,15 +61,15 @@ msgstr "O ficheiro não é um PDF nem uma imagem"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Fator de escala"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -88,12 +92,9 @@ msgid "Crop Margins"
 msgstr "Margens de recorte"
 
 #: pdfarranger/croputils.py:157
-#, fuzzy
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
-"O corte oculta o conteúdo do\n"
-"ficheiro PDF mas não o remove."
+msgstr "O corte oculta o conteúdo do ficheiro PDF mas não o remove."
 
 #: pdfarranger/croputils.py:166
 #, python-format
@@ -107,42 +108,41 @@ msgstr "% da altura"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Formato da página"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Largura"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Direita"
+msgstr "Altura"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Relativo"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Tamanho da página"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Adicionar página vazia"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Os formulários e tópicos não são guardados."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Não mostrar novamente."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
@@ -166,20 +166,19 @@ msgstr "Criador"
 
 #: pdfarranger/metadata.py:45
 msgid "Creator tool"
-msgstr "Ferramenta de criação"
+msgstr "Criado por"
 
 #: pdfarranger/metadata.py:46
-#, fuzzy
 msgid "Created"
-msgstr "Criador"
+msgstr "Criado"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Modificado"
 
 #: pdfarranger/metadata.py:150
 msgid "Invalid date format. Input discarded."
-msgstr ""
+msgstr "Formato de data inválido. Será descartado."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -194,9 +193,8 @@ msgid "Value"
 msgstr "Valor"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Ficheiros suportados"
+msgstr "Todos os ficheiros suportados"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -208,12 +206,11 @@ msgstr "Todos os ficheiros"
 
 #: pdfarranger/pdfarranger.py:357
 msgid "Supported image files"
-msgstr "Ficheiros suportados"
+msgstr "Ficheiros de imagem suportados"
 
 #: pdfarranger/pdfarranger.py:531
-#, fuzzy
 msgid "untitled"
-msgstr "Título"
+msgstr "sem título"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
@@ -225,7 +222,7 @@ msgstr "Guardar alterações antes de fechar?"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Your changes will be lost if you don’t save them."
-msgstr "As suas alterações serão perdidas se não as guardar."
+msgstr "Se não as guardar, perderá todas as alterações."
 
 #: pdfarranger/pdfarranger.py:630
 msgid "Do_n’t Save"
@@ -249,7 +246,7 @@ msgstr "Importar..."
 
 #: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
-msgstr "Os dados colados são inválidos. A abortar..."
+msgstr "Os dados colados são inválidos. A abortar."
 
 #: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
@@ -273,54 +270,52 @@ msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL), versão 3."
 
 #: pdfarranger/pdfarranger.py:1829
-#, fuzzy
 msgid "Selected pages: "
-msgstr "Seleci_onar páginas ímpares"
+msgstr "Páginas selecionadas:"
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Separação em grelha"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Colunas"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Separação vertical"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Separação horizontal"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Igualar largura de colunas"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% da altura"
+msgstr "Igualar altura de linhas"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "#Coluna"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "#Linha"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Largura em %"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Altura em %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -364,30 +359,27 @@ msgstr "_Importar"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "_Nova janela"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
-msgstr "Guardar _como"
+msgstr "Guard_ar como"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Exportar..."
+msgstr "E_xportar"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "E_xportar seleção…"
+msgstr "E_xportar seleção para um ficheiro…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "E_xportar seleção…"
+msgstr "Exportar seleção para f_icheiros distintos…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "Export_ar todas as páginas para ficheiros distintos..."
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -411,7 +403,7 @@ msgstr "Rodar à _direita"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "Formato da _página"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
@@ -435,7 +427,7 @@ msgstr "_Separar páginas"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "Separação em _grelha"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
@@ -463,7 +455,7 @@ msgstr ""
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "Adicionar página va_zia"
 
 #: data/menu.ui.h:28
 msgid "_Select"
@@ -487,11 +479,11 @@ msgstr "Selecionar páginas par_es"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Tudo do me_smo ficheiro"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Mesmo _formato de página"
 
 #: data/menu.ui.h:35
 msgid "_Invert Selection"
