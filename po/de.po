@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-27 16:44+0100\n"
+"POT-Creation-Date: 2020-12-29 17:35+0100\n"
 "PO-Revision-Date: 2020-07-22 13:12+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Password"
 msgstr "Passwort"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
 msgstr "Unbekanntes Dateiformat"
 
@@ -54,7 +54,7 @@ msgstr "Bilddateien werden nur mit img2pdf unterstützt"
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformat wird von img2pdf nicht unterstützt"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
 msgstr "Datei ist weder ein pdf noch ein Bild"
 
@@ -178,7 +178,8 @@ msgid "Modified"
 msgstr "Geändert"
 
 #: pdfarranger/metadata.py:150
-msgid "Invalid date format. Discard input."
+#, fuzzy
+msgid "Invalid date format. Input discarded."
 msgstr "Ungeültiges Datenformat. Eingabe verworfen."
 
 #: pdfarranger/metadata.py:179
@@ -237,23 +238,23 @@ msgstr "_Abbrechen"
 msgid "_Save"
 msgstr "_Speichern"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:671
 msgid "Export…"
 msgstr "Exportieren…"
 
-#: pdfarranger/pdfarranger.py:785
+#: pdfarranger/pdfarranger.py:784
 msgid "Import…"
 msgstr "Importieren…"
 
-#: pdfarranger/pdfarranger.py:886
+#: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Eingefügte Daten nicht gültig. Einfügen wird abgebrochen."
 
-#: pdfarranger/pdfarranger.py:994
+#: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
 msgstr "PDF-Dokument ist beschädigt"
 
-#: pdfarranger/pdfarranger.py:1795
+#: pdfarranger/pdfarranger.py:1794
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -262,15 +263,15 @@ msgstr ""
 "%s ist ein Programm zum Umsortieren und Modifizieren von PDF-Dokumenten. "
 "Geschrieben in GTK+ und Python."
 
-#: pdfarranger/pdfarranger.py:1798
+#: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
 msgstr "Verwalter und Mitwirkende"
 
-#: pdfarranger/pdfarranger.py:1802
+#: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
 
-#: pdfarranger/pdfarranger.py:1830
+#: pdfarranger/pdfarranger.py:1829
 msgid "Selected pages: "
 msgstr "Ausgewählte Seiten: "
 

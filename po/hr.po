@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
+"POT-Creation-Date: 2020-12-29 17:35+0100\n"
 "PO-Revision-Date: 2020-10-11 15:28+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
@@ -40,7 +40,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
 msgstr "Nepoznat datotečni format"
 
@@ -52,7 +52,7 @@ msgstr "Slikovne datoteke su podržane samo s img2pdf"
 msgid "Image format is not supported by img2pdf"
 msgstr "img2pdf ne podržava format slike"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
 msgstr "Datoteka nije PDF niti slika"
 
@@ -179,7 +179,7 @@ msgid "Modified"
 msgstr ""
 
 #: pdfarranger/metadata.py:150
-msgid "Invalid date format. Discard input."
+msgid "Invalid date format. Input discarded."
 msgstr ""
 
 #: pdfarranger/metadata.py:179
@@ -240,23 +240,23 @@ msgstr "O_dustani"
 msgid "_Save"
 msgstr "_Spremi"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:671
 msgid "Export…"
 msgstr "Izvezi …"
 
-#: pdfarranger/pdfarranger.py:785
+#: pdfarranger/pdfarranger.py:784
 msgid "Import…"
 msgstr "Uvezi …"
 
-#: pdfarranger/pdfarranger.py:886
+#: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Umetnuti podaci nisu ispravni. Umetanje se prekida."
 
-#: pdfarranger/pdfarranger.py:994
+#: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
 msgstr "PDF dokument je oštećen"
 
-#: pdfarranger/pdfarranger.py:1795
+#: pdfarranger/pdfarranger.py:1794
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -265,13 +265,18 @@ msgstr ""
 "%s je alat za preraspoređivanje i mijenjenje PDF datoteka. Razvijen je "
 "pomoću GTK+ i Pythona"
 
-#: pdfarranger/pdfarranger.py:1798
+#: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
 msgstr "Održavatelji i doprinositelji"
 
-#: pdfarranger/pdfarranger.py:1802
+#: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU opća javna licenca, verzija 3."
+
+#: pdfarranger/pdfarranger.py:1829
+#, fuzzy
+msgid "Selected pages: "
+msgstr "Odaberi _neparne stranice"
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
+"POT-Creation-Date: 2020-12-29 17:35+0100\n"
 "PO-Revision-Date: 2020-10-11 14:12+0300\n"
 "Last-Translator: Alexander Volkov\n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
 msgstr "Неизвестный формат файла"
 
@@ -49,7 +49,7 @@ msgstr "Файлы изображений поддерживаются толь�
 msgid "Image format is not supported by img2pdf"
 msgstr "Формат изображения не поддерживается img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
 msgstr "Файл не является ни PDF, ни изображением"
 
@@ -176,7 +176,7 @@ msgid "Modified"
 msgstr ""
 
 #: pdfarranger/metadata.py:150
-msgid "Invalid date format. Discard input."
+msgid "Invalid date format. Input discarded."
 msgstr ""
 
 #: pdfarranger/metadata.py:179
@@ -237,23 +237,23 @@ msgstr "_Отмена"
 msgid "_Save"
 msgstr "_Сохранить"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:671
 msgid "Export…"
 msgstr "Экспорт…"
 
-#: pdfarranger/pdfarranger.py:785
+#: pdfarranger/pdfarranger.py:784
 msgid "Import…"
 msgstr "Импорт…"
 
-#: pdfarranger/pdfarranger.py:886
+#: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Вставляемые данные недопустимы. Вставка прервана."
 
-#: pdfarranger/pdfarranger.py:994
+#: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
 msgstr "Документ PDF повреждён"
 
-#: pdfarranger/pdfarranger.py:1795
+#: pdfarranger/pdfarranger.py:1794
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -262,13 +262,18 @@ msgstr ""
 "%s - инструмент для переупорядочивания и изменения файлов PDF. Разработан с "
 "использованием GTK+ и Python"
 
-#: pdfarranger/pdfarranger.py:1798
+#: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
 msgstr "Сопровождающие и участники проекта"
 
-#: pdfarranger/pdfarranger.py:1802
+#: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
 msgstr ""
+
+#: pdfarranger/pdfarranger.py:1829
+#, fuzzy
+msgid "Selected pages: "
+msgstr "Выделить _нечётные страницы"
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"

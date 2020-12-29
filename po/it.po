@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
+"POT-Creation-Date: 2020-12-29 17:35+0100\n"
 "PO-Revision-Date: 2020-12-27 13:54+0200\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language-Team: it\n"
@@ -33,13 +33,14 @@ msgstr "La password verrà ricordata fino alla chiusura di PDF-Arranger."
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Il documento “{}” è bloccato e richiede una password prima di poter essere aperto."
+"Il documento “{}” è bloccato e richiede una password prima di poter essere "
+"aperto."
 
 #: pdfarranger/core.py:197
 msgid "Password"
 msgstr "Password"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
 msgstr "Formato file sconosciuto"
 
@@ -51,7 +52,7 @@ msgstr "I file di immagine sono supportati solo con img2pdf"
 msgid "Image format is not supported by img2pdf"
 msgstr "Il formato dell'immagine non è supportato da img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
 msgstr "Il file non è un pdf o una immagine"
 
@@ -92,7 +93,6 @@ msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Il ritaglio non rimuove alcun contenuto dal file PDF, lo nasconde solo."
-
 
 #: pdfarranger/croputils.py:166
 #, python-format
@@ -175,7 +175,8 @@ msgid "Modified"
 msgstr "Modificato"
 
 #: pdfarranger/metadata.py:150
-msgid "Invalid date format. Discard input."
+#, fuzzy
+msgid "Invalid date format. Input discarded."
 msgstr "Formato data non valido. Elimina input."
 
 #: pdfarranger/metadata.py:179
@@ -234,23 +235,23 @@ msgstr "_Annulla"
 msgid "_Save"
 msgstr "_Salva"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:671
 msgid "Export…"
 msgstr "Esporta…"
 
-#: pdfarranger/pdfarranger.py:785
+#: pdfarranger/pdfarranger.py:784
 msgid "Import…"
 msgstr "Importa…"
 
-#: pdfarranger/pdfarranger.py:886
+#: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Dati incollati non validi. Incolla annullato."
 
-#: pdfarranger/pdfarranger.py:994
+#: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
 msgstr "Il documento PDF è danneggiato"
 
-#: pdfarranger/pdfarranger.py:1795
+#: pdfarranger/pdfarranger.py:1794
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -259,13 +260,18 @@ msgstr ""
 "%s è uno strumento per riordinare e modificare file PDF. Sviluppato con GTK+ "
 "e Python"
 
-#: pdfarranger/pdfarranger.py:1798
+#: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
 msgstr "Manutentori e collaboratori"
 
-#: pdfarranger/pdfarranger.py:1802
+#: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
+
+#: pdfarranger/pdfarranger.py:1829
+#, fuzzy
+msgid "Selected pages: "
+msgstr "Seleziona _Pagine dispari"
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
