@@ -147,7 +147,7 @@ class _EditedEventHandler(object):
             return datetime.isoformat(date) # ISO-8601 formatted date
         except ValueError:
             if string:
-                msg = _('Invalid date format. Discard input.')
+                msg = _('Invalid date format. Input discarded.')
                 d = Gtk.MessageDialog(parent=parent,
                                       flags=Gtk.DialogFlags.MODAL,
                                       type=Gtk.MessageType.ERROR,
