@@ -62,7 +62,7 @@ class _LinkedSpinButton(Gtk.SpinButton):
 
     def __output(self, _user_data):
         """ output signal handler to remove unneeded 0 """
-        s = locale.str(self.get_adjustment().get_value())
+        s = locale.format("%.8g", self.get_adjustment().get_value())
         self.get_buffer().set_text(s, len(s))
         return True
 
