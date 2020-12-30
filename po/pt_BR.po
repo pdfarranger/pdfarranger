@@ -1,23 +1,22 @@
-# PDF-Shuffler translation files.
-# Copyright (C) 2008-2017 Konstantinos Poulios
-# This file is part of PDF-Shuffler which is released under the GNU General
-# Public License version 3 or later.
-# See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
-# Translators:
+# Brazilian portuguese translation for pdfarranger.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # Rogênio Belém <rogeniobelem@gmail.com>, 2013
+# Túlio César do Nascimento Peroni <tulioperoni@outlook.com>; 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PDF-Shuffler 0.7\n"
+"Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 18:03+0100\n"
-"PO-Revision-Date: 2013-03-28 10:48-0300\n"
-"Last-Translator: Rogênio L. Belém <rogeniobelem@gmail.com>\n"
-"Language-Team: Rogênio L. Belém <rogeniobelem@gmail.com>\n"
+"POT-Creation-Date: 2020-12-29 17:35+0100\n"
+"PO-Revision-Date: 2020-12-29 21:18-0300\n"
+"Last-Translator: Túlio Peroni <tulioperoni@outlook.com>\n"
+"Language-Team: BR\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: pdfarranger/core.py:80
 msgid "page"
@@ -25,48 +24,49 @@ msgstr "página"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Senha obrigatória"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "A senha será lembrada até que você feche o PDF-Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"O documento “{}” está bloqueado e requer uma senha antes de ser aberto."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Senha"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
-msgstr ""
+msgstr "Formato de arquivo desconhecido"
 
 #: pdfarranger/core.py:256
 msgid "Image files are only supported with img2pdf"
-msgstr ""
+msgstr "Arquivos de imagem somente são suportados com o im2pdf"
 
 #: pdfarranger/core.py:278
 msgid "Image format is not supported by img2pdf"
-msgstr ""
+msgstr "A imagem não é suportada pelo img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
-msgstr ""
+msgstr "O arquivo não é PDF nem imagem"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Fator de escala"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -86,12 +86,12 @@ msgstr "Inferior"
 
 #: pdfarranger/croputils.py:149
 msgid "Crop Margins"
-msgstr "Recortar as márgens"
+msgstr "Recortar as margens"
 
 #: pdfarranger/croputils.py:157
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
+msgstr "Recortar não remove o conteúdo do arquivo PDF, apenas o oculta."
 
 #: pdfarranger/croputils.py:166
 #, python-format
@@ -105,95 +105,93 @@ msgstr "% da altura"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Formato da página"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Largura"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Direita"
+msgstr "Altura"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Relativo"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Tamanho da página"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Inserir página em branco"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Atenção"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Os formulários e marcadores serão perdidos ao salvar o documento."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Não mostrar esta caixa de diálogo novamente."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: pdfarranger/metadata.py:41
 msgid "Subject"
-msgstr ""
+msgstr "Assunto"
 
 #: pdfarranger/metadata.py:42
 msgid "Keywords"
-msgstr ""
+msgstr "Palavras-chave"
 
 #: pdfarranger/metadata.py:43
 msgid "Producer"
-msgstr ""
+msgstr "Produtor"
 
 #: pdfarranger/metadata.py:44
 msgid "Creator"
-msgstr ""
+msgstr "Autor"
 
 #: pdfarranger/metadata.py:45
 msgid "Creator tool"
-msgstr ""
+msgstr "Ferramenta de criação"
 
 #: pdfarranger/metadata.py:46
 msgid "Created"
-msgstr ""
+msgstr "Criado em"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Modificado em"
 
 #: pdfarranger/metadata.py:150
-msgid "Invalid date format. Discard input."
-msgstr ""
+msgid "Invalid date format. Input discarded."
+msgstr "Formato de data inválido. Valor descartado."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
-msgstr ""
+msgstr "Editar propriedades"
 
 #: pdfarranger/metadata.py:192
 msgid "Property"
-msgstr ""
+msgstr "Propriedade"
 
 #: pdfarranger/metadata.py:192
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Todos os arquivos"
+msgstr "Todos os arquivos suportados"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -205,114 +203,116 @@ msgstr "Todos os arquivos"
 
 #: pdfarranger/pdfarranger.py:357
 msgid "Supported image files"
-msgstr ""
+msgstr "Arquivos de imagem suportados"
 
 #: pdfarranger/pdfarranger.py:531
 msgid "untitled"
-msgstr ""
+msgstr "sem título"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
-msgstr ""
+msgstr "Salvar as alterações em “{}” antes de fechar?"
 
 #: pdfarranger/pdfarranger.py:627
 msgid "Save changes before closing?"
-msgstr ""
+msgstr "Salvar alterações antes de fechar?"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Your changes will be lost if you don’t save them."
-msgstr ""
+msgstr "Suas alterações serão perdidas se você não salvá-las."
 
 #: pdfarranger/pdfarranger.py:630
 msgid "Do_n’t Save"
-msgstr ""
+msgstr "_Não salvar"
 
 #: pdfarranger/pdfarranger.py:630
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
-#, fuzzy
 msgid "_Save"
-msgstr "Salvar"
+msgstr "_Salvar"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:671
 msgid "Export…"
 msgstr "Exportar…"
 
-#: pdfarranger/pdfarranger.py:785
+#: pdfarranger/pdfarranger.py:784
 msgid "Import…"
 msgstr "Importar…"
 
-#: pdfarranger/pdfarranger.py:886
+#: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
-msgstr ""
+msgstr "Os dados colados são inválidos. Cancelando operação."
 
-#: pdfarranger/pdfarranger.py:994
+#: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
-msgstr ""
+msgstr "O documento PDF está danificado"
 
-#: pdfarranger/pdfarranger.py:1795
+#: pdfarranger/pdfarranger.py:1794
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s é uma ferramenta que rearranja e modifica arquivos PDF. Desenvolvido "
+"%s é uma ferramenta que reorganiza e modifica arquivos PDF. Desenvolvido "
 "utilizando GTK+ e Python"
 
-#: pdfarranger/pdfarranger.py:1798
+#: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
-msgstr ""
+msgstr "Programadores e colaboradores"
 
-#: pdfarranger/pdfarranger.py:1802
+#: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
+msgstr "GNU General Public License (GPL) Versão 3."
+
+#: pdfarranger/pdfarranger.py:1829
+msgid "Selected pages: "
+msgstr "Páginas selecionadas: "
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Divisão em grade"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Colunas"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Divisões na vertical"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Divisões na horizontal"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Igualar largura das colunas"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% da altura"
+msgstr "Igualar altura das linhas"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "#Col"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "#Lin"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Largura em %"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Altura em %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -323,78 +323,68 @@ msgid "Save"
 msgstr "Salvar"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
-msgstr "Salvar como"
+msgstr "Salvar Como"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Número de páginas"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu principal"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Ampliar"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Reduzir"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Rotacionar à _esquerda"
+msgstr "Rotacionar à esquerda"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "Rotacionar à _direita"
+msgstr "Rotacionar à direita"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Importar"
+msgstr "_Importar"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "_Nova Janela"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "Save _As…"
-msgstr "Salvar como"
+msgstr "S_alvar Como…"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Exportar…"
+msgstr "E_xportar"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "_Exportar as páginas selecionadas…"
+msgstr "E_xportar seleção para um único arquivo…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "_Exportar as páginas selecionadas…"
+msgstr "Exportar seleção em arquivos _individuais…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "Export_ar todas as páginas em arquivos individuais…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
-msgstr ""
+msgstr "_Desfazer"
 
 #: data/menu.ui.h:10
 msgid "_Redo"
-msgstr ""
+msgstr "_Refazer"
 
 #: data/menu.ui.h:11
 msgid "_Edit"
@@ -402,125 +392,120 @@ msgstr "_Editar"
 
 #: data/menu.ui.h:12
 msgid "Rotate _Left"
-msgstr "Rotacionar à _esquerda"
+msgstr "Rotacionar à Es_querda"
 
 #: data/menu.ui.h:13
 msgid "_Rotate Right"
-msgstr "Rotacionar à _direita"
+msgstr "_Rotacionar à Direita"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "Formato da _Página"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
-msgstr ""
+msgstr "Recortar margens em branco"
 
 #: data/menu.ui.h:16
 msgid "_Delete"
-msgstr "Remover"
+msgstr "Remo_ver"
 
 #: data/menu.ui.h:17
 msgid "Dupl_icate"
-msgstr ""
+msgstr "Dupl_icar"
 
 #: data/menu.ui.h:18
 msgid "Re_verse Order"
-msgstr ""
+msgstr "Inverter _ordem"
 
 #: data/menu.ui.h:19
 msgid "_Split Pages"
-msgstr ""
+msgstr "_Dividir Páginas"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "Dividir em _grade"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
-msgstr ""
+msgstr "Cor_tar"
 
 #: data/menu.ui.h:22
 msgid "_Copy"
-msgstr ""
+msgstr "_Copiar"
 
 #: data/menu.ui.h:23
 msgid "Paste _After"
-msgstr ""
+msgstr "Col_ar depois"
 
 #: data/menu.ui.h:24
 msgid "Paste _Before"
-msgstr ""
+msgstr "Colar a_ntes"
 
 #: data/menu.ui.h:25
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Co_lar como páginas ímpares"
 
 #: data/menu.ui.h:26
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Colar como páginas par_es"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "Inserir página em _branco"
 
 #: data/menu.ui.h:28
 msgid "_Select"
-msgstr ""
+msgstr "_Selecionar"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
-msgstr ""
+msgstr "Selecion_ar tudo"
 
 #: data/menu.ui.h:30
 msgid "_Deselect All"
-msgstr ""
+msgstr "_Desmarcar tudo"
 
 #: data/menu.ui.h:31
-#, fuzzy
 msgid "Select _Odd Pages"
-msgstr "Recortar as páginas selecionadas"
+msgstr "Seleci_onar páginas ímpares"
 
 #: data/menu.ui.h:32
-#, fuzzy
 msgid "Select _Even Pages"
-msgstr "Recortar as páginas selecionadas"
+msgstr "Selecionar páginas par_es"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Tudo do me_smo arquivo"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Mesmo _formato de página"
 
 #: data/menu.ui.h:35
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "_Exportar as páginas selecionadas…"
+msgstr "_Inverter seleção"
 
 #: data/menu.ui.h:36
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Ampliar"
+msgstr "A_mpliar"
 
 #: data/menu.ui.h:37
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Reduzir"
+msgstr "Redu_zir"
 
 #: data/menu.ui.h:38
 msgid "Edit _Properties"
-msgstr ""
+msgstr "Editar _Propriedades"
 
 #: data/menu.ui.h:39
 msgid "_About"
-msgstr ""
+msgstr "S_obre"
 
 #: data/menu.ui.h:40
 msgid "_Quit"
-msgstr ""
+msgstr "_Sair"
 
 #: data/menu.ui.h:41
 msgid "Past_e Special"
-msgstr ""
+msgstr "Colar _especial"
