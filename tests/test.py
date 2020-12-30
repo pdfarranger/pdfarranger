@@ -284,6 +284,9 @@ class TestBatch1(PdfArrangerTest):
         self._popupmenu(0, ["Select", "Select Even Pages"])
         self._assert_selected("2, 4, 6, 8")
         self._mainmenu(["Edit", "Split Pages"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
         self.assertEqual(len(self._icons()), lbefore + 4)
 
     def test_08_zoom_pages(self):
