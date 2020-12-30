@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2020-12-29 21:18-0300\n"
+"PO-Revision-Date: 2020-12-30 11:05-0300\n"
 "Last-Translator: Túlio Peroni <tulioperoni@outlook.com>\n"
 "Language-Team: BR\n"
 "Language: pt_BR\n"
@@ -324,7 +324,7 @@ msgstr "Salvar"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save As"
-msgstr "Salvar Como"
+msgstr "Salvar como"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
@@ -392,15 +392,15 @@ msgstr "_Editar"
 
 #: data/menu.ui.h:12
 msgid "Rotate _Left"
-msgstr "Rotacionar à Es_querda"
+msgstr "Rotacionar à es_querda"
 
 #: data/menu.ui.h:13
 msgid "_Rotate Right"
-msgstr "_Rotacionar à Direita"
+msgstr "_Rotacionar à direita"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr "Formato da _Página"
+msgstr "Formato da _página"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
@@ -420,7 +420,7 @@ msgstr "Inverter _ordem"
 
 #: data/menu.ui.h:19
 msgid "_Split Pages"
-msgstr "_Dividir Páginas"
+msgstr "_Dividir páginas"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
