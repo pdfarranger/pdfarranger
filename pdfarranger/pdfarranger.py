@@ -298,7 +298,7 @@ class PdfArranger(Gtk.Application):
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
-            ('split', self.split_pages, 'i'),
+            ('split', self.split_pages),
             ('metadata', self.edit_metadata),
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
@@ -1656,19 +1656,12 @@ class PdfArranger(Gtk.Application):
             GObject.timeout_add(50, self.scroll_to_selection)
         return rotated
 
-    def split_pages(self, _action, option, _unknown):
+    def split_pages(self, _action, _parameter, _unknown):
         """ Split selected pages """
-        splitoptions = {0: 'HALF', 1: 'GRID'}
-        splitoption = splitoptions[option.get_int32()]
-        if splitoption == 'GRID':
-            diag = splitter.Dialog(self.window)
-            leftcrops, topcrops = diag.run_get()
-            if leftcrops is None or topcrops is None:
-                return
-        else:
-            leftcrops = [0.0, 0.5, 1.0]
-            topcrops = [0.0, 1.0]
-
+        diag = splitter.Dialog(self.window)
+        leftcrops, topcrops = diag.run_get()
+        if leftcrops is None or topcrops is None:
+            return
         model = self.iconview.get_model()
         self.set_unsaved(True)
         self.undomanager.commit("Split")

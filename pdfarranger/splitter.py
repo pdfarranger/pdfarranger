@@ -23,7 +23,7 @@ class Dialog(Gtk.Dialog):
     """ A dialog box to split pages into a grid of pages"""
     def __init__(self, window):
         super().__init__(
-            title=_("Grid splitting"),
+            title=_("Split Pages"),
             parent=window,
             flags=Gtk.DialogFlags.MODAL,
             buttons=(
@@ -35,7 +35,7 @@ class Dialog(Gtk.Dialog):
         )
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_resizable(False)
-        self.split_count = {'vertical' : 1, 'horizontal' : 1}
+        self.split_count = {'vertical' : 2, 'horizontal' : 1}
         self.even_splits = {'vertical' : True, 'horizontal' : True}
         self.vmodel = Gtk.ListStore(int, int)
         self.hmodel = Gtk.ListStore(int, int)
@@ -69,7 +69,7 @@ class Dialog(Gtk.Dialog):
         label.props.margin = 8
         label.props.margin_bottom = 6
         grid.attach(label, 0, 0, width=1, height=1)
-        adjustment = Gtk.Adjustment(value=1, lower=1, upper=20, step_incr=1)
+        adjustment = Gtk.Adjustment(value=self.split_count[direction], lower=1, upper=20, step_incr=1)
         self.spinbuttons[direction].set_adjustment(adjustment)
         self.spinbuttons[direction].connect("value-changed", self._update_split, direction)
         grid.attach(self.spinbuttons[direction], 1, 0, width=1, height=1)
@@ -85,7 +85,9 @@ class Dialog(Gtk.Dialog):
         label1 = {'vertical' : _("#Col"), 'horizontal' : _("#Row")}
         label2 = {'vertical' : _("Width in %"), 'horizontal' : _("Height in %")}
 
-        self.model[direction].append([1, 100])
+        split_count = self.split_count[direction]
+        for s in range(1, split_count + 1):
+            self.model[direction].append([s, 100 // split_count])
         treeview = Gtk.TreeView(model=self.model[direction])
         cr = Gtk.CellRendererText()
         heading = Gtk.TreeViewColumn(label1[direction], cr, text=0)
