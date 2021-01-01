@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 17:35+0100\n"
+"POT-Creation-Date: 2021-01-01 22:06+0100\n"
 "PO-Revision-Date: 2017-02-26 16:16+0000\n"
 "Last-Translator: Konstantinos Poulios <logari81@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/logari81/pdfshuffler/language/"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
 msgid "Unknown file format"
 msgstr ""
 
@@ -53,81 +53,78 @@ msgstr ""
 msgid "Image format is not supported by img2pdf"
 msgstr ""
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
 msgid "File is neither pdf nor image"
 msgstr ""
 
-#: pdfarranger/croputils.py:113
+#: pdfarranger/croputils.py:124
 msgid "Scale factor"
 msgstr ""
 
-#: pdfarranger/croputils.py:119
+#: pdfarranger/croputils.py:130
 msgid "%"
 msgstr ""
 
-#: pdfarranger/croputils.py:135
+#: pdfarranger/croputils.py:146
 msgid "mm"
 msgstr ""
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Left"
 msgstr "Αριστερά"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Right"
 msgstr "Δεξιά"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Top"
 msgstr "Πάνω"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Bottom"
 msgstr "Κάτω"
 
-#: pdfarranger/croputils.py:149
+#: pdfarranger/croputils.py:160
 msgid "Crop Margins"
 msgstr "Αποκοπή περιθωρίων"
 
-#: pdfarranger/croputils.py:157
+#: pdfarranger/croputils.py:168
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 
-#: pdfarranger/croputils.py:166
-#, fuzzy, python-format
+#: pdfarranger/croputils.py:177
 msgid "% of width"
-msgstr "% του πλάτους"
+msgstr ""
 
-#: pdfarranger/croputils.py:166
-#, fuzzy, python-format
+#: pdfarranger/croputils.py:177
 msgid "% of height"
-msgstr "% του ύψους"
+msgstr ""
 
-#: pdfarranger/croputils.py:210
+#: pdfarranger/croputils.py:221
 msgid "Page format"
 msgstr ""
 
-#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:236 pdfarranger/croputils.py:240
+#: pdfarranger/croputils.py:349
 msgid "Width"
 msgstr ""
 
-#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
-#: pdfarranger/croputils.py:339
-#, fuzzy
+#: pdfarranger/croputils.py:237 pdfarranger/croputils.py:241
+#: pdfarranger/croputils.py:350
 msgid "Height"
-msgstr "Δεξιά"
+msgstr ""
 
-#: pdfarranger/croputils.py:228
+#: pdfarranger/croputils.py:239
 msgid "Relative"
 msgstr ""
 
-#: pdfarranger/croputils.py:231
+#: pdfarranger/croputils.py:242
 msgid "Page Size"
 msgstr ""
 
-#: pdfarranger/croputils.py:328
+#: pdfarranger/croputils.py:339
 msgid "Insert Blank Page"
 msgstr ""
 
@@ -192,9 +189,8 @@ msgid "Value"
 msgstr ""
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Όλα τα αρχεία"
+msgstr ""
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -208,52 +204,51 @@ msgstr "Όλα τα αρχεία"
 msgid "Supported image files"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:531
+#: pdfarranger/pdfarranger.py:532
 msgid "untitled"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:625
+#: pdfarranger/pdfarranger.py:626
 msgid "Save changes to “{}” before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:627
+#: pdfarranger/pdfarranger.py:628
 msgid "Save changes before closing?"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:630
 msgid "Your changes will be lost if you don’t save them."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:631
 msgid "Do_n’t Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:631
 msgid "_Cancel"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
-#, fuzzy
+#: pdfarranger/pdfarranger.py:631 data/menu.ui.h:3
 msgid "_Save"
-msgstr "Αποθήκευση"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:671
+#: pdfarranger/pdfarranger.py:672
 msgid "Export…"
 msgstr "Εξαγωγή…"
 
-#: pdfarranger/pdfarranger.py:784
+#: pdfarranger/pdfarranger.py:785
 msgid "Import…"
 msgstr "Εισαγωγή…"
 
-#: pdfarranger/pdfarranger.py:885
+#: pdfarranger/pdfarranger.py:886
 msgid "Pasted data not valid. Aborting paste."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:994
 msgid "PDF document is damaged"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1794
+#: pdfarranger/pdfarranger.py:1788
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -262,21 +257,20 @@ msgstr ""
 "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF. Είναι "
 "γραμμένο σε GTK+ και Python"
 
-#: pdfarranger/pdfarranger.py:1797
+#: pdfarranger/pdfarranger.py:1791
 msgid "Maintainers and contributors"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1801
+#: pdfarranger/pdfarranger.py:1795
 msgid "GNU General Public License (GPL) Version 3."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1829
-#, fuzzy
+#: pdfarranger/pdfarranger.py:1823
 msgid "Selected pages: "
-msgstr "Περικοπή επιλεγμένων σελίδων"
+msgstr ""
 
 #: pdfarranger/splitter.py:26
-msgid "Grid splitting"
+msgid "Split Pages"
 msgstr ""
 
 #: pdfarranger/splitter.py:58
@@ -300,9 +294,8 @@ msgid "Equal column width"
 msgstr ""
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% του ύψους"
+msgstr ""
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
@@ -329,9 +322,8 @@ msgid "Save"
 msgstr "Αποθήκευση"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
-msgstr "Αποθήκευση ως"
+msgstr ""
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
@@ -342,53 +334,44 @@ msgid "Main Menu"
 msgstr ""
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
-msgstr "Μεγέθυνση"
+msgstr ""
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Σμίκρυνση"
+msgstr ""
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Περιστροφή  _Αριστερά"
+msgstr ""
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "Περιστροφή  _Δεξιά"
+msgstr ""
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Εισαγωγή"
+msgstr ""
 
 #: data/menu.ui.h:2
 msgid "_New Window"
 msgstr ""
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "Save _As…"
-msgstr "Αποθήκευση ως"
+msgstr ""
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Εξαγωγή…"
+msgstr ""
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "Εξαγωγή επιλεγμένων…"
+msgstr ""
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "Εξαγωγή επιλεγμένων…"
+msgstr ""
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
@@ -439,94 +422,85 @@ msgid "_Split Pages"
 msgstr ""
 
 #: data/menu.ui.h:20
-msgid "_Grid Split"
-msgstr ""
-
-#: data/menu.ui.h:21
 msgid "Cu_t"
 msgstr ""
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:21
 msgid "_Copy"
 msgstr ""
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:22
 msgid "Paste _After"
 msgstr ""
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:23
 msgid "Paste _Before"
 msgstr ""
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:24
 msgid "Paste Interleave _Odd"
 msgstr ""
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:25
 msgid "Paste Interleave _Even"
 msgstr ""
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
 msgstr ""
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:27
 msgid "_Select"
 msgstr ""
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:28
 msgid "Select _All"
 msgstr ""
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:29
 msgid "_Deselect All"
 msgstr ""
 
-#: data/menu.ui.h:31
-#, fuzzy
+#: data/menu.ui.h:30
 msgid "Select _Odd Pages"
-msgstr "Περικοπή επιλεγμένων σελίδων"
+msgstr ""
+
+#: data/menu.ui.h:31
+msgid "Select _Even Pages"
+msgstr ""
 
 #: data/menu.ui.h:32
-#, fuzzy
-msgid "Select _Even Pages"
-msgstr "Περικοπή επιλεγμένων σελίδων"
-
-#: data/menu.ui.h:33
 msgid "All From _Same File"
 msgstr ""
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:33
 msgid "Same Page _Format"
 msgstr ""
 
-#: data/menu.ui.h:35
-#, fuzzy
+#: data/menu.ui.h:34
 msgid "_Invert Selection"
-msgstr "Εξαγωγή επιλεγμένων…"
+msgstr ""
+
+#: data/menu.ui.h:35
+msgid "Zoom _In"
+msgstr ""
 
 #: data/menu.ui.h:36
-#, fuzzy
-msgid "Zoom _In"
-msgstr "Μεγέθυνση"
+msgid "Zoom _Out"
+msgstr ""
 
 #: data/menu.ui.h:37
-#, fuzzy
-msgid "Zoom _Out"
-msgstr "Σμίκρυνση"
-
-#: data/menu.ui.h:38
 msgid "Edit _Properties"
 msgstr ""
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:38
 msgid "_About"
 msgstr ""
 
-#: data/menu.ui.h:40
+#: data/menu.ui.h:39
 msgid "_Quit"
 msgstr ""
 
-#: data/menu.ui.h:41
+#: data/menu.ui.h:40
 msgid "Past_e Special"
 msgstr ""
