@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2020-12-27 20:00+0200\n"
+"POT-Creation-Date: 2021-01-01 06:35+0200\n"
+"PO-Revision-Date: 2021-01-01 06:38+0200\n"
 "Last-Translator: kbengs\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
@@ -174,9 +174,8 @@ msgid "Modified"
 msgstr "Ändrad"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
-msgstr "Ogiltigt datumformat. "
+msgstr "Ogiltigt datumformat."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -272,8 +271,8 @@ msgid "Selected pages: "
 msgstr "Markerade sidor: "
 
 #: pdfarranger/splitter.py:26
-msgid "Grid splitting"
-msgstr "Fri delning"
+msgid "Split Pages"
+msgstr "Dela sidor"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -301,7 +300,7 @@ msgstr "Samma radhöjd"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr "#Column"
+msgstr "#Kolumn"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
@@ -422,10 +421,6 @@ msgstr "Omv_änd ordningen"
 #: data/menu.ui.h:19
 msgid "_Split Pages"
 msgstr "_Dela sidor"
-
-#: data/menu.ui.h:20
-msgid "_Grid Split"
-msgstr "Fri delnin_g"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
