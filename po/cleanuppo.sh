@@ -23,6 +23,6 @@
 cd "$(dirname $0)/.."
 for po in po/*.po
 do
-  # Remove #~ lines
-  msgattrib --no-obsolete -o "$po" "$po"
+  # Remove #~ lines and fuzzy
+  msgattrib --no-fuzzy --no-obsolete -o "$po" "$po"
 done
