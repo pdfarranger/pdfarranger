@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 17:35+0100\n"
+"POT-Creation-Date: 2021-01-01 22:06+0100\n"
 "PO-Revision-Date: 2020-12-26 10:03+0100\n"
 "Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
 "Language-Team: French - France <>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Password"
 msgstr "Mot de passe"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
+#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:990
 msgid "Unknown file format"
 msgstr "Format de fichier inconnu"
 
@@ -60,81 +60,79 @@ msgstr "Les fichiers images sont seulement pris en charge avec img2pdf"
 msgid "Image format is not supported by img2pdf"
 msgstr "Le format d’image n’est pas pris en charge par img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
+#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
 msgid "File is neither pdf nor image"
 msgstr "Le fichier n'est pas un PDF ni une image"
 
-#: pdfarranger/croputils.py:113
+#: pdfarranger/croputils.py:124
 msgid "Scale factor"
 msgstr "Facteur d'échelle"
 
-#: pdfarranger/croputils.py:119
+#: pdfarranger/croputils.py:130
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:135
+#: pdfarranger/croputils.py:146
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Left"
 msgstr "À gauche"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Right"
 msgstr "À droite"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Top"
 msgstr "En haut"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:156
 msgid "Bottom"
 msgstr "En bas"
 
-#: pdfarranger/croputils.py:149
+#: pdfarranger/croputils.py:160
 msgid "Crop Margins"
 msgstr "Rogner les marges"
 
-#: pdfarranger/croputils.py:157
+#: pdfarranger/croputils.py:168
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Le contenu rogné reste présent dans le fichier PDF. Il est simplement caché."
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:177
 msgid "% of width"
 msgstr "% de la largeur"
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:177
 msgid "% of height"
 msgstr "% de la hauteur"
 
-#: pdfarranger/croputils.py:210
+#: pdfarranger/croputils.py:221
 msgid "Page format"
 msgstr "Format de page"
 
-#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:236 pdfarranger/croputils.py:240
+#: pdfarranger/croputils.py:349
 msgid "Width"
 msgstr "Largeur"
 
-#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
-#: pdfarranger/croputils.py:339
+#: pdfarranger/croputils.py:237 pdfarranger/croputils.py:241
+#: pdfarranger/croputils.py:350
 msgid "Height"
 msgstr "Hauteur"
 
-#: pdfarranger/croputils.py:228
+#: pdfarranger/croputils.py:239
 msgid "Relative"
 msgstr "Relative"
 
-#: pdfarranger/croputils.py:231
+#: pdfarranger/croputils.py:242
 msgid "Page Size"
 msgstr "Dimensions"
 
-#: pdfarranger/croputils.py:328
+#: pdfarranger/croputils.py:339
 msgid "Insert Blank Page"
 msgstr "Inserer une page blanche"
 
@@ -183,7 +181,6 @@ msgid "Modified"
 msgstr "Modifié le"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
 msgstr "Format de date non valide."
 
@@ -215,51 +212,51 @@ msgstr "Tous les fichiers"
 msgid "Supported image files"
 msgstr "Fichiers image pris en charge"
 
-#: pdfarranger/pdfarranger.py:531
+#: pdfarranger/pdfarranger.py:532
 msgid "untitled"
 msgstr "sans titre"
 
-#: pdfarranger/pdfarranger.py:625
+#: pdfarranger/pdfarranger.py:626
 msgid "Save changes to “{}” before closing?"
 msgstr "Enregistrer les modifications du document «{}» avant la fermeture ?"
 
-#: pdfarranger/pdfarranger.py:627
+#: pdfarranger/pdfarranger.py:628
 msgid "Save changes before closing?"
 msgstr "Enregistrer les modifications avant la fermeture ?"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:630
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Vos modifications seront perdues si vous ne les enregistrez pas."
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:631
 msgid "Do_n’t Save"
 msgstr "_Ne pas enregistrer"
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:631
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:631 data/menu.ui.h:3
 msgid "_Save"
 msgstr "_Enregistrer"
 
-#: pdfarranger/pdfarranger.py:671
+#: pdfarranger/pdfarranger.py:672
 msgid "Export…"
 msgstr "Exporter…"
 
-#: pdfarranger/pdfarranger.py:784
+#: pdfarranger/pdfarranger.py:785
 msgid "Import…"
 msgstr "Importer…"
 
-#: pdfarranger/pdfarranger.py:885
+#: pdfarranger/pdfarranger.py:886
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Données collées invalides. Annulation du collage."
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:994
 msgid "PDF document is damaged"
 msgstr "Le document PDF est endommagé"
 
-#: pdfarranger/pdfarranger.py:1794
+#: pdfarranger/pdfarranger.py:1788
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -268,65 +265,61 @@ msgstr ""
 "%s est un outil pour réorganiser et modifier les fichiers PDF. Développé "
 "avec GTK+ et Python"
 
-#: pdfarranger/pdfarranger.py:1797
+#: pdfarranger/pdfarranger.py:1791
 msgid "Maintainers and contributors"
 msgstr "Mainteneurs et contributeurs"
 
-#: pdfarranger/pdfarranger.py:1801
+#: pdfarranger/pdfarranger.py:1795
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "Licence publique générale GNU (GPL), version 3."
 
-#: pdfarranger/pdfarranger.py:1829
-#, fuzzy
+#: pdfarranger/pdfarranger.py:1823
 msgid "Selected pages: "
-msgstr "Pages impaires"
+msgstr "Pages selectionnées: "
 
 #: pdfarranger/splitter.py:26
-msgid "Grid splitting"
+msgid "Split Pages"
 msgstr ""
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "En colonnes"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "En lignes"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Nombre de colonnes"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Numbre de lignes"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Colonnes de largeurs égales"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% de la hauteur"
+msgstr "Lignes de hauteurs égales"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "#Col"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "#Lig"
 
 #: pdfarranger/splitter.py:86
-#, fuzzy
 msgid "Width in %"
-msgstr "Largeur"
+msgstr "Largeur en %"
 
 #: pdfarranger/splitter.py:86
-#, fuzzy
 msgid "Height in %"
-msgstr "Hauteur"
+msgstr "Hauteur en %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
@@ -370,7 +363,7 @@ msgstr "_Importer"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr "Nouvelle fenêtre"
+msgstr "_Nouvelle fenêtre"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
@@ -378,19 +371,19 @@ msgstr "Enregistrer _sous…"
 
 #: data/menu.ui.h:5
 msgid "E_xport"
-msgstr "Exporter"
+msgstr "E_xporter"
 
 #: data/menu.ui.h:6
 msgid "E_xport Selection to a Single File…"
-msgstr "Exporter la selection vers un seul fichier…"
+msgstr "E_xporter la selection vers un seul fichier…"
 
 #: data/menu.ui.h:7
 msgid "Export Selection to _Individual Files…"
-msgstr "Exporter chaque page selectionnée vers un fichier…"
+msgstr "Exporter chaque page select_ionnée vers un fichier…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr "Exporter chaque page vers un fichier…"
+msgstr "Exporter ch_aque page vers un fichier…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -414,7 +407,7 @@ msgstr "Rotation vers la _droite"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr "Format de page"
+msgstr "Format de _page"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
@@ -437,89 +430,85 @@ msgid "_Split Pages"
 msgstr "_Séparer les pages"
 
 #: data/menu.ui.h:20
-msgid "_Grid Split"
-msgstr ""
-
-#: data/menu.ui.h:21
 msgid "Cu_t"
 msgstr "C_ouper"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:21
 msgid "_Copy"
 msgstr "_Copier"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:22
 msgid "Paste _After"
 msgstr "Co_ller après"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:23
 msgid "Paste _Before"
 msgstr "Coller a_vant"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:24
 msgid "Paste Interleave _Odd"
 msgstr "Collage entrelacé _pair"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:25
 msgid "Paste Interleave _Even"
 msgstr "Collage entrelacé i_mpair"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
-msgstr "Inserer une page blanche"
+msgstr "Inserer une page _blanche"
+
+#: data/menu.ui.h:27
+msgid "_Select"
+msgstr "_Selectionner"
 
 #: data/menu.ui.h:28
-msgid "_Select"
-msgstr "Selectionner"
+msgid "Select _All"
+msgstr "Selectionner _tout"
 
 #: data/menu.ui.h:29
-msgid "Select _All"
-msgstr "Selectionner tout"
+msgid "_Deselect All"
+msgstr "_Déselectionner tout"
 
 #: data/menu.ui.h:30
-msgid "_Deselect All"
-msgstr "Déselectionner tout"
+msgid "Select _Odd Pages"
+msgstr "Pages _impaires"
 
 #: data/menu.ui.h:31
-msgid "Select _Odd Pages"
-msgstr "Pages impaires"
+msgid "Select _Even Pages"
+msgstr "Pages _paires"
 
 #: data/menu.ui.h:32
-msgid "Select _Even Pages"
-msgstr "Pages paires"
+msgid "All From _Same File"
+msgstr "Pages du _même fichier"
 
 #: data/menu.ui.h:33
-msgid "All From _Same File"
-msgstr "Pages du même fichier"
+msgid "Same Page _Format"
+msgstr "Pages de même _format"
 
 #: data/menu.ui.h:34
-msgid "Same Page _Format"
-msgstr "Pages de même format"
+msgid "_Invert Selection"
+msgstr "_Inverser la selection"
 
 #: data/menu.ui.h:35
-msgid "_Invert Selection"
-msgstr "Inverser la selection"
-
-#: data/menu.ui.h:36
 msgid "Zoom _In"
 msgstr "Zoom a_vant"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:36
 msgid "Zoom _Out"
 msgstr "Zoom _arrière"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:37
 msgid "Edit _Properties"
 msgstr "Édi_ter les propriétés"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:38
 msgid "_About"
 msgstr "À _propos"
 
-#: data/menu.ui.h:40
+#: data/menu.ui.h:39
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: data/menu.ui.h:41
+#: data/menu.ui.h:40
 msgid "Past_e Special"
 msgstr "Coll_age spécial"
