@@ -58,13 +58,14 @@ _ = gettext.gettext
 
 
 class Page:
-    def __init__(self, nfile, npage, zoom, filename, angle, scale, crop, size):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
         #: The ID (from 1 to n) of the page in its owner PDF document
         self.npage = npage
         self.zoom = zoom
-        self.filename = filename
+        #: Filepath to the temporary stored file
+        self.copyname = copyname
         #: Left, right, top, bottom crop
         self.crop = list(crop)
         #: width and height
@@ -73,10 +74,11 @@ class Page:
         self.thumbnail = None
         self.resample = 2
         self.scale = scale
+        #: The name of the original file
+        self.basename = basename
 
     def description(self):
-        shortname = os.path.split(self.filename)[1]
-        shortname = os.path.splitext(shortname)[0]
+        shortname = os.path.splitext(self.basename)[0]
         return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
 
     def width_in_points(self):
@@ -111,7 +113,7 @@ class Page:
 
     def serialize(self):
         """Convert to string for copy/past operations."""
-        ts = [self.filename, self.npage, self.angle, self.scale] + list(self.crop)
+        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale] + list(self.crop)
         return "\n".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
@@ -214,14 +216,13 @@ class PasswordDialog(Gtk.Dialog):
 class PDFDoc:
     """Class handling PDF documents."""
 
-    def __from_file(self, parent):
+    def __from_file(self, parent, basename):
         uri = pathlib.Path(self.copyname).as_uri()
         askpass = False
         while True:
             try:
                 if askpass:
-                    bn = os.path.basename(self.filename)
-                    self.password = PasswordDialog(parent, bn).get_password()
+                    self.password = PasswordDialog(parent, basename).get_password()
                 self.document = Poppler.Document.new_from_file(uri, self.password)
                 # When there is no encryption Poppler want None as password
                 # while PikePDF want an empty string
@@ -232,30 +233,34 @@ class PDFDoc:
                 if not askpass:
                     raise e
 
-    def __init__(self, filename, tmp_dir, parent):
+    def __init__(self, filename, basename, tmp_dir, parent):
         self.filename = os.path.abspath(filename)
         self.mtime = os.path.getmtime(filename)
+        if basename is None:  # When importing files
+            self.basename = os.path.basename(filename)
+        else:  # When copy-pasting
+            self.basename = basename
         self.password = ""
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
         if filemime == "application/pdf":
-            if self.filename.startswith(tmp_dir):
+            if self.filename.startswith(tmp_dir) and basename is None:
                 # In the "Insert Blank Page" we don't need to copy self.filename
                 self.copyname = self.filename
             else:
-                fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+                fd, self.copyname = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
                 os.close(fd)
                 shutil.copy(self.filename, self.copyname)
             try:
-                self.__from_file(parent)
+                self.__from_file(parent, self.basename)
             except GLib.Error as e:
                 raise PDFDocError(e.message + ": " + filename)
         elif filemime.split("/")[0] == "image":
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
             if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
-                fd, self.copyname = tempfile.mkstemp(dir=tmp_dir)
+                fd, self.copyname = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
                 os.close(fd)
                 with open(self.copyname, "wb") as f:
                     img = img2pdf.Image.open(filename)
@@ -298,30 +303,35 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def addpages(self, filename, page=-1, angle=0, scale=1.0, crop=None):
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None):
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         nfile = None
+        # Check if added page or file already exist in pdfqueue
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
-            if (
-                os.path.isfile(it_pdfdoc.filename)
-                and os.path.samefile(filename, it_pdfdoc.filename)
-                and os.path.getmtime(filename) is it_pdfdoc.mtime
-            ):
+            if basename is not None and filename == it_pdfdoc.copyname:
+                # File of copy-pasted page was found in pdfqueue
+                pdfdoc = it_pdfdoc
+                nfile = i + 1
+                break
+            elif (os.path.isfile(it_pdfdoc.filename)
+                  and os.path.samefile(filename, it_pdfdoc.filename)
+                  and os.path.getmtime(filename) == it_pdfdoc.mtime):
+                # Imported file was found in pdfqueue
                 pdfdoc = it_pdfdoc
                 nfile = i + 1
                 break
 
         if not pdfdoc:
             try:
-                pdfdoc = PDFDoc(filename, self.app.tmp_dir, self.app.window)
+                pdfdoc = PDFDoc(filename, basename, self.app.tmp_dir, self.app.window)
             except _UnknownPasswordException:
                 return
             except PDFDocError as e:
                 print(e.message, file=sys.stderr)
                 self.app.error_message_dialog(e.message)
                 return
-            if pdfdoc.copyname != pdfdoc.filename:
+            if pdfdoc.copyname != pdfdoc.filename and basename is None:
                 self.app.import_directory = os.path.split(filename)[0]
                 self.app.export_directory = self.app.import_directory
             self.app.pdfqueue.append(pdfdoc)
@@ -339,11 +349,12 @@ class PageAdder:
                     nfile,
                     npage,
                     self.app.zoom_scale,
-                    pdfdoc.filename,
+                    pdfdoc.copyname,
                     angle,
                     scale,
                     crop,
                     page.get_size(),
+                    pdfdoc.basename,
                 )
             )
 

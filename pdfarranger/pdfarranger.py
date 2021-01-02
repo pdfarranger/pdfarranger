@@ -699,12 +699,7 @@ class PdfArranger(Gtk.Application):
 
     def active_file_names(self):
         """Returns the file names currently associated with pages in the model."""
-        all_files = set()
-        for row in self.model:
-            f = self.pdfqueue[row[0].nfile - 1]
-            f = os.path.splitext(os.path.basename(f.filename))[0]
-            all_files.add(f)
-        return all_files
+        return set(row[1].split('\n')[0] for row in self.model)
 
     def on_action_new(self, _action, _param, _unknown):
         """Start a new instance."""
@@ -855,10 +850,11 @@ class PdfArranger(Gtk.Application):
         if len(tmp) < 3:  # Only when paste files interleaved
             pageadder.addpages(filename, npage)
         else:
-            angle = int(tmp[2])
-            scale = float(tmp[3])
-            crop = [float(side) for side in tmp[4:8]]
-            pageadder.addpages(filename, npage, angle, scale, crop)
+            basename = tmp[2]
+            angle = int(tmp[3])
+            scale = float(tmp[4])
+            crop = [float(side) for side in tmp[5:9]]
+            pageadder.addpages(filename, npage, basename, angle, scale, crop)
 
     def is_data_valid(self, data):
         """Validate data to be pasted from clipboard. Only used in Windows."""
@@ -867,16 +863,20 @@ class PdfArranger(Gtk.Application):
         while data_copy:
             try:
                 tmp = data_copy.pop(0).split('\n')
-                filename = tmp[0]
+                copyname = tmp[0]
                 npage = int(tmp[1])
-                angle = int(tmp[2])
-                scale = float(tmp[3])
-                crop = [float(side) for side in tmp[4:8]]
-                if not (os.path.isfile(filename) and len(tmp) == 8 and
-                        npage > 0 and angle in [0, 90, 180, 270] and
+                # basename = tmp[2] but is not validated here
+                angle = int(tmp[3])
+                scale = float(tmp[4])
+                crop = [float(side) for side in tmp[5:9]]
+                if not (os.path.isfile(copyname) and
+                        npage > 0 and
+                        angle in [0, 90, 180, 270] and
                         0 < scale <= 200.0 and
                         all((cr >= 0.0 and cr <= 0.99) for cr in crop) and
-                        (crop[0] + crop[1] <= 0.99) and (crop[2] + crop[3] <= 0.99)):
+                        (crop[0] + crop[1] <= 0.99) and
+                        (crop[2] + crop[3] <= 0.99) and
+                        len(tmp) == 9):
                     data_valid = False
                     break
             except (ValueError, IndexError):
@@ -1104,9 +1104,9 @@ class PdfArranger(Gtk.Application):
                     self.iconview.select_path(row.path)
         elif selectoption == 'SAME_FILE':
             selection = self.iconview.get_selected_items()
-            filenames = set(model[row][0].filename for row in selection)
+            copynames = set(model[row][0].copyname for row in selection)
             for page_number, row in enumerate(model):
-                if model[page_number][0].filename in filenames:
+                if model[page_number][0].copyname in copynames:
                     self.iconview.select_path(row.path)
         elif selectoption == 'SAME_FORMAT':
             selection = self.iconview.get_selected_items()
