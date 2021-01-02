@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2020-12-28 20:36+0300\n"
+"PO-Revision-Date: 2021-01-02 14:54+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -175,9 +175,8 @@ msgid "Modified"
 msgstr "Değiştirilme"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
-msgstr "Geçersiz tarih biçimi. Girdi göz ardı ediliyor."
+msgstr "Geçersiz tarih biçimi. Girdi görmezden gelindi."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -269,9 +268,8 @@ msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Genel Kamu Lisansı (GPL) Sürüm 3."
 
 #: pdfarranger/pdfarranger.py:1829
-#, fuzzy
 msgid "Selected pages: "
-msgstr "_Tek Sayfaları Seç"
+msgstr "Seçili sayfalar: "
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
