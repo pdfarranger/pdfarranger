@@ -309,7 +309,7 @@ msgstr "#行"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr "横 (%)"
+msgstr "幅 (%)"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
