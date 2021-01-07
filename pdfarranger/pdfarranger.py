@@ -699,7 +699,9 @@ class PdfArranger(Gtk.Application):
 
     def active_file_names(self):
         """Returns the file names currently associated with pages in the model."""
-        return set(row[1].split('\n')[0] for row in self.model)
+        r = set(row[1].split('\n')[0] for row in self.model)
+        r.discard("")
+        return r
 
     def on_action_new(self, _action, _param, _unknown):
         """Start a new instance."""

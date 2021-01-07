@@ -248,6 +248,7 @@ class PDFDoc:
             if self.filename.startswith(tmp_dir) and basename is None:
                 # In the "Insert Blank Page" we don't need to copy self.filename
                 self.copyname = self.filename
+                self.basename = ""
             else:
                 fd, self.copyname = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
                 os.close(fd)
