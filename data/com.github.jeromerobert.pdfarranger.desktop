@@ -19,3 +19,8 @@ Categories=Office;
 Terminal=false
 StartupNotify=false
 Keywords=pdfarranger;pdfshuffler;PDF Shuffler;
+Actions=new-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=pdfarranger
