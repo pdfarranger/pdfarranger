@@ -378,8 +378,9 @@ class PageAdder:
                 path = self.app.model.get_path(it)
                 self.app.iconview.select_path(path)
             self.app.update_geometry(it)
-        GObject.idle_add(self.app.retitle)
-        GObject.idle_add(self.app.render)
+        if add_to_undomanager:
+            GObject.idle_add(self.app.retitle)
+            GObject.idle_add(self.app.render)
         self.pages = []
         return True
 
