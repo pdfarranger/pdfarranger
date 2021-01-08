@@ -1006,6 +1006,8 @@ class PdfArranger(Gtk.Application):
                     return
                 data = filepaths
             self.paste_pages_interleave(data, before, ref_to)
+            GObject.idle_add(self.retitle)
+            GObject.idle_add(self.render)
             self.iv_selection_changed_event()
 
     def read_from_clipboard(self):
