@@ -79,6 +79,12 @@ def _scale(doc, page, factor):
     """ Scale a page """
     if factor == 1:
         return page
+    rotate = 0
+    if "/Rotate" in page:
+        # We'll set the rotate attribute on the resulting page so we must
+        # unset it on the input page before
+        rotate = page.Rotate
+        page.Rotate = 0
     page = doc.make_indirect(page)
     page_id = len(doc.pages)
     newmediabox = [factor * float(x) for x in page.MediaBox]
@@ -89,6 +95,7 @@ def _scale(doc, page, factor):
         MediaBox=newmediabox,
         Contents=doc.make_stream(content.encode()),
         Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
+        Rotate=rotate,
     )
     return new_page
 
