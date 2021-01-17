@@ -323,7 +323,7 @@ def white_borders(model, selection, pdfqueue):
             if not allwhite:
                 break
 
-        crop.append(crop_this_page)
+        crop.append(p.rotate_crop(crop_this_page, p.rotate_times(p.angle)))
     return crop
 
 
