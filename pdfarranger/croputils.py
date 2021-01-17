@@ -264,16 +264,21 @@ def white_borders(model, selection, pdfqueue):
         pdfdoc = pdfqueue[p.nfile - 1]
 
         page = pdfdoc.document.get_page(p.npage - 1)
+        # Always render pages at 72 dpi whatever the zoom or scale of the page
         w, h = page.get_size()
+        # FIXME: No longer ignore p.crop so we could do nested white border crop
         w = int(w)
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
         cr = cairo.Context(thumbnail)
         page.render(cr)
+        # TODO: python list are dead slow compared to memoryview. It would
+        # be faster to create a memoryview full of 0 and then compare each row
+        # to it. memoryview have full native __eq__ operator which is fast.
         data = thumbnail.get_data().cast("i", shape=[h, w]).tolist()
 
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
-
+        # TODO: Those 4 copy/past should be factorized
         # Left
         allwhite = True
         for col in range(w - 1):
