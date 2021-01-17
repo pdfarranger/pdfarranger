@@ -99,15 +99,25 @@ class Page:
     def height_in_pixel(self):
         return int(0.5 + self.zoom * self.height_in_points())
 
-    def rotate(self, angle):
-        rotate_times = int(round(((-angle) % 360) / 90) % 4)
-        if rotate_times == 0:
-            return False
+    @staticmethod
+    def rotate_times(angle):
+        """Convert an angle in degree to a number of 90° rotation (integer)"""
+        return int(round(((-angle) % 360) / 90) % 4)
+
+    @staticmethod
+    def rotate_crop(croparray, rotate_times):
+        """Rotate a given crop array (left, right, top bottom) a number of time"""
         perm = [0, 2, 1, 3]
         for __ in range(rotate_times):
             perm.append(perm.pop(0))
         perm.insert(1, perm.pop(2))
-        self.crop = [self.crop[x] for x in perm]
+        return [croparray[x] for x in perm]
+
+    def rotate(self, angle):
+        rt = self.rotate_times(angle)
+        if rt == 0:
+            return False
+        self.crop = self.rotate_crop(self.crop, rt)
         self.angle = (self.angle + int(angle)) % 360
         return True
 
