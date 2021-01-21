@@ -442,11 +442,11 @@ msgstr "Einfügen _vor"
 
 #: data/menu.ui.h:24
 msgid "Paste Interleave _Odd"
-msgstr "Leere _ungerade Seite einfügen"
+msgstr "Als _ungerade Seiten einfügen"
 
 #: data/menu.ui.h:25
 msgid "Paste Interleave _Even"
-msgstr "Leere _gerade Seite einfügen"
+msgstr "Als _gerade Seiten einfügen"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
