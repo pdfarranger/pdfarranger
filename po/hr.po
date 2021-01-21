@@ -439,11 +439,11 @@ msgstr "Umetni i_spred"
 
 #: data/menu.ui.h:24
 msgid "Paste Interleave _Odd"
-msgstr "Umetni praznu _neparnu stranicu"
+msgstr "Umetni kao _neparne stranice"
 
 #: data/menu.ui.h:25
 msgid "Paste Interleave _Even"
-msgstr "Umetni praznu _parnu stranicu"
+msgstr "Umetni kao _parne stranice"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
