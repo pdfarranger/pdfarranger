@@ -27,48 +27,48 @@ msgstr "stránka"
 
 #: pdfarranger/core.py:175
 msgid "Password required"
-msgstr ""
+msgstr "Je vyžadováno heslo"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
+msgstr "Heslo bude zapamatováno, dokud neukončíte program PDF Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr ""
+msgstr "Dokument “{}” je uzamčen a je vyžadováno heslo pro jeho otevření."
 
 #: pdfarranger/core.py:197
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
 msgid "Unknown file format"
-msgstr ""
+msgstr "Neznámý formát souboru"
 
 #: pdfarranger/core.py:256
 msgid "Image files are only supported with img2pdf"
-msgstr ""
+msgstr "Soubory s obrázky jsou podporovány pouze s programem img2pdf"
 
 #: pdfarranger/core.py:278
 msgid "Image format is not supported by img2pdf"
-msgstr ""
+msgstr "Formát obrázku není podporován programem img2pdf"
 
 #: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
 msgid "File is neither pdf nor image"
-msgstr ""
+msgstr "Soubor není ani PDF dokument ani obrázek"
 
 #: pdfarranger/croputils.py:113
 msgid "Scale factor"
-msgstr ""
+msgstr "Měřítko"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -93,7 +93,7 @@ msgstr "Oříznout okraje"
 #: pdfarranger/croputils.py:157
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
+msgstr "Oříznutí neodstraní žádný obsah z PDF dokumentu, pouze jej skryje."
 
 #: pdfarranger/croputils.py:166
 #, fuzzy, python-format
@@ -107,95 +107,93 @@ msgstr "% výšky"
 
 #: pdfarranger/croputils.py:210
 msgid "Page format"
-msgstr ""
+msgstr "Formát stránky"
 
 #: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
 #: pdfarranger/croputils.py:338
 msgid "Width"
-msgstr ""
+msgstr "Šířka"
 
 #: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
 #: pdfarranger/croputils.py:339
-#, fuzzy
 msgid "Height"
-msgstr "Pravý"
+msgstr "Výška"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Relativní"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
-msgstr ""
+msgstr "Velikost stránky"
 
 #: pdfarranger/croputils.py:328
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Vložit prázdnou stránku"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
 #: pdfarranger/exporter.py:111
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Při ukládání se ztratí formuláře a obrysy."
 
 #: pdfarranger/exporter.py:113
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "Tento dialog znovu nezobrazovat."
 
 #: pdfarranger/metadata.py:40
 msgid "Title"
-msgstr ""
+msgstr "Název"
 
 #: pdfarranger/metadata.py:41
 msgid "Subject"
-msgstr ""
+msgstr "Předmět"
 
 #: pdfarranger/metadata.py:42
 msgid "Keywords"
-msgstr ""
+msgstr "Klíčová slova"
 
 #: pdfarranger/metadata.py:43
 msgid "Producer"
-msgstr ""
+msgstr "Producent"
 
 #: pdfarranger/metadata.py:44
 msgid "Creator"
-msgstr ""
+msgstr "Tvůrce"
 
 #: pdfarranger/metadata.py:45
 msgid "Creator tool"
-msgstr ""
+msgstr "Vytvořeno nástrojem"
 
 #: pdfarranger/metadata.py:46
 msgid "Created"
-msgstr ""
+msgstr "Vytvořeno"
 
 #: pdfarranger/metadata.py:47
 msgid "Modified"
-msgstr ""
+msgstr "Změněno"
 
 #: pdfarranger/metadata.py:150
 msgid "Invalid date format. Input discarded."
-msgstr ""
+msgstr "Neplatný formát data. Vstup byl zahozen."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
-msgstr ""
+msgstr "Upravit vlastnosti"
 
 #: pdfarranger/metadata.py:192
 msgid "Property"
-msgstr ""
+msgstr "Vlastnost"
 
 #: pdfarranger/metadata.py:192
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #: pdfarranger/pdfarranger.py:341
-#, fuzzy
 msgid "All supported files"
-msgstr "Všechny soubory"
+msgstr "Všechny podporované soubory"
 
 #: pdfarranger/pdfarranger.py:345
 msgid "PDF files"
@@ -207,52 +205,51 @@ msgstr "Všechny soubory"
 
 #: pdfarranger/pdfarranger.py:357
 msgid "Supported image files"
-msgstr ""
+msgstr "Podporované soubory s obrázky"
 
 #: pdfarranger/pdfarranger.py:531
 msgid "untitled"
-msgstr ""
+msgstr "nepojmenovaný"
 
 #: pdfarranger/pdfarranger.py:625
 msgid "Save changes to “{}” before closing?"
-msgstr ""
+msgstr "Uložit změny do “{}” před zavřením?"
 
 #: pdfarranger/pdfarranger.py:627
 msgid "Save changes before closing?"
-msgstr ""
+msgstr "Uložit změny před zavřením?"
 
 #: pdfarranger/pdfarranger.py:629
 msgid "Your changes will be lost if you don’t save them."
-msgstr ""
+msgstr "Provedené změny budou ztraceny, pokud je neuložíte."
 
 #: pdfarranger/pdfarranger.py:630
 msgid "Do_n’t Save"
-msgstr ""
+msgstr "_Neukládat"
 
 #: pdfarranger/pdfarranger.py:630
 msgid "_Cancel"
-msgstr ""
+msgstr "_Zrušit"
 
 #: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
-#, fuzzy
 msgid "_Save"
-msgstr "Uložit"
+msgstr "_Uložit"
 
 #: pdfarranger/pdfarranger.py:671
 msgid "Export…"
-msgstr "Vyvést…"
+msgstr "_Exportovat…"
 
 #: pdfarranger/pdfarranger.py:784
 msgid "Import…"
-msgstr "Zavést…"
+msgstr "_Importovat…"
 
 #: pdfarranger/pdfarranger.py:885
 msgid "Pasted data not valid. Aborting paste."
-msgstr ""
+msgstr "Vkládaná data jsou neplatná. Vkládání bylo přerušeno."
 
 #: pdfarranger/pdfarranger.py:993
 msgid "PDF document is damaged"
-msgstr ""
+msgstr "PDF dokument je poškozený"
 
 #: pdfarranger/pdfarranger.py:1794
 #, python-format
@@ -260,168 +257,156 @@ msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
 msgstr ""
-"%s je nástroj na přeuspořádání a měnění souborů PDF. Vyvíjeno za použití GTK"
-"+ a Pythonu"
+"%s je nástroj na přeuspořádání a úpravy PDF dokumentů. Vyvinuto za použití GTK+ "
+"a Pythonu"
 
 #: pdfarranger/pdfarranger.py:1797
 msgid "Maintainers and contributors"
-msgstr ""
+msgstr "Správci a přispěvatelé"
 
 #: pdfarranger/pdfarranger.py:1801
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
+msgstr "GNU General Public License (GPL) Veze 3."
 
 #: pdfarranger/pdfarranger.py:1829
-#, fuzzy
 msgid "Selected pages: "
-msgstr "Oříznout vybrané stránky"
+msgstr "Vybrané stránky: "
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
-msgstr ""
+msgstr "Rozdělení podle mřížky"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
-msgstr ""
+msgstr "Sloupce"
 
 #: pdfarranger/splitter.py:58
 msgid "Rows"
-msgstr ""
+msgstr "Řádky"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Svislé rozdělení"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Vodorovné rozdělení"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
-msgstr ""
+msgstr "Stejná šířka sloupců"
 
 #: pdfarranger/splitter.py:60
-#, fuzzy
 msgid "Equal row height"
-msgstr "% výšky"
+msgstr "Stejná výška řádků"
 
 #: pdfarranger/splitter.py:85
 msgid "#Col"
-msgstr ""
+msgstr "#Sloupec"
 
 #: pdfarranger/splitter.py:85
 msgid "#Row"
-msgstr ""
+msgstr "#Řádek"
 
 #: pdfarranger/splitter.py:86
 msgid "Width in %"
-msgstr ""
+msgstr "Šířka v %"
 
 #: pdfarranger/splitter.py:86
 msgid "Height in %"
-msgstr ""
+msgstr "Výška v %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open a file and append it to the current document"
-msgstr "Otevřít soubor a připojit jej k nynějšímu dokumentu"
+msgstr "Otevřít soubor a připojit jej k aktuálnímu dokumentu"
 
 #: data/pdfarranger.ui.h:2
 msgid "Save"
 msgstr "Uložit"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
 msgid "Save As"
 msgstr "Uložit jako"
 
 #: data/pdfarranger.ui.h:4
 msgid "Number of Pages"
-msgstr ""
+msgstr "Počet stránek"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Přiblížit"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Oddálit"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Otočit _vlevo"
+msgstr "Otočit doleva"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "_Otočit vpravo"
+msgstr "Otočit doprava"
 
 #: data/menu.ui.h:1
-#, fuzzy
 msgid "_Import"
-msgstr "Zavést"
+msgstr "_Importovat"
 
 #: data/menu.ui.h:2
 msgid "_New Window"
-msgstr ""
+msgstr "_Nové okno"
 
 #: data/menu.ui.h:4
-#, fuzzy
 msgid "Save _As…"
-msgstr "Uložit jako"
+msgstr "Uložit _jako…"
 
 #: data/menu.ui.h:5
-#, fuzzy
 msgid "E_xport"
-msgstr "Vyvést…"
+msgstr "E_xportovat…"
 
 #: data/menu.ui.h:6
-#, fuzzy
 msgid "E_xport Selection to a Single File…"
-msgstr "_Vyvést výběr…"
+msgstr "E_xportovat výběr do jediného souboru…"
 
 #: data/menu.ui.h:7
-#, fuzzy
 msgid "Export Selection to _Individual Files…"
-msgstr "_Vyvést výběr…"
+msgstr "Exportovat výběr do _samostatných souborů…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgstr "Exportovat _všechny stránky do samostatných souborů…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
-msgstr ""
+msgstr "_Zpět"
 
 #: data/menu.ui.h:10
 msgid "_Redo"
-msgstr ""
+msgstr "Z_novu"
 
 #: data/menu.ui.h:11
 msgid "_Edit"
-msgstr "Ú_pravy"
+msgstr "Úprav_y"
 
 #: data/menu.ui.h:12
 msgid "Rotate _Left"
-msgstr "Otočit _vlevo"
+msgstr "Otočit do_leva"
 
 #: data/menu.ui.h:13
 msgid "_Rotate Right"
-msgstr "_Otočit vpravo"
+msgstr "Otočit do_prava"
 
 #: data/menu.ui.h:14
 msgid "_Page Format"
-msgstr ""
+msgstr "_Formát stránky"
 
 #: data/menu.ui.h:15
 msgid "Crop White Borders"
-msgstr ""
+msgstr "Oříznout bílé okra_je"
 
 #: data/menu.ui.h:16
 msgid "_Delete"
@@ -429,105 +414,100 @@ msgstr "_Smazat"
 
 #: data/menu.ui.h:17
 msgid "Dupl_icate"
-msgstr ""
+msgstr "_Duplikovat"
 
 #: data/menu.ui.h:18
 msgid "Re_verse Order"
-msgstr ""
+msgstr "O_brácené pořadí"
 
 #: data/menu.ui.h:19
 msgid "_Split Pages"
-msgstr ""
+msgstr "_Rozdělit stránky"
 
 #: data/menu.ui.h:20
 msgid "_Grid Split"
-msgstr ""
+msgstr "Rozdělení podle _mřížky"
 
 #: data/menu.ui.h:21
 msgid "Cu_t"
-msgstr ""
+msgstr "_Vyjmout"
 
 #: data/menu.ui.h:22
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopírovat"
 
 #: data/menu.ui.h:23
 msgid "Paste _After"
-msgstr ""
+msgstr "Vložit z_a"
 
 #: data/menu.ui.h:24
 msgid "Paste _Before"
-msgstr ""
+msgstr "Vložit př_ed"
 
 #: data/menu.ui.h:25
 msgid "Paste Interleave _Odd"
-msgstr ""
+msgstr "Vložit prokládaně jako l_iché"
 
 #: data/menu.ui.h:26
 msgid "Paste Interleave _Even"
-msgstr ""
+msgstr "Vložit prokládaně jako s_udé"
 
 #: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
-msgstr ""
+msgstr "Vložit prázdn_ou stránku"
 
 #: data/menu.ui.h:28
 msgid "_Select"
-msgstr ""
+msgstr "Vybra_t"
 
 #: data/menu.ui.h:29
 msgid "Select _All"
-msgstr ""
+msgstr "Vybrat v_še"
 
 #: data/menu.ui.h:30
 msgid "_Deselect All"
-msgstr ""
+msgstr "Odzna_čit vše"
 
 #: data/menu.ui.h:31
-#, fuzzy
 msgid "Select _Odd Pages"
-msgstr "Oříznout vybrané stránky"
+msgstr "Vybrat lic_hé stránky"
 
 #: data/menu.ui.h:32
-#, fuzzy
 msgid "Select _Even Pages"
-msgstr "Oříznout vybrané stránky"
+msgstr "Vybrat sud_é stránky"
 
 #: data/menu.ui.h:33
 msgid "All From _Same File"
-msgstr ""
+msgstr "Vše ze _stejného souboru"
 
 #: data/menu.ui.h:34
 msgid "Same Page _Format"
-msgstr ""
+msgstr "Stejný _formát stránky"
 
 #: data/menu.ui.h:35
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "_Vyvést výběr…"
+msgstr "P_řevrátit výběr"
 
 #: data/menu.ui.h:36
-#, fuzzy
 msgid "Zoom _In"
 msgstr "Přiblížit"
 
 #: data/menu.ui.h:37
-#, fuzzy
 msgid "Zoom _Out"
 msgstr "Oddálit"
 
 #: data/menu.ui.h:38
 msgid "Edit _Properties"
-msgstr ""
+msgstr "Upravit _vlastnosti"
 
 #: data/menu.ui.h:39
 msgid "_About"
-msgstr ""
+msgstr "_O programu"
 
 #: data/menu.ui.h:40
 msgid "_Quit"
-msgstr ""
+msgstr "U_končit"
 
 #: data/menu.ui.h:41
 msgid "Past_e Special"
-msgstr ""
+msgstr "Vložit _jinak"
