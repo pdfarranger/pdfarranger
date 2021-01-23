@@ -96,7 +96,6 @@ msgid ""
 msgstr "Oříznutí neodstraní žádný obsah z PDF dokumentu, pouze jej skryje."
 
 #: pdfarranger/croputils.py:166
-#, fuzzy, python-format
 msgid "% of width"
 msgstr "% šířky"
 
