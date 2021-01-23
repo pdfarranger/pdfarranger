@@ -29,6 +29,8 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   </screenshots>
   <update_contact>jeromerobert@gmx.com</update_contact>
   <releases>
+    <release date="2021-01-24" version="1.7.0"/>
+    <release date="2020-08-01" version="1.6.2"/>
     <release date="2020-07-31" version="1.6.1"/>
     <release date="2020-07-15" version="1.6.0"/>
     <release date="2020-05-16" version="1.5.3"/>
