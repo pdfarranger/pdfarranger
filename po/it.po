@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2020-12-27 13:54+0200\n"
+"PO-Revision-Date: 2021-01-23 13:54+0200\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language-Team: it\n"
 "Language: it\n"
@@ -62,11 +62,11 @@ msgstr "Fattore di scala"
 
 #: pdfarranger/croputils.py:119
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: pdfarranger/croputils.py:135
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: pdfarranger/croputils.py:145
 msgid "Left"
@@ -120,7 +120,7 @@ msgstr "Altezza"
 
 #: pdfarranger/croputils.py:228
 msgid "Relative"
-msgstr ""
+msgstr "Genitore"
 
 #: pdfarranger/croputils.py:231
 msgid "Page Size"
@@ -175,9 +175,8 @@ msgid "Modified"
 msgstr "Modificato"
 
 #: pdfarranger/metadata.py:150
-#, fuzzy
 msgid "Invalid date format. Input discarded."
-msgstr "Formato data non valido. Elimina input."
+msgstr "Formato data non valido. Input scartato."
 
 #: pdfarranger/metadata.py:179
 msgid "Edit properties"
@@ -269,9 +268,8 @@ msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
 #: pdfarranger/pdfarranger.py:1829
-#, fuzzy
 msgid "Selected pages: "
-msgstr "Seleziona _Pagine dispari"
+msgstr "Pagine selezionate: "
 
 #: pdfarranger/splitter.py:26
 msgid "Grid splitting"
