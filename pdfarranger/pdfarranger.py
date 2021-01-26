@@ -981,6 +981,8 @@ class PdfArranger(Gtk.Application):
                 self.paste_files(data, before, ref_to)
             else:
                 self.paste_pages(data, before, ref_to, select_added=False)
+            if pastemode == 'BEFORE':
+                self.__update_statusbar()
         elif pastemode in ['ODD', 'EVEN']:
             if data_is_filepaths:
                 # Generate data to send to paste_pages_interleave
