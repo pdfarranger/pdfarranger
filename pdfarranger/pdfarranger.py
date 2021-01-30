@@ -669,13 +669,14 @@ class PdfArranger(Gtk.Application):
     def choose_export_pdf_name(self, mode):
         """Handles choosing a name for exporting """
 
-        chooser = Gtk.FileChooserDialog(title=_('Export…'),
-                                        parent=self.window,
+        chooser = Gtk.FileChooserNative(title=_('Export…'),
+                                        #parent=self.window,
                                         action=Gtk.FileChooserAction.SAVE,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_SAVE,
-                                                 Gtk.ResponseType.ACCEPT))
+                                        #buttons=(Gtk.STOCK_CANCEL,
+                                        #         Gtk.ResponseType.CANCEL,
+                                        #         Gtk.STOCK_SAVE,
+                                        #         Gtk.ResponseType.ACCEPT)
+                                        )
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             f = self.pdfqueue[0].filename
@@ -779,13 +780,14 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, _action, _param, _unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserDialog(title=_('Import…'),
-                                        parent=self.window,
+        chooser = Gtk.FileChooserNative(title=_('Import…'),
+                                        #parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
-                                                 Gtk.ResponseType.ACCEPT))
+                                        #buttons=(Gtk.STOCK_CANCEL,
+                                        #         Gtk.ResponseType.CANCEL,
+                                        #         Gtk.STOCK_OPEN,
+                                        #         Gtk.ResponseType.ACCEPT))
+                                        )
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
         file_type_list = ['all', 'pdf']
