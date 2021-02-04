@@ -6,22 +6,22 @@
 # Translators:
 # David VANTYGHEM <david.vantyghem@free.fr>, 2014.
 # Jérôme Robert <jeromerobert@gmx.com>, 2019.
-# Charles Monzat <charles.monzat@free.fr>, 2019.
+# Charles Monzat <charles.monzat@free.fr>, 2019-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-01 22:06+0100\n"
-"PO-Revision-Date: 2020-12-26 10:03+0100\n"
-"Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
+"PO-Revision-Date: 2021-02-04 14:22+0100\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: French - France <>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Gtranslator 3.38.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: pdfarranger/core.py:80
@@ -34,15 +34,14 @@ msgstr "Mot de passe requis"
 
 #: pdfarranger/core.py:186
 msgid "The password will be remembered until you close PDF-Arranger."
-msgstr ""
-"Le mot de passe sera mémorisé jusqu'à ce que vous fermiez PDF-Arranger."
+msgstr "Le mot de passe sera mémorisé jusqu’à la fermeture de PDF-Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Le document « {} » est verrouillé et nécessite un mot de passe avant de "
-"pouvoir être ouvert."
+"Le document « {} » est verrouillé et nécessite un mot de passe avant son "
+"ouverture."
 
 #: pdfarranger/core.py:197
 msgid "Password"
@@ -54,7 +53,7 @@ msgstr "Format de fichier inconnu"
 
 #: pdfarranger/core.py:256
 msgid "Image files are only supported with img2pdf"
-msgstr "Les fichiers images sont seulement pris en charge avec img2pdf"
+msgstr "Les fichiers image sont seulement pris en charge avec img2pdf"
 
 #: pdfarranger/core.py:278
 msgid "Image format is not supported by img2pdf"
@@ -62,11 +61,11 @@ msgstr "Le format d’image n’est pas pris en charge par img2pdf"
 
 #: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:1000
 msgid "File is neither pdf nor image"
-msgstr "Le fichier n'est pas un PDF ni une image"
+msgstr "Le fichier n’est ni un PDF ni une image"
 
 #: pdfarranger/croputils.py:124
 msgid "Scale factor"
-msgstr "Facteur d'échelle"
+msgstr "Facteur d’échelle"
 
 #: pdfarranger/croputils.py:130
 msgid "%"
@@ -134,7 +133,7 @@ msgstr "Dimensions"
 
 #: pdfarranger/croputils.py:339
 msgid "Insert Blank Page"
-msgstr "Inserer une page blanche"
+msgstr "Insérer une page blanche"
 
 #: pdfarranger/exporter.py:106
 msgid "Warning"
@@ -218,11 +217,11 @@ msgstr "sans titre"
 
 #: pdfarranger/pdfarranger.py:626
 msgid "Save changes to “{}” before closing?"
-msgstr "Enregistrer les modifications du document «{}» avant la fermeture ?"
+msgstr "Enregistrer les modifications du document « {} » avant la fermeture ?"
 
 #: pdfarranger/pdfarranger.py:628
 msgid "Save changes before closing?"
-msgstr "Enregistrer les modifications avant la fermeture ?"
+msgstr "Enregistrer les modifications avant la fermeture ?"
 
 #: pdfarranger/pdfarranger.py:630
 msgid "Your changes will be lost if you don’t save them."
@@ -230,11 +229,11 @@ msgstr "Vos modifications seront perdues si vous ne les enregistrez pas."
 
 #: pdfarranger/pdfarranger.py:631
 msgid "Do_n’t Save"
-msgstr "_Ne pas enregistrer"
+msgstr "Ne _pas enregistrer"
 
 #: pdfarranger/pdfarranger.py:631
 msgid "_Cancel"
-msgstr "_Annuler"
+msgstr "A_nnuler"
 
 #: pdfarranger/pdfarranger.py:631 data/menu.ui.h:3
 msgid "_Save"
@@ -250,7 +249,7 @@ msgstr "Importer…"
 
 #: pdfarranger/pdfarranger.py:886
 msgid "Pasted data not valid. Aborting paste."
-msgstr "Données collées invalides. Annulation du collage."
+msgstr "Données collées non valides. Annulation du collage."
 
 #: pdfarranger/pdfarranger.py:994
 msgid "PDF document is damaged"
@@ -275,11 +274,11 @@ msgstr "Licence publique générale GNU (GPL), version 3."
 
 #: pdfarranger/pdfarranger.py:1823
 msgid "Selected pages: "
-msgstr "Pages selectionnées: "
+msgstr "Pages sélectionnées : "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
-msgstr ""
+msgstr "Séparer les pages"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -295,7 +294,7 @@ msgstr "Nombre de colonnes"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr "Numbre de lignes"
+msgstr "Nombre de lignes"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
@@ -375,11 +374,11 @@ msgstr "E_xporter"
 
 #: data/menu.ui.h:6
 msgid "E_xport Selection to a Single File…"
-msgstr "E_xporter la selection vers un seul fichier…"
+msgstr "E_xporter la sélection vers un seul fichier…"
 
 #: data/menu.ui.h:7
 msgid "Export Selection to _Individual Files…"
-msgstr "Exporter chaque page select_ionnée vers un fichier…"
+msgstr "Exporter chaque page sélect_ionnée vers un fichier…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
@@ -455,19 +454,19 @@ msgstr "Collage entrelacé i_mpair"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
-msgstr "Inserer une page _blanche"
+msgstr "Insérer une page _blanche"
 
 #: data/menu.ui.h:27
 msgid "_Select"
-msgstr "_Selectionner"
+msgstr "_Sélectionner"
 
 #: data/menu.ui.h:28
 msgid "Select _All"
-msgstr "Selectionner _tout"
+msgstr "_Tout sélectionner"
 
 #: data/menu.ui.h:29
 msgid "_Deselect All"
-msgstr "_Déselectionner tout"
+msgstr "Tout _désélectionner"
 
 #: data/menu.ui.h:30
 msgid "Select _Odd Pages"
@@ -487,7 +486,7 @@ msgstr "Pages de même _format"
 
 #: data/menu.ui.h:34
 msgid "_Invert Selection"
-msgstr "_Inverser la selection"
+msgstr "_Inverser la sélection"
 
 #: data/menu.ui.h:35
 msgid "Zoom _In"
