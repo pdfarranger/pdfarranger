@@ -1181,11 +1181,12 @@ class PdfArranger(Gtk.Application):
                              for p in data]
             iter_to = self.model.get_iter(ref_to.get_path())
             for ref_from in ref_from_list:
-                row = model[model.get_iter(ref_from.get_path())]
+                iterator = model.get_iter(ref_from.get_path())
+                page = model.get_value(iterator, 0).duplicate()
                 if before:
-                    it = model.insert_before(iter_to, row[:])
+                    it = model.insert_before(iter_to, [page, page.description()])
                 else:
-                    it = model.insert_after(iter_to, row[:])
+                    it = model.insert_after(iter_to, [page, page.description()])
                 path = model.get_path(it)
                 iconview.select_path(path)
             if move:
