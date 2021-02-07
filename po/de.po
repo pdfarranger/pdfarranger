@@ -274,7 +274,7 @@ msgstr "Ausgewählte Seiten: "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
-msgstr "Seiten zuschneiden"
+msgstr "Seiten teilen"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -422,7 +422,7 @@ msgstr "Rei_henfolge umkehren"
 
 #: data/menu.ui.h:19
 msgid "_Split Pages"
-msgstr "_Seiten zuschneiden"
+msgstr "_Seiten teilen"
 
 #: data/menu.ui.h:20
 msgid "Cu_t"
