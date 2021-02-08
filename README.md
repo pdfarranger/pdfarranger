@@ -3,8 +3,8 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/pdfarranger/pdfarranger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pdfarranger/pdfarranger/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/pdfarranger/pdfarranger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pdfarranger/pdfarranger/context:python)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1be9c9a69f3a44b79612cc5b2887c0f7)](https://www.codacy.com/gh/pdfarranger/pdfarranger/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pdfarranger/pdfarranger&amp;utm_campaign=Badge_Grade)
-[![pdfarranger](https://github.com/pdfarranger/pdfarranger/workflows/pdfarranger/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3Apdfarranger+branch%3Amaster)
-[![codecov](https://codecov.io/gh/pdfarranger/pdfarranger/branch/master/graph/badge.svg)](https://codecov.io/gh/pdfarranger/pdfarranger)
+[![pdfarranger](https://github.com/pdfarranger/pdfarranger/workflows/pdfarranger/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3Apdfarranger+branch%3Amain)
+[![codecov](https://codecov.io/gh/pdfarranger/pdfarranger/branch/main/graph/badge.svg)](https://codecov.io/gh/pdfarranger/pdfarranger)
 
 *pdfarranger* is a small python-gtk application, which helps the user to merge
 or split pdf documents and rotate, crop and rearrange their pages using an
@@ -16,7 +16,7 @@ interactive and intuitive graphical interface. It is a frontend for
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It’s a humble attempt to make the project a bit more active.
 
-![screenshot of pdfarranger](https://github.com/pdfarranger/pdfarranger/raw/master/data/screenshot.png)
+![screenshot of pdfarranger](https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png)
 
 ## Downloads
 
@@ -62,7 +62,7 @@ or `sudo dnf builddep pdfarranger`
 **Then**
 
 ```
-pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/master
+pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/main
 ```
 
 In addition, *pdfarranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
@@ -81,7 +81,7 @@ For Windows see [Win32.md](Win32.md).
 
 ## For translators
 
--   Download the master branch (see [For developers](#for-developers))
+-   Download the main branch (see [For developers](#for-developers))
 
 -   Run `po/genpot.sh`. The `pot` is an automatically generated file and as such
     should not be in the repository. It is to make life of some translators
