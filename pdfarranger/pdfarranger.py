@@ -1548,7 +1548,8 @@ class PdfArranger(Gtk.Application):
 
     def zoom_set(self, level):
         """Sets the zoom level"""
-        if level < -10 or level > 40:
+        level = min(max(level, -10), 40)
+        if level == self.zoom_level:
             return
         if self.zoom_change_render:
             GObject.source_remove(self.zoom_change_render)
