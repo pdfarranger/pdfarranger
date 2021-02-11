@@ -25,3 +25,7 @@ jobs:
     steps:
     - name: RPM Build
       run: /pdfarranger/pdfarranger-build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: fedora-rpm
+        path: /github/home/rpmbuild/**/*.rpm
