@@ -244,6 +244,7 @@ class PDFDoc:
                     raise e
 
     def __init__(self, filename, basename, tmp_dir, parent):
+        self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
         self.mtime = os.path.getmtime(filename)
         if basename is None:  # When importing files
@@ -445,7 +446,8 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         cr = cairo.Context(thumbnail)
         if scale != 1.0:
             cr.scale(scale, scale)
-        page.render(cr)
+        with pdfdoc.render_lock:
+            page.render(cr)
         GObject.idle_add(
             self.emit,
             "update_thumbnail",

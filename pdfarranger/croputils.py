@@ -271,7 +271,8 @@ def white_borders(model, selection, pdfqueue):
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
         cr = cairo.Context(thumbnail)
-        page.render(cr)
+        with pdfdoc.render_lock:
+            page.render(cr)
         # TODO: python list are dead slow compared to memoryview. It would
         # be faster to create a memoryview full of 0 and then compare each row
         # to it. memoryview have full native __eq__ operator which is fast.
