@@ -108,7 +108,7 @@ class Dialog(Gtk.Dialog):
         self.model[direction][path][1] = int(value)
         self.checkbuttons[direction].set_active(False)
         for i in reversed(range(len(self.model[direction]))):
-          self.model[direction][i][1] = self.model[direction][path][1]
+            self.model[direction][i][1] = self.model[direction][path][1]
 
     def _update_split(self, _event, direction):
         self.split_count[direction] = self.spinbuttons[direction].get_value_as_int()
@@ -143,15 +143,15 @@ class Dialog(Gtk.Dialog):
     def _crops(self, direction):
         # Pad so that the size calculates crops[i+1] - crops[i].
         crops = [0,0] * (len(self.model[direction]))
-        sum = 0
+        crop_sum = 0
         for i in range(0, len(self.model[direction])):
-            sum += self.model[direction][i][1]
-        # sum can be > 100 if split with overlap
+            crop_sum += self.model[direction][i][1]
+        # crop_sum can be > 100 if split with overlap
         # 35,35,35 => [0,35],[32.5,67.5],[65,100]; overlap = 5
         # 60,60 => [0,60],[40,100]; overlap = 20
         # In general:
         #   [start=last-overlap/(pages-1),end=start+width]
-        overlap = sum-100
+        overlap = crop_sum - 100
         pages = len(self.model[direction])
         if pages > 1:
             # There is overlap between pages
