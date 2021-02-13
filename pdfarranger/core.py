@@ -152,13 +152,13 @@ class Page:
         vscale = 1 - (top + bottom)
         leftcrops = [l * hscale for l in leftcrops]
         topcrops = [t * vscale for t in topcrops]
-        for i in reversed(range(len(topcrops)-1)):
-            topcrop = top + topcrops[i]
-            row_height = topcrops[i+1] - topcrops[i]
+        for i in reversed(range(int(len(topcrops)/2))):
+            topcrop = top + topcrops[i*2]
+            row_height = topcrops[i*2+1] - topcrops[i*2]
             bottomcrop = 1 - (topcrop + row_height)
-            for j in reversed(range(len(leftcrops)-1)):
-                leftcrop = left + leftcrops[j]
-                col_width = leftcrops[j+1] - leftcrops[j]
+            for j in reversed(range(int(len(leftcrops)/2))):
+                leftcrop = left + leftcrops[j*2]
+                col_width = leftcrops[j*2+1] - leftcrops[j*2]
                 rightcrop = 1 - (leftcrop + col_width)
                 crop = [leftcrop, rightcrop, topcrop, bottomcrop]
                 if i == 0 and j == 0:
