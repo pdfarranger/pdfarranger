@@ -28,7 +28,7 @@ msgid "Password required"
 msgstr "Zahtijeva lozinku"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Lozinka će se zapamtiti, sve dok se ne zatvori PDF uređivač."
 
 #: pdfarranger/core.py:187

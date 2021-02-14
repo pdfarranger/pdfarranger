@@ -156,7 +156,7 @@ def export(input_files, pages, file_out, mode, mdata):
                 _report_pikepdf_err = False
                 traceback.print_exc()
                 print("Current pikepdf version {}, required pikepdf version "
-                      "1.7.0 or greater. Continuing but pdfarranger will not "
+                      "1.7.0 or greater. Continuing but PDF Arranger will not "
                       "work properly.".format(pikepdf.__version__),
                       file=sys.stderr)
         if angle != 0:

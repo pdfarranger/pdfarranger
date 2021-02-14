@@ -195,7 +195,7 @@ class PasswordDialog(Gtk.Dialog):
             ),
         )
         self.set_default_response(Gtk.ResponseType.OK)
-        bottommsg = _("The password will be remembered until you close PDF-Arranger.")
+        bottommsg = _("The password will be remembered until you close PDF Arranger.")
         topmsg = _("The document “{}” is locked and requires a password before it can be opened.")
         label = Gtk.Label(label=topmsg.format(filename))
         label.set_max_width_chars(len(bottommsg)-6)

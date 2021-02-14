@@ -6,12 +6,12 @@
 [![pdfarranger](https://github.com/pdfarranger/pdfarranger/workflows/pdfarranger/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3Apdfarranger+branch%3Amain)
 [![codecov](https://codecov.io/gh/pdfarranger/pdfarranger/branch/main/graph/badge.svg)](https://codecov.io/gh/pdfarranger/pdfarranger)
 
-*pdfarranger* is a small python-gtk application, which helps the user to merge
+*PDF Arranger* is a small python-gtk application, which helps the user to merge
 or split pdf documents and rotate, crop and rearrange their pages using an
 interactive and intuitive graphical interface. It is a frontend for
 [pikepdf](https://github.com/pikepdf/pikepdf).
 
-*pdfarranger* is a fork of Konstantinos Poulios’s pdfshuffler
+*PDF Arranger* is a fork of Konstantinos Poulios’s pdfshuffler
 (see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It’s a humble attempt to make the project a bit more active.
@@ -37,7 +37,7 @@ lines.
 
 ## Install from source
 
-*pdfarranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0, but pikepdf >= 1.15.1 is highly recommended.
+*PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0, but pikepdf >= 1.15.1 is highly recommended.
 pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
 
 **On Debian based distributions**
@@ -70,7 +70,7 @@ sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip devel/py-python-di
 pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/main
 ```
 
-In addition, *pdfarranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
+In addition, *PDF Arranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
 
 ## For developers
 

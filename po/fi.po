@@ -27,7 +27,7 @@ msgid "Password required"
 msgstr "Salasana tarvitaan"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Salasana pysyy muistissa kunnes ohjelma suljetaan."
 
 #: pdfarranger/core.py:187
