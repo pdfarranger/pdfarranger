@@ -1,4 +1,4 @@
-# pdfarranger on Windows
+# PDF Arranger on Windows
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+down
 /mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 ```
 
-Get the pdfarranger sources from a MSYS2 shell:
+Get the PDF Arranger sources from a MSYS2 shell:
 
 ```
 git clone https://github.com/pdfarranger/pdfarranger.git
@@ -53,7 +53,7 @@ create a pdfarranger installer in Wine you must first install the required mingw
 on a real Windows box. Then copy the MSYS2 `/mingw64` to Linux and run installation process with
 `wine /path/to/mingw64/bin/python3` instead of `/mingw64/bin/python3`.
 
-To run the pdfarranger in Wine you may have to:
+To run the PDF Arranger in Wine you may have to:
 
 ```
 unset $(env |grep ^XDG_ | cut -d= -f1)

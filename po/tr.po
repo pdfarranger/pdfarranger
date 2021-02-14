@@ -28,8 +28,8 @@ msgid "Password required"
 msgstr "Parola gerekli"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
-msgstr "Parola, siz PDF-Arrangerʼi kapatana dek anımsanacak."
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Parola, siz PDF Arrangerʼi kapatana dek anımsanacak."
 
 #: pdfarranger/core.py:187
 msgid ""

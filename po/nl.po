@@ -31,8 +31,8 @@ msgid "Password required"
 msgstr "Wachtwoord vereist"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
-msgstr "PDF-Arranger onthoudt het wachtwoord totdat je afsluit."
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "PDF Arranger onthoudt het wachtwoord totdat je afsluit."
 
 #: pdfarranger/core.py:187
 msgid ""

@@ -1,4 +1,4 @@
-This file aims at listing all GUI operation one should do to test the whole pdfarranger
+This file aims at listing all GUI operation one should do to test the whole PDF Arranger
 source code. Those tests must currently be done manually. May one day, they'll
 be done with [Dogtail](https://gitlab.com/dogtail/dogtail) or another GUI testing framework.
 
@@ -28,7 +28,7 @@ possible. This list was created using
 
 -   Move one page using drag and drop
 
--   Cut / paste within same pdfarranger instance
+-   Cut / paste within same PDF Arranger instance
 
 -   Save As
 
@@ -40,13 +40,13 @@ possible. This list was created using
 
 -   Drag a PDF file from a file explorer
 
--   Copy a PDF file from another pdfarranger instance and paste it interleaved
+-   Copy a PDF file from another PDF Arranger instance and paste it interleaved
 
 -   Select all pages, copy then paste odd
 
 -   Select even page, then invert selection
 
--   Drag a PDF file from a pdfarranger to a other pdfarranger instance
+-   Drag a PDF file from a PDF Arranger to a other PDF Arranger instance
 
 -   Duplicate a page
 

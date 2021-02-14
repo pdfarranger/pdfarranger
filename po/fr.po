@@ -33,8 +33,8 @@ msgid "Password required"
 msgstr "Mot de passe requis"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
-msgstr "Le mot de passe sera mémorisé jusqu’à la fermeture de PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Le mot de passe sera mémorisé jusqu’à la fermeture de PDF Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""

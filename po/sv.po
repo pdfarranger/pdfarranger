@@ -27,7 +27,7 @@ msgid "Password required"
 msgstr "Lösenord krävs"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Lösenordet kommer att vara sparat tills du stänger PDF Arranger."
 
 #: pdfarranger/core.py:187
