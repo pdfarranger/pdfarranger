@@ -37,8 +37,8 @@ lines.
 
 ## Install from source
 
-*pdfarranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0. Older versions may work
-but are not supported. [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.15.1 is highly recommended.
+*pdfarranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0, but pikepdf >= 1.15.1 is highly recommended.
+pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
 
 **On Debian based distributions**
 
@@ -55,9 +55,8 @@ sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk
 **On Fedora**
 
 ```
-sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo python3-wheel
+sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject gtk3 python3-cairo python3-wheel python3-pikepdf python3-img2pdf python3-dateutil
 ```
-or `sudo dnf builddep pdfarranger`
 
 **Then**
 
