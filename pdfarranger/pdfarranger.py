@@ -26,7 +26,9 @@ import locale  # for multilanguage support
 import gettext
 import gc
 import subprocess
+import ctypes
 from urllib.request import url2pathname
+from functools import lru_cache
 
 
 sharedir = os.path.join(sys.prefix, 'share')
@@ -60,9 +62,8 @@ if hasattr(locale, 'bindtextdomain'):
     except AttributeError:
         pass
 else:
-    from ctypes import cdll
     # Windows or musl
-    libintl = cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
+    libintl = ctypes.cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
     libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
     del libintl
@@ -161,6 +162,26 @@ def warn_dialog(func):
             warnings.showwarning = backup_showwarning
 
     return wrapper
+
+
+def malloc_trim():
+    """Release free memory from the heap."""
+    if os.name == 'nt':
+        return
+    if mtrim := malloc_trim_available():
+        mtrim()
+
+
+@lru_cache()
+def malloc_trim_available():
+    try:
+        ctypes.CDLL('libc.so.6').malloc_trim(0)
+    except (FileNotFoundError, AttributeError, OSError):
+        print('malloc_trim not available. Application may not release memory properly.')
+        return
+    def mtrim():
+        ctypes.CDLL('libc.so.6').malloc_trim(0)
+    return mtrim
 
 
 def get_file_path_from_uri(uri):
@@ -559,6 +580,8 @@ class PdfArranger(Gtk.Application):
             page.zoom = self.zoom_scale
             page.thumbnail = thumbnail
             self.model[num][0] = page
+        elif num == -2:
+            malloc_trim()
         self.update_progress_bar(num)
 
     def on_window_size_request(self, _window):
@@ -825,6 +848,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.grab_focus()
         if self.progress_bar.get_visible() and len(self.model) > 0:
             self.render()
+        malloc_trim()
 
     def copy_pages(self):
         """Collect data from selected pages"""
@@ -1214,6 +1238,7 @@ class PdfArranger(Gtk.Application):
         for ref_del in ref_del_list:
             path = ref_del.get_path()
             model.remove(model.get_iter(path))
+        malloc_trim()
 
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles drag motion: autoscroll, select move or copy, select drag cursor location."""

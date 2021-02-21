@@ -422,7 +422,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 previous_p = self.start_p - cnt
                 next_p = self.start_p + cnt
                 if previous_p < 0 and next_p > len(self.model):
-                    return
+                    break
                 if previous_p >= 0:
                     self.update(previous_p, self.model[previous_p])
                 if next_p < len(self.model):
