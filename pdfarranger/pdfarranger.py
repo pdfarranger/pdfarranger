@@ -533,7 +533,7 @@ class PdfArranger(Gtk.Application):
 
         all_files = self.active_file_names()
         if len(all_files) > 0:
-            title += ' [' + ', '.join(all_files) + ']'
+            title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
         self.window.set_title(title)
