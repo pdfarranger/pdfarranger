@@ -1611,7 +1611,6 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         if len(selection) != 1:
             return
-        self.zoom_full_page = True
 
         item_padding = self.iconview.get_item_padding()
         cell_image_renderer, cell_text_renderer = self.iconview.get_cells()
@@ -1630,6 +1629,8 @@ class PdfArranger(Gtk.Application):
         zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
         zoom_scaleY_new = (sw_height - cell_extraY - margins) / page_height
         self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
+        if self.zoom_scale < 0.2 * (1.1 ** -10):
+            return
         for page, _ in self.model:
             page.zoom = self.zoom_scale
         selected_page_nr = Gtk.TreePath.get_indices(selection[0])[0]
@@ -1639,6 +1640,7 @@ class PdfArranger(Gtk.Application):
         self.zoom_level = -10
         while self.zoom_scale > 0.2 * (1.1 ** self.zoom_level):
             self.zoom_level += 1
+        self.zoom_full_page = True
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
