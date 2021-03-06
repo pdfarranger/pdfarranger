@@ -26,7 +26,6 @@ from gi.repository import Gtk
 import gettext
 _ = gettext.gettext
 
-from decimal import Decimal
 
 
 def create_blank_page(tmpdir, size):
@@ -42,25 +41,28 @@ def create_blank_page(tmpdir, size):
     return filename
 
 
-def _mediabox(crop, angle, angle0, box):
-    """ Return the cropped media box for a given page """
-    if crop != (0., 0., 0., 0.):
-        rotate_times = int(round(((angle + angle0) % 360) / 90) % 4)
-        crop_init = crop
-        if rotate_times != 0:
-            perm = [0, 2, 1, 3]
-            for _ in range(rotate_times):
-                perm.append(perm.pop(0))
-            perm.insert(1, perm.pop(2))
-            crop = [crop_init[perm[side]] for side in range(4)]
-        # PyPDF2 FloatObject instances are decimal.Decimal objects
-        x1, y1, x2, y2 = [float(x) for x in box]
-        x1_new = x1 + (x2 - x1) * crop[0]
-        x2_new = x2 - (x2 - x1) * crop[1]
-        y1_new = y1 + (y2 - y1) * crop[3]
-        y2_new = y2 - (y2 - y1) * crop[2]
-        # pikepdf converts float to Decimal in most cases
-        return [Decimal(v) for v in [x1_new, y1_new, x2_new, y2_new]]
+def _mediabox(page, crop):
+    """ Return the media box for a given page. """
+    # PDF files which do not have mediabox default to Portrait Letter / ANSI A
+    cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
+
+    if crop == [0., 0., 0., 0.]:
+        return cmb
+    angle = page.Rotate if '/Rotate' in page else 0
+    rotate_times = int(round(((angle) % 360) / 90) % 4)
+    crop_init = crop
+    if rotate_times != 0:
+        perm = [0, 2, 1, 3]
+        for _ in range(rotate_times):
+            perm.append(perm.pop(0))
+        perm.insert(1, perm.pop(2))
+        crop = [crop_init[perm[side]] for side in range(4)]
+    x1, y1, x2, y2 = [float(x) for x in cmb]
+    x1_new = x1 + (x2 - x1) * crop[0]
+    x2_new = x2 - (x2 - x1) * crop[1]
+    y1_new = y1 + (y2 - y1) * crop[3]
+    y2_new = y2 - (y2 - y1) * crop[2]
+    return [x1_new, y1_new, x2_new, y2_new]
 
 
 _report_pikepdf_err = True
@@ -159,11 +161,7 @@ def export(input_files, pages, file_out, mode, mdata):
                       file=sys.stderr)
         if angle != 0:
             new_page.Rotate = angle + angle0
-        # PDF files which do not have mediabox default to Portrait Letter / ANSI A
-        cmb = current_page.MediaBox if "/MediaBox" in current_page else [0, 0, 612, 792]
-        cropped = _mediabox(row.crop, angle, angle0, cmb)
-        if cropped:
-            new_page.MediaBox = cropped
+        new_page.MediaBox = _mediabox(new_page, row.crop)
         new_page = _scale(pdf_output, new_page, row.scale)
         pdf_output.pages.append(new_page)
 
