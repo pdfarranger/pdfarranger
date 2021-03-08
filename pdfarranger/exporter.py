@@ -165,12 +165,20 @@ def export(input_files, pages, file_out, mode, mdata):
         if cropped:
             new_page.MediaBox = cropped
         new_page = _scale(pdf_output, new_page, row.scale)
+
+        # Workraround for pikepdf < 2.7.0
+        # https://github.com/pikepdf/pikepdf/issues/174
+        new_page = pdf_output.make_indirect(new_page)
+
         pdf_output.pages.append(new_page)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
             outpdf = pikepdf.Pdf.new()
             _set_meta(mdata, pdf_input, outpdf)
+            # needed to add this, probably related to pikepdf < 2.7.0 workaround
+            page = outpdf.copy_foreign(page)
+            # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             outname = file_out
             parts = file_out.rsplit('.', 1)
