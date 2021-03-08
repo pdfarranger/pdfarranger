@@ -168,7 +168,8 @@ def malloc_trim():
     """Release free memory from the heap."""
     if os.name == 'nt':
         return
-    if mtrim := malloc_trim_available():
+    mtrim = malloc_trim_available()
+    if mtrim:
         mtrim()
 
 
