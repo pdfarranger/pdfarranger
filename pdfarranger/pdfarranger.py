@@ -69,7 +69,7 @@ else:
     del libintl
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.7.0'
+VERSION = '1.7.1'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 # Add support for dnd to other instance and insert file at drop location in Windows
