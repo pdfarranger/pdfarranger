@@ -441,11 +441,10 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         w, h = page.get_size()
         scale = p.scale / self.resample
         thumbnail = cairo.ImageSurface(
-            cairo.FORMAT_ARGB32, int(w * scale), int(h * scale)
+            cairo.FORMAT_ARGB32, int(0.5 + w * scale), int(0.5 + h * scale)
         )
         cr = cairo.Context(thumbnail)
-        if scale != 1.0:
-            cr.scale(scale, scale)
+        cr.scale(int(0.5 + w * scale) / w, int(0.5 + h * scale) / h)
         with pdfdoc.render_lock:
             page.render(cr)
         GObject.idle_add(
