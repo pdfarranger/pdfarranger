@@ -30,26 +30,16 @@ class CellRendererImage(Gtk.CellRenderer):
         self.page = page
 
     def get_geometry(self):
-
         rotation = int(self.page.angle) % 360
         rotation = round(rotation / 90) * 90
-        if not self.page.thumbnail:
-            s = self.page.size
-            r = self.page.resample
-            w0 = w1 = s[0] / r
-            h0 = h1 = s[1] / r
+        w0 = self.page.thumbnail.get_width()
+        h0 = self.page.thumbnail.get_height()
+        if rotation == 90 or rotation == 270:
+            w1, h1 = h0, w0
         else:
-            w0 = self.page.thumbnail.get_width()
-            h0 = self.page.thumbnail.get_height()
-            if rotation == 90 or rotation == 270:
-                w1, h1 = h0, w0
-            else:
-                w1, h1 = w0, h0
-
-        scale = self.page.resample * self.page.zoom
-        c = self.page.crop
-        w2 = int(0.5 + scale * (1. - c[0] - c[1]) * w1)
-        h2 = int(0.5 + scale * (1. - c[2] - c[3]) * h1)
+            w1, h1 = w0, h0
+        w2 = self.page.width_in_pixel()
+        h2 = self.page.height_in_pixel()
 
         return w0, h0, w1, h1, w2, h2, rotation
 
@@ -67,11 +57,7 @@ class CellRendererImage(Gtk.CellRenderer):
         if cell_area and w > 0 and h > 0:
             x += self.get_property('xalign') * (cell_area.width - w)
             y += self.get_property('yalign') * (cell_area.height - h)
-
-        window.translate(x, y)
-
-        x = self.page.crop[0] * w1
-        y = self.page.crop[2] * h1
+        window.translate(int(0.5 + x), int(0.5 + y))
 
         # shadow
         window.set_source_rgb(0.5, 0.5, 0.5)
@@ -92,6 +78,8 @@ class CellRendererImage(Gtk.CellRenderer):
         window.translate(self.th1, self.th1)
         scale = self.page.resample * self.page.zoom
         window.scale(scale, scale)
+        x = int(self.page.crop[0] * w1)
+        y = int(self.page.crop[2] * h1)
         window.translate(-x, -y)
         if rotation > 0:
             window.translate(w1 / 2, h1 / 2)
@@ -103,10 +91,9 @@ class CellRendererImage(Gtk.CellRenderer):
 
     def do_get_size(self, _widget, cell_area=None):
         x = y = 0
-        _w0, _h0, _w1, _h1, w2, h2, _rotation = self.get_geometry()
         th = int(2 * self.th1 + self.th2)
-        w = w2 + th
-        h = h2 + th
+        w = self.page.width_in_pixel() + th
+        h = self.page.height_in_pixel() + th
 
         if cell_area and w > 0 and h > 0:
             x = self.get_property('xalign') * (

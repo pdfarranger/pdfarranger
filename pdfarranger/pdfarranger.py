@@ -514,7 +514,7 @@ class PdfArranger(Gtk.Application):
         GObject.signal_new('update_thumbnail', PDFRenderer,
                            GObject.SignalFlags.RUN_FIRST, None,
                            [GObject.TYPE_INT, GObject.TYPE_PYOBJECT,
-                            GObject.TYPE_FLOAT])
+                            GObject.TYPE_PYOBJECT])
         self.set_unsaved(False)
         self.__create_actions()
         self.__create_menus()
