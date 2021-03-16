@@ -1728,8 +1728,7 @@ class PdfArranger(Gtk.Application):
         if crop is not None or newscale is not None:
             self.undomanager.commit("Format")
         if crop is not None:
-            oldcrop = self.crop(selection, crop)
-            if oldcrop != crop:
+            if self.crop(selection, crop):
                 self.set_unsaved(True)
         if newscale is not None:
             if croputils.scale(self.model, selection, newscale):
@@ -1740,21 +1739,21 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         crop = croputils.white_borders(self.iconview.get_model(), selection, self.pdfqueue)
         self.undomanager.commit("Crop white Borders")
-        oldcrop = self.crop(selection, crop)
-        if oldcrop != crop:
+        if self.crop(selection, crop):
             self.set_unsaved(True)
 
     def crop(self, selection, newcrop):
-        oldcrop = []
+        changed = False
         model = self.iconview.get_model()
         for id_sel, path in enumerate(selection):
             pos = model.get_iter(path)
             page = model.get_value(pos, 0)
-            oldcrop.append(page.crop)
-            page.crop = list(newcrop[id_sel])
+            if page.crop != list(newcrop[id_sel]):
+                page.crop = list(newcrop[id_sel])
+                changed = True
             model.set_value(pos, 0, page)
             self.update_geometry(pos)
-        return oldcrop
+        return changed
 
     def duplicate(self, _action, _parameter, _unknown):
         """Duplicates the selected elements"""
