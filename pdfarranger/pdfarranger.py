@@ -27,6 +27,7 @@ import gettext
 import gc
 import subprocess
 import ctypes
+import pikepdf
 from urllib.request import url2pathname
 from functools import lru_cache
 
@@ -1819,12 +1820,17 @@ class PdfArranger(Gtk.Application):
         about_dialog.set_name(APPNAME)
         about_dialog.set_program_name(APPNAME)
         about_dialog.set_version(VERSION)
+        pike = pikepdf.__version__
+        qpdf = pikepdf.__libqpdf_version__
         about_dialog.set_comments(_(
             '%s is a tool for rearranging and modifying PDF files. '
-            'Developed using GTK+ and Python') % APPNAME)
+            'Developed using GTK+ and Python'
+            '\n \n'
+            '(%s uses libqpdf %s and pikepdf %s)') % (APPNAME, APPNAME, qpdf, pike))
         about_dialog.set_authors(['Konstantinos Poulios'])
         about_dialog.add_credit_section(_('Maintainers and contributors'), [
             'https://github.com/pdfarranger/pdfarranger/graphs/contributors'])
+        about_dialog.set_website(WEBSITE)
         about_dialog.set_website_label(WEBSITE)
         about_dialog.set_logo_icon_name(ICON_ID)
         about_dialog.set_license(_('GNU General Public License (GPL) Version 3.'))
