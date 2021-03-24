@@ -45,6 +45,8 @@ def _mediabox(page, crop):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
+    if "/CropBox" in page:
+        cmb = page.CropBox
 
     if crop == [0., 0., 0., 0.]:
         return cmb
