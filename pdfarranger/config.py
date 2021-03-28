@@ -114,7 +114,7 @@ class Config(object):
     def set_position(self,position):
         self.data.set('window','root_x',str(position[0]))
         self.data.set('window','root_y',str(position[1]))
-
+    
     def position(self):
         return self.data.getint('window', 'root_x', fallback=10),self.data.getint('window', 'root_y', fallback=10)       
 
