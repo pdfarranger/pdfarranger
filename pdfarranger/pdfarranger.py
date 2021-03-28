@@ -350,7 +350,7 @@ class PdfArranger(Gtk.Application):
         selection.sort()
         model = self.iconview.get_model()
         if len(selection) > 0:
-            size = model[selection[-1]][0].size
+            size = model[selection[-1]][0].size_in_points()
         page_size = croputils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)
