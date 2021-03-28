@@ -19,6 +19,20 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
+  build-win32:
+    runs-on: ubuntu-latest
+    container:
+      image: jeromerobert/wine-mingw64
+      options: --user root
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./setup.py build
+    - run: HOME=/root wine python setup_win32.py bdist_msi
+    - run: HOME=/root wine python setup_win32.py bdist_zip
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Windows installer
+        path: dist/*
   rpmbuild:
     runs-on: ubuntu-latest
     container: dreua/pdfarranger-docker-rpm
