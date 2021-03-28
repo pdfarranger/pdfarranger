@@ -111,6 +111,13 @@ class Config(object):
         self.data.set('window', 'width', str(size[0]))
         self.data.set('window', 'height', str(size[1]))
 
+    def set_position(self, position):
+        self.data.set('window', 'root_x', str(position[0]))
+        self.data.set('window', 'root_y', str(position[1]))
+
+    def position(self):
+        return self.data.getint('window', 'root_x', fallback=10), self.data.getint('window', 'root_y', fallback=10)
+
     def maximized(self):
         return self.data.getboolean('window', 'maximized', fallback=False)
 
