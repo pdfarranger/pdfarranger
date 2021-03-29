@@ -171,6 +171,12 @@ def export(input_files, pages, file_out, mode, mdata):
         new_page = pdf_output.make_indirect(new_page)
 
         pdf_output.pages.append(new_page)
+        # Ensure annotations are copied rather than referenced
+        # https://github.com/pdfarranger/pdfarranger/issues/437
+        if pikepdf.Name.Annots in current_page:
+            pdf_temp = pikepdf.Pdf.new()
+            pdf_temp.pages.append(current_page)
+            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
