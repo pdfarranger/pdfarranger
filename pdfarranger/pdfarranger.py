@@ -114,8 +114,7 @@ from .iconview import CellRendererImage
 from .iconview import IconviewCursor
 from .iconview import IconviewDragSelect
 from .config import Config
-from .core import img2pdf_supported_img
-from .core import *
+from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
 
@@ -359,7 +358,8 @@ class PdfArranger(Gtk.Application):
             adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
             adder.commit(select_added=False, add_to_undomanager=True)
 
-    def __create_filters(self, file_type_list):
+    @staticmethod
+    def __create_filters(file_type_list):
         filter_list = []
         f_supported = Gtk.FileFilter()
         f_supported.set_name(_('All supported files'))
@@ -831,7 +831,7 @@ class PdfArranger(Gtk.Application):
             try:
                 app_info = Gio.DesktopAppInfo.new(desktop_file)
                 app_info.launch([], launch_context)
-            except TypeError as e:
+            except TypeError:
                 subprocess.Popen([sys.executable, '-mpdfarranger'])
 
     def on_action_save(self, _action, _param, _unknown):
