@@ -170,13 +170,17 @@ def export(input_files, pages, file_out, mode, mdata):
         # https://github.com/pikepdf/pikepdf/issues/174
         new_page = pdf_output.make_indirect(new_page)
 
-        pdf_output.pages.append(new_page)
         # Ensure annotations are copied rather than referenced
         # https://github.com/pdfarranger/pdfarranger/issues/437
-        if pikepdf.Name.Annots in current_page:
-            pdf_temp = pikepdf.Pdf.new()
-            pdf_temp.pages.append(current_page)
-            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
+        if pikepdf.Name.Annots in new_page:
+            new_page.Annots = pikepdf.Array(
+                [pdf_output.make_indirect(copy.copy(annot))
+                    for annot in new_page.Annots])
+        # Annotations must be indirect or they cannot be edited
+        # Using copy.copy(annot) instead of pikepdf.Dictionary(annot)) to
+        # make a new annotations dictionary for compatibility with pikepdf < 2.8.0
+
+        pdf_output.pages.append(new_page)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
