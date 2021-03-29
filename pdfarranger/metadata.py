@@ -141,7 +141,8 @@ class _EditedEventHandler(object):
     def editable_changed(self, editable):
         self.new_text = editable.get_text()
 
-    def _parse_date(self, string, parent):
+    @staticmethod
+    def _parse_date(string, parent):
         try:
             date = parser.parse(string)
             return datetime.isoformat(date) # ISO-8601 formatted date

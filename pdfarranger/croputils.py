@@ -280,7 +280,7 @@ def white_borders(model, selection, pdfqueue):
         data = thumbnail.get_data().cast("i", shape=[h, w]).tolist()
 
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
-        # TODO: Those 4 copy/past should be factorized
+        # TODO: Those 4 copy/paste should be factorized
         # Left
         allwhite = True
         for col in range(w - 1):
