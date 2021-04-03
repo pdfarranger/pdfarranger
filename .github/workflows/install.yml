@@ -31,8 +31,12 @@ jobs:
     - run: HOME=/root wine python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v2
       with:
-        name: Windows installer
-        path: dist/*
+        name: pdfarranger-windows-installer-msi
+        path: dist/*.msi
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfarranger-windows-portable-zip
+        path: dist/*.zip
   rpmbuild:
     runs-on: ubuntu-latest
     container: dreua/pdfarranger-docker-rpm
