@@ -398,6 +398,7 @@ class PageAdder:
         self.app.model_unlock()
         if add_to_undomanager:
             GObject.idle_add(self.app.retitle)
+            self.app.zoom_set(self.app.zoom_level)
             self.app.silent_render()
         self.pages = []
         return True

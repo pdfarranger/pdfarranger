@@ -1123,6 +1123,7 @@ class PdfArranger(Gtk.Application):
             self.paste_pages_interleave(data, before, ref_to)
             GObject.idle_add(self.retitle)
             self.iv_selection_changed_event()
+            self.zoom_set(self.zoom_level)
             self.silent_render()
 
     def read_from_clipboard(self):
@@ -1669,13 +1670,25 @@ class PdfArranger(Gtk.Application):
     def zoom_set(self, level):
         """Sets the zoom level"""
         level = min(max(level, -10), 40)
-        if level == self.zoom_level:
+        zoom_level_old = self.zoom_level
+        self.zoom_level = level
+        self.zoom_scale = 0.2 * (1.1 ** level)
+        # Limit max zoom level so that thumbnail is max 23Mb
+        if len(self.model) > 0:
+            max_limit = 6000000  # 6000000 pixels * 4 byte/pixel -> 23Mb
+            max_page_size = max(p.size[0] * p.size[1] * p.scale ** 2 for p, _ in self.model)
+            max_page_size_zoomed = max_page_size * self.zoom_scale ** 2
+            if max_page_size_zoomed > max_limit:
+                max_zoom_scale = (max_limit / max_page_size) ** .5
+                self.zoom_level = -10
+                while max_zoom_scale > 0.2 * (1.1 ** (self.zoom_level + 1)):
+                    self.zoom_level += 1
+                self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
+        if self.zoom_level == zoom_level_old:
             return
         if self.id_scroll_to_sel:
             GObject.source_remove(self.id_scroll_to_sel)
         self.zoom_full_page = False
-        self.zoom_level = level
-        self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         self.quit_rendering()  # For performance reasons
         for row in self.model:
             row[0].zoom = self.zoom_scale
@@ -1828,6 +1841,7 @@ class PdfArranger(Gtk.Application):
             if croputils.scale(self.model, selection, newscale):
                 self.set_unsaved(True)
         self.model_unlock()
+        self.zoom_set(self.zoom_level)
         GObject.idle_add(self.render)
 
     def crop_white_borders(self, _action, _parameter, _unknown):
