@@ -919,9 +919,10 @@ class PdfArranger(Gtk.Application):
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
-    def clear_selected(self):
+    def clear_selected(self, add_to_undomanager=True):
         """Removes the selected elements in the IconView"""
-        self.undomanager.commit("Delete")
+        if add_to_undomanager:
+            self.undomanager.commit("Delete")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
@@ -1817,12 +1818,12 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         pages = [row[0] for row in self.model if row.path in selection]
         adder = PageAdder(self)
-        # TODO: Improve undo to delete stitched page and restore original pages
+        self.undomanager.commit("stitch")
         adder.move(Gtk.TreeRowReference.new(self.model, selection[0]), False)
         filename = exporter.create_stitched_page(self.tmp_dir, self.pdfqueue, pages)
         adder.addpages(filename)
-        adder.commit(select_added=False, add_to_undomanager=True)
-        self.clear_selected()
+        adder.commit(select_added=False, add_to_undomanager=False)
+        self.clear_selected(add_to_undomanager=False)
         self.scroll_to_selection()
 
     def edit_metadata(self, _action, _parameter, _unknown):
