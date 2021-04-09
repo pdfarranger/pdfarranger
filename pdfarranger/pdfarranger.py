@@ -322,6 +322,7 @@ class PdfArranger(Gtk.Application):
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
             ('split', self.split_pages),
+            ('stitch', self.stitch_pages),
             ('metadata', self.edit_metadata),
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
@@ -1602,6 +1603,7 @@ class PdfArranger(Gtk.Application):
             ("cut", ne),
             ("copy", ne),
             ("split", ne),
+            ("stitch", self.stitch_available(selection)),
             ("select-same-file", ne),
             ("select-same-format", ne),
             ("crop-white-borders", ne),
@@ -1810,6 +1812,19 @@ class PdfArranger(Gtk.Application):
         self.model_unlock()
         self.iv_selection_changed_event()
 
+    def stitch_pages(self, _action, _parameter, _unknown):
+        """Stitch the two selected pages"""
+        selection = self.iconview.get_selected_items()
+        pages = [row[0] for row in self.model if row.path in selection]
+        adder = PageAdder(self)
+        # TODO: Improve undo to delete stitched page and restore original pages
+        adder.move(Gtk.TreeRowReference.new(self.model, selection[0]), False)
+        filename = exporter.create_stitched_page(self.tmp_dir, self.pdfqueue, pages)
+        adder.addpages(filename)
+        adder.commit(select_added=False, add_to_undomanager=True)
+        self.clear_selected()
+        self.scroll_to_selection()
+
     def edit_metadata(self, _action, _parameter, _unknown):
         if metadata.edit(self.metadata, self.pdfqueue, self.window):
             self.set_unsaved(True)
@@ -1872,6 +1887,19 @@ class PdfArranger(Gtk.Application):
         self.model_unlock()
         self.iv_selection_changed_event()
 
+    def stitch_available(self, selection):
+        """Determine whether two pages with matching heights are selected."""
+        if len(selection) != 2:
+            return False
+
+        model = self.iconview.get_model()
+        selected_pages = []
+        for path in selection:
+            it = model.get_iter(path)
+            selected_pages.append(model.get_value(it, 0))
+        left_page, right_page = selected_pages
+        same_height = left_page.height_in_points() == right_page.height_in_points()
+        return same_height
 
     @staticmethod
     def reverse_order_available(selection):
