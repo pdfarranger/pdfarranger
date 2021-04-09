@@ -432,7 +432,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 path = Gtk.TreePath.new_from_indices([num])
                 ref = Gtk.TreeRowReference.new(self.model, path)
                 p = copy.copy(self.model[path][0])
-            if p.resample * p.zoom != 1:
+            if p.resample != 1 / p.zoom:
                 scale = p.scale * p.zoom
                 self.update(p, ref, scale, 1 / p.zoom, False)
         mem_limit = False
