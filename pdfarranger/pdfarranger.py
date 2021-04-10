@@ -663,10 +663,9 @@ class PdfArranger(Gtk.Application):
             path = Gtk.TreePath.new_from_indices([item_nr])
             cell_rect = self.iconview.get_cell_rect(path)[1]
             item_center = cell_rect.y + cell_rect.height / 2
-            if range_start < 0:
-                if item_center > sw_vpos - self.vp_css_margin:
-                    range_start = item_nr
-            elif item_center < sw_vpos + sw_height - self.vp_css_margin:
+            if range_start < 0 and item_center > sw_vpos - self.vp_css_margin:
+                range_start = item_nr
+            if item_center < sw_vpos + sw_height - self.vp_css_margin:
                 range_end = item_nr + columns_nr - 1
             else:
                 break
