@@ -633,19 +633,14 @@ class PdfArranger(Gtk.Application):
         page.zoom = self.zoom_scale
         if is_preview:
             page.preview = thumbnail
-        cell_width, _ = self.cellthmb.get_fixed_size()
-        if cell_width > self.sw.get_allocated_width():
-            # Let iconview do a "full refresh" by writing page to model.
-            self.model[path][0] = page
-        else:
-            # Let iconview refresh the thumbnail (only) by selecting it.
-            with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-                if self.iconview.path_is_selected(path):
-                    self.iconview.unselect_path(path)
-                    self.iconview.select_path(path)
-                else:
-                    self.iconview.select_path(path)
-                    self.iconview.unselect_path(path)
+        # Let iconview refresh the thumbnail (only) by selecting it
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            if self.iconview.path_is_selected(path):
+                self.iconview.unselect_path(path)
+                self.iconview.select_path(path)
+            else:
+                self.iconview.select_path(path)
+                self.iconview.unselect_path(path)
         self.__update_statusbar(path.get_indices()[0] + 1)
 
     def get_visible_range2(self):
@@ -1694,6 +1689,7 @@ class PdfArranger(Gtk.Application):
             row[0].zoom = self.zoom_scale
         if len(self.model) > 0:
             self.update_iconview_geometry()
+            self.model[0][0] = self.model[0][0]  # Let iconview refresh itself
             self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection)
             self.silent_render()
 
