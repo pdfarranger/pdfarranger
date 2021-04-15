@@ -1226,9 +1226,12 @@ class PdfArranger(Gtk.Application):
         elif selectoption == 'SAME_FORMAT':
             selection = self.iconview.get_selected_items()
             formats = set(model[row][0].size_in_points() for row in selection)
+            # Chop digits to detect same page format on rotated cropped pages
+            formats = [(round(w, 8), round(h, 8)) for (w, h) in formats]
             for row in model:
                 page = model[row.path][0]
-                if page.size_in_points() in formats:
+                w, h = page.size_in_points()
+                if (round(w, 8), round(h, 8)) in formats:
                     self.iconview.select_path(row.path)
         elif selectoption == 'INVERT':
             for row in model:
