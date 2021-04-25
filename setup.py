@@ -51,7 +51,7 @@ setup(
     entry_points={
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     },
-    install_requires=['pikepdf>=1.7.0','python-dateutil>=2.4.0'],
+    install_requires=['pikepdf>=1.17.0','python-dateutil>=2.4.0'],
     extras_require={
         'image': ['img2pdf>=0.3.4'],
     },
