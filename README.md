@@ -37,7 +37,7 @@ lines.
 
 ## Install from source
 
-*PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.7.0, but pikepdf >= 1.15.1 is highly recommended.
+*PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.17.0.
 pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
 
 **On Debian based distributions**
