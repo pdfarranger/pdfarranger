@@ -964,7 +964,8 @@ class PdfArranger(Gtk.Application):
             angle = int(tmp[3])
             scale = float(tmp[4])
             crop = [float(side) for side in tmp[5:9]]
-            pageadder.addpages(filename, npage, basename, angle, scale, crop)
+            clip = bool(tmp[9])
+            pageadder.addpages(filename, npage, basename, angle, scale, crop, clip)
 
     def is_data_valid(self, data):
         """Validate data to be pasted from clipboard. Only used in Windows."""
@@ -1829,12 +1830,12 @@ class PdfArranger(Gtk.Application):
         """Opens a dialog box to define margins for page cropping and page size"""
         selection = self.iconview.get_selected_items()
         diag = croputils.Dialog(self.iconview.get_model(), selection, self.window)
-        crop, newscale = diag.run_get()
+        crop, clip, newscale = diag.run_get()
         if crop is not None or newscale is not None:
             self.model_lock()
             self.undomanager.commit("Format")
         if crop is not None:
-            if self.crop(selection, crop):
+            if self.crop(selection, crop, clip):
                 self.set_unsaved(True)
         if newscale is not None:
             if croputils.scale(self.model, selection, newscale):
@@ -1851,12 +1852,13 @@ class PdfArranger(Gtk.Application):
             self.set_unsaved(True)
         GObject.idle_add(self.render)
 
-    def crop(self, selection, newcrop):
+    def crop(self, selection, newcrop, clip):
         changed = False
         model = self.iconview.get_model()
         for id_sel, path in enumerate(selection):
             pos = model.get_iter(path)
             page = model.get_value(pos, 0)
+            page.clip = clip
             if page.crop != list(newcrop[id_sel]):
                 page.crop = list(newcrop[id_sel])
                 changed = True
