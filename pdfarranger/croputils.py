@@ -166,9 +166,11 @@ class _CropWidget(Gtk.Frame):
         self.spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
         crop = [0.0, 0.0, 0.0, 0.0]
+        clip = False
         if selection:
             pos = model.get_iter(selection[0])
             crop = list(model.get_value(pos, 0).crop)
+            clip = model.get_value(pos, 0).clip
 
         for row, side in enumerate(_CropWidget.sides):
             label = Gtk.Label(label=_CropWidget.side_names[side])
@@ -193,6 +195,11 @@ class _CropWidget(Gtk.Frame):
             label.set_alignment(0.0, 0.5)
             grid.attach(label, 2, row + 1, 1, 1)
 
+        self.clipcheck = Gtk.CheckButton()
+        self.clipcheck.set_label("Crop content only, retain page margins")
+        self.clipcheck.set_active(clip)
+        grid.attach(self.clipcheck, 0, 5, 3, 1)
+
     @staticmethod
     def __set_crop_value(spinbutton, self, side):
         opp_side = self.opposite_sides[side]
@@ -202,6 +209,8 @@ class _CropWidget(Gtk.Frame):
     def get_crop(self):
         return [spin.get_value() / 100.0 for spin in self.spin_list]
 
+    def get_clip(self):
+        return self.clipcheck.get_active()
 
 class Dialog(Gtk.Dialog):
     """ A dialog box to define margins for page cropping and page size or scale factor """
@@ -244,9 +253,11 @@ class Dialog(Gtk.Dialog):
         """ Open the dialog and return the crop value """
         result = self.run()
         crop = None
+        clip = None
         val = None
         if result == Gtk.ResponseType.OK:
             crop = [self.crop_widget.get_crop()] * len(self.selection)
+            clip = self.crop_widget.get_clip() * len(self.selection)
             val = self.scale_stack.selected_child.get_value()
             if self.scale_stack.selected_name == "Width":
                 val = val, 0
@@ -254,7 +265,7 @@ class Dialog(Gtk.Dialog):
                 val = 0, val
             # else val is a relative scale so we return it as is
         self.destroy()
-        return crop, val
+        return crop, clip, val
 
 
 def white_borders(model, selection, pdfqueue):

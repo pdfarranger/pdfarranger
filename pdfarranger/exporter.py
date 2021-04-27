@@ -148,7 +148,21 @@ def export(input_files, pages, file_out, mode, mdata):
         new_page = pdf_output.copy_foreign(current_page)
         if angle != 0:
             new_page.Rotate = angle + angle0
-        new_page.MediaBox = _mediabox(new_page, row.crop)
+        mediabox = _mediabox(new_page, row.crop)
+        if not row.clip:
+            new_page.MediaBox = _mediabox(new_page, row.crop)
+        # clip content instead of cropping the page
+        else:
+            new_page.CropBox = mediabox
+            content_dict = pikepdf.Dictionary({})
+            content_dict['/0'] = pikepdf.Page(new_page).as_form_xobject()
+            content_txt = 'q 1 0 0 1 0 0 cm /0 Do Q'
+            new_page = pikepdf.Dictionary(
+                Type=pikepdf.Name.Page,
+                MediaBox=new_page.MediaBox,
+                Resources=pikepdf.Dictionary(XObject=content_dict),
+                Contents=pikepdf.Stream(pdf_output, content_txt.encode())
+            )
         new_page = _scale(pdf_output, new_page, row.scale)
 
         # Workraround for pikepdf < 2.7.0

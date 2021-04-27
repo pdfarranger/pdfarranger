@@ -58,7 +58,7 @@ _ = gettext.gettext
 
 
 class Page:
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, clip, size, basename):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
         #: The ID (from 1 to n) of the page in its owner PDF document
@@ -68,6 +68,8 @@ class Page:
         self.copyname = copyname
         #: Left, right, top, bottom crop
         self.crop = list(crop)
+        #: If True only crop content, retain page size
+        self.clip = clip
         #: width and height
         self.size = list(size)
         self.angle = angle
@@ -125,7 +127,7 @@ class Page:
 
     def serialize(self):
         """Convert to string for copy/past operations."""
-        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale] + list(self.crop)
+        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale] + list(self.crop) + [self.clip]
         return "\n".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
@@ -319,8 +321,9 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None):
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, clip=None):
         crop = [0] * 4 if crop is None else crop
+        clip = False if clip is None else clip
         pdfdoc = None
         nfile = None
         # Check if added page or file already exist in pdfqueue
@@ -369,6 +372,7 @@ class PageAdder:
                     angle,
                     scale,
                     crop,
+                    clip,
                     page.get_size(),
                     pdfdoc.basename,
                 )
