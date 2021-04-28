@@ -38,7 +38,7 @@ def create_blank_page(tmpdir, size):
     return filename
 
 
-def _mediabox(page, crop):
+def _mediabox(page, crop, angle=None):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
@@ -47,7 +47,8 @@ def _mediabox(page, crop):
 
     if crop == [0., 0., 0., 0.]:
         return cmb
-    angle = page.Rotate if '/Rotate' in page else 0
+    if angle is None:
+        angle = page.Rotate if '/Rotate' in page else 0
     rotate_times = int(round(((angle) % 360) / 90) % 4)
     crop_init = crop
     if rotate_times != 0:
@@ -146,23 +147,24 @@ def export(input_files, pages, file_out, mode, mdata):
         angle = row.angle
         angle0 = current_page.Rotate if '/Rotate' in current_page else 0
         new_page = pdf_output.copy_foreign(current_page)
-        if angle != 0:
-            new_page.Rotate = angle + angle0
-        mediabox = _mediabox(new_page, row.crop)
+        new_page.Rotate = 0
+        mediabox = _mediabox(new_page, row.crop, angle + angle0)
         if not row.clip:
-            new_page.MediaBox = _mediabox(new_page, row.crop)
+            new_page.MediaBox = mediabox
         # clip content instead of cropping the page
         else:
-            new_page.CropBox = mediabox
+            new_page.CropBox = _mediabox(new_page, row.crop, angle + angle0)
             content_dict = pikepdf.Dictionary({})
             content_dict['/0'] = pikepdf.Page(new_page).as_form_xobject()
             content_txt = 'q 1 0 0 1 0 0 cm /0 Do Q'
             new_page = pikepdf.Dictionary(
                 Type=pikepdf.Name.Page,
                 MediaBox=new_page.MediaBox,
+                Rotate=0,
                 Resources=pikepdf.Dictionary(XObject=content_dict),
                 Contents=pikepdf.Stream(pdf_output, content_txt.encode())
             )
+        new_page.Rotate = angle + angle0
         new_page = _scale(pdf_output, new_page, row.scale)
 
         # Workraround for pikepdf < 2.7.0

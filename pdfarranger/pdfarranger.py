@@ -987,7 +987,7 @@ class PdfArranger(Gtk.Application):
                         all((cr >= 0.0 and cr <= 0.99) for cr in crop) and
                         (crop[0] + crop[1] <= 0.99) and
                         (crop[2] + crop[3] <= 0.99) and
-                        len(tmp) == 9):
+                        len(tmp) == 10):
                     data_valid = False
                     break
             except (ValueError, IndexError):
@@ -1848,7 +1848,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         crop = croputils.white_borders(self.iconview.get_model(), selection, self.pdfqueue)
         self.undomanager.commit("Crop white Borders")
-        if self.crop(selection, crop):
+        if self.crop(selection, crop, False):
             self.set_unsaved(True)
         GObject.idle_add(self.render)
 

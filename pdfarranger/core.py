@@ -321,9 +321,8 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, clip=None):
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, clip=False):
         crop = [0] * 4 if crop is None else crop
-        clip = False if clip is None else clip
         pdfdoc = None
         nfile = None
         # Check if added page or file already exist in pdfqueue
