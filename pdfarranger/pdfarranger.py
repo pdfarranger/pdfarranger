@@ -875,7 +875,8 @@ class PdfArranger(Gtk.Application):
             self.config.set_content_loss_warning(enabled)
             if res == Gtk.ResponseType.CANCEL:
                 return # Abort
-        exporter.export(self.pdfqueue, to_export, file_out, mode, m)
+        to_multiple = exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']
+        exporter.export(self.pdfqueue, to_export, file_out, to_multiple, m)
 
         if exportmode == 'ALL_TO_SINGLE':
             self.set_unsaved(False)

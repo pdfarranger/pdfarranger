@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
+import copy
 import pikepdf
 import os
 import tempfile
@@ -22,6 +23,43 @@ from . import metadata
 from gi.repository import Gtk
 import gettext
 _ = gettext.gettext
+
+
+
+# Fix pikepdf.Pdf and pikepdf.PageList
+# see: https://github.com/pikepdf/pikepdf/issues/196
+# see: https://github.com/pikepdf/pikepdf/issues/192
+#
+# We are augmenting rather than subclassing because we do not instantiate
+# the classes directly
+
+@pikepdf._methods.augments(pikepdf._qpdf.PageList)
+class FixedPageList:
+
+    def extract(self, p):
+        '''extract a page for later reinsertion
+           p : 1 based index of page'''
+        # We must make sure that there are no duplicate references to the extracted page in the page tree after
+        # reinsertion. Replace the extracted page with a copy at its original position in the page tree.
+        page = self.p(p)
+        self[p-1] = copy.copy(page)
+        return page
+
+    def delete_page(self, index):
+        '''remove page from the page tree and delete page content(/Contents, /Resources, etc)
+           so that it can be removed from the output file'''
+        page = self[index]
+        for key in page.keys():
+            del(page[key])
+        del(self[index])
+
+@pikepdf._methods.augments(pikepdf._qpdf.Pdf)
+class FixedPdf:
+
+    def append(self, page):
+        '''append the actual page, not a copy (so that bookmarks do not get broken)'''
+        self._add_page(page)
+
 
 
 
@@ -75,41 +113,63 @@ def _set_meta(mdata, pdf_input, pdf_output):
         for k, v in mdata.items():
             outmeta[k] = v
 
+def _scale_box(box, factor):
+    return [factor * float(x) for x in box]
+
+
+def _fix_annots(page, factor):
+    if '/Annots' in page.keys():
+        for annot in page.Annots:
+            for key in ('/Rect', '/QuadPoints', '/Vertices', '/CL'):
+                if key in annot.keys():
+                    annot[key] = _scale_box(annot[key], factor)
+            if '/InkList' in annot.keys():
+                for i, il in enumerate(annot.InkList):
+                    annot.InkList[i] = _scale_box(il, factor)
+
 
 def _scale(doc, page, factor):
     """ Scale a page """
     if factor == 1:
         return page
-    rotate = 0
-    if "/Rotate" in page:
-        # We'll set the rotate attribute on the resulting page so we must
-        # unset it on the input page before
-        rotate = page.Rotate
-        page.Rotate = 0
+    orig_page = page
+    page = copy.copy(page)
+    page.Rotate = 0
     page = doc.make_indirect(page)
-    page_id = len(doc.pages)
+    page_id = len(doc.pages) + 1
     newmediabox = [factor * float(x) for x in page.MediaBox]
-    content = "q {} 0 0 {} 0 0 cm /p{} Do Q".format(factor, factor, page_id)
+    contents = "q {} 0 0 {} 0 0 cm /p{} Do Q".format(factor, factor, page_id)
     xobject = pikepdf.Page(page).as_form_xobject()
-    new_page = pikepdf.Dictionary(
-        Type=pikepdf.Name.Page,
-        MediaBox=newmediabox,
-        Contents=doc.make_stream(content.encode()),
-        Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
-        Rotate=rotate,
-    )
-    return new_page
+    orig_page.MediaBox = newmediabox
+    #Question - if we scale a cropped page, do we loose content?
+    if '/CropBox' in orig_page.keys(): del(orig_page['/CropBox'])
+    orig_page.Contents = doc.make_stream(contents.encode())
+    orig_page.Resources = pikepdf.Dictionary({'/XObject': {'/p{}'.format(page_id): xobject}})
+    #Question - what else do we need to scale?
+    _fix_annots(orig_page, factor)
+    return orig_page
+
 
 def check_content(parent, pdf_list):
     """ Warn about fillable forms or outlines that are lost on export."""
+    # TODO: consider further
+    # - with new export, only imported pages are affected
+    #   - Done
+    # - seems wrong to let the user do all the work and only warn him when
+    #   he tries to save his work
     warn = False
-    for pdf in [pikepdf.open(p.copyname, password=p.password) for p in pdf_list]:
+    for pdf in [pikepdf.open(p.copyname, password=p.password) for p in pdf_list[1:]]:
         if "/AcroForm" in pdf.Root.keys(): # fillable form
             warn = True
             break
         if pdf.open_outline().root: # table of contents
             warn = True
             break
+    # the rest is GUI stuff
+    # should be moved to different module to facilitate function tests
+    # also, providing a warning with a "don't show again" option sounds like
+    # a generic requirement that should be factored out into a separate function
+    # finally, why are such dialogs not loaded from a .ui file?
     if warn:
         d = Gtk.Dialog(_('Warning'),
                        parent=parent,
@@ -131,57 +191,108 @@ def check_content(parent, pdf_list):
     return Gtk.ResponseType.OK, True
 
 
-def export(input_files, pages, file_out, mode, mdata):
-    exportmodes = {0: 'ALL_TO_SINGLE',
-                   1: 'ALL_TO_MULTIPLE',
-                   2: 'SELECTED_TO_SINGLE',
-                   3: 'SELECTED_TO_MULTIPLE'}
-    exportmode = exportmodes[mode.get_int32()]
-
-    global _report_pikepdf_err
-    pdf_output = pikepdf.Pdf.new()
-    pdf_input = [pikepdf.open(p.copyname, password=p.password) for p in input_files]
-    for row in pages:
-        current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
-        angle = row.angle
-        angle0 = current_page.Rotate if '/Rotate' in current_page else 0
-        new_page = pdf_output.copy_foreign(current_page)
-        if angle != 0:
-            new_page.Rotate = angle + angle0
-        new_page.MediaBox = _mediabox(new_page, row.crop)
-        new_page = _scale(pdf_output, new_page, row.scale)
-
-        # Workraround for pikepdf < 2.7.0
-        # https://github.com/pikepdf/pikepdf/issues/174
-        new_page = pdf_output.make_indirect(new_page)
-
-        pdf_output.pages.append(new_page)
-        # Ensure annotations are copied rather than referenced
-        # https://github.com/pdfarranger/pdfarranger/issues/437
-        if pikepdf.Name.Annots in current_page:
-            pdf_temp = pikepdf.Pdf.new()
-            pdf_temp.pages.append(current_page)
-            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
-
-    if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
-        for n, page in enumerate(pdf_output.pages):
-            outpdf = pikepdf.Pdf.new()
-            _set_meta(mdata, pdf_input, outpdf)
-            # needed to add this, probably related to pikepdf < 2.7.0 workaround
-            page = outpdf.copy_foreign(page)
-            # works without make_indirect as already applied to this page
-            outpdf.pages.append(page)
+def export(input_files, pages, file_out, to_multiple, mdata):
+    # if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
+    # this is essentially gui stuff and duplicates code in Pdfarranger
+    if to_multiple:
+        parts = file_out.rsplit('.', 1)
+        for n, page in enumerate(pages):
+            # Add page number to filename
             outname = file_out
-            parts = file_out.rsplit('.', 1)
             if n > 0:
-                # Add page number to filename
                 outname = "".join(parts[:-1]) + str(n + 1) + '.' + parts[-1]
-            outpdf.remove_unreferenced_resources()
-            outpdf.save(outname)
+            # This needs rethinking
+            # - for selected to multiple these are not page numbers
+            #   consider the ase where a document is exported 'TO_MULTIPLE'
+            #   The user than crops page 13 nad re-exports it 'SELECTED_TO_MULTIPLE'
+            #   result: page 1 gets overwriten with the amended page 13,
+            #           the uncorrected page 13 remains as page 13
+            #   - needs fixing
+            # - page 1 does not get a page number and therefore may potentially overwrite
+            #   the source file
+            #   - TODO as fix fails test4 (Done, append "page number" to all pages)
+            export_single(input_files, [page], outname, mdata)
     else:
-        _set_meta(mdata, pdf_input, pdf_output)
-        pdf_output.remove_unreferenced_resources()
-        pdf_output.save(file_out)
+        export_single(input_files, pages, file_out, mdata)
+
+
+def export_single(input_files, pages, file_out, mdata):
+
+    active_files = set()
+    appended_pages = set()
+
+    with pikepdf.open(input_files[0].copyname, password=input_files[0].password) as pdf_output:
+        # first read the required qpdf pages and attach them to the page list
+        for page in pages:
+            if page.nfile == 1:
+                #
+                page.qpdf = pdf_output.pages.extract(page.npage)
+            else:
+                # might aswell use the opportunity to work out which of the other
+                # input_files contain pages in the page list
+                active_files.add(page.nfile)
+
+        for nfile, pdfdoc in [(n+1, pdf) for (n, pdf) in enumerate(input_files)
+                                if n+1 in active_files ]:
+            with pikepdf.open(pdfdoc.copyname, password=pdfdoc.password) as pdf_input:
+                for page in pages:
+                    if page.nfile == nfile:
+                        page.qpdf = pdf_output.copy_foreign(pdf_input.pages.p(page.npage))
+
+        # Fix issue when all pages of main pdf are deleted
+        # see https://github.com/pdfarranger/pdfarranger/pull/462#issuecomment-830546209
+        # I am not convinced open file - delete all pages - import pages instead of new file - import pages
+        # makes sense. Needs further consideration
+        dummy = pdf_output.pages.extract(1)
+
+        # delete existing pages
+        # could be improved if we want to maintain the page tree
+        # rather than flatten it
+        while len(pdf_output.pages) > 0:
+            pdf_output.pages.delete_page(0)
+
+        # now add the pages
+        for page in pages:
+            qpdf_page = page.qpdf
+            page.qpdf = None
+            if qpdf_page.objgen in appended_pages:
+                qpdf_page = copy.copy(qpdf_page)
+            appended_pages.add(qpdf_page.objgen)
+            angle = page.angle
+            angle0 = qpdf_page.Rotate if '/Rotate' in qpdf_page else 0
+
+            if angle != 0:
+                qpdf_page.Rotate = angle + angle0
+            qpdf_page.MediaBox = _mediabox(qpdf_page, page.crop)
+            qpdf_page = _scale(pdf_output, qpdf_page, page.scale)
+
+            # Workraround for pikepdf < 2.7.0
+            # https://github.com/pikepdf/pikepdf/issues/174
+            #
+            # removed because it is not required for this version of export
+
+            # Ensure annotations are copied rather than referenced
+            # https://github.com/pdfarranger/pdfarranger/issues/437
+            # Annotations must be indirect or they cannot be edited
+            # Using copy.copy(annot) instead of pikepdf.Dictionary(annot)) to
+            # make a new annotations dictionary for compatibility with pikepdf < 2.8.0
+            #
+            # Temporarily removed because current fix trashes form fields
+
+            # note: we are using our fixed append (
+            pdf_output.append(qpdf_page)
+
+
+        _set_meta(mdata, [pdf_output], pdf_output)
+
+        # Fix issue when all pages of main pdf are deleted (see above)
+        del(dummy)
+
+        # see https://github.com/qpdf/qpdf/issues/520
+        pdf_output.save(file_out, object_stream_mode=pikepdf.ObjectStreamMode.generate)
+
+
+
 
 def num_pages(filepath):
     """Get number of pages for filepath."""
