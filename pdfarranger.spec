@@ -87,7 +87,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{python3_sitelib}/%{name}/
 %{python3_sitelib}/%{name}-*.dist-info/
 %{_mandir}/man*/*.*
-%{_datadir}/icons/hicolor/*/apps/%{app_id}.*
+%{_datadir}/icons/hicolor/*/apps/*
 %{_metainfodir}/%{app_id}.metainfo.xml
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/%{name}/
