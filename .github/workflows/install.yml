@@ -43,3 +43,7 @@ jobs:
     steps:
     - name: RPM Build
       run: /pdfarranger/pdfarranger-build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfarranger-fedora-testbuild
+        path: /github/home/rpmbuild/**/*.rpm
