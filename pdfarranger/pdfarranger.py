@@ -687,7 +687,7 @@ class PdfArranger(Gtk.Application):
         """
         sw_vadj = self.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
-        columns_nr = self.iconview.get_columns()
+        columns_nr = max(self.iconview.get_columns(), 1)
         sw_height = self.sw.get_allocated_height()
         range_start = range_end = -1
         item_nr = 0
