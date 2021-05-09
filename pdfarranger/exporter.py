@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
+import copy
 import pikepdf
 import os
 import tempfile
@@ -42,8 +42,6 @@ def _mediabox(page, crop, angle=None):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
-    if "/CropBox" in page:
-        cmb = page.CropBox
 
     if crop == [0., 0., 0., 0.]:
         return cmb
@@ -153,6 +151,7 @@ def export(input_files, pages, file_out, mode, mdata):
             new_page.MediaBox = mediabox
         # clip content instead of cropping the page
         else:
+            print(row.crop)
             new_page.CropBox = _mediabox(new_page, row.crop, angle + angle0)
             content_dict = pikepdf.Dictionary({})
             content_dict['/0'] = pikepdf.Page(new_page).as_form_xobject()
@@ -161,6 +160,9 @@ def export(input_files, pages, file_out, mode, mdata):
                 Type=pikepdf.Name.Page,
                 MediaBox=new_page.MediaBox,
                 Rotate=0,
+                Annots=pikepdf.Array(
+                [pdf_output.make_indirect(copy.copy(annot))
+                    for annot in new_page.Annots]),
                 Resources=pikepdf.Dictionary(XObject=content_dict),
                 Contents=pikepdf.Stream(pdf_output, content_txt.encode())
             )
@@ -174,7 +176,7 @@ def export(input_files, pages, file_out, mode, mdata):
         pdf_output.pages.append(new_page)
         # Ensure annotations are copied rather than referenced
         # https://github.com/pdfarranger/pdfarranger/issues/437
-        if pikepdf.Name.Annots in current_page:
+        if not row.clip and pikepdf.Name.Annots in current_page:
             pdf_temp = pikepdf.Pdf.new()
             pdf_temp.pages.append(current_page)
             pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
