@@ -161,7 +161,8 @@ def export(input_files, pages, file_out, mode, mdata):
         if pikepdf.Name.Annots in current_page:
             pdf_temp = pikepdf.Pdf.new()
             pdf_temp.pages.append(current_page)
-            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
+            indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
+            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(indirect_annots)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
