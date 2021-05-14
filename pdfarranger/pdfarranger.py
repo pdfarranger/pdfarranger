@@ -606,9 +606,9 @@ class PdfArranger(Gtk.Application):
             return
         self.set_iconview_visible(timeout=False)
 
-    def window_state_event(self, _window, event):
+    def window_state_event(self, _window, _event):
         """Window state change."""
-        self.set_iconview_visible(timeout=False)
+        GObject.timeout_add(100, self.set_iconview_visible)
 
     def set_iconview_visible(self, timeout=True):
         if timeout:
