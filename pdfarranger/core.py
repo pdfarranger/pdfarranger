@@ -280,7 +280,7 @@ class PDFDoc:
                 os.close(fd)
                 with open(self.copyname, "wb") as f:
                     img = img2pdf.Image.open(filename)
-                    if img.mode != "RGBA" and "transparency" in img.info:
+                    if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
                         # TODO: Find a way to keep image in P or L format and remove transparency.
                         # This will work but converting from 1, L, P to RGB is not optimal.
                         img = img.convert("RGBA")
