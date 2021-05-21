@@ -357,14 +357,22 @@ class PdfArranger(Gtk.Application):
             size = model[selection[-1]][0].size_in_points()
         page_size = croputils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
-            adder = PageAdder(self)
-            if len(selection) > 0:
-                adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
-            adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
-            adder.commit(select_added=False, add_to_undomanager=True)
+            self._insert_page(model, page_size, selection)
+
+    def _insert_page(self, model, page_size, selection):
+        adder = PageAdder(self)
+        if len(selection) > 0:
+            adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
+        adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
+        adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _, __, ___):
-        print('hello')
+        model = self.iconview.get_model()
+        last_page_size = model[-1][0].size_in_points()
+        first_page_size = model[0][0].size_in_points()
+        page_size = [max(last_page_size[0], first_page_size[0])*2,
+                     max(last_page_size[1], first_page_size[1])]
+        self._insert_page(model, page_size, [])
 
     @staticmethod
     def __create_filters(file_type_list):
