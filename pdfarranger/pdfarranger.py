@@ -334,6 +334,7 @@ class PdfArranger(Gtk.Application):
             ('select-same-format', self.on_action_select, 'i'),
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
+            ("generate-booklet", self.generate_booklet),
         ])
 
         main_menu = self.uiXML.get_object("main_menu_button")
@@ -361,6 +362,9 @@ class PdfArranger(Gtk.Application):
                 adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
             adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
             adder.commit(select_added=False, add_to_undomanager=True)
+
+    def generate_booklet(self, _, __, ___):
+        print('hello')
 
     @staticmethod
     def __create_filters(file_type_list):
