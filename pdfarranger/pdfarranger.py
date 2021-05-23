@@ -73,10 +73,12 @@ APPNAME = 'PDF Arranger'
 VERSION = '1.7.1'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
-# Add support for dnd to other instance and insert file at drop location in Windows
 if os.name == 'nt':
+    # Add support for dnd to other instance and insert file at drop location in Windows
     import keyboard  # to get control key state when drag to other instance
     os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
+    # Use client side decorations. Will also enable window moving with Win + left/right
+    os.environ['GTK_CSD'] = '1'
 
 import gi
 
