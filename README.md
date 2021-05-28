@@ -60,6 +60,13 @@ sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobjec
 
 **On FreeBSD**
 
+`cd /usr/ports/print/pdfarranger/ && sudo make install clean`
+
+* see https://www.freshports.org/print/pdfarranger/#add
+* no need for subsequent use of `pip3`
+
+– or: 
+
 ```
 sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip devel/py-python-distutils-extra graphics/poppler-glib textproc/intltool textproc/py-pikepdf x11-toolkits/gtk30
 ```
