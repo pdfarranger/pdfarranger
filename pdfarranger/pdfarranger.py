@@ -368,11 +368,14 @@ class PdfArranger(Gtk.Application):
 
     def generate_booklet(self, _, __, ___):
         model = self.iconview.get_model()
-        last_page_size = model[-1][0].size_in_points()
-        first_page_size = model[0][0].size_in_points()
-        page_size = [max(last_page_size[0], first_page_size[0])*2,
-                     max(last_page_size[1], first_page_size[1])]
-        self._insert_page(model, page_size, [])
+
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        pages = [model.get_value(model.get_iter(ref.get_path()), 0) for ref in ref_list]
+
+        exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
 
     @staticmethod
     def __create_filters(file_type_list):
