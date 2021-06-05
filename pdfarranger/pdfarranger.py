@@ -370,12 +370,18 @@ class PdfArranger(Gtk.Application):
         model = self.iconview.get_model()
 
         selection = self.iconview.get_selected_items()
-        selection.sort(key=lambda x: x.get_indices()[0])
-        ref_list = [Gtk.TreeRowReference.new(model, path)
-                    for path in selection]
-        pages = [model.get_value(model.get_iter(ref.get_path()), 0) for ref in ref_list]
+        if len(selection) < 1:
+            pages = [e[0] for e in self.model]
+        else:
+            selection.sort(key=lambda x: x.get_indices()[0])
+            ref_list = [Gtk.TreeRowReference.new(model, path)
+                        for path in selection]
+            pages = [model.get_value(model.get_iter(ref.get_path()), 0) for ref in ref_list]
 
-        exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
+        adder = PageAdder(self)
+        booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
+        adder.addpages(booklet)
+        adder.commit(False, True)
 
     @staticmethod
     def __create_filters(file_type_list):

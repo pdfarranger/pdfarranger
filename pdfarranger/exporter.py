@@ -205,10 +205,10 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     content_dict = pikepdf.Dictionary({})
     file_indexes = {p.nfile for p in pages}
     source_files = {n: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
-    for i in range(int(len(pages)/2)):
+    for i in range(len(pages)//2):
         even = i % 2 == 0
-        first = pages[i*-1 - 1 if even else i]
-        second = pages[i if even else i*-1 - 1]
+        first = pages[-i - 1 if even else i]
+        second = pages[i if even else -i - 1]
 
         second_page_size = second.size_in_points()
         first_page_size = first.size_in_points()
@@ -220,7 +220,8 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
         content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
 
-        content_txt = f'q 1 0 0 1 0 0 cm /Page{i*2} Do Q q 1 0 0 1 {first_page_size[0]} 0 cm /Page{i*2 + 1} Do Q '
+        content_txt = (f'q 1 0 0 1 0 0 cm /Page{i*2} Do Q'
+                       f' q 1 0 0 1 {first_page_size[0]} 0 cm /Page{i*2 + 1} Do Q ')
 
         newpage = pikepdf.Dictionary(
                 Type=pikepdf.Name.Page,
@@ -231,4 +232,5 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         file.pages.append(newpage)
 
     file.save(filename)
+    return filename
 
