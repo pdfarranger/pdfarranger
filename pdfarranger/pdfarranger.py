@@ -378,10 +378,16 @@ class PdfArranger(Gtk.Application):
                         for path in selection]
             pages = [model.get_value(model.get_iter(ref.get_path()), 0) for ref in ref_list]
 
+        if len(selection) > 0:
+            self.clear_selected()
+        else:
+            self.clear_all()
+
         adder = PageAdder(self)
         booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
         adder.addpages(booklet)
         adder.commit(False, True)
+
 
     @staticmethod
     def __create_filters(file_type_list):
@@ -972,6 +978,18 @@ class PdfArranger(Gtk.Application):
                 adder.addpages(filename)
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
+
+    def clear_all(self):
+        """Removes the selected elements in the IconView"""
+        self.undomanager.commit("Delete")
+        model = self.iconview.get_model()
+        self.set_unsaved(True)
+        self.model_lock()
+        model.clear()
+        self.model_unlock()
+        self.iconview.grab_focus()
+        self.silent_render()
+        malloc_trim()
 
     def clear_selected(self):
         """Removes the selected elements in the IconView"""
