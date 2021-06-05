@@ -206,8 +206,9 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     file_indexes = {p.nfile for p in pages}
     source_files = {n: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
     for i in range(int(len(pages)/2)):
-        first = pages[i]
-        second = pages[i*-1 - 1]
+        even = i % 2 == 0
+        first = pages[i*-1 - 1 if even else i]
+        second = pages[i if even else i*-1 - 1]
 
         second_page_size = second.size_in_points()
         first_page_size = first.size_in_points()
