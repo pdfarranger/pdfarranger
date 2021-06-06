@@ -250,7 +250,10 @@ class PDFDoc:
     def __init__(self, filename, basename, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
-        self.mtime = os.path.getmtime(filename)
+        try:
+            self.mtime = os.path.getmtime(filename)
+        except OSError as e:
+            raise PDFDocError(e)
         if basename is None:  # When importing files
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
