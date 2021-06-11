@@ -1945,18 +1945,14 @@ class PdfArranger(Gtk.Application):
         first = indices[0]
         last = indices[-1]
         contiguous = (len(indices) == last - first + 1)
-        if not contiguous:
-            return False
 
-        return True
+        return contiguous
 
     def reverse_order(self, _action, _parameter, _unknown):
         """Reverses the selected elements in the IconView"""
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-        if not self.reverse_order_available(selection):
-            return
 
         # selection is a list of 1-tuples, not in order
         indices = sorted([i[0] for i in selection])
