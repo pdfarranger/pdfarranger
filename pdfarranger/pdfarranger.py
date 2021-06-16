@@ -382,7 +382,7 @@ class PdfArranger(Gtk.Application):
         if len(pages) % 2 != 0:
             self._insert_page(model, pages[0].size, selection)
             if len(selection) < 1:
-                pass
+                pages.append(model[-1][0])
             else:
                 added_page_index = selection[-1].get_indices()[-1] + 1
                 added_page = model.get_value(model.get_iter(added_page_index), 0)
