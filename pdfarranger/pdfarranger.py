@@ -376,7 +376,18 @@ class PdfArranger(Gtk.Application):
             selection.sort(key=lambda x: x.get_indices()[0])
             ref_list = [Gtk.TreeRowReference.new(model, path)
                         for path in selection]
-            pages = [model.get_value(model.get_iter(ref.get_path()), 0) for ref in ref_list]
+            pages = [model.get_value(model.get_iter(ref.get_path()), 0)
+                     for ref in ref_list]
+
+        if len(pages) % 2 != 0:
+            self._insert_page(model, pages[0].size, selection)
+            if len(selection) < 1:
+                pass
+            else:
+                added_page_index = selection[-1].get_indices()[-1] + 1
+                added_page = model.get_value(model.get_iter(added_page_index), 0)
+                pages.append(added_page)
+                model.remove(model.get_iter(added_page_index))
 
         if len(selection) > 0:
             self.clear_selected()
