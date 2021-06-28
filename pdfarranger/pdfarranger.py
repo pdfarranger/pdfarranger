@@ -367,6 +367,7 @@ class PdfArranger(Gtk.Application):
         adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _, __, ___):
+        self.undomanager.commit("generate booklet")
         model = self.iconview.get_model()
 
         selection = self.iconview.get_selected_items()
@@ -397,7 +398,8 @@ class PdfArranger(Gtk.Application):
         adder = PageAdder(self)
         booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
         adder.addpages(booklet)
-        adder.commit(False, True)
+        adder.commit(False, False)
+        self.silent_render()
 
 
     @staticmethod
@@ -990,9 +992,10 @@ class PdfArranger(Gtk.Application):
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
-    def clear_selected(self):
+    def clear_selected(self, add_to_undomanager=True):
         """Removes the selected elements in the IconView"""
-        self.undomanager.commit("Delete")
+        if add_to_undomanager:
+            self.undomanager.commit("Delete")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
