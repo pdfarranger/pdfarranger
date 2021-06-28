@@ -256,6 +256,8 @@ class PdfArranger(Gtk.Application):
         self.drag_path = None
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         self.sb_timeout_id = None
+        self.window_width_old = 0
+        self.set_iv_visible_id = None
 
         # Clipboard for cut copy paste
         self.clipboard_default = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -411,6 +413,9 @@ class PdfArranger(Gtk.Application):
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
         self.window.connect('configure_event', self.window_configure_event)
+        self.window.connect('button_release_event', self.window_button_release_event)
+        self.window.connect('enter_notify_event', self.window_enter_notify_event)
+        self.window.connect('window_state_event', self.window_state_event)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -577,10 +582,42 @@ class PdfArranger(Gtk.Application):
         """Render when vertical scrollbar value has changed."""
         self.silent_render()
 
-    def window_configure_event(self, _window, _event):
-        """Render when window size has changed."""
+    def window_configure_event(self, _window, event):
+        """Handle window size and position changes."""
+        if self.window_width_old not in [0, event.width] and len(self.model) > 0:
+            if self.set_iv_visible_id:
+                GObject.source_remove(self.set_iv_visible_id)
+            self.set_iv_visible_id = GObject.timeout_add(1500, self.set_iconview_visible)
+            self.iconview.set_visible(False)
+        self.window_width_old = event.width
         if len(self.model) > 1: # Don't trigger extra render after first page is inserted
             self.silent_render()
+
+    def window_button_release_event(self, _window, event):
+        """Mouse button release on window."""
+        if event.button == 1:
+            self.set_iconview_visible(timeout=False)
+
+    def window_enter_notify_event(self, _window, _event):
+        """Mouse pointer enter window."""
+        if os.name == 'nt':
+            # In Windows this is triggered when dragging window edge. Instead the release event
+            # is usually triggered when releasing button.
+            return
+        self.set_iconview_visible(timeout=False)
+
+    def window_state_event(self, _window, _event):
+        """Window state change."""
+        GObject.timeout_add(100, self.set_iconview_visible)
+
+    def set_iconview_visible(self, timeout=True):
+        if timeout:
+            self.set_iv_visible_id = None
+        if not self.iconview.get_visible():
+            self.update_iconview_geometry()
+            self.scroll_to_selection()
+            GObject.idle_add(self.iconview.set_visible, True)
+            self.iconview.grab_focus()
 
     def set_export_file(self, file):
         if file != self.export_file:
@@ -650,7 +687,7 @@ class PdfArranger(Gtk.Application):
         """
         sw_vadj = self.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
-        columns_nr = self.iconview.get_columns()
+        columns_nr = max(self.iconview.get_columns(), 1)
         sw_height = self.sw.get_allocated_height()
         range_start = range_end = -1
         item_nr = 0
@@ -671,7 +708,8 @@ class PdfArranger(Gtk.Application):
 
     def on_window_size_request(self, _window):
         """Main Window resize."""
-        self.update_iconview_geometry()
+        if self.iconview.get_visible():
+            self.update_iconview_geometry()
 
     def update_iconview_geometry(self):
         """Set iconview cell size, margins, number of columns and spacing."""
@@ -1485,7 +1523,7 @@ class PdfArranger(Gtk.Application):
                 self.zoom_level_old = self.zoom_level
                 self.zoom_to_full_page()
                 self.update_iconview_geometry()
-                GObject.timeout_add(5, self.scroll_to_selection)
+                self.scroll_to_selection()
             return True
 
         click_path_old = self.click_path
@@ -1557,7 +1595,7 @@ class PdfArranger(Gtk.Application):
                 self.zoom_level_old = self.zoom_level
                 self.zoom_to_full_page()
                 self.update_iconview_geometry()
-                GObject.timeout_add(5, self.scroll_to_selection)
+                self.scroll_to_selection()
 
         elif event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                             Gdk.KEY_Home, Gdk.KEY_End]:
@@ -1611,7 +1649,9 @@ class PdfArranger(Gtk.Application):
             self.iv_cursor.cursor_is_visible = False
 
     def window_focus_in_out_event(self, _widget=None, _event=None):
-        """Enable or disable paste actions based on clipboard content."""
+        """Keyboard focus enter or leave window."""
+        self.set_iconview_visible(timeout=False)
+        # Enable or disable paste actions based on clipboard content
         cb_d_data = self.clipboard_default.wait_for_text()
         cb_p_data = os.name == 'posix' and self.clipboard_pdfarranger.wait_for_text()
         data_available = True if cb_d_data or cb_p_data else False
@@ -1748,9 +1788,12 @@ class PdfArranger(Gtk.Application):
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
+        self.id_scroll_to_sel = None
+        GObject.timeout_add(50, self._scroll_to_selection)
+
+    def _scroll_to_selection(self):
         selection = self.iconview.get_selected_items()
         if not selection:
-            self.id_scroll_to_sel = None
             return
         selection.sort(key=lambda x: x.get_indices()[0])
         if self.zoom_full_page:
@@ -1767,8 +1810,11 @@ class PdfArranger(Gtk.Application):
         last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
         selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
         sw_height = self.get_full_sw_height()
-        sw_vadj.set_value(first_cell_y + selection_center + self.vp_css_margin - sw_height / 2)
-        self.id_scroll_to_sel = None
+        new_value = first_cell_y + selection_center + self.vp_css_margin - sw_height / 2
+        if new_value > sw_vadj.get_upper():
+            # Scrollable not yet ready. Call function again.
+            return True
+        sw_vadj.set_value(new_value)
         self.silent_render()
 
     def rotate_page_action(self, _action, angle, _unknown):
@@ -1794,7 +1840,7 @@ class PdfArranger(Gtk.Application):
         page_width_new = max(p.width_in_points() for p, _ in self.model)
         page_height_new = max(p.height_in_points() for p, _ in self.model)
         if page_width_old != page_width_new or page_height_old != page_height_new:
-            GObject.timeout_add(50, self.scroll_to_selection)
+            self.scroll_to_selection()
         return rotated
 
     def split_pages(self, _action, _parameter, _unknown):
@@ -1901,18 +1947,14 @@ class PdfArranger(Gtk.Application):
         first = indices[0]
         last = indices[-1]
         contiguous = (len(indices) == last - first + 1)
-        if not contiguous:
-            return False
 
-        return True
+        return contiguous
 
     def reverse_order(self, _action, _parameter, _unknown):
         """Reverses the selected elements in the IconView"""
 
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
-        if not self.reverse_order_available(selection):
-            return
 
         # selection is a list of 1-tuples, not in order
         indices = sorted([i[0] for i in selection])

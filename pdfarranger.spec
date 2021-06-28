@@ -1,6 +1,8 @@
 # If you change this file, please inform @dreua since I most likely have to
 # apply these changes to the other pdfarranger spec files I maintain, too.
 
+# Note for future-me: meld ~/fedora-scm/pdfarranger/*.spec ~/git/pdfarranger/*.spec
+
 # These must come from the calling environment
 %global repo %{getenv:GITHUB_REPOSITORY}
 %global sha %{getenv:GITHUB_SHA}
@@ -37,6 +39,7 @@ Requires:       python3-gobject
 Requires:       gtk3
 Requires:       python3-cairo
 Requires:       poppler-glib
+Requires:       python3-dateutil >= 2.4.0
 
 %if 0%{?fedora} > 31
 # replace pdfshuffler for Fedora 32+ since it is python2 only (#1738935)
@@ -46,15 +49,18 @@ Provides:       pdfshuffler = %{version}-%{release}
 Obsoletes:      pdfshuffler < 0.6.1-1
 %endif
 
+# The repository changed to pdfarranger/pdfarranger but we leave the app_id
+# for now.
 %global app_id com.github.jeromerobert.pdfarranger
 %global python3_wheelname %{name}-*-py3-none-any.whl
 
 %description
-pdfarranger is a small Python GTK application, which helps the user to merge 
-or split PDF documents and rotate, crop and rearrange their pages using an 
-interactive and intuitive graphical interface. It is a front end for 
-python-PyPDF2.
-pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
+PDF Arranger is a small python-gtk application, which helps the user to merge 
+or split pdf documents and rotate, crop and rearrange their pages using an 
+interactive and intuitive graphical interface. It is a frontend for pikepdf.
+
+PDF Arranger is a fork of Konstantinos Poulios’s PDF-Shuffler.
+
 
 %prep
 %autosetup -n %{name}-%{sha}
@@ -81,7 +87,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{python3_sitelib}/%{name}/
 %{python3_sitelib}/%{name}-*.dist-info/
 %{_mandir}/man*/*.*
-%{_datadir}/icons/hicolor/*/apps/%{app_id}.*
+%{_datadir}/icons/hicolor/*/apps/*
 %{_metainfodir}/%{app_id}.metainfo.xml
 %{_datadir}/applications/%{app_id}.desktop
 %{_datadir}/%{name}/
@@ -93,6 +99,19 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %changelog
 * Sat Dec 12 2020 David Auer <dreua@posteo.de> - 0-20201212git%{shortcommmit}.0.1
 - Modified for pdfarranger-CI: Build given commit.
+
+* Thu Mar 18 2021 David Auer <dreua@posteo.de> - 1.7.1-1
+- Update to 1.7.1
+- Update repository URL (was a redirection anyway)
+
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Sun Jan 24 2021 David Auer <dreua@posteo.de> - 1.7.0-2
+- Add dependency: dateutil
+
+* Sun Jan 24 2021 David Auer <dreua@posteo.de> - 1.7.0-1
+- Update to 1.7.0
 
 * Sat Aug 01 2020 David Auer <dreua@posteo.de> - 1.6.2-1
 - Update to 1.6.2

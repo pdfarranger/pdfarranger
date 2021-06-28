@@ -252,7 +252,10 @@ class PDFDoc:
     def __init__(self, filename, basename, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
-        self.mtime = os.path.getmtime(filename)
+        try:
+            self.mtime = os.path.getmtime(filename)
+        except OSError as e:
+            raise PDFDocError(e)
         if basename is None:  # When importing files
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
@@ -282,7 +285,7 @@ class PDFDoc:
                 os.close(fd)
                 with open(self.copyname, "wb") as f:
                     img = img2pdf.Image.open(filename)
-                    if img.mode != "RGBA" and "transparency" in img.info:
+                    if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
                         # TODO: Find a way to keep image in P or L format and remove transparency.
                         # This will work but converting from 1, L, P to RGB is not optimal.
                         img = img.convert("RGBA")
