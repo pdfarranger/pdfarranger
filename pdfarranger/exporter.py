@@ -14,7 +14,6 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import copy
 import pikepdf
 import os
 import tempfile
@@ -160,9 +159,6 @@ def export(input_files, pages, file_out, mode, mdata):
                 Type=pikepdf.Name.Page,
                 MediaBox=new_page.MediaBox,
                 Rotate=0,
-                Annots=pikepdf.Array(
-                [pdf_output.make_indirect(copy.copy(annot))
-                    for annot in new_page.Annots]),
                 Resources=pikepdf.Dictionary(XObject=content_dict),
                 Contents=pikepdf.Stream(pdf_output, content_txt.encode())
             )
@@ -176,10 +172,11 @@ def export(input_files, pages, file_out, mode, mdata):
         pdf_output.pages.append(new_page)
         # Ensure annotations are copied rather than referenced
         # https://github.com/pdfarranger/pdfarranger/issues/437
-        if not row.clip and pikepdf.Name.Annots in current_page:
+        if pikepdf.Name.Annots in current_page:
             pdf_temp = pikepdf.Pdf.new()
             pdf_temp.pages.append(current_page)
-            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(pdf_temp.pages[0].Annots)
+            indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
+            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(indirect_annots)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
