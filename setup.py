@@ -33,7 +33,7 @@ data_files = [
 
 setup(
     name='pdfarranger',
-    version='1.7.0',
+    version='1.7.1',
     author='Jerome Robert',
     author_email='jeromerobert@gmx.com',
     description='A simple application for PDF Merging, Rearranging, and Splitting',
@@ -51,7 +51,7 @@ setup(
     entry_points={
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     },
-    install_requires=['pikepdf>=1.7.0','python-dateutil>=2.4.0'],
+    install_requires=['pikepdf>=1.17.0','python-dateutil>=2.4.0'],
     extras_require={
         'image': ['img2pdf>=0.3.4'],
     },

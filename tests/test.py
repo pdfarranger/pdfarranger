@@ -36,6 +36,10 @@ You may need to run the following commands to run thoses tests in your current s
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
 Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/config.ini)
+
+Some tips:
+
+* Use to print widget tree (names and roles) self._app().dump()
 """
 
 
@@ -171,6 +175,18 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _process(self):
         return self.__class__.pdfarranger.process
+
+    def _import_file(self, filename):
+        """Try to import a file with a file chooser and return that file chooser object"""
+        self._mainmenu("Import")
+        filechooser = self._app().child(roleName='file chooser')
+        treeview = filechooser.child(roleName="table", name="Files")
+        treeview.keyCombo("<ctrl>L")
+        treeview.typeText(os.path.abspath(filename))
+        ob = filechooser.button("Open")
+        self._wait_cond(lambda: ob.sensitive)
+        ob.click()
+        return filechooser
 
     @classmethod
     def setUpClass(cls):
@@ -323,7 +339,6 @@ class TestBatch1(PdfArrangerTest):
 
 
 class TestBatch2(PdfArrangerTest):
-    LAST=True
     def test_01_open_empty(self):
         from dogtail.config import config
         config.searchBackoffDuration = 1
@@ -335,14 +350,7 @@ class TestBatch2(PdfArrangerTest):
         config.searchBackoffDuration = 0.1
 
     def test_02_import(self):
-        self._mainmenu("Import")
-        filechooser = self._app().child(roleName='file chooser')
-        treeview = filechooser.child(roleName="table", name="Files")
-        treeview.keyCombo("<ctrl>L")
-        treeview.typeText(os.path.abspath("tests/test.pdf"))
-        ob = filechooser.button("Open")
-        self._wait_cond(lambda: ob.sensitive)
-        ob.click()
+        filechooser = self._import_file("tests/test.pdf")
         self._wait_cond(lambda: filechooser.dead)
         self.assertEqual(len(self._icons()), 2)
 
@@ -375,5 +383,50 @@ class TestBatch2(PdfArrangerTest):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Don’t Save").click()
+        # check that process actually exit
+        self._process().wait(timeout=22)
+
+
+class TestBatch3(PdfArrangerTest):
+    # Kill X11 after that batch
+    LAST=True
+    def test_01_open_encrypted(self):
+        from dogtail.config import config
+        config.searchBackoffDuration = 1
+        filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
+        shutil.copyfile("tests/test_encrypted.pdf", filename)
+        self.__class__.pdfarranger = PdfArrangerManager([filename])
+        # check that process is actually running
+        self.assertIsNone(self._process().poll())
+        app = self._app()
+        # Now let's go faster
+        config.searchBackoffDuration = 0.1
+        dialog = app.child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        passfield.text = "foobar"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_02_import_wrong_pass(self):
+        filechooser = self._import_file("tests/test_encrypted.pdf")
+        dialog = self._app().child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        passfield.text = "wrong"
+        dialog.child(name="OK").click()
+        dialog = self._app().child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        dialog.child(name="Cancel").click()
+        self._wait_cond(lambda: dialog.dead)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 2)
+
+    def test_03_quit(self):
+        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+        dialog = self._app().child(roleName="alert")
+        dialog.child(name="Save").click()
+        filechooser = self._app().child(roleName="file chooser")
+        filechooser.button("Save").click()
+        dialog = self._app().child(roleName="alert")
+        dialog.child(name="Replace").click()
         # check that process actually exit
         self._process().wait(timeout=22)

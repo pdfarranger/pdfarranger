@@ -1,4 +1,4 @@
-# This file is part of PDF-Arranger which is released under the GNU General
+# This file is part of PDF Arranger which is released under the GNU General
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
@@ -23,7 +23,7 @@ msgid "Password required"
 msgstr "Jelszó szükséges"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
 msgstr "A jelszó mindaddig emlékezetes marad, amíg bezárja a PDF-rendezőt"
 
 #: pdfarranger/core.py:187

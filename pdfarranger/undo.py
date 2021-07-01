@@ -23,8 +23,6 @@ only store snapshots of the GtkListStore object, not of
 the whole PDF files.
 """
 
-from gi.repository import GObject
-
 
 class Manager(object):
     """
@@ -73,15 +71,16 @@ class Manager(object):
         self.__refresh()
 
     def __set_state(self, state):
-        if self.app.rendering_thread:
-            self.app.rendering_thread.quit = True
-            self.app.rendering_thread.join()
+        self.app.quit_rendering()
+        self.app.model_lock()
         self.model.clear()
         for page in state:
             # Do not reset the zoom level
             page.zoom = self.app.zoom_scale
             self.model.append([page, page.description()])
-        GObject.idle_add(self.app.render)
+        self.app.model_unlock()
+        self.app.zoom_set(self.app.zoom_level)
+        self.app.silent_render()
 
     def __refresh(self):
         if self.undoaction:

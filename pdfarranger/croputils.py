@@ -43,6 +43,7 @@ def scale(model, selection, factor):
         f = min(f, 14400 / page.size[0], 14400 / page.size[1])
         if page.scale != f:
             changed = True
+        page.resample = page.resample * f / page.scale
         page.scale = f
         model.set_value(it, 0, page)
     return changed
@@ -196,7 +197,10 @@ class _CropWidget(Gtk.Frame):
     def __set_crop_value(spinbutton, self, side):
         opp_side = self.opposite_sides[side]
         adj = self.spin_list[self.sides.index(opp_side)].get_adjustment()
-        adj.set_upper(99.0 - spinbutton.get_value())
+        limit = 99.0 - spinbutton.get_value()
+        adj.set_upper(limit)
+        opp_spinner = self.spin_list[self.sides.index(opp_side)]
+        opp_spinner.set_value(min(opp_spinner.get_value(), limit))
 
     def get_crop(self):
         return [spin.get_value() / 100.0 for spin in self.spin_list]
@@ -271,14 +275,15 @@ def white_borders(model, selection, pdfqueue):
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
         cr = cairo.Context(thumbnail)
-        page.render(cr)
+        with pdfdoc.render_lock:
+            page.render(cr)
         # TODO: python list are dead slow compared to memoryview. It would
         # be faster to create a memoryview full of 0 and then compare each row
         # to it. memoryview have full native __eq__ operator which is fast.
         data = thumbnail.get_data().cast("i", shape=[h, w]).tolist()
 
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
-        # TODO: Those 4 copy/past should be factorized
+        # TODO: Those 4 copy/paste should be factorized
         # Left
         allwhite = True
         for col in range(w - 1):

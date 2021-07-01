@@ -27,8 +27,8 @@ msgid "Password required"
 msgstr "Senha obrigatória"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
-msgstr "A senha será lembrada até que você feche o PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "A senha será lembrada até que você feche o PDF Arranger."
 
 #: pdfarranger/core.py:187
 msgid ""

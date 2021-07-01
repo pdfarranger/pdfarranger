@@ -1,7 +1,7 @@
 name: pdfarranger
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
 jobs:
   build:
@@ -19,9 +19,31 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
+  build-win32:
+    runs-on: ubuntu-latest
+    container:
+      image: jeromerobert/wine-mingw64
+      options: --user root
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./setup.py build
+    - run: HOME=/root wine python setup_win32.py bdist_msi
+    - run: HOME=/root wine python setup_win32.py bdist_zip
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfarranger-windows-installer-msi
+        path: dist/*.msi
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfarranger-windows-portable-zip
+        path: dist/*.zip
   rpmbuild:
     runs-on: ubuntu-latest
     container: dreua/pdfarranger-docker-rpm
     steps:
     - name: RPM Build
       run: /pdfarranger/pdfarranger-build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfarranger-fedora-testbuild
+        path: /github/home/rpmbuild/**/*.rpm

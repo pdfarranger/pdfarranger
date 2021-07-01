@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
 <!--
-This file is part of pdfarranger which is released under the GNU General Public
+This file is part of PDF Arranger which is released under the GNU General Public
 License version 3 or later.
 See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 -->
@@ -14,7 +14,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <content_rating type="oars-1.1"/>
   <description>
     <p>
-      pdfarranger is a small application, which helps the user to merge or split pdf
+      PDF Arranger is a small application, which helps the user to merge or split pdf
       documents and rotate, crop and rearrange their pages using an interactive and
       intuitive graphical interface.
       It is a frontend for pikepdf.
@@ -23,12 +23,13 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/pdfarranger/pdfarranger/raw/master/data/screenshot.png</image>
+      <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
       <caption/>
     </screenshot>
   </screenshots>
   <update_contact>jeromerobert@gmx.com</update_contact>
   <releases>
+    <release date="2021-03-13" version="1.7.1"/>
     <release date="2021-01-24" version="1.7.0"/>
     <release date="2020-08-01" version="1.6.2"/>
     <release date="2020-07-31" version="1.6.1"/>

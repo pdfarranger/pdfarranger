@@ -29,8 +29,8 @@ msgid "Password required"
 msgstr "Passwort wird benötigt"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
-msgstr "Das Passwort wird gespeichert bis PDF-Arranger geschlossen wird."
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Das Passwort wird gespeichert bis PDF Arranger geschlossen wird."
 
 #: pdfarranger/core.py:187
 msgid ""
@@ -274,7 +274,7 @@ msgstr "Ausgewählte Seiten: "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
-msgstr "Seiten zuschneiden"
+msgstr "Seiten teilen"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -422,7 +422,7 @@ msgstr "Rei_henfolge umkehren"
 
 #: data/menu.ui.h:19
 msgid "_Split Pages"
-msgstr "_Seiten zuschneiden"
+msgstr "_Seiten teilen"
 
 #: data/menu.ui.h:20
 msgid "Cu_t"

@@ -30,7 +30,7 @@ msgid "Password required"
 msgstr "Je vyžadováno heslo"
 
 #: pdfarranger/core.py:186
-msgid "The password will be remembered until you close PDF-Arranger."
+msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Heslo bude zapamatováno, dokud neukončíte program PDF Arranger."
 
 #: pdfarranger/core.py:187

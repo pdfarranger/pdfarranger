@@ -1,0 +1,513 @@
+# PDF Arranger - Catalan translation.
+# Copyright (C) 2021
+# This file is distributed under the same license as the pdfarranger package.
+# Ícar Nin Solana <icar.nin@protonmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-27 01:37+0200\n"
+"PO-Revision-Date: 2021-05-27 01:49+0200\n"
+"Last-Translator: Ícar N. S. <icar.nin@protonmail.com>\n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.3\n"
+
+#: pdfarranger/core.py:84
+msgid "page"
+msgstr "pàgina"
+
+#: pdfarranger/core.py:191
+msgid "Password required"
+msgstr "Contrasenya requerida"
+
+#: pdfarranger/core.py:202
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "La contrasenya es recordarà fins que tanqueu el PDF Arranger."
+
+#: pdfarranger/core.py:203
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr ""
+"El document “{}” està bloquejat i requereix una contrasenya abans que es "
+"pugui obrir."
+
+#: pdfarranger/core.py:213
+msgid "Password"
+msgstr "Contrasenya"
+
+#: pdfarranger/core.py:261 pdfarranger/pdfarranger.py:1140
+msgid "Unknown file format"
+msgstr "Format de fitxer desconegut"
+
+#: pdfarranger/core.py:277
+msgid "Image files are only supported with img2pdf"
+msgstr "Els fitxers d'imatge només són compatibles amb img2pdf"
+
+#: pdfarranger/core.py:299
+msgid "Image format is not supported by img2pdf"
+msgstr "El format de la imatge no està admès per img2pdf"
+
+#: pdfarranger/core.py:301 pdfarranger/pdfarranger.py:1150
+msgid "File is neither pdf nor image"
+msgstr "El fitxer no és ni pdf ni imatge"
+
+#: pdfarranger/croputils.py:114
+msgid "Scale factor"
+msgstr "Factor d'escala"
+
+#: pdfarranger/croputils.py:120
+msgid "%"
+msgstr "%"
+
+#: pdfarranger/croputils.py:136
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/croputils.py:146
+msgid "Left"
+msgstr "Esquerra"
+
+#: pdfarranger/croputils.py:146
+msgid "Right"
+msgstr "Dreta"
+
+#: pdfarranger/croputils.py:146
+msgid "Top"
+msgstr "Superior"
+
+#: pdfarranger/croputils.py:146
+msgid "Bottom"
+msgstr "Inferior"
+
+#: pdfarranger/croputils.py:150
+msgid "Crop Margins"
+msgstr "Retalla els marges"
+
+#: pdfarranger/croputils.py:158
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr "Escapçar no elimina cap contingut del fitxer PDF, només l'oculta."
+
+#: pdfarranger/croputils.py:167
+#, python-format
+msgid "% of width"
+msgstr "% de l'amplada"
+
+#: pdfarranger/croputils.py:167
+#, python-format
+msgid "% of height"
+msgstr "% de l'alçada"
+
+#: pdfarranger/croputils.py:214
+msgid "Page format"
+msgstr "Format de la pàgina"
+
+#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
+#: pdfarranger/croputils.py:348
+msgid "Width"
+msgstr "Amplada"
+
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:349
+msgid "Height"
+msgstr "Alçada"
+
+#: pdfarranger/croputils.py:232
+msgid "Relative"
+msgstr "Relatiu"
+
+#: pdfarranger/croputils.py:235
+msgid "Page Size"
+msgstr "Mida de la pàgina"
+
+#: pdfarranger/croputils.py:338
+msgid "Insert Blank Page"
+msgstr "Insereix una pàgina en blanc"
+
+#: pdfarranger/exporter.py:114
+msgid "Warning"
+msgstr "Avís"
+
+#: pdfarranger/exporter.py:119
+msgid "Forms and outlines are lost on saving."
+msgstr "Els formularis i els contorns es perden en desar."
+
+#: pdfarranger/exporter.py:121
+msgid "Do not show this dialog again."
+msgstr "No tornis a mostrar aquest diàleg."
+
+#: pdfarranger/metadata.py:40
+msgid "Title"
+msgstr "Títol"
+
+#: pdfarranger/metadata.py:41
+msgid "Subject"
+msgstr "Assumpte"
+
+#: pdfarranger/metadata.py:42
+msgid "Keywords"
+msgstr "Paraules clau"
+
+#: pdfarranger/metadata.py:43
+msgid "Producer"
+msgstr "Productor"
+
+#: pdfarranger/metadata.py:44
+msgid "Creator"
+msgstr "Creador"
+
+#: pdfarranger/metadata.py:45
+msgid "Creator tool"
+msgstr "Eina creadora"
+
+#: pdfarranger/metadata.py:46
+msgid "Created"
+msgstr "Creat"
+
+#: pdfarranger/metadata.py:47
+msgid "Modified"
+msgstr "Modificat"
+
+#: pdfarranger/metadata.py:151
+msgid "Invalid date format. Input discarded."
+msgstr "Format de data no vàlid. S'ha descartat l'entrada."
+
+#: pdfarranger/metadata.py:180
+msgid "Edit properties"
+msgstr "Edita les propietats"
+
+#: pdfarranger/metadata.py:193
+msgid "Property"
+msgstr "Propietat"
+
+#: pdfarranger/metadata.py:193
+msgid "Value"
+msgstr "Valor"
+
+#: pdfarranger/pdfarranger.py:367
+msgid "All supported files"
+msgstr "Tots els fitxers admesos"
+
+#: pdfarranger/pdfarranger.py:371
+msgid "PDF files"
+msgstr "Fitxers PDF"
+
+#: pdfarranger/pdfarranger.py:378
+msgid "All files"
+msgstr "Tots els fitxers"
+
+#: pdfarranger/pdfarranger.py:383
+msgid "Supported image files"
+msgstr "Fitxers d'imatge compatibles"
+
+#: pdfarranger/pdfarranger.py:637
+msgid "untitled"
+msgstr "sense títol"
+
+#: pdfarranger/pdfarranger.py:772
+msgid "Save changes to “{}” before closing?"
+msgstr "Voleu desar els canvis a “{}” abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:774
+msgid "Save changes before closing?"
+msgstr "Voleu desar els canvis abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:776
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Els teus canvis es perdran si no els guardes."
+
+#: pdfarranger/pdfarranger.py:777
+msgid "Do_n’t Save"
+msgstr "No desar"
+
+#: pdfarranger/pdfarranger.py:777
+msgid "_Cancel"
+msgstr "Cancel·la"
+
+#: pdfarranger/pdfarranger.py:777 data/menu.ui.h:3
+msgid "_Save"
+msgstr "Desa"
+
+#: pdfarranger/pdfarranger.py:819
+msgid "Export…"
+msgstr "Exporta..."
+
+#: pdfarranger/pdfarranger.py:929
+msgid "Import…"
+msgstr "Importa..."
+
+#: pdfarranger/pdfarranger.py:1034
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Les dades enganxades no són vàlides. S'està avortant l'operació."
+
+#: pdfarranger/pdfarranger.py:1144
+msgid "PDF document is damaged"
+msgstr "El document PDF està malmès"
+
+#: pdfarranger/pdfarranger.py:1985
+#, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"%s és una eina per reordenar i modificar fitxers PDF. Desenvolupat usant GTK"
+"+ i Python"
+
+#: pdfarranger/pdfarranger.py:1988
+#, python-format
+msgid "(%s uses libqpdf %s and pikepdf %s)"
+msgstr "(%s utilitza libqpdf %s i pikepdf %s)"
+
+#: pdfarranger/pdfarranger.py:1990
+msgid "Maintainers and contributors"
+msgstr "Mantenidors i contribuïdors"
+
+#: pdfarranger/pdfarranger.py:1995
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "Llicència Pública General GNU (GPL) Versió 3."
+
+#: pdfarranger/pdfarranger.py:2024
+msgid "Selected pages: "
+msgstr "Pàgines seleccionades: "
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "Divideix les pàgines"
+
+#: pdfarranger/splitter.py:58
+msgid "Columns"
+msgstr "Columnes"
+
+#: pdfarranger/splitter.py:58
+msgid "Rows"
+msgstr "Files"
+
+#: pdfarranger/splitter.py:59
+msgid "Vertical Splits"
+msgstr "Divisions verticals"
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr "Divisions horitzontals"
+
+#: pdfarranger/splitter.py:60
+msgid "Equal column width"
+msgstr "Amplada igual de la columna"
+
+#: pdfarranger/splitter.py:60
+msgid "Equal row height"
+msgstr "Alçada igual de la fila"
+
+#: pdfarranger/splitter.py:85
+msgid "#Col"
+msgstr "#Col"
+
+#: pdfarranger/splitter.py:85
+msgid "#Row"
+msgstr "#Fila"
+
+#: pdfarranger/splitter.py:86
+msgid "Width in %"
+msgstr "Amplada en %"
+
+#: pdfarranger/splitter.py:86
+msgid "Height in %"
+msgstr "Alçada en %"
+
+#: data/pdfarranger.ui.h:1
+msgid "Open a file and append it to the current document"
+msgstr "Obre un fitxer i afegeix-el al document actual"
+
+#: data/pdfarranger.ui.h:2
+msgid "Save"
+msgstr "Desa"
+
+#: data/pdfarranger.ui.h:3
+msgid "Save As"
+msgstr "Desa com a"
+
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
+msgstr "Nombre de pàgines"
+
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
+msgstr "Menú principal"
+
+#: data/pdfarranger.ui.h:6
+msgid "Zoom In"
+msgstr "Amplia"
+
+#: data/pdfarranger.ui.h:7
+msgid "Zoom Out"
+msgstr "Allunya"
+
+#: data/pdfarranger.ui.h:8
+msgid "Rotate Left"
+msgstr "Gira a l'esquerra"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Gira a la dreta"
+
+#: data/menu.ui.h:1
+msgid "_Import"
+msgstr "Importa"
+
+#: data/menu.ui.h:2
+msgid "_New Window"
+msgstr "Finestra nova"
+
+#: data/menu.ui.h:4
+msgid "Save _As…"
+msgstr "Anomena i desa..."
+
+#: data/menu.ui.h:5
+msgid "E_xport"
+msgstr "Exporta"
+
+#: data/menu.ui.h:6
+msgid "E_xport Selection to a Single File…"
+msgstr "Exporta la selecció a un sol fitxer..."
+
+#: data/menu.ui.h:7
+msgid "Export Selection to _Individual Files…"
+msgstr "Exporta la selecció a fitxers individuals..."
+
+#: data/menu.ui.h:8
+msgid "Export _All Pages to Individual Files…"
+msgstr "Exporta totes les pàgines a fitxers individuals..."
+
+#: data/menu.ui.h:9
+msgid "_Undo"
+msgstr "Desfés"
+
+#: data/menu.ui.h:10
+msgid "_Redo"
+msgstr "Refés"
+
+#: data/menu.ui.h:11
+msgid "_Edit"
+msgstr "Edita"
+
+#: data/menu.ui.h:12
+msgid "Rotate _Left"
+msgstr "Gira a l'esquerra"
+
+#: data/menu.ui.h:13
+msgid "_Rotate Right"
+msgstr "Gira a la dreta"
+
+#: data/menu.ui.h:14
+msgid "_Page Format"
+msgstr "Format de la pàgina"
+
+#: data/menu.ui.h:15
+msgid "Crop White Borders"
+msgstr "Escapça les vores blanques"
+
+#: data/menu.ui.h:16
+msgid "_Delete"
+msgstr "Suprimeix"
+
+#: data/menu.ui.h:17
+msgid "Dupl_icate"
+msgstr "Duplica"
+
+#: data/menu.ui.h:18
+msgid "Re_verse Order"
+msgstr "Ordre invers"
+
+#: data/menu.ui.h:19
+msgid "_Split Pages"
+msgstr "Divideix les pàgines"
+
+#: data/menu.ui.h:20
+msgid "Cu_t"
+msgstr "Retalla"
+
+#: data/menu.ui.h:21
+msgid "_Copy"
+msgstr "Copia"
+
+#: data/menu.ui.h:22
+msgid "Paste _After"
+msgstr "Enganxa després"
+
+#: data/menu.ui.h:23
+msgid "Paste _Before"
+msgstr "Enganxa abans"
+
+#: data/menu.ui.h:24
+msgid "Paste Interleave _Odd"
+msgstr "Enganxa intercalada senarment"
+
+#: data/menu.ui.h:25
+msgid "Paste Interleave _Even"
+msgstr "Enganxa intercalada parellament"
+
+#: data/menu.ui.h:26
+msgid "Insert Blan_k Page"
+msgstr "Insereix una pàgina en blanc"
+
+#: data/menu.ui.h:27
+msgid "_Select"
+msgstr "Selecciona"
+
+#: data/menu.ui.h:28
+msgid "Select _All"
+msgstr "Selecciona-ho tot"
+
+#: data/menu.ui.h:29
+msgid "_Deselect All"
+msgstr "Desselecciona-ho tot"
+
+#: data/menu.ui.h:30
+msgid "Select _Odd Pages"
+msgstr "Selecciona les pàgines senars"
+
+#: data/menu.ui.h:31
+msgid "Select _Even Pages"
+msgstr "Selecciona les pàgines parelles"
+
+#: data/menu.ui.h:32
+msgid "All From _Same File"
+msgstr "Tots del mateix fitxer"
+
+#: data/menu.ui.h:33
+msgid "Same Page _Format"
+msgstr "El mateix format de pàgina"
+
+#: data/menu.ui.h:34
+msgid "_Invert Selection"
+msgstr "Inverteix la selecció"
+
+#: data/menu.ui.h:35
+msgid "Zoom _In"
+msgstr "Amplia"
+
+#: data/menu.ui.h:36
+msgid "Zoom _Out"
+msgstr "Allunya"
+
+#: data/menu.ui.h:37
+msgid "Edit _Properties"
+msgstr "Edita les propietats"
+
+#: data/menu.ui.h:38
+msgid "_About"
+msgstr "Quant a"
+
+#: data/menu.ui.h:39
+msgid "_Quit"
+msgstr "Surt"
+
+#: data/menu.ui.h:40
+msgid "Past_e Special"
+msgstr "Enganxament especial"
