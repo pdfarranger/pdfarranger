@@ -68,7 +68,7 @@ else:
     del libintl
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.7.0rc1'
+VERSION = '1.7.0'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 # Add support for dnd to other instance and insert file at drop location in Windows
@@ -669,13 +669,10 @@ class PdfArranger(Gtk.Application):
     def choose_export_pdf_name(self, mode):
         """Handles choosing a name for exporting """
 
-        chooser = Gtk.FileChooserDialog(title=_('Export…'),
-                                        parent=self.window,
-                                        action=Gtk.FileChooserAction.SAVE,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_SAVE,
-                                                 Gtk.ResponseType.ACCEPT))
+        chooser = Gtk.FileChooserNative.new(title=_('Export…'),
+                                            parent=self.window,
+                                            action=Gtk.FileChooserAction.SAVE
+                                            )
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             f = self.pdfqueue[0].filename
@@ -779,13 +776,10 @@ class PdfArranger(Gtk.Application):
 
     def on_action_add_doc_activate(self, _action, _param, _unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserDialog(title=_('Import…'),
-                                        parent=self.window,
-                                        action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
-                                                 Gtk.ResponseType.ACCEPT))
+        chooser = Gtk.FileChooserNative.new(title=_('Import…'),
+                                            parent=self.window,
+                                            action=Gtk.FileChooserAction.OPEN,
+                                            )
         chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
         file_type_list = ['all', 'pdf']
@@ -981,6 +975,8 @@ class PdfArranger(Gtk.Application):
                 self.paste_files(data, before, ref_to)
             else:
                 self.paste_pages(data, before, ref_to, select_added=False)
+            if pastemode == 'BEFORE':
+                self.__update_statusbar()
         elif pastemode in ['ODD', 'EVEN']:
             if data_is_filepaths:
                 # Generate data to send to paste_pages_interleave
@@ -1179,11 +1175,12 @@ class PdfArranger(Gtk.Application):
                              for p in data]
             iter_to = self.model.get_iter(ref_to.get_path())
             for ref_from in ref_from_list:
-                row = model[model.get_iter(ref_from.get_path())]
+                iterator = model.get_iter(ref_from.get_path())
+                page = model.get_value(iterator, 0).duplicate()
                 if before:
-                    it = model.insert_before(iter_to, row[:])
+                    it = model.insert_before(iter_to, [page, page.description()])
                 else:
-                    it = model.insert_after(iter_to, row[:])
+                    it = model.insert_after(iter_to, [page, page.description()])
                 path = model.get_path(it)
                 iconview.select_path(path)
             if move:
