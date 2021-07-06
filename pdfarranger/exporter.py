@@ -229,6 +229,10 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
                 Resources=pikepdf.Dictionary(XObject=content_dict),
                 Contents=pikepdf.Stream(file, content_txt.encode())
             )
+
+        # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
+        if pikepdf.__version__ < '2.7.0':
+            newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
 
     file.save(filename)
