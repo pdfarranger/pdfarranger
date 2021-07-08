@@ -25,6 +25,7 @@ __all__ = [
 
 import sys
 import os
+import errno
 import mimetypes
 import copy
 import pathlib
@@ -326,6 +327,11 @@ class PageAdder:
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         nfile = None
+        # Check if file exists
+        if not os.path.isfile(filename):
+            raise FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), filename)
+
         # Check if added page or file already exist in pdfqueue
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
             if basename is not None and filename == it_pdfdoc.copyname:

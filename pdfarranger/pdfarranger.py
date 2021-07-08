@@ -214,7 +214,8 @@ class PdfArranger(Gtk.Application):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, application_id="com.github.jeromerobert.pdfarranger",
-                         flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE,
+                         flags=Gio.ApplicationFlags.NON_UNIQUE |
+                            Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
                          **kwargs)
 
         # Create the temporary directory
@@ -267,15 +268,32 @@ class PdfArranger(Gtk.Application):
             # "private" clipboard does not work in Windows so we can't use it here
             self.clipboard_pdfarranger = Gtk.Clipboard.get(Gdk.Atom.intern('_SELECTION_PDFARRANGER',
                                                                            False))
+        self.add_arguments()
 
-    def do_open(self, files, _n, _hints):
-        """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_open """
-        self.activate()
-        # Importing documents passed as command line arguments
-        a = PageAdder(self)
-        for f in files:
-            a.addpages(f.get_path())
-        a.commit(select_added=False, add_to_undomanager=True)
+    def add_arguments(self):
+        self.set_option_context_summary(_(
+           "PDF Arranger is a small python-gtk application, which helps the "
+           "user to merge or split pdf documents and rotate, crop and rearrange "
+           "their pages using an interactive and intuitive graphical interface. "
+           "It is a frontend for pikepdf."
+        ))
+
+        self.add_main_option(
+            "version",
+            ord("v"),
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.NONE,
+            _("Print the version of PDF Arranger and exit"),
+            None,
+        )
+        self.add_main_option(
+            GLib.OPTION_REMAINING,
+            0,
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.STRING_ARRAY,
+            _("File(s) to open"),
+            "[FILES]",
+        )
 
     def __build_from_file(self, path):
         """ Return the path of a resource file """
@@ -534,6 +552,34 @@ class PdfArranger(Gtk.Application):
 
         self.iv_cursor = IconviewCursor(self)
         self.iv_drag_select = IconviewDragSelect(self)
+
+    def do_command_line(self, command_line):
+        options = command_line.get_options_dict()
+
+        # Print PDF Arranger version and exit
+        if options.contains("version"):
+            print(APPNAME + "-" + VERSION)
+            print("pikepdf-" + pikepdf.__version__)
+            print("libqpdf-" + pikepdf.__libqpdf_version__)
+            return 0
+
+        self.activate()
+
+        if options.lookup_value(GLib.OPTION_REMAINING):
+            files = [Gio.File.new_for_commandline_arg(i)
+                    for i in options.lookup_value(GLib.OPTION_REMAINING)]
+
+            a = PageAdder(self)
+            for f in files:
+                try:
+                    a.addpages(f.get_path())
+                except FileNotFoundError as e:
+                    print(e, file=sys.stderr)
+                    self.error_message_dialog(e)
+
+            a.commit(select_added=False, add_to_undomanager=True)
+
+        return 0
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
