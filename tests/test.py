@@ -129,7 +129,7 @@ class PdfArrangerTest(unittest.TestCase):
     def _app(self):
         # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
         from dogtail.tree import root
-        a = root.application("__main__.py")
+        a = root.application("../bin/pdfarranger")
         self.assertFalse(a.dead)
         return a
 

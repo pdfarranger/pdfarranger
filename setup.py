@@ -48,9 +48,7 @@ setup(
         "clean_i18n": clean_i18n.clean_i18n,
         "build_icons": build_icons.build_icons,
     },
-    entry_points={
-        'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
-    },
+    scripts=['bin/pdfarranger'],
     install_requires=['pikepdf>=1.17.0','python-dateutil>=2.4.0'],
     extras_require={
         'image': ['img2pdf>=0.3.4'],
