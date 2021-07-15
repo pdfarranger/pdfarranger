@@ -826,7 +826,11 @@ class PdfArranger(Gtk.Application):
             response = d.run()
             d.destroy()
 
-            if response == 2:
+            if response == 1:
+                # Quit
+                self.close_application()
+            elif response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                # DELETE_EVENT is returned if Esc is pressed
                 # Returning True to stop self.window delete_event propagation.
                 return True
             elif response == 3:
@@ -835,8 +839,12 @@ class PdfArranger(Gtk.Application):
                 # Quit only if it has been really saved.
                 if self.is_unsaved:
                     return True
-
-        self.close_application()
+                self.close_application()
+            else:
+                # If unknown return code, do nothing
+                return True
+        else:
+            self.close_application()
 
     def close_application(self, _widget=None, _event=None, _data=None):
         """Termination"""
