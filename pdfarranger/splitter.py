@@ -102,21 +102,35 @@ class Dialog(Gtk.Dialog):
         return treeview
 
     def _edited(self, widget, path, value, direction):
-        delta = self.model[direction][path][1] - int(value)
-        if delta == 0:
+        # Avoid that a user bypasses the limits of the spin buttons
+        # via keyboard input and pressing enter.
+        value = min(max(0, int(value)), 100)
+        if self.model[direction][path][1] == int(value):
             return
-        self.model[direction][path][1] = int(value)
-        self.checkbuttons[direction].set_active(False)
-        # Fix the sum to match 100, adjusting entries from bottom to top.
-        cur_idx = int(path)
-        for i in reversed(range(len(self.model[direction]))):
-            if i != cur_idx:
-                sign = delta/abs(delta)
-                s = sign * min(abs(delta), self.model[direction][i][1])
-                self.model[direction][i][1] += s
-                delta -= s
-                if delta == 0:
-                    break
+        if self.checkbuttons[direction].get_active():
+            # Populate all entries with the new value
+            # The sum may exceed 100, allowing for overlap.
+            crop_sum = len(self.model[direction]) * value
+            if crop_sum >= 100:
+                for i in range(len(self.model[direction])):
+                    self.model[direction][i][1] = value
+        else:
+            # Unevenly sized tiles. Fix the sum to match 100,
+            # adjusting entries from bottom to top.
+            self.model[direction][path][1] = value
+            crop_sum = 0
+            for i in range(len(self.model[direction])):
+                crop_sum += self.model[direction][i][1]
+            delta = 100 - crop_sum
+            cur_idx = int(path)
+            for i in reversed(range(len(self.model[direction]))):
+                if i != cur_idx:
+                    sign = delta/abs(delta)
+                    s = sign * min(abs(delta), self.model[direction][i][1])
+                    self.model[direction][i][1] += s
+                    delta -= s
+                    if delta == 0:
+                        break
 
     def _update_split(self, _event, direction):
         self.split_count[direction] = self.spinbuttons[direction].get_value_as_int()
@@ -149,21 +163,47 @@ class Dialog(Gtk.Dialog):
         self._update_split(None, direction)
 
     def _crops(self, direction):
-        # Pad so that the size calculates crops[i+1] - crops[i].
-        crops = [0] * (len(self.model[direction]) + 1)
-        for i in range(0, len(self.model[direction])):
-            value = 0.01 * self.model[direction][i][1]
-            crops[i+1] = crops[i] + value
-        # Remove empty tiles
-        crops = list(sorted(set(crops)))
+        # Convert the tile sizes into a list of tuples (start, end) such that
+        # tile size = end - start.
+        num_splits = len(self.model[direction])
+        crops = [(0, 0.01 * self.model[direction][0][1])] * num_splits
+        crop_sum = 0.01 * self.model[direction][0][1]
+        for i in range(1, num_splits):
+            size = 0.01 * self.model[direction][i][1]
+            crop_sum += size
+            crops[i] = (crops[i-1][1], crops[i-1][1] + size)
+
+        # Remove zero-sized tiles
+        crops = [t for t in crops if t[0] < t[1]]
+
+        overlap = crop_sum - 1.0 # nonnegative
+        if overlap == 0.0:
+            return crops
+
+        # We have multiple splits and crop_sum > 1.0
+        # 35,35,35 => [0,35],[32.5,67.5],[65,100]; overlap = 5
+        # 60,60 => [0,60],[40,100]; overlap = 20
+        # In general:
+        #   [start=last-overlap/(num_splits-1),end=start+size]
+        overlap_per_tile = overlap / (num_splits - 1)
+
+        # Overlap is only defined when all tiles have the same size.
+        size = 0.01 * self.model[direction][0][1]
+        crops[0] = (0, size)
+        for i in range(1, num_splits - 1):
+            start = crops[i-1][1] - overlap_per_tile
+            end = start + size
+            crops[i] = (start, end)
+        crops[-1] = (1.0 - size, 1.0)
         return crops
+
 
     def run_get(self):
         result = self.run()
-        leftcrops = None
-        topcrops = None
+        vcrops = None
+        hcrops = None
         if result == Gtk.ResponseType.OK:
-            leftcrops = self._crops('vertical')
-            topcrops = self._crops('horizontal')
+            vcrops = self._crops('vertical')
+            hcrops = self._crops('horizontal')
         self.destroy()
-        return leftcrops, topcrops
+        return vcrops, hcrops
