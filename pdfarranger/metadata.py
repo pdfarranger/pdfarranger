@@ -182,7 +182,8 @@ def edit(metadata, pdffiles, parent):
                         flags=Gtk.DialogFlags.MODAL,
                         buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                                  Gtk.STOCK_OK, Gtk.ResponseType.OK))
-    dialog.set_default_response(Gtk.ResponseType.OK)
+    ok_button = dialog.get_widget_for_response(response_id = Gtk.ResponseType.OK)
+    ok_button.grab_focus()
     # Property, Value, XMP name (hidden)
     liststore = Gtk.ListStore(str, str, str)
     mergedmetadata = merge(metadata, pdffiles)
