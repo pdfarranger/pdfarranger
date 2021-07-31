@@ -371,29 +371,21 @@ class PdfArranger(Gtk.Application):
         model = self.iconview.get_model()
 
         selection = self.iconview.get_selected_items()
-        if len(selection) < 1:
-            pages = [e[0] for e in self.model]
-        else:
-            selection.sort(key=lambda x: x.get_indices()[0])
-            ref_list = [Gtk.TreeRowReference.new(model, path)
-                        for path in selection]
-            pages = [model.get_value(model.get_iter(ref.get_path()), 0)
-                     for ref in ref_list]
+        selection.sort(key=lambda x: x.get_indices()[0])
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        pages = [model.get_value(model.get_iter(ref.get_path()), 0)
+                 for ref in ref_list]
 
-        if len(pages) % 2 != 0:
+        blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
+        for i in range(blank_page_count):
             self._insert_page(model, pages[0].size, selection)
-            if len(selection) < 1:
-                pages.append(model[-1][0])
-            else:
-                added_page_index = selection[-1].get_indices()[-1] + 1
-                added_page = model.get_value(model.get_iter(added_page_index), 0)
-                pages.append(added_page)
-                model.remove(model.get_iter(added_page_index))
+            added_page_index = selection[-1].get_indices()[-1] + 1
+            added_page = model.get_value(model.get_iter(added_page_index), 0)
+            pages.append(added_page)
+            model.remove(model.get_iter(added_page_index))
 
-        if len(selection) > 0:
-            self.clear_selected()
-        else:
-            self.model.clear()
+        self.clear_selected()
 
         adder = PageAdder(self)
         booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
@@ -1686,6 +1678,7 @@ class PdfArranger(Gtk.Application):
             ("select-same-file", ne),
             ("select-same-format", ne),
             ("crop-white-borders", ne),
+            ("generate-booklet", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()
