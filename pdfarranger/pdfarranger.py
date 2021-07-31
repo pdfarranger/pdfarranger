@@ -107,16 +107,16 @@ gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
 
-import undo
-import exporter
-import metadata
-import croputils
-import splitter
-from iconview import CellRendererImage
-from iconview import IconviewCursor
-from iconview import IconviewDragSelect
-from config import Config
-from core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
+from . import undo
+from . import exporter
+from . import metadata
+from . import croputils
+from . import splitter
+from .iconview import CellRendererImage
+from .iconview import IconviewCursor
+from .iconview import IconviewDragSelect
+from .config import Config
+from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
 
@@ -377,12 +377,14 @@ class PdfArranger(Gtk.Application):
         pages = [model.get_value(model.get_iter(ref.get_path()), 0)
                  for ref in ref_list]
 
+        # We need a multiple of 4
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
             file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
-            for i in range(blank_page_count):
+            for _ in range(blank_page_count):
                 self._insert_pages(model, file, selection)
                 added_page_index = selection[-1].get_indices()[-1] + 1
+                # Fetch the additional blank pages and remove them from the model.
                 added_page = model.get_value(model.get_iter(added_page_index), 0)
                 pages.append(added_page)
                 model.remove(model.get_iter(added_page_index))
