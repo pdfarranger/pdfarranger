@@ -107,16 +107,16 @@ gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
 
-from . import undo
-from . import exporter
-from . import metadata
-from . import croputils
-from . import splitter
-from .iconview import CellRendererImage
-from .iconview import IconviewCursor
-from .iconview import IconviewDragSelect
-from .config import Config
-from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
+import undo
+import exporter
+import metadata
+import croputils
+import splitter
+from iconview import CellRendererImage
+from iconview import IconviewCursor
+from iconview import IconviewDragSelect
+from config import Config
+from core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
 
@@ -357,13 +357,13 @@ class PdfArranger(Gtk.Application):
             size = model[selection[-1]][0].size_in_points()
         page_size = croputils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
-            self._insert_page(model, page_size, selection)
+            self._insert_pages(model, exporter.create_blank_page(self.tmp_dir, page_size), selection)
 
-    def _insert_page(self, model, page_size, selection):
+    def _insert_pages(self, model, file, selection):
         adder = PageAdder(self)
         if len(selection) > 0:
             adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
-        adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
+        adder.addpages(file)
         adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _, __, ___):
@@ -378,12 +378,14 @@ class PdfArranger(Gtk.Application):
                  for ref in ref_list]
 
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
-        for i in range(blank_page_count):
-            self._insert_page(model, pages[0].size, selection)
-            added_page_index = selection[-1].get_indices()[-1] + 1
-            added_page = model.get_value(model.get_iter(added_page_index), 0)
-            pages.append(added_page)
-            model.remove(model.get_iter(added_page_index))
+        if blank_page_count > 0:
+            file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
+            for i in range(blank_page_count):
+                self._insert_pages(model, file, selection)
+                added_page_index = selection[-1].get_indices()[-1] + 1
+                added_page = model.get_value(model.get_iter(added_page_index), 0)
+                pages.append(added_page)
+                model.remove(model.get_iter(added_page_index))
 
         self.clear_selected()
 
