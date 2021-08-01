@@ -727,6 +727,8 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
                 self.iconview.unselect_path(path)
         self.__update_statusbar(path.get_indices()[0] + 1)
+        ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
+        ac.set_description(page.description())
 
     def get_visible_range2(self):
         """Get range of items visible in window.
