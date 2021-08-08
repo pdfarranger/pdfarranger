@@ -381,13 +381,14 @@ class PdfArranger(Gtk.Application):
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
             file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
-            for _ in range(blank_page_count):
-                self._insert_pages(model, file, selection)
-                added_page_index = selection[-1].get_indices()[-1] + 1
-                # Fetch the additional blank pages and remove them from the model.
-                added_page = model.get_value(model.get_iter(added_page_index), 0)
-                pages.append(added_page)
-                model.remove(model.get_iter(added_page_index))
+            with self.model_lock:
+                for _ in range(blank_page_count):
+                    self._insert_pages(model, file, selection)
+                    added_page_index = selection[-1].get_indices()[-1] + 1
+                    # Fetch the additional blank pages and remove them from the model.
+                    added_page = model.get_value(model.get_iter(added_page_index), 0)
+                    pages.append(added_page)
+                    model.remove(model.get_iter(added_page_index))
 
         self.clear_selected()
 
