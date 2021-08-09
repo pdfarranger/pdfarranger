@@ -352,6 +352,7 @@ class PdfArranger(Gtk.Application):
             ('select-same-format', self.on_action_select, 'i'),
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
+            ("generate-booklet", self.generate_booklet),
         ])
 
         main_menu = self.uiXML.get_object("main_menu_button")
@@ -374,11 +375,47 @@ class PdfArranger(Gtk.Application):
             size = model[selection[-1]][0].size_in_points()
         page_size = croputils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
-            adder = PageAdder(self)
-            if len(selection) > 0:
-                adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
-            adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
-            adder.commit(select_added=False, add_to_undomanager=True)
+            self._insert_pages(model, exporter.create_blank_page(self.tmp_dir, page_size), selection)
+
+    def _insert_pages(self, model, file, selection):
+        adder = PageAdder(self)
+        if len(selection) > 0:
+            adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
+        adder.addpages(file)
+        adder.commit(select_added=False, add_to_undomanager=True)
+
+    def generate_booklet(self, _, __, ___):
+        self.undomanager.commit("generate booklet")
+        model = self.iconview.get_model()
+
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        pages = [model.get_value(model.get_iter(ref.get_path()), 0)
+                 for ref in ref_list]
+
+        # We need a multiple of 4
+        blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
+        if blank_page_count > 0:
+            file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
+            with self.model_lock:
+                for _ in range(blank_page_count):
+                    self._insert_pages(model, file, selection)
+                    added_page_index = selection[-1].get_indices()[-1] + 1
+                    # Fetch the additional blank pages and remove them from the model.
+                    added_page = model.get_value(model.get_iter(added_page_index), 0)
+                    pages.append(added_page)
+                    model.remove(model.get_iter(added_page_index))
+
+        self.clear_selected()
+
+        adder = PageAdder(self)
+        booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
+        adder.addpages(booklet)
+        adder.commit(False, False)
+        self.silent_render()
+
 
     @staticmethod
     def __create_filters(file_type_list):
@@ -1008,9 +1045,10 @@ class PdfArranger(Gtk.Application):
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
-    def clear_selected(self):
+    def clear_selected(self, add_to_undomanager=True):
         """Removes the selected elements in the IconView"""
-        self.undomanager.commit("Delete")
+        if add_to_undomanager:
+            self.undomanager.commit("Delete")
         model = self.iconview.get_model()
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
@@ -1701,6 +1739,7 @@ class PdfArranger(Gtk.Application):
             ("select-same-file", ne),
             ("select-same-format", ne),
             ("crop-white-borders", ne),
+            ("generate-booklet", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
         self.__update_statusbar()

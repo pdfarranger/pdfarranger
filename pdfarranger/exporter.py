@@ -30,12 +30,17 @@ def create_blank_page(tmpdir, size):
     Create a temporary PDF file with a single empty page.
     The size is in PDF unit (1/72 of inch).
     """
-    fd, filename = tempfile.mkstemp(suffix=".pdf", dir=tmpdir)
-    os.close(fd)
-    f = pikepdf.Pdf.new()
+    f, filename = make_tmp_file(tmpdir)
     f.add_blank_page(page_size=size)
     f.save(filename)
     return filename
+
+
+def make_tmp_file(tmpdir):
+    fd, filename = tempfile.mkstemp(suffix=".pdf", dir=tmpdir)
+    os.close(fd)
+    f = pikepdf.Pdf.new()
+    return f, filename
 
 
 def _mediabox(page, crop):
@@ -193,3 +198,43 @@ def num_pages(filepath):
     npages = len(pdf.pages)
     pdf.close()
     return npages
+
+
+def generate_booklet(pdfqueue, tmp_dir, pages):
+    file, filename = make_tmp_file(tmp_dir)
+    content_dict = pikepdf.Dictionary({})
+    file_indexes = {p.nfile for p in pages}
+    source_files = {n: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
+    for i in range(len(pages)//2):
+        even = i % 2 == 0
+        first = pages[-i - 1 if even else i]
+        second = pages[i if even else -i - 1]
+
+        second_page_size = second.size_in_points()
+        first_page_size = first.size_in_points()
+        page_size = [max(second_page_size[0], first_page_size[0]) * 2,
+                     max(second_page_size[1], first_page_size[1])]
+        first_foreign = file.copy_foreign(source_files[first.nfile].pages[first.npage - 1])
+        second_foreign = file.copy_foreign(source_files[second.nfile].pages[second.npage - 1])
+
+        content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
+        content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
+
+        content_txt = (f'q 1 0 0 1 0 0 cm /Page{i*2} Do Q'
+                       f' q 1 0 0 1 {first_page_size[0]} 0 cm /Page{i*2 + 1} Do Q ')
+
+        newpage = pikepdf.Dictionary(
+                Type=pikepdf.Name.Page,
+                MediaBox=[0, 0, *page_size],
+                Resources=pikepdf.Dictionary(XObject=content_dict),
+                Contents=pikepdf.Stream(file, content_txt.encode())
+            )
+
+        # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
+        if pikepdf.__version__ < '2.7.0':
+            newpage = file.make_indirect(newpage)
+        file.pages.append(newpage)
+
+    file.save(filename)
+    return filename
+
