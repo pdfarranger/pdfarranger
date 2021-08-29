@@ -375,14 +375,11 @@ class PdfArranger(Gtk.Application):
             size = model[selection[-1]][0].size_in_points()
         page_size = croputils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
-            self._insert_pages(model, exporter.create_blank_page(self.tmp_dir, page_size), selection)
-
-    def _insert_pages(self, model, file, selection):
-        adder = PageAdder(self)
-        if len(selection) > 0:
-            adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
-        adder.addpages(file)
-        adder.commit(select_added=False, add_to_undomanager=True)
+            adder = PageAdder(self)
+            if len(selection) > 0:
+                adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
+            adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
+            adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _, __, ___):
         self.undomanager.commit("generate booklet")
@@ -399,21 +396,17 @@ class PdfArranger(Gtk.Application):
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
             file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
-            with self.render_lock():
-                for _ in range(blank_page_count):
-                    self._insert_pages(model, file, selection)
-                    added_page_index = selection[-1].get_indices()[-1] + 1
-                    # Fetch the additional blank pages and remove them from the model.
-                    added_page = model.get_value(model.get_iter(added_page_index), 0)
-                    pages.append(added_page)
-                    model.remove(model.get_iter(added_page_index))
+            adder = PageAdder(self)
+            for _ in range(blank_page_count):
+                adder.addpages(file)
+            pages += adder.pages
 
-        self.clear_selected()
+        self.clear_selected(add_to_undomanager=False)
 
         adder = PageAdder(self)
         booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
         adder.addpages(booklet)
-        adder.commit(False, False)
+        adder.commit(select_added=False, add_to_undomanager=False)
         self.silent_render()
 
 
