@@ -390,22 +390,21 @@ class PageAdder:
         if add_to_undomanager:
             self.app.undomanager.commit("Add")
             self.app.set_unsaved(True)
-        self.app.model_lock()
-        for p in self.pages:
-            m = [p, p.description()]
-            if self.treerowref:
-                iter_to = self.app.model.get_iter(self.treerowref.get_path())
-                if self.before:
-                    it = self.app.model.insert_before(iter_to, m)
+        with self.app.render_lock():
+            for p in self.pages:
+                m = [p, p.description()]
+                if self.treerowref:
+                    iter_to = self.app.model.get_iter(self.treerowref.get_path())
+                    if self.before:
+                        it = self.app.model.insert_before(iter_to, m)
+                    else:
+                        it = self.app.model.insert_after(iter_to, m)
                 else:
-                    it = self.app.model.insert_after(iter_to, m)
-            else:
-                it = self.app.model.append(m)
-            if select_added:
-                path = self.app.model.get_path(it)
-                self.app.iconview.select_path(path)
-            self.app.update_geometry(it)
-        self.app.model_unlock()
+                    it = self.app.model.append(m)
+                if select_added:
+                    path = self.app.model.get_path(it)
+                    self.app.iconview.select_path(path)
+                self.app.update_geometry(it)
         if add_to_undomanager:
             GObject.idle_add(self.app.retitle)
             self.app.zoom_set(self.app.zoom_level)

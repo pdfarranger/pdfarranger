@@ -72,13 +72,12 @@ class Manager(object):
 
     def __set_state(self, state):
         self.app.quit_rendering()
-        self.app.model_lock()
-        self.model.clear()
-        for page in state:
-            # Do not reset the zoom level
-            page.zoom = self.app.zoom_scale
-            self.model.append([page, page.description()])
-        self.app.model_unlock()
+        with self.app.render_lock():
+            self.model.clear()
+            for page in state:
+                # Do not reset the zoom level
+                page.zoom = self.app.zoom_scale
+                self.model.append([page, page.description()])
         self.app.zoom_set(self.app.zoom_level)
         self.app.silent_render()
 

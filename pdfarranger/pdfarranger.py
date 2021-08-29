@@ -399,7 +399,7 @@ class PdfArranger(Gtk.Application):
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
             file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
-            with self.model_lock:
+            with self.render_lock():
                 for _ in range(blank_page_count):
                     self._insert_pages(model, file, selection)
                     added_page_index = selection[-1].get_indices()[-1] + 1
@@ -653,15 +653,23 @@ class PdfArranger(Gtk.Application):
             GObject.source_remove(self.render_id)
         self.render_id = GObject.timeout_add(149, self.render)
 
-    def model_lock(self):
-        """Acquire model lock (before any add/delete/reorder)."""
-        if self.rendering_thread:
-            self.rendering_thread.model_lock.acquire()
+    def render_lock(self):
+        """Acquire/release a lock (before any add/delete/reorder)."""
+        class __RenderLock:
+            def __init__(self, app):
+                self.app = app
 
-    def model_unlock(self):
-        """Release model lock."""
-        if self.rendering_thread and self.rendering_thread.model_lock.locked():
-            self.rendering_thread.model_lock.release()
+            def _th(self):
+                return self.app.rendering_thread
+
+            def __enter__(self):
+                if self._th():
+                    self._th().model_lock.acquire()
+
+            def __exit__(self, _exc_type, _exc_value, _traceback):
+                if self._th() and self._th().model_lock.locked():
+                    self._th().model_lock.release()
+        return __RenderLock(self)
 
     def vscrollbar_value_changed(self, _vscrollbar):
         """Render when vertical scrollbar value has changed."""
@@ -1053,10 +1061,9 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
         self.set_unsaved(True)
-        self.model_lock()
-        for path in selection:
-            model.remove(model.get_iter(path))
-        self.model_unlock()
+        with self.render_lock():
+            for path in selection:
+                model.remove(model.get_iter(path))
         path = selection[-1]
         self.iconview.select_path(path)
         if not self.iconview.path_is_selected(path):
@@ -1426,20 +1433,19 @@ class PdfArranger(Gtk.Application):
             ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
                              for p in data]
             iter_to = self.model.get_iter(ref_to.get_path())
-            self.model_lock()
-            for ref_from in ref_from_list:
-                iterator = model.get_iter(ref_from.get_path())
-                page = model.get_value(iterator, 0).duplicate()
-                if before:
-                    it = model.insert_before(iter_to, [page, page.description()])
-                else:
-                    it = model.insert_after(iter_to, [page, page.description()])
-                path = model.get_path(it)
-                iconview.select_path(path)
-            if move:
+            with self.render_lock():
                 for ref_from in ref_from_list:
-                    model.remove(model.get_iter(ref_from.get_path()))
-            self.model_unlock()
+                    iterator = model.get_iter(ref_from.get_path())
+                    page = model.get_value(iterator, 0).duplicate()
+                    if before:
+                        it = model.insert_before(iter_to, [page, page.description()])
+                    else:
+                        it = model.insert_after(iter_to, [page, page.description()])
+                    path = model.get_path(it)
+                    iconview.select_path(path)
+                if move:
+                    for ref_from in ref_from_list:
+                        model.remove(model.get_iter(ref_from.get_path()))
             GObject.idle_add(self.render)
 
         elif target == 'MODEL_ROW_EXTERN':
@@ -1460,11 +1466,10 @@ class PdfArranger(Gtk.Application):
         self.set_unsaved(True)
         model = self.iconview.get_model()
         ref_del_list = [Gtk.TreeRowReference.new(model, path) for path in selection]
-        self.model_lock()
-        for ref_del in ref_del_list:
-            path = ref_del.get_path()
-            model.remove(model.get_iter(path))
-        self.model_unlock()
+        with self.render_lock():
+            for ref_del in ref_del_list:
+                path = ref_del.get_path()
+                model.remove(model.get_iter(path))
         GObject.idle_add(self.render)
         malloc_trim()
 
@@ -1955,15 +1960,14 @@ class PdfArranger(Gtk.Application):
         selection.sort(key=lambda x: x.get_indices()[0])
         ref_list = [Gtk.TreeRowReference.new(model, path)
                     for path in selection]
-        self.model_lock()
-        for ref in ref_list:
-            iterator = model.get_iter(ref.get_path())
-            page = model.get_value(iterator, 0)
-            newpages = page.split(leftcrops, topcrops)
-            for p in newpages:
-                model.insert_after(iterator, [p, p.description()])
-            model.set_value(iterator, 0, page)
-        self.model_unlock()
+        with self.render_lock():
+            for ref in ref_list:
+                iterator = model.get_iter(ref.get_path())
+                page = model.get_value(iterator, 0)
+                newpages = page.split(leftcrops, topcrops)
+                for p in newpages:
+                    model.insert_after(iterator, [p, p.description()])
+                model.set_value(iterator, 0, page)
         self.iv_selection_changed_event()
 
     def edit_metadata(self, _action, _parameter, _unknown):
@@ -1975,16 +1979,15 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         diag = croputils.Dialog(self.iconview.get_model(), selection, self.window)
         crop, newscale = diag.run_get()
-        if crop is not None or newscale is not None:
-            self.model_lock()
-            self.undomanager.commit("Format")
-        if crop is not None:
-            if self.crop(selection, crop):
-                self.set_unsaved(True)
-        if newscale is not None:
-            if croputils.scale(self.model, selection, newscale):
-                self.set_unsaved(True)
-        self.model_unlock()
+        with self.render_lock():
+            if crop is not None or newscale is not None:
+                self.undomanager.commit("Format")
+            if crop is not None:
+                if self.crop(selection, crop):
+                    self.set_unsaved(True)
+            if newscale is not None:
+                if croputils.scale(self.model, selection, newscale):
+                    self.set_unsaved(True)
         self.zoom_set(self.zoom_level)
         GObject.idle_add(self.render)
 
@@ -2021,12 +2024,11 @@ class PdfArranger(Gtk.Application):
         selection.sort(key=lambda x: x.get_indices()[0])
         ref_list = [Gtk.TreeRowReference.new(model, path)
                     for path in selection]
-        self.model_lock()
-        for ref in ref_list:
-            iterator = model.get_iter(ref.get_path())
-            page = model.get_value(iterator, 0).duplicate()
-            model.insert_after(iterator, [page, page.description()])
-        self.model_unlock()
+        with self.render_lock():
+            for ref in ref_list:
+                iterator = model.get_iter(ref.get_path())
+                page = model.get_value(iterator, 0).duplicate()
+                model.insert_after(iterator, [page, page.description()])
         self.iv_selection_changed_event()
 
 
@@ -2062,9 +2064,8 @@ class PdfArranger(Gtk.Application):
         indices.reverse()
         new_order = list(range(first)) + indices + list(range(last + 1, len(model)))
         self.undomanager.commit("Reorder")
-        self.model_lock()
-        model.reorder(new_order)
-        self.model_unlock()
+        with self.render_lock():
+            model.reorder(new_order)
         GObject.idle_add(self.render)
 
     def about_dialog(self, _action, _parameter, _unknown):
