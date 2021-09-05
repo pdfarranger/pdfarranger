@@ -526,9 +526,6 @@ class PdfArranger(Gtk.Application):
         self.model.connect('row-deleted', self.__update_num_pages)
         self.model.connect('row-deleted', self.reset_export_file)
 
-        # Progress bar
-        self.progress_bar = self.uiXML.get_object('progressbar')
-
         # Status bar.
         self.status_bar = self.uiXML.get_object('statusbar')
 
@@ -539,7 +536,6 @@ class PdfArranger(Gtk.Application):
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
         self.window.show_all()
-        self.progress_bar.hide()
 
         # Change iconview color background
         style_context_sw = self.sw.get_style_context()
@@ -1837,16 +1833,6 @@ class PdfArranger(Gtk.Application):
         """ Action handle for zoom change """
         self.zoom_set(self.zoom_level + step.get_int32())
 
-    def get_full_sw_height(self):
-        """Get scrolledwindow height as it will be when progressbar is hidden."""
-        box = self.sw.get_parent()
-        sw_height = box.get_allocated_height()
-        sw_height -= self.status_bar.get_allocated_height()
-        sw_height -= self.status_bar.get_margin_top()
-        sw_height -= self.status_bar.get_margin_bottom()
-        sw_height -= box.get_children()[2].get_allocated_height()  # separator
-        return sw_height
-
     def zoom_to_full_page(self):
         """Zoom selected thumbnail to full page."""
         selection = self.iconview.get_selected_items()
@@ -1863,7 +1849,7 @@ class PdfArranger(Gtk.Application):
         cell_extraY = 2 * (item_padding + image_padding[1]) + text_rect_height + border_and_shadow
 
         sw_width = self.sw.get_allocated_width()
-        sw_height = self.get_full_sw_height()
+        sw_height = self.sw.get_allocated_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
         page_height = max(p.height_in_points() for p, _ in self.model)
         margins = 12  # leave 6 pixel at top and 6 pixel at bottom
@@ -1905,7 +1891,7 @@ class PdfArranger(Gtk.Application):
         last_cell_y = self.iconview.get_cell_rect(selection[-1])[1].y
         last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
         selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
-        sw_height = self.get_full_sw_height()
+        sw_height = self.sw.get_allocated_height()
         new_value = first_cell_y + selection_center + self.vp_css_margin - sw_height / 2
         if new_value > sw_vadj.get_upper():
             # Scrollable not yet ready. Call function again.
