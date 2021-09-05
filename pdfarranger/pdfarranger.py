@@ -258,7 +258,6 @@ class PdfArranger(Gtk.Application):
         self.export_file = None
         self.drag_path = None
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
-        self.sb_timeout_id = None
         self.window_width_old = 0
         self.set_iv_visible_id = None
 
@@ -526,8 +525,11 @@ class PdfArranger(Gtk.Application):
         self.model.connect('row-deleted', self.__update_num_pages)
         self.model.connect('row-deleted', self.reset_export_file)
 
-        # Status bar.
+        # Status bar to the left
         self.status_bar = self.uiXML.get_object('statusbar')
+
+        # Status bar to the right
+        self.status_bar2 = self.uiXML.get_object('statusbar2')
 
         # Vertical scrollbar
         vscrollbar = self.sw.get_vscrollbar()
@@ -623,6 +625,8 @@ class PdfArranger(Gtk.Application):
                                             self.visible_range , columns_nr)
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
+        ctxt_id = self.status_bar2.get_context_id("rendering")
+        self.status_bar2.push(ctxt_id, _('Rendering...'))
 
     def quit_rendering(self):
         """Quit rendering."""
@@ -730,7 +734,8 @@ class PdfArranger(Gtk.Application):
         """Update thumbnail emitted from rendering thread."""
         if ref is None:
             # Rendering ended
-            self.__update_statusbar(-1)
+            ctxt_id = self.status_bar2.get_context_id("rendering")
+            self.status_bar2.remove_all(ctxt_id)
             malloc_trim()
             return
         path = ref.get_path()
@@ -760,7 +765,6 @@ class PdfArranger(Gtk.Application):
             else:
                 self.iconview.select_path(path)
                 self.iconview.unselect_path(path)
-        self.__update_statusbar(path.get_indices()[0] + 1)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
         ac.set_description(page.description())
 
@@ -2083,32 +2087,19 @@ class PdfArranger(Gtk.Application):
         for a in ["save", "save-as", "select", "export-all"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
-    def __update_statusbar(self, num=None):
-        if num is None:
-            selection = self.iconview.get_selected_items()
-            selected_pages = sorted([p.get_indices()[0] + 1 for p in selection])
-            # Compact the representation of the selected page range
-            jumps = [[l, r] for l, r in zip(selected_pages, selected_pages[1:])
+    def __update_statusbar(self):
+        selection = self.iconview.get_selected_items()
+        selected_pages = sorted([p.get_indices()[0] + 1 for p in selection])
+        # Compact the representation of the selected page range
+        jumps = [[l, r] for l, r in zip(selected_pages, selected_pages[1:])
                     if l + 1 < r]
-            ranges = list(selected_pages[0:1] + sum(jumps, []) + selected_pages[-1:])
-            display = []
-            for lo, hi in zip(ranges[::2], ranges[1::2]):
-                range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
-                display.append(range_str)
-            ctxt_id = self.status_bar.get_context_id("selected_pages")
-            self.status_bar.push(ctxt_id, _('Selected pages: ') + ', '.join(display))
-            if self.sb_timeout_id:
-                GObject.source_remove(self.sb_timeout_id)
-            self.sb_timeout_id = GObject.timeout_add(600, self.sb_timeout)
-        elif not self.sb_timeout_id:
-            ctxt_id = self.status_bar.get_context_id("updated_num")
-            if num >= 0:
-                self.status_bar.push(ctxt_id, 'Updating thumbnail: ' + str(num))
-            else:
-                self.status_bar.remove_all(ctxt_id)
-
-    def sb_timeout(self):
-        self.sb_timeout_id = None
+        ranges = list(selected_pages[0:1] + sum(jumps, []) + selected_pages[-1:])
+        display = []
+        for lo, hi in zip(ranges[::2], ranges[1::2]):
+            range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
+            display.append(range_str)
+        ctxt_id = self.status_bar.get_context_id("selected_pages")
+        self.status_bar.push(ctxt_id, _('Selected pages: ') + ', '.join(display))
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
