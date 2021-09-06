@@ -128,12 +128,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">1</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Paste Interleave _Odd</attribute>
+          <attribute name="label" translatable="yes">Paste As _Odd Pages</attribute>
           <attribute name="action">win.paste</attribute>
           <attribute name="target" type="i">2</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Paste Interleave _Even</attribute>
+          <attribute name="label" translatable="yes">Paste As _Even Pages</attribute>
           <attribute name="action">win.paste</attribute>
           <attribute name="target" type="i">3</attribute>
         </item>
@@ -246,12 +246,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="target" type="i">1</attribute>
           </item>
           <item>
-            <attribute name="label" translatable="yes">Paste Interleave _Odd</attribute>
+            <attribute name="label" translatable="yes">Paste As _Odd Pages</attribute>
             <attribute name="action">win.paste</attribute>
             <attribute name="target" type="i">2</attribute>
           </item>
           <item>
-            <attribute name="label" translatable="yes">Paste Interleave _Even</attribute>
+            <attribute name="label" translatable="yes">Paste As _Even Pages</attribute>
             <attribute name="action">win.paste</attribute>
             <attribute name="target" type="i">3</attribute>
           </item>
