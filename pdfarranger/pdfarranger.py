@@ -263,11 +263,8 @@ class PdfArranger(Gtk.Application):
         self.set_iv_visible_id = None
 
         # Clipboard for cut copy paste
-        self.clipboard_default = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-        if os.name == 'posix':
-            # "private" clipboard does not work in Windows so we can't use it here
-            self.clipboard_pdfarranger = Gtk.Clipboard.get(Gdk.Atom.intern('_SELECTION_PDFARRANGER',
-                                                                           False))
+        self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+
         self.add_arguments()
 
     def add_arguments(self):
@@ -1101,7 +1098,7 @@ class PdfArranger(Gtk.Application):
             pageadder.addpages(filename, npage, basename, angle, scale, crop)
 
     def is_data_valid(self, data):
-        """Validate data to be pasted from clipboard. Only used in Windows."""
+        """Validate data to be pasted from clipboard."""
         data_copy = data.copy()
         data_valid = True
         while data_copy:
@@ -1188,23 +1185,14 @@ class PdfArranger(Gtk.Application):
     def on_action_cut(self, _action, _param, _unknown):
         """Cut selected pages to clipboard."""
         data = self.copy_pages()
-        if os.name == 'posix':
-            self.clipboard_pdfarranger.set_text(data, -1)
-            self.clipboard_default.set_text('', -1)
-        if os.name == 'nt':
-            self.clipboard_default.set_text('pdfarranger-clipboard\n' + data, -1)
-
+        self.clipboard.set_text('pdfarranger-clipboard\n' + data, -1)
         self.clear_selected()
         self.window.lookup_action("paste").set_enabled(True)
 
     def on_action_copy(self, _action, _param, _unknown):
         """Copy selected pages to clipboard."""
         data = self.copy_pages()
-        if os.name == 'posix':
-            self.clipboard_pdfarranger.set_text(data, -1)
-            self.clipboard_default.set_text('', -1)
-        if os.name == 'nt':
-            self.clipboard_default.set_text('pdfarranger-clipboard\n' + data, -1)
+        self.clipboard.set_text('pdfarranger-clipboard\n' + data, -1)
         self.window.lookup_action("paste").set_enabled(True)
 
     def on_action_paste(self, _action, mode, _unknown):
@@ -1256,21 +1244,16 @@ class PdfArranger(Gtk.Application):
             self.silent_render()
 
     def read_from_clipboard(self):
-        """Read data from clipboards. Check if data is copied pages or files."""
-        # In Linux, if default clipboard holds path to pdf or image files,
-        # these files will be pasted with precedence over copied pages.
-        # In Windows default clipboard is used for both copied pages and copied files.
-        # If id "pdfarranger-clipboard" is found pages is expected to be in clipboard, else files.
-        data = self.clipboard_default.wait_for_text()
+        """Read data from clipboards. Check if data is copied pages or files.
+
+        If id "pdfarranger-clipboard" is found pages is expected to be in clipboard, else files.
+        """
+        data = self.clipboard.wait_for_text()
         if not data:
             data = ''
 
         data_is_filepaths = False
-        if os.name == 'posix' and not data:
-            data = self.clipboard_pdfarranger.wait_for_text()
-            if data:
-                data = data.split('\n;\n')
-        elif os.name == 'nt' and data.startswith('pdfarranger-clipboard\n'):
+        if data.startswith('pdfarranger-clipboard\n'):
             data = data.replace('pdfarranger-clipboard\n', '', 1)
             data = data.split('\n;\n')
             if not self.is_data_valid(data):
@@ -1748,9 +1731,7 @@ class PdfArranger(Gtk.Application):
         """Keyboard focus enter or leave window."""
         self.set_iconview_visible(timeout=False)
         # Enable or disable paste actions based on clipboard content
-        cb_d_data = self.clipboard_default.wait_for_text()
-        cb_p_data = os.name == 'posix' and self.clipboard_pdfarranger.wait_for_text()
-        data_available = True if cb_d_data or cb_p_data else False
+        data_available = True if self.clipboard.wait_for_text() else False
         if self.window.lookup_action("paste"):  # Prevent error when closing with Alt+F4
             self.window.lookup_action("paste").set_enabled(data_available)
 
