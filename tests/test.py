@@ -152,7 +152,10 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _assert_selected(self, selection):
         app = self._app()
-        statusbar = app.child(roleName="status bar")
+        from dogtail import predicate
+        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+        # If we have multiple status bar, concider the last one as the one who display the selection
+        statusbar = allstatusbar[-1]
         self.assertEqual(statusbar.name, "Selected pages: " + selection)
 
     def _icons(self):
