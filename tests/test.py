@@ -234,7 +234,13 @@ class TestBatch1(PdfArrangerTest):
         rawinput.keyCombo("enter")
         rawinput.typeText('Memories')
         rawinput.keyCombo("enter")
-        dialog.child(name="OK").click()
+	# FIXME: depending on where the test is ran the previous enter close
+	# the dialog or do not close it.
+        try:
+            dialog.child(name="OK").click()
+        except Exception:
+            print("'Edit Properties dialog' closed by 'enter'.")
+        self._wait_cond(lambda: dialog.dead)
 
     def test_03_zoom(self):
         app = self._app()
