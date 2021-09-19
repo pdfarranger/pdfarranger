@@ -1051,16 +1051,18 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
         self.set_unsaved(True)
-        with self.render_lock():
-            for path in selection:
-                model.remove(model.get_iter(path))
-        path = selection[-1]
-        self.iconview.select_path(path)
-        if not self.iconview.path_is_selected(path):
-            if len(model) > 0:  # select the last row
-                row = model[-1]
-                path = row.path
-                self.iconview.select_path(path)
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            with self.render_lock():
+                for path in selection:
+                    model.remove(model.get_iter(path))
+            path = selection[-1]
+            self.iconview.select_path(path)
+            if not self.iconview.path_is_selected(path):
+                if len(model) > 0:  # select the last row
+                    row = model[-1]
+                    path = row.path
+                    self.iconview.select_path(path)
+        self.iv_selection_changed_event()
         self.iconview.grab_focus()
         self.silent_render()
         malloc_trim()
