@@ -1320,44 +1320,46 @@ class PdfArranger(Gtk.Application):
                          4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
-        if selectoption == 'ALL':
-            self.iconview.select_all()
-        elif selectoption == 'DESELECT':
-            self.iconview.unselect_all()
-        elif selectoption == 'ODD':
-            for page_number, row in enumerate(model, start=1):
-                if page_number % 2:
-                    self.iconview.select_path(row.path)
-                else:
-                    self.iconview.unselect_path(row.path)
-        elif selectoption == 'EVEN':
-            for page_number, row in enumerate(model, start=1):
-                if page_number % 2:
-                    self.iconview.unselect_path(row.path)
-                else:
-                    self.iconview.select_path(row.path)
-        elif selectoption == 'SAME_FILE':
-            selection = self.iconview.get_selected_items()
-            copynames = set(model[row][0].copyname for row in selection)
-            for page_number, row in enumerate(model):
-                if model[page_number][0].copyname in copynames:
-                    self.iconview.select_path(row.path)
-        elif selectoption == 'SAME_FORMAT':
-            selection = self.iconview.get_selected_items()
-            formats = set(model[row][0].size_in_points() for row in selection)
-            # Chop digits to detect same page format on rotated cropped pages
-            formats = [(round(w, 8), round(h, 8)) for (w, h) in formats]
-            for row in model:
-                page = model[row.path][0]
-                w, h = page.size_in_points()
-                if (round(w, 8), round(h, 8)) in formats:
-                    self.iconview.select_path(row.path)
-        elif selectoption == 'INVERT':
-            for row in model:
-                if self.iconview.path_is_selected(row.path):
-                    self.iconview.unselect_path(row.path)
-                else:
-                    self.iconview.select_path(row.path)
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            if selectoption == 'ALL':
+                self.iconview.select_all()
+            elif selectoption == 'DESELECT':
+                self.iconview.unselect_all()
+            elif selectoption == 'ODD':
+                for page_number, row in enumerate(model, start=1):
+                    if page_number % 2:
+                        self.iconview.select_path(row.path)
+                    else:
+                        self.iconview.unselect_path(row.path)
+            elif selectoption == 'EVEN':
+                for page_number, row in enumerate(model, start=1):
+                    if page_number % 2:
+                        self.iconview.unselect_path(row.path)
+                    else:
+                        self.iconview.select_path(row.path)
+            elif selectoption == 'SAME_FILE':
+                selection = self.iconview.get_selected_items()
+                copynames = set(model[row][0].copyname for row in selection)
+                for page_number, row in enumerate(model):
+                    if model[page_number][0].copyname in copynames:
+                        self.iconview.select_path(row.path)
+            elif selectoption == 'SAME_FORMAT':
+                selection = self.iconview.get_selected_items()
+                formats = set(model[row][0].size_in_points() for row in selection)
+                # Chop digits to detect same page format on rotated cropped pages
+                formats = [(round(w, 8), round(h, 8)) for (w, h) in formats]
+                for row in model:
+                    page = model[row.path][0]
+                    w, h = page.size_in_points()
+                    if (round(w, 8), round(h, 8)) in formats:
+                        self.iconview.select_path(row.path)
+            elif selectoption == 'INVERT':
+                for row in model:
+                    if self.iconview.path_is_selected(row.path):
+                        self.iconview.unselect_path(row.path)
+                    else:
+                        self.iconview.select_path(row.path)
+        self.iv_selection_changed_event()
 
     @staticmethod
     def iv_drag_begin(iconview, context):
