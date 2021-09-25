@@ -397,12 +397,12 @@ class PdfArranger(Gtk.Application):
                 adder.addpages(file)
             pages += adder.pages
 
-        self.clear_selected(add_to_undomanager=False)
-
         adder = PageAdder(self)
         booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
+        adder.move(Gtk.TreeRowReference.new(self.model, selection[0]), True)
         adder.addpages(booklet)
         adder.commit(select_added=False, add_to_undomanager=False)
+        self.clear_selected(add_to_undomanager=False)
         self.silent_render()
 
 
