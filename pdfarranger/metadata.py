@@ -23,6 +23,8 @@ import json
 import traceback
 from datetime import datetime
 from dateutil import parser
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 _ = gettext.gettext
 
@@ -78,8 +80,8 @@ def load_from_docinfo(meta, doc):
 def merge(metadata, input_files):
     """ Merge current global metadata and each imported files meta data """
     r = metadata.copy()
-    for p in input_files:
-        doc = pikepdf.open(p.copyname, password=p.password)
+    for copyname, password in input_files:
+        doc = pikepdf.open(copyname, password=password)
         with doc.open_metadata() as meta:
             load_from_docinfo(meta, doc)
             for k, v in meta.items():
