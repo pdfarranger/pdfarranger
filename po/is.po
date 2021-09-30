@@ -1,0 +1,535 @@
+# Icelandic translation of PDF Arranger
+# Copyright (C) 2021 PDF Arranger
+# This file is distributed under the same license as the pdfarranger package.
+#
+# Sveinn í Felli <sv1@fellsnet.is>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-07 13:39+0200\n"
+"PO-Revision-Date: 2021-09-30 09:08+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.12.3\n"
+
+#: pdfarranger/core.py:85
+msgid "page"
+msgstr "síða"
+
+#: pdfarranger/core.py:193
+msgid "Password required"
+msgstr "Lykilorð nauðsynlegt"
+
+#: pdfarranger/core.py:204
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Lykilorðið er geymt þar til þú lokar PDF Arranger."
+
+#: pdfarranger/core.py:205
+#, python-format
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "Skjalið “{}” er læst, til að opna það þarf lykilorð."
+
+#: pdfarranger/core.py:215
+msgid "Password"
+msgstr "Lykilorð"
+
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1236
+msgid "Unknown file format"
+msgstr "Óþekkt skráarsnið"
+
+#: pdfarranger/core.py:282
+msgid "Image files are only supported with img2pdf"
+msgstr "Myndskrár eru einungis studdar í gegnum img2pdf"
+
+#: pdfarranger/core.py:304
+msgid "Image format is not supported by img2pdf"
+msgstr "Myndskrársnið er ekki stutt af img2pdf"
+
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1246
+msgid "File is neither pdf nor image"
+msgstr "Skráin er hvorki PDF-skrá né mynd"
+
+#: pdfarranger/croputils.py:114
+msgid "Scale factor"
+msgstr "Kvörðunargildi"
+
+#: pdfarranger/croputils.py:120
+msgid "%"
+msgstr "%"
+
+#: pdfarranger/croputils.py:136
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/croputils.py:146
+msgid "Left"
+msgstr "Vinstri"
+
+#: pdfarranger/croputils.py:146
+msgid "Right"
+msgstr "Hægri"
+
+#: pdfarranger/croputils.py:146
+msgid "Top"
+msgstr "Efst"
+
+#: pdfarranger/croputils.py:146
+msgid "Bottom"
+msgstr "Neðst"
+
+#: pdfarranger/croputils.py:150
+msgid "Crop Margins"
+msgstr "Skera utan af spássíum"
+
+#: pdfarranger/croputils.py:158
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Utanskurður fjarlægir ekki neitt efni úr PDF-skránni, það er einungis falið."
+
+#: pdfarranger/croputils.py:167
+msgid "% of width"
+msgstr "% af breidd"
+
+#: pdfarranger/croputils.py:167
+msgid "% of height"
+msgstr "% af hæð"
+
+#: pdfarranger/croputils.py:214
+msgid "Page format"
+msgstr "Blaðsíðusnið"
+
+#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
+#: pdfarranger/croputils.py:353
+msgid "Width"
+msgstr "Breidd"
+
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:354
+msgid "Height"
+msgstr "Hæð"
+
+#: pdfarranger/croputils.py:232
+msgid "Relative"
+msgstr "Hlutfallslegt"
+
+#: pdfarranger/croputils.py:235
+msgid "Page Size"
+msgstr "Blaðsíðustærð"
+
+#: pdfarranger/croputils.py:343
+msgid "Insert Blank Page"
+msgstr "Setja inn auða síðu"
+
+#: pdfarranger/exporter.py:119
+msgid "Warning"
+msgstr "Aðvörun"
+
+#: pdfarranger/exporter.py:124
+msgid "Forms and outlines are lost on saving."
+msgstr "Útfyllingarform og efnisskipan tapast við vistun."
+
+#: pdfarranger/exporter.py:126
+msgid "Do not show this dialog again."
+msgstr "Ekki sýna þennan glugga aftur."
+
+#: pdfarranger/metadata.py:40
+msgid "Title"
+msgstr "Titill"
+
+#: pdfarranger/metadata.py:41
+msgid "Subject"
+msgstr "Viðfangsefni"
+
+#: pdfarranger/metadata.py:42
+msgid "Keywords"
+msgstr "Stikkorð"
+
+#: pdfarranger/metadata.py:43
+msgid "Producer"
+msgstr "Framleiðandi"
+
+#: pdfarranger/metadata.py:44
+msgid "Creator"
+msgstr "Höfundur"
+
+#: pdfarranger/metadata.py:45
+msgid "Creator tool"
+msgstr "Verkfæri fyrir hönnuði"
+
+#: pdfarranger/metadata.py:46
+msgid "Created"
+msgstr "Búið til"
+
+#: pdfarranger/metadata.py:47
+msgid "Modified"
+msgstr "Breytt"
+
+#: pdfarranger/metadata.py:151
+msgid "Invalid date format. Input discarded."
+msgstr "Ógilt dagsetningasnið. Inntaki hent."
+
+#: pdfarranger/metadata.py:180
+msgid "Edit properties"
+msgstr "Breyta eiginleikum"
+
+#: pdfarranger/metadata.py:194
+msgid "Property"
+msgstr "Eiginleiki"
+
+#: pdfarranger/metadata.py:194
+msgid "Value"
+msgstr "Gildi"
+
+#: pdfarranger/pdfarranger.py:275
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"PDF Arranger er lítið python-gtk forrit, sem hjálpar notandanum að sameina"
+" eða skipta upp PDF-skjölum, snúa síðum eða skera utan af þeim, allt í"
+" gagnvirku og auðveldu myndrænu viðmóti. Það er í grunninn aðgangsviðmót"
+" fyrir pikepdf."
+
+#: pdfarranger/pdfarranger.py:286
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Birta upplýsingar um PDF Arranger og hætta"
+
+#: pdfarranger/pdfarranger.py:294
+msgid "File(s) to open"
+msgstr "Skrá(r) til að opna"
+
+#: pdfarranger/pdfarranger.py:417
+msgid "All supported files"
+msgstr "Allar studdar skrár"
+
+#: pdfarranger/pdfarranger.py:421
+msgid "PDF files"
+msgstr "PDF-skrár"
+
+#: pdfarranger/pdfarranger.py:428
+msgid "All files"
+msgstr "Allar skrár"
+
+#: pdfarranger/pdfarranger.py:433
+msgid "Supported image files"
+msgstr "Studdar myndskrár"
+
+#: pdfarranger/pdfarranger.py:723
+msgid "untitled"
+msgstr "ónefnt"
+
+#: pdfarranger/pdfarranger.py:860
+#, python-format
+msgid "Save changes to “{}” before closing?"
+msgstr "Vista breytingar á '{}' áður en lokað er?"
+
+#: pdfarranger/pdfarranger.py:862
+msgid "Save changes before closing?"
+msgstr "Vista breytingar áður en lokað er?"
+
+#: pdfarranger/pdfarranger.py:864
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Breytingarnar þínar tapast ef þú vistar þær ekki."
+
+#: pdfarranger/pdfarranger.py:865
+msgid "Do_n’t Save"
+msgstr "E_kki vista"
+
+#: pdfarranger/pdfarranger.py:865
+msgid "_Cancel"
+msgstr "_Hætta við"
+
+#: pdfarranger/pdfarranger.py:865 data/menu.ui.h:3
+msgid "_Save"
+msgstr "Vi_sta"
+
+#: pdfarranger/pdfarranger.py:915
+msgid "Export…"
+msgstr "Flytja út…"
+
+#: pdfarranger/pdfarranger.py:1025
+msgid "Import…"
+msgstr "Flytja inn…"
+
+#: pdfarranger/pdfarranger.py:1130
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Límd gögn ekki gild. Hætti við límingu."
+
+#: pdfarranger/pdfarranger.py:1240
+msgid "PDF document is damaged"
+msgstr "PDF-skjal er skemmt"
+
+#: pdfarranger/pdfarranger.py:2074
+#, python-format
+msgid ""
+"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
+"and Python"
+msgstr ""
+"%s er verkfæri til að endurraða og breyta PDF-skrám. Þróað með GTK+ og Python"
+
+#: pdfarranger/pdfarranger.py:2077
+#, python-format
+msgid "(%s uses libqpdf %s and pikepdf %s)"
+msgstr "(%s notar libqpdf %s og pikepdf %s)"
+
+#: pdfarranger/pdfarranger.py:2079
+msgid "Maintainers and contributors"
+msgstr "Höfundar og önnur framlög"
+
+#: pdfarranger/pdfarranger.py:2084
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public notkunarleyfið útgáfa 3."
+
+#: pdfarranger/pdfarranger.py:2113
+msgid "Selected pages: "
+msgstr "Valdar síður:"
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "Kljúfa síður"
+
+#: pdfarranger/splitter.py:58
+msgid "Columns"
+msgstr "Dálkar"
+
+#: pdfarranger/splitter.py:58
+msgid "Rows"
+msgstr "Raðir"
+
+#: pdfarranger/splitter.py:59
+msgid "Vertical Splits"
+msgstr "Klofið lóðrétt"
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr "Klofið lárétt"
+
+#: pdfarranger/splitter.py:60
+msgid "Equal column width"
+msgstr "Jöfn breidd dálka"
+
+#: pdfarranger/splitter.py:60
+msgid "Equal row height"
+msgstr "Jöfn hæð raða"
+
+#: pdfarranger/splitter.py:85
+msgid "#Col"
+msgstr "#Dál"
+
+#: pdfarranger/splitter.py:85
+msgid "#Row"
+msgstr "#Rað"
+
+#: pdfarranger/splitter.py:86
+msgid "Width in %"
+msgstr "Breidd í %"
+
+#: pdfarranger/splitter.py:86
+msgid "Height in %"
+msgstr "Hæð í %"
+
+#: data/pdfarranger.ui.h:1
+msgid "Open a file and append it to the current document"
+msgstr "Opnaðu skrá og bættu því aftan við fyrirliggjandi skjal"
+
+#: data/pdfarranger.ui.h:2
+msgid "Save"
+msgstr "Vista"
+
+#: data/pdfarranger.ui.h:3
+msgid "Save As"
+msgstr "Vista sem"
+
+#: data/pdfarranger.ui.h:4
+msgid "Number of Pages"
+msgstr "Fjöldi síðna"
+
+#: data/pdfarranger.ui.h:5
+msgid "Main Menu"
+msgstr "Aðalvalmynd"
+
+#: data/pdfarranger.ui.h:6
+msgid "Zoom In"
+msgstr "Renna að"
+
+#: data/pdfarranger.ui.h:7
+msgid "Zoom Out"
+msgstr "Renna frá"
+
+#: data/pdfarranger.ui.h:8
+msgid "Rotate Left"
+msgstr "Snúa til vinstri"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Snúa til hægri"
+
+#: data/menu.ui.h:1
+msgid "_Import"
+msgstr "Flytja _inn"
+
+#: data/menu.ui.h:2
+msgid "_New Window"
+msgstr "_Nýr gluggi"
+
+#: data/menu.ui.h:4
+msgid "Save _As…"
+msgstr "Vist_a sem..."
+
+#: data/menu.ui.h:5
+msgid "E_xport"
+msgstr "Fl_ytja út"
+
+#: data/menu.ui.h:6
+msgid "E_xport Selection to a Single File…"
+msgstr "Fl_ytja út valið í eina skrá…"
+
+#: data/menu.ui.h:7
+msgid "Export Selection to _Individual Files…"
+msgstr "Flyt_ja út valið í stakar skrár…"
+
+#: data/menu.ui.h:8
+msgid "Export _All Pages to Individual Files…"
+msgstr "Flytja út _allar síður í stakar skrár…"
+
+#: data/menu.ui.h:9
+msgid "_Undo"
+msgstr "Aft_urkalla"
+
+#: data/menu.ui.h:10
+msgid "_Redo"
+msgstr "Endu_rtaka"
+
+#: data/menu.ui.h:11
+msgid "_Edit"
+msgstr "Br_eyta"
+
+#: data/menu.ui.h:12
+msgid "Rotate _Left"
+msgstr "Snúa til _vinstri"
+
+#: data/menu.ui.h:13
+msgid "_Rotate Right"
+msgstr "Snúa til _hægri"
+
+#: data/menu.ui.h:14
+msgid "_Page Format"
+msgstr "_Blaðsíðusnið"
+
+#: data/menu.ui.h:15
+msgid "Crop White Borders"
+msgstr "Skera af hvíta jaðra"
+
+#: data/menu.ui.h:16
+msgid "_Delete"
+msgstr "_Eyða"
+
+#: data/menu.ui.h:17
+msgid "Dupl_icate"
+msgstr "Tvíta_ka"
+
+#: data/menu.ui.h:18
+msgid "Re_verse Order"
+msgstr "Öfu_g röð"
+
+#: data/menu.ui.h:19
+msgid "_Split Pages"
+msgstr "_Kljúfa síður"
+
+#: data/menu.ui.h:20
+msgid "Cu_t"
+msgstr "_Klippa"
+
+#: data/menu.ui.h:21
+msgid "_Copy"
+msgstr "A_frita"
+
+#: data/menu.ui.h:22
+msgid "Paste _After"
+msgstr "Lím_a á eftir"
+
+#: data/menu.ui.h:23
+msgid "Paste _Before"
+msgstr "Lí_ma á undan"
+
+#: data/menu.ui.h:24
+msgid "Paste As _Odd Pages"
+msgstr "Líma sem _oddatölusíður"
+
+#: data/menu.ui.h:25
+msgid "Paste As _Even Pages"
+msgstr "Líma s_em jafntölusíður"
+
+#: data/menu.ui.h:26
+msgid "Insert Blan_k Page"
+msgstr "Set_ja inn auða síðu"
+
+#: data/menu.ui.h:27
+msgid "Generate Booklet"
+msgstr "Útbúa bækling"
+
+#: data/menu.ui.h:28
+msgid "_Select"
+msgstr "_Velja"
+
+#: data/menu.ui.h:29
+msgid "Select _All"
+msgstr "Velja _allt"
+
+#: data/menu.ui.h:30
+msgid "_Deselect All"
+msgstr "A_fvelja allt"
+
+#: data/menu.ui.h:31
+msgid "Select _Odd Pages"
+msgstr "Velja _oddatölusíður"
+
+#: data/menu.ui.h:32
+msgid "Select _Even Pages"
+msgstr "V_elja jafntölusíður"
+
+#: data/menu.ui.h:33
+msgid "All From _Same File"
+msgstr "Allt úr _sömu skrá"
+
+#: data/menu.ui.h:34
+msgid "Same Page _Format"
+msgstr "Sama _blaðsíðusnið"
+
+#: data/menu.ui.h:35
+msgid "_Invert Selection"
+msgstr "Snúa vali v_ið"
+
+#: data/menu.ui.h:36
+msgid "Zoom _In"
+msgstr "Renna _að"
+
+#: data/menu.ui.h:37
+msgid "Zoom _Out"
+msgstr "Renna _frá"
+
+#: data/menu.ui.h:38
+msgid "Edit _Properties"
+msgstr "_Breyta eiginleikum"
+
+#: data/menu.ui.h:39
+msgid "_About"
+msgstr "_Um hugbúnaðinn"
+
+#: data/menu.ui.h:40
+msgid "_Quit"
+msgstr "_Hætta"
+
+#: data/menu.ui.h:41
+msgid "Past_e Special"
+msgstr "Sérstök _líming"
