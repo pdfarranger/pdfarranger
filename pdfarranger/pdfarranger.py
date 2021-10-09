@@ -388,6 +388,15 @@ class PdfArranger(Gtk.Application):
         pages = [model.get_value(model.get_iter(ref.get_path()), 0)
                  for ref in ref_list]
 
+        # Need uniform page size.
+        first_page_size = pages[0].size_in_points()
+        for page in pages[1:]:
+            if first_page_size != page.size_in_points():
+                from gettext import gettext as _
+                msg = _('All pages must have the same size.')
+                self.error_message_dialog(msg)
+                return
+
         # We need a multiple of 4
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
