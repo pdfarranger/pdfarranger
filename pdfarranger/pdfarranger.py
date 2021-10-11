@@ -1715,7 +1715,11 @@ class PdfArranger(Gtk.Application):
                 sw_vadj.set_value(min(sw_vpos_up, last_cell_y + self.vp_css_margin - 6))
             else:
                 sw_vadj.set_value(min(sw_vpos_down, last_cell_y + self.vp_css_margin - 6))
-        return True  # Prevent propagation
+
+        # Let Tab and Shift-Tab go through for keyboard navigation.
+        elif event.keyval in [Gdk.KEY_Tab, Gdk.KEY_KP_Tab, Gdk.KEY_ISO_Left_Tab]:
+            return False
+        return True
 
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
