@@ -136,6 +136,13 @@ def check_content(parent, pdf_list):
     return Gtk.ResponseType.OK, True
 
 
+def _update_angle(model_page, source_page, output_page):
+    angle = model_page.angle
+    angle0 = source_page.Rotate if '/Rotate' in source_page else 0
+    if angle != 0:
+        output_page.Rotate = angle + angle0
+
+
 def export(input_files, pages, file_out, mode, mdata):
     exportmodes = {0: 'ALL_TO_SINGLE',
                    1: 'ALL_TO_MULTIPLE',
@@ -148,11 +155,8 @@ def export(input_files, pages, file_out, mode, mdata):
     pdf_input = [pikepdf.open(p.copyname, password=p.password) for p in input_files]
     for row in pages:
         current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
-        angle = row.angle
-        angle0 = current_page.Rotate if '/Rotate' in current_page else 0
         new_page = pdf_output.copy_foreign(current_page)
-        if angle != 0:
-            new_page.Rotate = angle + angle0
+        _update_angle(row, current_page, new_page)
         new_page.MediaBox = _mediabox(new_page, row.crop)
         new_page = _scale(pdf_output, new_page, row.scale)
 
@@ -214,8 +218,14 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         first_page_size = first.size_in_points()
         page_size = [max(second_page_size[0], first_page_size[0]) * 2,
                      max(second_page_size[1], first_page_size[1])]
-        first_foreign = file.copy_foreign(source_files[first.nfile].pages[first.npage - 1])
-        second_foreign = file.copy_foreign(source_files[second.nfile].pages[second.npage - 1])
+
+        first_original = source_files[first.nfile].pages[first.npage - 1]
+        first_foreign = file.copy_foreign(first_original)
+        _update_angle(first, first_original, first_foreign)
+
+        second_original = source_files[second.nfile].pages[second.npage - 1]
+        second_foreign = file.copy_foreign(second_original)
+        _update_angle(second, second_original, second_foreign)
 
         content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
         content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
