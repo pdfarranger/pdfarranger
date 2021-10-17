@@ -377,7 +377,7 @@ class PdfArranger(Gtk.Application):
             adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
             adder.commit(select_added=False, add_to_undomanager=True)
 
-    def generate_booklet(self, _, __, ___):
+    def generate_booklet(self, _action, _option, _unknown):
         self.undomanager.commit("generate booklet")
         model = self.iconview.get_model()
 
@@ -392,7 +392,6 @@ class PdfArranger(Gtk.Application):
         first_page_size = pages[0].size_in_points()
         for page in pages[1:]:
             if first_page_size != page.size_in_points():
-                from gettext import gettext as _
                 msg = _('All pages must have the same size.')
                 self.error_message_dialog(msg)
                 return
@@ -402,7 +401,7 @@ class PdfArranger(Gtk.Application):
         if blank_page_count > 0:
             file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
             adder = PageAdder(self)
-            for _ in range(blank_page_count):
+            for __ in range(blank_page_count):
                 adder.addpages(file)
             pages += adder.pages
 
