@@ -305,6 +305,23 @@ class PDFDoc:
         else:
             raise PDFDocError(_("File is neither pdf nor image"))
 
+        self.transparent_link_annots_removed = [False] * self.document.get_n_pages()
+
+    def get_page(self, n_page):
+        """Get a page where transparent link annotations are removed.
+
+        By removing them memory usage will be lower.
+        """
+        page = self.document.get_page(n_page)
+        if self.transparent_link_annots_removed[n_page]:
+            return page
+        annot_mapping_list = page.get_annot_mapping()
+        for annot_mapping in annot_mapping_list:
+            a = annot_mapping.annot
+            if a.get_annot_type() == Poppler.AnnotType.LINK and a.get_color() is None:
+                page.remove_annot(a)
+        self.transparent_link_annots_removed[n_page] = True
+        return page
 
 class PageAdder:
     """Helper class to add pages to the current model."""
@@ -495,7 +512,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             thumbnail = p.preview
         else:
             pdfdoc = self.pdfqueue[p.nfile - 1]
-            page = pdfdoc.document.get_page(p.npage - 1)
+            page = pdfdoc.get_page(p.npage - 1)
             w, h = page.get_size()
             thumbnail = cairo.ImageSurface(
                 cairo.FORMAT_ARGB32, int(0.5 + w * scale), int(0.5 + h * scale)
