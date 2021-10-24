@@ -156,7 +156,7 @@ class PdfArrangerTest(unittest.TestCase):
         allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
         # If we have multiple status bar, concider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
-        self.assertEqual(statusbar.name, "Selected pages: " + selection)
+        self.assertTrue(statusbar.name.startswith("Selected pages: " + selection))
 
     def _icons(self):
         """Return the list of page icons"""

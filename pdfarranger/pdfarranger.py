@@ -1907,6 +1907,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         if self.rotate_page(selection, angle):
             self.set_unsaved(True)
+            self.__update_statusbar()
 
     def rotate_page(self, selection, angle):
         model = self.iconview.get_model()
@@ -1962,12 +1963,16 @@ class PdfArranger(Gtk.Application):
         with self.render_lock():
             if crop is not None or newscale is not None:
                 self.undomanager.commit("Format")
+            updatestatus = False
             if crop is not None:
                 if self.crop(selection, crop):
-                    self.set_unsaved(True)
+                    updatestatus = True
             if newscale is not None:
                 if croputils.scale(self.model, selection, newscale):
-                    self.set_unsaved(True)
+                    updatestatus = True
+            if updatestatus:
+                self.set_unsaved(True)
+                self.__update_statusbar()
         self.zoom_set(self.zoom_level)
         GObject.idle_add(self.render)
 
@@ -1977,6 +1982,7 @@ class PdfArranger(Gtk.Application):
         self.undomanager.commit("Crop white Borders")
         if self.crop(selection, crop):
             self.set_unsaved(True)
+            self.__update_statusbar()
         GObject.idle_add(self.render)
 
     def crop(self, selection, newcrop):
@@ -2096,7 +2102,13 @@ class PdfArranger(Gtk.Application):
             range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
             display.append(range_str)
         ctxt_id = self.status_bar.get_context_id("selected_pages")
-        self.status_bar.push(ctxt_id, _('Selected pages: ') + ', '.join(display))
+        msg = _("Selected pages: ") + ", ".join(display)
+        if len(selection) == 1:
+            model = self.iconview.get_model()
+            pagesize = model[selection[0]][0].size_in_points()
+            pagesize = [x * 25.4 / 72 for x in pagesize]
+            msg += " / "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
+        self.status_bar.push(ctxt_id, msg)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
