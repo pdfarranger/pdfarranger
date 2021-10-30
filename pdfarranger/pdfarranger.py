@@ -521,6 +521,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.connect('button_press_event', self.iv_button_press_event)
         self.iconview.connect('motion_notify_event', self.iv_motion)
         self.iconview.connect('button_release_event', self.iv_button_release_event)
+        self.iconview.connect('style_updated', self.set_text_renderer_cell_height)
         self.id_selection_changed_event = self.iconview.connect('selection_changed',
                                                           self.iv_selection_changed_event)
         self.iconview.connect('key_press_event', self.iv_key_press_event)
@@ -615,6 +616,22 @@ class PdfArranger(Gtk.Application):
             a.commit(select_added=False, add_to_undomanager=True)
 
         return 0
+
+    @staticmethod
+    def set_text_renderer_cell_height(iconview):
+        """Update text renderer cell height on style update.
+
+        Having a fixed height will improve speed.
+        Cell height is: "number of rows" * "text height" + 2 * padding
+        At start cell will have the height of 1 row + paddings.
+        """
+        cell_text_renderer = iconview.get_cells()[1]
+        cell_text_renderer.set_fixed_size(-1, -1)
+        paddy = cell_text_renderer.get_padding()[1]
+        natural_height = cell_text_renderer.get_preferred_height(iconview)[1]
+        text = cell_text_renderer.props.text
+        height = 2 * (natural_height - paddy) if text is None else natural_height
+        cell_text_renderer.set_fixed_size(-1, height)
 
     @staticmethod
     def set_cellrenderer_data(_column, cell, model, it, _data=None):
