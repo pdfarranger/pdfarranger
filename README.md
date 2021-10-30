@@ -25,7 +25,7 @@ It’s a humble attempt to make the project a bit more active.
 
 ### Linux and BSD packages
 
-[![Linux packages](https://repology.org/badge/vertical-allrepos/pdfarranger.svg?columns=4)](https://repology.org/project/pdfarranger/versions)
+[![Linux packages](https://repology.org/badge/vertical-allrepos/pdfarranger.svg?columns=4&exclude_unsupported=1)](https://repology.org/project/pdfarranger/versions)
 
 ## Customization of keyboard shortcuts
 
