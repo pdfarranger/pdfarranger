@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 13:39+0200\n"
-"PO-Revision-Date: 2021-10-22 12:06+0100\n"
+"POT-Creation-Date: 2021-10-31 13:42+0100\n"
+"PO-Revision-Date: 2021-10-31 20:47+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Password"
 msgstr "Palavra-passe"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1236
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
 msgid "Unknown file format"
 msgstr "Formato desconhecido"
 
@@ -54,7 +54,7 @@ msgstr "Ficheiros de imagem apenas suportados com img2pdf"
 msgid "Image format is not supported by img2pdf"
 msgstr "O formato de imagem não é suportado pelo img2pdf"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1246
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
 msgid "File is neither pdf nor image"
 msgstr "O ficheiro não é um PDF nem uma imagem"
 
@@ -127,7 +127,7 @@ msgstr "Tamanho da página"
 
 #: pdfarranger/croputils.py:343
 msgid "Insert Blank Page"
-msgstr "Inserir página vazia"
+msgstr "Inserir página em branco"
 
 #: pdfarranger/exporter.py:119
 msgid "Warning"
@@ -189,7 +189,7 @@ msgstr "Propriedade"
 msgid "Value"
 msgstr "Valor"
 
-#: pdfarranger/pdfarranger.py:275
+#: pdfarranger/pdfarranger.py:271
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -201,76 +201,84 @@ msgstr ""
 "páginas usando uma interface gráfica interativa e intuitiva. É um front-end "
 "para pikepdf."
 
-#: pdfarranger/pdfarranger.py:286
+#: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Mostrar a versão do PDF Arranger e sair"
 
-#: pdfarranger/pdfarranger.py:294
+#: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
 msgstr "Ficheiro(s) a abrir"
 
-#: pdfarranger/pdfarranger.py:417
+#: pdfarranger/pdfarranger.py:395
+msgid "All pages must have the same size."
+msgstr "Todas as páginas devem ter o mesmo tamanho."
+
+#: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
 msgstr "Todos os ficheiros suportados"
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:425
 msgid "PDF files"
 msgstr "Ficheiros PDF"
 
-#: pdfarranger/pdfarranger.py:428
+#: pdfarranger/pdfarranger.py:432
 msgid "All files"
 msgstr "Todos os ficheiros"
 
-#: pdfarranger/pdfarranger.py:433
+#: pdfarranger/pdfarranger.py:437
 msgid "Supported image files"
 msgstr "Ficheiros de imagem suportados"
 
-#: pdfarranger/pdfarranger.py:723
+#: pdfarranger/pdfarranger.py:634
+msgid "Rendering…"
+msgstr "Renderização…"
+
+#: pdfarranger/pdfarranger.py:728
 msgid "untitled"
 msgstr "sem título"
 
-#: pdfarranger/pdfarranger.py:860
+#: pdfarranger/pdfarranger.py:865
 #, python-format
 msgid "Save changes to “{}” before closing?"
 msgstr "Guardar alterações a “{}” antes de fechar?"
 
-#: pdfarranger/pdfarranger.py:862
+#: pdfarranger/pdfarranger.py:867
 msgid "Save changes before closing?"
 msgstr "Guardar alterações antes de fechar?"
 
-#: pdfarranger/pdfarranger.py:864
+#: pdfarranger/pdfarranger.py:869
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Se não as guardar, perderá todas as alterações."
 
-#: pdfarranger/pdfarranger.py:865
+#: pdfarranger/pdfarranger.py:870
 msgid "Do_n’t Save"
 msgstr "_Não guardar"
 
-#: pdfarranger/pdfarranger.py:865
+#: pdfarranger/pdfarranger.py:870
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: pdfarranger/pdfarranger.py:865 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
 msgid "_Save"
 msgstr "_Guardar"
 
-#: pdfarranger/pdfarranger.py:915
+#: pdfarranger/pdfarranger.py:920
 msgid "Export…"
 msgstr "Exportar…"
 
-#: pdfarranger/pdfarranger.py:1025
+#: pdfarranger/pdfarranger.py:1030
 msgid "Import…"
 msgstr "Importar…"
 
-#: pdfarranger/pdfarranger.py:1130
+#: pdfarranger/pdfarranger.py:1137
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Os dados colados são inválidos. A abortar."
 
-#: pdfarranger/pdfarranger.py:1240
+#: pdfarranger/pdfarranger.py:1238
 msgid "PDF document is damaged"
 msgstr "O documento PDF está danificado"
 
-#: pdfarranger/pdfarranger.py:2074
+#: pdfarranger/pdfarranger.py:2067
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -279,22 +287,26 @@ msgstr ""
 "%s é uma ferramenta para organizar e modificar ficheiros PDF. Desenvolvido "
 "em GTK+ e Python"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2070
 #, python-format
 msgid "(%s uses libqpdf %s and pikepdf %s)"
 msgstr "(%s usa libqpdf %s e pikepdf %s)"
 
-#: pdfarranger/pdfarranger.py:2079
+#: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
 msgstr "Programadores e colaboradores"
 
-#: pdfarranger/pdfarranger.py:2084
+#: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL), versão 3."
 
-#: pdfarranger/pdfarranger.py:2113
+#: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
 msgstr "Páginas selecionadas: "
+
+#: pdfarranger/pdfarranger.py:2110
+msgid "Page Size:"
+msgstr "Tamanho da página:"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -474,7 +486,7 @@ msgstr "Colar como páginas par_es"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
-msgstr "Inserir página va_zia"
+msgstr "Inserir página em bran_co"
 
 #: data/menu.ui.h:27
 msgid "Generate Booklet"
