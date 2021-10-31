@@ -631,7 +631,7 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
         self.rendering_thread.start()
         ctxt_id = self.status_bar2.get_context_id("rendering")
-        self.status_bar2.push(ctxt_id, _('Rendering...'))
+        self.status_bar2.push(ctxt_id, _('Rendering…'))
 
     def quit_rendering(self):
         """Quit rendering."""
