@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 13:39+0200\n"
-"PO-Revision-Date: 2021-09-30 09:08+0000\n"
+"POT-Creation-Date: 2021-10-31 13:42+0100\n"
+"PO-Revision-Date: 2021-10-31 14:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -40,7 +40,7 @@ msgstr "Skjalið “{}” er læst, til að opna það þarf lykilorð."
 msgid "Password"
 msgstr "Lykilorð"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1236
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
 msgid "Unknown file format"
 msgstr "Óþekkt skráarsnið"
 
@@ -52,7 +52,7 @@ msgstr "Myndskrár eru einungis studdar í gegnum img2pdf"
 msgid "Image format is not supported by img2pdf"
 msgstr "Myndskrársnið er ekki stutt af img2pdf"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1246
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
 msgid "File is neither pdf nor image"
 msgstr "Skráin er hvorki PDF-skrá né mynd"
 
@@ -188,88 +188,96 @@ msgstr "Eiginleiki"
 msgid "Value"
 msgstr "Gildi"
 
-#: pdfarranger/pdfarranger.py:275
+#: pdfarranger/pdfarranger.py:271
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
-"PDF Arranger er lítið python-gtk forrit, sem hjálpar notandanum að sameina"
-" eða skipta upp PDF-skjölum, snúa síðum eða skera utan af þeim, allt í"
-" gagnvirku og auðveldu myndrænu viðmóti. Það er í grunninn aðgangsviðmót"
-" fyrir pikepdf."
+"PDF Arranger er lítið python-gtk forrit, sem hjálpar notandanum að sameina "
+"eða skipta upp PDF-skjölum, snúa síðum eða skera utan af þeim, allt í "
+"gagnvirku og auðveldu myndrænu viðmóti. Það er í grunninn aðgangsviðmót "
+"fyrir pikepdf."
 
-#: pdfarranger/pdfarranger.py:286
+#: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Birta upplýsingar um PDF Arranger og hætta"
 
-#: pdfarranger/pdfarranger.py:294
+#: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
 msgstr "Skrá(r) til að opna"
 
-#: pdfarranger/pdfarranger.py:417
+#: pdfarranger/pdfarranger.py:395
+msgid "All pages must have the same size."
+msgstr "Allar síður verða að hafa sömu stærð."
+
+#: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
 msgstr "Allar studdar skrár"
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:425
 msgid "PDF files"
 msgstr "PDF-skrár"
 
-#: pdfarranger/pdfarranger.py:428
+#: pdfarranger/pdfarranger.py:432
 msgid "All files"
 msgstr "Allar skrár"
 
-#: pdfarranger/pdfarranger.py:433
+#: pdfarranger/pdfarranger.py:437
 msgid "Supported image files"
 msgstr "Studdar myndskrár"
 
-#: pdfarranger/pdfarranger.py:723
+#: pdfarranger/pdfarranger.py:634
+msgid "Rendering…"
+msgstr "Myndgeri…"
+
+#: pdfarranger/pdfarranger.py:728
 msgid "untitled"
 msgstr "ónefnt"
 
-#: pdfarranger/pdfarranger.py:860
+#: pdfarranger/pdfarranger.py:865
 #, python-format
 msgid "Save changes to “{}” before closing?"
 msgstr "Vista breytingar á '{}' áður en lokað er?"
 
-#: pdfarranger/pdfarranger.py:862
+#: pdfarranger/pdfarranger.py:867
 msgid "Save changes before closing?"
 msgstr "Vista breytingar áður en lokað er?"
 
-#: pdfarranger/pdfarranger.py:864
+#: pdfarranger/pdfarranger.py:869
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Breytingarnar þínar tapast ef þú vistar þær ekki."
 
-#: pdfarranger/pdfarranger.py:865
+#: pdfarranger/pdfarranger.py:870
 msgid "Do_n’t Save"
 msgstr "E_kki vista"
 
-#: pdfarranger/pdfarranger.py:865
+#: pdfarranger/pdfarranger.py:870
 msgid "_Cancel"
 msgstr "_Hætta við"
 
-#: pdfarranger/pdfarranger.py:865 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
 msgid "_Save"
 msgstr "Vi_sta"
 
-#: pdfarranger/pdfarranger.py:915
+#: pdfarranger/pdfarranger.py:920
 msgid "Export…"
 msgstr "Flytja út…"
 
-#: pdfarranger/pdfarranger.py:1025
+#: pdfarranger/pdfarranger.py:1030
 msgid "Import…"
 msgstr "Flytja inn…"
 
-#: pdfarranger/pdfarranger.py:1130
+#: pdfarranger/pdfarranger.py:1137
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Límd gögn ekki gild. Hætti við límingu."
 
-#: pdfarranger/pdfarranger.py:1240
+#: pdfarranger/pdfarranger.py:1238
 msgid "PDF document is damaged"
 msgstr "PDF-skjal er skemmt"
 
-#: pdfarranger/pdfarranger.py:2074
+#: pdfarranger/pdfarranger.py:2067
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -277,22 +285,26 @@ msgid ""
 msgstr ""
 "%s er verkfæri til að endurraða og breyta PDF-skrám. Þróað með GTK+ og Python"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2070
 #, python-format
 msgid "(%s uses libqpdf %s and pikepdf %s)"
 msgstr "(%s notar libqpdf %s og pikepdf %s)"
 
-#: pdfarranger/pdfarranger.py:2079
+#: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
 msgstr "Höfundar og önnur framlög"
 
-#: pdfarranger/pdfarranger.py:2084
+#: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public notkunarleyfið útgáfa 3."
 
-#: pdfarranger/pdfarranger.py:2113
+#: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
 msgstr "Valdar síður:"
+
+#: pdfarranger/pdfarranger.py:2110
+msgid "Page Size:"
+msgstr "Blaðsíðustærð:"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
