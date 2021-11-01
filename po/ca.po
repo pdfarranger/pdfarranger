@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-27 01:37+0200\n"
-"PO-Revision-Date: 2021-05-27 01:49+0200\n"
+"POT-Creation-Date: 2021-10-31 18:14+0100\n"
+"PO-Revision-Date: 2021-10-31 18:26+0100\n"
 "Last-Translator: Ícar N. S. <icar.nin@protonmail.com>\n"
 "Language-Team: \n"
 "Language: ca\n"
@@ -16,44 +16,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
-#: pdfarranger/core.py:84
+#: pdfarranger/core.py:85
 msgid "page"
 msgstr "pàgina"
 
-#: pdfarranger/core.py:191
+#: pdfarranger/core.py:193
 msgid "Password required"
 msgstr "Contrasenya requerida"
 
-#: pdfarranger/core.py:202
+#: pdfarranger/core.py:204
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "La contrasenya es recordarà fins que tanqueu el PDF Arranger."
 
-#: pdfarranger/core.py:203
+#: pdfarranger/core.py:205
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
 "El document “{}” està bloquejat i requereix una contrasenya abans que es "
 "pugui obrir."
 
-#: pdfarranger/core.py:213
+#: pdfarranger/core.py:215
 msgid "Password"
 msgstr "Contrasenya"
 
-#: pdfarranger/core.py:261 pdfarranger/pdfarranger.py:1140
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
 msgid "Unknown file format"
 msgstr "Format de fitxer desconegut"
 
-#: pdfarranger/core.py:277
+#: pdfarranger/core.py:282
 msgid "Image files are only supported with img2pdf"
 msgstr "Els fitxers d'imatge només són compatibles amb img2pdf"
 
-#: pdfarranger/core.py:299
+#: pdfarranger/core.py:304
 msgid "Image format is not supported by img2pdf"
 msgstr "El format de la imatge no està admès per img2pdf"
 
-#: pdfarranger/core.py:301 pdfarranger/pdfarranger.py:1150
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
 msgid "File is neither pdf nor image"
 msgstr "El fitxer no és ni pdf ni imatge"
 
@@ -109,12 +109,12 @@ msgid "Page format"
 msgstr "Format de la pàgina"
 
 #: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
-#: pdfarranger/croputils.py:348
+#: pdfarranger/croputils.py:353
 msgid "Width"
 msgstr "Amplada"
 
 #: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:349
+#: pdfarranger/croputils.py:354
 msgid "Height"
 msgstr "Alçada"
 
@@ -126,19 +126,19 @@ msgstr "Relatiu"
 msgid "Page Size"
 msgstr "Mida de la pàgina"
 
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:343
 msgid "Insert Blank Page"
 msgstr "Insereix una pàgina en blanc"
 
-#: pdfarranger/exporter.py:114
+#: pdfarranger/exporter.py:119
 msgid "Warning"
 msgstr "Avís"
 
-#: pdfarranger/exporter.py:119
+#: pdfarranger/exporter.py:124
 msgid "Forms and outlines are lost on saving."
 msgstr "Els formularis i els contorns es perden en desar."
 
-#: pdfarranger/exporter.py:121
+#: pdfarranger/exporter.py:126
 msgid "Do not show this dialog again."
 msgstr "No tornis a mostrar aquest diàleg."
 
@@ -182,75 +182,103 @@ msgstr "Format de data no vàlid. S'ha descartat l'entrada."
 msgid "Edit properties"
 msgstr "Edita les propietats"
 
-#: pdfarranger/metadata.py:193
+#: pdfarranger/metadata.py:194
 msgid "Property"
 msgstr "Propietat"
 
-#: pdfarranger/metadata.py:193
+#: pdfarranger/metadata.py:194
 msgid "Value"
 msgstr "Valor"
 
-#: pdfarranger/pdfarranger.py:367
+#: pdfarranger/pdfarranger.py:271
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"L'Arranjador de PDFs és una petita aplicació feta amb Python i GTK que ajuda "
+"l'usuari a fusionar o dividir documents PDF i girar, escapçar i reordenar "
+"les pàgines d'aquests mitjançant una interfície gràfica intuïtiva. És el "
+"frontal pel programari Pikepdf."
+
+#: pdfarranger/pdfarranger.py:282
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Imprimeix la versió de l'Arranjador de PDFs i surt"
+
+#: pdfarranger/pdfarranger.py:290
+msgid "File(s) to open"
+msgstr "Fitxer(s) a obrir"
+
+#: pdfarranger/pdfarranger.py:395
+msgid "All pages must have the same size."
+msgstr "Totes les pàgines han de tenir la mateixa mida."
+
+#: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
 msgstr "Tots els fitxers admesos"
 
-#: pdfarranger/pdfarranger.py:371
+#: pdfarranger/pdfarranger.py:425
 msgid "PDF files"
 msgstr "Fitxers PDF"
 
-#: pdfarranger/pdfarranger.py:378
+#: pdfarranger/pdfarranger.py:432
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: pdfarranger/pdfarranger.py:383
+#: pdfarranger/pdfarranger.py:437
 msgid "Supported image files"
 msgstr "Fitxers d'imatge compatibles"
 
-#: pdfarranger/pdfarranger.py:637
+#: pdfarranger/pdfarranger.py:634
+msgid "Rendering…"
+msgstr "Renderitzant…"
+
+#: pdfarranger/pdfarranger.py:728
 msgid "untitled"
 msgstr "sense títol"
 
-#: pdfarranger/pdfarranger.py:772
+#: pdfarranger/pdfarranger.py:865
 msgid "Save changes to “{}” before closing?"
 msgstr "Voleu desar els canvis a “{}” abans de tancar?"
 
-#: pdfarranger/pdfarranger.py:774
+#: pdfarranger/pdfarranger.py:867
 msgid "Save changes before closing?"
 msgstr "Voleu desar els canvis abans de tancar?"
 
-#: pdfarranger/pdfarranger.py:776
+#: pdfarranger/pdfarranger.py:869
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Els teus canvis es perdran si no els guardes."
 
-#: pdfarranger/pdfarranger.py:777
+#: pdfarranger/pdfarranger.py:870
 msgid "Do_n’t Save"
 msgstr "No desar"
 
-#: pdfarranger/pdfarranger.py:777
+#: pdfarranger/pdfarranger.py:870
 msgid "_Cancel"
 msgstr "Cancel·la"
 
-#: pdfarranger/pdfarranger.py:777 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
 msgid "_Save"
 msgstr "Desa"
 
-#: pdfarranger/pdfarranger.py:819
+#: pdfarranger/pdfarranger.py:920
 msgid "Export…"
-msgstr "Exporta..."
+msgstr "Exporta…"
 
-#: pdfarranger/pdfarranger.py:929
+#: pdfarranger/pdfarranger.py:1030
 msgid "Import…"
-msgstr "Importa..."
+msgstr "Importa…"
 
-#: pdfarranger/pdfarranger.py:1034
+#: pdfarranger/pdfarranger.py:1137
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Les dades enganxades no són vàlides. S'està avortant l'operació."
 
-#: pdfarranger/pdfarranger.py:1144
+#: pdfarranger/pdfarranger.py:1238
 msgid "PDF document is damaged"
 msgstr "El document PDF està malmès"
 
-#: pdfarranger/pdfarranger.py:1985
+#: pdfarranger/pdfarranger.py:2067
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -259,22 +287,26 @@ msgstr ""
 "%s és una eina per reordenar i modificar fitxers PDF. Desenvolupat usant GTK"
 "+ i Python"
 
-#: pdfarranger/pdfarranger.py:1988
+#: pdfarranger/pdfarranger.py:2070
 #, python-format
 msgid "(%s uses libqpdf %s and pikepdf %s)"
 msgstr "(%s utilitza libqpdf %s i pikepdf %s)"
 
-#: pdfarranger/pdfarranger.py:1990
+#: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
 msgstr "Mantenidors i contribuïdors"
 
-#: pdfarranger/pdfarranger.py:1995
+#: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "Llicència Pública General GNU (GPL) Versió 3."
 
-#: pdfarranger/pdfarranger.py:2024
+#: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
 msgstr "Pàgines seleccionades: "
+
+#: pdfarranger/pdfarranger.py:2110
+msgid "Page Size:"
+msgstr "Mida de la pàgina:"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -366,7 +398,7 @@ msgstr "Finestra nova"
 
 #: data/menu.ui.h:4
 msgid "Save _As…"
-msgstr "Anomena i desa..."
+msgstr "Anomena i desa…"
 
 #: data/menu.ui.h:5
 msgid "E_xport"
@@ -374,15 +406,15 @@ msgstr "Exporta"
 
 #: data/menu.ui.h:6
 msgid "E_xport Selection to a Single File…"
-msgstr "Exporta la selecció a un sol fitxer..."
+msgstr "Exporta la selecció a un sol fitxer…"
 
 #: data/menu.ui.h:7
 msgid "Export Selection to _Individual Files…"
-msgstr "Exporta la selecció a fitxers individuals..."
+msgstr "Exporta la selecció a fitxers individuals…"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
-msgstr "Exporta totes les pàgines a fitxers individuals..."
+msgstr "Exporta totes les pàgines a fitxers individuals…"
 
 #: data/menu.ui.h:9
 msgid "_Undo"
@@ -445,69 +477,79 @@ msgid "Paste _Before"
 msgstr "Enganxa abans"
 
 #: data/menu.ui.h:24
-msgid "Paste Interleave _Odd"
-msgstr "Enganxa intercalada senarment"
+msgid "Paste As _Odd Pages"
+msgstr "Enganxa com a pàgines senars"
 
 #: data/menu.ui.h:25
-msgid "Paste Interleave _Even"
-msgstr "Enganxa intercalada parellament"
+msgid "Paste As _Even Pages"
+msgstr "Enganxa com a pàgines parelles"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
 msgstr "Insereix una pàgina en blanc"
 
 #: data/menu.ui.h:27
+msgid "Generate Booklet"
+msgstr "Genera un fullet"
+
+#: data/menu.ui.h:28
 msgid "_Select"
 msgstr "Selecciona"
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:29
 msgid "Select _All"
 msgstr "Selecciona-ho tot"
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:30
 msgid "_Deselect All"
 msgstr "Desselecciona-ho tot"
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:31
 msgid "Select _Odd Pages"
 msgstr "Selecciona les pàgines senars"
 
-#: data/menu.ui.h:31
+#: data/menu.ui.h:32
 msgid "Select _Even Pages"
 msgstr "Selecciona les pàgines parelles"
 
-#: data/menu.ui.h:32
+#: data/menu.ui.h:33
 msgid "All From _Same File"
 msgstr "Tots del mateix fitxer"
 
-#: data/menu.ui.h:33
+#: data/menu.ui.h:34
 msgid "Same Page _Format"
 msgstr "El mateix format de pàgina"
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:35
 msgid "_Invert Selection"
 msgstr "Inverteix la selecció"
 
-#: data/menu.ui.h:35
+#: data/menu.ui.h:36
 msgid "Zoom _In"
 msgstr "Amplia"
 
-#: data/menu.ui.h:36
+#: data/menu.ui.h:37
 msgid "Zoom _Out"
 msgstr "Allunya"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:38
 msgid "Edit _Properties"
 msgstr "Edita les propietats"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:39
 msgid "_About"
 msgstr "Quant a"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:40
 msgid "_Quit"
 msgstr "Surt"
 
-#: data/menu.ui.h:40
+#: data/menu.ui.h:41
 msgid "Past_e Special"
 msgstr "Enganxament especial"
+
+#~ msgid "Paste Interleave _Odd"
+#~ msgstr "Enganxa intercalada senarment"
+
+#~ msgid "Paste Interleave _Even"
+#~ msgstr "Enganxa intercalada parellament"

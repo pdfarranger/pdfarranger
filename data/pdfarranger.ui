@@ -21,23 +21,19 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkApplicationWindow" id="main_window">
-    <property name="can_focus">False</property>
     <property name="show_menubar">False</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="spacing">4</property>
         <property name="show_close_button">True</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Open a file and append it to the current document</property>
@@ -45,7 +41,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">insert-image-symbolic</property>
                     <property name="use_fallback">True</property>
                   </object>
@@ -60,14 +55,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Save</property>
                 <property name="action_name">win.save</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">document-save-symbolic</property>
                   </object>
                 </child>
@@ -81,14 +74,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkButton" id="save_as_bar_button">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Save As</property>
                 <property name="action_name">win.save-as</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">document-save-as-symbolic</property>
                   </object>
                 </child>
@@ -108,7 +99,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <object class="GtkEntry" id="num_pages">
             <property name="visible">True</property>
             <property name="sensitive">False</property>
-            <property name="can_focus">False</property>
             <property name="editable">False</property>
             <property name="width_chars">3</property>
             <property name="text">0</property>
@@ -123,14 +113,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <child>
           <object class="GtkMenuButton" id="main_menu_button">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="receives_default">False</property>
             <property name="use_popover">False</property>
             <property name="tooltip_text" translatable="yes">Main Menu</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="icon_name">open-menu-symbolic</property>
               </object>
             </child>
@@ -143,12 +131,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Zoom In</property>
@@ -157,7 +143,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">zoom-in-symbolic</property>
                   </object>
                 </child>
@@ -174,7 +159,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Zoom Out</property>
@@ -183,7 +167,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">zoom-out-symbolic</property>
                   </object>
                 </child>
@@ -209,12 +192,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Rotate Left</property>
@@ -223,7 +204,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">object-rotate-left-symbolic</property>
                   </object>
                 </child>
@@ -240,7 +220,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Rotate Right</property>
@@ -249,7 +228,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">object-rotate-right-symbolic</property>
                   </object>
                 </child>
@@ -277,12 +255,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
     <child>
       <object class="GtkBox" id="main_box">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
             <child>
               <placeholder/>
             </child>
@@ -296,7 +272,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <child>
           <object class="GtkSeparator">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -308,12 +283,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <!-- n-columns=2 n-rows=1 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="row_spacing">10</property>
             <child>
               <object class="GtkStatusbar" id="statusbar">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="margin_right">183</property>
                 <property name="margin_start">4</property>
                 <property name="margin_end">4</property>
@@ -331,7 +304,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkStatusbar" id="statusbar2">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="halign">end</property>
                 <property name="margin_right">4</property>
                 <property name="margin_start">4</property>
