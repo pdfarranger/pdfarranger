@@ -1802,22 +1802,22 @@ class PdfArranger(Gtk.Application):
     def zoom_set(self, level):
         """Sets the zoom level"""
         level = min(max(level, -10), 40)
-        zoom_level_old = self.zoom_level
-        self.zoom_level = level
-        self.zoom_scale = 0.2 * (1.1 ** level)
+        zoom_scale = 0.2 * (1.1 ** level)
         # Limit max zoom level so that thumbnail is max 23Mb
         if len(self.model) > 0:
             max_limit = 6000000  # 6000000 pixels * 4 byte/pixel -> 23Mb
             max_page_size = max(p.size[0] * p.size[1] * p.scale ** 2 for p, _ in self.model)
-            max_page_size_zoomed = max_page_size * self.zoom_scale ** 2
+            max_page_size_zoomed = max_page_size * zoom_scale ** 2
             if max_page_size_zoomed > max_limit:
                 max_zoom_scale = (max_limit / max_page_size) ** .5
-                self.zoom_level = -10
-                while max_zoom_scale > 0.2 * (1.1 ** (self.zoom_level + 1)):
-                    self.zoom_level += 1
-                self.zoom_scale = 0.2 * (1.1 ** self.zoom_level)
-        if self.zoom_level == zoom_level_old:
+                level = -10
+                while max_zoom_scale > 0.2 * (1.1 ** (level + 1)):
+                    level += 1
+                zoom_scale = 0.2 * (1.1 ** level)
+        if self.zoom_level == level:
             return
+        self.zoom_level = level
+        self.zoom_scale = zoom_scale
         if self.id_scroll_to_sel:
             GObject.source_remove(self.id_scroll_to_sel)
         self.zoom_full_page = False
