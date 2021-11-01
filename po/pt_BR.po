@@ -31,8 +31,8 @@ msgid "The password will be remembered until you close PDF Arranger."
 msgstr "A senha será lembrada até que você feche o PDF Arranger."
 
 #: pdfarranger/core.py:205
-msgid ""
 #, python-format
+msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
 "O documento “{}” está bloqueado e requer uma senha antes de ser aberto."
