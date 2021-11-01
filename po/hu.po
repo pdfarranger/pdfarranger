@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 17:35+0100\n"
+"POT-Creation-Date: 2021-10-31 13:42+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,125 +14,124 @@ msgstr ""
 "X-Poedit-Country: HUNGARY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: pdfarranger/core.py:80
+#: pdfarranger/core.py:85
 msgid "page"
 msgstr "oldal"
 
-#: pdfarranger/core.py:175
+#: pdfarranger/core.py:193
 msgid "Password required"
 msgstr "Jelszó szükséges"
 
-#: pdfarranger/core.py:186
+#: pdfarranger/core.py:204
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "A jelszó mindaddig emlékezetes marad, amíg bezárja a PDF-rendezőt"
 
-#: pdfarranger/core.py:187
+#: pdfarranger/core.py:205
+#, python-format
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr "A(z) „{}” dokumentum zárolva van és megnyitásához jelszó szükséges."
 
-#: pdfarranger/core.py:197
+#: pdfarranger/core.py:215
 msgid "Password"
 msgstr "Jelszó"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
 msgid "Unknown file format"
 msgstr "Ismeretlen fájlformátum"
 
-#: pdfarranger/core.py:256
+#: pdfarranger/core.py:282
 msgid "Image files are only supported with img2pdf"
 msgstr "A képfájlokat csak az img2pdf támogatja"
 
-#: pdfarranger/core.py:278
+#: pdfarranger/core.py:304
 msgid "Image format is not supported by img2pdf"
 msgstr "Az img2pdf nem támogatja a képformátumot"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
 msgid "File is neither pdf nor image"
 msgstr "A fájl nem pdf vagy kép"
 
-#: pdfarranger/croputils.py:113
+#: pdfarranger/croputils.py:114
 msgid "Scale factor"
 msgstr "Nagyságrendi tényező"
 
-#: pdfarranger/croputils.py:119
+#: pdfarranger/croputils.py:120
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:135
+#: pdfarranger/croputils.py:136
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Left"
 msgstr "Balra"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Right"
 msgstr "Jobbra"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Top"
 msgstr "Fent"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Bottom"
 msgstr "Lent"
 
-#: pdfarranger/croputils.py:149
+#: pdfarranger/croputils.py:150
 msgid "Crop Margins"
 msgstr "Margók körülvágása"
 
-#: pdfarranger/croputils.py:157
+#: pdfarranger/croputils.py:158
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr "A körülvágás nem távolít el tartalmat a PDF-fájlból, csak elrejti."
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:167
 msgid "% of width"
 msgstr "a szélesség százaléka"
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:167
 msgid "% of height"
 msgstr "a magasság százaléka"
 
-#: pdfarranger/croputils.py:210
+#: pdfarranger/croputils.py:214
 msgid "Page format"
 msgstr "Oldalformátum"
 
-#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
+#: pdfarranger/croputils.py:353
 msgid "Width"
 msgstr "Szélesség"
 
-#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
-#: pdfarranger/croputils.py:339
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:354
 msgid "Height"
 msgstr "Magasság"
 
-#: pdfarranger/croputils.py:228
+#: pdfarranger/croputils.py:232
 msgid "Relative"
 msgstr "Viszonylagos"
 
-#: pdfarranger/croputils.py:231
+#: pdfarranger/croputils.py:235
 msgid "Page Size"
 msgstr "Oldalméret"
 
-#: pdfarranger/croputils.py:328
+#: pdfarranger/croputils.py:343
 msgid "Insert Blank Page"
 msgstr "Üres oldal beszúrása"
 
-#: pdfarranger/exporter.py:106
+#: pdfarranger/exporter.py:119
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: pdfarranger/exporter.py:111
+#: pdfarranger/exporter.py:124
 msgid "Forms and outlines are lost on saving."
 msgstr "Az űrlapok és a körvonalak elvesznek a mentéskor."
 
-#: pdfarranger/exporter.py:113
+#: pdfarranger/exporter.py:126
 msgid "Do not show this dialog again."
 msgstr "Ne jelenjen meg újra ez a párbeszédpanel."
 
@@ -168,83 +167,108 @@ msgstr "Készült"
 msgid "Modified"
 msgstr "Módosítva"
 
-#: pdfarranger/metadata.py:150
+#: pdfarranger/metadata.py:151
 msgid "Invalid date format. Input discarded."
 msgstr "Érvénytelen dátumformátum. A bevitelt elvetve."
 
-#: pdfarranger/metadata.py:179
+#: pdfarranger/metadata.py:180
 msgid "Edit properties"
 msgstr "Tulajdonságok szerkesztése"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:194
 msgid "Property"
 msgstr "Tulajdonság"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:194
 msgid "Value"
 msgstr "Érték"
 
-#: pdfarranger/pdfarranger.py:341
+#: pdfarranger/pdfarranger.py:271
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:282
+msgid "Print the version of PDF Arranger and exit"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:290
+msgid "File(s) to open"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:395
+msgid "All pages must have the same size."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
 msgstr "Minden támogatott fájl"
 
-#: pdfarranger/pdfarranger.py:345
+#: pdfarranger/pdfarranger.py:425
 msgid "PDF files"
 msgstr "PDF-fájlok"
 
-#: pdfarranger/pdfarranger.py:352
+#: pdfarranger/pdfarranger.py:432
 msgid "All files"
 msgstr "Minden fájl"
 
-#: pdfarranger/pdfarranger.py:357
+#: pdfarranger/pdfarranger.py:437
 msgid "Supported image files"
 msgstr "Támogatott képfájlok"
 
-#: pdfarranger/pdfarranger.py:531
+#: pdfarranger/pdfarranger.py:634
+msgid "Rendering…"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:728
 msgid "untitled"
 msgstr "névtelen"
 
-#: pdfarranger/pdfarranger.py:625
+#: pdfarranger/pdfarranger.py:865
+#, python-format
 msgid "Save changes to “{}” before closing?"
 msgstr "Menti a változásokat a(z) „{}” fájlba bezárás előtt?"
 
-#: pdfarranger/pdfarranger.py:627
+#: pdfarranger/pdfarranger.py:867
 msgid "Save changes before closing?"
 msgstr "Menti a módosításokat a bezárás előtt?"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:869
 msgid "Your changes will be lost if you don’t save them."
 msgstr "A változtatások elvesznek, ha nem menti őket."
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:870
 msgid "Do_n’t Save"
 msgstr "_Nincs mentés"
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:870
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
 msgid "_Save"
 msgstr "_Mentés"
 
-#: pdfarranger/pdfarranger.py:671
+#: pdfarranger/pdfarranger.py:920
 msgid "Export…"
 msgstr "Exportálás…"
 
-#: pdfarranger/pdfarranger.py:784
+#: pdfarranger/pdfarranger.py:1030
 msgid "Import…"
 msgstr "Importálás…"
 
-#: pdfarranger/pdfarranger.py:885
+#: pdfarranger/pdfarranger.py:1137
 msgid "Pasted data not valid. Aborting paste."
 msgstr "A beillesztett adatok érvénytelenek. A beillesztés megszakadt."
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:1238
 msgid "PDF document is damaged"
 msgstr "A PDF dokumentum sérült"
 
-#: pdfarranger/pdfarranger.py:1794
+#: pdfarranger/pdfarranger.py:2067
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -253,22 +277,33 @@ msgstr ""
 "A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. "
 "GTK+ és Python segítségével írták"
 
-#: pdfarranger/pdfarranger.py:1797
+#: pdfarranger/pdfarranger.py:2070
+#, python-format
+msgid "(%s uses libqpdf %s and pikepdf %s)"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
 msgstr "Fenntartók és közreműködők"
 
-#: pdfarranger/pdfarranger.py:1801
+#: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
 msgstr ""
 "GNU GPL (General Public License - általános nyilvános engedély) 3. verzió."
 
-#: pdfarranger/pdfarranger.py:1829
+#: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
 msgstr "Kiválasztott oldalak: "
 
+#: pdfarranger/pdfarranger.py:2110
+#, fuzzy
+msgid "Page Size:"
+msgstr "Oldalméret"
+
 #: pdfarranger/splitter.py:26
-msgid "Grid splitting"
-msgstr "Rács felosztása"
+#, fuzzy
+msgid "Split Pages"
+msgstr "Oldalak fel_osztása"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -419,36 +454,38 @@ msgid "_Split Pages"
 msgstr "Oldalak fel_osztása"
 
 #: data/menu.ui.h:20
-msgid "_Grid Split"
-msgstr "_Rács felosztása"
-
-#: data/menu.ui.h:21
 msgid "Cu_t"
 msgstr "_Kivágás"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:21
 msgid "_Copy"
 msgstr "_Másolás"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:22
 msgid "Paste _After"
 msgstr "Beillesztés _után"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:23
 msgid "Paste _Before"
 msgstr "Beillesztés _előtt"
 
+#: data/menu.ui.h:24
+#, fuzzy
+msgid "Paste As _Odd Pages"
+msgstr "Párat_lan oldalak kijelölése"
+
 #: data/menu.ui.h:25
-msgid "Paste Interleave _Odd"
-msgstr "Összefűzés beillesztése párat_lan"
+#, fuzzy
+msgid "Paste As _Even Pages"
+msgstr "_Páros oldalak kijelölése"
 
 #: data/menu.ui.h:26
-msgid "Paste Interleave _Even"
-msgstr "Összefűzés beillesztése _páros"
-
-#: data/menu.ui.h:27
 msgid "Insert Blan_k Page"
 msgstr "Üres oldal bes_zúrása"
+
+#: data/menu.ui.h:27
+msgid "Generate Booklet"
+msgstr ""
 
 #: data/menu.ui.h:28
 msgid "_Select"
