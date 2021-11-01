@@ -197,11 +197,11 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
-msgstr ""
+msgstr "Megnyitandó fájl(ok)"
 
 #: pdfarranger/pdfarranger.py:395
 msgid "All pages must have the same size."
-msgstr ""
+msgstr "Minden oldalnak azonos méretűnek kell lennie."
 
 #: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
@@ -221,7 +221,7 @@ msgstr "Támogatott képfájlok"
 
 #: pdfarranger/pdfarranger.py:634
 msgid "Rendering…"
-msgstr ""
+msgstr "Renderelés folyamatban van…"
 
 #: pdfarranger/pdfarranger.py:728
 msgid "untitled"
