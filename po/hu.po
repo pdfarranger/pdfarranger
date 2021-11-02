@@ -190,10 +190,15 @@ msgid ""
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
+"A PDF-rendező egy kis python-gtk alkalmazás, amely egy interaktív és "
+"intuitív grafikus felület segítségével segíti a felhasználót a pdf "
+"dokumentumok egyesítésében vagy felosztásában, valamint az oldalak "
+"elforgatásában, kivágásában és átrendezésében. Ez a pikepdf Python-könyvtár "
+"kezelőfelülete."
 
 #: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
-msgstr ""
+msgstr "PDF-rendező verzió nyomtatása és kilépés"
 
 #: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
@@ -280,7 +285,7 @@ msgstr ""
 #: pdfarranger/pdfarranger.py:2070
 #, python-format
 msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr ""
+msgstr "(%s libqpdf %s és pikepdf %s könyvtárak használata)"
 
 #: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
@@ -296,14 +301,12 @@ msgid "Selected pages: "
 msgstr "Kiválasztott oldalak: "
 
 #: pdfarranger/pdfarranger.py:2110
-#, fuzzy
 msgid "Page Size:"
-msgstr "Oldalméret"
+msgstr "Oldalméret:"
 
 #: pdfarranger/splitter.py:26
-#, fuzzy
 msgid "Split Pages"
-msgstr "Oldalak fel_osztása"
+msgstr "Oldalak felosztása"
 
 #: pdfarranger/splitter.py:58
 msgid "Columns"
@@ -470,14 +473,12 @@ msgid "Paste _Before"
 msgstr "Beillesztés _előtt"
 
 #: data/menu.ui.h:24
-#, fuzzy
 msgid "Paste As _Odd Pages"
-msgstr "Párat_lan oldalak kijelölése"
+msgstr "Beillesztés párat_lan oldalakként"
 
 #: data/menu.ui.h:25
-#, fuzzy
 msgid "Paste As _Even Pages"
-msgstr "_Páros oldalak kijelölése"
+msgstr "Beillesztés _páros oldalakként"
 
 #: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
@@ -485,7 +486,7 @@ msgstr "Üres oldal bes_zúrása"
 
 #: data/menu.ui.h:27
 msgid "Generate Booklet"
-msgstr ""
+msgstr "Füzet létrehozása"
 
 #: data/menu.ui.h:28
 msgid "_Select"
