@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-01 06:35+0200\n"
-"PO-Revision-Date: 2021-01-01 06:38+0200\n"
+"POT-Creation-Date: 2021-11-09 10:23+0200\n"
+"PO-Revision-Date: 2021-11-02 17:01+0200\n"
 "Last-Translator: kbengs\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
@@ -18,126 +18,124 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfarranger/core.py:80
+#: pdfarranger/core.py:85
 msgid "page"
 msgstr "sida"
 
-#: pdfarranger/core.py:175
+#: pdfarranger/core.py:193
 msgid "Password required"
 msgstr "Lösenord krävs"
 
-#: pdfarranger/core.py:186
+#: pdfarranger/core.py:204
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Lösenordet kommer att vara sparat tills du stänger PDF Arranger."
 
-#: pdfarranger/core.py:187
+#: pdfarranger/core.py:205
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr "Dokumentet “{}” är låst och ett lösenord krävs innan det kan öppnas."
 
-#: pdfarranger/core.py:197
+#: pdfarranger/core.py:215
 msgid "Password"
 msgstr "Lösenord"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
+#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1267
 msgid "Unknown file format"
 msgstr "Okänt filformat"
 
-#: pdfarranger/core.py:256
+#: pdfarranger/core.py:282
 msgid "Image files are only supported with img2pdf"
 msgstr "Img2pdf krävs för stöd av bildfiler"
 
-#: pdfarranger/core.py:278
+#: pdfarranger/core.py:304
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformatet stöds inte av img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
+#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1277
 msgid "File is neither pdf nor image"
 msgstr "Filen är varken en PDF eller en bildfil"
 
-#: pdfarranger/croputils.py:113
+#: pdfarranger/croputils.py:114
 msgid "Scale factor"
 msgstr "Skalningsfaktor"
 
-#: pdfarranger/croputils.py:119
+#: pdfarranger/croputils.py:120
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:135
+#: pdfarranger/croputils.py:136
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Left"
 msgstr "Vänster"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Right"
 msgstr "Höger"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Top"
 msgstr "Över"
 
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:146
 msgid "Bottom"
 msgstr "Under"
 
-#: pdfarranger/croputils.py:149
+#: pdfarranger/croputils.py:150
 msgid "Crop Margins"
 msgstr "Beskär marginaler"
 
-#: pdfarranger/croputils.py:157
+#: pdfarranger/croputils.py:158
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Innehåll tas inte bort från PDF-filen vid beskärning, utan döljs endast."
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:167
 msgid "% of width"
 msgstr "% av bredd"
 
-#: pdfarranger/croputils.py:166
-#, python-format
+#: pdfarranger/croputils.py:167
 msgid "% of height"
 msgstr "% av höjd"
 
-#: pdfarranger/croputils.py:210
+#: pdfarranger/croputils.py:214
 msgid "Page format"
 msgstr "Sidformat"
 
-#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
+#: pdfarranger/croputils.py:353
 msgid "Width"
 msgstr "Bredd"
 
-#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
-#: pdfarranger/croputils.py:339
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:354
 msgid "Height"
 msgstr "Höjd"
 
-#: pdfarranger/croputils.py:228
+#: pdfarranger/croputils.py:232
 msgid "Relative"
 msgstr "Relativt"
 
-#: pdfarranger/croputils.py:231
+#: pdfarranger/croputils.py:235
 msgid "Page Size"
 msgstr "Sidstorlek"
 
-#: pdfarranger/croputils.py:328
+#: pdfarranger/croputils.py:343
 msgid "Insert Blank Page"
 msgstr "Infoga tom sida"
 
-#: pdfarranger/exporter.py:106
+#: pdfarranger/exporter.py:119
 msgid "Warning"
 msgstr "Varning"
 
-#: pdfarranger/exporter.py:111
+#: pdfarranger/exporter.py:124
 msgid "Forms and outlines are lost on saving."
 msgstr "Formulär och bokmärken går förlorade när dokumentet sparas."
 
-#: pdfarranger/exporter.py:113
+#: pdfarranger/exporter.py:126
 msgid "Do not show this dialog again."
 msgstr "Visa inte detta meddelande igen."
 
@@ -173,83 +171,111 @@ msgstr "Skapad"
 msgid "Modified"
 msgstr "Ändrad"
 
-#: pdfarranger/metadata.py:150
+#: pdfarranger/metadata.py:151
 msgid "Invalid date format. Input discarded."
 msgstr "Ogiltigt datumformat."
 
-#: pdfarranger/metadata.py:179
+#: pdfarranger/metadata.py:180
 msgid "Edit properties"
 msgstr "Dokument egenskaper"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:194
 msgid "Property"
 msgstr "Fält"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:194
 msgid "Value"
 msgstr "Innehåll"
 
-#: pdfarranger/pdfarranger.py:341
+#: pdfarranger/pdfarranger.py:271
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"PDF Arranger är ett litet python-gtk program som hjälper användaren att slå "
+"samman och dela pdf dokument samt att rotera och arrangera om dess sidor med "
+"ett interaktivt och intuitivt grafiskt användargränssnitt. Programmet "
+"använder pikepdf i bakgrunden."
+
+#: pdfarranger/pdfarranger.py:282
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Skriv ut PDF Arranger versionen och avsluta"
+
+#: pdfarranger/pdfarranger.py:290
+msgid "File(s) to open"
+msgstr "Fil(er) att öppna"
+
+#: pdfarranger/pdfarranger.py:395
+msgid "All pages must have the same size."
+msgstr "Alla sidor måste ha samma storlek."
+
+#: pdfarranger/pdfarranger.py:421
 msgid "All supported files"
 msgstr "Alla filer som stöds"
 
-#: pdfarranger/pdfarranger.py:345
+#: pdfarranger/pdfarranger.py:425
 msgid "PDF files"
 msgstr "PDF filer"
 
-#: pdfarranger/pdfarranger.py:352
+#: pdfarranger/pdfarranger.py:432
 msgid "All files"
 msgstr "Alla filer"
 
-#: pdfarranger/pdfarranger.py:357
+#: pdfarranger/pdfarranger.py:437
 msgid "Supported image files"
 msgstr "Bildfiler som stöds"
 
-#: pdfarranger/pdfarranger.py:531
+#: pdfarranger/pdfarranger.py:653
+msgid "Rendering…"
+msgstr "Renderar…"
+
+#: pdfarranger/pdfarranger.py:751
 msgid "untitled"
 msgstr "Osparat dokument"
 
-#: pdfarranger/pdfarranger.py:625
+#: pdfarranger/pdfarranger.py:898
 msgid "Save changes to “{}” before closing?"
 msgstr "Spara ändringar till “{}” innan stängning?"
 
-#: pdfarranger/pdfarranger.py:627
+#: pdfarranger/pdfarranger.py:900
 msgid "Save changes before closing?"
 msgstr "Spara ändringar innan stängning?"
 
-#: pdfarranger/pdfarranger.py:629
+#: pdfarranger/pdfarranger.py:902
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Dina ändringar går förlorade om du inte sparar dem."
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:903
 msgid "Do_n’t Save"
 msgstr "Spara _inte"
 
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:903
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:903 data/menu.ui.h:3
 msgid "_Save"
 msgstr "_Spara"
 
-#: pdfarranger/pdfarranger.py:671
+#: pdfarranger/pdfarranger.py:953
 msgid "Export…"
 msgstr "Exportera…"
 
-#: pdfarranger/pdfarranger.py:784
+#: pdfarranger/pdfarranger.py:1063
 msgid "Import…"
 msgstr "Importera…"
 
-#: pdfarranger/pdfarranger.py:885
+#: pdfarranger/pdfarranger.py:1170
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Inklistrat data är inte giltigt. Inklistringen avbryts."
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:1271
 msgid "PDF document is damaged"
 msgstr "PDF dokumentet är skadat"
 
-#: pdfarranger/pdfarranger.py:1794
+#: pdfarranger/pdfarranger.py:2099
 #, python-format
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
@@ -258,17 +284,25 @@ msgstr ""
 "%s är ett verktyg för att arrangera om och modifiera PDF filer. Utvecklat "
 "med hjälp av GTK+ och Python"
 
-#: pdfarranger/pdfarranger.py:1797
+#: pdfarranger/pdfarranger.py:2102
+msgid "(%s uses libqpdf %s and pikepdf %s)"
+msgstr "(%s använder libqpdf %s och pikepdf %s)"
+
+#: pdfarranger/pdfarranger.py:2104
 msgid "Maintainers and contributors"
 msgstr "Administratörer och bidragsgivare"
 
-#: pdfarranger/pdfarranger.py:1801
+#: pdfarranger/pdfarranger.py:2109
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
-#: pdfarranger/pdfarranger.py:1829
+#: pdfarranger/pdfarranger.py:2137
 msgid "Selected pages: "
 msgstr "Markerade sidor: "
+
+#: pdfarranger/pdfarranger.py:2142
+msgid "Page Size:"
+msgstr "Sidstorlek:"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -422,33 +456,37 @@ msgstr "Omv_änd ordningen"
 msgid "_Split Pages"
 msgstr "_Dela sidor"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:20
 msgid "Cu_t"
 msgstr "_Klipp ut"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:21
 msgid "_Copy"
 msgstr "K_opiera"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:22
 msgid "Paste _After"
 msgstr "Klistra in _efter"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:23
 msgid "Paste _Before"
 msgstr "Klistra in _före"
 
-#: data/menu.ui.h:25
-msgid "Paste Interleave _Odd"
+#: data/menu.ui.h:24
+msgid "Paste As _Odd Pages"
 msgstr "Klistra in som _udda sidor"
 
-#: data/menu.ui.h:26
-msgid "Paste Interleave _Even"
+#: data/menu.ui.h:25
+msgid "Paste As _Even Pages"
 msgstr "Klistra in som _jämna sidor"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:26
 msgid "Insert Blan_k Page"
 msgstr "_Infoga tom sida"
+
+#: data/menu.ui.h:27
+msgid "Generate Booklet"
+msgstr "Skapa ett häfte"
 
 #: data/menu.ui.h:28
 msgid "_Select"
