@@ -1856,9 +1856,7 @@ class PdfArranger(Gtk.Application):
         margins = 12  # leave 6 pixel at top and 6 pixel at bottom
         zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
         zoom_scaleY_new = (sw_height - cell_extraY - margins) / page_height
-        self.zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
-        if self.zoom_scale < 0.2 * (1.1 ** -10):
-            return
+        self.zoom_scale = max(min(zoom_scaleY_new, zoom_scaleX_new), 0.2 * (1.1 ** -10))
         self.quit_rendering()  # For performance reasons
         for page, _ in self.model:
             page.zoom = self.zoom_scale
