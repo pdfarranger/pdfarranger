@@ -542,6 +542,7 @@ class PdfArranger(Gtk.Application):
 
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
+        self.window.connect_after('check_resize', self.hide_horizontal_scrollbar)
         self.window.show_all()
 
         # Change iconview color background
@@ -803,6 +804,16 @@ class PdfArranger(Gtk.Application):
         """Main Window resize."""
         if self.iconview.get_visible():
             self.update_iconview_geometry()
+
+    def hide_horizontal_scrollbar(self, _window):
+        """Hide horizontal scrollbar when not needed."""
+        sw_width = self.sw.get_allocated_width()
+        iv_width = self.iconview.get_allocated_width()
+        hscrollbar = self.sw.get_hscrollbar()
+        if iv_width <= sw_width:
+            hscrollbar.hide()
+        else:
+            hscrollbar.show()
 
     def update_iconview_geometry(self):
         """Set iconview cell size, margins, number of columns and spacing."""
