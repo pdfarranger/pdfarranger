@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-31 13:42+0100\n"
-"PO-Revision-Date: 2021-10-31 20:47+0000\n"
+"PO-Revision-Date: 2021-11-02 11:45+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
@@ -52,7 +52,7 @@ msgstr "Ficheiros de imagem apenas suportados com img2pdf"
 
 #: pdfarranger/core.py:304
 msgid "Image format is not supported by img2pdf"
-msgstr "O formato de imagem não é suportado pelo img2pdf"
+msgstr "Formato de imagem não suportado por img2pdf"
 
 #: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
 msgid "File is neither pdf nor image"
@@ -127,7 +127,7 @@ msgstr "Tamanho da página"
 
 #: pdfarranger/croputils.py:343
 msgid "Insert Blank Page"
-msgstr "Inserir página em branco"
+msgstr "Inserir página vazia"
 
 #: pdfarranger/exporter.py:119
 msgid "Warning"
@@ -198,12 +198,12 @@ msgid ""
 msgstr ""
 "O PDF Arranger é uma pequena aplicação em python-gtk, que ajuda o utilizador "
 "a juntar ou dividir documentos pdf e a rodar, cortar e reorganizar as suas "
-"páginas usando uma interface gráfica interativa e intuitiva. É um front-end "
+"páginas usando uma interface gráfica interativa e intuitiva. É uma interface "
 "para pikepdf."
 
 #: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
-msgstr "Mostrar a versão do PDF Arranger e sair"
+msgstr "Mostra a versão do PDF Arranger e sai"
 
 #: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
@@ -490,7 +490,7 @@ msgstr "Inserir página em bran_co"
 
 #: data/menu.ui.h:27
 msgid "Generate Booklet"
-msgstr "Gerar Folheto"
+msgstr "Gerar folheto"
 
 #: data/menu.ui.h:28
 msgid "_Select"
