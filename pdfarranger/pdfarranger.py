@@ -483,6 +483,7 @@ class PdfArranger(Gtk.Application):
         self.sw.connect('drag_data_received', self.sw_dnd_received_data)
         self.sw.connect('button_press_event', self.sw_button_press_event)
         self.sw.connect('scroll_event', self.sw_scroll_event)
+        self.sw.connect('motion_notify_event', self.sw_motion)
 
         # Create ListStore model and IconView
         self.model = Gtk.ListStore(GObject.TYPE_PYOBJECT, str)
@@ -678,7 +679,7 @@ class PdfArranger(Gtk.Application):
         if self.window_width_old not in [0, event.width] and len(self.model) > 0:
             if self.set_iv_visible_id:
                 GObject.source_remove(self.set_iv_visible_id)
-            self.set_iv_visible_id = GObject.timeout_add(1500, self.set_iconview_visible)
+            self.set_iv_visible_id = GObject.timeout_add(1000, self.set_iconview_visible)
             self.iconview.set_visible(False)
         self.window_width_old = event.width
         if len(self.model) > 1: # Don't trigger extra render after first page is inserted
@@ -689,17 +690,21 @@ class PdfArranger(Gtk.Application):
         if event.button == 1:
             self.set_iconview_visible(timeout=False)
 
-    def window_enter_notify_event(self, _window, _event):
+    def window_enter_notify_event(self, _window, event):
         """Mouse pointer enter window."""
-        if os.name == 'nt':
+        if os.name == 'nt' or event.state & Gdk.ModifierType.BUTTON1_MASK:
             # In Windows this is triggered when dragging window edge. Instead the release event
-            # is usually triggered when releasing button.
+            # is usually triggered when releasing button. Also triggered in Mate desktop.
             return
         self.set_iconview_visible(timeout=False)
 
     def window_state_event(self, _window, _event):
         """Window state change."""
         GObject.timeout_add(100, self.set_iconview_visible)
+
+    def sw_motion(self, _scrolledwindow, _event):
+        """Mouse movement in scrolled window."""
+        self.set_iconview_visible(timeout=False)
 
     def set_iconview_visible(self, timeout=True):
         if timeout:
