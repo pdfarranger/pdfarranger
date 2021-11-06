@@ -1860,6 +1860,7 @@ class PdfArranger(Gtk.Application):
         self.quit_rendering()  # For performance reasons
         for page, _ in self.model:
             page.zoom = self.zoom_scale
+        self.model[0][0] = self.model[0][0]
 
         # Set zoom level to nearest possible so zoom in/out works right
         self.zoom_level = -10
