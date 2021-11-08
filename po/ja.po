@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-31 13:42+0100\n"
-"PO-Revision-Date: 2021-11-08 21:00+0900\n"
+"PO-Revision-Date: 2021-11-08 21:20+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -289,7 +289,7 @@ msgstr ""
 #: pdfarranger/pdfarranger.py:2070
 #, python-format
 msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr "%s は次を使用しています: libqpdf %s pikepdf %s"
+msgstr "(%s は次を使用しています: libqpdf %s pikepdf %s)"
 
 #: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
