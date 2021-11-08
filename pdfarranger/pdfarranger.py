@@ -892,18 +892,6 @@ class PdfArranger(Gtk.Application):
             upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
             vscrollbar.set_range(lower_limit, upper_limit)
 
-    def update_geometry(self, treeiter):
-        """Recomputes the width and height of the rotated page and saves
-           the result in the ListStore"""
-
-        if not self.model.iter_is_valid(treeiter):
-            return
-
-        p = self.model.get(treeiter, 0)[0]
-        page = self.pdfqueue[p.nfile - 1].document.get_page(p.npage - 1)
-        p.set_size(page.get_size())
-        self.model.set(treeiter, 0, p)
-
     def confirm_dialog(self, msg, action):
         """A dialog for confirmation of an action."""
         d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
@@ -2050,7 +2038,6 @@ class PdfArranger(Gtk.Application):
             if p.rotate(angle):
                 rotated = True
                 model.set_value(treeiter, 0, p)
-            self.update_geometry(treeiter)
         page_width_new = max(p.width_in_points() for p, _ in self.model)
         page_height_new = max(p.height_in_points() for p, _ in self.model)
         if page_width_old != page_width_new or page_height_old != page_height_new:
@@ -2126,7 +2113,6 @@ class PdfArranger(Gtk.Application):
                 page.crop = list(newcrop[id_sel])
                 changed = True
             model.set_value(pos, 0, page)
-            self.update_geometry(pos)
         return changed
 
     def duplicate(self, _action, _parameter, _unknown):

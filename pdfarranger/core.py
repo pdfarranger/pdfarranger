@@ -69,8 +69,10 @@ class Page:
         self.copyname = copyname
         #: Left, right, top, bottom crop
         self.crop = list(crop)
-        #: width and height
-        self.size = list(size)
+        #: Width and height of the original page
+        self.size_orig = list(size)
+        #: Width and height
+        self.size = list(size) if angle in [0, 180] else list(reversed(size))
         self.angle = angle
         self.thumbnail = None
         self.resample = -1
@@ -122,6 +124,7 @@ class Page:
             return False
         self.crop = self.rotate_crop(self.crop, rt)
         self.angle = (self.angle + int(angle)) % 360
+        self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
         return True
 
     def serialize(self):
@@ -139,14 +142,6 @@ class Page:
             r.resample = -1
             r.preview = None
         return r
-
-    def set_size(self, size):
-        """set this page size from the Poppler page."""
-        self.size = list(size)
-        rotation = int(self.angle) % 360
-        rotation = round(rotation / 90) * 90
-        if rotation == 90 or rotation == 270:
-            self.size.reverse()
 
     def split(self, vcrops, hcrops):
         """Split this page into a grid and return all but the top-left page."""
@@ -424,7 +419,6 @@ class PageAdder:
                 if select_added:
                     path = self.app.model.get_path(it)
                     self.app.iconview.select_path(path)
-                self.app.update_geometry(it)
         if add_to_undomanager:
             GObject.idle_add(self.app.retitle)
             self.app.zoom_set(self.app.zoom_level)
