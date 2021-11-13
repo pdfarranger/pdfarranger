@@ -5,20 +5,21 @@
 # Konstantinos Poulios, 2008-2017
 # David Auer, 2020
 # Milo Ivir <mail@milotype.de>, 2020, 2021
+# Dr. Tobias Quathamer <toddy@debian.org>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-31 13:42+0100\n"
-"PO-Revision-Date: 2021-10-31 15:38+0100\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"PO-Revision-Date: 2021-11-13 22:30+0100\n"
+"Last-Translator: Dr. Tobias Quathamer <toddy@debian.org>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Lokalize 21.08.0\n"
 
 #: pdfarranger/core.py:85
 msgid "page"
@@ -30,14 +31,14 @@ msgstr "Passwort wird benötigt"
 
 #: pdfarranger/core.py:204
 msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Das Passwort wird gespeichert bis PDF Arranger geschlossen wird."
+msgstr "Das Passwort wird gespeichert, bis PDF Arranger geschlossen wird."
 
 #: pdfarranger/core.py:205
 #, python-format
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Das Dokument „{}“ ist gesperrt und ein Passwort wird benötigt um es zu "
+"Das Dokument „{}“ ist gesperrt und ein Passwort wird benötigt, um es zu "
 "öffnen."
 
 #: pdfarranger/core.py:215
@@ -138,7 +139,7 @@ msgstr "Warnung"
 
 #: pdfarranger/exporter.py:124
 msgid "Forms and outlines are lost on saving."
-msgstr "Formulare und Inhaltsverzeichnisse gehen beim speichern verloren."
+msgstr "Formulare und Inhaltsverzeichnisse gehen beim Speichern verloren."
 
 #: pdfarranger/exporter.py:126
 msgid "Do not show this dialog again."
@@ -200,17 +201,17 @@ msgid ""
 "pikepdf."
 msgstr ""
 "PDF Arranger ist eine kleine Python-GTK-Anwendung, die dem Benutzer hilft, "
-"PDF-Dokumente zusammenzuführen oder aufzuteilen und ihre Seiten mithilfe "
+"PDF-Dokumente zusammenzuführen oder aufzuteilen und ihre Seiten mit Hilfe "
 "einer interaktiven und intuitiven grafischen Oberfläche zu drehen, "
 "zuzuschneiden und neu anzuordnen. Es ist ein Frontend für Pikepdf."
 
 #: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
-msgstr "PDF Arranger Version ausdrucken und beenden"
+msgstr "PDF Arranger Version anzeigen und beenden"
 
 #: pdfarranger/pdfarranger.py:290
 msgid "File(s) to open"
-msgstr "Dateien zum Öffnen"
+msgstr "Zu öffnende Datei(en)"
 
 #: pdfarranger/pdfarranger.py:395
 msgid "All pages must have the same size."
@@ -234,7 +235,7 @@ msgstr "Unterstützte Bilddateien"
 
 #: pdfarranger/pdfarranger.py:634
 msgid "Rendering…"
-msgstr "Wiedergabe …"
+msgstr "Vorschau erstellen …"
 
 #: pdfarranger/pdfarranger.py:728
 msgid "untitled"
@@ -255,7 +256,7 @@ msgstr "Änderungen gehen verloren, wenn sie nicht gespeichert werden."
 
 #: pdfarranger/pdfarranger.py:870
 msgid "Do_n’t Save"
-msgstr "Nicht speicher_n"
+msgstr "_Nicht speichern"
 
 #: pdfarranger/pdfarranger.py:870
 msgid "_Cancel"
@@ -297,11 +298,11 @@ msgstr "(%s benutzt libqpdf %s und pikepdf %s)"
 
 #: pdfarranger/pdfarranger.py:2072
 msgid "Maintainers and contributors"
-msgstr "Verwalter und Mitwirkende"
+msgstr "Hauptentwickler und Mitwirkende"
 
 #: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU Allgemeine öffentliche Lizenz Version 3."
+msgstr "GNU General Public License (GPL) Version 3."
 
 #: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
@@ -325,11 +326,11 @@ msgstr "Zeilen"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
-msgstr "Senkrechte Teile"
+msgstr "Senkrechte Teilungen"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
-msgstr "Waagerecht Teile"
+msgstr "Waagerechte Teilungen"
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
@@ -377,7 +378,7 @@ msgstr "Hauptmenü"
 
 #: data/pdfarranger.ui.h:6
 msgid "Zoom In"
-msgstr "Vergrössern"
+msgstr "Vergrößern"
 
 #: data/pdfarranger.ui.h:7
 msgid "Zoom Out"
@@ -413,7 +414,7 @@ msgstr "Auswahl in eine Datei e_xportieren …"
 
 #: data/menu.ui.h:7
 msgid "Export Selection to _Individual Files…"
-msgstr "Auswahl in Einzeldateien e_xportieren …"
+msgstr "Auswahl in E_inzeldateien exportieren …"
 
 #: data/menu.ui.h:8
 msgid "Export _All Pages to Individual Files…"
@@ -493,7 +494,7 @@ msgstr "_Leere Seite einfügen"
 
 #: data/menu.ui.h:27
 msgid "Generate Booklet"
-msgstr "Büchlein erstellen"
+msgstr "Broschüre erstellen"
 
 #: data/menu.ui.h:28
 msgid "_Select"
@@ -529,7 +530,7 @@ msgstr "Auswahl _umkehren"
 
 #: data/menu.ui.h:36
 msgid "Zoom _In"
-msgstr "Ver_grössern"
+msgstr "Ver_größern"
 
 #: data/menu.ui.h:37
 msgid "Zoom _Out"
@@ -541,7 +542,7 @@ msgstr "Eige_nschaften ändern"
 
 #: data/menu.ui.h:39
 msgid "_About"
-msgstr "Info zu _PDF Arranger"
+msgstr "Über _PDF Arranger"
 
 #: data/menu.ui.h:40
 msgid "_Quit"
@@ -549,4 +550,4 @@ msgstr "Been_den"
 
 #: data/menu.ui.h:41
 msgid "Past_e Special"
-msgstr "Ein_fügen"
+msgstr "Spezielles Ein_fügen"
