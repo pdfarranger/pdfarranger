@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-31 13:42+0100\n"
 "PO-Revision-Date: 2021-10-31 15:55+0100\n"
-"Last-Translator: Jérôme Robert <jeromerobert@gmx.com>\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: French - France <>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -206,7 +206,7 @@ msgstr ""
 "PDF Arranger est une application basée sur Python GTK, qui permet de "
 "fusionner ou diviser des documents PDF et de pivoter, recadrer et "
 "réorganiser leurs pages en utilisant une interface graphique interactive et "
-"intuitive. C'est une interface pour Pikepdf."
+"intuitive. C’est une interface pour Pikepdf."
 
 #: pdfarranger/pdfarranger.py:282
 msgid "Print the version of PDF Arranger and exit"
@@ -305,7 +305,7 @@ msgstr "Mainteneurs et contributeurs"
 
 #: pdfarranger/pdfarranger.py:2077
 msgid "GNU General Public License (GPL) Version 3."
-msgstr "Licence publique générale GNU (GPL), version 3."
+msgstr "Licence publique générale GNU (GPL), version 3."
 
 #: pdfarranger/pdfarranger.py:2105
 msgid "Selected pages: "
@@ -313,7 +313,7 @@ msgstr "Pages sélectionnées : "
 
 #: pdfarranger/pdfarranger.py:2110
 msgid "Page Size:"
-msgstr "Dimensions de la page:"
+msgstr "Dimensions de la page :"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
