@@ -174,6 +174,9 @@ class bdist_zip(distutils.cmd.Command):
         fullname = self.distribution.get_fullname()
         build_exe.build_exe = os.path.join(build_base, fullname)
         build_exe.run()
+        config_ini = os.path.join(build_exe.build_exe, 'config.ini')
+        f = open(config_ini, 'w')
+        f.close()
         dist_dir = self.get_finalized_command('bdist').dist_dir
         archname = os.path.join(dist_dir, get_target_name('portable'))
         self.make_archive(archname, 'zip', root_dir=build_base, base_dir=fullname)

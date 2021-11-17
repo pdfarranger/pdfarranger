@@ -30,10 +30,11 @@ It’s a humble attempt to make the project a bit more active.
 ## Customization of keyboard shortcuts
 
 In case you are not satisfied with the default keyboard shortcuts they can be
-changed. To do so, set `enable_custom` to `true` in
-`~/.config/pdfarranger/config.ini` or
-`C:\Users\username\AppData\Roaming\pdfarranger\config.ini` and edit other
-lines.
+changed. To do so, set `enable_custom` to `true` and edit the shortcuts in `config.ini`:\
+`~/.config/pdfarranger/config.ini` (Linux)\
+`C:\Users\username\AppData\Roaming\pdfarranger\config.ini` (Windows installer version)\
+In Windows portable version the file is located in the same folder as pdfarranger.exe.
+Optionally this file can be removed. The application will then use the same config file location as installer version.
 
 ## Install from source
 
