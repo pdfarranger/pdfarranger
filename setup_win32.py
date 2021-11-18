@@ -6,6 +6,7 @@ import sys
 import distutils
 import shutil
 import glob
+import pkg_resources
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
@@ -122,6 +123,14 @@ addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll")
 addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders.cache")
 addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
+
+
+# Add support for pikepdf.__version__
+distrib = pkg_resources.get_distribution('pikepdf')
+from_path = os.path.join(distrib.egg_info, 'INSTALLER')
+to_path = os.path.join('lib', os.path.basename(distrib.egg_info), 'INSTALLER')
+include_files.append((from_path, to_path))
+
 
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
