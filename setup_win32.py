@@ -132,6 +132,12 @@ to_path = os.path.join('lib', os.path.basename(distrib.egg_info), 'INSTALLER')
 include_files.append((from_path, to_path))
 
 
+# gspawn-helper is needed for website link in AboutDialog
+from_path = os.path.join(sys.prefix, 'bin', 'gspawn-win64-helper.exe')
+to_path = 'gspawn-win64-helper.exe'
+include_files.append((from_path, to_path))
+
+
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
     excludes=['tkinter', 'test'],
