@@ -350,6 +350,8 @@ class BlankPageDialog(Gtk.Dialog):
                 Gtk.ResponseType.OK,
             ),
         )
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_resizable(False)
         self.width_widget = _ScalingWidget(_("Width"), size[0])
         self.height_widget = _ScalingWidget(_("Height"), size[1])
         self.vbox.pack_start(self.width_widget, True, True, 6)
@@ -357,8 +359,6 @@ class BlankPageDialog(Gtk.Dialog):
         self.width_widget.props.spacing = 6
         self.height_widget.props.spacing = 6
         self.show_all()
-        self.set_resizable(False)
-        self.set_default_response(Gtk.ResponseType.OK)
 
     def run_get(self):
         result = self.run()
