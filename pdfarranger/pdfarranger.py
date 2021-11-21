@@ -1805,6 +1805,7 @@ class PdfArranger(Gtk.Application):
                 filename = get_file_path_from_uri(uri)
                 pageadder.addpages(filename)
             pageadder.commit(select_added=False, add_to_undomanager=True)
+            self.iv_selection_changed_event()
 
     def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
