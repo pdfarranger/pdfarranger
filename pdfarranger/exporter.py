@@ -103,6 +103,9 @@ def _scale(doc, page, factor):
         Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
         Rotate=rotate,
     )
+    # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
+    if pikepdf.__version__ < '2.7.0':
+        new_page = doc.make_indirect(new_page)
     return new_page
 
 def check_content(parent, pdf_list):
@@ -153,25 +156,34 @@ def export(input_files, pages, file_out, mode, mdata):
     global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
     pdf_input = [pikepdf.open(p.copyname, password=p.password) for p in input_files]
+    copied_pages = {}
+    # Copy pages from the input PDF files to the output PDF file
     for row in pages:
         current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
-        new_page = pdf_output.copy_foreign(current_page)
-        _update_angle(row, current_page, new_page)
-        new_page.MediaBox = _mediabox(new_page, row.crop)
-        new_page = _scale(pdf_output, new_page, row.scale)
-
-        # Workraround for pikepdf < 2.7.0
-        # https://github.com/pikepdf/pikepdf/issues/174
-        new_page = pdf_output.make_indirect(new_page)
-
+        # if the page already exists in the output PDF, duplicate it
+        new_page = copied_pages.get((row.nfile, row.npage))
+        if new_page is None:
+            # for backward compatibility with old pikepdf. With pikepdf > 3
+            # new_page = current_page should be enough
+            new_page = pdf_output.copy_foreign(current_page)
+        # let pdf_output adopt new_page
         pdf_output.pages.append(new_page)
+        new_page = pdf_output.pages[-1]
+        copied_pages[(row.nfile, row.npage)] = new_page
         # Ensure annotations are copied rather than referenced
         # https://github.com/pdfarranger/pdfarranger/issues/437
         if pikepdf.Name.Annots in current_page:
             pdf_temp = pikepdf.Pdf.new()
             pdf_temp.pages.append(current_page)
             indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
-            pdf_output.pages[-1].Annots = pdf_output.copy_foreign(indirect_annots)
+            new_page.Annots = pdf_output.copy_foreign(indirect_annots)
+
+    # Apply geometrical transformations in the output PDF file
+    for page_id, row in enumerate(pages):
+        new_page = pdf_output.pages[page_id]
+        _update_angle(row, new_page, new_page)
+        new_page.MediaBox = _mediabox(new_page, row.crop)
+        pdf_output.pages[page_id] = _scale(pdf_output, new_page, row.scale)
 
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
