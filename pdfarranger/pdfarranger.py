@@ -1039,8 +1039,9 @@ class PdfArranger(Gtk.Application):
 
     def choose_export_pdf_name(self, mode):
         """Handles choosing a name for exporting """
+        title = _('Save As…') if mode == GLib.Variant('i', 0) else _('Export…')
 
-        chooser = Gtk.FileChooserDialog(title=_('Export…'),
+        chooser = Gtk.FileChooserDialog(title=title,
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.SAVE,
                                         buttons=(Gtk.STOCK_CANCEL,
