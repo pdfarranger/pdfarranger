@@ -79,6 +79,7 @@ class Manager(object):
                 page.zoom = self.app.zoom_scale
                 self.model.append([page, page.description()])
         self.app.zoom_set(self.app.zoom_level)
+        self.app.retitle()
         self.app.silent_render()
 
     def __refresh(self):
