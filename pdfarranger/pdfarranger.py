@@ -332,7 +332,8 @@ class PdfArranger(Gtk.Application):
             ('save', self.on_action_save),
             ('save-as', self.on_action_save_as),
             ('new', self.on_action_new),
-            ('import', self.on_action_add_doc_activate),
+            ('open', self.on_action_open),
+            ('import', self.on_action_import),
             ('zoom', self.zoom_change, 'i'),
             ('close', self.on_action_close),
             ('quit', self.on_quit),
@@ -612,17 +613,21 @@ class PdfArranger(Gtk.Application):
             files = [Gio.File.new_for_commandline_arg(i)
                     for i in options.lookup_value(GLib.OPTION_REMAINING)]
 
-            a = PageAdder(self)
-            for f in files:
-                try:
-                    a.addpages(f.get_path())
-                except FileNotFoundError as e:
-                    print(e, file=sys.stderr)
-                    self.error_message_dialog(e)
-
-            a.commit(select_added=False, add_to_undomanager=True)
+            GObject.idle_add(self.add_files, files)
 
         return 0
+
+    def add_files(self, files):
+        """Add files passed as command line arguments."""
+        a = PageAdder(self)
+        for f in files:
+            try:
+                a.addpages(f.get_path())
+            except FileNotFoundError as e:
+                print(e, file=sys.stderr)
+                self.error_message_dialog(e)
+
+        a.commit(select_added=False, add_to_undomanager=True)
 
     @staticmethod
     def set_text_renderer_cell_height(iconview):
@@ -1069,22 +1074,66 @@ class PdfArranger(Gtk.Application):
         r.discard("")
         return r
 
-    def on_action_new(self, _action, _param, _unknown):
+    def open_dialog(self, title):
+        chooser = Gtk.FileChooserDialog(title=title,
+                                        parent=self.window,
+                                        action=Gtk.FileChooserAction.OPEN,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_OPEN,
+                                                 Gtk.ResponseType.ACCEPT))
+        if self.import_directory is not None:
+            chooser.set_current_folder(self.import_directory)
+        chooser.set_select_multiple(True)
+        file_type_list = ['all', 'pdf']
+        if len(img2pdf_supported_img) > 0:
+            file_type_list = ['all', 'img2pdf', 'pdf']
+        filter_list = self.__create_filters(file_type_list)
+        for f in filter_list:
+            chooser.add_filter(f)
+
+        return chooser.run(), chooser
+
+    def on_action_new(self, _action=None, _param=None, _unknown=None, filenames=None):
         """Start a new instance."""
+        filenames = filenames or []
         if os.name == 'nt':
-            if sys.executable.find('python3.exe') == -1:
-                subprocess.Popen(sys.executable)
-            else:
-                subprocess.Popen([sys.executable, '-mpdfarranger'])
+            args = [str(sys.executable)]
+            for filename in filenames:
+                args.append(filename)
+            if sys.executable.find('python3.exe') != -1:
+                args.insert(1, '-mpdfarranger')
+            subprocess.Popen(args)
         else:
             display = Gdk.Display.get_default()
             launch_context = display.get_app_launch_context()
             desktop_file = "%s.desktop"%(self.get_application_id())
             try:
                 app_info = Gio.DesktopAppInfo.new(desktop_file)
-                app_info.launch([], launch_context)
+                launch_files = []
+                for filename in filenames:
+                    launch_file = Gio.File.new_for_path(filename)
+                    launch_files.append(launch_file)
+                app_info.launch(launch_files, launch_context)
             except TypeError:
-                subprocess.Popen([sys.executable, '-mpdfarranger'])
+                args = [str(sys.executable), '-mpdfarranger']
+                for filename in filenames:
+                    args.append(filename)
+                subprocess.Popen(args)
+
+    def on_action_open(self, _action, _param, _unknown):
+        """Open new file(s)."""
+        response, chooser = self.open_dialog(_('Open…'))
+
+        if response == Gtk.ResponseType.ACCEPT:
+            if self.is_unsaved or self.export_file:
+                self.on_action_new(filenames=chooser.get_filenames())
+            else:
+                adder = PageAdder(self)
+                for filename in chooser.get_filenames():
+                    adder.addpages(filename)
+                adder.commit(select_added=False, add_to_undomanager=True)
+        chooser.destroy()
 
     def on_action_save(self, _action, _param, _unknown):
         self.save_or_choose()
@@ -1143,26 +1192,10 @@ class PdfArranger(Gtk.Application):
     def on_action_export_all(self, _action, _param, _unknown):
         self.choose_export_pdf_name(GLib.Variant('i', 1))
 
-    def on_action_add_doc_activate(self, _action, _param, _unknown):
+    def on_action_import(self, _action, _param, _unknown):
         """Import doc"""
-        chooser = Gtk.FileChooserDialog(title=_('Import…'),
-                                        parent=self.window,
-                                        action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
-                                                 Gtk.ResponseType.ACCEPT))
-        if self.import_directory is not None:
-            chooser.set_current_folder(self.import_directory)
-        chooser.set_select_multiple(True)
-        file_type_list = ['all', 'pdf']
-        if len(img2pdf_supported_img) > 0:
-            file_type_list = ['all', 'img2pdf', 'pdf']
-        filter_list = self.__create_filters(file_type_list)
-        for f in filter_list:
-            chooser.add_filter(f)
+        response, chooser = self.open_dialog(_('Import…'))
 
-        response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
             adder = PageAdder(self)
             for filename in chooser.get_filenames():

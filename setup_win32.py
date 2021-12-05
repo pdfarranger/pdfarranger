@@ -50,6 +50,7 @@ def addicons():
         'actions/media-eject',
         'actions/document-save',
         'actions/document-save-as',
+        'actions/document-open',
         'actions/insert-image',
         'actions/object-rotate-left',
         'actions/object-rotate-right',
