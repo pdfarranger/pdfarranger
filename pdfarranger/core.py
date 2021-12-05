@@ -426,6 +426,7 @@ class PageAdder:
             GObject.idle_add(self.app.retitle)
             self.app.zoom_set(self.app.zoom_level)
             self.app.silent_render()
+            self.app.update_statusbar()
         self.pages = []
         return True
 
