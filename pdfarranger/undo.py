@@ -85,6 +85,7 @@ class Manager(object):
                 self.model.append([page, page.description()])
         self.app.zoom_set(self.app.zoom_level)
         self.app.retitle()
+        self.app.update_statusbar()
         self.app.silent_render()
 
     def __refresh(self):

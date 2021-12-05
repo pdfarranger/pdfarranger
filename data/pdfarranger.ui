@@ -117,21 +117,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="num_pages">
-            <property name="visible">True</property>
-            <property name="sensitive">False</property>
-            <property name="editable">False</property>
-            <property name="width_chars">3</property>
-            <property name="text">0</property>
-            <property name="shadow_type">etched-out</property>
-            <property name="input_purpose">digits</property>
-            <property name="tooltip_text" translatable="yes">Number of Pages</property>
-          </object>
-          <packing>
-            <property name="position">4</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkMenuButton" id="main_menu_button">
             <property name="visible">True</property>
             <property name="receives_default">False</property>

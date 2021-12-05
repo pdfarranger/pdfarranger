@@ -359,7 +359,6 @@ class PdfArranger(Gtk.Application):
         # Disable actions
         self.iv_selection_changed_event()
         self.window_focus_in_out_event()
-        self.__update_num_pages(self.iconview.get_model())
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
 
@@ -529,9 +528,6 @@ class PdfArranger(Gtk.Application):
         self.iconview.connect('size_allocate', self.iv_size_allocate)
 
         self.sw.add(self.iconview)
-
-        self.model.connect('row-inserted', self.__update_num_pages)
-        self.model.connect('row-deleted', self.__update_num_pages)
 
         # Status bar to the left
         self.status_bar = self.uiXML.get_object('statusbar')
@@ -966,7 +962,7 @@ class PdfArranger(Gtk.Application):
         self.undomanager.clear()
         self.set_export_file(None)
         self.set_unsaved(False)
-        self.__update_num_pages(self.model)
+        self.update_statusbar()
         malloc_trim()
 
     def on_quit(self, _action, _param=None, _unknown=None):
@@ -1374,8 +1370,6 @@ class PdfArranger(Gtk.Application):
                 self.paste_files(data, before, ref_to)
             else:
                 self.paste_pages(data, before, ref_to, select_added=False)
-            if pastemode == 'BEFORE':
-                self.__update_statusbar()
         elif pastemode in ['ODD', 'EVEN']:
             if data_is_filepaths:
                 # Generate data to send to paste_pages_interleave
@@ -1865,7 +1859,7 @@ class PdfArranger(Gtk.Application):
             ("generate-booklet", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
-        self.__update_statusbar()
+        self.update_statusbar()
         if selection and not move_cursor_event:
             self.iv_cursor.cursor_is_visible = False
 
@@ -2025,7 +2019,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         if self.rotate_page(selection, angle):
             self.set_unsaved(True)
-            self.__update_statusbar()
+            self.update_statusbar()
 
     def rotate_page(self, selection, angle):
         model = self.iconview.get_model()
@@ -2090,7 +2084,7 @@ class PdfArranger(Gtk.Application):
                     updatestatus = True
             if updatestatus:
                 self.set_unsaved(True)
-                self.__update_statusbar()
+                self.update_statusbar()
         self.zoom_set(self.zoom_level)
         GObject.idle_add(self.render)
 
@@ -2100,7 +2094,7 @@ class PdfArranger(Gtk.Application):
         self.undomanager.commit("Crop white Borders")
         if self.crop(selection, crop):
             self.set_unsaved(True)
-            self.__update_statusbar()
+            self.update_statusbar()
         GObject.idle_add(self.render)
 
     def crop(self, selection, newcrop):
@@ -2197,13 +2191,7 @@ class PdfArranger(Gtk.Application):
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
 
-    def __update_num_pages(self, model, _path=None, _itr=None, _user_data=None):
-        num_pages = len(model)
-        self.uiXML.get_object("num_pages").set_text(str(num_pages))
-        for a in ["save", "save-as", "select", "export-all"]:
-            self.window.lookup_action(a).set_enabled(num_pages > 0)
-
-    def __update_statusbar(self):
+    def update_statusbar(self):
         selection = self.iconview.get_selected_items()
         selected_pages = sorted([p.get_indices()[0] + 1 for p in selection])
         # Compact the representation of the selected page range
@@ -2215,13 +2203,17 @@ class PdfArranger(Gtk.Application):
             range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
             display.append(range_str)
         ctxt_id = self.status_bar.get_context_id("selected_pages")
-        msg = _("Selected pages: ") + ", ".join(display)
+        num_pages = len(self.model)
+        msg = _("Selected pages: ") + ", ".join(display) + " / " + str(num_pages)
         if len(selection) == 1:
             model = self.iconview.get_model()
             pagesize = model[selection[0]][0].size_in_points()
             pagesize = [x * 25.4 / 72 for x in pagesize]
-            msg += " / "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
+            msg += " | "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
         self.status_bar.push(ctxt_id, msg)
+
+        for a in ["save", "save-as", "select", "export-all"]:
+            self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
