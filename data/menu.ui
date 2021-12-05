@@ -21,6 +21,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
   <menu id="main_menu">
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Open</attribute>
+        <attribute name="action">win.open</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">_Import</attribute>
         <attribute name="action">win.import</attribute>
       </item>

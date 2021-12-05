@@ -36,7 +36,28 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="visible">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Open a file and append it to the current document</property>
+                <property name="tooltip_text" translatable="yes">Open</property>
+                <property name="action_name">win.open</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon_name">document-open-symbolic</property>
+                    <property name="use_fallback">True</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="visible">True</property>
+                <property name="focus_on_click">False</property>
+                <property name="receives_default">False</property>
+                <property name="tooltip_text" translatable="yes">Import</property>
                 <property name="action_name">win.import</property>
                 <child>
                   <object class="GtkImage">
@@ -49,7 +70,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -68,7 +89,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -87,7 +108,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <style>
