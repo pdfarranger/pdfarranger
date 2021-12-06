@@ -40,6 +40,11 @@ class Manager(object):
         self.undoaction = None
         self.redoaction = None
 
+    def clear(self):
+        self.states = []
+        self.label = None
+        self.current = 0
+
     def commit(self, label):
         """
         Must be called *BEFORE* each undoable actions

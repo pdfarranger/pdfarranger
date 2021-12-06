@@ -334,6 +334,7 @@ class PdfArranger(Gtk.Application):
             ('new', self.on_action_new),
             ('import', self.on_action_add_doc_activate),
             ('zoom', self.zoom_change, 'i'),
+            ('close', self.on_action_close),
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
@@ -530,7 +531,6 @@ class PdfArranger(Gtk.Application):
 
         self.model.connect('row-inserted', self.__update_num_pages)
         self.model.connect('row-deleted', self.__update_num_pages)
-        self.model.connect('row-deleted', self.reset_export_file)
 
         # Status bar to the left
         self.status_bar = self.uiXML.get_object('statusbar')
@@ -757,10 +757,10 @@ class PdfArranger(Gtk.Application):
     def retitle(self):
         if self.export_file:
             title = self.export_file
-            if self.is_unsaved:
-                title += '*'
         else:
             title = _('untitled')
+        if self.is_unsaved:
+            title += '*'
 
         all_files = self.active_file_names()
         if len(all_files) > 0:
@@ -922,35 +922,90 @@ class PdfArranger(Gtk.Application):
         p.set_size(page.get_size())
         self.model.set(treeiter, 0, p)
 
+    def on_action_close(self, _action, _param, _unknown):
+        """Close all files and restore initial state."""
+        if self.is_unsaved:
+            if len(self.model) == 0:
+                msg = _('Discard changes and close?')
+                d = Gtk.MessageDialog(self.window, 0,
+                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+                d.add_buttons(_('_Close'), 1, _('_Cancel'), 2)
+                response = d.run()
+                d.destroy()
+                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                    return
+            else:
+                if self.export_file:
+                    msg = _('Save changes to “{}” before closing?')
+                    msg = msg.format(os.path.basename(self.export_file))
+                else:
+                    msg = _('Save changes before closing?')
+                d = Gtk.MessageDialog(self.window, 0,
+                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+                d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
+                d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
+                response = d.run()
+                d.destroy()
+                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                    # DELETE_EVENT is returned if Esc is pressed
+                    return
+                elif response == 3:
+                    # Save.
+                    self.save_or_choose()
+                    # Close only if it has been really saved.
+                    if self.is_unsaved:
+                        return
+        self.model.clear()
+        self.pdfqueue = []
+        self.metadata = {}
+        self.undomanager.clear()
+        self.set_export_file(None)
+        self.set_unsaved(False)
+        self.__update_num_pages(self.model)
+        malloc_trim()
+
     def on_quit(self, _action, _param=None, _unknown=None):
         if self.is_unsaved:
-            if self.export_file:
-                msg = _('Save changes to “{}” before closing?').format(os.path.basename(self.export_file))
-            else:
-                msg = _('Save changes before closing?')
-            d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-            d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
-            d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
-            response = d.run()
-            d.destroy()
-
-            if response == 1:
-                # Quit
-                self.close_application()
-            elif response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
-                # DELETE_EVENT is returned if Esc is pressed
-                # Returning True to stop self.window delete_event propagation.
-                return True
-            elif response == 3:
-                # Save.
-                self.save_or_choose()
-                # Quit only if it has been really saved.
-                if self.is_unsaved:
+            if len(self.model) == 0:
+                msg = _('Discard changes and quit?')
+                d = Gtk.MessageDialog(self.window, 0,
+                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+                d.add_buttons(_('_Quit'), 1, _('_Cancel'), 2)
+                response = d.run()
+                d.destroy()
+                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
                     return True
-                self.close_application()
+                if response == 1:
+                    self.close_application()
             else:
-                # If unknown return code, do nothing
-                return True
+                if self.export_file:
+                    msg = _('Save changes to “{}” before quitting?')
+                    msg = msg.format(os.path.basename(self.export_file))
+                else:
+                    msg = _('Save changes before quitting?')
+                d = Gtk.MessageDialog(self.window, 0,
+                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+                d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
+                d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
+                response = d.run()
+                d.destroy()
+                if response == 1:
+                    # Quit
+                    self.close_application()
+                elif response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                    # DELETE_EVENT is returned if Esc is pressed
+                    # Returning True to stop self.window delete_event propagation.
+                    return True
+                elif response == 3:
+                    # Save.
+                    self.save_or_choose()
+                    # Quit only if it has been really saved.
+                    if self.is_unsaved:
+                        return True
+                    self.close_application()
+                else:
+                    # If unknown return code, do nothing
+                    return True
         else:
             self.close_application()
 
@@ -2107,11 +2162,6 @@ class PdfArranger(Gtk.Application):
         about_dialog.connect('response', lambda w, *args: w.destroy())
         about_dialog.connect('delete_event', lambda w, *args: w.destroy())
         about_dialog.show_all()
-
-    def reset_export_file(self, model, _path, _itr=None, _user_data=None):
-        if len(model) == 0:
-            self.set_export_file(None)
-            self.set_unsaved(False)
 
     def __update_num_pages(self, model, _path=None, _itr=None, _user_data=None):
         num_pages = len(model)

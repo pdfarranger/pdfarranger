@@ -30,6 +30,7 @@ _DEFAULT_ACCELS = [
     ('save-as', '<Primary><Shift>s'),
     ('export-selection(2)', '<Primary>e'),
     ('export-all', '<Primary><Shift>e'),
+    ('close', '<Primary>w'),
     ('quit', '<Primary>q'),
     ('new', '<Primary>n'),
     ('import', '<Primary>o'),
