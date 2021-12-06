@@ -213,6 +213,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Close</attribute>
+        <attribute name="action">win.close</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">_Quit</attribute>
         <attribute name="action">win.quit</attribute>
       </item>
