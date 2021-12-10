@@ -1,4 +1,4 @@
-VERSION='1.8.0'
+VERSION='1.8.1'
 
 from cx_Freeze import setup, Executable
 import os
