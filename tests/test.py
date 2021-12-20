@@ -160,13 +160,20 @@ class PdfArrangerTest(unittest.TestCase):
             self.assertLess(c, 30)
             c += 1
 
-    def _assert_selected(self, selection):
+    def _status_text(self):
         app = self._app()
         from dogtail import predicate
         allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
         # If we have multiple status bar, concider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
-        self.assertTrue(statusbar.name.startswith("Selected pages: " + selection))
+        return statusbar.name
+
+    def _assert_selected(self, selection):
+        self.assertTrue(self._status_text().startswith("Selected pages: " + selection))
+
+    def _assert_page_size(self, width, height):
+        label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
+        self.assertTrue(self._status_text().endswith("Page Size:" + label))
 
     def _icons(self):
         """Return the list of page icons"""
@@ -394,8 +401,6 @@ class TestBatch2(PdfArrangerTest):
 
 
 class TestBatch3(PdfArrangerTest):
-    # Kill X11 after that batch
-    LAST=True
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
         shutil.copyfile("tests/test_encrypted.pdf", filename)
@@ -429,3 +434,55 @@ class TestBatch3(PdfArrangerTest):
         dialog.child(name="Replace").click()
         # check that process actually exit
         self._process().wait(timeout=22)
+
+
+class TestBatch4(PdfArrangerTest):
+    # Kill X11 after that batch
+    LAST=True
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_duplicate(self):
+        app = self._app()
+        app.keyCombo("Down")
+        self._popupmenu(0, ["Duplicate"])
+        app.keyCombo("Right")
+
+    def test_03_scale(self):
+        app = self._app()
+        app.keyCombo("C")
+        dialog = self._app().child(roleName="dialog")
+        from dogtail import rawinput
+        rawinput.keyCombo("Tab")
+        rawinput.typeText("200")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        app.keyCombo("<ctrl>Left")  # rotate left
+        self._assert_selected("2")
+        self._assert_page_size(558.8, 431.8)
+
+    def test_04_export(self):
+        app = self._app()
+        app.keyCombo("<ctrl>a")  # select all
+        self._mainmenu(["Export", "Export Selection to a Single File…"])
+        filechooser = self._app().child(roleName="file chooser")
+        tmp = self.__class__.tmp
+        filename = os.path.join(tmp, "scaled.pdf")
+        filechooser.child(roleName="text").text = filename
+        saveb = filechooser.button("Save")
+        self._wait_cond(lambda: saveb.sensitive)
+        filechooser.button("Save").click()
+        self._wait_cond(lambda: os.path.isfile(filename))
+        self._popupmenu(1, "Delete")
+
+    def test_05_import(self):
+        filename = os.path.join(self.__class__.tmp, "scaled.pdf")
+        filechooser = self._import_file(filename)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 3)
+        app = self._app()
+        self._app().child(roleName="layered pane").grabFocus()
+        app.keyCombo("Right")
+        app.keyCombo("Right")
+        self._assert_selected("2")
+        self._assert_page_size(558.8, 431.8)
