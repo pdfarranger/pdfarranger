@@ -17,6 +17,7 @@
 
 import pikepdf
 import os
+import traceback
 import tempfile
 from . import metadata
 from gi.repository import Gtk
@@ -144,6 +145,15 @@ def _update_angle(model_page, source_page, output_page):
     if angle != 0:
         output_page.Rotate = angle + angle0
 
+def _remove_unreferenced_resources(pdfdoc):
+    try:
+        pdfdoc.remove_unreferenced_resources()
+    except RuntimeError:
+	# Catch "RuntimeError: operation for dictionary attempted on object of
+	# type null" with old version PikePDF (observed with 1.17 and 1.19).
+	# Blindly catch all RuntimeError is dangerous as this may catch
+	# unwanted exception so we print it.
+        print(traceback.format_exc())
 
 def export(input_files, pages, file_out, mode, mdata):
     exportmodes = {0: 'ALL_TO_SINGLE',
@@ -197,11 +207,11 @@ def export(input_files, pages, file_out, mode, mdata):
             if n > 0:
                 # Add page number to filename
                 outname = "".join(parts[:-1]) + str(n + 1) + '.' + parts[-1]
-            outpdf.remove_unreferenced_resources()
+            _remove_unreferenced_resources(outpdf)
             outpdf.save(outname)
     else:
         _set_meta(mdata, pdf_input, pdf_output)
-        pdf_output.remove_unreferenced_resources()
+        _remove_unreferenced_resources(pdf_output)
         pdf_output.save(file_out)
 
 def num_pages(filepath):
