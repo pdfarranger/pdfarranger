@@ -126,6 +126,16 @@ class PdfArrangerManager:
 
 class PdfArrangerTest(unittest.TestCase):
     LAST=False
+    def _start(self, args=None):
+        from dogtail.config import config
+        config.searchBackoffDuration = 1
+        self.__class__.pdfarranger = PdfArrangerManager(args)
+        # check that process is actually running
+        self.assertIsNone(self._process().poll())
+        self._app()
+        # Now let's go faster
+        config.searchBackoffDuration = 0.1
+
     def _app(self):
         # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
         from dogtail.tree import root
@@ -214,13 +224,7 @@ class PdfArrangerTest(unittest.TestCase):
 
 class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
-        self.__class__.pdfarranger = PdfArrangerManager(["data/screenshot.png"])
-        # check that process is actually running
-        self.assertIsNone(self._process().poll())
-        self._app()
-        from dogtail.config import config
-        # Now let's go faster
-        config.searchBackoffDuration = 0.1
+        self._start(["data/screenshot.png"])
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
@@ -349,14 +353,7 @@ class TestBatch1(PdfArrangerTest):
 
 class TestBatch2(PdfArrangerTest):
     def test_01_open_empty(self):
-        from dogtail.config import config
-        config.searchBackoffDuration = 1
-        self.__class__.pdfarranger = PdfArrangerManager()
-        # check that process is actually running
-        self.assertIsNone(self._process().poll())
-        self._app()
-        # Now let's go faster
-        config.searchBackoffDuration = 0.1
+        self._start()
 
     def test_02_import(self):
         filechooser = self._import_file("tests/test.pdf")
@@ -400,17 +397,10 @@ class TestBatch3(PdfArrangerTest):
     # Kill X11 after that batch
     LAST=True
     def test_01_open_encrypted(self):
-        from dogtail.config import config
-        config.searchBackoffDuration = 1
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
         shutil.copyfile("tests/test_encrypted.pdf", filename)
-        self.__class__.pdfarranger = PdfArrangerManager([filename])
-        # check that process is actually running
-        self.assertIsNone(self._process().poll())
-        app = self._app()
-        # Now let's go faster
-        config.searchBackoffDuration = 0.1
-        dialog = app.child(roleName="dialog")
+        self._start([filename])
+        dialog = self._app().child(roleName="dialog")
         passfield = dialog.child(roleName="password text")
         passfield.text = "foobar"
         dialog.child(name="OK").click()
