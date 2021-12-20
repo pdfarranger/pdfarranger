@@ -6,7 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: jeromerobert/pdfarranger-docker-ci
+    # PikePDF 4.2.0
+    container: jeromerobert/pdfarranger-docker-ci:1.4
     steps:
     - uses: actions/checkout@v2
     - name: Install
@@ -19,6 +20,16 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
+  build-old-pikepdf:
+    runs-on: ubuntu-latest
+    # PikePDF 1.19
+    container: jeromerobert/pdfarranger-docker-ci:1.3.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install
+      run: pip3 install .[image]
+    - name: Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-win32:
     runs-on: ubuntu-latest
     container:
