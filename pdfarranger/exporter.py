@@ -91,7 +91,6 @@ def _scale(doc, page, factor):
         # unset it on the input page before
         rotate = page.Rotate
         page.Rotate = 0
-    page = doc.make_indirect(page)
     page_id = len(doc.pages)
     newmediabox = [factor * float(x) for x in page.MediaBox]
     content = "q {} 0 0 {} 0 0 cm /p{} Do Q".format(factor, factor, page_id)
