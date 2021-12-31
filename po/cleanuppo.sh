@@ -20,7 +20,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-cd "$(dirname $0)/.."
+cd "$(dirname "$0")/.."
 for po in po/*.po
 do
   # Remove #~ lines
