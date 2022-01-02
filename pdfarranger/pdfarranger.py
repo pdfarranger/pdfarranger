@@ -1621,7 +1621,6 @@ class PdfArranger(Gtk.Application):
                 # Deselect everything except the clicked item.
                 iconview.unselect_all()
                 iconview.select_path(path)
-            iconview.set_cursor(path, None, False)  # for consistent shift+click selection
         self.pressed_button = None
 
         # Stop drag-select autoscrolling when button is released
