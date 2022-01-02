@@ -247,9 +247,7 @@ class PdfArranger(Gtk.Application):
         self.export_directory = os.path.expanduser('~')
         self.import_directory = self.export_directory
         self.nfile = 0
-        self.iv_auto_scroll_direction = 0
         self.iv_auto_scroll_timer = None
-        self.vp_css_margin = 0
         self.pdfqueue = []
         self.metadata = {}
         self.pressed_button = None
@@ -525,8 +523,9 @@ class PdfArranger(Gtk.Application):
         self.id_selection_changed_event = self.iconview.connect('selection_changed',
                                                           self.iv_selection_changed_event)
         self.iconview.connect('key_press_event', self.iv_key_press_event)
+        self.iconview.connect('size_allocate', self.set_vadjustment_limits)
 
-        self.sw.add_with_viewport(self.iconview)
+        self.sw.add(self.iconview)
 
         self.model.connect('row-inserted', self.__update_num_pages)
         self.model.connect('row-deleted', self.__update_num_pages)
@@ -541,6 +540,7 @@ class PdfArranger(Gtk.Application):
         # Vertical scrollbar
         vscrollbar = self.sw.get_vscrollbar()
         vscrollbar.connect('value_changed', self.vscrollbar_value_changed)
+        vscrollbar.props.adjustment.step_increment = 75
 
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
@@ -561,7 +561,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
                                                 color_prelight)
 
-        # Set outline properties for iconview items i.e. cursor look
+        # Set cursor look, hide rubberband selection rectangle, hide overshoot gradient
         style_provider = Gtk.CssProvider()
         css_data = """
         iconview {
@@ -570,6 +570,13 @@ class PdfArranger(Gtk.Application):
             outline-offset: -2px;
             outline-width: 2px;
             -gtk-outline-radius: 2px;
+        }
+        iconview rubberband {
+            border-color: alpha(currentColor, 0.0);
+            background-color: alpha(currentColor, 0.0);
+        }
+        scrolledwindow overshoot {
+            background: none;
         }
         """
         style_provider.load_from_data(bytes(css_data.encode()))
@@ -801,8 +808,6 @@ class PdfArranger(Gtk.Application):
 
         A item is considered visible if more than 50% of item is visible.
         """
-        sw_vadj = self.sw.get_vadjustment()
-        sw_vpos = sw_vadj.get_value()
         columns_nr = max(self.iconview.get_columns(), 1)
         sw_height = self.sw.get_allocated_height()
         range_start = range_end = -1
@@ -811,9 +816,9 @@ class PdfArranger(Gtk.Application):
             path = Gtk.TreePath.new_from_indices([item_nr])
             cell_rect = self.iconview.get_cell_rect(path)[1]
             item_center = cell_rect.y + cell_rect.height / 2
-            if range_start < 0 and item_center > sw_vpos - self.vp_css_margin:
+            if range_start < 0 and item_center > 0:
                 range_start = item_nr
-            if item_center < sw_vpos + sw_height - self.vp_css_margin:
+            if item_center < sw_height:
                 range_end = item_nr + columns_nr - 1
             else:
                 break
@@ -829,10 +834,9 @@ class PdfArranger(Gtk.Application):
 
     def hide_horizontal_scrollbar(self, _window):
         """Hide horizontal scrollbar when not needed."""
-        sw_width = self.sw.get_allocated_width()
-        iv_width = self.iconview.get_allocated_width()
+        sw_hadj = self.sw.get_hadjustment()
         hscrollbar = self.sw.get_hscrollbar()
-        if iv_width <= sw_width:
+        if sw_hadj.get_upper() <= self.sw.get_allocated_width():
             hscrollbar.hide()
         else:
             hscrollbar.show()
@@ -867,18 +871,13 @@ class PdfArranger(Gtk.Application):
             self.iconview.set_columns(col_num)
             self.iconview.set_column_spacing(spacing)
             self.iconview.set_margin(margin)
-            if self.vp_css_margin != 6 - margin:
-                # remove margin on top and bottom
-                self.vp_css_margin = 6 - margin
-                css_data = 'window viewport {\
-                margin-top:' + str(self.vp_css_margin) + 'px;\
-                margin-bottom:' + str(self.vp_css_margin) + 'px;}'
-                style_provider = Gtk.CssProvider()
-                style_provider.load_from_data(bytes(css_data.encode()))
-                Gtk.StyleContext.add_provider_for_screen(
-                    Gdk.Screen.get_default(),
-                    style_provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
+    def set_vadjustment_limits(self, iconview, _allocation):
+        """Remove unwanted margins at top and bottom of iconview."""
+        vscrollbar = self.sw.get_vscrollbar()
+        lower_limit = iconview.get_margin() - 6
+        upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
+        vscrollbar.set_range(lower_limit, upper_limit)
 
     def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
@@ -1496,6 +1495,8 @@ class PdfArranger(Gtk.Application):
 
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles drag motion: autoscroll, select move or copy, select drag cursor location."""
+        x, y = iconview.convert_widget_to_bin_window_coords(x, y)
+
         # Auto-scroll when drag up/down
         self.iv_autoscroll(x, y, autoscroll_area=40)
 
@@ -1551,17 +1552,12 @@ class PdfArranger(Gtk.Application):
     def iv_autoscroll(self, x, y, autoscroll_area):
         """Iconview auto-scrolling."""
         sw_vadj = self.sw.get_vadjustment()
-        sw_height = self.sw.get_allocation().height
-        if y - sw_vadj.get_value() < autoscroll_area - self.vp_css_margin:
+        if y < sw_vadj.get_value() + autoscroll_area:
             if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = Gtk.DirectionType.UP
-                self.iv_auto_scroll_timer = GObject.timeout_add(150,
-                                                                self.iv_auto_scroll)
-        elif y - sw_vadj.get_value() > sw_height - autoscroll_area - self.vp_css_margin:
+                self.iv_auto_scroll_timer = GObject.timeout_add(150, self.iv_auto_scroll, 'UP')
+        elif y > sw_vadj.get_page_size() + sw_vadj.get_value() - autoscroll_area:
             if not self.iv_auto_scroll_timer:
-                self.iv_auto_scroll_direction = Gtk.DirectionType.DOWN
-                self.iv_auto_scroll_timer = GObject.timeout_add(150,
-                                                                self.iv_auto_scroll)
+                self.iv_auto_scroll_timer = GObject.timeout_add(150, self.iv_auto_scroll, 'DOWN')
         elif self.iv_auto_scroll_timer:
             GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
@@ -1573,17 +1569,17 @@ class PdfArranger(Gtk.Application):
             GObject.source_remove(self.iv_auto_scroll_timer)
             self.iv_auto_scroll_timer = None
 
-    def iv_auto_scroll(self):
+    def iv_auto_scroll(self, direction):
         """Timeout routine for auto-scroll"""
-
         sw_vadj = self.sw.get_vadjustment()
-        sw_vpos = sw_vadj.get_value()
-        if self.iv_auto_scroll_direction == Gtk.DirectionType.UP:
-            sw_vpos -= sw_vadj.get_step_increment()
-            sw_vadj.set_value(max(sw_vpos, sw_vadj.get_lower()))
-        elif self.iv_auto_scroll_direction == Gtk.DirectionType.DOWN:
-            sw_vpos += sw_vadj.get_step_increment()
-            sw_vadj.set_value(min(sw_vpos, sw_vadj.get_upper() - sw_vadj.get_page_size()))
+        step = sw_vadj.get_step_increment()
+        step = -step if direction == "UP" else step
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            sw_vadj.set_value(sw_vadj.get_value() + step)
+            if not self.click_path:
+                changed = self.iv_drag_select.motion(rubberbanded=True, step=step)
+                if changed:
+                    self.iv_selection_changed_event()
         return True  # call me again
 
     def iv_motion(self, iconview, event):
@@ -1599,12 +1595,12 @@ class PdfArranger(Gtk.Application):
                 self.pressed_button = None
 
         # Drag-select when clicking between items and dragging mouse
-        if event.state & Gdk.ModifierType.BUTTON1_MASK:
+        if event.state & Gdk.ModifierType.BUTTON1_MASK and self.iv_drag_select.click_location:
             self.iv_autoscroll(event.x, event.y, autoscroll_area=4)
             if not self.click_path:
                 with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
-                    selection_changed = self.iv_drag_select.motion(event)
-                if selection_changed:
+                    changed = self.iv_drag_select.motion(event)
+                if changed:
                     self.iv_selection_changed_event()
                 return True  # Don't use iconview's built-in rubberband-selecting
 
@@ -1652,8 +1648,8 @@ class PdfArranger(Gtk.Application):
 
         # Go into drag-select mode if clicked between items
         if event.button == 1 and not self.click_path:
-            self.iv_drag_select.click(event)
-            if event.state & Gdk.ModifierType.SHIFT_MASK:
+            location = self.iv_drag_select.click(event)
+            if event.state & Gdk.ModifierType.SHIFT_MASK or not location:
                 return 1
 
         # On shift-click, select all items from cursor up to the shift-clicked item.
@@ -1710,6 +1706,8 @@ class PdfArranger(Gtk.Application):
 
     def iv_key_press_event(self, iconview, event):
         """Manages keyboard press events on the iconview."""
+        if event.state & Gdk.ModifierType.BUTTON1_MASK:
+            return True
         # Toggle full page zoom / set zoom level on key f
         if event.keyval == Gdk.KEY_f:
             if self.zoom_full_page:
@@ -1744,9 +1742,9 @@ class PdfArranger(Gtk.Application):
                 sw_vpos_down += iconview.get_cell_rect(path)[1].height + iconview.get_row_spacing()
                 page_nr += columns_nr
             if event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up]:
-                sw_vadj.set_value(min(sw_vpos_up, last_cell_y + self.vp_css_margin - 6))
+                sw_vadj.set_value(min(sw_vpos_up, last_cell_y - 6))
             else:
-                sw_vadj.set_value(min(sw_vpos_down, last_cell_y + self.vp_css_margin - 6))
+                sw_vadj.set_value(min(sw_vpos_down, last_cell_y - 6))
 
         # Let Tab and Shift-Tab go through for keyboard navigation.
         elif event.keyval in [Gdk.KEY_Tab, Gdk.KEY_KP_Tab, Gdk.KEY_ISO_Left_Tab]:
@@ -1816,22 +1814,36 @@ class PdfArranger(Gtk.Application):
 
     def sw_scroll_event(self, _scrolledwindow, event):
         """Manages mouse scroll events in scrolledwindow"""
-        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
-            zoom_delta = 0
-            if event.direction == Gdk.ScrollDirection.SMOOTH:
-                dy = event.get_scroll_deltas()[2]
-                if dy > 0:
-                    zoom_delta = -1
-                elif dy < 0:
-                    zoom_delta = 1
-            elif event.direction == Gdk.ScrollDirection.UP:
-                zoom_delta = 1
-            elif event.direction == Gdk.ScrollDirection.DOWN:
-                zoom_delta = -1
-
-            if zoom_delta != 0:
-                self.zoom_set(self.zoom_level + zoom_delta)
-                return 1
+        if event.direction == Gdk.ScrollDirection.SMOOTH:
+            dy = event.get_scroll_deltas()[2]
+            if dy < 0:
+                direction = 'UP'
+            elif dy > 0:
+                direction = 'DOWN'
+            else:
+                return
+        elif event.direction == Gdk.ScrollDirection.UP:
+            direction = 'UP'
+        elif event.direction == Gdk.ScrollDirection.DOWN:
+            direction = 'DOWN'
+        else:
+            return
+        if event.state & Gdk.ModifierType.CONTROL_MASK:
+            # Zoom
+            zoom_delta = 1 if direction == 'UP' else -1
+            self.zoom_set(self.zoom_level + zoom_delta)
+        else:
+            #Scroll. Also drag-select if mouse button is pressed
+            sw_vadj = self.sw.get_vadjustment()
+            step = sw_vadj.get_step_increment()
+            step = -step if direction == 'UP' else step
+            with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+                sw_vadj.set_value(sw_vadj.get_value() + step)
+                if event.state & Gdk.ModifierType.BUTTON1_MASK:
+                    changed = self.iv_drag_select.motion(event, rubberbanded=True, step=step)
+                    if changed:
+                        self.iv_selection_changed_event()
+        return True
 
     def zoom_set(self, level):
         """Sets the zoom level"""
@@ -1887,9 +1899,8 @@ class PdfArranger(Gtk.Application):
         sw_height = self.sw.get_allocated_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
         page_height = max(p.height_in_points() for p, _ in self.model)
-        margins = 12  # leave 6 pixel at top and 6 pixel at bottom
-        zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
-        zoom_scaleY_new = (sw_height - cell_extraY - margins) / page_height
+        zoom_scaleX_new = (sw_width - cell_extraX) / page_width
+        zoom_scaleY_new = (sw_height - cell_extraY) / page_height
         self.zoom_scale = max(min(zoom_scaleY_new, zoom_scaleX_new), 0.2 * (1.1 ** -10))
         self.quit_rendering()  # For performance reasons
         for page, _ in self.model:
@@ -1926,7 +1937,7 @@ class PdfArranger(Gtk.Application):
         last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
         selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
         sw_height = self.sw.get_allocated_height()
-        new_value = first_cell_y + selection_center + self.vp_css_margin - sw_height / 2
+        new_value = first_cell_y + selection_center - sw_height / 2
         if new_value > sw_vadj.get_upper():
             # Scrollable not yet ready. Call function again.
             return True
