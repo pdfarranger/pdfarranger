@@ -1717,39 +1717,14 @@ class PdfArranger(Gtk.Application):
                 self.zoom_to_full_page()
                 self.update_iconview_geometry()
                 self.scroll_to_selection()
-
         elif event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
-                            Gdk.KEY_Home, Gdk.KEY_End]:
+                              Gdk.KEY_Home, Gdk.KEY_End, Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
+                              Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
             # Move cursor, select pages and scroll with navigation keys
             with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
                 self.iv_cursor.handler(iconview, event)
             self.iv_selection_changed_event(None, move_cursor_event=True)
-
-        elif event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
-                              Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
-            # Scroll to next/previous page row
-            model = self.iconview.get_model()
-            sw_vadj = self.sw.get_vadjustment()
-            sw_vpos = sw_vadj.get_value()
-            columns_nr = self.iconview.get_columns()
-            path_last_page = Gtk.TreePath.new_from_indices([len(model) - 1])
-            last_cell_y = iconview.get_cell_rect(path_last_page)[1].y
-            sw_vpos_up = sw_vpos_down = page_nr = 0
-            extra = 0 if event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up] else 1
-            while sw_vpos_down < sw_vpos + extra:
-                path = Gtk.TreePath.new_from_indices([page_nr])
-                sw_vpos_up = sw_vpos_down
-                sw_vpos_down += iconview.get_cell_rect(path)[1].height + iconview.get_row_spacing()
-                page_nr += columns_nr
-            if event.keyval in [Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up]:
-                sw_vadj.set_value(min(sw_vpos_up, last_cell_y - 6))
-            else:
-                sw_vadj.set_value(min(sw_vpos_down, last_cell_y - 6))
-
-        # Let Tab and Shift-Tab go through for keyboard navigation.
-        elif event.keyval in [Gdk.KEY_Tab, Gdk.KEY_KP_Tab, Gdk.KEY_ISO_Left_Tab]:
-            return False
-        return True
+            return True
 
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
