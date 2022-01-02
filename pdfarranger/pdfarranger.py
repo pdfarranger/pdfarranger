@@ -1891,33 +1891,10 @@ class PdfArranger(Gtk.Application):
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
         self.id_scroll_to_sel = None
-        GObject.timeout_add(50, self._scroll_to_selection)
-
-    def _scroll_to_selection(self):
         selection = self.iconview.get_selected_items()
-        if not selection:
-            return
-        selection.sort(key=lambda x: x.get_indices()[0])
-        if self.zoom_full_page:
-            cell_image_renderer = self.iconview.get_cells()[0]
-            cell_rect = self.iconview.get_cell_rect(selection[-1], cell_image_renderer)
-            thmb_width, thmb_height = self.cellthmb.get_fixed_size()
-            if cell_rect[1].width != thmb_width or cell_rect[1].height != thmb_height:
-                # thmb_width and thmb_height is the wanted size. If cell_rect size is not
-                # yet equal, give it some time and then try again.
-                return True
-        sw_vadj = self.sw.get_vadjustment()
-        first_cell_y = self.iconview.get_cell_rect(selection[0])[1].y
-        last_cell_y = self.iconview.get_cell_rect(selection[-1])[1].y
-        last_cell_height = self.iconview.get_cell_rect(selection[-1])[1].height
-        selection_center = (last_cell_y + last_cell_height - first_cell_y) / 2 + 0.5
-        sw_height = self.sw.get_allocated_height()
-        new_value = first_cell_y + selection_center - sw_height / 2
-        if new_value > sw_vadj.get_upper():
-            # Scrollable not yet ready. Call function again.
-            return True
-        sw_vadj.set_value(new_value)
-        self.silent_render()
+        if len(selection) > 0:
+            path = selection[len(selection) // 2]
+            self.iconview.scroll_to_path(path, True, 0.5, 0.5)
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
