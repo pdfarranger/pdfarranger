@@ -202,7 +202,9 @@ class IconviewCursor(object):
             self.cursor_is_visible = True
             self.iconview.unselect_all()
         cursor_path_new = Gtk.TreePath.new_from_indices([self.cursor_page_nr_new])
+        sw_hpos = self.app.sw.get_hadjustment().get_value()
         self.iconview.set_cursor(cursor_path_new, None, False)
+        self.app.sw.get_hadjustment().set_value(sw_hpos)
 
     def select(self):
         """Select iconview pages with shift + navigation keys."""
@@ -238,8 +240,15 @@ class IconviewCursor(object):
         cell_height = cell_rect.height
         cell_y = self.iconview.convert_widget_to_bin_window_coords(cell_rect.x, cell_rect.y)[1]
         sw_height = self.app.sw.get_allocated_height()
-        sw_vpos = min(sw_vpos, cell_y)
-        sw_vpos = max(sw_vpos, cell_y - sw_height + cell_height)
+        columns_nr = self.iconview.get_columns()
+        up = self.cursor_page_nr_new < self.cursor_page_nr
+        at_min = self.cursor_page_nr_new - columns_nr < 0
+        down = self.cursor_page_nr_new > self.cursor_page_nr
+        at_max = self.cursor_page_nr_new + columns_nr > len(self.model) - 1
+        if up or at_min:
+            sw_vpos = min(max(sw_vpos, cell_y + cell_height - sw_height), cell_y)
+        elif down or at_max:
+            sw_vpos = max(min(sw_vpos, cell_y), cell_y + cell_height - sw_height)
         sw_vadj.set_value(sw_vpos)
 
 
