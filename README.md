@@ -77,7 +77,7 @@ In addition, *PDF Arranger* supports image file import if [img2pdf](https://gitl
 ```
 git clone https://github.com/pdfarranger/pdfarranger.git
 cd pdfarranger
-./setup.py build
+pip3 install --user .
 python3 -m pdfarranger
 ```
 
