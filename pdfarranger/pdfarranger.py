@@ -258,6 +258,7 @@ class PdfArranger(Gtk.Application):
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         self.window_width_old = 0
         self.set_iv_visible_id = None
+        self.vadj_percent = None
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -872,12 +873,28 @@ class PdfArranger(Gtk.Application):
             self.iconview.set_column_spacing(spacing)
             self.iconview.set_margin(margin)
 
+    def vadj_percent_handler(self, store=False, restore=False):
+        """Store and restore adjustment percentual value."""
+        sw_vadj = self.sw.get_vadjustment()
+        lower_limit = sw_vadj.get_lower()
+        upper_limit = sw_vadj.get_upper()
+        page_size = sw_vadj.get_page_size()
+        sw_vpos = sw_vadj.get_value()
+        vadj_range = upper_limit - lower_limit - page_size
+        if store and self.vadj_percent is None and vadj_range > 0:
+            self.vadj_percent = (sw_vpos - lower_limit) / vadj_range
+        if restore and self.vadj_percent is not None:
+            sw_vadj.set_value(self.vadj_percent * vadj_range + lower_limit)
+            self.vadj_percent = None
+
     def set_vadjustment_limits(self, iconview, _allocation):
         """Remove unwanted margins at top and bottom of iconview."""
         vscrollbar = self.sw.get_vscrollbar()
         lower_limit = iconview.get_margin() - 6
         upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
         vscrollbar.set_range(lower_limit, upper_limit)
+        if self.vadj_percent is not None:
+            self.vadj_percent_handler(restore=True)
 
     def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
@@ -1836,6 +1853,7 @@ class PdfArranger(Gtk.Application):
                 zoom_scale = 0.2 * (1.1 ** level)
         if self.zoom_level == level:
             return
+        self.vadj_percent_handler(store=True)
         self.zoom_level = level
         self.zoom_scale = zoom_scale
         if self.id_scroll_to_sel:
