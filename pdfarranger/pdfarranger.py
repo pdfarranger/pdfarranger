@@ -738,6 +738,8 @@ class PdfArranger(Gtk.Application):
         if not self.iconview.get_visible():
             self.update_iconview_geometry()
             self.scroll_to_selection()
+            self.sw.set_visible(False)
+            self.sw.set_visible(True)
             GObject.idle_add(self.iconview.set_visible, True)
             self.iconview.grab_focus()
 
