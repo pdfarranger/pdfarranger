@@ -178,7 +178,7 @@ class PdfArrangerTest(unittest.TestCase):
     def _icons(self):
         """Return the list of page icons"""
         from dogtail import predicate
-        viewport = self._app().child(roleName="viewport")
+        viewport = self._app().child(roleName="layered pane")
         return viewport.findChildren(predicate.GenericPredicate(roleName="icon"), showingOnly=False)
 
     def _popupmenu(self, page, action):
@@ -221,6 +221,7 @@ class PdfArrangerTest(unittest.TestCase):
         self._wait_cond(lambda: saveb.sensitive)
         filechooser.button("Save").click()
         self._wait_cond(lambda: os.path.isfile(filename))
+        self._wait_cond(lambda: filechooser.dead)
 
     @classmethod
     def setUpClass(cls):
@@ -343,6 +344,10 @@ class TestBatch1(PdfArrangerTest):
         self._app().child(roleName="layered pane").keyCombo("Home")
         self._assert_selected("1")
         self._app().keyCombo("f")
+        for __ in range(2):
+             self._app().keyCombo("minus")
+        # Zoom level is now 0 and that's what will be saved to config.ini and
+        # used by next batches
 
     def test_09_save_as(self):
         self._mainmenu("Save")
