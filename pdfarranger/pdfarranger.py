@@ -736,12 +736,15 @@ class PdfArranger(Gtk.Application):
         if timeout:
             self.set_iv_visible_id = None
         if not self.iconview.get_visible():
+            if len(self.iconview.get_selected_items()) == 0:
+                self.vadj_percent_handler(store=True)
             self.update_iconview_geometry()
             self.scroll_to_selection()
             self.sw.set_visible(False)
             self.sw.set_visible(True)
             GObject.idle_add(self.iconview.set_visible, True)
             self.iconview.grab_focus()
+            self.silent_render()
 
     def set_export_file(self, file):
         if file != self.export_file:
