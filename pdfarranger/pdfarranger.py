@@ -893,16 +893,22 @@ class PdfArranger(Gtk.Application):
 
     def iv_size_allocate(self, _iconview, _allocation):
         self.hide_horizontal_scrollbar()
-        self.set_vadjustment_limits()
+        self.set_adjustment_limits()
         if self.vadj_percent is not None:
             self.vadj_percent_handler(restore=True)
 
-    def set_vadjustment_limits(self):
-        """Remove unwanted margins at top and bottom of iconview."""
+    def set_adjustment_limits(self):
+        hscrollbar = self.sw.get_hscrollbar()
         vscrollbar = self.sw.get_vscrollbar()
-        lower_limit = self.iconview.get_margin() - 6
-        upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
-        vscrollbar.set_range(lower_limit, upper_limit)
+        if len(self.model) == 0:
+            # Hide scrollbars https://gitlab.gnome.org/GNOME/gtk/-/issues/4370 ?
+            hscrollbar.set_range(0, 0)
+            vscrollbar.set_range(0, 0)
+        else:
+            # Remove margins at top and bottom of iconview
+            lower_limit = self.iconview.get_margin() - 6
+            upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
+            vscrollbar.set_range(lower_limit, upper_limit)
 
     def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
