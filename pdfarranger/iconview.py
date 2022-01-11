@@ -272,15 +272,9 @@ class IconviewDragSelect:
     def click(self, event):
         """Store the click location."""
         if len(self.model) == 0:
+            self.click_location = None
             return
         self.selection_state = {}
-        last_cell = self.iconview.get_cell_rect(self.model[-1].path)[1]
-        x, y = self.iconview.convert_widget_to_bin_window_coords(last_cell.x, last_cell.y)
-        self.last_cell_x = x
-        self.last_cell_y = y
-        self.last_cell_width = last_cell.width
-        self.last_cell_height = last_cell.height
-
         self.click_location = self.get_location(event.x, event.y)
         if self.click_location:
             self.set_mouse_cursor('text')
@@ -382,28 +376,49 @@ class IconviewDragSelect:
             elif selected == False:
                 self.iconview.unselect_path(path)
 
-    def get_location(self, event_x, event_y):
+    def get_location(self, x, y):
         """
         Get mouse pointer location.
 
         E.g. Location is 2.0 when pointer is on item 2.
              Location is 2.5 when pointer is between item 2 and 3.
         """
-        location = None
-        search_positions = [(event_x, event_y, 0),
-                            (event_x + self.last_cell_width / 2, event_y, -0.5),
-                            (event_x - self.last_cell_width / 2, event_y, 0.5)]
-        for x_s, y_s, offset in search_positions:
+        last = self.iconview.get_cell_rect(self.model[-1].path)[1]
+        last_x, last_y = self.iconview.convert_widget_to_bin_window_coords(last.x, last.y)
+        x_step = last.width - 2 * self.iconview.get_item_padding() - 1
+        y_step = self.iconview.get_row_spacing() + 2 * self.iconview.get_item_padding() + 1
+        search_pos = [('XY', x, y),
+                      ('Right', x + x_step, y),
+                      ('Left', x - x_step, y),
+                      ('Below', x, y + y_step),
+                      ('Below', x + x_step, y + y_step),
+                      ('Below', x - x_step, y + y_step),
+                      ('Above', x, y - y_step),
+                      ('Above', x + x_step, y - y_step),
+                      ('Above', x - x_step, y - y_step),
+                      ('Zero', 0, 0)]
+        for pos, x_s, y_s in search_pos:
             path = self.iconview.get_path_at_pos(x_s, y_s)
             if path:
-                location = Gtk.TreePath.get_indices(path)[0] + offset
-                return location
-        if (event_y > self.last_cell_y + self.last_cell_height) or (
-            event_y > self.last_cell_y and event_x > self.last_cell_x + self.last_cell_width):
+                ind = Gtk.TreePath.get_indices(path)[0]
+                break
+        if pos == 'XY':
+            location = ind
+        elif pos == 'Right':
+            location = ind - 0.5
+        elif pos == 'Left':
+            location = ind + 0.5
+        elif pos == 'Below':
+            location = ind - self.iconview.get_item_column(path) - 0.5
+        elif pos == 'Above':
+            location = ind + self.iconview.get_columns() - self.iconview.get_item_column(path) - 0.5
+        elif (y > last_y + last.height) or (y > last_y and x > last_x + last.width):
             location = len(self.model) - 0.5
-        elif event_y < 0:
+        elif y < 0:
             location = -0.5
-        return location
+        else:
+            return None
+        return min(location, len(self.model) - 0.5)
 
     def set_mouse_cursor(self, cursor_name):
         """Set the cursor type specified by cursor_name."""
