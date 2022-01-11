@@ -524,7 +524,7 @@ class PdfArranger(Gtk.Application):
         self.id_selection_changed_event = self.iconview.connect('selection_changed',
                                                           self.iv_selection_changed_event)
         self.iconview.connect('key_press_event', self.iv_key_press_event)
-        self.iconview.connect('size_allocate', self.set_vadjustment_limits)
+        self.iconview.connect('size_allocate', self.iv_size_allocate)
 
         self.sw.add(self.iconview)
 
@@ -545,7 +545,6 @@ class PdfArranger(Gtk.Application):
 
         # Define window callback function and show window
         self.window.connect('check_resize', self.on_window_size_request)
-        self.window.connect_after('check_resize', self.hide_horizontal_scrollbar)
         self.window.show_all()
 
         # Change iconview color background
@@ -838,7 +837,7 @@ class PdfArranger(Gtk.Application):
         if self.iconview.get_visible():
             self.update_iconview_geometry()
 
-    def hide_horizontal_scrollbar(self, _window):
+    def hide_horizontal_scrollbar(self):
         """Hide horizontal scrollbar when not needed."""
         sw_hadj = self.sw.get_hadjustment()
         hscrollbar = self.sw.get_hscrollbar()
@@ -892,14 +891,18 @@ class PdfArranger(Gtk.Application):
             sw_vadj.set_value(self.vadj_percent * vadj_range + lower_limit)
             self.vadj_percent = None
 
-    def set_vadjustment_limits(self, iconview, _allocation):
-        """Remove unwanted margins at top and bottom of iconview."""
-        vscrollbar = self.sw.get_vscrollbar()
-        lower_limit = iconview.get_margin() - 6
-        upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
-        vscrollbar.set_range(lower_limit, upper_limit)
+    def iv_size_allocate(self, _iconview, _allocation):
+        self.hide_horizontal_scrollbar()
+        self.set_vadjustment_limits()
         if self.vadj_percent is not None:
             self.vadj_percent_handler(restore=True)
+
+    def set_vadjustment_limits(self):
+        """Remove unwanted margins at top and bottom of iconview."""
+        vscrollbar = self.sw.get_vscrollbar()
+        lower_limit = self.iconview.get_margin() - 6
+        upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
+        vscrollbar.set_range(lower_limit, upper_limit)
 
     def update_geometry(self, treeiter):
         """Recomputes the width and height of the rotated page and saves
