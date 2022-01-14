@@ -1905,7 +1905,8 @@ class PdfArranger(Gtk.Application):
         sw_height = self.sw.get_allocated_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
         page_height = max(p.height_in_points() for p, _ in self.model)
-        zoom_scaleX_new = (sw_width - cell_extraX) / page_width
+        margins = 12  # leave 6 pixel at left and 6 pixel at right
+        zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
         zoom_scaleY_new = (sw_height - cell_extraY) / page_height
         self.zoom_scale = max(min(zoom_scaleY_new, zoom_scaleX_new), 0.2 * (1.1 ** -10))
         self.quit_rendering()  # For performance reasons
