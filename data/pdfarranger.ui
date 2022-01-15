@@ -144,8 +144,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Zoom In</property>
-                <property name="action_name">win.zoom</property>
-                <property name="action_target">5</property>
+                <property name="action_name">win.zoom-in</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -168,8 +167,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Zoom Out</property>
-                <property name="action_name">win.zoom</property>
-                <property name="action_target">-5</property>
+                <property name="action_name">win.zoom-out</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>

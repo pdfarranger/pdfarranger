@@ -198,13 +198,11 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <section>
         <item>
           <attribute name="label" translatable="yes">Zoom _In</attribute>
-          <attribute name="action">win.zoom</attribute>
-          <attribute name="target" type="i">5</attribute>
+          <attribute name="action">win.zoom-in</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Zoom _Out</attribute>
-          <attribute name="action">win.zoom</attribute>
-          <attribute name="target" type="i">-5</attribute>
+          <attribute name="action">win.zoom-out</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Zoom _Fit</attribute>
