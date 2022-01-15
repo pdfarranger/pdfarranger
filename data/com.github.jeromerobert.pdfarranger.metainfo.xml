@@ -50,6 +50,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <p xml:lang="ko">
       pikepdf를 기반으로 합니다.
     </p>
+    
+    <p xml:lang="pt">
+      O PDF Arranger é uma pequena aplicação, que ajuda o utilizador a juntar ou dividir
+      documentos pdf e a rodar, recortar e reorganizar as suas páginas usando uma
+      interface gráfica interativa e intuitiva.
+    </p>
+    <p xml:lang="pt">
+      É uma interface gráfica para o pikepdf.
+    </p>
   </description>
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
   <screenshots>
