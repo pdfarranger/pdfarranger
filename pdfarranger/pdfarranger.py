@@ -245,7 +245,7 @@ class PdfArranger(Gtk.Application):
         self.target_is_intern = True
 
         self.export_directory = os.path.expanduser('~')
-        self.import_directory = self.export_directory
+        self.import_directory = None
         self.nfile = 0
         self.iv_auto_scroll_timer = None
         self.pdfqueue = []
@@ -1097,7 +1097,8 @@ class PdfArranger(Gtk.Application):
                                                  Gtk.ResponseType.CANCEL,
                                                  Gtk.STOCK_OPEN,
                                                  Gtk.ResponseType.ACCEPT))
-        chooser.set_current_folder(self.import_directory)
+        if self.import_directory is not None:
+            chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
         file_type_list = ['all', 'pdf']
         if len(img2pdf_supported_img) > 0:
