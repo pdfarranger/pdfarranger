@@ -312,7 +312,8 @@ class PdfArranger(Gtk.Application):
             ('new', self.on_action_new),
             ('open', self.on_action_open),
             ('import', self.on_action_import),
-            ('zoom', self.zoom_change, 'i'),
+            ('zoom-in', self.on_action_zoom_in),
+            ('zoom-out', self.on_action_zoom_out),
             ('zoom-fit', self.on_action_zoom_fit),
             ('close', self.on_action_close),
             ('quit', self.on_quit),
@@ -1942,6 +1943,11 @@ class PdfArranger(Gtk.Application):
                         self.iv_selection_changed_event()
         return True
 
+    def enable_zoom_buttons(self, out_enable, in_enable):
+        if self.window.lookup_action("zoom-out"):
+            self.window.lookup_action("zoom-out").set_enabled(out_enable)
+            self.window.lookup_action("zoom-in").set_enabled(in_enable)
+
     def update_max_zoom_level(self):
         """Update upper zoom level limit so thumbnails are max 6000000 pixels."""
         if len(self.model) == 0:
@@ -1956,6 +1962,7 @@ class PdfArranger(Gtk.Application):
         """Sets the zoom level"""
         lower, upper = self.zoom_level_limits
         level = min(max(level, lower), upper)
+        self.enable_zoom_buttons(level != lower, level != upper)
         if self.zoom_level == level:
             return
         self.vadj_percent_handler(store=True)
@@ -1997,15 +2004,18 @@ class PdfArranger(Gtk.Application):
         if self.zoom_level in [lower, upper]:
             zoom_scale = 0.2 * (1.1 ** self.zoom_level)
         self.zoom_scale = zoom_scale
+        self.enable_zoom_buttons(self.zoom_level != lower, self.zoom_level != upper)
         for page, _ in self.model:
             page.zoom = self.zoom_scale
         self.model[0][0] = self.model[0][0]
         self.update_iconview_geometry()
         self.iconview.scroll_to_path(path, True, 0.5, 0.5)
 
-    def zoom_change(self, _action, step, _unknown):
-        """ Action handle for zoom change """
-        self.zoom_set(self.zoom_level + step.get_int32())
+    def on_action_zoom_in(self, _action, _param, _unknown):
+        self.zoom_set(self.zoom_level + 5)
+
+    def on_action_zoom_out(self, _action, _param, _unknown):
+        self.zoom_set(self.zoom_level - 5)
 
     def on_action_zoom_fit(self, _action=None, _param=None, _unknown=None):
         """Switch between zoom_fit and zoom_set."""
