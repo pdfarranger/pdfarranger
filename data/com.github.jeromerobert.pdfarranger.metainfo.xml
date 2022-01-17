@@ -34,6 +34,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       It is a frontend for pikepdf.
     </p>
 
+    <p xml:lang="es">
+      PDF Arranger es una pequeña aplicación que ayuda al usuario a fusionar o dividir
+      documentos pdf y rotar, recortar y reorganizar sus páginas usando una interfaz
+      gráfica interactiva e intuitiva.
+    </p>
+    <p xml:lang="es">
+      Es una interfaz para pikepdf.
+    </p>
+
     <p xml:lang="hu">
       A PDF-rendező egy kis alkalmazás, amely egy interaktív és intuitív grafikus 
       felület segítségével segíti a felhasználót a pdf dokumentumok egyesítésében 
