@@ -763,7 +763,7 @@ class PdfArranger(Gtk.Application):
         if self.is_unsaved:
             title += '*'
 
-        all_files = self.active_file_names()
+        all_files = set(os.path.splitext(doc.basename)[0] for doc in self.pdfqueue)
         if len(all_files) > 0:
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
@@ -1064,12 +1064,6 @@ class PdfArranger(Gtk.Application):
             except Exception as e:
                 traceback.print_exc()
                 self.error_message_dialog(e)
-
-    def active_file_names(self):
-        """Returns the file names currently associated with pages in the model."""
-        r = set(row[1].split('\n')[0] for row in self.model)
-        r.discard("")
-        return r
 
     def open_dialog(self, title):
         chooser = Gtk.FileChooserDialog(title=title,
