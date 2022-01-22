@@ -2169,11 +2169,23 @@ class PdfArranger(Gtk.Application):
         about_dialog.set_version(VERSION)
         pike = pikepdf.__version__
         qpdf = pikepdf.__libqpdf_version__
-        about_dialog.set_comments(''.join((_(
-            '%s is a tool for rearranging and modifying PDF files. '
-            'Developed using GTK+ and Python') % APPNAME,
-            '\n \n',
-            _('(%s uses libqpdf %s and pikepdf %s)') % (APPNAME, qpdf, pike))))
+        gtkv = "{}.{}.{}".format(
+            Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version()
+        )
+        pyv = "{}.{}.{}".format(
+            sys.version_info.major, sys.version_info.minor, sys.version_info.micro
+        )
+        about_dialog.set_comments(
+            "".join(
+                (
+                    _("%s is a tool for rearranging and modifying PDF files. ")
+                    % APPNAME,
+                    "\n \n",
+                    _("It uses libqpdf %s, pikepdf %s, GTK %s and Python %s.")
+                    % (qpdf, pike, gtkv, pyv),
+                )
+            )
+        )
         about_dialog.set_authors(['Konstantinos Poulios'])
         about_dialog.add_credit_section(_('Maintainers and contributors'), [
             'https://github.com/pdfarranger/pdfarranger/graphs/contributors'])
