@@ -30,6 +30,7 @@ import ctypes
 import pikepdf
 from urllib.request import url2pathname
 from functools import lru_cache
+from math import log
 
 multiprocessing.freeze_support()  # Does nothing in Linux
 multiprocessing.set_start_method('spawn')
@@ -213,8 +214,9 @@ class PdfArranger(Gtk.Application):
         self.is_unsaved = False
         self.zoom_level = None
         self.zoom_level_old = 0
+        self.zoom_level_limits = [-10, 40]
         self.zoom_scale = None
-        self.zoom_full_page = False
+        self.zoom_fit_page = False
         self.render_id = None
         self.id_scroll_to_sel = None
         self.target_is_intern = True
@@ -312,6 +314,7 @@ class PdfArranger(Gtk.Application):
             ('open', self.on_action_open),
             ('import', self.on_action_import),
             ('zoom', self.zoom_change, 'i'),
+            ('zoom-fit', self.on_action_zoom_fit),
             ('close', self.on_action_close),
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
@@ -838,7 +841,7 @@ class PdfArranger(Gtk.Application):
             # cell width min limit 50 is set in gtkiconview.c
             cell_width = max(item_width + 2 * cellthmb_xpad + border_and_shadow, 50)
             cell_height = -1
-            if self.zoom_full_page:
+            if self.zoom_fit_page:
                 item_height = max(row[0].height_in_pixel() for row in self.model)
                 cell_height = item_height + 2 * cellthmb_ypad + border_and_shadow
             self.cellthmb.set_fixed_size(cell_width, cell_height)
@@ -1239,6 +1242,7 @@ class PdfArranger(Gtk.Application):
         self.iv_selection_changed_event()
         self.iconview.grab_focus()
         self.silent_render()
+        self.update_max_zoom_level()
         malloc_trim()
 
     def copy_pages(self):
@@ -1414,7 +1418,7 @@ class PdfArranger(Gtk.Application):
             self.paste_pages_interleave(data, before, ref_to)
             GObject.idle_add(self.retitle)
             self.iv_selection_changed_event()
-            self.zoom_set(self.zoom_level)
+            self.update_max_zoom_level()
             self.silent_render()
 
     def read_from_clipboard(self):
@@ -1762,16 +1766,10 @@ class PdfArranger(Gtk.Application):
 
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
-        # Toggle full page zoom / set zoom level on double-click
-        if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS:
+        # Switch between zoom_fit and zoom_set on double-click
+        if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS and self.click_path:
             self.pressed_button = None
-            if self.zoom_full_page:
-                self.zoom_set(self.zoom_level_old)
-            else:
-                self.zoom_level_old = self.zoom_level
-                self.zoom_to_full_page()
-                self.update_iconview_geometry()
-                self.scroll_to_selection()
+            self.on_action_zoom_fit()
             return True
 
         click_path_old = self.click_path
@@ -1839,16 +1837,7 @@ class PdfArranger(Gtk.Application):
         """Manages keyboard press events on the iconview."""
         if event.state & Gdk.ModifierType.BUTTON1_MASK:
             return True
-        # Toggle full page zoom / set zoom level on key f
-        if event.keyval == Gdk.KEY_f:
-            if self.zoom_full_page:
-                self.zoom_set(self.zoom_level_old)
-            else:
-                self.zoom_level_old = self.zoom_level
-                self.zoom_to_full_page()
-                self.update_iconview_geometry()
-                self.scroll_to_selection()
-        elif event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
+        if event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                               Gdk.KEY_Home, Gdk.KEY_End, Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
                               Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
             # Move cursor, select pages and scroll with navigation keys
@@ -1952,29 +1941,28 @@ class PdfArranger(Gtk.Application):
                         self.iv_selection_changed_event()
         return True
 
+    def update_max_zoom_level(self):
+        """Update upper zoom level limit so thumbnails are max 6000000 pixels."""
+        if len(self.model) == 0:
+            return
+        max_pixels = 6000000  # 6000000 pixels * 4 byte/pixel -> 23Mb
+        max_page_size = max(p.size[0] * p.size[1] * p.scale ** 2 for p, _ in self.model)
+        max_zoom_scale = (max_pixels / max_page_size) ** .5
+        self.zoom_level_limits[1] = min(int(log(max_zoom_scale / .2) / log(1.1)), 40)
+        self.zoom_set(self.zoom_level)
+
     def zoom_set(self, level):
         """Sets the zoom level"""
-        level = min(max(level, -10), 40)
-        zoom_scale = 0.2 * (1.1 ** level)
-        # Limit max zoom level so that thumbnail is max 23Mb
-        if len(self.model) > 0:
-            max_limit = 6000000  # 6000000 pixels * 4 byte/pixel -> 23Mb
-            max_page_size = max(p.size[0] * p.size[1] * p.scale ** 2 for p, _ in self.model)
-            max_page_size_zoomed = max_page_size * zoom_scale ** 2
-            if max_page_size_zoomed > max_limit:
-                max_zoom_scale = (max_limit / max_page_size) ** .5
-                level = -10
-                while max_zoom_scale > 0.2 * (1.1 ** (level + 1)):
-                    level += 1
-                zoom_scale = 0.2 * (1.1 ** level)
+        lower, upper = self.zoom_level_limits
+        level = min(max(level, lower), upper)
         if self.zoom_level == level:
             return
         self.vadj_percent_handler(store=True)
         self.zoom_level = level
-        self.zoom_scale = zoom_scale
+        self.zoom_scale = 0.2 * (1.1 ** level)
         if self.id_scroll_to_sel:
             GObject.source_remove(self.id_scroll_to_sel)
-        self.zoom_full_page = False
+        self.zoom_fit_page = False
         self.quit_rendering()  # For performance reasons
         for row in self.model:
             row[0].zoom = self.zoom_scale
@@ -1984,25 +1972,16 @@ class PdfArranger(Gtk.Application):
             self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection)
             self.silent_render()
 
-    def zoom_change(self, _action, step, _unknown):
-        """ Action handle for zoom change """
-        self.zoom_set(self.zoom_level + step.get_int32())
-
-    def zoom_to_full_page(self):
-        """Zoom selected thumbnail to full page."""
-        selection = self.iconview.get_selected_items()
-        if len(selection) != 1:
-            return
-
+    def zoom_fit(self, path):
+        """Zoom and scroll to path."""
         item_padding = self.iconview.get_item_padding()
         cell_image_renderer, cell_text_renderer = self.iconview.get_cells()
         image_padding = cell_image_renderer.get_padding()
-        text_rect = self.iconview.get_cell_rect(selection[-1], cell_text_renderer)[1]
+        text_rect = self.iconview.get_cell_rect(path, cell_text_renderer)[1]
         text_rect_height = text_rect.height  # cell_text_renderer padding is included here
         border_and_shadow = 7  # 2*th1+th2 set in iconview.py
         cell_extraX = 2 * (item_padding + image_padding[0]) + border_and_shadow
         cell_extraY = 2 * (item_padding + image_padding[1]) + text_rect_height + border_and_shadow
-
         sw_width = self.sw.get_allocated_width()
         sw_height = self.sw.get_allocated_height()
         page_width = max(p.width_in_points() for p, _ in self.model)
@@ -2010,17 +1989,40 @@ class PdfArranger(Gtk.Application):
         margins = 12  # leave 6 pixel at left and 6 pixel at right
         zoom_scaleX_new = (sw_width - cell_extraX - margins) / page_width
         zoom_scaleY_new = (sw_height - cell_extraY) / page_height
-        self.zoom_scale = max(min(zoom_scaleY_new, zoom_scaleX_new), 0.2 * (1.1 ** -10))
-        self.quit_rendering()  # For performance reasons
+        zoom_scale = min(zoom_scaleY_new, zoom_scaleX_new)
+
+        lower, upper = self.zoom_level_limits
+        self.zoom_level = min(max(int(log(zoom_scale / .2) / log(1.1)), lower), upper)
+        if self.zoom_level in [lower, upper]:
+            zoom_scale = 0.2 * (1.1 ** self.zoom_level)
+        self.zoom_scale = zoom_scale
         for page, _ in self.model:
             page.zoom = self.zoom_scale
         self.model[0][0] = self.model[0][0]
+        self.update_iconview_geometry()
+        self.iconview.scroll_to_path(path, True, 0.5, 0.5)
 
-        # Set zoom level to nearest possible so zoom in/out works right
-        self.zoom_level = -10
-        while self.zoom_scale > 0.2 * (1.1 ** self.zoom_level):
-            self.zoom_level += 1
-        self.zoom_full_page = True
+    def zoom_change(self, _action, step, _unknown):
+        """ Action handle for zoom change """
+        self.zoom_set(self.zoom_level + step.get_int32())
+
+    def on_action_zoom_fit(self, _action=None, _param=None, _unknown=None):
+        """Switch between zoom_fit and zoom_set."""
+        if len(self.model) == 0:
+            return
+        if self.zoom_fit_page:
+            self.zoom_set(self.zoom_level_old)
+        else:
+            selection = self.iconview.get_selected_items()
+            if len(selection) > 0:
+                path = selection[-1]
+            else:
+                path = Gtk.TreePath.new_from_indices([self.get_visible_range2()[0]])
+                self.iconview.select_path(path)
+            self.iconview.set_cursor(path, None, False)
+            self.zoom_level_old = self.zoom_level
+            self.zoom_fit(path)
+            self.zoom_fit_page = True
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
@@ -2104,7 +2106,7 @@ class PdfArranger(Gtk.Application):
             if updatestatus:
                 self.set_unsaved(True)
                 self.update_statusbar()
-        self.zoom_set(self.zoom_level)
+        self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
     def crop_white_borders(self, _action, _parameter, _unknown):
@@ -2243,7 +2245,7 @@ class PdfArranger(Gtk.Application):
             msg += " | "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
         self.status_bar.push(ctxt_id, msg)
 
-        for a in ["save", "save-as", "select", "export-all"]:
+        for a in ["save", "save-as", "select", "export-all", "zoom-fit"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):

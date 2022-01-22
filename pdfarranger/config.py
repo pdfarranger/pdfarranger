@@ -37,6 +37,7 @@ _DEFAULT_ACCELS = [
     ('import', '<Primary>i'),
     ('zoom(5)', 'plus KP_Add <Primary>plus <Primary>KP_Add'),
     ('zoom(-5)', 'minus KP_Subtract <Primary>minus <Primary>KP_Subtract'),
+    ('zoom-fit', 'f'),
     ('undo', '<Primary>z'),
     ('redo', '<Primary>y'),
     ('cut', '<Primary>x'),

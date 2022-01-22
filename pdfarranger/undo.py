@@ -83,7 +83,7 @@ class Manager(object):
                 # Do not reset the zoom level
                 page.zoom = self.app.zoom_scale
                 self.model.append([page, page.description()])
-        self.app.zoom_set(self.app.zoom_level)
+        self.app.update_max_zoom_level()
         self.app.retitle()
         self.app.update_statusbar()
         self.app.silent_render()

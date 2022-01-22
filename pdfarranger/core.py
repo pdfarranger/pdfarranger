@@ -427,7 +427,7 @@ class PageAdder:
                 self.app.update_geometry(it)
         if add_to_undomanager:
             GObject.idle_add(self.app.retitle)
-            self.app.zoom_set(self.app.zoom_level)
+            self.app.update_max_zoom_level()
             self.app.silent_render()
             self.app.update_statusbar()
         self.pages = []
