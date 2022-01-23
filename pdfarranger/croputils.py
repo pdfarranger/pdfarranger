@@ -282,55 +282,32 @@ def white_borders(model, selection, pdfqueue):
         cr = cairo.Context(thumbnail)
         with pdfdoc.render_lock:
             page.render(cr)
-        # TODO: python list are dead slow compared to memoryview. It would
-        # be faster to create a memoryview full of 0 and then compare each row
-        # to it. memoryview have full native __eq__ operator which is fast.
-        data = thumbnail.get_data().cast("i", shape=[h, w]).tolist()
-
+        data = thumbnail.get_data().cast("i")
+        whitecol = memoryview(b"\0" * h * 4).cast("i")
+        whiterow = memoryview(b"\0" * w * 4).cast("i")
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
-        # TODO: Those 4 copy/paste should be factorized
         # Left
-        allwhite = True
         for col in range(first_col, last_col):
-            for row in range(first_row, last_row):
-                if data[row][col] != 0:
-                    allwhite = False
-                    crop_this_page[0] = (col) / w
-                    break
-            if not allwhite:
+            if data[col::w] != whitecol:
+                crop_this_page[0] = col / w
                 break
 
         # Right
-        allwhite = True
         for col in range(last_col - 1, first_col - 1, -1):
-            for row in range(first_row, last_row):
-                if data[row][col] != 0:
-                    allwhite = False
-                    crop_this_page[1] = (w - col) / w
-                    break
-            if not allwhite:
+            if data[col::w] != whitecol:
+                crop_this_page[1] = (w - col) / w
                 break
 
         # Top
-        allwhite = True
         for row in range(first_row, last_row):
-            for col in range(first_col, last_col):
-                if data[row][col] != 0:
-                    allwhite = False
-                    crop_this_page[2] = (row) / h
-                    break
-            if not allwhite:
+            if data[row * w : (row + 1) * w] != whiterow:
+                crop_this_page[2] = (row) / h
                 break
 
         # Bottom
-        allwhite = True
         for row in range(last_row - 1, first_row - 1, -1):
-            for col in range(first_col, last_col):
-                if data[row][col] != 0:
-                    allwhite = False
-                    crop_this_page[3] = (h - row) / h
-                    break
-            if not allwhite:
+            if data[row * w : (row + 1) * w] != whiterow:
+                crop_this_page[3] = (h - row) / h
                 break
 
         crop.append(p.rotate_crop(crop_this_page, p.rotate_times(p.angle)))
