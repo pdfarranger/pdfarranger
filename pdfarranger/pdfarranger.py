@@ -923,17 +923,30 @@ class PdfArranger(Gtk.Application):
         p.set_size(page.get_size())
         self.model.set(treeiter, 0, p)
 
+    def confirm_dialog(self, msg, action):
+        """A dialog for confirmation of an action."""
+        d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+        d.add_buttons(action, 1, _('_Cancel'), 2)
+        response = d.run()
+        d.destroy()
+        return response == 1
+
+    def save_changes_dialog(self, msg):
+        """A dialog which ask if changes should be saved."""
+        d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
+        d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
+        d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
+        response = d.run()
+        d.destroy()
+        return response
+
     def on_action_close(self, _action, _param, _unknown):
         """Close all files and restore initial state."""
         if self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and close?')
-                d = Gtk.MessageDialog(self.window, 0,
-                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-                d.add_buttons(_('_Close'), 1, _('_Cancel'), 2)
-                response = d.run()
-                d.destroy()
-                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                confirm = self.confirm_dialog(msg, action=_('_Close'))
+                if not confirm:
                     return
             else:
                 if self.export_file:
@@ -941,21 +954,14 @@ class PdfArranger(Gtk.Application):
                     msg = msg.format(os.path.basename(self.export_file))
                 else:
                     msg = _('Save changes before closing?')
-                d = Gtk.MessageDialog(self.window, 0,
-                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-                d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
-                d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
-                response = d.run()
-                d.destroy()
-                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
-                    # DELETE_EVENT is returned if Esc is pressed
-                    return
-                elif response == 3:
-                    # Save.
+                response = self.save_changes_dialog(msg)
+                if response == 3:
                     self.save_or_choose()
                     # Close only if it has been really saved.
                     if self.is_unsaved:
                         return
+                elif response != 1:
+                    return
         self.model.clear()
         self.pdfqueue = []
         self.metadata = {}
@@ -969,46 +975,24 @@ class PdfArranger(Gtk.Application):
         if self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and quit?')
-                d = Gtk.MessageDialog(self.window, 0,
-                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-                d.add_buttons(_('_Quit'), 1, _('_Cancel'), 2)
-                response = d.run()
-                d.destroy()
-                if response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
+                confirm = self.confirm_dialog(msg, action=_('_Quit'))
+                if not confirm:
                     return True
-                if response == 1:
-                    self.close_application()
             else:
                 if self.export_file:
                     msg = _('Save changes to “{}” before quitting?')
                     msg = msg.format(os.path.basename(self.export_file))
                 else:
                     msg = _('Save changes before quitting?')
-                d = Gtk.MessageDialog(self.window, 0,
-                                      Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-                d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
-                d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
-                response = d.run()
-                d.destroy()
-                if response == 1:
-                    # Quit
-                    self.close_application()
-                elif response == 2 or response == Gtk.ResponseType.DELETE_EVENT:
-                    # DELETE_EVENT is returned if Esc is pressed
-                    # Returning True to stop self.window delete_event propagation.
-                    return True
-                elif response == 3:
-                    # Save.
+                response = self.save_changes_dialog(msg)
+                if response == 3:
                     self.save_or_choose()
                     # Quit only if it has been really saved.
                     if self.is_unsaved:
                         return True
-                    self.close_application()
-                else:
-                    # If unknown return code, do nothing
+                elif response != 1:
                     return True
-        else:
-            self.close_application()
+        self.close_application()
 
     def close_application(self, _widget=None, _event=None, _data=None):
         """Termination"""
