@@ -365,6 +365,7 @@ class TestBatch1(PdfArrangerTest):
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Cancel").click()
         self._app().keyCombo("<ctrl>s")
+        time.sleep(5)  # Let the save finish before quit
         self._app().keyCombo("<ctrl>q")
         # check that process actually exit
         self._process().wait(timeout=22)
