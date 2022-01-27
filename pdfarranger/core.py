@@ -25,7 +25,7 @@ __all__ = [
 
 import sys
 import os
-import errno
+import traceback
 import mimetypes
 import copy
 import pathlib
@@ -249,13 +249,10 @@ class PDFDoc:
                 if not askpass:
                     raise e
 
-    def __init__(self, filename, basename, tmp_dir, parent):
+    def __init__(self, filename, basename, stat, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
-        try:
-            self.mtime = os.path.getmtime(filename)
-        except OSError as e:
-            raise PDFDocError(e)
+        self.stat = stat
         if basename is None:  # When importing files
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
@@ -335,6 +332,7 @@ class PageAdder:
         self.before = False
         #: Where to insert pages. If None pages are inserted at the end
         self.treerowref = None
+        self.stat_cache = {}
 
     def move(self, treerowref, before):
         """Insert pages at the given location."""
@@ -345,10 +343,6 @@ class PageAdder:
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         nfile = None
-        # Check if file exists
-        if not os.path.isfile(filename):
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), filename)
 
         # Check if added page or file already exist in pdfqueue
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
@@ -357,17 +351,26 @@ class PageAdder:
                 pdfdoc = it_pdfdoc
                 nfile = i + 1
                 break
-            elif (os.path.isfile(it_pdfdoc.filename)
-                  and os.path.samefile(filename, it_pdfdoc.filename)
-                  and os.path.getmtime(filename) == it_pdfdoc.mtime):
-                # Imported file was found in pdfqueue
-                pdfdoc = it_pdfdoc
-                nfile = i + 1
-                break
+        if pdfdoc is None:
+            if not filename in self.stat_cache:
+                try:
+                    s = os.stat(filename)
+                    self.stat_cache[filename] = s.st_dev, s.st_ino, s.st_mtime
+                except OSError as e:
+                    print(traceback.format_exc())
+                    self.app.error_message_dialog(e)
+                    return
+            for i, it_pdfdoc in enumerate(self.app.pdfqueue):
+                if self.stat_cache[filename] == it_pdfdoc.stat:
+                    # Imported file was found in pdfqueue
+                    pdfdoc = it_pdfdoc
+                    nfile = i + 1
+                    break
 
-        if not pdfdoc:
+        if pdfdoc is None:
             try:
-                pdfdoc = PDFDoc(filename, basename, self.app.tmp_dir, self.app.window)
+                pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
+                                self.app.tmp_dir, self.app.window)
             except _UnknownPasswordException:
                 return
             except PDFDocError as e:
