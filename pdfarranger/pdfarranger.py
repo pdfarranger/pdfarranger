@@ -87,7 +87,9 @@ import gi
 # check that we don't need GObject.threads_init()
 gi.check_version('3.10.2')
 gi.require_version('Gtk', '3.0')
+gi.require_version('Handy', '1')
 from gi.repository import Gtk
+from gi.repository import Handy
 
 if Gtk.check_version(3, 12, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
@@ -135,7 +137,7 @@ def _install_workaround_bug29():
                 action.connect("activate", d[1], None)
                 self.add_action(action)
 
-        Gtk.ApplicationWindow.add_action_entries = func
+        Handy.ApplicationWindow.add_action_entries = func
 
 
 _install_workaround_bug29()
@@ -295,7 +297,7 @@ class PdfArranger(Gtk.Application):
         main_menu.set_menu_model(b.get_object("main_menu"))
 
     def __create_actions(self):
-        # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
+        # Both Handy.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
         self.actions = [
@@ -433,12 +435,13 @@ class PdfArranger(Gtk.Application):
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
-        Gtk.Window.set_default_icon_name(ICON_ID)
+        Handy.Window.set_default_icon_name(ICON_ID)
+        Handy.init()
         self.uiXML = self.__build_from_file(DOMAIN + '.ui')
         # Create the main window, and attach delete_event signal to terminating
         # the application
         self.window = self.uiXML.get_object('main_window')
-        self.window.set_title(APPNAME)
+        self.uiXML.get_object('header_bar').set_title(APPNAME)
         self.window.set_border_width(0)
         self.window.set_application(self)
         if self.config.maximized():
@@ -752,7 +755,7 @@ class PdfArranger(Gtk.Application):
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
-        self.window.set_title(title)
+        self.uiXML.get_object('header_bar').set_title(title)
         return False
 
     def update_thumbnail(self, _obj, ref, thumbnail, resample, scale, is_preview):

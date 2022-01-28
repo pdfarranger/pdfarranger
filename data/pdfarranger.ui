@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
 <!--
 Copyright (C) 2020 Jerome Robert
 
@@ -19,13 +18,15 @@ You should have received a copy of the GNU General Public License
 along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <interface>
-  <requires lib="gtk+" version="3.12"/>
-  <object class="GtkApplicationWindow" id="main_window">
+  <object class="HdyApplicationWindow" id="main_window">
     <property name="show_menubar">False</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
+    <child>
+      <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="spacing">4</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="HdyHeaderBar" id="header_bar">
+        <property name="visible">True</property>
         <property name="show_close_button">True</property>
         <child>
           <object class="GtkBox">
@@ -260,6 +261,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkBox" id="main_box">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
+            <property name="expand">True</property>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
@@ -331,6 +333,8 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           </packing>
         </child>
       </object>
+    </child>
+  </object>
     </child>
   </object>
 </interface>
