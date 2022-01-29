@@ -112,12 +112,12 @@ dogtail_manager = DogtailManager()
 
 
 class PdfArrangerManager:
-    def __init__(self, args=None, coverage=True):
+    def __init__(self, args=None):
         self.process = None
         args = [] if args is None else args
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
-        if coverage:
-            cmd = cmd + ["-m", "coverage", "run", "-a"]
+        if "PDFARRANGER_COVERAGE" in os.environ:
+            cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]
         self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args)
 
     def kill(self):
