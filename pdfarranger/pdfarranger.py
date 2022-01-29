@@ -20,7 +20,7 @@ import sys  # for processing of command line args
 import tempfile
 import signal
 import mimetypes
-import warnings
+import multiprocessing
 import traceback
 import locale  # for multilanguage support
 import gettext
@@ -31,6 +31,8 @@ import pikepdf
 from urllib.request import url2pathname
 from functools import lru_cache
 
+multiprocessing.freeze_support()  # Does nothing in Linux
+multiprocessing.set_start_method('spawn')
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -139,33 +141,6 @@ def _install_workaround_bug29():
 _install_workaround_bug29()
 
 
-def warn_dialog(func):
-    """ Decorator which redirect warnings module messages to a gkt MessageDialog """
-
-    class ShowWarning:
-        def __init__(self):
-            self.buffer = ""
-
-        def __call__(self, message, category, filename, lineno, f=None, line=None):
-            s = warnings.formatwarning(message, category, filename, lineno, line)
-            if sys.stderr is not None:
-                sys.stderr.write(s + '\n')
-            self.buffer += str(message) + '\n'
-
-    def wrapper(*args, **kwargs):
-        self = args[0]
-        backup_showwarning = warnings.showwarning
-        warnings.showwarning = ShowWarning()
-        try:
-            func(*args, **kwargs)
-            if len(warnings.showwarning.buffer) > 0:
-                self.error_message_dialog(warnings.showwarning.buffer, Gtk.MessageType.WARNING)
-        finally:
-            warnings.showwarning = backup_showwarning
-
-    return wrapper
-
-
 def malloc_trim():
     """Release free memory from the heap."""
     if os.name == 'nt':
@@ -253,6 +228,8 @@ class PdfArranger(Gtk.Application):
         self.pressed_button = None
         self.click_path = None
         self.rendering_thread = None
+        self.export_process = None
+        self.post_action = None
         self.export_file = None
         self.drag_path = None
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
@@ -320,7 +297,7 @@ class PdfArranger(Gtk.Application):
         # Both Gtk.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
-        self.window.add_action_entries([
+        self.actions = [
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
@@ -350,10 +327,11 @@ class PdfArranger(Gtk.Application):
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
             ("generate-booklet", self.generate_booklet),
-        ])
+        ]
+        self.window.add_action_entries(self.actions)
 
-        main_menu = self.uiXML.get_object("main_menu_button")
-        self.window.add_action(Gio.PropertyAction.new("main-menu", main_menu, "active"))
+        self.main_menu = self.uiXML.get_object("main_menu_button")
+        self.window.add_action(Gio.PropertyAction.new("main-menu", self.main_menu, "active"))
         for a, k in self.config.get_accels():
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
@@ -647,6 +625,8 @@ class PdfArranger(Gtk.Application):
 
     def render(self):
         self.render_id = None
+        if not self.sw.is_sensitive():
+            return
         alive = self.quit_rendering()
         if alive:
             self.silent_render()
@@ -957,11 +937,13 @@ class PdfArranger(Gtk.Application):
                 response = self.save_changes_dialog(msg)
                 if response == 3:
                     self.save_or_choose()
-                    # Close only if it has been really saved.
-                    if self.is_unsaved:
-                        return
+                    self.post_action = 'CLEAR_DATA'
+                    return
                 elif response != 1:
                     return
+        self.clear_data()
+
+    def clear_data(self):
         self.model.clear()
         self.pdfqueue = []
         self.metadata = {}
@@ -972,7 +954,12 @@ class PdfArranger(Gtk.Application):
         malloc_trim()
 
     def on_quit(self, _action, _param=None, _unknown=None):
-        if self.is_unsaved:
+        if self.export_process and self.export_process.is_alive():
+            msg = _('Abort saving and quit?')
+            confirm = self.confirm_dialog(msg, action=_('_Quit'))
+            if not confirm:
+                return True
+        elif self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and quit?')
                 confirm = self.confirm_dialog(msg, action=_('_Quit'))
@@ -987,9 +974,8 @@ class PdfArranger(Gtk.Application):
                 response = self.save_changes_dialog(msg)
                 if response == 3:
                     self.save_or_choose()
-                    # Quit only if it has been really saved.
-                    if self.is_unsaved:
-                        return True
+                    self.post_action = 'CLOSE_APPLICATION'
+                    return True
                 elif response != 1:
                     return True
         self.close_application()
@@ -1000,6 +986,13 @@ class PdfArranger(Gtk.Application):
             self.rendering_thread.quit = True
             self.rendering_thread.join()
             self.rendering_thread.pdfqueue = []
+
+        if self.export_process:
+            self.quit_flag.set()
+            self.export_process.join(timeout=2)
+            if self.export_process.is_alive():
+                self.export_process.terminate()
+                self.export_process.join()
 
         # Prevent gtk errors when closing with everything selected
         self.iconview.unselect_all()
@@ -1043,11 +1036,9 @@ class PdfArranger(Gtk.Application):
         file_out = chooser.get_filename()
         chooser.destroy()
         if response == Gtk.ResponseType.ACCEPT:
-            try:
-                self.save(mode, file_out)
-            except Exception as e:
-                traceback.print_exc()
-                self.error_message_dialog(e)
+            self.save(mode, file_out)
+        else:
+            self.post_action = None
 
     def open_dialog(self, title):
         chooser = Gtk.FileChooserDialog(title=title,
@@ -1117,20 +1108,16 @@ class PdfArranger(Gtk.Application):
         """Saves to the previously exported file or shows the export dialog if
         there was none."""
         savemode = GLib.Variant('i', 0) # Save all pages in a single document.
-        try:
-            if self.export_file:
-                self.save(savemode, self.export_file)
-            else:
-                self.choose_export_pdf_name(savemode)
-        except Exception as e:
-            self.error_message_dialog(e)
+        if self.export_file:
+            self.save(savemode, self.export_file)
+        else:
+            self.choose_export_pdf_name(savemode)
 
     def on_action_save_as(self, _action, _param, _unknown):
         self.choose_export_pdf_name(GLib.Variant('i', 0))
 
-    @warn_dialog
     def save(self, mode, file_out):
-        """Saves to the specified file.  May throw exceptions."""
+        """Saves to the specified file."""
         (path, shortname) = os.path.split(file_out)
         (shortname, ext) = os.path.splitext(shortname)
         if ext.lower() != '.pdf':
@@ -1143,23 +1130,74 @@ class PdfArranger(Gtk.Application):
         exportmode = exportmodes[mode.get_int32()]
 
         if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
-            selection = self.iconview.get_selected_items()
-            to_export = [row[0] for row in self.model if row.path in selection]
+            selection = reversed(self.iconview.get_selected_items())
+            pages = [self.model[row][0].duplicate(incl_thumbnail=False) for row in selection]
         else:
             self.export_directory = path
             self.set_export_file(file_out)
-            to_export = [row[0] for row in self.model]
+            pages = [row[0].duplicate(incl_thumbnail=False) for row in self.model]
 
-        m = metadata.merge(self.metadata, self.pdfqueue)
         if self.config.content_loss_warning():
-            res, enabled = exporter.check_content(self.window, self.pdfqueue)
+            try:
+                res, enabled = exporter.check_content(self.window, self.pdfqueue)
+            except Exception as e:
+                traceback.print_exc()
+                self.error_message_dialog(e)
+                return
             self.config.set_content_loss_warning(enabled)
             if res == Gtk.ResponseType.CANCEL:
                 return # Abort
-        exporter.export(self.pdfqueue, to_export, file_out, mode, m)
 
-        if exportmode == 'ALL_TO_SINGLE':
+        files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
+        self.quit_flag = multiprocessing.Event()
+        export_msg = multiprocessing.Queue()
+        a = files, pages, self.metadata, exportmode, file_out, self.quit_flag, export_msg
+        self.export_process = multiprocessing.Process(target=exporter.export_process, args=a)
+        self.export_process.start()
+        GObject.timeout_add(300, self.export_finished, exportmode, export_msg)
+        self.set_export_state(True)
+
+    def export_finished(self, exportmode, export_msg):
+        """Check if export finished. Show any messages. Run any post action."""
+        if self.export_process.is_alive():
+            return True
+        self.set_export_state(False)
+        msg_type = None
+        if not export_msg.empty():
+            msg, msg_type = export_msg.get()
+        if exportmode == 'ALL_TO_SINGLE' and msg_type != Gtk.MessageType.ERROR:
             self.set_unsaved(False)
+        if msg_type:
+            self.error_message_dialog(msg, msg_type)
+        if not self.is_unsaved:
+            if self.post_action == 'CLEAR_DATA':
+                self.clear_data()
+            elif self.post_action == 'CLOSE_APPLICATION':
+                self.close_application()
+        self.post_action = None
+
+    def set_export_state(self, enable):
+        """Enable/disable app export state.
+
+        When enabled app is moveable, resizable and closeable but does not respond to other input.
+        """
+        self.sw.set_sensitive(not enable)
+        self.main_menu.set_sensitive(not enable)
+        for a in self.actions:
+            self.window.lookup_action(a[0]).set_enabled(not enable)
+        ctxt_id = self.status_bar2.get_context_id("saving")
+        if enable:
+            self.status_bar2.push(ctxt_id, _('Saving…'))
+            cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), 'wait')
+            self.quit_rendering()
+        else:
+            self.status_bar2.remove_all(ctxt_id)
+            cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), 'default')
+            self.window_focus_in_out_event()
+            self.iv_selection_changed_event()
+            self.silent_render()
+            self.iconview.grab_focus()
+        self.iconview.get_window().set_cursor(cursor)
 
     def choose_export_selection_pdf_name(self, _action, mode, _unknown):
         self.choose_export_pdf_name(mode)
@@ -1847,7 +1885,8 @@ class PdfArranger(Gtk.Application):
         # Enable or disable paste actions based on clipboard content
         data_available = True if self.clipboard.wait_for_text() else False
         if self.window.lookup_action("paste"):  # Prevent error when closing with Alt+F4
-            self.window.lookup_action("paste").set_enabled(data_available)
+            if self.sw.is_sensitive():
+                self.window.lookup_action("paste").set_enabled(data_available)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
                              selection_data, target_id, _etime):
@@ -2042,7 +2081,8 @@ class PdfArranger(Gtk.Application):
         self.iv_selection_changed_event()
 
     def edit_metadata(self, _action, _parameter, _unknown):
-        if metadata.edit(self.metadata, self.pdfqueue, self.window):
+        files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
+        if metadata.edit(self.metadata, files, self.window):
             self.set_unsaved(True)
 
     def page_format_dialog(self, _action, _parameter, _unknown):

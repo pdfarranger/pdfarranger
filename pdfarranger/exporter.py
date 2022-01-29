@@ -18,6 +18,8 @@
 import pikepdf
 import os
 import traceback
+import sys
+import warnings
 import tempfile
 from . import metadata
 from gi.repository import Gtk
@@ -155,19 +157,47 @@ def _remove_unreferenced_resources(pdfdoc):
 	# unwanted exception so we print it.
         print(traceback.format_exc())
 
-def export(input_files, pages, file_out, mode, mdata):
-    exportmodes = {0: 'ALL_TO_SINGLE',
-                   1: 'ALL_TO_MULTIPLE',
-                   2: 'SELECTED_TO_SINGLE',
-                   3: 'SELECTED_TO_MULTIPLE'}
-    exportmode = exportmodes[mode.get_int32()]
+def warn_dialog(func):
+    """ Decorator which redirect warnings and error messages to a gtk MessageDialog """
+    class ShowWarning:
+        def __init__(self):
+            self.buffer = ""
 
+        def __call__(self, message, category, filename, lineno, f=None, line=None):
+            s = warnings.formatwarning(message, category, filename, lineno, line)
+            if sys.stderr is not None:
+                sys.stderr.write(s + '\n')
+            self.buffer += str(message) + '\n'
+
+    def wrapper(*args, **kwargs):
+        export_msg = args[-1]
+        backup_showwarning = warnings.showwarning
+        warnings.showwarning = ShowWarning()
+        try:
+            func(*args, **kwargs)
+            if len(warnings.showwarning.buffer) > 0:
+                export_msg.put([warnings.showwarning.buffer, Gtk.MessageType.WARNING])
+        except Exception as e:
+            traceback.print_exc()
+            export_msg.put([e, Gtk.MessageType.ERROR])
+        finally:
+            warnings.showwarning = backup_showwarning
+
+    return wrapper
+
+def export_process(*args, **kwargs):
+    """Export PDF in a separate process."""
+    warn_dialog(export)(*args, **kwargs)
+
+def export(files, pages, mdata, exportmode, file_out, quit_flag, _export_msg):
     global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
-    pdf_input = [pikepdf.open(p.copyname, password=p.password) for p in input_files]
+    pdf_input = [pikepdf.open(copyname, password=password) for copyname, password in files]
     copied_pages = {}
     # Copy pages from the input PDF files to the output PDF file
     for row in pages:
+        if quit_flag.is_set():
+            return
         current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
         # if the page already exists in the output PDF, duplicate it
         new_page = copied_pages.get((row.nfile, row.npage))
@@ -189,13 +219,18 @@ def export(input_files, pages, file_out, mode, mdata):
 
     # Apply geometrical transformations in the output PDF file
     for page_id, row in enumerate(pages):
+        if quit_flag.is_set():
+            return
         new_page = pdf_output.pages[page_id]
         _update_angle(row, new_page, new_page)
         new_page.MediaBox = _mediabox(new_page, row.crop)
         pdf_output.pages[page_id] = _scale(pdf_output, new_page, row.scale)
 
+    mdata = metadata.merge(mdata, files)
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
+            if quit_flag.is_set():
+                return
             outpdf = pikepdf.Pdf.new()
             _set_meta(mdata, pdf_input, outpdf)
             # needed to add this, probably related to pikepdf < 2.7.0 workaround

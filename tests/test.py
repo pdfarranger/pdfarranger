@@ -160,6 +160,19 @@ class PdfArrangerTest(unittest.TestCase):
             self.assertLess(c, 30)
             c += 1
 
+    def _is_saving(self):
+        app = self._app()
+        from dogtail import predicate
+        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+        statusbar = allstatusbar[0]
+        return statusbar.name.startswith("Saving")
+
+    def _wait_saving(self):
+        # When saving the main window is made unresponsive. When saving end
+        # it's made responsive again. We must be sure that it's responsive
+        # before continuing test else clicks may fail.
+        self._wait_cond(lambda: not self._is_saving())
+
     def _status_text(self):
         app = self._app()
         from dogtail import predicate
@@ -222,6 +235,7 @@ class PdfArrangerTest(unittest.TestCase):
         filechooser.button("Save").click()
         self._wait_cond(lambda: os.path.isfile(filename))
         self._wait_cond(lambda: filechooser.dead)
+        self._wait_saving()
 
     @classmethod
     def setUpClass(cls):
@@ -365,6 +379,7 @@ class TestBatch1(PdfArrangerTest):
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Cancel").click()
         self._app().keyCombo("<ctrl>s")
+        self._wait_saving()
         self._app().keyCombo("<ctrl>q")
         # check that process actually exit
         self._process().wait(timeout=22)
