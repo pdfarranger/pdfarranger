@@ -184,7 +184,10 @@ class PdfArrangerTest(unittest.TestCase):
     def _assert_selected(self, selection):
         self.assertTrue(self._status_text().startswith("Selected pages: " + selection))
 
-    def _assert_page_size(self, width, height):
+    def _assert_page_size(self, width, height, pageid=None):
+        if pageid is not None:
+            self._icons()[pageid].click()
+            self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
         label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
 
@@ -236,6 +239,22 @@ class PdfArrangerTest(unittest.TestCase):
         self._wait_cond(lambda: os.path.isfile(filename))
         self._wait_cond(lambda: filechooser.dead)
         self._wait_saving()
+
+    def _scale_selected(self, scale):
+        app = self._app()
+        app.keyCombo("C")
+        dialog = app.child(roleName="dialog")
+        from dogtail import rawinput
+        rawinput.keyCombo("Tab")
+        rawinput.typeText(str(scale))
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def _quit_without_saving(self):
+        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+        dialog = self._app().child(roleName="alert")
+        dialog.child(name="Don’t Save").click()
+        self._process().wait(timeout=22)
 
     @classmethod
     def setUpClass(cls):
@@ -423,6 +442,7 @@ class TestBatch2(PdfArrangerTest):
 
 
 class TestBatch3(PdfArrangerTest):
+    """Test encryption"""
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
         shutil.copyfile("tests/test_encrypted.pdf", filename)
@@ -459,8 +479,7 @@ class TestBatch3(PdfArrangerTest):
 
 
 class TestBatch4(PdfArrangerTest):
-    # Kill X11 after that batch
-    LAST=True
+    """Check the size of duplicated and scaled pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -471,15 +490,8 @@ class TestBatch4(PdfArrangerTest):
         app.keyCombo("Right")
 
     def test_03_scale(self):
-        app = self._app()
-        app.keyCombo("C")
-        dialog = self._app().child(roleName="dialog")
-        from dogtail import rawinput
-        rawinput.keyCombo("Tab")
-        rawinput.typeText("200")
-        dialog.child(name="OK").click()
-        self._wait_cond(lambda: dialog.dead)
-        app.keyCombo("<ctrl>Left")  # rotate left
+        self._scale_selected(200)
+        self._app().keyCombo("<ctrl>Left")  # rotate left
         self._assert_selected("2")
         self._assert_page_size(558.8, 431.8)
 
@@ -501,3 +513,37 @@ class TestBatch4(PdfArrangerTest):
         app.keyCombo("Right")
         self._assert_selected("2")
         self._assert_page_size(558.8, 431.8)
+        self._quit_without_saving()
+
+
+class TestBatch5(PdfArrangerTest):
+    """Test booklet and blank pages"""
+    # Kill X11 after that batch
+    LAST = True
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_blank_page(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Crop White Borders"])
+        self._scale_selected(150)
+        self._popupmenu(0, ["Insert Blank Page"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: len(self._icons()) == 3)
+
+    def test_03_booklet(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Generate Booklet"])
+        self._wait_cond(lambda: len(self._icons()) == 2)
+        self._assert_page_size(489, 212.2, 0)
+        self._assert_page_size(489, 212.2, 1)
+
+    def test_04_crop_white_border(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Crop White Borders"])
+        self._assert_page_size(244.1, 211.8, 0)
+        self._assert_page_size(244.1, 211.8, 1)
+        self._quit_without_saving()
+
