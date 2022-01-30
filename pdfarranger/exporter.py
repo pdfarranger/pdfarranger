@@ -105,9 +105,11 @@ def _scale(doc, page, factor):
         Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
         Rotate=rotate,
     )
-    # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-    if pikepdf.__version__ < '2.7.0':
-        new_page = doc.make_indirect(new_page)
+    # This was needed for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
+    # It's also needed with pikepdf 4.2 else we get:
+    # RuntimeError: QPDFPageObjectHelper::getFormXObjectForPage called with a direct object
+    # when calling as_form_xobject in generate_booklet
+    new_page = doc.make_indirect(new_page)
     return new_page
 
 def check_content(parent, pdf_list):
@@ -146,6 +148,13 @@ def _update_angle(model_page, source_page, output_page):
     angle0 = source_page.Rotate if '/Rotate' in source_page else 0
     if angle != 0:
         output_page.Rotate = angle + angle0
+
+
+def _apply_geom_transform(pdf_output, new_page, row):
+    _update_angle(row, new_page, new_page)
+    new_page.MediaBox = _mediabox(new_page, row.crop)
+    return _scale(pdf_output, new_page, row.scale)
+
 
 def _remove_unreferenced_resources(pdfdoc):
     try:
@@ -221,10 +230,9 @@ def export(files, pages, mdata, exportmode, file_out, quit_flag, _export_msg):
     for page_id, row in enumerate(pages):
         if quit_flag.is_set():
             return
-        new_page = pdf_output.pages[page_id]
-        _update_angle(row, new_page, new_page)
-        new_page.MediaBox = _mediabox(new_page, row.crop)
-        pdf_output.pages[page_id] = _scale(pdf_output, new_page, row.scale)
+        pdf_output.pages[page_id] = _apply_geom_transform(
+            pdf_output, pdf_output.pages[page_id], row
+        )
 
     mdata = metadata.merge(mdata, files)
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
@@ -276,18 +284,26 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
                      max(second_page_size[1], first_page_size[1])]
 
         first_original = source_files[first.nfile].pages[first.npage - 1]
-        first_foreign = file.copy_foreign(first_original)
-        _update_angle(first, first_original, first_foreign)
+        first_foreign = _apply_geom_transform(
+            file, file.copy_foreign(first_original), first
+        )
 
         second_original = source_files[second.nfile].pages[second.npage - 1]
-        second_foreign = file.copy_foreign(second_original)
-        _update_angle(second, second_original, second_foreign)
+        second_foreign = _apply_geom_transform(
+            file, file.copy_foreign(second_original), second
+        )
 
         content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
         content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
-
-        content_txt = (f'q 1 0 0 1 0 0 cm /Page{i*2} Do Q'
-                       f' q 1 0 0 1 {first_page_size[0]} 0 cm /Page{i*2 + 1} Do Q ')
+        # See PDF reference section 4.2.3 Transformation Matrices
+        tx1 = -first_foreign.MediaBox[0]
+        ty1 = -first_foreign.MediaBox[1]
+        tx2 = first_page_size[0] - float(second_foreign.MediaBox[0])
+        ty2 = -second_foreign.MediaBox[1]
+        content_txt = (
+            f"q 1 0 0 1 {tx1} {ty1} cm /Page{i*2} Do Q "
+            f"q 1 0 0 1 {tx2} {ty2} cm /Page{i*2 + 1} Do Q "
+        )
 
         newpage = pikepdf.Dictionary(
                 Type=pikepdf.Name.Page,
