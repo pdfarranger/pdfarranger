@@ -367,9 +367,10 @@ class PdfArranger(Gtk.Application):
                  for ref in ref_list]
 
         # Need uniform page size.
-        first_page_size = pages[0].size_in_points()
+        p1w, p1h = pages[0].size_in_points()
         for page in pages[1:]:
-            if first_page_size != page.size_in_points():
+            pw, ph = page.size_in_points()
+            if abs(p1w-pw) > 1e-2 and abs(p1h-ph) > 1e-2:
                 msg = _('All pages must have the same size.')
                 self.error_message_dialog(msg)
                 return
