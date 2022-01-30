@@ -377,7 +377,7 @@ class PdfArranger(Gtk.Application):
         # We need a multiple of 4
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
-            file = exporter.create_blank_page(self.tmp_dir, pages[0].size)
+            file = exporter.create_blank_page(self.tmp_dir, pages[0].size_in_points())
             adder = PageAdder(self)
             for __ in range(blank_page_count):
                 adder.addpages(file)
