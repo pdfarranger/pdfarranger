@@ -10,6 +10,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name>PDF Arranger</name>
   <name xml:lang="ko">PDF 편집기</name>
   <name xml:lang="hu">PDF-rendező</name>
+  <name xml:lang="tr">PDF Düzenleyici</name>
   <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
   <summary xml:lang="de">PDFs zusammenfügen, umsortieren, trennen, rotieren und zuschneiden</summary>
@@ -21,6 +22,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="sk">Grafický nástroj na manipuláciu s PDF</summary>
   <summary xml:lang="sv">Slå samman, arrangera om, dela, rotera och beskär PDF filer</summary>
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
+  <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1"/>
@@ -52,14 +54,14 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <p xml:lang="hu">
       Ez a pikepdf kezelőfelülete.
     </p>
-    
+
     <p xml:lang="ko">
       PDF 편집기는 사용자가 PDF 문서를 합치거나 나누고 페이지를 재정렬할 수 있는 다기능 그래픽 인터페이스를 사용하는 간단한 프로그램입니다.
     </p>
     <p xml:lang="ko">
       pikepdf를 기반으로 합니다.
     </p>
-    
+
     <p xml:lang="pt">
       O PDF Arranger é uma pequena aplicação, que ajuda o utilizador a juntar ou dividir
       documentos pdf e a rodar, recortar e reorganizar as suas páginas usando uma
@@ -67,6 +69,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="pt">
       É uma interface gráfica para o pikepdf.
+    </p>
+
+    <p xml:lang="tr">
+      PDF Arranger, kullanıcının etkileşimli ve sezgisel bir grafiksel arayüz kullanarak
+      PDF belgelerini birleştirmesine veya bölmesine ve sayfalarını döndürmesine,
+      kırpmasına ve yeniden düzenlemesine yardımcı olan küçük bir uygulamadır.
+    </p>
+    <p xml:lang="tr">
+      pikepdf için bir önyüzdür.
     </p>
   </description>
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
