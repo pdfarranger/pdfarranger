@@ -77,6 +77,17 @@ def load_from_docinfo(meta, doc):
         traceback.print_exc()
 
 
+def _safeiter(elements):
+    it = iter(elements)
+    while True:
+        try:
+            yield next(it)
+        except StopIteration:
+            break
+        except ValueError:
+            traceback.print_exc()
+
+
 def merge(metadata, input_files):
     """ Merge current global metadata and each imported files meta data """
     r = metadata.copy()
@@ -84,7 +95,7 @@ def merge(metadata, input_files):
         doc = pikepdf.open(copyname, password=password)
         with doc.open_metadata() as meta:
             load_from_docinfo(meta, doc)
-            for k, v in meta.items():
+            for k, v in _safeiter(meta.items()):
                 if not _pikepdf_meta_is_valid(v):
                     # workaround for https://github.com/pikepdf/pikepdf/issues/84
                     del meta[k]
