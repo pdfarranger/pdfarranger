@@ -32,7 +32,6 @@ from urllib.request import url2pathname
 from functools import lru_cache
 
 multiprocessing.freeze_support()  # Does nothing in Linux
-multiprocessing.set_start_method('spawn')
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -1150,6 +1149,8 @@ class PdfArranger(Gtk.Application):
                 return # Abort
 
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
+        if not self.export_process:
+            multiprocessing.set_start_method('spawn')
         self.quit_flag = multiprocessing.Event()
         export_msg = multiprocessing.Queue()
         a = files, pages, self.metadata, exportmode, file_out, self.quit_flag, export_msg
