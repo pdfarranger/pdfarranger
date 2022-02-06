@@ -1128,6 +1128,27 @@ class PdfArranger(Gtk.Application):
         GObject.timeout_add(300, self.export_finished, exportmode, export_msg)
         self.set_export_state(True)
 
+    def save_warning_dialog(self, msg):
+        d = Gtk.MessageDialog(
+            type=Gtk.MessageType.WARNING,
+            parent=self.window,
+            text=_("Saving produced some warnings"),
+            secondary_text=_("Despite the warnings the document(s) should have no visible issues."),
+            buttons=Gtk.ButtonsType.OK
+            )
+        sw = Gtk.ScrolledWindow(margin=6)
+        label = Gtk.Label(msg, wrap=True, margin=6, xalign=0.0, selectable=True)
+        sw.add(label)
+        d.vbox.pack_start(sw, False, False, 0)
+        cb = Gtk.CheckButton(_("Don't show warnings when saving again."), margin=6, can_focus=False)
+        d.vbox.pack_start(cb, False, False, 0)
+        d.show_all()
+        sw.set_min_content_height(min(150, label.get_allocated_height()))
+        cb.set_can_focus(True)
+        d.run()
+        self.config.set_show_save_warnings(not cb.get_active())
+        d.destroy()
+
     def export_finished(self, exportmode, export_msg):
         """Check if export finished. Show any messages. Run any post action."""
         if self.export_process.is_alive():
@@ -1138,8 +1159,10 @@ class PdfArranger(Gtk.Application):
             msg, msg_type = export_msg.get()
         if exportmode == 'ALL_TO_SINGLE' and msg_type != Gtk.MessageType.ERROR:
             self.set_unsaved(False)
-        if msg_type:
-            self.error_message_dialog(msg, msg_type)
+        if msg_type == Gtk.MessageType.ERROR:
+            self.error_message_dialog(msg)
+        elif msg_type == Gtk.MessageType.WARNING and self.config.show_save_warnings():
+            self.save_warning_dialog(msg)
         if not self.is_unsaved:
             if self.post_action == 'CLEAR_DATA':
                 self.clear_data()
@@ -2229,9 +2252,9 @@ class PdfArranger(Gtk.Application):
         for a in ["save", "save-as", "select", "export-all", "zoom-fit"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
-    def error_message_dialog(self, msg, msg_type=Gtk.MessageType.ERROR):
+    def error_message_dialog(self, msg):
         error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
-                                          type=msg_type, parent=self.window,
+                                          type=Gtk.MessageType.ERROR, parent=self.window,
                                           message_format=str(msg),
                                           buttons=Gtk.ButtonsType.OK)
         response = error_msg_dlg.run()
