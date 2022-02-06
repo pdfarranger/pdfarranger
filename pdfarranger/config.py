@@ -145,6 +145,12 @@ class Config(object):
     def set_content_loss_warning(self, enabled):
         self.data.set('preferences', 'content-loss-warning', str(enabled))
 
+    def show_save_warnings(self):
+        return self.data.getboolean('preferences', 'show-save-warnings', fallback=True)
+
+    def set_show_save_warnings(self, enabled):
+        self.data.set('preferences', 'show-save-warnings', str(enabled))
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
