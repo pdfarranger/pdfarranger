@@ -91,6 +91,7 @@ required_dlls = [
     'poppler-glib-8',
     'xml2-2',
     'rsvg-2-2',
+    'handy-1-0',
 ]
 
 for dll in required_dlls:
@@ -113,7 +114,8 @@ required_gi_namespaces = [
     "GModule-2.0",
     "Atk-1.0",
     "Poppler-0.18",
-    "HarfBuzz-0.0"
+    "HarfBuzz-0.0",
+    "Handy-1",
 ]
 
 for ns in required_gi_namespaces:

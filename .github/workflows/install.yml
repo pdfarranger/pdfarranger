@@ -6,8 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # PikePDF 4.2.0
-    container: jeromerobert/pdfarranger-docker-ci:1.4
+    # PikePDF 4.4.1
+    container: jeromerobert/pdfarranger-docker-ci:1.4.1
     env:
       PDFARRANGER_COVERAGE: 1
     steps:
@@ -27,7 +27,7 @@ jobs:
   build-old-pikepdf:
     runs-on: ubuntu-latest
     # PikePDF 1.19
-    container: jeromerobert/pdfarranger-docker-ci:1.3.1
+    container: jeromerobert/pdfarranger-docker-ci:1.3.2
     steps:
     - uses: actions/checkout@v2
     - name: Install
@@ -37,7 +37,7 @@ jobs:
   build-win32:
     runs-on: ubuntu-latest
     container:
-      image: jeromerobert/wine-mingw64:1.7.0
+      image: jeromerobert/wine-mingw64:1.7.1
       options: --user root
     steps:
     - uses: actions/checkout@v2
