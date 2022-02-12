@@ -1287,9 +1287,9 @@ class PdfArranger(Gtk.Application):
                         npage > 0 and
                         angle in [0, 90, 180, 270] and
                         0 < scale <= 200.0 and
-                        all((cr >= 0.0 and cr <= 0.99) for cr in crop) and
-                        (crop[0] + crop[1] <= 0.99) and
-                        (crop[2] + crop[3] <= 0.99) and
+                        all((cr >= 0.0 and cr <= 0.90) for cr in crop) and
+                        (crop[0] + crop[1] <= 0.90) and
+                        (crop[2] + crop[3] <= 0.90) and
                         len(tmp) == 9):
                     data_valid = False
                     break
