@@ -39,6 +39,7 @@ _DEFAULT_ACCELS = [
     ('zoom-in', 'plus KP_Add <Primary>plus <Primary>KP_Add'),
     ('zoom-out', 'minus KP_Subtract <Primary>minus <Primary>KP_Subtract'),
     ('zoom-fit', 'f'),
+    ('fullscreen', 'F11'),
     ('undo', '<Primary>z'),
     ('redo', '<Primary>y'),
     ('cut', '<Primary>x'),
