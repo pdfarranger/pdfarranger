@@ -199,7 +199,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       </section>
     </submenu>
     <submenu>
-      <attribute name="label" translatable="yes">_Zoom</attribute>
+      <attribute name="label" translatable="yes">_View</attribute>
       <section>
         <item>
           <attribute name="label" translatable="yes">Zoom _In</attribute>
@@ -212,6 +212,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <item>
           <attribute name="label" translatable="yes">Zoom _Fit</attribute>
           <attribute name="action">win.zoom-fit</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Full_screen</attribute>
+          <attribute name="action">win.fullscreen</attribute>
         </item>
       </section>
     </submenu>

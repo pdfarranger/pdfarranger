@@ -361,6 +361,7 @@ class PdfArranger(Gtk.Application):
             ('zoom-in', self.on_action_zoom_in),
             ('zoom-out', self.on_action_zoom_out),
             ('zoom-fit', self.on_action_zoom_fit),
+            ('fullscreen', self.on_action_fullscreen),
             ('close', self.on_action_close),
             ('quit', self.on_quit),
             ('undo', self.undomanager.undo),
@@ -2066,6 +2067,16 @@ class PdfArranger(Gtk.Application):
             self.zoom_level_old = self.zoom_level
             self.zoom_fit_page = True
             self.zoom_fit(path)
+
+    def on_action_fullscreen(self, _action, _param, _unknown):
+        """Toggle fullscreen mode."""
+        header_bar = self.uiXML.get_object('header_bar')
+        if header_bar.get_visible():
+            self.window.fullscreen()
+            header_bar.hide()
+        else:
+            self.window.unfullscreen()
+            header_bar.show()
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
