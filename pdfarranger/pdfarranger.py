@@ -522,8 +522,6 @@ class PdfArranger(Gtk.Application):
         vscrollbar.connect('value_changed', self.vscrollbar_value_changed)
         vscrollbar.props.adjustment.step_increment = 75
 
-        # Define window callback function and show window
-        self.window.connect('check_resize', self.on_window_size_request)
         self.window.show_all()
 
         # Change iconview color background
@@ -800,11 +798,6 @@ class PdfArranger(Gtk.Application):
         if range_start < 0 and len(self.model) > 0:
             range_start = len(self.model) - 1
         return range_start, min(max(range_end, range_start), len(self.model) - 1)
-
-    def on_window_size_request(self, _window):
-        """Main Window resize."""
-        if self.iconview.get_visible():
-            self.update_iconview_geometry()
 
     def hide_horizontal_scrollbar(self):
         """Hide horizontal scrollbar when not needed."""
@@ -1213,6 +1206,7 @@ class PdfArranger(Gtk.Application):
                     row = model[-1]
                     path = row.path
                     self.iconview.select_path(path)
+        self.update_iconview_geometry()
         self.iv_selection_changed_event()
         self.iconview.grab_focus()
         self.silent_render()
@@ -1390,6 +1384,7 @@ class PdfArranger(Gtk.Application):
                     return
                 data = filepaths
             self.paste_pages_interleave(data, before, ref_to)
+            self.update_iconview_geometry()
             GObject.idle_add(self.retitle)
             self.iv_selection_changed_event()
             self.update_max_zoom_level()
@@ -1600,6 +1595,7 @@ class PdfArranger(Gtk.Application):
             for ref_del in ref_del_list:
                 path = ref_del.get_path()
                 model.remove(model.get_iter(path))
+        self.update_iconview_geometry()
         GObject.idle_add(self.render)
         malloc_trim()
 
@@ -2003,8 +1999,8 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
             self.iconview.set_cursor(path, None, False)
             self.zoom_level_old = self.zoom_level
-            self.zoom_fit(path)
             self.zoom_fit_page = True
+            self.zoom_fit(path)
 
     def scroll_to_selection(self):
         """Scroll iconview so that selection is in center of window."""
@@ -2034,6 +2030,7 @@ class PdfArranger(Gtk.Application):
             if p.rotate(angle):
                 rotated = True
                 model.set_value(treeiter, 0, p)
+        self.update_iconview_geometry()
         page_width_new = max(p.width_in_points() for p, _ in self.model)
         page_height_new = max(p.height_in_points() for p, _ in self.model)
         if page_width_old != page_width_new or page_height_old != page_height_new:
@@ -2062,6 +2059,7 @@ class PdfArranger(Gtk.Application):
                 for p in newpages:
                     model.insert_after(iterator, [p, p.description()])
                 model.set_value(iterator, 0, page)
+        self.update_iconview_geometry()
         self.iv_selection_changed_event()
 
     def edit_metadata(self, _action, _parameter, _unknown):
@@ -2087,6 +2085,7 @@ class PdfArranger(Gtk.Application):
             if updatestatus:
                 self.set_unsaved(True)
                 self.update_statusbar()
+        self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
@@ -2109,6 +2108,7 @@ class PdfArranger(Gtk.Application):
                 page.crop = list(newcrop[id_sel])
                 changed = True
             model.set_value(pos, 0, page)
+        self.update_iconview_geometry()
         return changed
 
     def duplicate(self, _action, _parameter, _unknown):
