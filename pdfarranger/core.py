@@ -420,6 +420,7 @@ class PageAdder:
                     path = self.app.model.get_path(it)
                     self.app.iconview.select_path(path)
         if add_to_undomanager:
+            self.app.update_iconview_geometry()
             GObject.idle_add(self.app.retitle)
             self.app.update_max_zoom_level()
             self.app.silent_render()
