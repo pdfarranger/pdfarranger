@@ -178,7 +178,7 @@ class _CropWidget(Gtk.Frame):
             adj = Gtk.Adjustment(
                 value=100.0 * crop.pop(0),
                 lower=0.0,
-                upper=99.0,
+                upper=90.0,
                 step_increment=1.0,
                 page_increment=5.0,
                 page_size=0.0,
@@ -197,7 +197,7 @@ class _CropWidget(Gtk.Frame):
     def __set_crop_value(spinbutton, self, side):
         opp_side = self.opposite_sides[side]
         adj = self.spin_list[self.sides.index(opp_side)].get_adjustment()
-        limit = 99.0 - spinbutton.get_value()
+        limit = 90.0 - spinbutton.get_value()
         adj.set_upper(limit)
         opp_spinner = self.spin_list[self.sides.index(opp_side)]
         opp_spinner.set_value(min(opp_spinner.get_value(), limit))
