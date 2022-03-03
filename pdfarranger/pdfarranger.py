@@ -2085,6 +2085,7 @@ class PdfArranger(Gtk.Application):
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
+        GObject.idle_add(self.render)
 
     def edit_metadata(self, _action, _parameter, _unknown):
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
@@ -2153,6 +2154,7 @@ class PdfArranger(Gtk.Application):
                 page = model.get_value(iterator, 0).duplicate()
                 model.insert_after(iterator, [page, page.description()])
         self.iv_selection_changed_event()
+        GObject.idle_add(self.render)
 
 
     @staticmethod
