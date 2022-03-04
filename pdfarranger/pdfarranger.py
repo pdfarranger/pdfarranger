@@ -1713,6 +1713,7 @@ class PdfArranger(Gtk.Application):
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
         self.iv_drag_select.set_mouse_cursor('default')
+        self.iv_drag_select.click_location = None
 
         if self.pressed_button:
             # Button was pressed and released on a previously selected item
