@@ -384,6 +384,9 @@ class IconviewDragSelect:
              Location is 2.5 when pointer is between item 2 and 3.
         """
         last = self.iconview.get_cell_rect(self.model[-1].path)[1]
+        if last.width < 50:
+            # Avoid seg fault if calling get_path_at_pos before iconview is ready
+            return None
         last_x, last_y = self.iconview.convert_widget_to_bin_window_coords(last.x, last.y)
         x_step = last.width - 2 * self.iconview.get_item_padding() - 1
         y_step = self.iconview.get_row_spacing() + 2 * self.iconview.get_item_padding() + 1
