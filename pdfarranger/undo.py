@@ -77,6 +77,7 @@ class Manager(object):
 
     def __set_state(self, state):
         self.app.quit_rendering()
+        self.app.iconview.unselect_all()
         with self.app.render_lock():
             self.model.clear()
             for page in state:
