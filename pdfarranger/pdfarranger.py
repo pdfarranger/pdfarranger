@@ -771,24 +771,21 @@ class PdfArranger(Gtk.Application):
 
         A item is considered visible if more than 50% of item is visible.
         """
-        columns_nr = max(self.iconview.get_columns(), 1)
+        vr = self.iconview.get_visible_range()
+        if vr is None:
+            return -1, -1
+        first_ind = vr[0].get_indices()[0]
+        last_ind = vr[1].get_indices()[0]
+        first_cell = self.iconview.get_cell_rect(vr[0])[1]
+        last_cell = self.iconview.get_cell_rect(vr[1])[1]
         sw_height = self.sw.get_allocated_height()
-        range_start = range_end = -1
-        item_nr = 0
-        while item_nr < len(self.model):
-            path = Gtk.TreePath.new_from_indices([item_nr])
-            cell_rect = self.iconview.get_cell_rect(path)[1]
-            item_center = cell_rect.y + cell_rect.height / 2
-            if range_start < 0 and item_center > 0:
-                range_start = item_nr
-            if item_center < sw_height:
-                range_end = item_nr + columns_nr - 1
-            else:
-                break
-            item_nr += columns_nr
-        if range_start < 0 and len(self.model) > 0:
-            range_start = len(self.model) - 1
-        return range_start, min(max(range_end, range_start), len(self.model) - 1)
+        if first_cell.y + first_cell.height * 0.5 < 0:
+            columns_nr = self.iconview.get_columns()
+            first_ind = min(first_ind + columns_nr, len(self.model) - 1)
+        if last_cell.y + last_cell.height * 0.5 > sw_height:
+            last_item_col = self.iconview.get_item_column(vr[1])
+            last_ind = max(last_ind - last_item_col - 1, 0)
+        return min(first_ind, last_ind), max(first_ind, last_ind)
 
     def hide_horizontal_scrollbar(self):
         """Hide horizontal scrollbar when not needed."""
