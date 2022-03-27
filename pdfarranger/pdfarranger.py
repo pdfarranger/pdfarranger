@@ -1015,7 +1015,7 @@ class PdfArranger(Gtk.Application):
         chooser = Gtk.FileChooserDialog(title=title,
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.SAVE,
-                                        buttons=(Gtk.STOCK_CANCEL,
+                                        buttons=("_Cancel",
                                                  Gtk.ResponseType.CANCEL,
                                                  Gtk.STOCK_SAVE,
                                                  Gtk.ResponseType.ACCEPT))
@@ -1042,9 +1042,9 @@ class PdfArranger(Gtk.Application):
         chooser = Gtk.FileChooserDialog(title=title,
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
+                                        buttons=("_Cancel",
                                                  Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
+                                                 "_Open",
                                                  Gtk.ResponseType.ACCEPT))
         if self.import_directory is not None:
             chooser.set_current_folder(self.import_directory)
