@@ -289,7 +289,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <child>
               <object class="GtkStatusbar" id="statusbar">
                 <property name="visible">True</property>
-                <property name="margin_right">183</property>
                 <property name="margin_start">4</property>
                 <property name="margin_end">4</property>
                 <property name="margin_top">4</property>
@@ -307,7 +306,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
               <object class="GtkStatusbar" id="statusbar2">
                 <property name="visible">True</property>
                 <property name="halign">end</property>
-                <property name="margin_right">4</property>
                 <property name="margin_start">4</property>
                 <property name="margin_end">4</property>
                 <property name="margin_top">4</property>

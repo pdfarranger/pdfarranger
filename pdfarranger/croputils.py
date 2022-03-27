@@ -68,16 +68,17 @@ class _LinkedSpinButton(Gtk.SpinButton):
         return True
 
 
-class _RadioStackSwitcher(Gtk.VBox):
+class _RadioStackSwitcher(Gtk.Box):
     """ Same as GtkStackSwitcher but with radio button (i.e different semantic) """
 
     def __init__(self, margin=10):
         super().__init__()
+        self.props.orientation = Gtk.Orientation.VERTICAL
         self.set_spacing(margin)
         self.props.margin = margin
         self.radiogroup = []
         self.stack = Gtk.Stack()
-        self.button_box = Gtk.HBox()
+        self.button_box = Gtk.Box()
         self.button_box.set_spacing(margin)
         self.add(self.button_box)
         self.add(self.stack)
@@ -105,7 +106,7 @@ class _RadioStackSwitcher(Gtk.VBox):
             self.selected_child = self.stack.get_child_by_name(name)
 
 
-class _RelativeScalingWidget(Gtk.HBox):
+class _RelativeScalingWidget(Gtk.Box):
     """ A form to specify the relative scaling factor """
 
     def __init__(self, current_scale, margin=10):
@@ -124,7 +125,7 @@ class _RelativeScalingWidget(Gtk.HBox):
         return self.entry.get_value() / 100
 
 
-class _ScalingWidget(Gtk.HBox):
+class _ScalingWidget(Gtk.Box):
     """ A form to specify the page width or height """
 
     def __init__(self, label, default):
@@ -215,9 +216,9 @@ class Dialog(Gtk.Dialog):
             parent=window,
             flags=Gtk.DialogFlags.MODAL,
             buttons=(
-                Gtk.STOCK_CANCEL,
+                "_Cancel",
                 Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OK,
+                "_OK",
                 Gtk.ResponseType.OK,
             ),
         )
@@ -321,9 +322,9 @@ class BlankPageDialog(Gtk.Dialog):
             parent=window,
             flags=Gtk.DialogFlags.MODAL,
             buttons=(
-                Gtk.STOCK_CANCEL,
+                "_Cancel",
                 Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OK,
+                "_OK",
                 Gtk.ResponseType.OK,
             ),
         )

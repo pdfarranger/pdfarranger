@@ -126,8 +126,8 @@ def check_content(parent, pdf_list):
         d = Gtk.Dialog(_('Warning'),
                        parent=parent,
                        flags=Gtk.DialogFlags.MODAL,
-                       buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+                       buttons=("_Cancel", Gtk.ResponseType.CANCEL,
+                                "_OK", Gtk.ResponseType.OK))
         label = Gtk.Label(_('Forms and outlines are lost on saving.'))
         d.vbox.pack_start(label, False, False, 6)
         checkbutton = Gtk.CheckButton(_('Do not show this dialog again.'))
