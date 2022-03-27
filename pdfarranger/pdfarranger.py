@@ -437,6 +437,7 @@ class PdfArranger(Gtk.Application):
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
         Handy.Window.set_default_icon_name(ICON_ID)
         Handy.init()
+        Handy.StyleManager.get_default().set_color_scheme(Handy.ColorScheme.PREFER_LIGHT)
         self.uiXML = self.__build_from_file(DOMAIN + '.ui')
         # Create the main window, and attach delete_event signal to terminating
         # the application
