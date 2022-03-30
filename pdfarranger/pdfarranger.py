@@ -87,9 +87,12 @@ import gi
 # check that we don't need GObject.threads_init()
 gi.check_version('3.10.2')
 gi.require_version('Gtk', '3.0')
-gi.require_version('Handy', '1')
 from gi.repository import Gtk
-from gi.repository import Handy
+try:
+    gi.require_version('Handy', '1')
+    from gi.repository import Handy
+except ValueError:
+    Handy = None
 
 if Gtk.check_version(3, 12, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
@@ -137,7 +140,7 @@ def _install_workaround_bug29():
                 action.connect("activate", d[1], None)
                 self.add_action(action)
 
-        Handy.ApplicationWindow.add_action_entries = func
+        Gtk.ApplicationWindow.add_action_entries = func
 
 
 _install_workaround_bug29()
@@ -270,7 +273,8 @@ class PdfArranger(Gtk.Application):
             "[FILES]",
         )
 
-    def __build_from_file(self, path):
+    @staticmethod
+    def __resource_path(path):
         """ Return the path of a resource file """
         # TODO: May be we could use Application.set_resource_base_path and
         # get_menu_by_id in place of that
@@ -282,14 +286,50 @@ class PdfArranger(Gtk.Application):
             f = '/usr/share/{}/{}'.format(DOMAIN, path)
         if not os.path.exists(f):
             f = '/usr/local/share/{}/{}'.format(DOMAIN, path)
+        return f
+
+    def __create_main_window(self):
+        """Create the Gtk.ApplicationWindow or Handy.ApplicationWindow"""
         b = Gtk.Builder()
         b.set_translation_domain(DOMAIN)
-        b.add_from_file(f)
+        with open(self.__resource_path(DOMAIN + ".ui")) as ff:
+            s = ff.read()
+            if Handy:
+                Handy.init()
+                s = s.replace("GtkHeaderBar", "HdyHeaderBar")
+            b.add_from_string(s)
         b.connect_signals(self)
+        self.uiXML = b
+        self.window = self.uiXML.get_object("main_window")
+        if Handy:
+            try:
+                Handy.StyleManager.get_default().set_color_scheme(
+                    Handy.ColorScheme.PREFER_LIGHT
+                )
+            except AttributeError:
+                # This libhandy is too old. 1.5.90 needed ?
+                pass
+            # Add an intermediate vertical box
+            box = Gtk.Box()
+            box.props.orientation = Gtk.Orientation.VERTICAL
+            hd = self.uiXML.get_object("header_bar")
+            mb = self.uiXML.get_object("main_box")
+            self.window.remove(hd)
+            self.window.remove(mb)
+            # Replace the Gtk.ApplicationWindow by the Handy one
+            self.window = Handy.ApplicationWindow()
+            box.add(hd)
+            mb.props.expand = True
+            box.add(mb)
+            self.window.add(box)
+        self.window.set_default_icon_name(ICON_ID)
         return b
 
     def __create_menus(self):
-        b = self.__build_from_file("menu.ui")
+        b = Gtk.Builder()
+        b.set_translation_domain(DOMAIN)
+        b.add_from_file(self.__resource_path("menu.ui"))
+        b.connect_signals(self)
         self.config.set_actions(b)
         self.popup = Gtk.Menu.new_from_model(b.get_object("popup_menu"))
         self.popup.attach_to_widget(self.window, None)
@@ -427,6 +467,12 @@ class PdfArranger(Gtk.Application):
             filter_list.append(f_img)
         return filter_list
 
+    def set_title(self, title):
+        if Handy:
+            self.uiXML.get_object('header_bar').set_title(title)
+        else:
+            self.window.set_title(title)
+
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
         # TODO: huge method that should be splitted
@@ -435,13 +481,8 @@ class PdfArranger(Gtk.Application):
         if not os.path.exists(iconsdir):
             iconsdir = os.path.join(sharedir, 'data', 'icons')
         Gtk.IconTheme.get_default().append_search_path(iconsdir)
-        Handy.Window.set_default_icon_name(ICON_ID)
-        Handy.init()
-        self.uiXML = self.__build_from_file(DOMAIN + '.ui')
-        # Create the main window, and attach delete_event signal to terminating
-        # the application
-        self.window = self.uiXML.get_object('main_window')
-        self.uiXML.get_object('header_bar').set_title(APPNAME)
+        self.__create_main_window()
+        self.set_title(APPNAME)
         self.window.set_border_width(0)
         self.window.set_application(self)
         if self.config.maximized():
@@ -726,7 +767,7 @@ class PdfArranger(Gtk.Application):
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
-        self.uiXML.get_object('header_bar').set_title(title)
+        self.set_title(title)
         return False
 
     def update_thumbnail(self, _obj, ref, thumbnail, resample, scale, is_preview):
