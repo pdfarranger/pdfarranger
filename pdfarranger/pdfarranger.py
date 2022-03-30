@@ -452,7 +452,6 @@ class PdfArranger(Gtk.Application):
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
         self.window.connect('configure_event', self.window_configure_event)
-        self.window.connect('enter_notify_event', self.window_enter_notify_event)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -705,13 +704,6 @@ class PdfArranger(Gtk.Application):
         self.iconview.grab_focus()
         self.silent_render()
 
-    def window_enter_notify_event(self, _window, event):
-        """Mouse pointer enter window."""
-        if os.name == 'nt' or event.state & Gdk.ModifierType.BUTTON1_MASK:
-            # In Windows this is triggered when dragging window edge. Instead the release event
-            # is usually triggered when releasing button. Also triggered in Mate desktop.
-            return
-
     def set_export_file(self, file):
         if file != self.export_file:
             self.export_file = file
@@ -761,7 +753,6 @@ class PdfArranger(Gtk.Application):
             return
         page.thumbnail = thumbnail
         page.resample = resample
-        page.zoom = self.zoom_scale
         if is_preview:
             page.preview = thumbnail
         # Let iconview refresh the thumbnail (only) by selecting it
