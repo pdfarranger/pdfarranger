@@ -50,7 +50,7 @@ sudo apt-get install python3-pip python3-distutils-extra python3-wheel python3-g
 **On Arch Linux**
 
 ```
-sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk3 python-cairo
+sudo pacman -S poppler-glib python-distutils-extra python-pip python-gobject gtk3 python-cairo libhandy
 ```
 
 **On Fedora**
