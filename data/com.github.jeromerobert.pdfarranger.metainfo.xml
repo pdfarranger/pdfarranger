@@ -9,6 +9,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <id>com.github.jeromerobert.pdfarranger</id>
   <name>PDF Arranger</name>
   <name xml:lang="ko">PDF 편집기</name>
+  <name xml:lang="hr">PDF uređivač</name>
   <name xml:lang="hu">PDF-rendező</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
   <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
@@ -44,6 +45,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <p xml:lang="es">
       Es una interfaz para pikepdf.
     </p>
+
+    <p xml:lang="hr">
+      PDF uređivač je mali program koja pomaže korisniku sjediniti ili rastaviti
+      pdf dokumente te okretati, obrezati i preurediti stranice tih dokumenata pomoću
+      interaktivnog i intuitivnog grafičkog sučelja.
+     </p>
+     <p xml:lang="hr">
+       Radi se o sučelju za pikepdf.
+     </p>
 
     <p xml:lang="hu">
       A PDF-rendező egy kis alkalmazás, amely egy interaktív és intuitív grafikus 
