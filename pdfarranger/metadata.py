@@ -88,11 +88,10 @@ def _safeiter(elements):
             traceback.print_exc()
 
 
-def merge(metadata, input_files):
-    """ Merge current global metadata and each imported files meta data """
+def merge_doc(metadata, input_docs):
+    """Same as merge but with pikepdf.PDF object instead of files"""
     r = metadata.copy()
-    for copyname, password in input_files:
-        doc = pikepdf.open(copyname, password=password)
+    for doc in input_docs:
         with doc.open_metadata() as meta:
             load_from_docinfo(meta, doc)
             for k, v in _safeiter(meta.items()):
@@ -102,6 +101,12 @@ def merge(metadata, input_files):
                 elif k not in metadata:
                     r[k] = v
     return r
+
+
+def merge(metadata, input_files):
+    """Merge current global metadata and each imported files meta data"""
+    docs = [pikepdf.open(copyname, password=password) for copyname, password in input_files]
+    return merge_doc(metadata, docs)
 
 
 def _metatostr(value, name):
