@@ -67,6 +67,11 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           </item>
         </section>
       </submenu>
+      <item>
+        <attribute name="label" translatable="yes">_Print…</attribute>
+        <attribute name="action">win.print</attribute>
+        <attribute name="verb-icon">document-print-symbolic</attribute>
+      </item>
     </section>
     <section>
       <item>

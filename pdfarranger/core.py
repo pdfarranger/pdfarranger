@@ -127,6 +127,9 @@ class Page:
         self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
         return True
 
+    def unmodified(self):
+        return self.angle == 0 and self.crop == [0]*4 and self.scale == 1
+
     def serialize(self):
         """Convert to string for copy/past operations."""
         ts = [self.copyname, self.npage, self.basename, self.angle, self.scale] + list(self.crop)
