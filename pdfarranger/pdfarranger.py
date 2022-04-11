@@ -766,6 +766,7 @@ class PdfArranger(Gtk.Application):
             title += '*'
 
         all_files = set(os.path.splitext(doc.basename)[0] for doc in self.pdfqueue)
+        all_files.discard('')
         if len(all_files) > 0:
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
