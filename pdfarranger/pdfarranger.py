@@ -578,7 +578,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.override_background_color(Gtk.StateFlags.PRELIGHT,
                                                 color_prelight)
 
-        # Set cursor look, hide rubberband selection rectangle, hide overshoot gradient
+        # Set cursor look and hide overshoot gradient
         style_provider = Gtk.CssProvider()
         css_data = """
         iconview {
@@ -587,10 +587,6 @@ class PdfArranger(Gtk.Application):
             outline-offset: -2px;
             outline-width: 2px;
             -gtk-outline-radius: 2px;
-        }
-        iconview rubberband {
-            border-color: alpha(currentColor, 0.0);
-            background-color: alpha(currentColor, 0.0);
         }
         scrolledwindow overshoot {
             background: none;
@@ -1735,7 +1731,7 @@ class PdfArranger(Gtk.Application):
         with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
             sw_vadj.set_value(sw_vadj.get_value() + step)
             if not self.click_path:
-                changed = self.iv_drag_select.motion(rubberbanded=True, step=step)
+                changed = self.iv_drag_select.motion(step=step)
                 if changed:
                     self.iv_selection_changed_event()
         return True  # call me again
@@ -1760,7 +1756,6 @@ class PdfArranger(Gtk.Application):
                     changed = self.iv_drag_select.motion(event)
                 if changed:
                     self.iv_selection_changed_event()
-                return True  # Don't use iconview's built-in rubberband-selecting
 
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
@@ -1797,12 +1792,6 @@ class PdfArranger(Gtk.Application):
 
         click_path_old = self.click_path
         self.click_path = iconview.get_path_at_pos(event.x, event.y)
-
-        # Go into drag-select mode if clicked between items
-        if event.button == 1 and not self.click_path:
-            location = self.iv_drag_select.click(event)
-            if event.state & Gdk.ModifierType.SHIFT_MASK or not location:
-                return 1
 
         # On shift-click, select all items from cursor up to the shift-clicked item.
         # On shift-ctrl-click, toggle selection for single items.
@@ -1844,7 +1833,8 @@ class PdfArranger(Gtk.Application):
                 return 1  # prevent propagation i.e. (de-)selection
 
         # Display right click menu
-        if event.button == 3:
+        if event.button == 3 and not self.iv_auto_scroll_timer:
+            self.iv_drag_select.set_mouse_cursor('default')
             if self.click_path:
                 selection = iconview.get_selected_items()
                 if self.click_path not in selection:
@@ -1855,6 +1845,15 @@ class PdfArranger(Gtk.Application):
             iconview.grab_focus()
             self.popup.popup(None, None, None, None, event.button, event.time)
             return 1
+
+        # Go into drag-select mode if clicked between items
+        if not self.click_path:
+            if event.button == 1:
+                self.iv_drag_select.click(event)
+            if not (event.state & Gdk.ModifierType.CONTROL_MASK
+                    or event.state & Gdk.ModifierType.SHIFT_MASK):
+                self.iconview.unselect_all()
+            return True  # Don't use iconview's built-in rubberband-selecting
 
     def iv_key_press_event(self, iconview, event):
         """Manages keyboard press events on the iconview."""
@@ -1958,7 +1957,7 @@ class PdfArranger(Gtk.Application):
             with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
                 sw_vadj.set_value(sw_vadj.get_value() + step)
                 if event.state & Gdk.ModifierType.BUTTON1_MASK:
-                    changed = self.iv_drag_select.motion(event, rubberbanded=True, step=step)
+                    changed = self.iv_drag_select.motion(event, step=step)
                     if changed:
                         self.iv_selection_changed_event()
         return True

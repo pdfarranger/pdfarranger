@@ -274,7 +274,6 @@ class IconviewDragSelect:
         if len(self.model) == 0:
             self.click_location = None
             return
-        self.selection_state = {}
         self.click_location = self.get_location(event.x, event.y)
         if self.click_location:
             self.set_mouse_cursor('text')
@@ -286,9 +285,8 @@ class IconviewDragSelect:
                 self.selection_list = []
                 for row in self.model:
                     self.selection_list.append(self.iconview.path_is_selected(row.path))
-            return True
 
-    def motion(self, event=None, rubberbanded=False, step=0):
+    def motion(self, event=None, step=0):
         """Get drag location and select or deselect items."""
         if not self.click_location:
             return
@@ -305,8 +303,6 @@ class IconviewDragSelect:
         else:
             event_y = self.event_y - self.sw_vpos + sw_vpos + step
         drag_location = self.get_location(self.event_x, event_y)
-        if rubberbanded:
-            self.restore_selection_state()
         if drag_location is None:
             return
         selection_changed = self.select(drag_location)
@@ -349,32 +345,7 @@ class IconviewDragSelect:
                     self.iconview.select_path(path)
                 else:
                     self.iconview.unselect_path(path)
-        self.store_selection_state(changed_range_start, changed_range_end)
         return True
-
-    def store_selection_state(self, changed_range_start, changed_range_end):
-        """Store the selection state.
-
-        Iconview will do its built in rubberband selecting when scrolling.
-        The selection can be undone by storing the selection state before
-        rubberbanding and restoring the state when rubberbanding is done.
-        """
-        columns_nr = self.iconview.get_columns()
-        store_range_start = max(0, changed_range_start - columns_nr)
-        store_range_end = min(len(self.model), changed_range_end + columns_nr)
-        self.selection_state = {}
-        for page_nr in range(store_range_start, store_range_end):
-            path = Gtk.TreePath.new_from_indices([page_nr])
-            self.selection_state[page_nr] = True if self.iconview.path_is_selected(path) else False
-
-    def restore_selection_state(self):
-        """Restore the selection state."""
-        for page_nr, selected in self.selection_state.items():
-            path = Gtk.TreePath.new_from_indices([page_nr])
-            if selected == True:
-                self.iconview.select_path(path)
-            elif selected == False:
-                self.iconview.unselect_path(path)
 
     def get_location(self, x, y):
         """
