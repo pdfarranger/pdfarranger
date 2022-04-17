@@ -242,6 +242,7 @@ class PdfArranger(Gtk.Application):
         self.window_width_old = 0
         self.set_iv_visible_id = None
         self.vadj_percent = None
+        self.end_rubberbanding = False
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -1759,6 +1760,9 @@ class PdfArranger(Gtk.Application):
 
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
+        if self.end_rubberbanding:
+            self.end_rubberbanding = False
+            return
         self.iv_drag_select.set_mouse_cursor('default')
         self.iv_drag_select.click_location = None
 
@@ -1851,10 +1855,14 @@ class PdfArranger(Gtk.Application):
         if not self.click_path:
             if event.button == 1:
                 self.iv_drag_select.click(event)
-            if not (event.state & Gdk.ModifierType.CONTROL_MASK
-                    or event.state & Gdk.ModifierType.SHIFT_MASK):
-                self.iconview.unselect_all()
-            return True  # Don't use iconview's built-in rubberband-selecting
+            if event.state & Gdk.ModifierType.SHIFT_MASK:
+                return True  # Don't deselect all
+
+            # Let iconview hide cursor. Then stop rubberbanding with the release event
+            self.end_rubberbanding = True
+            release_event = event.copy()
+            release_event.type = Gdk.EventType.BUTTON_RELEASE
+            release_event.put()
 
     def iv_key_press_event(self, iconview, event):
         """Manages keyboard press events on the iconview."""
