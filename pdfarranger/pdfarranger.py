@@ -1830,6 +1830,7 @@ class PdfArranger(Gtk.Application):
             selection = iconview.get_selected_items()
             if self.click_path and self.click_path in selection:
                 self.pressed_button = event
+                self.iconview.set_cursor(self.click_path, None, False)
                 return 1  # prevent propagation i.e. (de-)selection
 
         # Display right click menu
