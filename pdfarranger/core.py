@@ -428,8 +428,22 @@ class PageAdder:
             self.app.update_max_zoom_level()
             self.app.silent_render()
             self.app.update_statusbar()
+            self.scroll()
         self.pages = []
         return True
+
+    def scroll(self):
+        """Scroll to first added page."""
+        if self.treerowref:
+            iref = self.treerowref.get_path().get_indices()[0]
+        else:
+            iref = len(self.app.model) - 1 - len(self.pages)
+            self.before = False
+        if self.before:
+            scroll_path = Gtk.TreePath.new_from_indices([max(iref - len(self.pages), 0)])
+        else:
+            scroll_path = Gtk.TreePath.new_from_indices([max(iref + 1, 0)])
+        self.app.iconview.scroll_to_path(scroll_path, False, 0, 0)
 
 
 class PDFRenderer(threading.Thread, GObject.GObject):

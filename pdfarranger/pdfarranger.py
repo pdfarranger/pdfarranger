@@ -1357,6 +1357,7 @@ class PdfArranger(Gtk.Application):
         pageadder = PageAdder(self)
         model = self.iconview.get_model()
         iter_to = None
+        iref = ref_to.get_path().get_indices()[0] if ref_to else 0
 
         self.undomanager.commit("Paste")
         self.set_unsaved(True)
@@ -1378,6 +1379,10 @@ class PdfArranger(Gtk.Application):
                 ref_to = Gtk.TreeRowReference.new(model, path)
             else:
                 ref_to = None
+
+        iscroll = iref if before else iref + 1
+        scroll_path = Gtk.TreePath.new_from_indices([iscroll])
+        self.iconview.scroll_to_path(scroll_path, False, 0, 0)
 
     def on_action_delete(self, _action, _parameter, _unknown):
         """Removes the selected elements in the IconView"""
