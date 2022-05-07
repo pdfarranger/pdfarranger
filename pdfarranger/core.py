@@ -292,7 +292,9 @@ class PDFDoc:
                         imgio.seek(0)
                         f.write(img2pdf.convert(imgio))
                     else:
-                        f.write(img2pdf.convert(filename))
+                        # Silently ignore invalid rotations, see:
+                        # https://github.com/pdfarranger/pdfarranger/issues/668
+                        f.write(img2pdf.convert(filename, rotation=img2pdf.Rotation.ifvalid))
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
