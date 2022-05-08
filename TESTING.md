@@ -62,6 +62,14 @@ possible. This list was created using
 
 ## Dogtail
 
+Running Dogtail tests and coverage in Docker:
+
 ```
 docker run -w /src -v $PWD:/src jeromerobert/pdfarranger-docker-ci sh -c "pip install .[image] ; python3 -X tracemalloc -u -m unittest discover -s tests -v -f ; python3 -m coverage combine ; python3 -m coverage html"
+```
+
+Running Dogtail tests with the legacy PikePDF in Podman:
+
+```
+podman run -w /src -v $PWD:/src docker.io/jeromerobert/pdfarranger-docker-ci:1.3.1 sh -c "pip install .[image] ; python3 -u -m unittest discover -s tests -v"
 ```
