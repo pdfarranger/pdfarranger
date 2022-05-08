@@ -53,6 +53,16 @@ def endgroup():
         print("::endgroup::")
 
 
+def check_img2pdf(version):
+    try:
+        import img2pdf
+        v = [int(x) for x in img2pdf.__version__.split(".")]
+        r = v >= version
+    except Exception:
+        r = False
+    return r
+
+
 class XvfbManager:
     """Base class for running offscreen tests"""
 
@@ -545,5 +555,15 @@ class TestBatch5(PdfArrangerTest):
         self._popupmenu(0, ["Crop White Borders"])
         self._assert_page_size(244.1, 211.8, 0)
         self._assert_page_size(244.1, 211.8, 1)
-        self._quit_without_saving()
 
+    def test_05_buggy_exif(self):
+        """Test img2pdf import with buggy EXIF rotation"""
+        if not check_img2pdf([0,4,2]):
+            print("Ignoring test_05_buggy_exif, img2pdf too old")
+            return
+        filechooser = self._import_file("tests/1x1.jpg")
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 3)
+
+    def test_06_quit(self):
+        self._quit_without_saving()
