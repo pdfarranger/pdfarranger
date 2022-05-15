@@ -227,6 +227,34 @@ class PasswordDialog(Gtk.Dialog):
             raise _UnknownPasswordException()
 
 
+def _img_to_pdf(filename, tmp_dir):
+    """Wrap img2pdf.convert to handle some corner cases"""
+    fd, pdf_file_name = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
+    os.close(fd)
+    with open(pdf_file_name, "wb") as f:
+        img = img2pdf.Image.open(filename)
+        if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
+            # TODO: Find a way to keep image in P or L format and remove transparency.
+            # This will work but converting from 1, L, P to RGB is not optimal.
+            img = img.convert("RGBA")
+        if img.mode == "RGBA":
+            bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
+            bg.paste(img, mask=img.split()[-1])
+            imgio = img2pdf.BytesIO()
+            bg.save(imgio, "PNG")
+            imgio.seek(0)
+            f.write(img2pdf.convert(imgio))
+        else:
+            try:
+                # Try to handle invalid EXIF rotation
+                rot = img2pdf.Rotation.ifvalid
+            except AttributeError:
+                # img2pdf is too old so we can't support invalid EXIF rotation
+                rot = None
+            f.write(img2pdf.convert(filename, rotation=rot))
+    return pdf_file_name
+
+
 class PDFDoc:
     """Class handling PDF documents."""
 
@@ -276,23 +304,7 @@ class PDFDoc:
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
             if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
-                fd, self.copyname = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
-                os.close(fd)
-                with open(self.copyname, "wb") as f:
-                    img = img2pdf.Image.open(filename)
-                    if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
-                        # TODO: Find a way to keep image in P or L format and remove transparency.
-                        # This will work but converting from 1, L, P to RGB is not optimal.
-                        img = img.convert("RGBA")
-                    if img.mode == "RGBA":
-                        bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
-                        bg.paste(img, mask=img.split()[-1])
-                        imgio = img2pdf.BytesIO()
-                        bg.save(imgio, "PNG")
-                        imgio.seek(0)
-                        f.write(img2pdf.convert(imgio))
-                    else:
-                        f.write(img2pdf.convert(filename))
+                self.copyname = _img_to_pdf(filename, tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
