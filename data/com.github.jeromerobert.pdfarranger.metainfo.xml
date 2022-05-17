@@ -15,6 +15,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
   <summary xml:lang="de">PDFs zusammenfügen, umsortieren, trennen, rotieren und zuschneiden</summary>
+  <summary xml:lang="el">Συγχώνευση, αναδιάταξη, διαχωρισμός, περιστροφή και περικοπή αρχείων PDF</summary>
   <summary xml:lang="es">Mezcle, reordene, divida, rote y recorte documentos PDF</summary>
   <summary xml:lang="fi">Yhdistä, järjestele, jaa, käännä ja rajaa PDF-tiedostoja</summary>
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
@@ -35,6 +36,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p>
       It is a frontend for pikepdf.
+    </p>
+
+    <p xml:lang="es">
+      Το PDF Arranger είναι μια μικρή εφαρμογή, που βοηθά τον χρήστη να συγχωνεύσει η
+      να διαχωρίσει αρχεία τύπου PDF και να περιστρέψει, περικόψει η αναδιατάξει τις
+      σελίδες τους χρησιμοποιώντας ένα διαδραστικό και διαισθητικό γραφικό περιβάλλον.
+    </p>
+    <p xml:lang="es">
+      Είναι ένα γραφικό περιβάλλον για το pikepdf.
     </p>
 
     <p xml:lang="es">
