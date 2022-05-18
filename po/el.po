@@ -11,7 +11,34 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF Arranger 1.9.0\n"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-18 09:23+0300\n"
+=======
+<<<<<<< HEAD
 "POT-Creation-Date: \n"
+=======
+=======
+<<<<<<< HEAD
+"POT-Creation-Date: \n"
+=======
+<<<<<<< Updated upstream
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-18 09:23+0300\n"
+=======
+<<<<<<< HEAD
+"POT-Creation-Date: \n"
+=======
+>>>>>>> Stashed changes
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-18 09:23+0300\n"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 "PO-Revision-Date: \n"
 "Last-Translator: Manussos Pulinakis <manussos@protonmail.com>\n"
 "Language-Team: \n"
@@ -32,7 +59,27 @@ msgstr "Απαιτείται κωδικός"
 
 #: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr ""
+"Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
+=======
+<<<<<<< HEAD
+msgstr "Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
+=======
+msgstr ""
+"Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/core.py:203
 msgid ""
@@ -91,16 +138,62 @@ msgstr "Κάτω"
 #: pdfarranger/croputils.py:151
 msgid "Crop Margins"
 msgstr "Απομάκρυνση περιθωρίων"
+<<<<<<< HEAD
 
 #: pdfarranger/croputils.py:159
-msgid "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr "Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
 
 #: pdfarranger/croputils.py:168
-msgid "% οf width"
+#, python-format
+msgid "% of width"
 msgstr "% του πλάτους"
 
 #: pdfarranger/croputils.py:168
+<<<<<<< Updated upstream
+=======
+=======
+<<<<<<< HEAD
+
+#: pdfarranger/croputils.py:159
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
+
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of width"
+msgstr "% του πλάτους"
+
+#: pdfarranger/croputils.py:168
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+#, python-format
+=======
+=======
+
+#: pdfarranger/croputils.py:159
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
+
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of width"
+msgstr "% του πλάτους"
+
+#: pdfarranger/croputils.py:168
+#, python-format
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 msgid "% of height"
 msgstr "% του ύψους"
 
@@ -128,7 +221,25 @@ msgstr "Μέγεθος σελίδας"
 
 #: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Εισαγωγή Κενής Σελίδας"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Εισαγωγή κενής σελίδας"
+=======
+<<<<<<< HEAD
+msgstr "Εισαγωγή Κενής Σελίδας"
+=======
+msgstr "Εισαγωγή κενής σελίδας"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/exporter.py:130
 msgid "Warning"
@@ -172,7 +283,25 @@ msgstr "Δημιουργός"
 
 #: pdfarranger/metadata.py:47
 msgid "Creator tool"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Εργαλείο δημιουργίας"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Εργαλείο δημιουργού"
+=======
+<<<<<<< HEAD
+msgstr "Εργαλείο δημιουργίας"
+=======
+msgstr "Εργαλείο δημιουργού"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/metadata.py:48
 msgid "Created"
@@ -184,7 +313,31 @@ msgstr "Τροποποιήθηκε"
 
 #: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+=======
+<<<<<<< HEAD
 msgstr "Εσφαλμένη μορφή ημερομηνίας. Η εισαγωγή απορρίφθηκε."
+=======
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+=======
+<<<<<<< HEAD
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η εισαγωγή απορρίφθηκε."
+=======
+<<<<<<< Updated upstream
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+=======
+<<<<<<< HEAD
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η εισαγωγή απορρίφθηκε."
+=======
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
@@ -200,6 +353,23 @@ msgstr "Τιμή"
 
 #: pdfarranger/pdfarranger.py:257
 msgid ""
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 "PDF Arranger is a small python-gtk application, which helps the user to merge or "
 "split pdf documents and rotate, crop and rearrange their pages using an "
 "interactive and intuitive graphical interface. It is a frontend for pikepdf."
@@ -207,6 +377,30 @@ msgstr ""
 "Το PDF Arranger είναι μια μικρή εφαρμογή, που βοηθά τον χρήστη να συγχωνεύσει η "
 "να διαχωρίσει αρχεία τύπου PDF και να περιστρέψει, περικόψει η αναδιατάξει τις "
 "σελίδες τους χρησιμοποιώντας ένα διαδραστικό και διαισθητικό γραφικό περιβάλλον."
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+=======
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+>>>>>>> Stashed changes
+"Το PDF Arranger είναι μια μικρή εφαρμογή, που βοηθά τον χρήστη να συγχωνεύσει ή "
+"να διαχωρίσει αρχεία τύπου PDF καθώς και να περιστρέψει, περικόψει και "
+"αναδιατάξει τις σελίδες τους χρησιμοποιώντας ένα διαδραστικό και διαισθητικό "
+"γραφικό περιβάλλον. Είναι δηλαδή ένα γραφικό περιβάλλον για το pikepdf."
+<<<<<<< Updated upstream
+=======
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/pdfarranger.py:268
 msgid "Print the version of PDF Arranger and exit"
@@ -254,7 +448,25 @@ msgstr "Οι αλλαγές θα χαθούν αν δεν αποθηκεύσετ
 
 #: pdfarranger/pdfarranger.py:921
 msgid "Do_n’t Save"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "_Χωρίς Αποθήκευση"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "_Χωρίς αποθήκευση"
+=======
+<<<<<<< HEAD
+msgstr "_Χωρίς Αποθήκευση"
+=======
+msgstr "_Χωρίς αποθήκευση"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/pdfarranger.py:921 data/menu.ui.h:4
 msgid "_Save"
@@ -278,19 +490,75 @@ msgstr "Να αποθηκευτούν οι αλλαγές πριν το κλεί
 
 #: pdfarranger/pdfarranger.py:964
 msgid "Discard changes and quit?"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Απόρριψη αλλαγών και έξοδος;"
+=======
+=======
+>>>>>>> Stashed changes
+<<<<<<< HEAD
 msgstr "Απόρριψη αλλαγών και τερματισμός;"
+>>>>>>> Stashed changes
 
 #: pdfarranger/pdfarranger.py:965 data/menu.ui.h:46
 msgid "_Quit"
-msgstr "Έ_ξοδος"
+msgstr "Έξ_οδος"
 
 #: pdfarranger/pdfarranger.py:970
 msgid "Save changes to “{}” before quitting?"
-msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν το κλείσιμο;"
+msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν την έξοδο;"
 
 #: pdfarranger/pdfarranger.py:973
 msgid "Save changes before quitting?"
+<<<<<<< Updated upstream
+msgstr "Να αποθηκευτούν οι αλλαγές πριν την έξοδο;"
+=======
 msgstr "Να αποθηκευτούν οι αλλαγές πριν το κλείσιμο;"
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+msgstr "Απόρριψη αλλαγών και έξοδος;"
+=======
+<<<<<<< HEAD
+msgstr "Απόρριψη αλλαγών και τερματισμός;"
+>>>>>>> Stashed changes
+
+#: pdfarranger/pdfarranger.py:965 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "Έξ_οδος"
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Save changes to “{}” before quitting?"
+msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν την έξοδο;"
+
+#: pdfarranger/pdfarranger.py:973
+msgid "Save changes before quitting?"
+<<<<<<< Updated upstream
+msgstr "Να αποθηκευτούν οι αλλαγές πριν την έξοδο;"
+=======
+msgstr "Να αποθηκευτούν οι αλλαγές πριν το κλείσιμο;"
+=======
+>>>>>>> Stashed changes
+msgstr "Απόρριψη αλλαγών και έξοδος;"
+
+#: pdfarranger/pdfarranger.py:965 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "Έξ_οδος"
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Save changes to “{}” before quitting?"
+msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν την έξοδο;"
+
+#: pdfarranger/pdfarranger.py:973
+msgid "Save changes before quitting?"
+msgstr "Να αποθηκευτούν οι αλλαγές πριν την έξοδο;"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/pdfarranger.py:1015
 msgid "Save As…"
@@ -310,7 +578,34 @@ msgstr "Η αποθήκευση παρήγαγε ορισμένες προειδ
 
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr ""
+"Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+=======
+<<<<<<< HEAD
 msgstr "Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+=======
+=======
+<<<<<<< HEAD
+msgstr "Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+=======
+<<<<<<< Updated upstream
+msgstr ""
+"Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+=======
+<<<<<<< HEAD
+msgstr "Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+=======
+>>>>>>> Stashed changes
+msgstr ""
+"Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχουν ορατά προβλήματα."
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/pdfarranger.py:1171
 msgid "Don't show warnings when saving again."
@@ -372,11 +667,41 @@ msgstr "Σειρές"
 
 #: pdfarranger/splitter.py:59
 msgid "Vertical Splits"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Κάθετοι Διαχωρισμοί"
 
 #: pdfarranger/splitter.py:59
 msgid "Horizontal Splits"
 msgstr "Οριζόντιοι Διαχωρισμοί"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Κάθετοι διαχωρισμοί"
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr "Οριζόντιοι διαχωρισμοί"
+=======
+<<<<<<< HEAD
+msgstr "Κάθετοι Διαχωρισμοί"
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr "Οριζόντιοι Διαχωρισμοί"
+=======
+msgstr "Κάθετοι διαχωρισμοί"
+
+#: pdfarranger/splitter.py:59
+msgid "Horizontal Splits"
+msgstr "Οριζόντιοι διαχωρισμοί"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: pdfarranger/splitter.py:60
 msgid "Equal column width"
@@ -420,7 +745,25 @@ msgstr "Αποθήκευση ως"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Κεντρικό Μενού"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Κεντρικό μενού"
+=======
+<<<<<<< HEAD
+msgstr "Κεντρικό Μενού"
+=======
+msgstr "Κεντρικό μενού"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/pdfarranger.ui.h:6
 msgid "Zoom In"
@@ -432,11 +775,41 @@ msgstr "Σμίκρυνση"
 
 #: data/pdfarranger.ui.h:8
 msgid "Rotate Left"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Περιστροφή Αριστερά"
 
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
 msgstr "Περιστροφή Δεξιά"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Περιστροφή αριστερά"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Περιστροφή δεξιά"
+=======
+<<<<<<< HEAD
+msgstr "Περιστροφή Αριστερά"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Περιστροφή Δεξιά"
+=======
+msgstr "Περιστροφή αριστερά"
+
+#: data/pdfarranger.ui.h:9
+msgid "Rotate Right"
+msgstr "Περιστροφή δεξιά"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:1
 msgid "_Open"
@@ -448,7 +821,25 @@ msgstr "Ε_ισαγωγή"
 
 #: data/menu.ui.h:3
 msgid "_New Window"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "_Νέο Παράθυρο"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "_Νέο παράθυρο"
+=======
+<<<<<<< HEAD
+msgstr "_Νέο Παράθυρο"
+=======
+msgstr "_Νέο παράθυρο"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:5
 msgid "Save _As…"
@@ -460,15 +851,63 @@ msgstr "Ε_ξαγωγή"
 
 #: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Ε_ξαγωγή επιλογής σε μονό αρχείο…"
+=======
+=======
+>>>>>>> Stashed changes
+<<<<<<< HEAD
 msgstr "Ε_ξαγωγή Επιλογής σε ένα Αρχείο…"
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
-msgstr "Εξαγωγή Επιλογής σε Ξεχωρ_ιστά αρχεία…"
+msgstr "Εξαγωγή επιλογής σε ξεχωρ_ιστά αρχεία…"
 
 #: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
+<<<<<<< Updated upstream
+msgstr "Εξαγωγή _όλων των σελίδων σε ξεχωριστά αρχεία…"
+=======
 msgstr "Εξαγωγή Όλων των Σελίδων σε Ξεχωριστά _Αρχεία…"
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+msgstr "Ε_ξαγωγή επιλογής σε μονό αρχείο…"
+=======
+<<<<<<< HEAD
+msgstr "Ε_ξαγωγή Επιλογής σε ένα Αρχείο…"
+>>>>>>> Stashed changes
+
+#: data/menu.ui.h:8
+msgid "Export Selection to _Individual Files…"
+msgstr "Εξαγωγή επιλογής σε ξεχωρ_ιστά αρχεία…"
+
+#: data/menu.ui.h:9
+msgid "Export _All Pages to Individual Files…"
+<<<<<<< Updated upstream
+msgstr "Εξαγωγή _όλων των σελίδων σε ξεχωριστά αρχεία…"
+=======
+msgstr "Εξαγωγή Όλων των Σελίδων σε Ξεχωριστά _Αρχεία…"
+=======
+>>>>>>> Stashed changes
+msgstr "Ε_ξαγωγή επιλογής σε μονό αρχείο…"
+
+#: data/menu.ui.h:8
+msgid "Export Selection to _Individual Files…"
+msgstr "Εξαγωγή επιλογής σε ξεχωρ_ιστά αρχεία…"
+
+#: data/menu.ui.h:9
+msgid "Export _All Pages to Individual Files…"
+msgstr "Εξαγωγή _όλων των σελίδων σε ξεχωριστά αρχεία…"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:10
 msgid "_Print…"
@@ -476,11 +915,45 @@ msgstr "Εκτύ_πωση…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Αναί_ρεση"
+
+#: data/menu.ui.h:12
+msgid "_Redo"
+msgstr "Επανάλη_ψη"
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 msgstr "Α_ναίρεση"
 
 #: data/menu.ui.h:12
 msgid "_Redo"
 msgstr "Ε_πανάληψη"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+=======
+msgstr "Αναί_ρεση"
+
+#: data/menu.ui.h:12
+msgid "_Redo"
+msgstr "Επανάλη_ψη"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:13
 msgid "_Edit"
@@ -488,19 +961,75 @@ msgstr "_Επεξεργασία"
 
 #: data/menu.ui.h:14
 msgid "Rotate _Left"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Περιστροφή _αριστερά"
+=======
+=======
+>>>>>>> Stashed changes
+<<<<<<< HEAD
 msgstr "Περιστροφή  _Αριστερά"
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:15
 msgid "_Rotate Right"
-msgstr "Περιστροφή  _Δεξιά"
+msgstr "_Περιστροφή δεξιά"
 
 #: data/menu.ui.h:16
 msgid "_Page Format"
-msgstr "Μορφή _Σελίδας"
+msgstr "Μορφή _σελίδας"
 
 #: data/menu.ui.h:17
 msgid "Crop White Borders"
+<<<<<<< Updated upstream
+msgstr "Περικοπή λευκών περιθωρίων"
+=======
 msgstr "Περικοπή Λευκών Περιθωρίων"
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+msgstr "Περιστροφή _αριστερά"
+=======
+<<<<<<< HEAD
+msgstr "Περιστροφή  _Αριστερά"
+>>>>>>> Stashed changes
+
+#: data/menu.ui.h:15
+msgid "_Rotate Right"
+msgstr "_Περιστροφή δεξιά"
+
+#: data/menu.ui.h:16
+msgid "_Page Format"
+msgstr "Μορφή _σελίδας"
+
+#: data/menu.ui.h:17
+msgid "Crop White Borders"
+<<<<<<< Updated upstream
+msgstr "Περικοπή λευκών περιθωρίων"
+=======
+msgstr "Περικοπή Λευκών Περιθωρίων"
+=======
+>>>>>>> Stashed changes
+msgstr "Περιστροφή _αριστερά"
+
+#: data/menu.ui.h:15
+msgid "_Rotate Right"
+msgstr "_Περιστροφή δεξιά"
+
+#: data/menu.ui.h:16
+msgid "_Page Format"
+msgstr "Μορφή _σελίδας"
+
+#: data/menu.ui.h:17
+msgid "Crop White Borders"
+msgstr "Περικοπή λευκών περιθωρίων"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:18
 msgid "_Delete"
@@ -512,11 +1041,41 @@ msgstr "Δ_ιπλότυπο"
 
 #: data/menu.ui.h:20
 msgid "Re_verse Order"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
 msgstr "Αναστρο_φή Σειράς"
 
 #: data/menu.ui.h:21
 msgid "_Split Pages"
 msgstr "Διαχωρισμός _Σελίδων"
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+msgstr "Αναστρο_φή σειράς"
+
+#: data/menu.ui.h:21
+msgid "_Split Pages"
+msgstr "Διαχωρισμός _σελίδων"
+=======
+<<<<<<< HEAD
+msgstr "Αναστρο_φή Σειράς"
+
+#: data/menu.ui.h:21
+msgid "_Split Pages"
+msgstr "Διαχωρισμός _Σελίδων"
+=======
+msgstr "Αναστρο_φή σειράς"
+
+#: data/menu.ui.h:21
+msgid "_Split Pages"
+msgstr "Διαχωρισμός _σελίδων"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:22
 msgid "Cu_t"
@@ -528,59 +1087,195 @@ msgstr "Αντι_γραφή"
 
 #: data/menu.ui.h:24
 msgid "Paste _After"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Επικόλληση μετ_ά"
+=======
+=======
+>>>>>>> Stashed changes
+<<<<<<< HEAD
 msgstr "Επικόλληση _Μετά"
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:25
 msgid "Paste _Before"
-msgstr "Επικόλληση _Πριν"
+msgstr "Επικόλληση _πριν"
 
 #: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
-msgstr "Επικόλληση Ως Μ_ονές Σελίδες"
+msgstr "Επικόλληση ως μ_ονές σελίδες"
 
 #: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
-msgstr "_Επικόλληση Ως Ζυγές Σελίδες"
+msgstr "Επικόλληση ως ζυγ_ές σελίδες"
 
 #: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
-msgstr "Εισαγωγή _Κενής Σελίδας"
+msgstr "Εισαγωγή _κενής σελίδας"
 
 #: data/menu.ui.h:29
 msgid "Generate Booklet"
-msgstr "Δημιουργία Ένθετου"
+msgstr "Δημιουργία ένθετου"
 
 #: data/menu.ui.h:30
 msgid "_Select"
-msgstr "_Επιλογή"
+msgstr "Επιλο_γή"
 
 #: data/menu.ui.h:31
 msgid "Select _All"
-msgstr "Επιλογή Ό_λων"
+msgstr "Επιλογή ό_λων"
 
 #: data/menu.ui.h:32
 msgid "_Deselect All"
-msgstr "_Αποεπιλογή Όλων"
+msgstr "_Αποεπιλογή όλων"
 
 #: data/menu.ui.h:33
 msgid "Select _Odd Pages"
-msgstr "Επιλογή Μ_ονών Σελίδων"
+msgstr "Επιλογή μ_ονών σελίδων"
 
 #: data/menu.ui.h:34
 msgid "Select _Even Pages"
-msgstr "_Επιλογή Ζυγών Σελίδων"
+msgstr "_Επιλογή ζυγών σελίδων"
 
 #: data/menu.ui.h:35
 msgid "All From _Same File"
-msgstr "Όλε_ς Από Ίδιο Αρχείο"
+msgstr "Όλε_ς του ίδιου αρχείου"
 
 #: data/menu.ui.h:36
 msgid "Same Page _Format"
-msgstr "Ίδια Μορ_φοποίηση Σελίδας"
+msgstr "Ίδια μορ_φή σελίδας"
 
 #: data/menu.ui.h:37
 msgid "_Invert Selection"
+<<<<<<< Updated upstream
+msgstr "Αντ_ιστροφή επιλογής"
+=======
 msgstr "Αντ_ιστροφή Επιλογής"
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+msgstr "Επικόλληση μετ_ά"
+=======
+<<<<<<< HEAD
+msgstr "Επικόλληση _Μετά"
+>>>>>>> Stashed changes
+
+#: data/menu.ui.h:25
+msgid "Paste _Before"
+msgstr "Επικόλληση _πριν"
+
+#: data/menu.ui.h:26
+msgid "Paste As _Odd Pages"
+msgstr "Επικόλληση ως μ_ονές σελίδες"
+
+#: data/menu.ui.h:27
+msgid "Paste As _Even Pages"
+msgstr "Επικόλληση ως ζυγ_ές σελίδες"
+
+#: data/menu.ui.h:28
+msgid "Insert Blan_k Page"
+msgstr "Εισαγωγή _κενής σελίδας"
+
+#: data/menu.ui.h:29
+msgid "Generate Booklet"
+msgstr "Δημιουργία ένθετου"
+
+#: data/menu.ui.h:30
+msgid "_Select"
+msgstr "Επιλο_γή"
+
+#: data/menu.ui.h:31
+msgid "Select _All"
+msgstr "Επιλογή ό_λων"
+
+#: data/menu.ui.h:32
+msgid "_Deselect All"
+msgstr "_Αποεπιλογή όλων"
+
+#: data/menu.ui.h:33
+msgid "Select _Odd Pages"
+msgstr "Επιλογή μ_ονών σελίδων"
+
+#: data/menu.ui.h:34
+msgid "Select _Even Pages"
+msgstr "_Επιλογή ζυγών σελίδων"
+
+#: data/menu.ui.h:35
+msgid "All From _Same File"
+msgstr "Όλε_ς του ίδιου αρχείου"
+
+#: data/menu.ui.h:36
+msgid "Same Page _Format"
+msgstr "Ίδια μορ_φή σελίδας"
+
+#: data/menu.ui.h:37
+msgid "_Invert Selection"
+<<<<<<< Updated upstream
+msgstr "Αντ_ιστροφή επιλογής"
+=======
+msgstr "Αντ_ιστροφή Επιλογής"
+=======
+>>>>>>> Stashed changes
+msgstr "Επικόλληση μετ_ά"
+
+#: data/menu.ui.h:25
+msgid "Paste _Before"
+msgstr "Επικόλληση _πριν"
+
+#: data/menu.ui.h:26
+msgid "Paste As _Odd Pages"
+msgstr "Επικόλληση ως μ_ονές σελίδες"
+
+#: data/menu.ui.h:27
+msgid "Paste As _Even Pages"
+msgstr "Επικόλληση ως ζυγ_ές σελίδες"
+
+#: data/menu.ui.h:28
+msgid "Insert Blan_k Page"
+msgstr "Εισαγωγή _κενής σελίδας"
+
+#: data/menu.ui.h:29
+msgid "Generate Booklet"
+msgstr "Δημιουργία ένθετου"
+
+#: data/menu.ui.h:30
+msgid "_Select"
+msgstr "Επιλο_γή"
+
+#: data/menu.ui.h:31
+msgid "Select _All"
+msgstr "Επιλογή ό_λων"
+
+#: data/menu.ui.h:32
+msgid "_Deselect All"
+msgstr "_Αποεπιλογή όλων"
+
+#: data/menu.ui.h:33
+msgid "Select _Odd Pages"
+msgstr "Επιλογή μ_ονών σελίδων"
+
+#: data/menu.ui.h:34
+msgid "Select _Even Pages"
+msgstr "_Επιλογή ζυγών σελίδων"
+
+#: data/menu.ui.h:35
+msgid "All From _Same File"
+msgstr "Όλε_ς του ίδιου αρχείου"
+
+#: data/menu.ui.h:36
+msgid "Same Page _Format"
+msgstr "Ίδια μορ_φή σελίδας"
+
+#: data/menu.ui.h:37
+msgid "_Invert Selection"
+msgstr "Αντ_ιστροφή επιλογής"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:38
 msgid "_View"
@@ -604,15 +1299,63 @@ msgstr "Π_λήρης οθόνη"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+msgstr "Επεξεργασία _ιδιοτήτων"
+=======
+=======
+>>>>>>> Stashed changes
+<<<<<<< HEAD
 msgstr "Ε_πεξεργασία Ιδιοτήτων"
+>>>>>>> Stashed changes
 
 #: data/menu.ui.h:44
 msgid "_About"
-msgstr "Σχετι_κά"
+msgstr "Σ_χετικά"
 
 #: data/menu.ui.h:47
 msgid "Past_e Special"
+<<<<<<< Updated upstream
+msgstr "_Ειδική επικόλληση"
+=======
 msgstr "_Ειδική Επικόλληση"
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+msgstr "Επεξεργασία _ιδιοτήτων"
+=======
+<<<<<<< HEAD
+msgstr "Ε_πεξεργασία Ιδιοτήτων"
+>>>>>>> Stashed changes
+
+#: data/menu.ui.h:44
+msgid "_About"
+msgstr "Σ_χετικά"
+
+#: data/menu.ui.h:47
+msgid "Past_e Special"
+<<<<<<< Updated upstream
+msgstr "_Ειδική επικόλληση"
+=======
+msgstr "_Ειδική Επικόλληση"
+=======
+>>>>>>> Stashed changes
+msgstr "Επεξεργασία _ιδιοτήτων"
+
+#: data/menu.ui.h:44
+msgid "_About"
+msgstr "Σ_χετικά"
+
+#: data/menu.ui.h:47
+msgid "Past_e Special"
+msgstr "_Ειδική επικόλληση"
+>>>>>>> 7145288 (Update the Greek translation)
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> d767cd6 (Update the Greek translation)
+>>>>>>> Stashed changes
 
 #~ msgid "Open a file and append it to the current document"
 #~ msgstr "Άνοιγμα ενός αρχείου και προσάρτηση στο τρέχον έγγραφο"
