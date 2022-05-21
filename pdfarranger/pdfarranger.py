@@ -1403,7 +1403,7 @@ class PdfArranger(Gtk.Application):
         self.window.lookup_action("paste").set_enabled(True)
 
     def on_action_paste(self, _action, mode, _unknown):
-        """Paste pages or files from clipboard."""
+        """Paste pages, file paths or an image from clipboard."""
         data, data_is_filepaths = self.read_from_clipboard()
         if not data:
             return
@@ -1450,37 +1450,49 @@ class PdfArranger(Gtk.Application):
             self.silent_render()
 
     def read_from_clipboard(self):
-        """Read data from clipboards. Check if data is copied pages or files.
+        """Read and pre-process data from clipboard.
 
-        If id "pdfarranger-clipboard" is found pages is expected to be in clipboard, else files.
+        If an image is found it is stored as a temporary png file.
+        If id "pdfarranger-clipboard" is found pages is expected to be in clipboard, else file paths.
         """
-        data = self.clipboard.wait_for_text()
-        if not data:
-            data = ''
-
-        data_is_filepaths = False
-        if data.startswith('pdfarranger-clipboard\n'):
-            data = data.replace('pdfarranger-clipboard\n', '', 1)
-            data = data.split('\n;\n')
-            if not self.is_data_valid(data):
-                data = []
-        else:
+        if len(img2pdf_supported_img) > 0 and self.clipboard.wait_is_image_available():
             data_is_filepaths = True
-            if os.name == 'posix' and data.startswith('x-special/nautilus-clipboard\ncopy'):
-                data = data.replace('x-special/nautilus-clipboard\ncopy', '', 1)
-            rows = data.split('\n')
-            rows = filter(None, rows)
-            data = []
-            for row in rows:
-                if os.name == 'posix' and row.startswith('file:///'):  # Dolphin, Nautilus
-                    row = get_file_path_from_uri(row)
-                elif os.name == 'nt' and row.startswith('"') and row.endswith('"'):
-                    row = row[1:-1]
-                if os.path.isfile(row):
-                    data.append(row)
-                else:
+            image = self.clipboard.wait_for_image()
+            if image is None:
+                data = ''
+            else:
+                fd, filename = tempfile.mkstemp(suffix=".png", dir=self.tmp_dir)
+                os.close(fd)
+                image.savev(filename, "png", [], [])
+                data = [filename]
+        else:
+            data = self.clipboard.wait_for_text()
+            if not data:
+                data = ''
+
+            data_is_filepaths = False
+            if data.startswith('pdfarranger-clipboard\n'):
+                data = data.replace('pdfarranger-clipboard\n', '', 1)
+                data = data.split('\n;\n')
+                if not self.is_data_valid(data):
                     data = []
-                    break
+            else:
+                data_is_filepaths = True
+                if os.name == 'posix' and data.startswith('x-special/nautilus-clipboard\ncopy'):
+                    data = data.replace('x-special/nautilus-clipboard\ncopy', '', 1)
+                rows = data.split('\n')
+                rows = filter(None, rows)
+                data = []
+                for row in rows:
+                    if os.name == 'posix' and row.startswith('file:///'):  # Dolphin, Nautilus
+                        row = get_file_path_from_uri(row)
+                    elif os.name == 'nt' and row.startswith('"') and row.endswith('"'):
+                        row = row[1:-1]
+                    if os.path.isfile(row):
+                        data.append(row)
+                    else:
+                        data = []
+                        break
 
         return data, data_is_filepaths
 
@@ -1914,10 +1926,11 @@ class PdfArranger(Gtk.Application):
     def window_focus_in_out_event(self, _widget=None, _event=None):
         """Keyboard focus enter or leave window."""
         # Enable or disable paste actions based on clipboard content
-        data_available = True if self.clipboard.wait_for_text() else False
+        text = self.clipboard.wait_is_text_available()
+        image = len(img2pdf_supported_img) > 0 and self.clipboard.wait_is_image_available()
         if self.window.lookup_action("paste"):  # Prevent error when closing with Alt+F4
             if self.sw.is_sensitive():
-                self.window.lookup_action("paste").set_enabled(data_available)
+                self.window.lookup_action("paste").set_enabled(text or image)
 
     def sw_dnd_received_data(self, _scrolledwindow, _context, _x, _y,
                              selection_data, target_id, _etime):

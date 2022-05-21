@@ -121,6 +121,7 @@ required_gi_namespaces = [
 for ns in required_gi_namespaces:
     addfile("lib/girepository-1.0/{}.typelib".format(ns))
 
+addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-bmp.dll")
 addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll")
 addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll")
 addfile("lib/gdk-pixbuf-2.0/2.10.0/loaders.cache")
