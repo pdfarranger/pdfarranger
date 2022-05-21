@@ -309,6 +309,9 @@ class PDFDoc:
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
                 raise PDFDocError(_("Image format is not supported by img2pdf"))
+            if filename.startswith(tmp_dir) and filename.endswith(".png"):
+                os.remove(filename)
+                self.basename = _("Clipboard image")
         else:
             raise PDFDocError(_("File is neither pdf nor image"))
 
@@ -387,7 +390,8 @@ class PageAdder:
                 print(e.message, file=sys.stderr)
                 self.app.error_message_dialog(e.message)
                 return
-            if pdfdoc.copyname != pdfdoc.filename and basename is None:
+            if (pdfdoc.copyname != pdfdoc.filename and basename is None and not
+                (filename.startswith(self.app.tmp_dir) and filename.endswith(".png"))):
                 self.app.import_directory = os.path.split(filename)[0]
                 self.app.export_directory = self.app.import_directory
             self.app.pdfqueue.append(pdfdoc)
