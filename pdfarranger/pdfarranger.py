@@ -1785,8 +1785,7 @@ class PdfArranger(Gtk.Application):
         if self.end_rubberbanding:
             self.end_rubberbanding = False
             return
-        self.iv_drag_select.set_mouse_cursor('default')
-        self.iv_drag_select.click_location = None
+        self.iv_drag_select.end()
 
         if self.pressed_button:
             # Button was pressed and released on a previously selected item
@@ -1862,7 +1861,7 @@ class PdfArranger(Gtk.Application):
 
         # Display right click menu
         if event.button == 3 and not self.iv_auto_scroll_timer:
-            self.iv_drag_select.set_mouse_cursor('default')
+            self.iv_drag_select.end()
             if self.click_path:
                 selection = iconview.get_selected_items()
                 if self.click_path not in selection:
