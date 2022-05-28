@@ -405,3 +405,32 @@ class IconviewDragSelect:
     def end(self):
         self.set_mouse_cursor('default')
         self.click_location = None
+
+
+class IconviewPanView:
+    """Pan the view when pressing mouse wheel and moving mouse."""
+    def __init__(self, app):
+        self.iconview = app.iconview
+        self.sw_hadj = app.sw.get_hadjustment()
+        self.sw_vadj = app.sw.get_vadjustment()
+        self.cursor_name = 'default'
+
+    def click(self, event):
+        self.cursor_name = 'move'
+        cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), self.cursor_name)
+        self.iconview.get_window().set_cursor(cursor)
+        self.click_x = event.x
+        self.click_y = event.y
+
+    def motion(self, event):
+        if self.cursor_name == 'default':
+            return
+        self.sw_hadj.set_value(self.sw_hadj.get_value() + self.click_x - event.x)
+        self.sw_vadj.set_value(self.sw_vadj.get_value() + self.click_y - event.y)
+
+    def end(self):
+        if self.cursor_name == 'default':
+            return
+        self.cursor_name = 'default'
+        cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), self.cursor_name)
+        self.iconview.get_window().set_cursor(cursor)
