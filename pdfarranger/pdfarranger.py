@@ -119,9 +119,7 @@ from . import exporter
 from . import metadata
 from . import croputils
 from . import splitter
-from .iconview import CellRendererImage
-from .iconview import IconviewCursor
-from .iconview import IconviewDragSelect
+from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
 from .config import Config
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
@@ -616,6 +614,7 @@ class PdfArranger(Gtk.Application):
 
         self.iv_cursor = IconviewCursor(self)
         self.iv_drag_select = IconviewDragSelect(self)
+        self.iv_pan_view = IconviewPanView(self)
 
     def do_command_line(self, command_line):
         options = command_line.get_options_dict()
@@ -1761,6 +1760,10 @@ class PdfArranger(Gtk.Application):
 
     def iv_motion(self, iconview, event):
         """Manages mouse movement on the iconview."""
+        # Pan the view when pressing mouse wheel and moving mouse
+        if event.state & Gdk.ModifierType.BUTTON2_MASK:
+            self.iv_pan_view.motion(event)
+
         # Detect drag and drop events
         if self.pressed_button:
             if iconview.drag_check_threshold(self.pressed_button.x,
@@ -1786,6 +1789,7 @@ class PdfArranger(Gtk.Application):
             self.end_rubberbanding = False
             return
         self.iv_drag_select.end()
+        self.iv_pan_view.end()
 
         if self.pressed_button:
             # Button was pressed and released on a previously selected item
@@ -1814,6 +1818,10 @@ class PdfArranger(Gtk.Application):
             self.pressed_button = None
             self.on_action_zoom_fit()
             return True
+
+        # Change to 'move' cursor when pressing mouse wheel
+        if event.button == 2:
+            self.iv_pan_view.click(event)
 
         click_path_old = self.click_path
         self.click_path = iconview.get_path_at_pos(event.x, event.y)
@@ -1862,6 +1870,7 @@ class PdfArranger(Gtk.Application):
         # Display right click menu
         if event.button == 3 and not self.iv_auto_scroll_timer:
             self.iv_drag_select.end()
+            self.iv_pan_view.end()
             if self.click_path:
                 selection = iconview.get_selected_items()
                 if self.click_path not in selection:
