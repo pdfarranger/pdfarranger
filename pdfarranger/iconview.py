@@ -401,3 +401,7 @@ class IconviewDragSelect:
         cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), cursor_name)
         self.iconview.get_window().set_cursor(cursor)
         self.cursor_name_old = cursor_name
+
+    def end(self):
+        self.set_mouse_cursor('default')
+        self.click_location = None
