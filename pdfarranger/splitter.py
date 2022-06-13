@@ -33,7 +33,9 @@ class Dialog(Gtk.Dialog):
                 Gtk.ResponseType.OK,
             ),
         )
-        self.set_default_response(Gtk.ResponseType.OK)
+        buttonbox = self.get_action_area()
+        buttons = buttonbox.get_children()
+        self.set_focus(buttons[1])
         self.set_resizable(False)
         self.split_count = {'vertical' : 2, 'horizontal' : 1}
         self.even_splits = {'vertical' : True, 'horizontal' : True}
