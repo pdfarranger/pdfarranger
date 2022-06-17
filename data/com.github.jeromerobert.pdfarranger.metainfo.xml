@@ -21,6 +21,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
   <summary xml:lang="hu">PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása</summary>
   <summary xml:lang="pt">Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF</summary>
+  <summary xml:lang="ru">Приложение для объединения, изменения порядка страниц, разделения, вращение и обрезки документов PDF</summary>
   <summary xml:lang="sk">Grafický nástroj na manipuláciu s PDF</summary>
   <summary xml:lang="sv">Slå samman, arrangera om, dela, rotera och beskär PDF filer</summary>
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
@@ -89,6 +90,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="pt">
       É uma interface gráfica para o pikepdf.
+    </p>
+
+        <p xml:lang="ru">
+      PDF Arranger - это небольшое python-gtk приложение, которое помогает пользователю
+      объединять или разделять документы PDF, а также вращать, обрезать и изменять порядок
+      страниц с помощью интерактивного и интуитивно понятного графического интерфейса.
+    </p>
+    <p xml:lang="ru">
+      Это клиентский интерфейс для pikepdf.
     </p>
 
     <p xml:lang="tr">

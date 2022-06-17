@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 13:42+0100\n"
-"PO-Revision-Date: 2021-11-01 18:23+1000\n"
-"Last-Translator: Ser82-png; Alexander Volkov\n"
+"POT-Creation-Date: 2022-06-17 22:50+1000\n"
+"PO-Revision-Date: 2022-06-17 23:20+1000\n"
+"Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,176 +17,189 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
 
-#: pdfarranger/core.py:85
+#: pdfarranger/core.py:87
 msgid "page"
 msgstr "страница"
 
-#: pdfarranger/core.py:193
+#: pdfarranger/core.py:191
 msgid "Password required"
 msgstr "Требуется пароль"
 
-#: pdfarranger/core.py:204
+#: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Пароль будет запомнен, пока вы не закроете PDF Arranger."
 
-#: pdfarranger/core.py:205
-#, python-format
+#: pdfarranger/core.py:203
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr "Документ “{}” заблокирован, и для его открытия требуется пароль."
+msgstr "Документ «{}» заблокирован, для его открытия требуется пароль."
 
-#: pdfarranger/core.py:215
+#: pdfarranger/core.py:213
 msgid "Password"
 msgstr "Пароль"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1428
 msgid "Unknown file format"
 msgstr "Неизвестный формат файла"
 
-#: pdfarranger/core.py:282
+#: pdfarranger/core.py:305
 msgid "Image files are only supported with img2pdf"
 msgstr "Файлы изображений поддерживаются только с img2pdf"
 
-#: pdfarranger/core.py:304
+#: pdfarranger/core.py:311
 msgid "Image format is not supported by img2pdf"
 msgstr "Формат изображения не поддерживается img2pdf"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
+#: pdfarranger/core.py:314
+msgid "Clipboard image"
+msgstr "Изображение буфера обмена"
+
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1438
 msgid "File is neither pdf nor image"
 msgstr "Файл не является ни PDF, ни изображением"
 
-#: pdfarranger/croputils.py:114
+#: pdfarranger/croputils.py:115
 msgid "Scale factor"
 msgstr "Масштаб"
 
-#: pdfarranger/croputils.py:120
+#: pdfarranger/croputils.py:121
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:136
+#: pdfarranger/croputils.py:137
 msgid "mm"
 msgstr "мм"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Left"
 msgstr "Слева"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Right"
 msgstr "Справа"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Top"
 msgstr "Сверху"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Bottom"
 msgstr "Снизу"
 
-#: pdfarranger/croputils.py:150
+#: pdfarranger/croputils.py:151
 msgid "Crop Margins"
 msgstr "Обрезать поля"
 
-#: pdfarranger/croputils.py:158
+#: pdfarranger/croputils.py:159
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr "Обрезка не удаляет содержимое файла PDF, а только скрывает его."
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
+#, python-format
 msgid "% of width"
-msgstr "% ширины"
+msgstr "% oт ширины"
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
+#, python-format
 msgid "% of height"
-msgstr "% высоты"
+msgstr "% oт высоты"
 
-#: pdfarranger/croputils.py:214
+#: pdfarranger/croputils.py:215
 msgid "Page format"
 msgstr "Форматировать страницу"
 
-#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
-#: pdfarranger/croputils.py:353
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:333
 msgid "Width"
 msgstr "Ширина"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:354
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Height"
 msgstr "Высота"
 
-#: pdfarranger/croputils.py:232
+#: pdfarranger/croputils.py:233
 msgid "Relative"
 msgstr "Относительный"
 
-#: pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:236
 msgid "Page Size"
 msgstr "Размер страницы"
 
-#: pdfarranger/croputils.py:343
+#: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
 msgstr "Вставить пустую страницу"
 
-#: pdfarranger/exporter.py:119
+#: pdfarranger/exporter.py:130
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: pdfarranger/exporter.py:124
+#: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
 msgstr "Формы и очертания будут потеряны при сохранении."
 
-#: pdfarranger/exporter.py:126
+#: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Не показывать этот диалог снова."
 
-#: pdfarranger/metadata.py:40
+#: pdfarranger/exporter.py:339
+msgid "Printing…"
+msgstr "Печать…"
+
+#: pdfarranger/exporter.py:351
+msgid "Rendering Preview…"
+msgstr "Предварительная визуализация…"
+
+#: pdfarranger/metadata.py:42
 msgid "Title"
 msgstr "Заголовок"
 
-#: pdfarranger/metadata.py:41
+#: pdfarranger/metadata.py:43
 msgid "Subject"
 msgstr "Тема"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:44
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:45
 msgid "Producer"
 msgstr "Программа"
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:46
 msgid "Creator"
 msgstr "Автор"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:47
 msgid "Creator tool"
 msgstr "Создано с помощью"
 
-#: pdfarranger/metadata.py:46
+#: pdfarranger/metadata.py:48
 msgid "Created"
 msgstr "Создан"
 
-#: pdfarranger/metadata.py:47
+#: pdfarranger/metadata.py:49
 msgid "Modified"
 msgstr "Изменён"
 
-#: pdfarranger/metadata.py:151
+#: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
 msgstr "Неверный формат даты. Вход отклонен."
 
-#: pdfarranger/metadata.py:180
+#: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Редактировать свойства"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Property"
 msgstr "Свойство"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Value"
 msgstr "Значение"
 
-#: pdfarranger/pdfarranger.py:271
+#: pdfarranger/pdfarranger.py:255
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -195,113 +208,157 @@ msgid ""
 msgstr ""
 "PDF Arranger - это небольшое python-gtk приложение, которое помогает "
 "пользователю объединять или разделять документы PDF, а также вращать, "
-"обрезать и переупорядочивать их страницы с помощью интерактивного и "
-"интуитивно понятного графического интерфейса. Это интерфейс для pikepdf."
+"обрезать и изменять порядок страниц с помощью интерактивного и интуитивно "
+"понятного графического интерфейса. Это клиентский интерфейс для pikepdf."
 
-#: pdfarranger/pdfarranger.py:282
+#: pdfarranger/pdfarranger.py:266
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Распечатать версию программы PDF Arranger и выйти"
 
-#: pdfarranger/pdfarranger.py:290
+#: pdfarranger/pdfarranger.py:274
 msgid "File(s) to open"
 msgstr "Файл(ы) для открытия"
 
-#: pdfarranger/pdfarranger.py:395
+#: pdfarranger/pdfarranger.py:423
 msgid "All pages must have the same size."
 msgstr "Все страницы должны иметь одинаковый размер."
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:451
 msgid "All supported files"
 msgstr "Все поддерживаемые файлы"
 
-#: pdfarranger/pdfarranger.py:425
+#: pdfarranger/pdfarranger.py:455
 msgid "PDF files"
 msgstr "Файлы PDF"
 
-#: pdfarranger/pdfarranger.py:432
+#: pdfarranger/pdfarranger.py:462
 msgid "All files"
 msgstr "Все файлы"
 
-#: pdfarranger/pdfarranger.py:437
+#: pdfarranger/pdfarranger.py:467
 msgid "Supported image files"
 msgstr "Поддерживаемые файлы изображений"
 
-#: pdfarranger/pdfarranger.py:634
+#: pdfarranger/pdfarranger.py:686
 msgid "Rendering…"
-msgstr "Отрисовка…"
+msgstr "Визуализация…"
 
-#: pdfarranger/pdfarranger.py:728
+#: pdfarranger/pdfarranger.py:764
 msgid "untitled"
 msgstr "без_названия"
 
-#: pdfarranger/pdfarranger.py:865
-#, python-format
-msgid "Save changes to “{}” before closing?"
-msgstr "Сохранить изменения в “{}” перед закрытием?"
-
-#: pdfarranger/pdfarranger.py:867
-msgid "Save changes before closing?"
-msgstr "Сохранить изменения в перед закрытием?"
-
-#: pdfarranger/pdfarranger.py:869
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Ваши изменения будут потеряны, если их не сохранить."
-
-#: pdfarranger/pdfarranger.py:870
-msgid "Do_n’t Save"
-msgstr "_Не сохранять"
-
-#: pdfarranger/pdfarranger.py:870
+#: pdfarranger/pdfarranger.py:911 pdfarranger/pdfarranger.py:920
 msgid "_Cancel"
 msgstr "_Отмена"
 
-#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:919
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Ваши изменения будут потеряны, если их не сохранить."
+
+#: pdfarranger/pdfarranger.py:920
+msgid "Do_n’t Save"
+msgstr "_Не сохранять"
+
+#: pdfarranger/pdfarranger.py:920 data/menu.ui.h:4
 msgid "_Save"
 msgstr "_Сохранить"
 
-#: pdfarranger/pdfarranger.py:920
+#: pdfarranger/pdfarranger.py:929
+msgid "Discard changes and close?"
+msgstr "Отменить изменения и закрыть?"
+
+#: pdfarranger/pdfarranger.py:930 data/menu.ui.h:45
+msgid "_Close"
+msgstr "_Закрыть"
+
+#: pdfarranger/pdfarranger.py:935
+msgid "Save changes to “{}” before closing?"
+msgstr "Сохранить изменения в «{}» перед закрытием?"
+
+#: pdfarranger/pdfarranger.py:938
+msgid "Save changes before closing?"
+msgstr "Сохранить изменения в перед закрытием?"
+
+#: pdfarranger/pdfarranger.py:963
+msgid "Discard changes and quit?"
+msgstr "Отменить изменения и выйти?"
+
+#: pdfarranger/pdfarranger.py:964 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "В_ыход"
+
+#: pdfarranger/pdfarranger.py:969
+msgid "Save changes to “{}” before quitting?"
+msgstr "Сохранить изменения в «{}» перед выходом?"
+
+#: pdfarranger/pdfarranger.py:972
+msgid "Save changes before quitting?"
+msgstr "Сохранить изменения в перед выходом?"
+
+#: pdfarranger/pdfarranger.py:1014
+msgid "Save As…"
+msgstr "Сохранить как…"
+
+#: pdfarranger/pdfarranger.py:1014
 msgid "Export…"
 msgstr "Экспорт…"
 
-#: pdfarranger/pdfarranger.py:1030
+#: pdfarranger/pdfarranger.py:1091
+msgid "Open…"
+msgstr "Открыть…"
+
+#: pdfarranger/pdfarranger.py:1162
+msgid "Saving produced some warnings"
+msgstr "Сохранение выдало несколько предупреждений"
+
+#: pdfarranger/pdfarranger.py:1163
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+"Несмотря на предупреждения, документ(ы) не должен(ны) иметь видимых проблем."
+
+#: pdfarranger/pdfarranger.py:1170
+msgid "Don't show warnings when saving again."
+msgstr "Не показывать предупреждения при повторном сохранении."
+
+#: pdfarranger/pdfarranger.py:1200
+msgid "Saving…"
+msgstr "Сохранение…"
+
+#: pdfarranger/pdfarranger.py:1234
 msgid "Import…"
 msgstr "Импорт…"
 
-#: pdfarranger/pdfarranger.py:1137
+#: pdfarranger/pdfarranger.py:1328
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Вставляемые данные недопустимы. Вставка прервана."
 
-#: pdfarranger/pdfarranger.py:1238
+#: pdfarranger/pdfarranger.py:1432
 msgid "PDF document is damaged"
 msgstr "Документ PDF повреждён"
 
-#: pdfarranger/pdfarranger.py:2067
+#: pdfarranger/pdfarranger.py:2293
 #, python-format
-msgid ""
-"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
-"and Python"
-msgstr ""
-"%s - инструмент для переупорядочивания и изменения файлов PDF. Разработан с "
-"использованием GTK+ и Python"
+msgid "%s is a tool for rearranging and modifying PDF files. "
+msgstr "%s - инструмент для переупорядочивания и изменения файлов PDF. "
 
-#: pdfarranger/pdfarranger.py:2070
+#: pdfarranger/pdfarranger.py:2296
 #, python-format
-msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr "(%s использует libqpdf %s и pikepdf %s)"
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Приложение использует libqpdf %s, и pikepdf %s, GTK %s и Python %s."
 
-#: pdfarranger/pdfarranger.py:2072
+#: pdfarranger/pdfarranger.py:2302
 msgid "Maintainers and contributors"
 msgstr "Сопровождающие и участники проекта"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2307
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
+msgstr "GNU General Public License (GPL) версия 3."
 
-#: pdfarranger/pdfarranger.py:2105
+#: pdfarranger/pdfarranger.py:2325
 msgid "Selected pages: "
 msgstr "Выбранные страницы: "
 
-#: pdfarranger/pdfarranger.py:2110
+#: pdfarranger/pdfarranger.py:2330
 msgid "Page Size:"
 msgstr "Размер страницы:"
 
@@ -309,61 +366,61 @@ msgstr "Размер страницы:"
 msgid "Split Pages"
 msgstr "Разделить страницы"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Столбцы"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Ряды"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Вертикальные разделения"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
 msgstr "Горизонтальные разделения"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal column width"
 msgstr "Равная ширина столбцов"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal row height"
 msgstr "Равная высота рядов"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Col"
 msgstr "#Столбец"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Row"
 msgstr "#Ряд"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Ширина в %"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "Высота в %"
 
 #: data/pdfarranger.ui.h:1
-msgid "Open a file and append it to the current document"
-msgstr "Открыть файл и добавить его к текущему документу"
+msgid "Open"
+msgstr "Открыть"
 
 #: data/pdfarranger.ui.h:2
+msgid "Import"
+msgstr "Импортировать"
+
+#: data/pdfarranger.ui.h:3
 msgid "Save"
 msgstr "Сохранить"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Save As"
 msgstr "Сохранить как"
-
-#: data/pdfarranger.ui.h:4
-msgid "Number of Pages"
-msgstr "Число страниц"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
@@ -386,164 +443,186 @@ msgid "Rotate Right"
 msgstr "Повернуть вправо"
 
 #: data/menu.ui.h:1
+msgid "_Open"
+msgstr "_Открыть"
+
+#: data/menu.ui.h:2
 msgid "_Import"
 msgstr "_Импорт"
 
-#: data/menu.ui.h:2
+#: data/menu.ui.h:3
 msgid "_New Window"
 msgstr "_Создать окно"
 
-#: data/menu.ui.h:4
+#: data/menu.ui.h:5
 msgid "Save _As…"
 msgstr "Сохранить _как…"
 
-#: data/menu.ui.h:5
+#: data/menu.ui.h:6
 msgid "E_xport"
 msgstr "_Экспорт…"
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
 msgstr "Экспорт выделенного фрагмента в _один файл…"
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
 msgstr "Экспорт выделенных фрагментов в от_дельные файлы…"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
 msgstr "Экспорт _всех страниц в отдельные файлы…"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:10
+msgid "_Print…"
+msgstr "_Печать…"
+
+#: data/menu.ui.h:11
 msgid "_Undo"
 msgstr "О_тменить"
 
-#: data/menu.ui.h:10
+#: data/menu.ui.h:12
 msgid "_Redo"
 msgstr "_Повторить"
 
-#: data/menu.ui.h:11
+#: data/menu.ui.h:13
 msgid "_Edit"
 msgstr "П_равка"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:14
 msgid "Rotate _Left"
 msgstr "Повернуть в_лево"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:15
 msgid "_Rotate Right"
 msgstr "Повернуть в_право"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:16
 msgid "_Page Format"
 msgstr "_Форматировать страницу"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:17
 msgid "Crop White Borders"
-msgstr "Обрезать белые границы"
+msgstr "Обрезать белые края"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:18
 msgid "_Delete"
 msgstr "_Удалить"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:19
 msgid "Dupl_icate"
 msgstr "_Дублировать"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:20
 msgid "Re_verse Order"
 msgstr "_Обратный порядок"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:21
 msgid "_Split Pages"
 msgstr "Раз_делить страницы"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:22
 msgid "Cu_t"
 msgstr "Вы_резать"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:23
 msgid "_Copy"
 msgstr "_Копировать"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:24
 msgid "Paste _After"
 msgstr "Вставить п_осле"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:25
 msgid "Paste _Before"
 msgstr "Вставит_ь до"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
 msgstr "Вставить как _нечётные страницы"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
 msgstr "Вставить как _чётные страницы"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
 msgstr "Вставить _пустую страницу"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:29
 msgid "Generate Booklet"
 msgstr "Создать буклет"
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:30
 msgid "_Select"
 msgstr "В_ыделить"
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:31
 msgid "Select _All"
 msgstr "Выделить _всё"
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:32
 msgid "_Deselect All"
 msgstr "Сн_ять выделение"
 
-#: data/menu.ui.h:31
+#: data/menu.ui.h:33
 msgid "Select _Odd Pages"
 msgstr "Выделить _нечётные страницы"
 
-#: data/menu.ui.h:32
+#: data/menu.ui.h:34
 msgid "Select _Even Pages"
 msgstr "Выделить _чётные страницы"
 
-#: data/menu.ui.h:33
+#: data/menu.ui.h:35
 msgid "All From _Same File"
 msgstr "Все из _одного файла"
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:36
 msgid "Same Page _Format"
 msgstr "Страницы того же _формата"
 
-#: data/menu.ui.h:35
+#: data/menu.ui.h:37
 msgid "_Invert Selection"
 msgstr "_Инвертировать выделение"
 
-#: data/menu.ui.h:36
+#: data/menu.ui.h:38
+msgid "_View"
+msgstr "_Вид"
+
+#: data/menu.ui.h:39
 msgid "Zoom _In"
 msgstr "У_величить"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:40
 msgid "Zoom _Out"
 msgstr "У_меньшить"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:41
+msgid "Zoom _Fit"
+msgstr "Страница _целиком"
+
+#: data/menu.ui.h:42
+msgid "Full_screen"
+msgstr "_Во весь экран"
+
+#: data/menu.ui.h:43
 msgid "Edit _Properties"
 msgstr "Редактировать _свойства"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:44
 msgid "_About"
 msgstr "_О приложении"
 
-#: data/menu.ui.h:40
-msgid "_Quit"
-msgstr "В_ыход"
-
-#: data/menu.ui.h:41
+#: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "_Специальная вставка"
+
+#~ msgid "Open a file and append it to the current document"
+#~ msgstr "Открыть файл и добавить его к текущему документу"
+
+#~ msgid "Number of Pages"
+#~ msgstr "Число страниц"
 
 #~ msgid "Grid splitting"
 #~ msgstr "Разделительная сетка"
