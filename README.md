@@ -36,6 +36,10 @@ changed. To do so, set `enable_custom` to `true` and edit the shortcuts in `conf
 In Windows portable version the file is located in the same folder as pdfarranger.exe.
 Optionally this file can be removed. The application will then use the same config file location as installer version.
 
+## Set custom language in Windows
+
+Add/modify: `language = xx_YY` in `preferences` section in `config.ini` (where `xx_YY` is for example `en_US`)
+
 ## Install from source
 
 *PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.17.0.
@@ -108,6 +112,7 @@ For Windows see [Win32.md](Win32.md).
 -   If possible test your translation to see it in context (see [For developers](#for-developers))
 
 -   You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
+    For Windows see [Set custom language in Windows](#Set-custom-language-in-Windows)
 
 -   Do not include `pdfarranger.pot` (or any `*.po` file which was just
     automatically regenerated) in your pull request. Submit only the translations

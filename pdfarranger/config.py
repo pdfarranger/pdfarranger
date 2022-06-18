@@ -153,6 +153,9 @@ class Config(object):
     def set_show_save_warnings(self, enabled):
         self.data.set('preferences', 'show-save-warnings', str(enabled))
 
+    def language(self):
+        return self.data.get('preferences', 'language', fallback="")
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
