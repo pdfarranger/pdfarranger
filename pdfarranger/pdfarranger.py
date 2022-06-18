@@ -108,8 +108,14 @@ from gi.repository import Gio  # for inquiring mime types information
 from gi.repository import GLib
 from gi.repository import Pango
 
-if os.name == 'nt' and GLib.get_language_names():
-    os.environ['LANG'] = GLib.get_language_names()[0]
+from .config import Config
+
+if os.name == 'nt':
+    lang = Config(DOMAIN).language()
+    if not lang and GLib.get_language_names():
+        lang = GLib.get_language_names()[0]
+    os.environ['LANG'] = lang
+
 gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
 _ = gettext.gettext
@@ -120,7 +126,6 @@ from . import metadata
 from . import croputils
 from . import splitter
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
-from .config import Config
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
