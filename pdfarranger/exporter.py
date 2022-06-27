@@ -203,10 +203,9 @@ def export_process(*args, **kwargs):
     warn_dialog(export)(*args, **kwargs)
 
 
-def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
-    """Same as export() but with pikepdf.PDF objects instead of files"""
-    global _report_pikepdf_err
-    pdf_output = pikepdf.Pdf.new()
+def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
+    # all pages must be copied to pdf_output BEFORE applying geometrical
+    # transformation. See https://github.com/pikepdf/pikepdf/issues/271
     copied_pages = {}
     # Copy pages from the input PDF files to the output PDF file
     for row in pages:
@@ -239,6 +238,14 @@ def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
             pdf_output, pdf_output.pages[page_id], row
         )
 
+
+def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
+    """Same as export() but with pikepdf.PDF objects instead of files"""
+    global _report_pikepdf_err
+    pdf_output = pikepdf.Pdf.new()
+    _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
+    if quit_flag is not None and quit_flag.is_set():
+        return
     mdata = metadata.merge_doc(mdata, pdf_input)
     if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
         for n, page in enumerate(pdf_output.pages):
@@ -285,26 +292,21 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     file, filename = make_tmp_file(tmp_dir)
     content_dict = pikepdf.Dictionary({})
     file_indexes = {p.nfile for p in pages}
-    source_files = {n: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
+    source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
+    _copy_n_transform(source_files, file, pages)
+    to_remove = len(file.pages)
     for i in range(len(pages)//2):
         even = i % 2 == 0
-        first = pages[-i - 1 if even else i]
-        second = pages[i if even else -i - 1]
-
+        first_id = -i - 1 if even else i
+        second_id = i if even else -i - 1
+        first = pages[first_id]
+        second = pages[second_id]
+        first_foreign = file.pages[first_id]
+        second_foreign = file.pages[second_id]
         second_page_size = second.size_in_points()
         first_page_size = first.size_in_points()
         page_size = [max(second_page_size[0], first_page_size[0]) * 2,
                      max(second_page_size[1], first_page_size[1])]
-
-        first_original = source_files[first.nfile].pages[first.npage - 1]
-        first_foreign = _apply_geom_transform(
-            file, file.copy_foreign(first_original), first
-        )
-
-        second_original = source_files[second.nfile].pages[second.npage - 1]
-        second_foreign = _apply_geom_transform(
-            file, file.copy_foreign(second_original), second
-        )
 
         content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
         content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
@@ -329,7 +331,8 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         if pikepdf.__version__ < '2.7.0':
             newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
-
+    for __ in range(to_remove):
+        del file.pages[0]
     file.save(filename)
     return filename
 
