@@ -388,7 +388,7 @@ class TestBatch1(PdfArrangerTest):
         self._assert_selected("1")
         self._app().keyCombo("f")
         for __ in range(2):
-             self._app().keyCombo("minus")
+            self._app().keyCombo("minus")
         # Zoom level is now 0 and that's what will be saved to config.ini and
         # used by next batches
 
