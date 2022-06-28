@@ -7,16 +7,16 @@
 [![codecov](https://codecov.io/gh/pdfarranger/pdfarranger/branch/main/graph/badge.svg)](https://codecov.io/gh/pdfarranger/pdfarranger)
 
 *PDF Arranger* is a small python-gtk application, which helps the user to merge
-or split pdf documents and rotate, crop and rearrange their pages using an
-interactive and intuitive graphical interface. It is a frontend for
+or split PDF documents and rotate, crop and rearrange their pages using an
+interactive and intuitive graphical interface. It is a front end for
 [pikepdf](https://github.com/pikepdf/pikepdf).
 
-*PDF Arranger* is a fork of Konstantinos Poulios’s pdfshuffler
+*PDF Arranger* is a fork of Konstantinos Poulios’s PDF-Shuffler
 (see [Savannah](https://savannah.nongnu.org/projects/pdfshuffler) or
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It’s a humble attempt to make the project a bit more active.
 
-![screenshot of pdfarranger](https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png)
+![screenshot of PDF Arranger](https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png)
 
 ## Downloads
 
@@ -29,12 +29,11 @@ It’s a humble attempt to make the project a bit more active.
 
 ## Customization of keyboard shortcuts
 
-In case you are not satisfied with the default keyboard shortcuts they can be
-changed. To do so, set `enable_custom` to `true` and edit the shortcuts in `config.ini`:\
-`~/.config/pdfarranger/config.ini` (Linux)\
-`C:\Users\username\AppData\Roaming\pdfarranger\config.ini` (Windows installer version)\
-In Windows portable version the file is located in the same folder as pdfarranger.exe.
-Optionally this file can be removed. The application will then use the same config file location as installer version.
+You can change the default keyboard shortcuts. To do so, set `enable_custom` to `true` and edit the shortcuts in `config.ini` in the `[accelerators]` section.
+
+* For Linux: `~/.config/pdfarranger/config.ini`
+* For Windows installer version: `C:\Users\username\AppData\Roaming\pdfarranger\config.ini`
+* For Windows portable version, the file is located in the same folder as pdfarranger.exe. Optionally, this file can be removed. The application will then use the same config file location as in the installer version.
 
 ## Set custom language in Windows
 
@@ -43,9 +42,9 @@ Add/modify: `language = xx_YY` in `preferences` section in `config.ini` (where `
 ## Install from source
 
 *PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.17.0.
-pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
+Pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
 
-**On Debian based distributions**
+**On Debian-based distributions**
 
 ```
 sudo apt-get install python3-pip python3-distutils-extra python3-wheel python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-poppler-0.18 gir1.2-handy-1 python3-setuptools
@@ -94,7 +93,7 @@ For Windows see [Win32.md](Win32.md).
 
 -   Run `po/genpot.sh`. The `pot` is an automatically generated file and as such
     should not be in the repository. It is to make life of some translators
-    easier, but it may be often not synchronized with the source code. If you can
+    easier, but it might be out of sync with the source code. If you can
     regenerate it before adding or updating a translation, then do it.
 
 -   Translations are in the following files:
@@ -109,7 +108,7 @@ For Windows see [Win32.md](Win32.md).
     -   pick the same letter as the original string if available
     -   pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
 
--   If possible test your translation to see it in context (see [For developers](#for-developers))
+-   If possible, test your translation to see it in context (see [For developers](#for-developers))
 
 -   You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
     For Windows see [Set custom language in Windows](#Set-custom-language-in-Windows)
