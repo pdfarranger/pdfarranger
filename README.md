@@ -31,9 +31,9 @@ It’s a humble attempt to make the project a bit more active.
 
 You can change the default keyboard shortcuts. To do so, set `enable_custom` to `true` and edit the shortcuts in `config.ini` in the `[accelerators]` section.
 
-* For Linux: `~/.config/pdfarranger/config.ini`
-* For Windows installer version: `C:\Users\username\AppData\Roaming\pdfarranger\config.ini`
-* For Windows portable version, the file is located in the same folder as pdfarranger.exe. Optionally, this file can be removed. The application will then use the same config file location as in the installer version.
+*   For Linux: `~/.config/pdfarranger/config.ini`
+*   For Windows installer version: `C:\Users\username\AppData\Roaming\pdfarranger\config.ini`
+*   For Windows portable version, the file is located in the same folder as pdfarranger.exe. Optionally, this file can be removed. The application will then use the same config file location as in the installer version.
 
 ## Set custom language in Windows
 
@@ -89,34 +89,34 @@ For Windows see [Win32.md](Win32.md).
 
 ## For translators
 
--   Download the main branch (see [For developers](#for-developers))
+*   Download the main branch (see [For developers](#for-developers))
 
--   Run `po/genpot.sh`. The `pot` is an automatically generated file and as such
+*   Run `po/genpot.sh`. The `pot` is an automatically generated file and as such
     should not be in the repository. It is to make life of some translators
     easier, but it might be out of sync with the source code. If you can
     regenerate it before adding or updating a translation, then do it.
 
--   Translations are in the following files:
-    -   [`po`](po)`/*.po`
-    -   [data/com.github.jeromerobert.pdfarranger.metainfo.xml](data/com.github.jeromerobert.pdfarranger.metainfo.xml)
-    -   [data/com.github.jeromerobert.pdfarranger.desktop](data/com.github.jeromerobert.pdfarranger.desktop)
+*   Translations are in the following files:
+    *   [`po`](po)`/*.po`
+    *   [data/com.github.jeromerobert.pdfarranger.metainfo.xml](data/com.github.jeromerobert.pdfarranger.metainfo.xml)
+    *   [data/com.github.jeromerobert.pdfarranger.desktop](data/com.github.jeromerobert.pdfarranger.desktop)
 
--   For mnemonics accelerators (letters preceded by an underscore) try to follow
+*   For mnemonics accelerators (letters preceded by an underscore) try to follow
     those rules by priority order:
-    -   be consistent with other GTK/GNOME software
-    -   pick a unique letter **within that given menu** if possible
-    -   pick the same letter as the original string if available
-    -   pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
+    *   be consistent with other GTK/GNOME software
+    *   pick a unique letter **within that given menu** if possible
+    *   pick the same letter as the original string if available
+    *   pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
 
--   If possible, test your translation to see it in context (see [For developers](#for-developers))
+*   If possible, test your translation to see it in context (see [For developers](#for-developers))
 
--   You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
+*   You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
     For Windows see [Set custom language in Windows](#Set-custom-language-in-Windows)
 
--   Do not include `pdfarranger.pot` (or any `*.po` file which was just
+*   Do not include `pdfarranger.pot` (or any `*.po` file which was just
     automatically regenerated) in your pull request. Submit only the translations
     you actually updated or added.
 
--   If you don’t want or can’t use the developers tooling (`git`,
+*   If you don’t want or can’t use the developers tooling (`git`,
     `po/genpot.sh`, `python`, …) you can edit, download or upload the `*.po`
     files from the GitHub web pages.
