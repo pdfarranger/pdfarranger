@@ -333,7 +333,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:2298
 #, python-format
-msgid "%s is a tool for rearranging and modifying PDF files. "
+msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
 
 #: pdfarranger/pdfarranger.py:2301

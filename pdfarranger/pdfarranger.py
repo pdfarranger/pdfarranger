@@ -2295,7 +2295,7 @@ class PdfArranger(Gtk.Application):
         about_dialog.set_comments(
             "".join(
                 (
-                    _("%s is a tool for rearranging and modifying PDF files. ")
+                    _("%s is a tool for rearranging and modifying PDF files.")
                     % APPNAME,
                     "\n \n",
                     _("It uses libqpdf %s, pikepdf %s, GTK %s and Python %s.")

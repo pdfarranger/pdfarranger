@@ -349,8 +349,8 @@ msgstr "Le document PDF est endommagé"
 
 #: pdfarranger/pdfarranger.py:2298
 #, python-format
-msgid "%s is a tool for rearranging and modifying PDF files. "
-msgstr "%s est un outil pour réorganiser et modifier des fichiers PDF. "
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s est un outil pour réorganiser et modifier des fichiers PDF."
 
 #: pdfarranger/pdfarranger.py:2301
 #, python-format
