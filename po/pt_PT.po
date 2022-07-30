@@ -4,6 +4,7 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
+# Sérgio Marques <smarquespt@gmail.com>, 2021, 2022.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022.
 #
 msgid ""
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-30 18:26+0200\n"
-"PO-Revision-Date: 2022-07-30 22:01+0100\n"
+"PO-Revision-Date: 2022-07-30 23:01+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
@@ -315,12 +316,12 @@ msgstr "Abrir…"
 
 #: pdfarranger/pdfarranger.py:1167
 msgid "Saving produced some warnings"
-msgstr "Mostrou avisos ao guardar"
+msgstr "A gravação gerou alguns avisos"
 
 #: pdfarranger/pdfarranger.py:1168
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
-"Apesar dos avisos, o(s) documento(s) não deverá(ão) ter problemas visíveis."
+"Apesar dos avisos, o(s) documento(s) não parece(m) ter problemas visíveis."
 
 #: pdfarranger/pdfarranger.py:1175
 msgid "Don't show warnings when saving again."
@@ -610,7 +611,7 @@ msgstr "A_justar"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr "Ecrã _inteiro"
+msgstr "Ecrã completo"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
