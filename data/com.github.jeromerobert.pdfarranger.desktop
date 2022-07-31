@@ -32,4 +32,5 @@ Actions=new-window;
 
 [Desktop Action new-window]
 Name=New Window
+Name[es]=Ventana nueva
 Exec=pdfarranger
