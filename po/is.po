@@ -2,15 +2,15 @@
 # Copyright (C) 2021 PDF Arranger
 # This file is distributed under the same license as the pdfarranger package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2021.
+# Sveinn í Felli <sv1@fellsnet.is>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 13:42+0100\n"
-"PO-Revision-Date: 2021-10-31 14:17+0000\n"
+"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"PO-Revision-Date: 2022-08-02 10:59+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,177 +18,190 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 19.12.3\n"
 
-#: pdfarranger/core.py:85
+#: pdfarranger/core.py:87
 msgid "page"
 msgstr "síða"
 
-#: pdfarranger/core.py:193
+#: pdfarranger/core.py:191
 msgid "Password required"
 msgstr "Lykilorð nauðsynlegt"
 
-#: pdfarranger/core.py:204
+#: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Lykilorðið er geymt þar til þú lokar PDF Arranger."
 
-#: pdfarranger/core.py:205
-#, python-format
+#: pdfarranger/core.py:203
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr "Skjalið “{}” er læst, til að opna það þarf lykilorð."
 
-#: pdfarranger/core.py:215
+#: pdfarranger/core.py:213
 msgid "Password"
 msgstr "Lykilorð"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
 msgid "Unknown file format"
 msgstr "Óþekkt skráarsnið"
 
-#: pdfarranger/core.py:282
+#: pdfarranger/core.py:305
 msgid "Image files are only supported with img2pdf"
 msgstr "Myndskrár eru einungis studdar í gegnum img2pdf"
 
-#: pdfarranger/core.py:304
+#: pdfarranger/core.py:311
 msgid "Image format is not supported by img2pdf"
 msgstr "Myndskrársnið er ekki stutt af img2pdf"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
+#: pdfarranger/core.py:314
+msgid "Clipboard image"
+msgstr "Mynd á klippispjaldi"
+
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
 msgid "File is neither pdf nor image"
 msgstr "Skráin er hvorki PDF-skrá né mynd"
 
-#: pdfarranger/croputils.py:114
+#: pdfarranger/croputils.py:115
 msgid "Scale factor"
 msgstr "Kvörðunargildi"
 
-#: pdfarranger/croputils.py:120
+#: pdfarranger/croputils.py:121
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:136
+#: pdfarranger/croputils.py:137
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Left"
 msgstr "Vinstri"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Right"
 msgstr "Hægri"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Top"
 msgstr "Efst"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Bottom"
 msgstr "Neðst"
 
-#: pdfarranger/croputils.py:150
+#: pdfarranger/croputils.py:151
 msgid "Crop Margins"
 msgstr "Skera utan af spássíum"
 
-#: pdfarranger/croputils.py:158
+#: pdfarranger/croputils.py:159
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Utanskurður fjarlægir ekki neitt efni úr PDF-skránni, það er einungis falið."
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
+#, python-format
 msgid "% of width"
 msgstr "% af breidd"
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
+#, python-format
 msgid "% of height"
 msgstr "% af hæð"
 
-#: pdfarranger/croputils.py:214
+#: pdfarranger/croputils.py:215
 msgid "Page format"
 msgstr "Blaðsíðusnið"
 
-#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
-#: pdfarranger/croputils.py:353
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:333
 msgid "Width"
 msgstr "Breidd"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:354
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Height"
 msgstr "Hæð"
 
-#: pdfarranger/croputils.py:232
+#: pdfarranger/croputils.py:233
 msgid "Relative"
 msgstr "Hlutfallslegt"
 
-#: pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:236
 msgid "Page Size"
 msgstr "Blaðsíðustærð"
 
-#: pdfarranger/croputils.py:343
+#: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
 msgstr "Setja inn auða síðu"
 
-#: pdfarranger/exporter.py:119
+#: pdfarranger/exporter.py:130
 msgid "Warning"
 msgstr "Aðvörun"
 
-#: pdfarranger/exporter.py:124
+#: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
 msgstr "Útfyllingarform og efnisskipan tapast við vistun."
 
-#: pdfarranger/exporter.py:126
+#: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Ekki sýna þennan glugga aftur."
 
-#: pdfarranger/metadata.py:40
+#: pdfarranger/exporter.py:342
+msgid "Printing…"
+msgstr "Prenta..."
+
+#: pdfarranger/exporter.py:354
+msgid "Rendering Preview…"
+msgstr "Myndgeri forskoðun…"
+
+#: pdfarranger/metadata.py:42
 msgid "Title"
 msgstr "Titill"
 
-#: pdfarranger/metadata.py:41
+#: pdfarranger/metadata.py:43
 msgid "Subject"
 msgstr "Viðfangsefni"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:44
 msgid "Keywords"
 msgstr "Stikkorð"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:45
 msgid "Producer"
 msgstr "Framleiðandi"
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:46
 msgid "Creator"
 msgstr "Höfundur"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:47
 msgid "Creator tool"
 msgstr "Verkfæri fyrir hönnuði"
 
-#: pdfarranger/metadata.py:46
+#: pdfarranger/metadata.py:48
 msgid "Created"
 msgstr "Búið til"
 
-#: pdfarranger/metadata.py:47
+#: pdfarranger/metadata.py:49
 msgid "Modified"
 msgstr "Breytt"
 
-#: pdfarranger/metadata.py:151
+#: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
 msgstr "Ógilt dagsetningasnið. Inntaki hent."
 
-#: pdfarranger/metadata.py:180
+#: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Breyta eiginleikum"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Property"
 msgstr "Eiginleiki"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Value"
 msgstr "Gildi"
 
-#: pdfarranger/pdfarranger.py:271
+#: pdfarranger/pdfarranger.py:260
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -200,109 +213,154 @@ msgstr ""
 "gagnvirku og auðveldu myndrænu viðmóti. Það er í grunninn aðgangsviðmót "
 "fyrir pikepdf."
 
-#: pdfarranger/pdfarranger.py:282
+#: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Birta upplýsingar um PDF Arranger og hætta"
 
-#: pdfarranger/pdfarranger.py:290
+#: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
 msgstr "Skrá(r) til að opna"
 
-#: pdfarranger/pdfarranger.py:395
+#: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
 msgstr "Allar síður verða að hafa sömu stærð."
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
 msgstr "Allar studdar skrár"
 
-#: pdfarranger/pdfarranger.py:425
+#: pdfarranger/pdfarranger.py:460
 msgid "PDF files"
 msgstr "PDF-skrár"
 
-#: pdfarranger/pdfarranger.py:432
+#: pdfarranger/pdfarranger.py:467
 msgid "All files"
 msgstr "Allar skrár"
 
-#: pdfarranger/pdfarranger.py:437
+#: pdfarranger/pdfarranger.py:472
 msgid "Supported image files"
 msgstr "Studdar myndskrár"
 
-#: pdfarranger/pdfarranger.py:634
+#: pdfarranger/pdfarranger.py:691
 msgid "Rendering…"
 msgstr "Myndgeri…"
 
-#: pdfarranger/pdfarranger.py:728
+#: pdfarranger/pdfarranger.py:769
 msgid "untitled"
 msgstr "ónefnt"
 
-#: pdfarranger/pdfarranger.py:865
-#, python-format
-msgid "Save changes to “{}” before closing?"
-msgstr "Vista breytingar á '{}' áður en lokað er?"
-
-#: pdfarranger/pdfarranger.py:867
-msgid "Save changes before closing?"
-msgstr "Vista breytingar áður en lokað er?"
-
-#: pdfarranger/pdfarranger.py:869
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Breytingarnar þínar tapast ef þú vistar þær ekki."
-
-#: pdfarranger/pdfarranger.py:870
-msgid "Do_n’t Save"
-msgstr "E_kki vista"
-
-#: pdfarranger/pdfarranger.py:870
+#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
 msgid "_Cancel"
 msgstr "_Hætta við"
 
-#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:924
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Breytingarnar þínar tapast ef þú vistar þær ekki."
+
+#: pdfarranger/pdfarranger.py:925
+msgid "Do_n’t Save"
+msgstr "E_kki vista"
+
+#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
 msgid "_Save"
 msgstr "Vi_sta"
 
-#: pdfarranger/pdfarranger.py:920
+#: pdfarranger/pdfarranger.py:934
+msgid "Discard changes and close?"
+msgstr "Henda breytingum og loka?"
+
+#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
+msgid "_Close"
+msgstr "_Loka"
+
+#: pdfarranger/pdfarranger.py:940
+msgid "Save changes to “{}” before closing?"
+msgstr "Vista breytingar á '{}' áður en lokað er?"
+
+#: pdfarranger/pdfarranger.py:943
+msgid "Save changes before closing?"
+msgstr "Vista breytingar áður en lokað er?"
+
+#: pdfarranger/pdfarranger.py:968
+msgid "Discard changes and quit?"
+msgstr "Henda breytingum og hætta?"
+
+#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "_Hætta"
+
+#: pdfarranger/pdfarranger.py:974
+msgid "Save changes to “{}” before quitting?"
+msgstr "Vista breytingar á '{}' áður en þú hættir?"
+
+#: pdfarranger/pdfarranger.py:977
+msgid "Save changes before quitting?"
+msgstr "Vista breytingar áður en þú hættir?"
+
+#: pdfarranger/pdfarranger.py:1019
+msgid "Save As…"
+msgstr "Vista sem…"
+
+#: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
 msgstr "Flytja út…"
 
-#: pdfarranger/pdfarranger.py:1030
+#: pdfarranger/pdfarranger.py:1096
+msgid "Open…"
+msgstr "Opna..."
+
+#: pdfarranger/pdfarranger.py:1167
+msgid "Saving produced some warnings"
+msgstr "Vistun gaf einhverjar aðvaranir"
+
+#: pdfarranger/pdfarranger.py:1168
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+"Þrátt fyrir aðvaranirnar er skjalið/skölin ekki með nein sýnileg vandamál."
+
+#: pdfarranger/pdfarranger.py:1175
+msgid "Don't show warnings when saving again."
+msgstr "Ekki birta neinar aðvaranir aftur við vistun."
+
+#: pdfarranger/pdfarranger.py:1205
+msgid "Saving…"
+msgstr "Vista…"
+
+#: pdfarranger/pdfarranger.py:1239
 msgid "Import…"
 msgstr "Flytja inn…"
 
-#: pdfarranger/pdfarranger.py:1137
+#: pdfarranger/pdfarranger.py:1333
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Límd gögn ekki gild. Hætti við límingu."
 
-#: pdfarranger/pdfarranger.py:1238
+#: pdfarranger/pdfarranger.py:1437
 msgid "PDF document is damaged"
 msgstr "PDF-skjal er skemmt"
 
-#: pdfarranger/pdfarranger.py:2067
+#: pdfarranger/pdfarranger.py:2298
 #, python-format
-msgid ""
-"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
-"and Python"
-msgstr ""
-"%s er verkfæri til að endurraða og breyta PDF-skrám. Þróað með GTK+ og Python"
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s er verkfæri til að endurraða og breyta PDF-skrám."
 
-#: pdfarranger/pdfarranger.py:2070
+#: pdfarranger/pdfarranger.py:2301
 #, python-format
-msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr "(%s notar libqpdf %s og pikepdf %s)"
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Notar libqpdf %s, pikepdf %s, GTK %s og Python %s."
 
-#: pdfarranger/pdfarranger.py:2072
+#: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
 msgstr "Höfundar og önnur framlög"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2312
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public notkunarleyfið útgáfa 3."
 
-#: pdfarranger/pdfarranger.py:2105
+#: pdfarranger/pdfarranger.py:2330
 msgid "Selected pages: "
 msgstr "Valdar síður:"
 
-#: pdfarranger/pdfarranger.py:2110
+#: pdfarranger/pdfarranger.py:2335
 msgid "Page Size:"
 msgstr "Blaðsíðustærð:"
 
@@ -310,61 +368,61 @@ msgstr "Blaðsíðustærð:"
 msgid "Split Pages"
 msgstr "Kljúfa síður"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Dálkar"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Raðir"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Klofið lóðrétt"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
 msgstr "Klofið lárétt"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal column width"
 msgstr "Jöfn breidd dálka"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal row height"
 msgstr "Jöfn hæð raða"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Col"
 msgstr "#Dál"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Row"
 msgstr "#Rað"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Breidd í %"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "Hæð í %"
 
 #: data/pdfarranger.ui.h:1
-msgid "Open a file and append it to the current document"
-msgstr "Opnaðu skrá og bættu því aftan við fyrirliggjandi skjal"
+msgid "Open"
+msgstr "Opna"
 
 #: data/pdfarranger.ui.h:2
+msgid "Import"
+msgstr "Flytja inn"
+
+#: data/pdfarranger.ui.h:3
 msgid "Save"
 msgstr "Vista"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Save As"
 msgstr "Vista sem"
-
-#: data/pdfarranger.ui.h:4
-msgid "Number of Pages"
-msgstr "Fjöldi síðna"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
@@ -387,161 +445,183 @@ msgid "Rotate Right"
 msgstr "Snúa til hægri"
 
 #: data/menu.ui.h:1
+msgid "_Open"
+msgstr "_Opna"
+
+#: data/menu.ui.h:2
 msgid "_Import"
 msgstr "Flytja _inn"
 
-#: data/menu.ui.h:2
+#: data/menu.ui.h:3
 msgid "_New Window"
 msgstr "_Nýr gluggi"
 
-#: data/menu.ui.h:4
+#: data/menu.ui.h:5
 msgid "Save _As…"
 msgstr "Vist_a sem..."
 
-#: data/menu.ui.h:5
+#: data/menu.ui.h:6
 msgid "E_xport"
 msgstr "Fl_ytja út"
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
 msgstr "Fl_ytja út valið í eina skrá…"
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
 msgstr "Flyt_ja út valið í stakar skrár…"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
 msgstr "Flytja út _allar síður í stakar skrár…"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:10
+msgid "_Print…"
+msgstr "_Prenta…"
+
+#: data/menu.ui.h:11
 msgid "_Undo"
 msgstr "Aft_urkalla"
 
-#: data/menu.ui.h:10
+#: data/menu.ui.h:12
 msgid "_Redo"
 msgstr "Endu_rtaka"
 
-#: data/menu.ui.h:11
+#: data/menu.ui.h:13
 msgid "_Edit"
 msgstr "Br_eyta"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:14
 msgid "Rotate _Left"
 msgstr "Snúa til _vinstri"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:15
 msgid "_Rotate Right"
 msgstr "Snúa til _hægri"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:16
 msgid "_Page Format"
 msgstr "_Blaðsíðusnið"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:17
 msgid "Crop White Borders"
 msgstr "Skera af hvíta jaðra"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:18
 msgid "_Delete"
 msgstr "_Eyða"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:19
 msgid "Dupl_icate"
 msgstr "Tvíta_ka"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:20
 msgid "Re_verse Order"
 msgstr "Öfu_g röð"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:21
 msgid "_Split Pages"
 msgstr "_Kljúfa síður"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:22
 msgid "Cu_t"
 msgstr "_Klippa"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:23
 msgid "_Copy"
 msgstr "A_frita"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:24
 msgid "Paste _After"
 msgstr "Lím_a á eftir"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:25
 msgid "Paste _Before"
 msgstr "Lí_ma á undan"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
 msgstr "Líma sem _oddatölusíður"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
 msgstr "Líma s_em jafntölusíður"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
 msgstr "Set_ja inn auða síðu"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:29
 msgid "Generate Booklet"
 msgstr "Útbúa bækling"
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:30
 msgid "_Select"
 msgstr "_Velja"
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:31
 msgid "Select _All"
 msgstr "Velja _allt"
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:32
 msgid "_Deselect All"
 msgstr "A_fvelja allt"
 
-#: data/menu.ui.h:31
+#: data/menu.ui.h:33
 msgid "Select _Odd Pages"
 msgstr "Velja _oddatölusíður"
 
-#: data/menu.ui.h:32
+#: data/menu.ui.h:34
 msgid "Select _Even Pages"
 msgstr "V_elja jafntölusíður"
 
-#: data/menu.ui.h:33
+#: data/menu.ui.h:35
 msgid "All From _Same File"
 msgstr "Allt úr _sömu skrá"
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:36
 msgid "Same Page _Format"
 msgstr "Sama _blaðsíðusnið"
 
-#: data/menu.ui.h:35
+#: data/menu.ui.h:37
 msgid "_Invert Selection"
 msgstr "Snúa vali v_ið"
 
-#: data/menu.ui.h:36
+#: data/menu.ui.h:38
+msgid "_View"
+msgstr "S_koða"
+
+#: data/menu.ui.h:39
 msgid "Zoom _In"
 msgstr "Renna _að"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:40
 msgid "Zoom _Out"
 msgstr "Renna _frá"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:41
+msgid "Zoom _Fit"
+msgstr "Aðdráttur svo _passi"
+
+#: data/menu.ui.h:42
+msgid "Full_screen"
+msgstr "_Skjáfylli"
+
+#: data/menu.ui.h:43
 msgid "Edit _Properties"
 msgstr "_Breyta eiginleikum"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:44
 msgid "_About"
 msgstr "_Um hugbúnaðinn"
 
-#: data/menu.ui.h:40
-msgid "_Quit"
-msgstr "_Hætta"
-
-#: data/menu.ui.h:41
+#: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Sérstök _líming"
+
+#~ msgid "Open a file and append it to the current document"
+#~ msgstr "Opnaðu skrá og bættu því aftan við fyrirliggjandi skjal"
+
+#~ msgid "Number of Pages"
+#~ msgstr "Fjöldi síðna"
