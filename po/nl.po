@@ -4,197 +4,210 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# Heimen Stoffels <vistausss@outlook.com>, 2016
-# Thomas De Rocker, 2011
+# Heimen Stoffels <vistausss@outlook.com>, 2016, 2022.
+# Thomas De Rocker, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 17:14+0100\n"
-"PO-Revision-Date: 2021-10-31 18:14+0100\n"
+"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"PO-Revision-Date: 2022-08-01 18:02+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/logari81/pdfshuffler/language/"
-"nl/)\n"
+"Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Lokalize 22.04.3\n"
 
-#: pdfarranger/core.py:85
+#: pdfarranger/core.py:87
 msgid "page"
 msgstr "pagina"
 
-#: pdfarranger/core.py:193
+#: pdfarranger/core.py:191
 msgid "Password required"
 msgstr "Wachtwoord vereist"
 
-#: pdfarranger/core.py:204
+#: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "PDF Arranger bewaart het wachtwoord totdat u afsluit."
 
-#: pdfarranger/core.py:205
+#: pdfarranger/core.py:203
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr "“{}” is beveiligd en kan alleen worden geopend met een wachtwoord."
 
-#: pdfarranger/core.py:215
+#: pdfarranger/core.py:213
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
 msgid "Unknown file format"
 msgstr "Onbekend bestandstype"
 
-#: pdfarranger/core.py:282
+#: pdfarranger/core.py:305
 msgid "Image files are only supported with img2pdf"
 msgstr "Afbeeldingsbestanden kunnen alleen worden gebruikt met img2pdf"
 
-#: pdfarranger/core.py:304
+#: pdfarranger/core.py:311
 msgid "Image format is not supported by img2pdf"
 msgstr "Dit afbeeldingsbestand wordt niet ondersteund door img2pdf"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
+#: pdfarranger/core.py:314
+msgid "Clipboard image"
+msgstr "Klembordafbeelding"
+
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
 msgid "File is neither pdf nor image"
 msgstr "Het bestand is geen pdf of afbeelding"
 
-#: pdfarranger/croputils.py:114
+#: pdfarranger/croputils.py:115
 msgid "Scale factor"
 msgstr "Vergrotingsfactor"
 
-#: pdfarranger/croputils.py:120
+#: pdfarranger/croputils.py:121
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:136
+#: pdfarranger/croputils.py:137
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Left"
 msgstr "Links"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Top"
 msgstr "Boven"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Bottom"
 msgstr "Onder"
 
-#: pdfarranger/croputils.py:150
+#: pdfarranger/croputils.py:151
 msgid "Crop Margins"
 msgstr "Marges bijsnijden"
 
-#: pdfarranger/croputils.py:158
+#: pdfarranger/croputils.py:159
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Bijsnijden verwijdert geen inhoud uit het pdf-bestand; het verbergt het "
 "alleen."
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of width"
 msgstr "% van de breedte"
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of height"
 msgstr "% van de hoogte"
 
-#: pdfarranger/croputils.py:214
+#: pdfarranger/croputils.py:215
 msgid "Page format"
 msgstr "Paginaformaat"
 
-#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
-#: pdfarranger/croputils.py:353
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:333
 msgid "Width"
 msgstr "Breedte"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:354
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Height"
 msgstr "Hoogte"
 
-#: pdfarranger/croputils.py:232
+#: pdfarranger/croputils.py:233
 msgid "Relative"
 msgstr "Relatief"
 
-#: pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:236
 msgid "Page Size"
 msgstr "Paginagrootte"
 
-#: pdfarranger/croputils.py:343
+#: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
 msgstr "Blanco pagina invoegen"
 
-#: pdfarranger/exporter.py:119
+#: pdfarranger/exporter.py:130
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: pdfarranger/exporter.py:124
+#: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
 msgstr "Formulieren en contouren gaan verloren bij het opslaan."
 
-#: pdfarranger/exporter.py:126
+#: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Niet meer tonen"
 
-#: pdfarranger/metadata.py:40
+#: pdfarranger/exporter.py:342
+#| msgid "Rendering…"
+msgid "Printing…"
+msgstr "Bezig met afdrukken…"
+
+#: pdfarranger/exporter.py:354
+#| msgid "Rendering…"
+msgid "Rendering Preview…"
+msgstr "Bezig met maken van voorvertoning…"
+
+#: pdfarranger/metadata.py:42
 msgid "Title"
 msgstr "Naam"
 
-#: pdfarranger/metadata.py:41
+#: pdfarranger/metadata.py:43
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:44
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:45
 msgid "Producer"
 msgstr "Producent"
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:46
 msgid "Creator"
 msgstr "Maker"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:47
 msgid "Creator tool"
 msgstr "Gemaakt met"
 
-#: pdfarranger/metadata.py:46
+#: pdfarranger/metadata.py:48
 msgid "Created"
 msgstr "Gemaakt op"
 
-#: pdfarranger/metadata.py:47
+#: pdfarranger/metadata.py:49
 msgid "Modified"
 msgstr "Aangepast op"
 
-#: pdfarranger/metadata.py:151
+#: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
 msgstr "Ongeldige datumopmaak - de inhoud is verworpen."
 
-#: pdfarranger/metadata.py:180
+#: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Eigenschappen bewerken"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Property"
 msgstr "Eigenschap"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Value"
 msgstr "Waarde"
 
-#: pdfarranger/pdfarranger.py:271
+#: pdfarranger/pdfarranger.py:260
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -206,109 +219,165 @@ msgstr ""
 "samengevoegd, herordend en bijgesneden. Ook kunnen documenten worden "
 "gesplitst. PDF Arranger is een frontend voor pikepdf."
 
-#: pdfarranger/pdfarranger.py:282
+#: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Toon het versienummer en sluit af"
 
-#: pdfarranger/pdfarranger.py:290
+#: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
 msgstr "Te openen bestand(en)"
 
-#: pdfarranger/pdfarranger.py:395
+#: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
 msgstr "Alle pagina's dienen even groot te zijn."
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
 msgstr "Alle ondersteunde bestanden"
 
-#: pdfarranger/pdfarranger.py:425
+#: pdfarranger/pdfarranger.py:460
 msgid "PDF files"
 msgstr "PDF-bestanden"
 
-#: pdfarranger/pdfarranger.py:432
+#: pdfarranger/pdfarranger.py:467
 msgid "All files"
 msgstr "Alle bestanden"
 
-#: pdfarranger/pdfarranger.py:437
+#: pdfarranger/pdfarranger.py:472
 msgid "Supported image files"
 msgstr "Ondersteunde afbeeldingsbestanden"
 
-#: pdfarranger/pdfarranger.py:634
+#: pdfarranger/pdfarranger.py:691
 msgid "Rendering…"
 msgstr "Bezig met samenstellen…"
 
-#: pdfarranger/pdfarranger.py:728
+#: pdfarranger/pdfarranger.py:769
 msgid "untitled"
 msgstr "naamloos"
 
-#: pdfarranger/pdfarranger.py:865
-msgid "Save changes to “{}” before closing?"
-msgstr "Wilt u de aanpassingen aan ‘{}’ opslaan alvorens af te sluiten?"
-
-#: pdfarranger/pdfarranger.py:867
-msgid "Save changes before closing?"
-msgstr "Aanpassingen opslaan voor afsluiten?"
-
-#: pdfarranger/pdfarranger.py:869
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Als u dat niet doet, gaan ze definitief verloren."
-
-#: pdfarranger/pdfarranger.py:870
-msgid "Do_n’t Save"
-msgstr "_Niet opslaan"
-
-#: pdfarranger/pdfarranger.py:870
+#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:924
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Als u dat niet doet, gaan ze definitief verloren."
+
+#: pdfarranger/pdfarranger.py:925
+msgid "Do_n’t Save"
+msgstr "_Niet opslaan"
+
+#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
 msgid "_Save"
 msgstr "Op_slaan"
 
-#: pdfarranger/pdfarranger.py:920
+#: pdfarranger/pdfarranger.py:934
+msgid "Discard changes and close?"
+msgstr "Wilt u de aanpassingen negeren en sluiten?"
+
+#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
+msgid "_Close"
+msgstr "_Sluiten"
+
+#: pdfarranger/pdfarranger.py:940
+msgid "Save changes to “{}” before closing?"
+msgstr "Wilt u de aanpassingen aan ‘{}’ opslaan alvorens af te sluiten?"
+
+#: pdfarranger/pdfarranger.py:943
+msgid "Save changes before closing?"
+msgstr "Aanpassingen opslaan voor afsluiten?"
+
+#: pdfarranger/pdfarranger.py:968
+msgid "Discard changes and quit?"
+msgstr "Wilt u de aanpassingen negeren en afsluiten?"
+
+#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "_Afsluiten"
+
+#: pdfarranger/pdfarranger.py:974
+#| msgid "Save changes to “{}” before closing?"
+msgid "Save changes to “{}” before quitting?"
+msgstr "Wilt u de aanpassingen aan ‘{}’ opslaan alvorens af te sluiten?"
+
+#: pdfarranger/pdfarranger.py:977
+#| msgid "Save changes before closing?"
+msgid "Save changes before quitting?"
+msgstr "Aanpassingen opslaan voor afsluiten?"
+
+#: pdfarranger/pdfarranger.py:1019
+#| msgid "Save _As…"
+msgid "Save As…"
+msgstr "Opslaan als…"
+
+#: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
 msgstr "Exporteren…"
 
-#: pdfarranger/pdfarranger.py:1030
+#: pdfarranger/pdfarranger.py:1096
+msgid "Open…"
+msgstr "Openen…"
+
+#: pdfarranger/pdfarranger.py:1167
+msgid "Saving produced some warnings"
+msgstr "Waarschuwingen tijdens opslaan"
+
+#: pdfarranger/pdfarranger.py:1168
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+"Ondanks de waarschuwingen, zou het bestand/de bestanden geen zichtbare"
+" problemen moet(en) vertonen."
+
+#: pdfarranger/pdfarranger.py:1175
+#| msgid "Do not show this dialog again."
+msgid "Don't show warnings when saving again."
+msgstr "Niet meer tonen"
+
+#: pdfarranger/pdfarranger.py:1205
+msgid "Saving…"
+msgstr "Bezig met opslaan…"
+
+#: pdfarranger/pdfarranger.py:1239
 msgid "Import…"
 msgstr "Importeren…"
 
-#: pdfarranger/pdfarranger.py:1137
+#: pdfarranger/pdfarranger.py:1333
 msgid "Pasted data not valid. Aborting paste."
 msgstr "De geplakte gegevens zijn ongeldig - het plakken wordt afgebroken."
 
-#: pdfarranger/pdfarranger.py:1238
+#: pdfarranger/pdfarranger.py:1437
 msgid "PDF document is damaged"
 msgstr "Het pdf-bestand is beschadigd"
 
-#: pdfarranger/pdfarranger.py:2067
+#: pdfarranger/pdfarranger.py:2298
 #, python-format
-msgid ""
-"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
-"and Python"
+#| msgid ""
+#| "%s is a tool for rearranging and modifying PDF files. Developed using GTK"
+#| "+ and Python"
+msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
-"%s is een hulpprogramma voor het herordenen en bewerken van pdf-bestanden, "
-"gemaakt met GTK+ en Python"
+"%s is een hulpprogramma voor het herordenen en bewerken van pdf-bestanden."
 
-#: pdfarranger/pdfarranger.py:2070
+#: pdfarranger/pdfarranger.py:2301
 #, python-format
-msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr "(%s maakt gebruik van libqpdf %s en pikepdf %s)"
+#| msgid "(%s uses libqpdf %s and pikepdf %s)"
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr ""
+"Het programma maakt gebruik van libqpdf %s, pikepdf %s, GTK %s en Python %s."
 
-#: pdfarranger/pdfarranger.py:2072
+#: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
 msgstr "Onderhouders en bijdragers"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2312
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL), versie 3."
 
-#: pdfarranger/pdfarranger.py:2105
+#: pdfarranger/pdfarranger.py:2330
 msgid "Selected pages: "
 msgstr "Geselecteerde pagina': "
 
-#: pdfarranger/pdfarranger.py:2110
+#: pdfarranger/pdfarranger.py:2335
 msgid "Page Size:"
 msgstr "Paginagrootte:"
 
@@ -316,61 +385,62 @@ msgstr "Paginagrootte:"
 msgid "Split Pages"
 msgstr "Pagina's splitsen"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Kolommen"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Rijen"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Verticale splitsingen"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
 msgstr "Horizontale splitsingen"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal column width"
 msgstr "Gelijke kolombreedtes"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal row height"
 msgstr "Gelijke rijhoogten"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Col"
 msgstr "#Kol"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Row"
 msgstr "#Rij"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Breedte, in %"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "Hoogte, in %"
 
 #: data/pdfarranger.ui.h:1
-msgid "Open a file and append it to the current document"
-msgstr "Open een bestand en wijs het toe aan het huidige document"
+msgid "Open"
+msgstr "Openen"
 
 #: data/pdfarranger.ui.h:2
+#| msgid "_Import"
+msgid "Import"
+msgstr "Importeren"
+
+#: data/pdfarranger.ui.h:3
 msgid "Save"
 msgstr "Opslaan"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Save As"
 msgstr "Opslaan als"
-
-#: data/pdfarranger.ui.h:4
-msgid "Number of Pages"
-msgstr "Aantal pagina's"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
@@ -393,164 +463,187 @@ msgid "Rotate Right"
 msgstr "Naar rechts draaien"
 
 #: data/menu.ui.h:1
+msgid "_Open"
+msgstr "_Openen"
+
+#: data/menu.ui.h:2
 msgid "_Import"
 msgstr "_Importeren"
 
-#: data/menu.ui.h:2
+#: data/menu.ui.h:3
 msgid "_New Window"
 msgstr "_Nieuw venster"
 
-#: data/menu.ui.h:4
+#: data/menu.ui.h:5
 msgid "Save _As…"
 msgstr "Opslaan _als…"
 
-#: data/menu.ui.h:5
+#: data/menu.ui.h:6
 msgid "E_xport"
 msgstr "E_xporteren"
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
 msgstr "Selectie _exporteren naar bestand…"
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
 msgstr "Selectie exporteren naar _meerdere bestanden…"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
 msgstr "_Alle pagina's exporteren naar meerdere bestanden…"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:10
+msgid "_Print…"
+msgstr "Afdrukken…"
+
+#: data/menu.ui.h:11
 msgid "_Undo"
 msgstr "_Ongedaan maken"
 
-#: data/menu.ui.h:10
+#: data/menu.ui.h:12
 msgid "_Redo"
 msgstr "Opnieu_w uitvoeren"
 
-#: data/menu.ui.h:11
+#: data/menu.ui.h:13
 msgid "_Edit"
 msgstr "_Bewerken"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:14
 msgid "Rotate _Left"
 msgstr "Naar _links draaien"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:15
 msgid "_Rotate Right"
 msgstr "Naar rechts _draaien"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:16
 msgid "_Page Format"
 msgstr "Paginaformaat"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:17
 msgid "Crop White Borders"
 msgstr "Witte randen bijsnijden"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:18
 msgid "_Delete"
 msgstr "_Verwijderen"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:19
 msgid "Dupl_icate"
 msgstr "Dupl_iceren"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:20
 msgid "Re_verse Order"
 msgstr "Omgekeerde _volgorde"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:21
 msgid "_Split Pages"
 msgstr "Pagina's _splitsen"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:22
 msgid "Cu_t"
 msgstr "_Knippen"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:23
 msgid "_Copy"
 msgstr "_Kopiëren"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:24
 msgid "Paste _After"
 msgstr "Plakken _na"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:25
 msgid "Paste _Before"
 msgstr "Plakken _vóór"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
 msgstr "Plakken als _oneven pagina's"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
 msgstr "Plakken als _even pagina's"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
 msgstr "Blan_co pagina invoegen"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:29
 msgid "Generate Booklet"
 msgstr "Boekje samenstellen"
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:30
 msgid "_Select"
 msgstr "_Selecteren"
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:31
 msgid "Select _All"
 msgstr "_Alles selecteren"
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:32
 msgid "_Deselect All"
 msgstr "_Niets selecteren"
 
-#: data/menu.ui.h:31
+#: data/menu.ui.h:33
 msgid "Select _Odd Pages"
 msgstr "_Oneven pagina's selecteren"
 
-#: data/menu.ui.h:32
+#: data/menu.ui.h:34
 msgid "Select _Even Pages"
 msgstr "_Even pagina's selecteren"
 
-#: data/menu.ui.h:33
+#: data/menu.ui.h:35
 msgid "All From _Same File"
 msgstr "Alles uit _hetzelfde bestand"
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:36
 msgid "Same Page _Format"
 msgstr "Hetzelfde pagina_formaat"
 
-#: data/menu.ui.h:35
+#: data/menu.ui.h:37
 msgid "_Invert Selection"
 msgstr "Selectie _omkeren"
 
-#: data/menu.ui.h:36
+#: data/menu.ui.h:38
+msgid "_View"
+msgstr "_Beeld"
+
+#: data/menu.ui.h:39
 msgid "Zoom _In"
 msgstr "_Inzoomen"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:40
 msgid "Zoom _Out"
 msgstr "_Uitzoomen"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:41
+#| msgid "Zoom _Out"
+msgid "Zoom _Fit"
+msgstr "In_passen"
+
+#: data/menu.ui.h:42
+msgid "Full_screen"
+msgstr "_Schermvullende weergave"
+
+#: data/menu.ui.h:43
 msgid "Edit _Properties"
 msgstr "Eigenschappen bewerken"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:44
 msgid "_About"
 msgstr "_Over"
 
-#: data/menu.ui.h:40
-msgid "_Quit"
-msgstr "_Afsluiten"
-
-#: data/menu.ui.h:41
+#: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Sp_eciaal plakken"
+
+#~ msgid "Open a file and append it to the current document"
+#~ msgstr "Open een bestand en wijs het toe aan het huidige document"
+
+#~ msgid "Number of Pages"
+#~ msgstr "Aantal pagina's"
 
 #~ msgid "Grid splitting"
 #~ msgstr "Roostersplitsing"
