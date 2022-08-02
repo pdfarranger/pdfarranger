@@ -13,6 +13,7 @@ Comment[es]=Mezcle, reordene, divida, rote y recorte documentos PDF
 Comment[he]=מיזוג, סידור מחדש, פיצול, הטיה וחיתוך PDF
 Comment[hr]=Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata
 Comment[hu]=PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása
+Comment[is]=Forrit til að sameina, endurraða, skipta upp, snúa og skera utan af síðum í PDF-skjölum
 Comment[pt]=Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF
 Comment[ru]=Приложение для объединения, изменения порядка страниц, разделения, вращение и обрезки документов PDF
 Comment[sk]=Grafický nástroj na manipuláciu s PDF
@@ -33,4 +34,5 @@ Actions=new-window;
 [Desktop Action new-window]
 Name=New Window
 Name[es]=Ventana nueva
+Name[is]=Nýr gluggi
 Exec=pdfarranger
