@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-30 18:26+0200\n"
-"PO-Revision-Date: 2021-11-02 17:01+0200\n"
+"PO-Revision-Date: 2022-08-05 13:05+0300\n"
 "Last-Translator: kbengs\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: pdfarranger/core.py:87
 msgid "page"
@@ -53,7 +53,7 @@ msgstr "Bildformatet stöds inte av img2pdf"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "Urklipp bild"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
 msgid "File is neither pdf nor image"
@@ -97,6 +97,16 @@ msgid ""
 msgstr ""
 "Innehåll tas inte bort från PDF-filen vid beskärning, utan döljs endast."
 
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of width"
+msgstr "% av bredd"
+
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of height"
+msgstr "% av höjd"
+
 #: pdfarranger/croputils.py:215
 msgid "Page format"
 msgstr "Sidformat"
@@ -134,6 +144,14 @@ msgstr "Formulär och bokmärken går förlorade när dokumentet sparas."
 #: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Visa inte detta meddelande igen."
+
+#: pdfarranger/exporter.py:342
+msgid "Printing…"
+msgstr "Skriver ut…"
+
+#: pdfarranger/exporter.py:354
+msgid "Rendering Preview…"
+msgstr "Renderar förhandsgranskning…"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -249,11 +267,11 @@ msgstr "_Spara"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Förkasta ändringar och stäng?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "_Stäng"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
@@ -265,11 +283,23 @@ msgstr "Spara ändringar innan stängning?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Förkasta ändringar och avsluta?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
 msgstr "_Avsluta"
+
+#: pdfarranger/pdfarranger.py:974
+msgid "Save changes to “{}” before quitting?"
+msgstr "Spara ändringar till “{}” innan programmet avslutas?"
+
+#: pdfarranger/pdfarranger.py:977
+msgid "Save changes before quitting?"
+msgstr "Spara ändringar innan programmet avslutas?"
+
+#: pdfarranger/pdfarranger.py:1019
+msgid "Save As…"
+msgstr "Spara som…"
 
 #: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
@@ -277,19 +307,23 @@ msgstr "Exportera…"
 
 #: pdfarranger/pdfarranger.py:1096
 msgid "Open…"
-msgstr ""
+msgstr "Öppna…"
 
 #: pdfarranger/pdfarranger.py:1167
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "Spara-processen skapade varningar"
 
 #: pdfarranger/pdfarranger.py:1168
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
+msgstr "Trots varningarna borde dokumenten inte ha noterbara problem."
+
+#: pdfarranger/pdfarranger.py:1175
+msgid "Don't show warnings when saving again."
+msgstr "Visa inte varningar när dokument sparas."
 
 #: pdfarranger/pdfarranger.py:1205
 msgid "Saving…"
-msgstr ""
+msgstr "Sparar…"
 
 #: pdfarranger/pdfarranger.py:1239
 msgid "Import…"
@@ -302,6 +336,16 @@ msgstr "Inklistrat data är inte giltigt. Inklistringen avbryts."
 #: pdfarranger/pdfarranger.py:1437
 msgid "PDF document is damaged"
 msgstr "PDF dokumentet är skadat"
+
+#: pdfarranger/pdfarranger.py:2298
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s är ett verktyg för att arrangera om och modifiera PDF filer."
+
+#: pdfarranger/pdfarranger.py:2301
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Programmet använder %s, pikepdf %s, GTK %s och Python %s."
 
 #: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
@@ -365,7 +409,11 @@ msgstr "Höjd i %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "Öppna"
+
+#: data/pdfarranger.ui.h:2
+msgid "Import"
+msgstr "Importera"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -397,7 +445,7 @@ msgstr "Rotera åt höger"
 
 #: data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "_Öppna"
 
 #: data/menu.ui.h:2
 msgid "_Import"
@@ -429,7 +477,7 @@ msgstr "Exportera _alla sidor till enskilda filer…"
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "_Skriv ut…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -541,7 +589,7 @@ msgstr "_Invertera markeringen"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "_Visa"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -551,9 +599,13 @@ msgstr "Zooma _in"
 msgid "Zoom _Out"
 msgstr "Zooma _ut"
 
+#: data/menu.ui.h:41
+msgid "Zoom _Fit"
+msgstr "_Anpassa zoom"
+
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "_Helskärm"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
@@ -566,3 +618,9 @@ msgstr "_Om PDF Arranger"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Klistra in _special"
+
+#~ msgid "Open a file and append it to the current document"
+#~ msgstr "Importera filer"
+
+#~ msgid "Number of Pages"
+#~ msgstr "Antal sidor"
