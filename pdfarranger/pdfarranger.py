@@ -94,13 +94,13 @@ try:
 except ValueError:
     Handy = None
 
-if Gtk.check_version(3, 12, 0):
+if Gtk.check_version(3, 20, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
                     'Installed GTK+ version is ' +
                     '.'.join([str(Gtk.get_major_version()),
                               str(Gtk.get_minor_version()),
                               str(Gtk.get_micro_version())]) +
-                    '. Required GTK+ version is 3.12 or higher.')
+                    '. Required GTK+ version is 3.20 or higher.')
 
 from gi.repository import Gdk
 from gi.repository import GObject  # for using custom signals
@@ -1018,13 +1018,11 @@ class PdfArranger(Gtk.Application):
         """Handles choosing a name for exporting """
         title = _('Save As…') if mode == GLib.Variant('i', 0) else _('Export…')
 
-        chooser = Gtk.FileChooserDialog(title=title,
+        chooser = Gtk.FileChooserNative.new(title=title,
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.SAVE,
-                                        buttons=("_Cancel",
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_SAVE,
-                                                 Gtk.ResponseType.ACCEPT))
+                                        accept_label=_("_Save"),
+                                        cancel_label=_("_Cancel"))
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             f = self.pdfqueue[0].filename
@@ -1045,13 +1043,11 @@ class PdfArranger(Gtk.Application):
             self.post_action = None
 
     def open_dialog(self, title):
-        chooser = Gtk.FileChooserDialog(title=title,
+        chooser = Gtk.FileChooserNative.new(title=title,
                                         parent=self.window,
                                         action=Gtk.FileChooserAction.OPEN,
-                                        buttons=("_Cancel",
-                                                 Gtk.ResponseType.CANCEL,
-                                                 "_Open",
-                                                 Gtk.ResponseType.ACCEPT))
+                                        accept_label=_("_Open"),
+                                        cancel_label=_("_Cancel"))
         if self.import_directory is not None:
             chooser.set_current_folder(self.import_directory)
         chooser.set_select_multiple(True)
