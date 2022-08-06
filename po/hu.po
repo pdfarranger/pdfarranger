@@ -49,7 +49,7 @@ msgstr "Az img2pdf nem támogatja a képformátumot"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "Vágólap képe"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
 msgid "File is neither pdf nor image"
@@ -93,14 +93,12 @@ msgid ""
 msgstr "A körülvágás nem távolít el tartalmat a PDF-fájlból, csak elrejti."
 
 #: pdfarranger/croputils.py:168
-#, fuzzy, python-format
 msgid "% of width"
-msgstr "a szélesség százaléka"
+msgstr "Szélesség arányában (%)"
 
 #: pdfarranger/croputils.py:168
-#, fuzzy, python-format
 msgid "% of height"
-msgstr "a magasság százaléka"
+msgstr "Magasság arányában (%)"
 
 #: pdfarranger/croputils.py:215
 msgid "Page format"
@@ -141,14 +139,12 @@ msgid "Do not show this dialog again."
 msgstr "Ne jelenjen meg újra ez a párbeszédpanel."
 
 #: pdfarranger/exporter.py:342
-#, fuzzy
 msgid "Printing…"
-msgstr "Renderelés folyamatban van…"
+msgstr "Nyomtatás…"
 
 #: pdfarranger/exporter.py:354
-#, fuzzy
 msgid "Rendering Preview…"
-msgstr "Renderelés folyamatban van…"
+msgstr "Előnézet megjelenítése…"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -265,11 +261,11 @@ msgstr "_Mentés"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Módosítások elvetése és bezárás?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "_Bezárás"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
@@ -281,26 +277,23 @@ msgstr "Menti a módosításokat a bezárás előtt?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Módosítások elvetése és kilépés?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
 msgstr "_Kilépés"
 
 #: pdfarranger/pdfarranger.py:974
-#, fuzzy
 msgid "Save changes to “{}” before quitting?"
-msgstr "Menti a változásokat a(z) „{}” fájlba bezárás előtt?"
+msgstr "Menti a(z) „{}” módosításait a kilépés előtt?"
 
 #: pdfarranger/pdfarranger.py:977
-#, fuzzy
 msgid "Save changes before quitting?"
-msgstr "Menti a módosításokat a bezárás előtt?"
+msgstr "Menti a módosításokat a kilépés előtt?"
 
 #: pdfarranger/pdfarranger.py:1019
-#, fuzzy
 msgid "Save As…"
-msgstr "Menté_s másként…"
+msgstr "Mentés másként…"
 
 #: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
@@ -308,24 +301,23 @@ msgstr "Exportálás…"
 
 #: pdfarranger/pdfarranger.py:1096
 msgid "Open…"
-msgstr ""
+msgstr "Megnyitás…"
 
 #: pdfarranger/pdfarranger.py:1167
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "A mentés néhány figyelmeztetést jelentett"
 
 #: pdfarranger/pdfarranger.py:1168
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
+msgstr "A figyelmeztetések ellenére a dokumentum(ok)on nem lehetnek látható hibák."
 
 #: pdfarranger/pdfarranger.py:1175
-#, fuzzy
 msgid "Don't show warnings when saving again."
-msgstr "Ne jelenjen meg újra ez a párbeszédpanel."
+msgstr "Ne jelenjen meg többé ez az üzenet mentéskor."
 
 #: pdfarranger/pdfarranger.py:1205
 msgid "Saving…"
-msgstr ""
+msgstr "Mentés…"
 
 #: pdfarranger/pdfarranger.py:1239
 msgid "Import…"
@@ -337,19 +329,15 @@ msgstr "A beillesztett adatok érvénytelenek. A beillesztés megszakadt."
 
 #: pdfarranger/pdfarranger.py:1437
 msgid "PDF document is damaged"
-msgstr "A PDF dokumentum sérült"
+msgstr "A PDF-dokumentum sérült"
 
 #: pdfarranger/pdfarranger.py:2298
-#, fuzzy, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
-"A %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF fájlok. "
-"GTK+ és Python segítségével írták"
+msgstr "A(z) %s egy olyan eszköz, mellyel átrendezhetők és módosíthatóak a PDF-fájlok."
 
 #: pdfarranger/pdfarranger.py:2301
-#, fuzzy, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "(%s libqpdf %s és pikepdf %s könyvtárak használata)"
+msgstr "A libqpdf %s, a pikepdf %s, a GTK %s és a Python %s használata"
 
 #: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
@@ -357,8 +345,7 @@ msgstr "Fenntartók és közreműködők"
 
 #: pdfarranger/pdfarranger.py:2312
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
-"GNU GPL (General Public License - általános nyilvános engedély) 3. verzió."
+msgstr "GNU GPL (General Public License - általános nyilvános engedély) 3. verzió."
 
 #: pdfarranger/pdfarranger.py:2330
 msgid "Selected pages: "
@@ -414,12 +401,11 @@ msgstr "Magasság százalékként"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #: data/pdfarranger.ui.h:2
-#, fuzzy
 msgid "Import"
-msgstr "_Importálás…"
+msgstr "Importálás"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -451,7 +437,7 @@ msgstr "Forgatás jobbra"
 
 #: data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "_Megnyitás…"
 
 #: data/menu.ui.h:2
 msgid "_Import"
@@ -483,7 +469,7 @@ msgstr "Összes _oldal exportálása külön fájlokként"
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "_Nyomtatás…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -595,7 +581,7 @@ msgstr "Kijelölés meg_fordítása"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "_Nézet"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -606,13 +592,12 @@ msgid "Zoom _Out"
 msgstr "Ki_csinyítés"
 
 #: data/menu.ui.h:41
-#, fuzzy
 msgid "Zoom _Fit"
-msgstr "Ki_csinyítés"
+msgstr "Ill_eszkedő méret"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "_Teljes képernyő"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
