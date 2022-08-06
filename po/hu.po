@@ -69,19 +69,19 @@ msgstr "mm"
 
 #: pdfarranger/croputils.py:147
 msgid "Left"
-msgstr "Balra"
+msgstr "Balról"
 
 #: pdfarranger/croputils.py:147
 msgid "Right"
-msgstr "Jobbra"
+msgstr "Jobbról"
 
 #: pdfarranger/croputils.py:147
 msgid "Top"
-msgstr "Fent"
+msgstr "Felülről"
 
 #: pdfarranger/croputils.py:147
 msgid "Bottom"
-msgstr "Lent"
+msgstr "Alulról"
 
 #: pdfarranger/croputils.py:151
 msgid "Crop Margins"
@@ -94,11 +94,11 @@ msgstr "A körülvágás nem távolít el tartalmat a PDF-fájlból, csak elrejt
 
 #: pdfarranger/croputils.py:168
 msgid "% of width"
-msgstr "Szélesség arányában (%)"
+msgstr "% szélesség arányában"
 
 #: pdfarranger/croputils.py:168
 msgid "% of height"
-msgstr "Magasság arányában (%)"
+msgstr "% magasság arányában"
 
 #: pdfarranger/croputils.py:215
 msgid "Page format"
