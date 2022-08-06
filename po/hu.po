@@ -593,7 +593,7 @@ msgstr "Ki_csinyítés"
 
 #: data/menu.ui.h:41
 msgid "Zoom _Fit"
-msgstr "Ill_eszkedő méret"
+msgstr "_Mérethez igazítás"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
