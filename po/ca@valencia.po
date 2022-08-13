@@ -350,7 +350,7 @@ msgstr "%s es una ferramenta per a modificar i re-arranjar fitxers PDF"
 #: pdfarranger/pdfarranger.py:2301
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgid "Utilitza libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Utilitza libqpdf %s, pikepdf %s, GTK %s and Python %s."
 
 #: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
