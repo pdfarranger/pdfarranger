@@ -25,4 +25,5 @@ cd "$(dirname "$0")/.."
 for po in po/*.po
 do
   msgmerge --backup none -U "$po" po/pdfarranger.pot
+  msgattrib --no-obsolete --no-fuzzy -o "$po" "$po"
 done
