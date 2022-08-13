@@ -617,18 +617,3 @@ msgstr "_О приложении"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "_Специальная вставка"
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Открыть файл и добавить его к текущему документу"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Число страниц"
-
-#~ msgid "Grid splitting"
-#~ msgstr "Разделительная сетка"
-
-#~ msgid "Paste Interleave _Odd"
-#~ msgstr "Вставить с _нечётным чередованием"
-
-#~ msgid "Paste Interleave _Even"
-#~ msgstr "Вставить с _чётным чередованием"

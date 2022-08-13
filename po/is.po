@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"POT-Creation-Date: 2022-08-13 15:24+0200\n"
 "PO-Revision-Date: 2022-08-02 10:59+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -39,7 +39,7 @@ msgstr "Skjalið “{}” er læst, til að opna það þarf lykilorð."
 msgid "Password"
 msgstr "Lykilorð"
 
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
 msgid "Unknown file format"
 msgstr "Óþekkt skráarsnið"
 
@@ -55,7 +55,7 @@ msgstr "Myndskrársnið er ekki stutt af img2pdf"
 msgid "Clipboard image"
 msgstr "Mynd á klippispjaldi"
 
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
 msgstr "Skráin er hvorki PDF-skrá né mynd"
 
@@ -250,6 +250,7 @@ msgid "untitled"
 msgstr "ónefnt"
 
 #: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
+#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
 msgid "_Cancel"
 msgstr "_Hætta við"
 
@@ -261,7 +262,8 @@ msgstr "Breytingarnar þínar tapast ef þú vistar þær ekki."
 msgid "Do_n’t Save"
 msgstr "E_kki vista"
 
-#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
+#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
+#: data/menu.ui.h:4
 msgid "_Save"
 msgstr "Vi_sta"
 
@@ -305,62 +307,66 @@ msgstr "Vista sem…"
 msgid "Export…"
 msgstr "Flytja út…"
 
-#: pdfarranger/pdfarranger.py:1096
+#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
+msgid "_Open"
+msgstr "_Opna"
+
+#: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
 msgstr "Opna..."
 
-#: pdfarranger/pdfarranger.py:1167
+#: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
 msgstr "Vistun gaf einhverjar aðvaranir"
 
-#: pdfarranger/pdfarranger.py:1168
+#: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
 "Þrátt fyrir aðvaranirnar er skjalið/skölin ekki með nein sýnileg vandamál."
 
-#: pdfarranger/pdfarranger.py:1175
+#: pdfarranger/pdfarranger.py:1171
 msgid "Don't show warnings when saving again."
 msgstr "Ekki birta neinar aðvaranir aftur við vistun."
 
-#: pdfarranger/pdfarranger.py:1205
+#: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
 msgstr "Vista…"
 
-#: pdfarranger/pdfarranger.py:1239
+#: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
 msgstr "Flytja inn…"
 
-#: pdfarranger/pdfarranger.py:1333
+#: pdfarranger/pdfarranger.py:1329
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Límd gögn ekki gild. Hætti við límingu."
 
-#: pdfarranger/pdfarranger.py:1437
+#: pdfarranger/pdfarranger.py:1433
 msgid "PDF document is damaged"
 msgstr "PDF-skjal er skemmt"
 
-#: pdfarranger/pdfarranger.py:2298
+#: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr "%s er verkfæri til að endurraða og breyta PDF-skrám."
 
-#: pdfarranger/pdfarranger.py:2301
+#: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr "Notar libqpdf %s, pikepdf %s, GTK %s og Python %s."
 
-#: pdfarranger/pdfarranger.py:2307
+#: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
 msgstr "Höfundar og önnur framlög"
 
-#: pdfarranger/pdfarranger.py:2312
+#: pdfarranger/pdfarranger.py:2308
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public notkunarleyfið útgáfa 3."
 
-#: pdfarranger/pdfarranger.py:2330
+#: pdfarranger/pdfarranger.py:2326
 msgid "Selected pages: "
 msgstr "Valdar síður:"
 
-#: pdfarranger/pdfarranger.py:2335
+#: pdfarranger/pdfarranger.py:2331
 msgid "Page Size:"
 msgstr "Blaðsíðustærð:"
 
@@ -443,10 +449,6 @@ msgstr "Snúa til vinstri"
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
 msgstr "Snúa til hægri"
-
-#: data/menu.ui.h:1
-msgid "_Open"
-msgstr "_Opna"
 
 #: data/menu.ui.h:2
 msgid "_Import"
@@ -619,9 +621,3 @@ msgstr "_Um hugbúnaðinn"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Sérstök _líming"
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Opnaðu skrá og bættu því aftan við fyrirliggjandi skjal"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Fjöldi síðna"

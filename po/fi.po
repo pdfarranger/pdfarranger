@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-09 11:36+0200\n"
+"POT-Creation-Date: 2022-08-13 15:24+0200\n"
 "PO-Revision-Date: 2021-11-02 18:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
@@ -18,177 +18,177 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pdfarranger/core.py:85
+#: pdfarranger/core.py:87
 msgid "page"
 msgstr "sivu"
 
-#: pdfarranger/core.py:193
+#: pdfarranger/core.py:191
 msgid "Password required"
 msgstr "Salasana tarvitaan"
 
-#: pdfarranger/core.py:204
+#: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Salasana pysyy muistissa kunnes ohjelma suljetaan."
 
-#: pdfarranger/core.py:205
+#: pdfarranger/core.py:203
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
 "Tiedosto “{}” on  lukittu ja vaatii salasanan ennen kuin se voidaan avata."
 
-#: pdfarranger/core.py:215
+#: pdfarranger/core.py:213
 msgid "Password"
 msgstr "Salasana"
 
-#: pdfarranger/core.py:266 pdfarranger/pdfarranger.py:1234
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
 msgid "Unknown file format"
 msgstr "Tuntematon tiedostomuoto"
 
-#: pdfarranger/core.py:282
+#: pdfarranger/core.py:305
 msgid "Image files are only supported with img2pdf"
 msgstr "Kuvatiedostoja tuetaan voin jos img2pdf on asennettu"
 
-#: pdfarranger/core.py:304
+#: pdfarranger/core.py:311
 msgid "Image format is not supported by img2pdf"
 msgstr "Img2pdf ei tue kuvamuotoa"
 
-#: pdfarranger/core.py:306 pdfarranger/pdfarranger.py:1244
+#: pdfarranger/core.py:314
+msgid "Clipboard image"
+msgstr ""
+
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
 msgstr "Tiedosto ei ole pdf eikä kuva"
 
-#: pdfarranger/croputils.py:114
+#: pdfarranger/croputils.py:115
 msgid "Scale factor"
 msgstr "Skaalauskerroin"
 
-#: pdfarranger/croputils.py:120
+#: pdfarranger/croputils.py:121
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:136
+#: pdfarranger/croputils.py:137
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Left"
 msgstr "Vasen"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Right"
 msgstr "Oikea"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Top"
 msgstr "Yllä"
 
-#: pdfarranger/croputils.py:146
+#: pdfarranger/croputils.py:147
 msgid "Bottom"
 msgstr "Alla"
 
-#: pdfarranger/croputils.py:150
+#: pdfarranger/croputils.py:151
 msgid "Crop Margins"
 msgstr "Rajaa marginaalit"
 
-#: pdfarranger/croputils.py:158
+#: pdfarranger/croputils.py:159
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
-"Rajaus ei poista sisältöä PDF-tiedostosta, vaan vain piilottaa sen."
+msgstr "Rajaus ei poista sisältöä PDF-tiedostosta, vaan vain piilottaa sen."
 
-#: pdfarranger/croputils.py:167
+#: pdfarranger/croputils.py:168
+#, python-format
 msgid "% of width"
-msgstr "% leveydestä"
+msgstr ""
 
-#: pdfarranger/croputils.py:167
-msgid "% of height"
-msgstr "% korkeudesta"
-
-#: pdfarranger/croputils.py:214
+#: pdfarranger/croputils.py:215
 msgid "Page format"
 msgstr "Sivun muoto"
 
-#: pdfarranger/croputils.py:229 pdfarranger/croputils.py:233
-#: pdfarranger/croputils.py:353
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:333
 msgid "Width"
 msgstr "Leveys"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:354
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Height"
 msgstr "Korkeus"
 
-#: pdfarranger/croputils.py:232
+#: pdfarranger/croputils.py:233
 msgid "Relative"
 msgstr "Suhteellinen"
 
-#: pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:236
 msgid "Page Size"
 msgstr "Sivun koko"
 
-#: pdfarranger/croputils.py:343
+#: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
 msgstr "Lisää tyhjä sivu"
 
-#: pdfarranger/exporter.py:119
+#: pdfarranger/exporter.py:130
 msgid "Warning"
 msgstr "Varoitus"
 
-#: pdfarranger/exporter.py:124
+#: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
 msgstr "Lomakkeet ja kirjanmerkit menetetään tallennettaessa."
 
-#: pdfarranger/exporter.py:126
+#: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Älä näytä tätä viestiä enää."
 
-#: pdfarranger/metadata.py:40
+#: pdfarranger/metadata.py:42
 msgid "Title"
 msgstr "Otsikko"
 
-#: pdfarranger/metadata.py:41
+#: pdfarranger/metadata.py:43
 msgid "Subject"
 msgstr "Aihe"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:44
 msgid "Keywords"
 msgstr "Avainsanat"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:45
 msgid "Producer"
 msgstr "PDF-tuottaja"
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:46
 msgid "Creator"
 msgstr "Tekijä"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:47
 msgid "Creator tool"
 msgstr "Sovellus"
 
-#: pdfarranger/metadata.py:46
+#: pdfarranger/metadata.py:48
 msgid "Created"
 msgstr "Luotu"
 
-#: pdfarranger/metadata.py:47
+#: pdfarranger/metadata.py:49
 msgid "Modified"
 msgstr "Muokattu"
 
-#: pdfarranger/metadata.py:151
+#: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
 msgstr "Päivämäärämuoto on virheellinen."
 
-#: pdfarranger/metadata.py:180
+#: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Muokkaa ominaisuuksia"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Property"
 msgstr "Ominaisuus"
 
-#: pdfarranger/metadata.py:194
+#: pdfarranger/metadata.py:212
 msgid "Value"
 msgstr "Arvo"
 
-#: pdfarranger/pdfarranger.py:271
+#: pdfarranger/pdfarranger.py:260
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -198,108 +198,143 @@ msgstr ""
 "PDF Arranger on pieni python-gtk ohjelma mikä auttaa käyttäjää yhdistämään "
 "ja järjestämään PDF-tiedostoja. Ohjelma käyttää pikepdf taustalla."
 
-#: pdfarranger/pdfarranger.py:282
+#: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Tulosta PDF Arranger versio ja sulje"
 
-#: pdfarranger/pdfarranger.py:290
+#: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
 msgstr "Tiedostoja avattavaksi"
 
-#: pdfarranger/pdfarranger.py:395
+#: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
 msgstr "Kaikki sivut on oltava saman kokoiset."
 
-#: pdfarranger/pdfarranger.py:421
+#: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
 msgstr "Kaikki tuetut tiedostot"
 
-#: pdfarranger/pdfarranger.py:425
+#: pdfarranger/pdfarranger.py:460
 msgid "PDF files"
 msgstr "PDF tiedostot"
 
-#: pdfarranger/pdfarranger.py:432
+#: pdfarranger/pdfarranger.py:467
 msgid "All files"
 msgstr "Kaikki tiedostot"
 
-#: pdfarranger/pdfarranger.py:437
+#: pdfarranger/pdfarranger.py:472
 msgid "Supported image files"
 msgstr "Tuetut kuvatiedostot"
 
-#: pdfarranger/pdfarranger.py:634
+#: pdfarranger/pdfarranger.py:691
 msgid "Rendering…"
 msgstr "Renderöi…"
 
-#: pdfarranger/pdfarranger.py:728
+#: pdfarranger/pdfarranger.py:769
 msgid "untitled"
 msgstr "Nimetön"
 
-#: pdfarranger/pdfarranger.py:865
-msgid "Save changes to “{}” before closing?"
-msgstr "Tallenna muutokset “{}” ennen sulkemista?"
-
-#: pdfarranger/pdfarranger.py:867
-msgid "Save changes before closing?"
-msgstr "Tallenna muutokset ennen sulkemista?"
-
-#: pdfarranger/pdfarranger.py:869
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Muutokset menetetään jos et tallenna niitä."
-
-#: pdfarranger/pdfarranger.py:870
-msgid "Do_n’t Save"
-msgstr "_Älä tallenna"
-
-#: pdfarranger/pdfarranger.py:870
+#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
+#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: pdfarranger/pdfarranger.py:870 data/menu.ui.h:3
+#: pdfarranger/pdfarranger.py:924
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Muutokset menetetään jos et tallenna niitä."
+
+#: pdfarranger/pdfarranger.py:925
+msgid "Do_n’t Save"
+msgstr "_Älä tallenna"
+
+#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
+#: data/menu.ui.h:4
 msgid "_Save"
 msgstr "T_allenna"
 
-#: pdfarranger/pdfarranger.py:920
+#: pdfarranger/pdfarranger.py:934
+msgid "Discard changes and close?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
+msgid "_Close"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:940
+msgid "Save changes to “{}” before closing?"
+msgstr "Tallenna muutokset “{}” ennen sulkemista?"
+
+#: pdfarranger/pdfarranger.py:943
+msgid "Save changes before closing?"
+msgstr "Tallenna muutokset ennen sulkemista?"
+
+#: pdfarranger/pdfarranger.py:968
+msgid "Discard changes and quit?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "_Sulje"
+
+#: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
 msgstr "Vie…"
 
-#: pdfarranger/pdfarranger.py:1030
+#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
+msgid "_Open"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1092
+msgid "Open…"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1163
+msgid "Saving produced some warnings"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1164
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1201
+msgid "Saving…"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
 msgstr "Tuo…"
 
-#: pdfarranger/pdfarranger.py:1137
+#: pdfarranger/pdfarranger.py:1329
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Liitetty data ei hyväksytty."
 
-#: pdfarranger/pdfarranger.py:1238
+#: pdfarranger/pdfarranger.py:1433
 msgid "PDF document is damaged"
 msgstr "PDF tiedosto on vioittunut"
 
-#: pdfarranger/pdfarranger.py:2067
+#: pdfarranger/pdfarranger.py:2294
 #, python-format
-msgid ""
-"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
-"and Python"
+msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
-"% s on työkalu PDF-tiedostojen järjestämiseen ja muokkaamiseen. Kehitetty "
-"GTK +: lla ja Pythonilla"
 
-#: pdfarranger/pdfarranger.py:2070
-msgid "(%s uses libqpdf %s and pikepdf %s)"
-msgstr "(%s käyttää libqpdf %s ja pikepdf %s)"
+#: pdfarranger/pdfarranger.py:2297
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:2072
+#: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
 msgstr "Ylläpitäjät ja avustajat"
 
-#: pdfarranger/pdfarranger.py:2077
+#: pdfarranger/pdfarranger.py:2308
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
-#: pdfarranger/pdfarranger.py:2105
+#: pdfarranger/pdfarranger.py:2326
 msgid "Selected pages: "
 msgstr "Valitut sivut: "
 
-#: pdfarranger/pdfarranger.py:2110
+#: pdfarranger/pdfarranger.py:2331
 msgid "Page Size:"
 msgstr "Sivun koko:"
 
@@ -307,61 +342,57 @@ msgstr "Sivun koko:"
 msgid "Split Pages"
 msgstr "Jaa sivu"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Rivejä"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Pystysuora jako"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
 msgstr "Vaakasuora jako"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal column width"
 msgstr "Sama sarakeleveys"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal row height"
 msgstr "Sama rivikorkeus"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Col"
 msgstr "#Sarake"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Row"
 msgstr "#Rivi"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Leveys %"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "Korkeus %"
 
 #: data/pdfarranger.ui.h:1
-msgid "Open a file and append it to the current document"
-msgstr "Tuo tiedosto"
+msgid "Open"
+msgstr ""
 
-#: data/pdfarranger.ui.h:2
+#: data/pdfarranger.ui.h:3
 msgid "Save"
 msgstr "Tallenna"
 
-#: data/pdfarranger.ui.h:3
+#: data/pdfarranger.ui.h:4
 msgid "Save As"
 msgstr "Tallenna nimellä"
-
-#: data/pdfarranger.ui.h:4
-msgid "Number of Pages"
-msgstr "Sivujen määrä"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
@@ -383,162 +414,170 @@ msgstr "Käännä vasemmalle"
 msgid "Rotate Right"
 msgstr "Käännä oikealle"
 
-#: data/menu.ui.h:1
+#: data/menu.ui.h:2
 msgid "_Import"
 msgstr "_Tuo"
 
-#: data/menu.ui.h:2
+#: data/menu.ui.h:3
 msgid "_New Window"
 msgstr "_Uusi ikkuna"
 
-#: data/menu.ui.h:4
+#: data/menu.ui.h:5
 msgid "Save _As…"
 msgstr "Tallenna _nimellä…"
 
-#: data/menu.ui.h:5
+#: data/menu.ui.h:6
 msgid "E_xport"
 msgstr "Vi_e"
 
-#: data/menu.ui.h:6
+#: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
 msgstr "Vi_e valitut sivut yhteen tiedostoon…"
 
-#: data/menu.ui.h:7
+#: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
 msgstr "Vie valitut sivut _omiin tiedostoihin…"
 
-#: data/menu.ui.h:8
+#: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
 msgstr "Vie kaikki sivut omiin _tiedostoihin…"
 
-#: data/menu.ui.h:9
+#: data/menu.ui.h:10
+msgid "_Print…"
+msgstr ""
+
+#: data/menu.ui.h:11
 msgid "_Undo"
 msgstr "_Kumoa"
 
-#: data/menu.ui.h:10
+#: data/menu.ui.h:12
 msgid "_Redo"
 msgstr "Tee uu_delleen"
 
-#: data/menu.ui.h:11
+#: data/menu.ui.h:13
 msgid "_Edit"
 msgstr "_Muokkaa"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:14
 msgid "Rotate _Left"
 msgstr "Käännä v_asemmalle"
 
-#: data/menu.ui.h:13
+#: data/menu.ui.h:15
 msgid "_Rotate Right"
 msgstr "Käännä _oikealle"
 
-#: data/menu.ui.h:14
+#: data/menu.ui.h:16
 msgid "_Page Format"
 msgstr "Sivun m_uoto"
 
-#: data/menu.ui.h:15
+#: data/menu.ui.h:17
 msgid "Crop White Borders"
 msgstr "Rajaa valkoiset reunat"
 
-#: data/menu.ui.h:16
+#: data/menu.ui.h:18
 msgid "_Delete"
 msgstr "Poi_sta"
 
-#: data/menu.ui.h:17
+#: data/menu.ui.h:19
 msgid "Dupl_icate"
 msgstr "Monis_ta"
 
-#: data/menu.ui.h:18
+#: data/menu.ui.h:20
 msgid "Re_verse Order"
 msgstr "_Käännä järjestys"
 
-#: data/menu.ui.h:19
+#: data/menu.ui.h:21
 msgid "_Split Pages"
 msgstr "_Jaa sivu"
 
-#: data/menu.ui.h:20
+#: data/menu.ui.h:22
 msgid "Cu_t"
 msgstr "_Leikkaa"
 
-#: data/menu.ui.h:21
+#: data/menu.ui.h:23
 msgid "_Copy"
 msgstr "Ko_pioi"
 
-#: data/menu.ui.h:22
+#: data/menu.ui.h:24
 msgid "Paste _After"
 msgstr "Liitä j_älkeen"
 
-#: data/menu.ui.h:23
+#: data/menu.ui.h:25
 msgid "Paste _Before"
 msgstr "Liitä _ennen"
 
-#: data/menu.ui.h:24
+#: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
 msgstr "Liitä paritto_mina sivuina"
 
-#: data/menu.ui.h:25
+#: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
 msgstr "Liitä pa_rillisina sivuina"
 
-#: data/menu.ui.h:26
+#: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
 msgstr "L_isää tyhjä sivu"
 
-#: data/menu.ui.h:27
+#: data/menu.ui.h:29
 msgid "Generate Booklet"
 msgstr "Luo kirjanen"
 
-#: data/menu.ui.h:28
+#: data/menu.ui.h:30
 msgid "_Select"
 msgstr "_Valitse"
 
-#: data/menu.ui.h:29
+#: data/menu.ui.h:31
 msgid "Select _All"
 msgstr "_Valitse kaikki"
 
-#: data/menu.ui.h:30
+#: data/menu.ui.h:32
 msgid "_Deselect All"
 msgstr "_Poista valinta"
 
-#: data/menu.ui.h:31
+#: data/menu.ui.h:33
 msgid "Select _Odd Pages"
 msgstr "Valitse paritto_mat sivut"
 
-#: data/menu.ui.h:32
+#: data/menu.ui.h:34
 msgid "Select _Even Pages"
 msgstr "Valitse parilli_set sivut"
 
-#: data/menu.ui.h:33
+#: data/menu.ui.h:35
 msgid "All From _Same File"
 msgstr "Kaikki samasta _tiedostosta"
 
-#: data/menu.ui.h:34
+#: data/menu.ui.h:36
 msgid "Same Page _Format"
 msgstr "Sama s_ivunmuoto"
 
-#: data/menu.ui.h:35
+#: data/menu.ui.h:37
 msgid "_Invert Selection"
 msgstr "K_äänteinen valinta"
 
-#: data/menu.ui.h:36
+#: data/menu.ui.h:38
+msgid "_View"
+msgstr ""
+
+#: data/menu.ui.h:39
 msgid "Zoom _In"
 msgstr "L_ähennä"
 
-#: data/menu.ui.h:37
+#: data/menu.ui.h:40
 msgid "Zoom _Out"
 msgstr "L_oitonna"
 
-#: data/menu.ui.h:38
+#: data/menu.ui.h:42
+msgid "Full_screen"
+msgstr ""
+
+#: data/menu.ui.h:43
 msgid "Edit _Properties"
 msgstr "Muokkaa ominaisuuks_ia"
 
-#: data/menu.ui.h:39
+#: data/menu.ui.h:44
 msgid "_About"
 msgstr "Tietoja - PD_F Arranger"
 
-#: data/menu.ui.h:40
-msgid "_Quit"
-msgstr "_Sulje"
-
-#: data/menu.ui.h:41
+#: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Liitä määräte_n"

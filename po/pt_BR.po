@@ -619,9 +619,3 @@ msgstr "S_obre"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Colar _especial"
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Abrir um arquivo e adicioná-lo ao documento atual"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Número de páginas"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"POT-Creation-Date: 2022-08-13 15:24+0200\n"
 "PO-Revision-Date: 2022-07-30 19:50+0200\n"
 "Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: French - France <>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "Password"
 msgstr "Mot de passe"
 
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
 msgid "Unknown file format"
 msgstr "Format de fichier inconnu"
 
@@ -63,7 +63,7 @@ msgstr "Le format d’image n’est pas pris en charge par img2pdf"
 msgid "Clipboard image"
 msgstr "Image du presse-papier"
 
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
 msgstr "Le fichier n’est ni un PDF ni une image"
 
@@ -258,6 +258,7 @@ msgid "untitled"
 msgstr "sans titre"
 
 #: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
+#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
 msgid "_Cancel"
 msgstr "A_nnuler"
 
@@ -269,7 +270,8 @@ msgstr "Vos modifications seront perdues si vous ne les enregistrez pas."
 msgid "Do_n’t Save"
 msgstr "Ne _pas enregistrer"
 
-#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
+#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
+#: data/menu.ui.h:4
 msgid "_Save"
 msgstr "_Enregistrer"
 
@@ -313,63 +315,67 @@ msgstr "Enregistrer sous…"
 msgid "Export…"
 msgstr "Exporter…"
 
-#: pdfarranger/pdfarranger.py:1096
+#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
+msgid "_Open"
+msgstr "_Ouvrir"
+
+#: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
 msgstr "Ouvrir…"
 
-#: pdfarranger/pdfarranger.py:1167
+#: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
 msgstr "La sauvegarde a produit des avertissements"
 
-#: pdfarranger/pdfarranger.py:1168
+#: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
 "Malgré les avertissements, le(s) document(s) ne devrai(en)t pas présenter de "
 "problèmes visibles."
 
-#: pdfarranger/pdfarranger.py:1175
+#: pdfarranger/pdfarranger.py:1171
 msgid "Don't show warnings when saving again."
 msgstr "Ne plus montrer cet avertissement."
 
-#: pdfarranger/pdfarranger.py:1205
+#: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
 msgstr "Enregistrer…"
 
-#: pdfarranger/pdfarranger.py:1239
+#: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
 msgstr "Importer…"
 
-#: pdfarranger/pdfarranger.py:1333
+#: pdfarranger/pdfarranger.py:1329
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Données collées non valides. Annulation du collage."
 
-#: pdfarranger/pdfarranger.py:1437
+#: pdfarranger/pdfarranger.py:1433
 msgid "PDF document is damaged"
 msgstr "Le document PDF est endommagé"
 
-#: pdfarranger/pdfarranger.py:2298
+#: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr "%s est un outil pour réorganiser et modifier des fichiers PDF."
 
-#: pdfarranger/pdfarranger.py:2301
+#: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr "Il utilise libqpdf %s, pikepdf %s, GTK %s et Python %s."
 
-#: pdfarranger/pdfarranger.py:2307
+#: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
 msgstr "Mainteneurs et contributeurs"
 
-#: pdfarranger/pdfarranger.py:2312
+#: pdfarranger/pdfarranger.py:2308
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "Licence publique générale GNU (GPL), version 3."
 
-#: pdfarranger/pdfarranger.py:2330
+#: pdfarranger/pdfarranger.py:2326
 msgid "Selected pages: "
 msgstr "Pages sélectionnées : "
 
-#: pdfarranger/pdfarranger.py:2335
+#: pdfarranger/pdfarranger.py:2331
 msgid "Page Size:"
 msgstr "Dimensions de la page :"
 
@@ -452,10 +458,6 @@ msgstr "Rotation vers la gauche"
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
 msgstr "Rotation vers la droite"
-
-#: data/menu.ui.h:1
-msgid "_Open"
-msgstr "_Ouvrir"
 
 #: data/menu.ui.h:2
 msgid "_Import"
@@ -628,9 +630,3 @@ msgstr "À _propos"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Coll_age spécial"
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Ouvrir un fichier et l’ajouter au document actuel"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Nombre de pages"

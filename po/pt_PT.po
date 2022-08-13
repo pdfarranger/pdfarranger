@@ -624,15 +624,3 @@ msgstr "_Acerca"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "Colar _especial"
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Abrir um ficheiro e anexar ao documento atual"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Número de páginas"
-
-#~ msgid "Grid splitting"
-#~ msgstr "Separação em grelha"
-
-#~ msgid "_Grid Split"
-#~ msgstr "Separação em _grelha"

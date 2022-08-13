@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"POT-Creation-Date: 2022-08-13 15:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
 msgid "Unknown file format"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Clipboard image"
 msgstr ""
 
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
 msgstr ""
 
@@ -244,6 +244,7 @@ msgid "untitled"
 msgstr ""
 
 #: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
+#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
 msgid "_Cancel"
 msgstr ""
 
@@ -255,7 +256,8 @@ msgstr ""
 msgid "Do_n’t Save"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
+#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
+#: data/menu.ui.h:4
 msgid "_Save"
 msgstr ""
 
@@ -299,61 +301,65 @@ msgstr ""
 msgid "Export…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1096
+#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
+msgid "_Open"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1167
+#: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1168
+#: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1175
+#: pdfarranger/pdfarranger.py:1171
 msgid "Don't show warnings when saving again."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1205
+#: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1239
+#: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1333
+#: pdfarranger/pdfarranger.py:1329
 msgid "Pasted data not valid. Aborting paste."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:1437
+#: pdfarranger/pdfarranger.py:1433
 msgid "PDF document is damaged"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2298
+#: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2301
+#: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2307
+#: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2312
+#: pdfarranger/pdfarranger.py:2308
 msgid "GNU General Public License (GPL) Version 3."
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2330
+#: pdfarranger/pdfarranger.py:2326
 msgid "Selected pages: "
 msgstr ""
 
-#: pdfarranger/pdfarranger.py:2335
+#: pdfarranger/pdfarranger.py:2331
 msgid "Page Size:"
 msgstr ""
 
@@ -435,10 +441,6 @@ msgstr ""
 
 #: data/pdfarranger.ui.h:9
 msgid "Rotate Right"
-msgstr ""
-
-#: data/menu.ui.h:1
-msgid "_Open"
 msgstr ""
 
 #: data/menu.ui.h:2

@@ -616,16 +616,3 @@ msgstr "Σ_χετικά"
 #: data/menu.ui.h:47
 msgid "Past_e Special"
 msgstr "_Ειδική επικόλληση"
-
-
-#~ msgid "Open a file and append it to the current document"
-#~ msgstr "Άνοιγμα ενός αρχείου και προσάρτηση στο τρέχον έγγραφο"
-
-#~ msgid "Number of Pages"
-#~ msgstr "Αριθμός Σελίδων"
-
-#~ msgid "Paste Interleave _Odd"
-#~ msgstr "Επικόλληση Εναλλάξ Μ_ονών"
-
-#~ msgid "Paste Interleave _Even"
-#~ msgstr "Επικόλληση _Εναλλάξ Ζυγών"
