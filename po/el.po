@@ -337,8 +337,8 @@ msgstr "Το έγγραφο PDF είναι κατεστραμένο"
 
 #: pdfarranger/pdfarranger.py:2272
 #, python-format
-msgid "%s is a tool for rearranging and modifying PDF files. "
-msgstr "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF. "
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF."
 
 #: pdfarranger/pdfarranger.py:2275
 #, python-format

@@ -334,8 +334,8 @@ msgstr "מסמך ה־PDF פגום"
 
 #: pdfarranger/pdfarranger.py:2272
 #, python-format
-msgid "%s is a tool for rearranging and modifying PDF files. "
-msgstr "%s הוא כלי לסידור מחדש ועריכה של קובצי PDF. "
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s הוא כלי לסידור מחדש ועריכה של קובצי PDF."
 
 #: pdfarranger/pdfarranger.py:2275
 #, python-format
