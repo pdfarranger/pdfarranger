@@ -1,534 +1,627 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Pilar Embid Giner <embid_mar@gva.es>, 2014.
+# PDF Arranger - Catalan@Valencian translation.
+# Copyright (C) Pilar Embid Giner <embid_mar@gva.es>, 2014.
+# This file is distributed under the same license as the pdfarranger package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 17:35+0100\n"
-"PO-Revision-Date: 2018-10-10 09:09+0200\n"
-"Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
+"POT-Creation-Date: 2022-08-13 11:15+0100\n"
+"PO-Revision-Date:  2022-08-13 11:15+0200\n"
+"Last-Translator: Juanma1980 <juanma1980@gmail.com>\n"
 "Language-Team: LliureX\n"
-"Language: ca\n"
+"Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.0\n"
 
-#: pdfarranger/core.py:80
+#: pdfarranger/core.py:87
 msgid "page"
 msgstr "pàgina"
 
-#: pdfarranger/core.py:175
+#: pdfarranger/core.py:191
 msgid "Password required"
-msgstr ""
+msgstr "Contrasenya requerida"
 
-#: pdfarranger/core.py:186
+#: pdfarranger/core.py:202
 msgid "The password will be remembered until you close PDF Arranger."
-msgstr ""
+msgstr "La contrasenya es recordarà fins que es tanque el PDF Arranger."
 
-#: pdfarranger/core.py:187
+#: pdfarranger/core.py:203
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
+"El document “{}” es troba blocat i cal una contrasenya abans que es "
+"puga obrir."
 
-#: pdfarranger/core.py:197
+#: pdfarranger/core.py:213
 msgid "Password"
-msgstr ""
+msgstr "Contrasenya"
 
-#: pdfarranger/core.py:241 pdfarranger/pdfarranger.py:989
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
 msgid "Unknown file format"
-msgstr ""
+msgstr "Format de fitxer desconegut"
 
-#: pdfarranger/core.py:256
+#: pdfarranger/core.py:305
 msgid "Image files are only supported with img2pdf"
-msgstr ""
+msgstr "Els fitxers d'imatge només són compatibles amb img2pdf"
 
-#: pdfarranger/core.py:278
+#: pdfarranger/core.py:311
 msgid "Image format is not supported by img2pdf"
-msgstr ""
+msgstr "El format de la imatge no està admès per img2pdf"
 
-#: pdfarranger/core.py:280 pdfarranger/pdfarranger.py:999
+#: pdfarranger/core.py:314
+msgid "Clipboard image"
+msgstr "Imatge del porta-retalls"
+
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
 msgid "File is neither pdf nor image"
-msgstr ""
+msgstr "El fitxer no és ni pdf ni imatge"
 
-#: pdfarranger/croputils.py:113
+#: pdfarranger/croputils.py:115
 msgid "Scale factor"
-msgstr ""
+msgstr "Factor d'escala"
 
-#: pdfarranger/croputils.py:119
+#: pdfarranger/croputils.py:121
 msgid "%"
-msgstr ""
+msgstr "%"
 
-#: pdfarranger/croputils.py:135
+#: pdfarranger/croputils.py:137
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:147
 msgid "Left"
 msgstr "Esquerra"
 
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:147
 msgid "Right"
 msgstr "Dreta"
 
-# Netscape_4.7->String:RESDLL.DLL
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:147
 msgid "Top"
-msgstr "Dalt"
+msgstr "Superior"
 
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfarranger/croputils.py:145
+#: pdfarranger/croputils.py:147
 msgid "Bottom"
-msgstr "Baix"
+msgstr "Inferior"
 
-#: pdfarranger/croputils.py:149
+#: pdfarranger/croputils.py:151
 msgid "Crop Margins"
-msgstr "Retalla els marges"
+msgstr "Retalla els margens"
 
-#: pdfarranger/croputils.py:157
+#: pdfarranger/croputils.py:159
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
+msgstr "Escapçar no elimina cap contingut del fitxer PDF, només l'oculta."
 
-#: pdfarranger/croputils.py:166
+#: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of width"
-msgstr "% d'amplària"
+msgstr "% de l'amplada"
 
-#: pdfarranger/croputils.py:166
+#: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of height"
-msgstr "% d'alçària"
+msgstr "% de l'alçada"
 
-#: pdfarranger/croputils.py:210
+#: pdfarranger/croputils.py:215
 msgid "Page format"
-msgstr ""
+msgstr "Format de la pàgina"
 
-#: pdfarranger/croputils.py:225 pdfarranger/croputils.py:229
-#: pdfarranger/croputils.py:338
+#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
+#: pdfarranger/croputils.py:333
 msgid "Width"
-msgstr ""
+msgstr "Amplada"
 
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-#: pdfarranger/croputils.py:226 pdfarranger/croputils.py:230
-#: pdfarranger/croputils.py:339
-#, fuzzy
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Height"
-msgstr "Dreta"
+msgstr "Alçada"
 
-#: pdfarranger/croputils.py:228
+#: pdfarranger/croputils.py:233
 msgid "Relative"
-msgstr ""
+msgstr "Relatiu"
 
-#: pdfarranger/croputils.py:231
+#: pdfarranger/croputils.py:236
 msgid "Page Size"
-msgstr ""
+msgstr "Mida de la pàgina"
 
-#: pdfarranger/croputils.py:328
+#: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
-msgstr ""
+msgstr "Insereix una pàgina en blanc"
 
-#: pdfarranger/exporter.py:106
+#: pdfarranger/exporter.py:130
 msgid "Warning"
-msgstr ""
+msgstr "Avís"
 
-#: pdfarranger/exporter.py:111
+#: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
-msgstr ""
+msgstr "Els formularis i els contorns es perden en alçar."
 
-#: pdfarranger/exporter.py:113
+#: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
-msgstr ""
+msgstr "No tornes a mostrar aquest diàleg."
 
-#: pdfarranger/metadata.py:40
-msgid "Title"
-msgstr ""
+#: pdfarranger/exporter.py:342
+#, fuzzy
+msgid "Printing…"
+msgstr "Imprimint…"
 
-#: pdfarranger/metadata.py:41
-msgid "Subject"
-msgstr ""
+#: pdfarranger/exporter.py:354
+#, fuzzy
+msgid "Rendering Preview…"
+msgstr "Renderitzant…"
 
 #: pdfarranger/metadata.py:42
-msgid "Keywords"
-msgstr ""
+msgid "Title"
+msgstr "Títol"
 
 #: pdfarranger/metadata.py:43
-msgid "Producer"
-msgstr ""
+msgid "Subject"
+msgstr "Assumpte"
 
 #: pdfarranger/metadata.py:44
-msgid "Creator"
-msgstr ""
+msgid "Keywords"
+msgstr "Paraules clau"
 
 #: pdfarranger/metadata.py:45
-msgid "Creator tool"
-msgstr ""
+msgid "Producer"
+msgstr "Productor"
 
 #: pdfarranger/metadata.py:46
-msgid "Created"
-msgstr ""
+msgid "Creator"
+msgstr "Creador"
 
 #: pdfarranger/metadata.py:47
+msgid "Creator tool"
+msgstr "Eina creadora"
+
+#: pdfarranger/metadata.py:48
+msgid "Created"
+msgstr "Creat"
+
+#: pdfarranger/metadata.py:49
 msgid "Modified"
-msgstr ""
+msgstr "Modificat"
 
-#: pdfarranger/metadata.py:150
+#: pdfarranger/metadata.py:169
 msgid "Invalid date format. Input discarded."
-msgstr ""
+msgstr "Format de data no vàlid. S'ha descartat l'entrada."
 
-#: pdfarranger/metadata.py:179
+#: pdfarranger/metadata.py:198
 msgid "Edit properties"
-msgstr ""
+msgstr "Edita les propietats"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:212
 msgid "Property"
-msgstr ""
+msgstr "Propietat"
 
-#: pdfarranger/metadata.py:192
+#: pdfarranger/metadata.py:212
 msgid "Value"
+msgstr "Valor"
+
+#: pdfarranger/pdfarranger.py:260
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
 msgstr ""
+"PFD Arranger (Arranjador de PDFs) és una aplicació sentzilla feta amb Python i GTK que ajuda "
+"al usuari a fusionar o dividir documents PDF i girar, escapçar o reordenar "
+"les pàgines d'aquests mitjançant una interfície gràfica intuïtiva. És el "
+"frontal pel programari Pikepdf."
 
-#: pdfarranger/pdfarranger.py:341
-#, fuzzy
+#: pdfarranger/pdfarranger.py:271
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Imprimeix la versió de l'Arranjador de PDFs i ix"
+
+#: pdfarranger/pdfarranger.py:279
+msgid "File(s) to open"
+msgstr "Fitxer(s) a obrir"
+
+#: pdfarranger/pdfarranger.py:428
+msgid "All pages must have the same size."
+msgstr "Totes les pàgines han de tindre la mateixa mida."
+
+#: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
-msgstr "Tots els fitxers"
+msgstr "Tots els fitxers admesos"
 
-#: pdfarranger/pdfarranger.py:345
+#: pdfarranger/pdfarranger.py:460
 msgid "PDF files"
 msgstr "Fitxers PDF"
 
-#: pdfarranger/pdfarranger.py:352
+#: pdfarranger/pdfarranger.py:467
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: pdfarranger/pdfarranger.py:357
+#: pdfarranger/pdfarranger.py:472
 msgid "Supported image files"
-msgstr ""
+msgstr "Fitxers d'imatge compatibles"
 
-#: pdfarranger/pdfarranger.py:531
+#: pdfarranger/pdfarranger.py:691
+msgid "Rendering…"
+msgstr "Renderitzant…"
+
+#: pdfarranger/pdfarranger.py:769
 msgid "untitled"
-msgstr ""
+msgstr "sense títol"
 
-#: pdfarranger/pdfarranger.py:625
-msgid "Save changes to “{}” before closing?"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:627
-msgid "Save changes before closing?"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:629
-msgid "Your changes will be lost if you don’t save them."
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:630
-msgid "Do_n’t Save"
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:630
+#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
 msgid "_Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
-#: pdfarranger/pdfarranger.py:630 data/menu.ui.h:3
-#, fuzzy
+#: pdfarranger/pdfarranger.py:924
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Els teus canvis es perdran si no els alces."
+
+#: pdfarranger/pdfarranger.py:925
+msgid "Do_n’t Save"
+msgstr "No alçar"
+
+#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
 msgid "_Save"
-msgstr "Guarda"
+msgstr "Alça"
 
-#: pdfarranger/pdfarranger.py:671
+#: pdfarranger/pdfarranger.py:934
+msgid "Discard changes and close?"
+msgstr "Descartar els canvis i tancar?"
+
+#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
+msgid "_Close"
+msgstr "Tancar"
+
+#: pdfarranger/pdfarranger.py:940
+msgid "Save changes to “{}” before closing?"
+msgstr "Voleu alçar els canvis a “{}” abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:943
+msgid "Save changes before closing?"
+msgstr "Voleu alçar els canvis abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:968
+msgid "Discard changes and quit?"
+msgstr "Descartar canvis i eixir?"
+
+#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
+msgid "_Quit"
+msgstr "_Ix"
+
+#: pdfarranger/pdfarranger.py:974
+#, fuzzy
+msgid "Save changes to “{}” before quitting?"
+msgstr "Voleu alçar els canvis a “{}” abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:977
+#, fuzzy
+msgid "Save changes before quitting?"
+msgstr "Voleu alçar els canvis abans de tancar?"
+
+#: pdfarranger/pdfarranger.py:1019
+#, fuzzy
+msgid "Save As…"
+msgstr "Anomena i alça…"
+
+#: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
 msgstr "Exporta…"
 
-#: pdfarranger/pdfarranger.py:784
+#: pdfarranger/pdfarranger.py:1096
+msgid "Open…"
+msgstr "Obrir"
+
+#: pdfarranger/pdfarranger.py:1167
+msgid "Saving produced some warnings"
+msgstr "S'han produït avisos al alçar"
+
+#: pdfarranger/pdfarranger.py:1168
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr "A banda dels avisos el(s) document(s) no semblen tindre cap problema."
+
+#: pdfarranger/pdfarranger.py:1175
+#, fuzzy
+msgid "Don't show warnings when saving again."
+msgstr "No tornes a mostrar aquest diàleg."
+
+#: pdfarranger/pdfarranger.py:1205
+msgid "Saving…"
+msgstr "Alçant..."
+
+#: pdfarranger/pdfarranger.py:1239
 msgid "Import…"
 msgstr "Importa…"
 
-#: pdfarranger/pdfarranger.py:885
+#: pdfarranger/pdfarranger.py:1333
 msgid "Pasted data not valid. Aborting paste."
-msgstr ""
+msgstr "Les dades enganxades no són vàlides. S'està avortant l'operació."
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:1437
 msgid "PDF document is damaged"
-msgstr ""
+msgstr "El document PDF es troba danyat"
 
-#: pdfarranger/pdfarranger.py:1794
+#: pdfarranger/pdfarranger.py:2298
 #, python-format
-msgid ""
-"%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
-"and Python"
-msgstr ""
-"El %s és una ferramenta per a organitzar i modificar fitxers PDF. S'ha "
-"realitzat utilitzant GTK+ i Python"
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s es una ferramenta per a modificar i re-arranjar fitxers PDF"
 
-#: pdfarranger/pdfarranger.py:1797
+#: pdfarranger/pdfarranger.py:2301
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Utilitza libqpdf %s, pikepdf %s, GTK %s and Python %s."
+
+#: pdfarranger/pdfarranger.py:2307
 msgid "Maintainers and contributors"
-msgstr ""
+msgstr "Mantenidors i contribuïdors"
 
-#: pdfarranger/pdfarranger.py:1801
+#: pdfarranger/pdfarranger.py:2312
 msgid "GNU General Public License (GPL) Version 3."
-msgstr ""
+msgstr "Llicència Pública General GNU (GPL) Versió 3."
 
-#: pdfarranger/pdfarranger.py:1829
-#, fuzzy
+#: pdfarranger/pdfarranger.py:2330
 msgid "Selected pages: "
-msgstr "Retalla les pàgines seleccionades"
+msgstr "Pàgines seleccionades: "
+
+#: pdfarranger/pdfarranger.py:2335
+msgid "Page Size:"
+msgstr "Mida de la pàgina:"
 
 #: pdfarranger/splitter.py:26
-msgid "Grid splitting"
-msgstr ""
+msgid "Split Pages"
+msgstr "Divideix les pàgines"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
-#: pdfarranger/splitter.py:58
+#: pdfarranger/splitter.py:60
 msgid "Rows"
-msgstr ""
+msgstr "Files"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
-msgstr ""
+msgstr "Divisions verticals"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
-msgstr ""
+msgstr "Divisions horitzontals"
 
-#: pdfarranger/splitter.py:60
+#: pdfarranger/splitter.py:62
 msgid "Equal column width"
-msgstr ""
+msgstr "Amplada igual de la columna"
 
-#: pdfarranger/splitter.py:60
-#, fuzzy
+#: pdfarranger/splitter.py:62
 msgid "Equal row height"
-msgstr "% d'alçària"
+msgstr "Alçada igual de la fila"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr ""
+msgstr "#Col"
 
-#: pdfarranger/splitter.py:85
+#: pdfarranger/splitter.py:87
 msgid "#Row"
-msgstr ""
+msgstr "#Fila"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
-msgstr ""
+msgstr "Amplada en %"
 
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Height in %"
-msgstr ""
+msgstr "Alçada en %"
 
 #: data/pdfarranger.ui.h:1
-msgid "Open a file and append it to the current document"
-msgstr "Obri un fitxer i afig-lo al document actual"
+msgid "Open"
+msgstr "Obrir"
 
 #: data/pdfarranger.ui.h:2
-msgid "Save"
-msgstr "Guarda"
+#, fuzzy
+msgid "Import"
+msgstr "Importa"
 
 #: data/pdfarranger.ui.h:3
-#, fuzzy
-msgid "Save As"
-msgstr "Guarda com"
+msgid "Save"
+msgstr "Alça"
 
 #: data/pdfarranger.ui.h:4
-msgid "Number of Pages"
-msgstr ""
+msgid "Save As"
+msgstr "Alça com a"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr ""
+msgstr "Menú principal"
 
 #: data/pdfarranger.ui.h:6
-#, fuzzy
 msgid "Zoom In"
 msgstr "Amplia"
 
 #: data/pdfarranger.ui.h:7
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Redueïx"
+msgstr "Allunya"
 
 #: data/pdfarranger.ui.h:8
-#, fuzzy
 msgid "Rotate Left"
-msgstr "Gira a _l'esquerra"
+msgstr "Gira a l'esquerra"
 
 #: data/pdfarranger.ui.h:9
-#, fuzzy
 msgid "Rotate Right"
-msgstr "Gi_ra a la dreta"
+msgstr "Gira a la dreta"
 
 #: data/menu.ui.h:1
-#, fuzzy
-msgid "_Import"
-msgstr "Importa"
+msgid "_Open"
+msgstr "_Obrir"
 
 #: data/menu.ui.h:2
-msgid "_New Window"
-msgstr ""
+msgid "_Import"
+msgstr "_Importa"
 
-#: data/menu.ui.h:4
-#, fuzzy
-msgid "Save _As…"
-msgstr "Guarda com"
+#: data/menu.ui.h:3
+msgid "_New Window"
+msgstr "_Finestra nova"
 
 #: data/menu.ui.h:5
-#, fuzzy
-msgid "E_xport"
-msgstr "Exporta…"
+msgid "Save _As…"
+msgstr "_Anomena i alça…"
 
 #: data/menu.ui.h:6
-#, fuzzy
-msgid "E_xport Selection to a Single File…"
-msgstr "_Exporta la selecció…"
+msgid "E_xport"
+msgstr "E_xporta"
 
 #: data/menu.ui.h:7
-#, fuzzy
-msgid "Export Selection to _Individual Files…"
-msgstr "_Exporta la selecció…"
+msgid "E_xport Selection to a Single File…"
+msgstr "E_xporta la selecció a un sol fitxer…"
 
 #: data/menu.ui.h:8
-msgid "Export _All Pages to Individual Files…"
-msgstr ""
+msgid "Export Selection to _Individual Files…"
+msgstr "Exporta la selecció a fitxers _individuals…"
 
 #: data/menu.ui.h:9
-msgid "_Undo"
-msgstr ""
+msgid "Export _All Pages to Individual Files…"
+msgstr "Exporta _totes les pàgines a fitxers individuals…"
 
 #: data/menu.ui.h:10
-msgid "_Redo"
+msgid "_Print…"
 msgstr ""
 
 #: data/menu.ui.h:11
+msgid "_Undo"
+msgstr "Desfés"
+
+#: data/menu.ui.h:12
+msgid "_Redo"
+msgstr "_Refés"
+
+#: data/menu.ui.h:13
 msgid "_Edit"
 msgstr "_Edita"
 
-#: data/menu.ui.h:12
+#: data/menu.ui.h:14
 msgid "Rotate _Left"
 msgstr "Gira a _l'esquerra"
 
-#: data/menu.ui.h:13
-msgid "_Rotate Right"
-msgstr "Gi_ra a la dreta"
-
-#: data/menu.ui.h:14
-msgid "_Page Format"
-msgstr ""
-
 #: data/menu.ui.h:15
-msgid "Crop White Borders"
-msgstr ""
+msgid "_Rotate Right"
+msgstr "Gira a la d_reta"
 
 #: data/menu.ui.h:16
-msgid "_Delete"
-msgstr "_Esborra"
+msgid "_Page Format"
+msgstr "Format de la _pàgina"
 
 #: data/menu.ui.h:17
-msgid "Dupl_icate"
-msgstr ""
+msgid "Crop White Borders"
+msgstr "Escapça les vores blanques"
 
 #: data/menu.ui.h:18
-msgid "Re_verse Order"
-msgstr ""
+msgid "_Delete"
+msgstr "_Suprimeix"
 
 #: data/menu.ui.h:19
-msgid "_Split Pages"
-msgstr ""
+msgid "Dupl_icate"
+msgstr "_Duplica"
 
 #: data/menu.ui.h:20
-msgid "_Grid Split"
-msgstr ""
+msgid "Re_verse Order"
+msgstr "_Ordre invers"
 
 #: data/menu.ui.h:21
-msgid "Cu_t"
-msgstr ""
+msgid "_Split Pages"
+msgstr "_Divideix les pàgines"
 
 #: data/menu.ui.h:22
-msgid "_Copy"
-msgstr ""
+msgid "Cu_t"
+msgstr "Re_talla"
 
 #: data/menu.ui.h:23
-msgid "Paste _After"
-msgstr ""
+msgid "_Copy"
+msgstr "_Copia"
 
 #: data/menu.ui.h:24
-msgid "Paste _Before"
-msgstr ""
+msgid "Paste _After"
+msgstr "Enganxa _després"
 
 #: data/menu.ui.h:25
-msgid "Paste Interleave _Odd"
-msgstr ""
+msgid "Paste _Before"
+msgstr "Enganxa _abans"
 
 #: data/menu.ui.h:26
-msgid "Paste Interleave _Even"
-msgstr ""
+msgid "Paste As _Odd Pages"
+msgstr "Enganxa com a pàgines impars"
 
 #: data/menu.ui.h:27
-msgid "Insert Blan_k Page"
-msgstr ""
+msgid "Paste As _Even Pages"
+msgstr "Enganxa com a pàgines pars"
 
 #: data/menu.ui.h:28
-msgid "_Select"
-msgstr ""
+msgid "Insert Blan_k Page"
+msgstr "Insereix una pàgina en blanc"
 
 #: data/menu.ui.h:29
-msgid "Select _All"
-msgstr ""
+msgid "Generate Booklet"
+msgstr "Genera un fullet"
 
 #: data/menu.ui.h:30
-msgid "_Deselect All"
-msgstr ""
+msgid "_Select"
+msgstr "Selecciona"
 
 #: data/menu.ui.h:31
-#, fuzzy
-msgid "Select _Odd Pages"
-msgstr "Retalla les pàgines seleccionades"
+msgid "Select _All"
+msgstr "Selecciona-ho tot"
 
 #: data/menu.ui.h:32
-#, fuzzy
-msgid "Select _Even Pages"
-msgstr "Retalla les pàgines seleccionades"
+msgid "_Deselect All"
+msgstr "Desselecciona-ho tot"
 
 #: data/menu.ui.h:33
-msgid "All From _Same File"
-msgstr ""
+msgid "Select _Odd Pages"
+msgstr "Selecciona les pàgines impars"
 
 #: data/menu.ui.h:34
-msgid "Same Page _Format"
-msgstr ""
+msgid "Select _Even Pages"
+msgstr "Selecciona les pàgines pars"
 
 #: data/menu.ui.h:35
-#, fuzzy
-msgid "_Invert Selection"
-msgstr "_Exporta la selecció…"
+msgid "All From _Same File"
+msgstr "Tots del mateix fitxer"
 
 #: data/menu.ui.h:36
-#, fuzzy
-msgid "Zoom _In"
-msgstr "Amplia"
+msgid "Same Page _Format"
+msgstr "El mateix format de pàgina"
 
 #: data/menu.ui.h:37
-#, fuzzy
-msgid "Zoom _Out"
-msgstr "Redueïx"
+msgid "_Invert Selection"
+msgstr "Inverteix la selecció"
 
 #: data/menu.ui.h:38
-msgid "Edit _Properties"
-msgstr ""
+msgid "_View"
+msgstr "_Vista"
 
 #: data/menu.ui.h:39
-msgid "_About"
-msgstr ""
+msgid "Zoom _In"
+msgstr "Ampl_ia"
 
 #: data/menu.ui.h:40
-msgid "_Quit"
-msgstr ""
+msgid "Zoom _Out"
+msgstr "Allunya"
 
 #: data/menu.ui.h:41
+#, fuzzy
+msgid "Zoom _Fit"
+msgstr "Ajusta"
+
+#: data/menu.ui.h:42
+msgid "Full_screen"
+msgstr "Pantalla sencera"
+
+#: data/menu.ui.h:43
+msgid "Edit _Properties"
+msgstr "Edita les propietats"
+
+#: data/menu.ui.h:44
+msgid "_About"
+msgstr "Quant a"
+
+#: data/menu.ui.h:47
 msgid "Past_e Special"
-msgstr ""
+msgstr "Enganxament especial"
