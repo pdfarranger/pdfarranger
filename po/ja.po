@@ -1,16 +1,16 @@
 # Japanese translation for pdfarranger.
 # Copyright (C) 2008-2017 Konstantinos Poulios
-# Copyright (C) 2018-2021 pdfarranger's COPYRIGHT HOLDER
+# Copyright (C) 2018-2022 pdfarranger's COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # Toshiharu Kudoh <toshi.kd2@gmail.com>, 2010.
-# sicklylife <translation@sicklylife.jp>, 2019-2021.
+# sicklylife <translation@sicklylife.jp>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-13 15:24+0200\n"
-"PO-Revision-Date: 2021-11-08 21:20+0900\n"
+"PO-Revision-Date: 2022-09-01 00:40+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -54,7 +54,7 @@ msgstr "img2pdf がサポートしていない画像形式です"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "クリップボードの画像"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
@@ -101,7 +101,12 @@ msgstr ""
 #: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of width"
-msgstr ""
+msgstr "% (幅)"
+
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of height"
+msgstr "% (高さ)"
 
 #: pdfarranger/croputils.py:215
 msgid "Page format"
@@ -256,11 +261,11 @@ msgstr "保存(_S)"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "変更内容を破棄して閉じますか?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "閉じる(_C)"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
@@ -272,7 +277,7 @@ msgstr "閉じる前に変更内容を保存しますか?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "変更内容を破棄して終了しますか?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
@@ -284,23 +289,23 @@ msgstr "エクスポート…"
 
 #: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "開く(_O)"
 
 #: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
-msgstr ""
+msgstr "開く…"
 
 #: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "保存時にいくつかの警告がありました"
 
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
+msgstr "警告はありましたが見た目に問題はないはずです。"
 
 #: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
-msgstr ""
+msgstr "保存中…"
 
 #: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
@@ -318,11 +323,13 @@ msgstr "PDF 文書が破損しています"
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
+"%s は PDF ファイルの内容の追加や削除、順序の入れ替えやその他のちょっとした変"
+"更を行うためのツールです。"
 
 #: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "libqpdf %s、pikepdf %s、GTK %s、Python %s を使用しています。"
 
 #: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
@@ -386,7 +393,7 @@ msgstr "高さ (%)"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -446,7 +453,7 @@ msgstr "すべてのページを個別のファイルにエクスポート(_A)�
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "印刷(_P)…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -558,7 +565,7 @@ msgstr "選択を反転(_I)"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "表示(_V)"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -570,7 +577,7 @@ msgstr "縮小(_O)"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "フルスクリーン(_S)"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
