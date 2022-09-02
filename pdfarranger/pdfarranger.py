@@ -460,7 +460,8 @@ class PdfArranger(Gtk.Application):
             f_pdf.set_name(_('PDF files'))
             for f in [f_pdf, f_supported]:
                 f.add_pattern('*.pdf')
-                f.add_mime_type('application/pdf')
+                if os.name != 'nt':
+                    f.add_mime_type('application/pdf')
             filter_list.append(f_pdf)
         if 'all' in file_type_list:
             f = Gtk.FileFilter()
@@ -472,7 +473,8 @@ class PdfArranger(Gtk.Application):
             f_img.set_name(_('Supported image files'))
             for f in [f_img, f_supported]:
                 for mime in img2pdf_supported_img:
-                    f.add_mime_type(mime)
+                    if os.name != 'nt':
+                        f.add_mime_type(mime)
                     for extension in mimetypes.guess_all_extensions(mime):
                         f.add_pattern('*' + extension)
             filter_list.append(f_img)
