@@ -128,8 +128,9 @@ class _RelativeScalingWidget(Gtk.Box):
 class _ScalingWidget(Gtk.Box):
     """ A form to specify the page width or height """
 
-    def __init__(self, label, default):
+    def __init__(self, label, default, margin=10):
         super().__init__()
+        self.props.spacing = margin
         self.add(Gtk.Label(label=label))
         self.entry = _LinkedSpinButton(25.4, 5080, 1, 10)
         self.entry.set_activates_default(True)
