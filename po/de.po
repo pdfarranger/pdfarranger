@@ -5,21 +5,22 @@
 # Konstantinos Poulios, 2008-2017
 # David Auer, 2020
 # Milo Ivir <mail@milotype.de>, 2020, 2021
-# Dr. Tobias Quathamer <toddy@debian.org>, 2021.
+# Dr. Tobias Quathamer <toddy@debian.org>, 2021
+# David Kyburz, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-13 15:24+0200\n"
-"PO-Revision-Date: 2021-11-13 22:30+0100\n"
-"Last-Translator: Dr. Tobias Quathamer <toddy@debian.org>\n"
+"POT-Creation-Date: 2022-09-18 17:02+0200\n"
+"PO-Revision-Date: 2022-09-18 17:17+0200\n"
+"Last-Translator: David Kyburz\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.08.0\n"
+"X-Generator: Poedit 3.1\n"
 
 #: pdfarranger/core.py:87
 msgid "page"
@@ -44,7 +45,7 @@ msgstr ""
 msgid "Password"
 msgstr "Passwort"
 
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1431
 msgid "Unknown file format"
 msgstr "Unbekanntes Dateiformat"
 
@@ -58,9 +59,9 @@ msgstr "Bildformat wird von img2pdf nicht unterstützt"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "Zwischenablage-Bild"
 
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1441
 msgid "File is neither pdf nor image"
 msgstr "Datei ist weder ein PDF noch ein Bild"
 
@@ -72,69 +73,69 @@ msgstr "Vergrößerung"
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:137
+#: pdfarranger/croputils.py:138
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/croputils.py:147
+#: pdfarranger/croputils.py:148
 msgid "Left"
 msgstr "Links"
 
-#: pdfarranger/croputils.py:147
+#: pdfarranger/croputils.py:148
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfarranger/croputils.py:147
+#: pdfarranger/croputils.py:148
 msgid "Top"
 msgstr "Oben"
 
-#: pdfarranger/croputils.py:147
+#: pdfarranger/croputils.py:148
 msgid "Bottom"
 msgstr "Unten"
 
-#: pdfarranger/croputils.py:151
+#: pdfarranger/croputils.py:152
 msgid "Crop Margins"
 msgstr "Seitenränder abschneiden"
 
-#: pdfarranger/croputils.py:159
+#: pdfarranger/croputils.py:160
 msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Abschneiden entfernt keinen Inhalt der PDF-Datei, es blendet ihn nur aus."
 
-#: pdfarranger/croputils.py:168
+#: pdfarranger/croputils.py:169
 #, python-format
 msgid "% of width"
 msgstr "% der Breite"
 
-#: pdfarranger/croputils.py:168
+#: pdfarranger/croputils.py:169
 #, python-format
 msgid "% of height"
 msgstr "% der Höhe"
 
-#: pdfarranger/croputils.py:215
+#: pdfarranger/croputils.py:216
 msgid "Page format"
 msgstr "Seitenformat"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:333
+#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
+#: pdfarranger/croputils.py:334
 msgid "Width"
 msgstr "Breite"
 
-#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
-#: pdfarranger/croputils.py:334
+#: pdfarranger/croputils.py:232 pdfarranger/croputils.py:236
+#: pdfarranger/croputils.py:335
 msgid "Height"
 msgstr "Höhe"
 
-#: pdfarranger/croputils.py:233
+#: pdfarranger/croputils.py:234
 msgid "Relative"
 msgstr "Relativ"
 
-#: pdfarranger/croputils.py:236
+#: pdfarranger/croputils.py:237
 msgid "Page Size"
 msgstr "Seitengröße"
 
-#: pdfarranger/croputils.py:321
+#: pdfarranger/croputils.py:322
 msgid "Insert Blank Page"
 msgstr "Leere Seite einfügen"
 
@@ -149,6 +150,14 @@ msgstr "Formulare und Inhaltsverzeichnisse gehen beim Speichern verloren."
 #: pdfarranger/exporter.py:137
 msgid "Do not show this dialog again."
 msgstr "Diesen Dialog nicht mehr anzeigen."
+
+#: pdfarranger/exporter.py:342
+msgid "Printing…"
+msgstr "Drucken…"
+
+#: pdfarranger/exporter.py:354
+msgid "Rendering Preview…"
+msgstr "Vorschau erstellen…"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -230,123 +239,141 @@ msgstr "Alle unterstützten Dateien"
 msgid "PDF files"
 msgstr "PDF-Dateien"
 
-#: pdfarranger/pdfarranger.py:467
+#: pdfarranger/pdfarranger.py:468
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfarranger/pdfarranger.py:472
+#: pdfarranger/pdfarranger.py:473
 msgid "Supported image files"
 msgstr "Unterstützte Bilddateien"
 
-#: pdfarranger/pdfarranger.py:691
+#: pdfarranger/pdfarranger.py:693
 msgid "Rendering…"
 msgstr "Vorschau erstellen …"
 
-#: pdfarranger/pdfarranger.py:769
+#: pdfarranger/pdfarranger.py:771
 msgid "untitled"
 msgstr "unbenannt"
 
-#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
-#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
+#: pdfarranger/pdfarranger.py:918 pdfarranger/pdfarranger.py:927
+#: pdfarranger/pdfarranger.py:1027 pdfarranger/pdfarranger.py:1052
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: pdfarranger/pdfarranger.py:924
+#: pdfarranger/pdfarranger.py:926
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Änderungen gehen verloren, wenn sie nicht gespeichert werden."
 
-#: pdfarranger/pdfarranger.py:925
+#: pdfarranger/pdfarranger.py:927
 msgid "Do_n’t Save"
 msgstr "_Nicht speichern"
 
-#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
+#: pdfarranger/pdfarranger.py:927 pdfarranger/pdfarranger.py:1026
 #: data/menu.ui.h:4
 msgid "_Save"
 msgstr "_Speichern"
 
-#: pdfarranger/pdfarranger.py:934
+#: pdfarranger/pdfarranger.py:936
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Änderungen verwerfen und schließen?"
 
-#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
+#: pdfarranger/pdfarranger.py:937 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "_Schließen"
 
-#: pdfarranger/pdfarranger.py:940
+#: pdfarranger/pdfarranger.py:942
 msgid "Save changes to “{}” before closing?"
 msgstr "Änderungen an „{}“ vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:943
+#: pdfarranger/pdfarranger.py:945
 msgid "Save changes before closing?"
 msgstr "Änderungen vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:968
+#: pdfarranger/pdfarranger.py:970
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Änderungen verwerfen und beenden?"
 
-#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
+#: pdfarranger/pdfarranger.py:971 data/menu.ui.h:46
 msgid "_Quit"
 msgstr "Been_den"
 
-#: pdfarranger/pdfarranger.py:1019
+#: pdfarranger/pdfarranger.py:976
+msgid "Save changes to “{}” before quitting?"
+msgstr "Änderungen an „{}“ vor dem Beenden speichern?"
+
+#: pdfarranger/pdfarranger.py:979
+msgid "Save changes before quitting?"
+msgstr "Änderungen vor dem Beenden speichern?"
+
+#: pdfarranger/pdfarranger.py:1021
+msgid "Save As…"
+msgstr "Speichern unter…"
+
+#: pdfarranger/pdfarranger.py:1021
 msgid "Export…"
 msgstr "Exportieren …"
 
-#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
+#: pdfarranger/pdfarranger.py:1051 data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "_Öffnen"
 
-#: pdfarranger/pdfarranger.py:1092
+#: pdfarranger/pdfarranger.py:1094
 msgid "Open…"
-msgstr ""
+msgstr "Öffnen…"
 
-#: pdfarranger/pdfarranger.py:1163
+#: pdfarranger/pdfarranger.py:1165
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "Speichern führte zu einigen Warnungen"
 
-#: pdfarranger/pdfarranger.py:1164
+#: pdfarranger/pdfarranger.py:1166
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
+"Trotz der Warnungen sollte(n) das/die Dokument(e) keine sichtbaren Probleme "
+"aufweisen."
 
-#: pdfarranger/pdfarranger.py:1201
+#: pdfarranger/pdfarranger.py:1173
+msgid "Don't show warnings when saving again."
+msgstr "Beim erneuten Speichern keine Warnungen anzeigen."
+
+#: pdfarranger/pdfarranger.py:1203
 msgid "Saving…"
-msgstr ""
+msgstr "Speichern…"
 
-#: pdfarranger/pdfarranger.py:1235
+#: pdfarranger/pdfarranger.py:1237
 msgid "Import…"
 msgstr "Importieren …"
 
-#: pdfarranger/pdfarranger.py:1329
+#: pdfarranger/pdfarranger.py:1331
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Eingefügte Daten sind ungültig. Einfügen wird abgebrochen."
 
-#: pdfarranger/pdfarranger.py:1433
+#: pdfarranger/pdfarranger.py:1435
 msgid "PDF document is damaged"
 msgstr "PDF-Dokument ist beschädigt"
 
-#: pdfarranger/pdfarranger.py:2294
+#: pdfarranger/pdfarranger.py:2296
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s ist ein Werkzeug zum Neuordnen und Ändern von PDF-Dateien."
 
-#: pdfarranger/pdfarranger.py:2297
+#: pdfarranger/pdfarranger.py:2299
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "Es verwendet libqpdf %s, pikepdf %s, GTK %s and Python %s."
 
-#: pdfarranger/pdfarranger.py:2303
+#: pdfarranger/pdfarranger.py:2305
 msgid "Maintainers and contributors"
 msgstr "Hauptentwickler und Mitwirkende"
 
-#: pdfarranger/pdfarranger.py:2308
+#: pdfarranger/pdfarranger.py:2310
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
-#: pdfarranger/pdfarranger.py:2326
+#: pdfarranger/pdfarranger.py:2328
 msgid "Selected pages: "
 msgstr "Ausgewählte Seiten: "
 
-#: pdfarranger/pdfarranger.py:2331
+#: pdfarranger/pdfarranger.py:2333
 msgid "Page Size:"
 msgstr "Seitengröße:"
 
@@ -396,7 +423,11 @@ msgstr "Höhe in %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
+
+#: data/pdfarranger.ui.h:2
+msgid "Import"
+msgstr "Importieren"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -456,7 +487,7 @@ msgstr "_Alle Seiten in Einzeldateien exportieren …"
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "_Drucken…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -568,7 +599,7 @@ msgstr "Auswahl _umkehren"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "_Ansicht"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -578,9 +609,13 @@ msgstr "Ver_größern"
 msgid "Zoom _Out"
 msgstr "Ver_kleinern"
 
+#: data/menu.ui.h:41
+msgid "Zoom _Fit"
+msgstr "Zoom _einpassen"
+
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "Voll_bild"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
