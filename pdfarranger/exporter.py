@@ -295,10 +295,15 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
     _copy_n_transform(source_files, file, pages)
     to_remove = len(file.pages)
-    for i in range(len(pages)//2):
+    npages = len(pages)
+    for i in range(npages//2):
         even = i % 2 == 0
         first_id = -i - 1 if even else i
         second_id = i if even else -i - 1
+        if first_id < 0:
+            first_id += npages
+        if second_id < 0:
+            second_id += npages
         first = pages[first_id]
         second = pages[second_id]
         first_foreign = file.pages[first_id]
