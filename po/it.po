@@ -2,19 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 #
+# Massimo Pissarello <mapi68@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-13 15:24+0200\n"
-"PO-Revision-Date: 2021-01-23 13:54+0200\n"
-"Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
-"Language-Team: it\n"
+"PO-Revision-Date: 2022-09-21 07:46+0200\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
+"Language-Team: Italian <>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Lokalize 22.08.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pdfarranger/core.py:87
@@ -54,7 +55,7 @@ msgstr "Il formato dell'immagine non è supportato da img2pdf"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "Immagine appunti"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
@@ -128,7 +129,7 @@ msgstr "Genitore"
 
 #: pdfarranger/croputils.py:236
 msgid "Page Size"
-msgstr "Dimensione Pagina"
+msgstr "Dimensione pagina"
 
 #: pdfarranger/croputils.py:321
 msgid "Insert Blank Page"
@@ -136,7 +137,7 @@ msgstr "Inserisci pagina vuota"
 
 #: pdfarranger/exporter.py:130
 msgid "Warning"
-msgstr "Attenzione"
+msgstr "Avvertimento"
 
 #: pdfarranger/exporter.py:135
 msgid "Forms and outlines are lost on saving."
@@ -148,11 +149,11 @@ msgstr "Non mostrare più questo messaggio."
 
 #: pdfarranger/exporter.py:342
 msgid "Printing…"
-msgstr ""
+msgstr "Stampa…"
 
 #: pdfarranger/exporter.py:354
 msgid "Rendering Preview…"
-msgstr ""
+msgstr "Anteprima di rendering..."
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -209,18 +210,22 @@ msgid ""
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
+"PDF Arranger è una piccola applicazione python-gtk che aiuta l'utente a unire"
+" o dividere documenti pdf e a ruotare, ritagliare e riordinare le loro pagine"
+" utilizzando un'interattiva interfaccia grafica intuitiva È un frontend per"
+" pikepdf."
 
 #: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
-msgstr ""
+msgstr "Stampa la versione di PDF Arranger ed esci"
 
 #: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
-msgstr ""
+msgstr "File da aprire"
 
 #: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
-msgstr ""
+msgstr "Tutte le pagine devono avere le stesse dimensioni."
 
 #: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
@@ -240,7 +245,7 @@ msgstr "File di immagine supportati"
 
 #: pdfarranger/pdfarranger.py:691
 msgid "Rendering…"
-msgstr ""
+msgstr "Rendering…"
 
 #: pdfarranger/pdfarranger.py:769
 msgid "untitled"
@@ -266,23 +271,23 @@ msgstr "_Salva"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Scarto le modifiche e chiudo?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "_Chiudi"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
-msgstr "Salvare le modifiche apportate a “{}”prima di chiudere?"
+msgstr "Salvo le modifiche apportate a “{}”prima di chiudere?"
 
 #: pdfarranger/pdfarranger.py:943
 msgid "Save changes before closing?"
-msgstr "Salvare le modifiche prima di chiudere?"
+msgstr "Salvo le modifiche prima di chiudere?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Annullo le modifiche ed esco?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
@@ -294,23 +299,25 @@ msgstr "Esporta…"
 
 #: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "_Apri"
 
 #: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
-msgstr ""
+msgstr "Apri…"
 
 #: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "Il salvataggio ha prodotto alcuni avvisi"
 
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
+"Nonostante le avvertenze, i documenti non dovrebbero presentare problemi"
+" visibili."
 
 #: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
-msgstr ""
+msgstr "Salvataggio…"
 
 #: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
@@ -327,12 +334,12 @@ msgstr "Il documento PDF è danneggiato"
 #: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s è uno strumento per riorganizzare e modificare i file PDF."
 
 #: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "Utilizza libqpdf %s, pikepdf %s, GTK %s e Python %s."
 
 #: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
@@ -368,15 +375,15 @@ msgstr "Uguale larghezza della colonna"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal row height"
-msgstr "Altezza della riga uguale"
+msgstr "Uguale altezza della riga"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr "Col"
+msgstr "#Col"
 
 #: pdfarranger/splitter.py:87
 msgid "#Row"
-msgstr "Rig"
+msgstr "#Rig"
 
 #: pdfarranger/splitter.py:88
 msgid "Width in %"
@@ -388,7 +395,7 @@ msgstr "Altezza in %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "Apri"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -400,7 +407,7 @@ msgstr "Salva come"
 
 #: data/pdfarranger.ui.h:5
 msgid "Main Menu"
-msgstr "Menù Principale"
+msgstr "Menu principale"
 
 #: data/pdfarranger.ui.h:6
 msgid "Zoom In"
@@ -428,7 +435,7 @@ msgstr "_Nuova finestra"
 
 #: data/menu.ui.h:5
 msgid "Save _As…"
-msgstr "Save _come…"
+msgstr "S_alva come…"
 
 #: data/menu.ui.h:6
 msgid "E_xport"
@@ -436,19 +443,19 @@ msgstr "E_sporta"
 
 #: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
-msgstr "E_xporta selezione in un singolo file ..."
+msgstr "E_sporta selezione in un singolo file ..."
 
 #: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
-msgstr "Esporta selezione in _File individuali..."
+msgstr "Esporta selezione in _File singoli..."
 
 #: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
-msgstr "Esporta _Tutte le pagine in singoli file..."
+msgstr "Esporta _tutte le pagine in singoli file..."
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "_Stampa…"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -472,7 +479,7 @@ msgstr "Ruota a _destra"
 
 #: data/menu.ui.h:16
 msgid "_Page Format"
-msgstr "_Formato pagina"
+msgstr "Formato _pagina"
 
 #: data/menu.ui.h:17
 msgid "Crop White Borders"
@@ -484,15 +491,15 @@ msgstr "_Elimina"
 
 #: data/menu.ui.h:19
 msgid "Dupl_icate"
-msgstr "D_uplica"
+msgstr "Dupl_ica"
 
 #: data/menu.ui.h:20
 msgid "Re_verse Order"
-msgstr "_Inverti Ordine"
+msgstr "In_verti ordine"
 
 #: data/menu.ui.h:21
 msgid "_Split Pages"
-msgstr "Di_vidi pagine"
+msgstr "Dividi pa_gine"
 
 #: data/menu.ui.h:22
 msgid "Cu_t"
@@ -504,19 +511,19 @@ msgstr "_Copia"
 
 #: data/menu.ui.h:24
 msgid "Paste _After"
-msgstr "Incolla _prima"
+msgstr "Incolla _dopo"
 
 #: data/menu.ui.h:25
 msgid "Paste _Before"
-msgstr "Incolla _dopo"
+msgstr "Incolla _prima"
 
 #: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
-msgstr "Inserisci pagin_a vuota"
+msgstr "Inserisci pagi_na vuota"
 
 #: data/menu.ui.h:29
 msgid "Generate Booklet"
-msgstr ""
+msgstr "Genera libretto"
 
 #: data/menu.ui.h:30
 msgid "_Select"
@@ -524,19 +531,19 @@ msgstr "_Seleziona"
 
 #: data/menu.ui.h:31
 msgid "Select _All"
-msgstr "Seleziona _Tutto"
+msgstr "Seleziona _tutto"
 
 #: data/menu.ui.h:32
 msgid "_Deselect All"
-msgstr "_Deseleziona Tutto"
+msgstr "_Deseleziona tutto"
 
 #: data/menu.ui.h:33
 msgid "Select _Odd Pages"
-msgstr "Seleziona _Pagine dispari"
+msgstr "Seleziona _pagine dispari"
 
 #: data/menu.ui.h:34
 msgid "Select _Even Pages"
-msgstr "Seleziona _Pagine pari"
+msgstr "Seleziona _pagine pari"
 
 #: data/menu.ui.h:35
 msgid "All From _Same File"
@@ -548,23 +555,23 @@ msgstr "Stesso formato_di pagina"
 
 #: data/menu.ui.h:37
 msgid "_Invert Selection"
-msgstr "_Inverti Selezione"
+msgstr "_Inverti selezione"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "_Visualizza"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
-msgstr "Zoom _avanti"
+msgstr "Zoom a_vanti"
 
 #: data/menu.ui.h:40
 msgid "Zoom _Out"
-msgstr "Zoom _indietro"
+msgstr "Zoom in_dietro"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "Schermo intero"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
@@ -576,4 +583,4 @@ msgstr "Informazioni _su"
 
 #: data/menu.ui.h:47
 msgid "Past_e Special"
-msgstr "Incolla Specia_le"
+msgstr "Incolla specia_le"
