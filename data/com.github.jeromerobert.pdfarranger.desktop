@@ -2,6 +2,7 @@
 Version=1.0
 Name=PDF Arranger
 Name[ca]=Arranjador de PDF
+Name[de]=PDF Arranger
 Name[hr]=PDF uređivač
 Name[hu]=PDF-rendező
 Name[ko]=PDF 편집기
@@ -40,7 +41,9 @@ Actions=new-window;
 [Desktop Action new-window]
 Name=New Window
 Name[ca]=Finestra nova
+Name[de]=Neues Fenster
 Name[es]=Ventana nueva
+Name[hr]=Novi prozor
 Name[is]=Nýr gluggi
 Name[it]=Nuova finestra
 Name[nl]=Nieuw venster
