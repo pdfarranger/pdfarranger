@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-13 15:24+0200\n"
-"PO-Revision-Date: 2022-09-22 04:59+0200\n"
+"PO-Revision-Date: 2022-09-22 06:04+0200\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it\n"
@@ -63,7 +63,7 @@ msgstr "Il file non è un pdf o una immagine"
 
 #: pdfarranger/croputils.py:115
 msgid "Scale factor"
-msgstr "Fattore di scala"
+msgstr "Ridimensionamento"
 
 #: pdfarranger/croputils.py:121
 msgid "%"
@@ -125,7 +125,7 @@ msgstr "Altezza"
 
 #: pdfarranger/croputils.py:233
 msgid "Relative"
-msgstr "Genitore"
+msgstr "Relativa"
 
 #: pdfarranger/croputils.py:236
 msgid "Page Size"
@@ -551,7 +551,7 @@ msgstr "Tutto dallo _stesso file"
 
 #: data/menu.ui.h:36
 msgid "Same Page _Format"
-msgstr "Stesso formato_di pagina"
+msgstr "Stesso formato _di pagina"
 
 #: data/menu.ui.h:37
 msgid "_Invert Selection"
