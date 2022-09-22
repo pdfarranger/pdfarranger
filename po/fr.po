@@ -6,7 +6,7 @@
 # Translators:
 # David VANTYGHEM <david.vantyghem@free.fr>, 2014.
 # Jérôme Robert <jeromerobert@gmx.com>, 2019.
-# Charles Monzat <charles.monzat@free.fr>, 2019-2021.
+# Charles Monzat <charles.monzat@free.fr>, 2019-2022.
 #
 msgid ""
 msgstr ""
@@ -61,7 +61,7 @@ msgstr "Le format d’image n’est pas pris en charge par img2pdf"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr "Image du presse-papier"
+msgstr "Image du presse-papiers"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
-msgstr "Affiche la version de PDF Arranger et termine"
+msgstr "Affiche la version de PDF Arranger et quitte"
 
 #: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
@@ -277,7 +277,7 @@ msgstr "_Enregistrer"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr "Annuler les modifications et fermer ?"
+msgstr "Annuler les modifications et fermer ?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
@@ -293,7 +293,7 @@ msgstr "Enregistrer les modifications avant la fermeture ?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr "Annuler les modifications et quitter ?"
+msgstr "Annuler les modifications et quitter ?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
@@ -330,8 +330,8 @@ msgstr "La sauvegarde a produit des avertissements"
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
-"Malgré les avertissements, le(s) document(s) ne devrai(en)t pas présenter de "
-"problèmes visibles."
+"Malgré les avertissements, le ou les documents ne devraient présenter aucun "
+"problème visible."
 
 #: pdfarranger/pdfarranger.py:1171
 msgid "Don't show warnings when saving again."
