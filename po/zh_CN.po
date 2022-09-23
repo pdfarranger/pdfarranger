@@ -55,7 +55,7 @@ msgstr "img2pdf 不支持图片格式"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "剪贴板图像"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
@@ -101,7 +101,12 @@ msgstr "裁剪不会从 PDF 文件中删除任何内容，只会将其隐藏。"
 #: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of width"
-msgstr ""
+msgstr "% 宽度"
+
+#: pdfarranger/croputils.py:168
+#, python-format
+msgid "% of height"
+msgstr "% 高度"
 
 #: pdfarranger/croputils.py:215
 msgid "Page format"
@@ -143,11 +148,11 @@ msgstr "不要再显示此对话框。"
 
 #: pdfarranger/exporter.py:342
 msgid "Printing…"
-msgstr ""
+msgstr "正在打印..."
 
 #: pdfarranger/exporter.py:354
 msgid "Rendering Preview…"
-msgstr ""
+msgstr "渲染预览…"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -203,19 +208,19 @@ msgid ""
 "merge or split pdf documents and rotate, crop and rearrange their pages "
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
-msgstr ""
+msgstr "PDF Arranger 是一个小型的 python-gtk 应用程序，它可以帮助用户使用交互式和直观的图形界面来合并或拆分 pdf 文档以及旋转、裁剪和重新排列他们的页面。 它是 pikepdf 的前端。"
 
 #: pdfarranger/pdfarranger.py:271
 msgid "Print the version of PDF Arranger and exit"
-msgstr ""
+msgstr "打印 PDF Arranger 版本并退出"
 
 #: pdfarranger/pdfarranger.py:279
 msgid "File(s) to open"
-msgstr ""
+msgstr "要打开的文件"
 
 #: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
-msgstr ""
+msgstr "所有页面必须具有相同的大小。"
 
 #: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
@@ -235,7 +240,7 @@ msgstr "支持的图像文件"
 
 #: pdfarranger/pdfarranger.py:691
 msgid "Rendering…"
-msgstr ""
+msgstr "正在渲染..."
 
 #: pdfarranger/pdfarranger.py:769
 msgid "untitled"
@@ -261,11 +266,11 @@ msgstr "保存(_S)"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "放弃更改并关闭？"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "关闭(_C)"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
@@ -277,11 +282,23 @@ msgstr "关闭前保存更改？"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "放弃更改并退出？"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
 msgstr "退出(_Q)"
+
+#: pdfarranger/pdfarranger.py:974
+msgid "Save changes to “{}” before quitting?"
+msgstr "退出前保存对“{}”的更改？"
+
+#: pdfarranger/pdfarranger.py:977
+msgid "Save changes before quitting?"
+msgstr "退出前保存更改？"
+
+#: pdfarranger/pdfarranger.py:1019
+msgid "Save As…"
+msgstr "保存为"
 
 #: pdfarranger/pdfarranger.py:1019
 msgid "Export…"
@@ -289,23 +306,27 @@ msgstr "导出..."
 
 #: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "打开(_O)"
 
 #: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
-msgstr ""
+msgstr "打开..."
 
 #: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "保存会产生一些警告"
 
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
+msgstr "尽管有警告，但文档应该没有明显的问题。"
+
+#: pdfarranger/pdfarranger.py:1171
+msgid "Don't show warnings when saving again."
+msgstr "再次保存时不显示警告。"
 
 #: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
-msgstr ""
+msgstr "正在保存..."
 
 #: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
@@ -322,12 +343,12 @@ msgstr "PDF 文件已损坏"
 #: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s 是用于重新排列和修改 PDF 文件的工具。"
 
 #: pdfarranger/pdfarranger.py:2297
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "它使用 libqpdf %s、pikepdf %s、GTK %s 和 Python %s。"
 
 #: pdfarranger/pdfarranger.py:2303
 msgid "Maintainers and contributors"
@@ -340,6 +361,10 @@ msgstr "GNU 通用公共许可证 (GPL) 第 3 版。"
 #: pdfarranger/pdfarranger.py:2326
 msgid "Selected pages: "
 msgstr "所选页面："
+
+#: pdfarranger/pdfarranger.py:2331
+msgid "Page Size:"
+msgstr "页面大小"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -387,7 +412,11 @@ msgstr "高度 %"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "打开"
+
+#: data/pdfarranger.ui.h:2
+msgid "Import"
+msgstr "导入"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -447,7 +476,7 @@ msgstr "所有页面导出到单个文件(_A)..."
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "打印(_P)"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -509,13 +538,21 @@ msgstr "粘贴之后(_A)"
 msgid "Paste _Before"
 msgstr "粘贴之前(_B)"
 
+#: data/menu.ui.h:26
+msgid "粘贴为奇数页(_O)"
+msgstr ""
+
+#: data/menu.ui.h:27
+msgid "Paste As _Even Pages"
+msgstr "粘贴为偶数页(_F)"
+
 #: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
 msgstr "插入空白页面(_K)"
 
 #: data/menu.ui.h:29
 msgid "Generate Booklet"
-msgstr ""
+msgstr "生成手册"
 
 #: data/menu.ui.h:30
 msgid "_Select"
@@ -551,7 +588,7 @@ msgstr "反向选择(_I)"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "查看(_V)"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -561,9 +598,13 @@ msgstr "放大(_I)"
 msgid "Zoom _Out"
 msgstr "缩小(_O)"
 
+#: data/menu.ui.h:41
+msgid "缩放适合(_F)"
+msgstr ""
+
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "全屏幕(_C)"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
