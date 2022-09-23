@@ -215,9 +215,12 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
         # if the page already exists in the output PDF, duplicate it
         new_page = copied_pages.get((row.nfile, row.npage))
         if new_page is None:
-            # for backward compatibility with old pikepdf. With pikepdf > 3
-            # new_page = current_page should be enough
-            new_page = pdf_output.copy_foreign(current_page)
+            try:
+                # for backward compatibility with pikepdf <= 3
+                new_page = pdf_output.copy_foreign(current_page)
+            except NotImplementedError:
+                # This is pikepdf >= 6
+                new_page = current_page
         # let pdf_output adopt new_page
         pdf_output.pages.append(new_page)
         new_page = pdf_output.pages[-1]
@@ -253,8 +256,12 @@ def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
                 return
             outpdf = pikepdf.Pdf.new()
             _set_meta(mdata, pdf_input, outpdf)
-            # needed to add this, probably related to pikepdf < 2.7.0 workaround
-            page = outpdf.copy_foreign(page)
+            try:
+                # needed to add this, probably related to pikepdf < 2.7.0 workaround
+                page = outpdf.copy_foreign(page)
+            except NotImplementedError:
+                # This is pikepdf >= 6
+                pass
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             outname = file_out
@@ -295,10 +302,15 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
     _copy_n_transform(source_files, file, pages)
     to_remove = len(file.pages)
-    for i in range(len(pages)//2):
+    npages = len(pages)
+    for i in range(npages//2):
         even = i % 2 == 0
         first_id = -i - 1 if even else i
         second_id = i if even else -i - 1
+        if first_id < 0:
+            first_id += npages
+        if second_id < 0:
+            second_id += npages
         first = pages[first_id]
         second = pages[second_id]
         first_foreign = file.pages[first_id]

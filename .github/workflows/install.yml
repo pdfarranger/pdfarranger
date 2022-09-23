@@ -24,6 +24,16 @@ jobs:
       run: python3 -m coverage combine
     - name: Codecov
       run: curl -s https://codecov.io/bash | bash
+  build-pikepdf-6:
+    runs-on: ubuntu-latest
+    # PikePDF 6.0.1
+    container: jeromerobert/pdfarranger-docker-ci:1.5.0
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install
+      run: pip3 install .[image]
+    - name: Tests
+      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-old-pikepdf:
     runs-on: ubuntu-latest
     # PikePDF 1.19
