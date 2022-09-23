@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-13 15:24+0200\n"
+"POT-Creation-Date: 2022-09-23 18:00+0200\n"
 "PO-Revision-Date: 2014-11-05 07:31+0000\n"
 "Last-Translator: Dean Lee <xslidian@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
@@ -456,7 +456,7 @@ msgstr "新建窗口(_N)"
 
 #: data/menu.ui.h:5
 msgid "Save _As…"
-msgstr "另存为(_A)…"
+msgstr "另存为(_A)..."
 
 #: data/menu.ui.h:6
 msgid "E_xport"
@@ -539,8 +539,8 @@ msgid "Paste _Before"
 msgstr "粘贴之前(_B)"
 
 #: data/menu.ui.h:26
-msgid "粘贴为奇数页(_O)"
-msgstr ""
+msgid "Paste As _Odd Pages"
+msgstr "粘贴为奇数页(_O)"
 
 #: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
@@ -599,8 +599,8 @@ msgid "Zoom _Out"
 msgstr "缩小(_O)"
 
 #: data/menu.ui.h:41
-msgid "缩放适合(_F)"
-msgstr ""
+msgid "Zoom _Fit"
+msgstr "缩放适合(_F)"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
