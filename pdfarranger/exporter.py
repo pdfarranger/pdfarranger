@@ -50,12 +50,40 @@ def make_tmp_file(tmpdir):
     return f, filename
 
 
+def _normalize_rectangle(rect):
+    """
+    PDF Specification 1.7, 7.9.5, although rectangles are conventionally
+    specified by their lower-left and upper-right corners, it is acceptable to
+    specify any two diagonally opposite corners. Applications that process PDF
+    should be prepared to normalize such rectangles in situations where
+    specific corners are required.
+    """
+    rect = [float(x) for x in rect]
+    if rect[0] > rect[2]:
+        rect[0], rect[2] = rect[2], rect[0]
+    if rect[1] > rect[3]:
+        rect[1], rect[3] = rect[3], rect[1]
+    return rect
+
+
+def _intersect_rectangle(rect1, rect2):
+    return [
+        max(rect1[0], rect2[0]),
+        max(rect1[1], rect2[1]),
+        min(rect1[2], rect2[2]),
+        min(rect1[3], rect2[3]),
+    ]
+
+
 def _mediabox(page, crop):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
+    cmb = _normalize_rectangle(cmb)
     if "/CropBox" in page:
-        cmb = page.CropBox
+        # PDF specification §14.11.2.1, "If they do, they are effectively
+        # reduced to their intersection with the media box"
+        cmb = _intersect_rectangle(cmb, _normalize_rectangle(page.CropBox))
 
     if crop == [0., 0., 0., 0.]:
         return cmb
