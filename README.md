@@ -1,6 +1,6 @@
 ## About
 
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/pdfarranger/pdfarranger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pdfarranger/pdfarranger/alerts/)
+[![CodeQL](https://github.com/pdfarranger/pdfarranger/workflows/CodeQL/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3ACodeQL "Code quality workflow status")
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/pdfarranger/pdfarranger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pdfarranger/pdfarranger/context:python)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1be9c9a69f3a44b79612cc5b2887c0f7)](https://www.codacy.com/gh/pdfarranger/pdfarranger/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pdfarranger/pdfarranger&amp;utm_campaign=Badge_Grade)
 [![pdfarranger](https://github.com/pdfarranger/pdfarranger/workflows/pdfarranger/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3Apdfarranger+branch%3Amain)
