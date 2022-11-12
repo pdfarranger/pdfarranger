@@ -376,6 +376,8 @@ class IconviewDragSelect:
             if path:
                 ind = Gtk.TreePath.get_indices(path)[0]
                 break
+        else:
+            return None
         if pos == 'XY':
             location = ind
         elif pos == 'Right':
