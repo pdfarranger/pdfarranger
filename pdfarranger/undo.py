@@ -112,14 +112,13 @@ class Manager(object):
                 page.zoom = self.app.zoom_scale
                 page.resample = -1
                 self.model.append([page, page.description])
-        with GObject.signal_handler_block(self.app.iconview, self.app.id_selection_changed_event):
-            for num in state.selection:
-                self.app.iconview.select_path(self.model[num].path)
+        for num in state.selection:
+            self.app.iconview.select_path(self.model[num].path)
         self.app.vadj_percent = state.vadj_percent
         self.app.update_iconview_geometry()
         self.app.update_max_zoom_level()
         self.app.retitle()
-        self.app.iv_selection_changed_event()
+        self.app.iv_selection_changed()
         self.app.silent_render()
 
     def __refresh(self):
