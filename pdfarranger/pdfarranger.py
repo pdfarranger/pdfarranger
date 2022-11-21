@@ -240,6 +240,7 @@ class PdfArranger(Gtk.Application):
         self.export_process = None
         self.post_action = None
         self.export_file = None
+        self.export_counter = 1
         self.drag_path = None
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         self.window_width_old = 0
@@ -958,6 +959,7 @@ class PdfArranger(Gtk.Application):
         self.metadata = {}
         self.undomanager.clear()
         self.set_export_file(None)
+        self.export_counter = 1
         self.set_unsaved(False)
         self.update_statusbar()
         malloc_trim()
@@ -1028,9 +1030,18 @@ class PdfArranger(Gtk.Application):
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
             f = self.pdfqueue[0].filename
-            # could be an image thanks to img2pdf
-            if f.endswith(".pdf"):
-                chooser.set_filename(f)
+            f_dir, basename = os.path.split(f)
+            if exportmode == 'ALL_TO_SINGLE':
+                if f.endswith(".pdf"):
+                    chooser.set_filename(f)  # Set name to existing file
+            else:
+                shortname, ext = os.path.splitext(basename)
+                if exportmode == 'SELECTED_TO_SINGLE':
+                    f = shortname + "-" + str(self.export_counter).zfill(2) + ext
+                else:  # ALL_TO_MULTIPLE or SELECTED_TO_MULTIPLE
+                    f = basename
+                if f.endswith(".pdf"):
+                    chooser.set_current_name(f)  # Set name to new file
         chooser.set_current_folder(self.export_directory)
         filter_list = self.__create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
@@ -1041,6 +1052,8 @@ class PdfArranger(Gtk.Application):
         chooser.destroy()
         if response == Gtk.ResponseType.ACCEPT:
             self.save(exportmode, file_out)
+            if exportmode == 'SELECTED_TO_SINGLE':
+                self.export_counter += 1
         else:
             self.post_action = None
 
