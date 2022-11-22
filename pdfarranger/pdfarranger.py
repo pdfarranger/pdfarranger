@@ -1136,8 +1136,9 @@ class PdfArranger(Gtk.Application):
             pages = [self.model[row][0].duplicate(incl_thumbnail=False) for row in selection]
         else:
             self.export_directory = path
-            self.set_export_file(file_out)
             pages = [row[0].duplicate(incl_thumbnail=False) for row in self.model]
+        if exportmode == 'ALL_TO_SINGLE':
+            self.set_export_file(file_out)
 
         if self.config.content_loss_warning():
             try:
