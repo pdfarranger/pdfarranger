@@ -270,7 +270,7 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
         )
 
 
-def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
+def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
@@ -278,7 +278,7 @@ def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
     if quit_flag is not None and quit_flag.is_set():
         return
     mdata = metadata.merge_doc(mdata, pdf_input)
-    if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
+    if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
                 return
@@ -292,24 +292,19 @@ def export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag):
                 pass
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
-            outname = file_out
-            parts = file_out.rsplit('.', 1)
-            if n > 0:
-                # Add page number to filename
-                outname = "".join(parts[:-1]) + str(n + 1) + '.' + parts[-1]
             _remove_unreferenced_resources(outpdf)
-            outpdf.save(outname)
+            outpdf.save(files_out[n])
     else:
         _set_meta(mdata, pdf_input, pdf_output)
         _remove_unreferenced_resources(pdf_output)
-        pdf_output.save(file_out)
+        pdf_output.save(files_out[0])
 
 
-def export(files, pages, mdata, exportmode, file_out, quit_flag, _export_msg):
+def export(files, pages, mdata, files_out, quit_flag, _export_msg):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
-    export_doc(pdf_input, pages, mdata, exportmode, file_out, quit_flag)
+    export_doc(pdf_input, pages, mdata, files_out, quit_flag)
 
 
 def num_pages(filepath):
@@ -421,7 +416,7 @@ class PrintOperation(Gtk.PrintOperation):
                 page.render_for_printing(print_ctx.get_cairo_context())
         else:
             buf = io.BytesIO()
-            export_doc([self.pdf_input[p.nfile - 1]], [p], {}, None, buf, None)
+            export_doc([self.pdf_input[p.nfile - 1]], [p], {}, [buf], None)
             page = Poppler.Document.new_from_data(buf.getvalue()).get_page(0)
             page.render_for_printing(print_ctx.get_cairo_context())
 

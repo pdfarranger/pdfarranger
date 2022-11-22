@@ -1039,7 +1039,7 @@ class PdfArranger(Gtk.Application):
                 if exportmode == 'SELECTED_TO_SINGLE':
                     f = shortname + "-" + str(self.export_counter).zfill(2) + ext
                 else:  # ALL_TO_MULTIPLE or SELECTED_TO_MULTIPLE
-                    f = basename
+                    f = shortname + "-0001" + ext
                 if f.endswith(".pdf") and f_dir != self.tmp_dir:
                     chooser.set_current_name(f)  # Set name to new file
                 chooser.set_current_folder(self.export_directory)
@@ -1051,7 +1051,24 @@ class PdfArranger(Gtk.Application):
         file_out = chooser.get_filename()
         chooser.destroy()
         if response == Gtk.ResponseType.ACCEPT:
-            self.save(exportmode, file_out)
+            root, ext = os.path.splitext(file_out)
+            if ext.lower() != '.pdf':
+                ext = '.pdf'
+                file_out = file_out + ext
+            files_out = [file_out]
+            if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
+                root = root[:-5] if root.endswith("-0001") else root
+                s = self.iconview.get_selected_items()
+                len_files = len(self.model) if exportmode == 'ALL_TO_MULTIPLE' else len(s)
+                for i in range(1, len_files):
+                    files_out.append(root + "-" + str(i + 1).zfill(4) + ext)
+                    if os.path.exists(files_out[i]):
+                        msg = (_('A file named "%s" already exists. Do you want to replace it?')
+                               % os.path.split(files_out[i])[1])
+                        replace = self.confirm_dialog(msg, _("Replace"))
+                        if not replace:
+                            return
+            self.save(exportmode, files_out)
             if exportmode == 'SELECTED_TO_SINGLE':
                 self.export_counter += 1
         else:
@@ -1124,28 +1141,23 @@ class PdfArranger(Gtk.Application):
         there was none."""
         savemode = 'ALL_TO_SINGLE'
         if self.export_file:
-            self.save(savemode, self.export_file)
+            self.save(savemode, [self.export_file])
         else:
             self.choose_export_pdf_name(savemode)
 
     def on_action_save_as(self, _action, _param, _unknown):
         self.choose_export_pdf_name('ALL_TO_SINGLE')
 
-    def save(self, exportmode, file_out):
+    def save(self, exportmode, files_out):
         """Saves to the specified file."""
-        (path, shortname) = os.path.split(file_out)
-        (shortname, ext) = os.path.splitext(shortname)
-        if ext.lower() != '.pdf':
-            file_out = file_out + '.pdf'
-
         if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
             selection = reversed(self.iconview.get_selected_items())
             pages = [self.model[row][0].duplicate(incl_thumbnail=False) for row in selection]
         else:
             pages = [row[0].duplicate(incl_thumbnail=False) for row in self.model]
         if exportmode == 'ALL_TO_SINGLE':
-            self.set_export_file(file_out)
-        self.export_directory = path
+            self.set_export_file(files_out[0])
+        self.export_directory = os.path.split(files_out[0])[0]
 
         if self.config.content_loss_warning():
             try:
@@ -1160,7 +1172,7 @@ class PdfArranger(Gtk.Application):
 
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
         export_msg = multiprocessing.Queue()
-        a = files, pages, self.metadata, exportmode, file_out, self.quit_flag, export_msg
+        a = files, pages, self.metadata, files_out, self.quit_flag, export_msg
         self.export_process = multiprocessing.Process(target=exporter.export_process, args=a)
         self.export_process.start()
         GObject.timeout_add(300, self.export_finished, exportmode, export_msg)
