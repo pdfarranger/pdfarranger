@@ -1135,10 +1135,10 @@ class PdfArranger(Gtk.Application):
             selection = reversed(self.iconview.get_selected_items())
             pages = [self.model[row][0].duplicate(incl_thumbnail=False) for row in selection]
         else:
-            self.export_directory = path
             pages = [row[0].duplicate(incl_thumbnail=False) for row in self.model]
         if exportmode == 'ALL_TO_SINGLE':
             self.set_export_file(file_out)
+        self.export_directory = path
 
         if self.config.content_loss_warning():
             try:
