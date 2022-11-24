@@ -1032,7 +1032,7 @@ class PdfArranger(Gtk.Application):
             f = self.pdfqueue[0].filename
             f_dir, basename = os.path.split(f)
             if exportmode == 'ALL_TO_SINGLE':
-                if f.endswith(".pdf"):
+                if f.endswith(".pdf") and f_dir != self.tmp_dir:
                     chooser.set_filename(f)  # Set name to existing file
             else:
                 shortname, ext = os.path.splitext(basename)
@@ -1040,9 +1040,9 @@ class PdfArranger(Gtk.Application):
                     f = shortname + "-" + str(self.export_counter).zfill(2) + ext
                 else:  # ALL_TO_MULTIPLE or SELECTED_TO_MULTIPLE
                     f = basename
-                if f.endswith(".pdf"):
+                if f.endswith(".pdf") and f_dir != self.tmp_dir:
                     chooser.set_current_name(f)  # Set name to new file
-        chooser.set_current_folder(self.export_directory)
+                chooser.set_current_folder(self.export_directory)
         filter_list = self.__create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
             chooser.add_filter(f)
