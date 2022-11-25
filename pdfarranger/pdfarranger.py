@@ -1029,7 +1029,7 @@ class PdfArranger(Gtk.Application):
                                         cancel_label=_("_Cancel"))
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
-            f = self.pdfqueue[0].filename
+            f = self.export_file or self.pdfqueue[0].filename
             f_dir, basename = os.path.split(f)
             if exportmode == 'ALL_TO_SINGLE':
                 if f.endswith(".pdf") and f_dir != self.tmp_dir:
