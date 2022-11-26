@@ -945,8 +945,8 @@ class PdfArranger(Gtk.Application):
                     msg = _('Save changes before closing?')
                 response = self.save_changes_dialog(msg)
                 if response == 3:
-                    self.save_or_choose()
                     self.post_action = 'CLEAR_DATA'
+                    self.save_or_choose()
                     return
                 elif response != 1:
                     return
@@ -979,8 +979,8 @@ class PdfArranger(Gtk.Application):
                     msg = _('Save changes before quitting?')
                 response = self.save_changes_dialog(msg)
                 if response == 3:
-                    self.save_or_choose()
                     self.post_action = 'CLOSE_APPLICATION'
+                    self.save_or_choose()
                     return True
                 elif response != 1:
                     return True
