@@ -1016,9 +1016,9 @@ class PdfArranger(Gtk.Application):
             shutil.rmtree(self.tmp_dir)
         self.quit()
 
-    def choose_export_pdf_name(self, mode):
+    def choose_export_pdf_name(self, exportmode):
         """Handles choosing a name for exporting """
-        title = _('Save As…') if mode == GLib.Variant('i', 0) else _('Export…')
+        title = _('Save As…') if exportmode == 'ALL_TO_SINGLE' else _('Export…')
 
         chooser = Gtk.FileChooserNative.new(title=title,
                                         parent=self.window,
@@ -1040,7 +1040,7 @@ class PdfArranger(Gtk.Application):
         file_out = chooser.get_filename()
         chooser.destroy()
         if response == Gtk.ResponseType.ACCEPT:
-            self.save(mode, file_out)
+            self.save(exportmode, file_out)
         else:
             self.post_action = None
 
@@ -1109,27 +1109,21 @@ class PdfArranger(Gtk.Application):
     def save_or_choose(self):
         """Saves to the previously exported file or shows the export dialog if
         there was none."""
-        savemode = GLib.Variant('i', 0) # Save all pages in a single document.
+        savemode = 'ALL_TO_SINGLE'
         if self.export_file:
             self.save(savemode, self.export_file)
         else:
             self.choose_export_pdf_name(savemode)
 
     def on_action_save_as(self, _action, _param, _unknown):
-        self.choose_export_pdf_name(GLib.Variant('i', 0))
+        self.choose_export_pdf_name('ALL_TO_SINGLE')
 
-    def save(self, mode, file_out):
+    def save(self, exportmode, file_out):
         """Saves to the specified file."""
         (path, shortname) = os.path.split(file_out)
         (shortname, ext) = os.path.splitext(shortname)
         if ext.lower() != '.pdf':
             file_out = file_out + '.pdf'
-
-        exportmodes = {0: 'ALL_TO_SINGLE',
-                       1: 'ALL_TO_MULTIPLE',
-                       2: 'SELECTED_TO_SINGLE',
-                       3: 'SELECTED_TO_MULTIPLE'}
-        exportmode = exportmodes[mode.get_int32()]
 
         if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
             selection = reversed(self.iconview.get_selected_items())
@@ -1228,10 +1222,15 @@ class PdfArranger(Gtk.Application):
         self.iconview.get_window().set_cursor(cursor)
 
     def choose_export_selection_pdf_name(self, _action, mode, _unknown):
-        self.choose_export_pdf_name(mode)
+        exportmodes = {0: 'ALL_TO_SINGLE',
+                       1: 'ALL_TO_MULTIPLE',
+                       2: 'SELECTED_TO_SINGLE',
+                       3: 'SELECTED_TO_MULTIPLE'}
+        exportmode = exportmodes[mode.get_int32()]
+        self.choose_export_pdf_name(exportmode)
 
     def on_action_export_all(self, _action, _param, _unknown):
-        self.choose_export_pdf_name(GLib.Variant('i', 1))
+        self.choose_export_pdf_name('ALL_TO_MULTIPLE')
 
     def on_action_import(self, _action, _param, _unknown):
         """Import doc"""
