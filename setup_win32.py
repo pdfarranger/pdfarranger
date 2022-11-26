@@ -1,4 +1,4 @@
-VERSION='1.9.1'
+VERSION='1.9.2'
 
 from cx_Freeze import setup, Executable
 import os
