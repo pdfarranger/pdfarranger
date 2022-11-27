@@ -371,13 +371,12 @@ class IconviewDragSelect:
                       ('Above', x + x_step, y - y_step),
                       ('Above', x - x_step, y - y_step),
                       ('Zero', 0, 0)]
+        ind = 0
         for pos, x_s, y_s in search_pos:
             path = self.iconview.get_path_at_pos(x_s, y_s)
             if path:
                 ind = Gtk.TreePath.get_indices(path)[0]
                 break
-        else:
-            return None
         if pos == 'XY':
             location = ind
         elif pos == 'Right':
