@@ -53,7 +53,7 @@ msgstr "해당 이미지 형식은 img2pdf에서 지원하지 않습니다"
 
 #: pdfarranger/core.py:314
 msgid "Clipboard image"
-msgstr ""
+msgstr "클립보드 이미지"
 
 #: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
 msgid "File is neither pdf nor image"
@@ -253,11 +253,11 @@ msgstr "저장(_S)"
 
 #: pdfarranger/pdfarranger.py:934
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "변경 사항을 저장하지 않고 닫으시겠습니까?"
 
 #: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
 msgid "_Close"
-msgstr ""
+msgstr "닫기(_C)"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
@@ -269,7 +269,7 @@ msgstr "닫기 전에 펀집한 사항을 저장하시겠습니까?"
 
 #: pdfarranger/pdfarranger.py:968
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "변경 사항을 저장하지 않고 종료하시겠습니까?"
 
 #: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
 msgid "_Quit"
@@ -281,15 +281,15 @@ msgstr "내보내기…"
 
 #: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
 msgid "_Open"
-msgstr ""
+msgstr "열기(O)"
 
 #: pdfarranger/pdfarranger.py:1092
 msgid "Open…"
-msgstr ""
+msgstr "열기…"
 
 #: pdfarranger/pdfarranger.py:1163
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "만들어진 몇몇 경고를 포함하여 저장하는 중"
 
 #: pdfarranger/pdfarranger.py:1164
 msgid "Despite the warnings the document(s) should have no visible issues."
@@ -297,7 +297,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1201
 msgid "Saving…"
-msgstr ""
+msgstr "저장 중…"
 
 #: pdfarranger/pdfarranger.py:1235
 msgid "Import…"
@@ -314,7 +314,7 @@ msgstr "PDF 문서가 손상되었습니다"
 #: pdfarranger/pdfarranger.py:2294
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s는 PDF 파일을 재정렬하거나 수정하는 도구입니다."
 
 #: pdfarranger/pdfarranger.py:2297
 #, python-format
@@ -383,7 +383,7 @@ msgstr "높이(%)"
 
 #: data/pdfarranger.ui.h:1
 msgid "Open"
-msgstr ""
+msgstr "열기"
 
 #: data/pdfarranger.ui.h:3
 msgid "Save"
@@ -443,7 +443,7 @@ msgstr "모든 페이지를 개별의 파일로 내보내기…(_A)"
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr ""
+msgstr "인쇄…(_P)"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
@@ -507,11 +507,11 @@ msgstr "앞 페이지에 붙여넣기(_B)"
 
 #: data/menu.ui.h:26
 msgid "Paste As _Odd Pages"
-msgstr ""
+msgstr "홀수 페이지마다 붙여넣기(_O)"
 
 #: data/menu.ui.h:27
 msgid "Paste As _Even Pages"
-msgstr ""
+msgstr "짝수 페이지마다 붙여넣기(_E)"
 
 #: data/menu.ui.h:28
 msgid "Insert Blan_k Page"
@@ -535,15 +535,15 @@ msgstr "모두 선택 해제(_D)"
 
 #: data/menu.ui.h:33
 msgid "Select _Odd Pages"
-msgstr ""
+msgstr "홀수 페이지만 선택(_O)"
 
 #: data/menu.ui.h:34
 msgid "Select _Even Pages"
-msgstr ""
+msgstr "짝수 페이지만 선택(_E)"
 
 #: data/menu.ui.h:35
 msgid "All From _Same File"
-msgstr ""
+msgstr "같은 파일에서 선택(_S)"
 
 #: data/menu.ui.h:36
 msgid "Same Page _Format"
@@ -555,7 +555,7 @@ msgstr "선택 반전(_I)"
 
 #: data/menu.ui.h:38
 msgid "_View"
-msgstr ""
+msgstr "보기(_V)"
 
 #: data/menu.ui.h:39
 msgid "Zoom _In"
@@ -567,7 +567,7 @@ msgstr "축소(_O)"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr ""
+msgstr "전체 화면(_S)"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
