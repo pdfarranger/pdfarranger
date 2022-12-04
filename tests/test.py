@@ -234,11 +234,13 @@ class PdfArrangerTest(unittest.TestCase):
         ob.click()
         return filechooser
 
-    def _save_as_chooser(self, filebasename):
+    def _save_as_chooser(self, filebasename, expected=None):
         """
         Fill and validate a Save As file chooser.
         The file chooser is supposed to be already open.
         """
+        if expected is None:
+            expected = [filebasename]
         filechooser = self._app().child(roleName="file chooser")
         tmp = self.__class__.tmp
         filename = os.path.join(tmp, filebasename)
@@ -246,7 +248,9 @@ class PdfArrangerTest(unittest.TestCase):
         saveb = filechooser.button("Save")
         self._wait_cond(lambda: saveb.sensitive)
         filechooser.button("Save").click()
-        self._wait_cond(lambda: os.path.isfile(filename))
+        # Check files have been created
+        for e in expected:
+            self._wait_cond(lambda: os.path.isfile(os.path.join(tmp, e)))
         self._wait_cond(lambda: filechooser.dead)
         self._wait_saving()
 
@@ -428,10 +432,9 @@ class TestBatch2(PdfArrangerTest):
 
     def test_04_export(self):
         self._mainmenu(["Export", "Export All Pages to Individual Files…"])
-        self._save_as_chooser("alltosingle.pdf")
-        # check the second page has been properly saved
-        filename2 = os.path.join(self.__class__.tmp, "alltosingle2.pdf")
-        self._wait_cond(lambda: os.path.isfile(filename2))
+        self._save_as_chooser(
+            "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-0002.pdf"]
+        )
 
     def test_05_clear(self):
         self._popupmenu(1, "Delete")
