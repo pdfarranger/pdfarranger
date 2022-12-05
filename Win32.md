@@ -21,23 +21,49 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
- mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool
+ mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip \
+ mingw-w64-x86_64-python-setuptools-scm git python-pip intltool
 ```
 
 and
 
 ```
 pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
-/mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
+/mingw64/bin/python3 -m pip install --user keyboard https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 ```
+
+## Building pikepdf
+
+pikepdf cannot be installed from PyPI for the MSYS2/Ming64 python. It must be built from source. First get the source:
+
+```
+git clone https://github.com/pikepdf/pikepdf.git
+cd pikepdf
+```
+
+Switch to the latest tag and build, for example:
+
+```
+git checkout v6.2.5
+/mingw64/bin/python3.exe -m pip install --user --no-build-isolation .
+```
+
+Now that pikepdf is installed you may also install img2pdf:
+
+```
+/mingw64/bin/python3.exe -m pip install --user img2pdf
+```
+
+## Building PDF Arranger
 
 Get the PDF Arranger sources from a MSYS2 shell:
 
 ```
+cd
 git clone https://github.com/pdfarranger/pdfarranger.git
 ```
 
-## Building distributions
+Then
 
 ```
 cd pdfarranger
@@ -60,6 +86,8 @@ unset $(env |grep ^XDG_ | cut -d= -f1)
 ```
 
 ## Docker
+
+(This is currently outdated and broken)
 
 ```
 alias pythonwin32="docker run -v local:/root/.wine/drive_c/users/root/.local -v $PWD:/pdfarranger -w /pdfarranger -it jeromerobert/wine-mingw64 wine cmd /c z:/mingw64/bin/python"
