@@ -18,7 +18,11 @@ import platform
 import configparser
 import os
 import sys
+import gettext
 from gi.repository import Gdk
+from gi.repository import Gtk
+
+_ = gettext.gettext
 
 # See https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.23/gdk/keynames.txt for list of keys
 _DEFAULT_ACCELS = [
@@ -156,6 +160,9 @@ class Config(object):
     def language(self):
         return self.data.get('preferences', 'language', fallback="")
 
+    def set_language(self, language):
+        self.data.set('preferences', 'language', language)
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
@@ -191,3 +198,44 @@ class Config(object):
             for k, v in self.data["accelerators"].items()
             if k != "enable_custom"
         ]
+
+    def preferences_dialog(self, parent, localedir):
+        """A dialog where language can be selected."""
+        d = Gtk.Dialog(title=_("Preferences"),
+                       parent=parent,
+                       flags=Gtk.DialogFlags.MODAL,
+                       buttons=(
+                           _("_Cancel"), Gtk.ResponseType.CANCEL,
+                           _("_OK"), Gtk.ResponseType.OK,
+                        ),
+                       )
+        hbox = Gtk.Box(spacing=6, margin=8)
+        frame = Gtk.Frame(label=_("Language"), margin=8)
+        combo = Gtk.ComboBoxText(margin=8)
+        label = Gtk.Label(_("(Requires restart)"))
+        hbox.pack_start(combo, False, False, 8)
+        hbox.pack_start(label, False, False, 8)
+        frame.add(hbox)
+        d.vbox.pack_start(frame, False, False, 8)
+
+        langs = []
+        if os.path.isdir(localedir):
+            langs = os.listdir(localedir)
+        langs.append("en")
+        langs.sort()
+        langs.insert(0, _("System setting"))
+        for lan in langs:
+            combo.append(None, lan)
+        lang = self.language()
+        if lang in langs:
+            combo.set_active(langs.index(lang))
+        else:
+            combo.set_active(0)
+
+        d.show_all()
+        result = d.run()
+        if result == Gtk.ResponseType.OK:
+            num = combo.get_active()
+            language = langs[num] if num != 0 else ""
+            self.set_language(language)
+        d.destroy()

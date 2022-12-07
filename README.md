@@ -35,9 +35,9 @@ You can change the default keyboard shortcuts. To do so, set `enable_custom` to 
 *   For Windows installer version: `C:\Users\username\AppData\Roaming\pdfarranger\config.ini`
 *   For Windows portable version, the file is located in the same folder as pdfarranger.exe. Optionally, this file can be removed. The application will then use the same config file location as in the installer version.
 
-## Set custom language in Windows
+## Set custom language
 
-Add/modify: `language = xx_YY` in `preferences` section in `config.ini` (where `xx_YY` is for example `en_US`)
+Language can be selected in the `Preferences` dialog.
 
 ## Install from source
 
@@ -108,10 +108,8 @@ For Windows see [Win32.md](Win32.md).
     *   pick the same letter as the original string if available
     *   pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
 
-*   If possible, test your translation to see it in context (see [For developers](#for-developers))
-
-*   You may test different languages with `LANG=xx_YY python3 -m pdfarranger`
-    For Windows see [Set custom language in Windows](#Set-custom-language-in-Windows)
+*   If possible, test your translation to see it in context
+    (see [For developers](#for-developers) and [Set custom language](#Set-custom-language))
 
 *   Do not include `pdfarranger.pot` (or any `*.po` file which was just
     automatically regenerated) in your pull request. Submit only the translations
