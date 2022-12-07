@@ -110,11 +110,20 @@ from gi.repository import Pango
 
 from .config import Config
 
-if os.name == 'nt':
+
+def _set_language_locale():
     lang = Config(DOMAIN).language()
-    if not lang and GLib.get_language_names():
-        lang = GLib.get_language_names()[0]
-    os.environ['LANG'] = lang
+    if os.name == 'nt':
+        if not lang and GLib.get_language_names():
+            lang = GLib.get_language_names()[0]
+        os.environ['LANG'] = lang
+    elif lang:
+        if locale.getlocale(locale.LC_MESSAGES)[0] is None and lang != 'en':
+            print('LC_MESSAGES = "C" or not valid. Translations may not work properly.')
+        os.environ['LANGUAGE'] = lang
+
+
+_set_language_locale()
 
 gettext.bindtextdomain(DOMAIN, localedir)
 gettext.textdomain(DOMAIN)
@@ -381,6 +390,7 @@ class PdfArranger(Gtk.Application):
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
             ("generate-booklet", self.generate_booklet),
+            ("preferences", self.on_action_preferences),
             ("print", self.on_action_print),
         ]
         self.window.add_action_entries(self.actions)
@@ -446,6 +456,9 @@ class PdfArranger(Gtk.Application):
         adder.commit(select_added=False, add_to_undomanager=False)
         self.clear_selected(add_to_undomanager=False)
         self.silent_render()
+
+    def on_action_preferences(self, _action, _option, _unknown):
+        self.config.preferences_dialog(self.window, localedir)
 
     def on_action_print(self, _action, _option, _unknown):
         exporter.PrintOperation(self).run()

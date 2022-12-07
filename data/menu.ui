@@ -227,6 +227,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">Pre_ferences</attribute>
+        <attribute name="action">win.preferences</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">_About</attribute>
         <attribute name="action">win.about</attribute>
       </item>
