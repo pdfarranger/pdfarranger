@@ -217,6 +217,7 @@ class Config(object):
                            _("_OK"), Gtk.ResponseType.OK,
                         ),
                        )
+        d.set_resizable(False)
         hbox = Gtk.Box(spacing=6, margin=8)
         frame = Gtk.Frame(label=_("Language"), margin=8)
         combo = Gtk.ComboBoxText(margin=8)
@@ -233,6 +234,11 @@ class Config(object):
         hbox2.pack_start(label2, False, False, 8)
         frame2.add(hbox2)
         d.vbox.pack_start(frame2, False, False, 8)
+        t = _("For more options see:")
+        frame3 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
+        label3 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
+        frame3.add(label3)
+        d.vbox.pack_start(frame3, False, False, 8)
 
         langs = []
         if os.path.isdir(localedir):
