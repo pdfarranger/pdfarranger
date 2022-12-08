@@ -20,6 +20,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="el">Συγχώνευση, αναδιάταξη, διαχωρισμός, περιστροφή και περικοπή αρχείων PDF</summary>
   <summary xml:lang="es">Mezcle, reordene, divida, rote y recorte documentos PDF</summary>
   <summary xml:lang="fi">Yhdistä, järjestele, jaa, käännä ja rajaa PDF-tiedostoja</summary>
+  <summary xml:lang="fr">Fusionner, réorganiser, découper, pivoter et recadrer des documents PDF</summary>
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
   <summary xml:lang="hu">PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása</summary>
   <summary xml:lang="nl">Een programma voor het samenvoegen, herordenen, opsplitsen, draaien en bijsnijden van pdf-bestanden</summary>
@@ -68,6 +69,13 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="es">
       Es una interfaz para pikepdf.
+    </p>
+
+    <p xml:lang="fr">
+      PDF Arranger est une petite application qui aide l’utilisateur à fusionner ou découper des documents PDF et pivoter, recadrer et réarranger leurs pages en utilisant une interface graphique intuitive.
+    </p>
+    <p xml:lang="fr">
+      Il s’agit d’une interface pour pikepdf.
     </p>
 
     <p xml:lang="hr">
