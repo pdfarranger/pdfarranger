@@ -1,0 +1,9 @@
+char *s = N_("Open");
+char *s = N_("Import");
+char *s = N_("Save");
+char *s = N_("Save As");
+char *s = N_("Main Menu");
+char *s = N_("Zoom In");
+char *s = N_("Zoom Out");
+char *s = N_("Rotate Left");
+char *s = N_("Rotate Right");
