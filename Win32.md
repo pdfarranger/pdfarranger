@@ -21,7 +21,7 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
- mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip \
+ mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip mingw-w64-x86_64-libhandy \
  mingw-w64-x86_64-python-setuptools-scm git python-pip intltool
 ```
 
@@ -70,6 +70,16 @@ cd pdfarranger
 ./setup.py build
 /mingw64/bin/python3 setup_win32.py bdist_msi
 /mingw64/bin/python3 setup_win32.py bdist_zip
+```
+
+## Debug / hacking
+
+After running `setup.py build` it's possible to run PDF Arranger without creating the installer:
+
+```
+cd pdfarranger
+./setup.py build
+/mingw64/bin/python3.exe -m pdfarranger
 ```
 
 ## Wine
