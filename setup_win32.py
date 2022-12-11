@@ -16,6 +16,17 @@ include_files = [
 ]
 
 
+def clean_build():
+    dirs = os.listdir('build')
+    keep = ['mo', 'lib']
+    for d in dirs:
+        if d not in keep:
+            shutil.rmtree(os.path.join('build', d))
+
+
+clean_build()
+
+
 def addfile(relpath, warn_missing=False):
     global include_files
     f = os.path.join(sys.prefix, relpath)
@@ -26,9 +37,12 @@ def addfile(relpath, warn_missing=False):
 
 
 def addlocale(name):
+    langs = os.listdir('build/mo')
     for path in glob.glob(os.path.join(sys.prefix,
                                        "share/locale/*/LC_MESSAGES/{}.mo".format(name))):
-        addfile(os.path.relpath(path, sys.prefix))
+        lang = os.path.split(os.path.split(os.path.split(path)[0])[0])[1]
+        if lang in langs:
+            addfile(os.path.relpath(path, sys.prefix))
 
 
 addlocale("gtk30")
