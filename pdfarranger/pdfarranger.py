@@ -319,6 +319,11 @@ class PdfArranger(Gtk.Application):
             scheme = Handy.ColorScheme.PREFER_LIGHT
             if os.name == 'nt' and darkdetect.isDark():
                 scheme = Handy.ColorScheme.PREFER_DARK
+            theme = self.config.theme()
+            if theme == 'dark':
+                scheme = Handy.ColorScheme.FORCE_DARK
+            elif theme == 'light':
+                scheme = Handy.ColorScheme.FORCE_LIGHT
             try:
                 Handy.StyleManager.get_default().set_color_scheme(scheme)
             except AttributeError:
@@ -472,7 +477,9 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def on_action_preferences(self, _action, _option, _unknown):
-        self.config.preferences_dialog(self.window, localedir)
+        handy_available = True if Handy else False
+        self.config.preferences_dialog(self.window, localedir, handy_available)
+        self.set_color_scheme()
 
     def on_action_print(self, _action, _option, _unknown):
         exporter.PrintOperation(self).run()

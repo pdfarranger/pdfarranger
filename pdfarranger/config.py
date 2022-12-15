@@ -163,6 +163,12 @@ class Config(object):
     def set_language(self, language):
         self.data.set('preferences', 'language', language)
 
+    def theme(self):
+        return self.data.get('preferences', 'theme', fallback="")
+
+    def set_theme(self, theme):
+        self.data.set('preferences', 'theme', theme)
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
@@ -199,8 +205,8 @@ class Config(object):
             if k != "enable_custom"
         ]
 
-    def preferences_dialog(self, parent, localedir):
-        """A dialog where language can be selected."""
+    def preferences_dialog(self, parent, localedir, handy_available):
+        """A dialog where language and theme can be selected."""
         d = Gtk.Dialog(title=_("Preferences"),
                        parent=parent,
                        flags=Gtk.DialogFlags.MODAL,
@@ -217,6 +223,14 @@ class Config(object):
         hbox.pack_start(label, False, False, 8)
         frame.add(hbox)
         d.vbox.pack_start(frame, False, False, 8)
+        hbox2 = Gtk.Box(spacing=6, margin=8)
+        frame2 = Gtk.Frame(label=_("Theme"), margin=8)
+        combo2 = Gtk.ComboBoxText(margin=8)
+        label2 = Gtk.Label("" if handy_available else _("(Libhandy missing)"))
+        hbox2.pack_start(combo2, False, False, 8)
+        hbox2.pack_start(label2, False, False, 8)
+        frame2.add(hbox2)
+        d.vbox.pack_start(frame2, False, False, 8)
 
         langs = []
         if os.path.isdir(localedir):
@@ -231,6 +245,15 @@ class Config(object):
             combo.set_active(langs.index(lang))
         else:
             combo.set_active(0)
+        themes = [_("System setting"), "light", "dark"]
+        for the in themes:
+            combo2.append(None, the)
+        theme = self.theme()
+        if theme in themes:
+            combo2.set_active(themes.index(theme))
+        else:
+            combo2.set_active(0)
+        combo2.set_sensitive(handy_available)
 
         d.show_all()
         result = d.run()
@@ -238,4 +261,7 @@ class Config(object):
             num = combo.get_active()
             language = langs[num] if num != 0 else ""
             self.set_language(language)
+            num2 = combo2.get_active()
+            theme = themes[num2] if num2 != 0 else ""
+            self.set_theme(theme)
         d.destroy()
