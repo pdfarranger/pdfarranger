@@ -7,7 +7,7 @@ import tempfile
 import shutil
 
 """
-Thoses tests are using Dogtail https://gitlab.com/dogtail/dogtail
+Those tests are using Dogtail https://gitlab.com/dogtail/dogtail
 
 Other tools using dogtail where you can get example on how to use it:
 
@@ -29,7 +29,7 @@ treeview.keyCombo('<ctrl>L')
 treeview.typeText('qpdf-manual.pdf')
 filechooser.button('Open').click()
 
-You may need to run the following commands to run thoses tests in your current session instead of Xvfb:
+You may need to run the following commands to run those tests in your current session instead of Xvfb:
 
 * /usr/libexec/at-spi-bus-launcher --launch-immediately
 * setxkbmap -v fr
@@ -187,7 +187,7 @@ class PdfArrangerTest(unittest.TestCase):
         app = self._app()
         from dogtail import predicate
         allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
-        # If we have multiple status bar, concider the last one as the one who display the selection
+        # If we have multiple status bar, consider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
         return statusbar.name
 

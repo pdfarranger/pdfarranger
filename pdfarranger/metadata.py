@@ -28,10 +28,10 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 _ = gettext.gettext
 
-# The producer property can be overriden by pikepdf
+# The producer property can be overridden by pikepdf
 PRODUCER = '{http://ns.adobe.com/pdf/1.3/}Producer'
 # Currently the only property which support lists as values. If you add more
-# please implement a generic mecanism.
+# please implement a generic mechanism.
 _CREATOR = '{http://purl.org/dc/elements/1.1/}creator'
 _CREATED = '{http://ns.adobe.com/xap/1.0/}CreateDate'
 _MODIFIED = '{http://ns.adobe.com/xap/1.0/}ModifyDate'
@@ -191,7 +191,7 @@ def edit(metadata, pdffiles, parent):
     """
     Edit the current meta data
 
-    :param metadata: The dictionnary of meta data to modify
+    :param metadata: The dictionary of meta data to modify
     :param pdffiles: A list of PDF from witch to take the initial meta data
     :param parent: The parent window
     """

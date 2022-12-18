@@ -163,7 +163,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 * Wed Sep 11 2019 David Auer <dreua@posteo.de> - 1.3.0-2
 - Add missing dependency
-- Remove unnecessary python_provide makro
+- Remove unnecessary python_provide macro
 
 * Sun Aug 11 2019 David Auer <dreua@posteo.de> - 1.3.0-1
 - New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.0
@@ -184,7 +184,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 - Fix rpmlint errors and warnings
 
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-4
-- Buiding with wheel to get lang and icons right
+- Building with wheel to get lang and icons right
 
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-3
 - Move Requires to the right location

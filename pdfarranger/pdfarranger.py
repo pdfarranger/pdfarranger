@@ -502,7 +502,7 @@ class PdfArranger(Gtk.Application):
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
-        # TODO: huge method that should be splitted
+        # TODO: huge method that should be split
 
         iconsdir = os.path.join(sharedir, 'icons')
         if not os.path.exists(iconsdir):
@@ -1019,7 +1019,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.unselect_all()
         self.iconview.get_model().clear()
 
-        # Release Poppler.Document instances to unlock all temporay files
+        # Release Poppler.Document instances to unlock all temporary files
         self.pdfqueue = []
         gc.collect()
         self.config.set_window_size(self.window.get_size())
