@@ -84,8 +84,9 @@ VERSION = '1.9.2'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
-    # Add support for dnd to other instance and insert file at drop location in Windows
+    import darkdetect
     import keyboard  # to get control key state when drag to other instance
+    # Add support for dnd to other instance and insert file at drop location in Windows
     os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
     # Use client side decorations. Will also enable window moving with Win + left/right
     os.environ['GTK_CSD'] = '1'
@@ -313,6 +314,17 @@ class PdfArranger(Gtk.Application):
             f = '/usr/local/share/{}/{}'.format(DOMAIN, path)
         return f
 
+    def set_color_scheme(self):
+        if Handy:
+            scheme = Handy.ColorScheme.PREFER_LIGHT
+            if os.name == 'nt' and darkdetect.isDark():
+                scheme = Handy.ColorScheme.PREFER_DARK
+            try:
+                Handy.StyleManager.get_default().set_color_scheme(scheme)
+            except AttributeError:
+                # This libhandy is too old. 1.5.90 needed ?
+                pass
+
     def __create_main_window(self):
         """Create the Gtk.ApplicationWindow or Handy.ApplicationWindow"""
         b = Gtk.Builder()
@@ -327,13 +339,7 @@ class PdfArranger(Gtk.Application):
         self.uiXML = b
         self.window = self.uiXML.get_object("main_window")
         if Handy:
-            try:
-                Handy.StyleManager.get_default().set_color_scheme(
-                    Handy.ColorScheme.PREFER_LIGHT
-                )
-            except AttributeError:
-                # This libhandy is too old. 1.5.90 needed ?
-                pass
+            self.set_color_scheme()
             # Add an intermediate vertical box
             box = Gtk.Box()
             box.props.orientation = Gtk.Orientation.VERTICAL
