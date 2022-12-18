@@ -47,7 +47,7 @@ jobs:
   build-win32:
     runs-on: ubuntu-latest
     container:
-      image: jeromerobert/wine-mingw64:1.8.0
+      image: jeromerobert/wine-mingw64:1.8.1
       options: --user root
     steps:
     - uses: actions/checkout@v3
