@@ -15,6 +15,15 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import os
+import ctypes
+
+if os.name == 'nt':
+    try:
+        ctypes.windll.kernel32.SetDefaultDllDirectories(0x1000)
+    except AttributeError:
+        # Windows too old KB2533623
+        pass
+
 import shutil  # for file operations like whole directory deletion
 import sys  # for processing of command line args
 import tempfile
@@ -26,7 +35,6 @@ import locale  # for multilanguage support
 import gettext
 import gc
 import subprocess
-import ctypes
 import pikepdf
 from urllib.request import url2pathname
 from functools import lru_cache

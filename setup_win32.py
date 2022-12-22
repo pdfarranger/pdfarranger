@@ -112,9 +112,12 @@ for dll in required_dlls:
     fn = 'lib' + dll + '.dll'
     include_files.append((os.path.join(sys.prefix, 'bin', fn), fn))
 
-# zlib1 is first loaded by a DLL located in lib
+# Avoid loading wrong dll: Put the dll where it will be searched for first.
+# (That is the folder from where the dll load request originate)
 include_files.append((os.path.join(sys.prefix, 'bin', 'zlib1.dll'),
                       os.path.join('lib', 'zlib1.dll'),))
+include_files.append((os.path.join(sys.prefix, 'bin', 'libffi-8.dll'),
+                      os.path.join('lib', 'libffi-8.dll'),))
 
 required_gi_namespaces = [
     "Gtk-3.0",
@@ -161,7 +164,7 @@ build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
     excludes=['tkinter', 'test'],
     # manually added to the lib folder
-    bin_excludes=['zlib1.dll'],
+    bin_excludes=['zlib1.dll', 'libffi-8.dll'],
     include_files=include_files,
 )
 
