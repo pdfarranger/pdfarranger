@@ -450,6 +450,8 @@ class PageAdder:
 
     def scroll(self):
         """Scroll to first added page."""
+        if len(self.app.model) - len(self.pages) == 0:
+            return
         if self.treerowref:
             iref = self.treerowref.get_path().get_indices()[0]
         else:
