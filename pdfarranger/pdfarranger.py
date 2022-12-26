@@ -255,8 +255,8 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread = None
         self.export_process = None
         self.post_action = None
+        self.save_file = None
         self.export_file = None
-        self.export_counter = 1
         self.drag_path = None
         self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         self.window_width_old = 0
@@ -788,9 +788,9 @@ class PdfArranger(Gtk.Application):
         self.iconview.grab_focus()
         self.silent_render()
 
-    def set_export_file(self, file):
-        if file != self.export_file:
-            self.export_file = file
+    def set_save_file(self, file):
+        if file != self.save_file:
+            self.save_file = file
             self.set_unsaved(True)
 
     def set_unsaved(self, flag):
@@ -798,8 +798,8 @@ class PdfArranger(Gtk.Application):
         GObject.idle_add(self.retitle)
 
     def retitle(self):
-        if self.export_file:
-            title = self.export_file
+        if self.save_file:
+            title = self.save_file
         else:
             title = _('untitled')
         if self.is_unsaved:
@@ -971,9 +971,9 @@ class PdfArranger(Gtk.Application):
                 if not confirm:
                     return
             else:
-                if self.export_file:
+                if self.save_file:
                     msg = _('Save changes to “{}” before closing?')
-                    msg = msg.format(os.path.basename(self.export_file))
+                    msg = msg.format(os.path.basename(self.save_file))
                 else:
                     msg = _('Save changes before closing?')
                 response = self.save_changes_dialog(msg)
@@ -990,8 +990,8 @@ class PdfArranger(Gtk.Application):
         self.pdfqueue = []
         self.metadata = {}
         self.undomanager.clear()
-        self.set_export_file(None)
-        self.export_counter = 1
+        self.set_save_file(None)
+        self.export_file = None
         self.set_unsaved(False)
         self.update_statusbar()
         malloc_trim()
@@ -1006,9 +1006,9 @@ class PdfArranger(Gtk.Application):
                 if not confirm:
                     return True
             else:
-                if self.export_file:
+                if self.save_file:
                     msg = _('Save changes to “{}” before quitting?')
-                    msg = msg.format(os.path.basename(self.export_file))
+                    msg = msg.format(os.path.basename(self.save_file))
                 else:
                     msg = _('Save changes before quitting?')
                 response = self.save_changes_dialog(msg)
@@ -1050,6 +1050,26 @@ class PdfArranger(Gtk.Application):
             shutil.rmtree(self.tmp_dir)
         self.quit()
 
+    @staticmethod
+    def get_cnt_filename(f, need_cnt=False):
+        """Get a filename where the value at end is incremented by 1."""
+        shortname, ext = os.path.splitext(f)
+        if ext.lower() != ".pdf":
+            ext = ".pdf"
+        cnt = ""
+        for char in reversed(shortname):
+            if char.isdigit():
+                cnt = char + cnt
+            else:
+                break
+        if cnt != "":
+            name_part = shortname[:-len(cnt)]
+            cnt_part = str(int(cnt) + 1).zfill(len(cnt))
+            f = name_part + cnt_part + ext
+        elif need_cnt:
+            f = shortname + "-002" + ext
+        return f
+
     def choose_export_pdf_name(self, exportmode):
         """Handles choosing a name for exporting """
         title = _('Save As…') if exportmode == 'ALL_TO_SINGLE' else _('Export…')
@@ -1061,19 +1081,18 @@ class PdfArranger(Gtk.Application):
                                         cancel_label=_("_Cancel"))
         chooser.set_do_overwrite_confirmation(True)
         if len(self.pdfqueue) > 0:
-            f = self.export_file or self.pdfqueue[0].filename
+            f = self.save_file or self.pdfqueue[0].filename
             f_dir, basename = os.path.split(f)
             if exportmode == 'ALL_TO_SINGLE':
                 if f.endswith(".pdf") and f_dir != self.tmp_dir:
                     chooser.set_filename(f)  # Set name to existing file
             else:
                 shortname, ext = os.path.splitext(basename)
-                if exportmode == 'SELECTED_TO_SINGLE':
-                    f = shortname + "-" + str(self.export_counter).zfill(2) + ext
-                else:  # ALL_TO_MULTIPLE or SELECTED_TO_MULTIPLE
-                    f = shortname + "-0001" + ext
-                if f.endswith(".pdf") and f_dir != self.tmp_dir:
-                    chooser.set_current_name(f)  # Set name to new file
+                if self.export_file is None and f_dir == self.tmp_dir:
+                    shortname = ""
+                f = self.export_file or shortname + "-000" + ext
+                f = self.get_cnt_filename(f)
+                chooser.set_current_name(f)  # Set name to new file
                 chooser.set_current_folder(self.export_directory)
         filter_list = self.__create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
@@ -1089,11 +1108,10 @@ class PdfArranger(Gtk.Application):
                 file_out = file_out + ext
             files_out = [file_out]
             if exportmode in ['ALL_TO_MULTIPLE', 'SELECTED_TO_MULTIPLE']:
-                root = root[:-5] if root.endswith("-0001") else root
                 s = self.iconview.get_selected_items()
                 len_files = len(self.model) if exportmode == 'ALL_TO_MULTIPLE' else len(s)
                 for i in range(1, len_files):
-                    files_out.append(root + "-" + str(i + 1).zfill(4) + ext)
+                    files_out.append(self.get_cnt_filename(files_out[-1], need_cnt=True))
                     if os.path.exists(files_out[i]):
                         msg = (_('A file named "%s" already exists. Do you want to replace it?')
                                % os.path.split(files_out[i])[1])
@@ -1101,8 +1119,6 @@ class PdfArranger(Gtk.Application):
                         if not replace:
                             return
             self.save(exportmode, files_out)
-            if exportmode == 'SELECTED_TO_SINGLE':
-                self.export_counter += 1
         else:
             self.post_action = None
 
@@ -1156,7 +1172,7 @@ class PdfArranger(Gtk.Application):
         response, chooser = self.open_dialog(_('Open…'))
 
         if response == Gtk.ResponseType.ACCEPT:
-            if self.is_unsaved or self.export_file:
+            if self.is_unsaved or self.save_file:
                 self.on_action_new(filenames=chooser.get_filenames())
             else:
                 adder = PageAdder(self)
@@ -1172,8 +1188,8 @@ class PdfArranger(Gtk.Application):
         """Saves to the previously exported file or shows the export dialog if
         there was none."""
         savemode = 'ALL_TO_SINGLE'
-        if self.export_file:
-            self.save(savemode, [self.export_file])
+        if self.save_file:
+            self.save(savemode, [self.save_file])
         else:
             self.choose_export_pdf_name(savemode)
 
@@ -1188,7 +1204,9 @@ class PdfArranger(Gtk.Application):
         else:
             pages = [row[0].duplicate(incl_thumbnail=False) for row in self.model]
         if exportmode == 'ALL_TO_SINGLE':
-            self.set_export_file(files_out[0])
+            self.set_save_file(files_out[0])
+        else:
+            self.export_file = os.path.split(files_out[-1])[1]
         self.export_directory = os.path.split(files_out[0])[0]
 
         if self.config.content_loss_warning():
