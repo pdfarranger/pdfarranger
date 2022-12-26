@@ -433,7 +433,7 @@ class TestBatch2(PdfArrangerTest):
     def test_04_export(self):
         self._mainmenu(["Export", "Export All Pages to Individual Files…"])
         self._save_as_chooser(
-            "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-0002.pdf"]
+            "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
         )
 
     def test_05_clear(self):
