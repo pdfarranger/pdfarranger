@@ -68,10 +68,8 @@ ICON_ID = 'com.github.jeromerobert.' + DOMAIN
 if hasattr(locale, 'bindtextdomain'):
     # glibc
     locale.bindtextdomain(DOMAIN, localedir)
-    try:
-        locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
-    except AttributeError:
-        pass
+    # https://docs.gtk.org/glib/i18n.html
+    locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
 else:
     # Windows or musl
     libintl = ctypes.cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
