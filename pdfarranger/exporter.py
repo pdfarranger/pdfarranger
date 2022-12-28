@@ -104,9 +104,6 @@ def _mediabox(page, crop):
     return [x1_new, y1_new, x2_new, y2_new]
 
 
-_report_pikepdf_err = True
-
-
 def _set_meta(mdata, pdf_input, pdf_output):
     ppae = metadata.PRODUCER not in mdata
     with pdf_output.open_metadata(set_pikepdf_as_editor=ppae) as outmeta:
@@ -272,7 +269,6 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
 
 def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
     """Same as export() but with pikepdf.PDF objects instead of files"""
-    global _report_pikepdf_err
     pdf_output = pikepdf.Pdf.new()
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():

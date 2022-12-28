@@ -28,7 +28,6 @@ clean_build()
 
 
 def addfile(relpath, warn_missing=False):
-    global include_files
     f = os.path.join(sys.prefix, relpath)
     if warn_missing and not os.path.isfile(f):
         print("{} cannot be found.".format(f), file=sys.stderr)
