@@ -473,7 +473,6 @@ class TestBatch3(PdfArrangerTest):
         passfield.text = "wrong"
         dialog.child(name="OK").click()
         dialog = self._app().child(roleName="dialog")
-        passfield = dialog.child(roleName="password text")
         dialog.child(name="Cancel").click()
         self._wait_cond(lambda: dialog.dead)
         self._wait_cond(lambda: filechooser.dead)
