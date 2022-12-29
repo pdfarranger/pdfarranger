@@ -1240,17 +1240,6 @@ class PdfArranger(Gtk.Application):
             self.export_file = os.path.split(files_out[-1])[1]
         self.export_directory = os.path.split(files_out[0])[0]
 
-        if self.config.content_loss_warning():
-            try:
-                res, enabled = exporter.check_content(self.window, self.pdfqueue)
-            except Exception as e:
-                traceback.print_exc()
-                self.error_message_dialog(e)
-                return
-            self.config.set_content_loss_warning(enabled)
-            if res == Gtk.ResponseType.CANCEL:
-                return # Abort
-
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
         export_msg = multiprocessing.Queue()
         a = files, pages, self.metadata, files_out, self.quit_flag, export_msg
@@ -2727,6 +2716,26 @@ class PdfArranger(Gtk.Application):
         with self.render_lock():
             model.reorder(new_order)
         GObject.idle_add(self.render)
+
+    def content_loss_warning(self, old):
+        """Warn about that outlines might be lost on export."""
+        if old:
+            msg = _("Installed pikepdf is too old for preserving of outlines.")
+        else:
+            msg = _("Outlines can be preserved only for the first opened document.")
+        d = Gtk.MessageDialog(
+            type=Gtk.MessageType.INFO,
+            parent=self.window,
+            text=msg,
+            buttons=Gtk.ButtonsType.OK
+            )
+        cb = Gtk.CheckButton(_("Do not show this dialog again."), can_focus=False)
+        d.vbox.pack_start(cb, False, False, 6)
+        d.show_all()
+        cb.set_can_focus(True)
+        d.run()
+        self.config.set_content_loss_warning(not cb.get_active())
+        d.destroy()
 
     def about_dialog(self, _action, _parameter, _unknown):
         about_dialog = Gtk.AboutDialog()
