@@ -46,7 +46,7 @@ msgstr "(Erfordert Neustart)"
 
 #: pdfarranger/config.py:227
 msgid "Theme"
-msgstr "Thema"
+msgstr "Erscheinungsbild"
 
 #: pdfarranger/config.py:229
 msgid "(Libhandy missing)"
@@ -346,7 +346,7 @@ msgstr "Exportieren …"
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr ""
-"Eine Datei mit dem Namen \"%s\" existiert bereits. Möchten Sie sie ersetzen?"
+"Eine Datei mit dem Namen \"%s\" existiert bereits. Möchten Sie diese ersetzen?"
 
 #: pdfarranger/pdfarranger.py:1100
 msgid "Replace"
