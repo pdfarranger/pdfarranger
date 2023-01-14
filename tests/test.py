@@ -479,6 +479,9 @@ class TestBatch3(PdfArrangerTest):
         self.assertEqual(len(self._icons()), 2)
 
     def test_03_quit(self):
+        app = self._app()
+        app.keyCombo("<ctrl>z")  # undo
+        app.keyCombo("<ctrl>y")  # redo
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Save").click()
