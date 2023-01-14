@@ -346,6 +346,8 @@ class PageAdder:
         #: Where to insert pages. If None pages are inserted at the end
         self.treerowref = None
         self.stat_cache = {}
+        self.content = []
+        self.pdfqueue_used = True
 
     def move(self, treerowref, before):
         """Insert pages at the given location."""
@@ -356,6 +358,9 @@ class PageAdder:
         crop = [0] * 4 if crop is None else crop
         pdfdoc = None
         nfile = None
+        c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
+        self.content.append(c)
+        self.pdfqueue_used = len(self.app.pdfqueue) > 0
 
         # Check if added page or file already exist in pdfqueue
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
@@ -423,7 +428,9 @@ class PageAdder:
             return False
         if add_to_undomanager:
             self.app.undomanager.commit("Add")
-            self.app.set_unsaved(True)
+            if self.pdfqueue_used or len(self.content) > 1 or self.content[0] != 'pdf':
+                self.app.set_unsaved(True)
+            self.content = []
         with self.app.render_lock():
             for p in self.pages:
                 m = [p, p.description()]
