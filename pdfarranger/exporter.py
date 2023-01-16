@@ -402,6 +402,9 @@ class PrintOperation(Gtk.PrintOperation):
         self.message = self.MESSAGE
 
     def draw_page(self, operation, print_ctx, page_num, print_data):
+        cairo_ctx = print_ctx.get_cairo_context()
+        # Poppler context is always 72 dpi
+        cairo_ctx.scale(print_ctx.get_dpi_x() / 72, print_ctx.get_dpi_y() / 72)
         if page_num >= len(self.app.model):
             return
         p = self.app.model[page_num][0]
@@ -409,12 +412,12 @@ class PrintOperation(Gtk.PrintOperation):
             pdfdoc = self.app.pdfqueue[p.nfile - 1]
             page = pdfdoc.document.get_page(p.npage - 1)
             with pdfdoc.render_lock:
-                page.render_for_printing(print_ctx.get_cairo_context())
+                page.render_for_printing(cairo_ctx)
         else:
             buf = io.BytesIO()
             export_doc([self.pdf_input[p.nfile - 1]], [p], {}, [buf], None)
             page = Poppler.Document.new_from_data(buf.getvalue()).get_page(0)
-            page.render_for_printing(print_ctx.get_cairo_context())
+            page.render_for_printing(cairo_ctx)
 
     def run(self):
         result = super().run(Gtk.PrintOperationAction.PRINT_DIALOG, self.app.window)
