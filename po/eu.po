@@ -1,12 +1,11 @@
-# Spanish translation for pdfarranger.
+# Basque translation for pdfarranger.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # This file is an extended version of the PDF-Shuffler translation file
 # released under the GNU General Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Original translators:
-# Konstantinos Poulios, 2008-2017
-# Rafael Jesús García Perdigón, 2012
+# Alexander Gabilondo Urkijo, 2023
 #
 msgid ""
 msgstr ""
@@ -14,9 +13,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-30 18:26+0200\n"
 "PO-Revision-Date: 2023-01-19 20:27+0100\n"
-"Last-Translator: angsch\n"
-"Language-Team: Spanish\n"
-"Language: es\n"
+"Last-Translator: alexgabi\n"
+"Language-Team: Basque\n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -86,7 +85,7 @@ msgstr "Eskuina"
 
 #: pdfarranger/croputils.py:147
 msgid "Top"
-msgstr "Gainaldean"
+msgstr "Goian"
 
 #: pdfarranger/croputils.py:147
 msgid "Bottom"
@@ -105,12 +104,12 @@ msgstr ""
 #: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of width"
-msgstr "zabaleraren % o"
+msgstr "zabaleraren %a"
 
 #: pdfarranger/croputils.py:168
 #, python-format
 msgid "% of height"
-msgstr "altueraren % o"
+msgstr "altueraren %a"
 
 #: pdfarranger/croputils.py:215
 msgid "Page format"
@@ -228,7 +227,7 @@ msgstr "Ireki beharreko fitxategia(k)"
 
 #: pdfarranger/pdfarranger.py:428
 msgid "All pages must have the same size."
-msgstr "Orri guztiek tamaina berdina izan behar dute."
+msgstr "Orrialde guztiek tamaina berdina izan behar dute."
 
 #: pdfarranger/pdfarranger.py:456
 msgid "All supported files"
@@ -280,7 +279,7 @@ msgstr "_Itxi"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
-msgstr "Aldaketak \"{}\"-n gorde nahi dituzu itxi aurretik?"
+msgstr "Aldaketak "{}"-n gorde nahi dituzu itxi aurretik?"
 
 #: pdfarranger/pdfarranger.py:943
 msgid "Save changes before closing?"
@@ -296,7 +295,7 @@ msgstr "_Irten"
 
 #: pdfarranger/pdfarranger.py:974
 msgid "Save changes to “{}” before quitting?"
-msgstr "Aldaketak \"{}\"-n gorde nahi dituzu irten aurretik?"
+msgstr "Aldaketak "{}"-n gorde nahi dituzu irten aurretik?"
 
 #: pdfarranger/pdfarranger.py:977
 msgid "Save changes before quitting?"
@@ -382,7 +381,7 @@ msgstr "Errenkadak"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
-msgstr "Zatiketa bertikalak"
+msgstr "Zati bertikalak"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -398,11 +397,11 @@ msgstr "Errenkaden altuera berdina"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr "Zutabea"
+msgstr "#Zut"
 
 #: pdfarranger/splitter.py:87
 msgid "#Row"
-msgstr "Errenkada"
+msgstr "#Err"
 
 #: pdfarranger/splitter.py:88
 msgid "Width in %"
@@ -510,7 +509,7 @@ msgstr "Orriaren _formatua"
 
 #: data/menu.ui.h:17
 msgid "Crop White Borders"
-msgstr "Moztu ertz zuria"
+msgstr "Moztu ertz zuriak"
 
 #: data/menu.ui.h:18
 msgid "_Delete"
@@ -610,7 +609,7 @@ msgstr "_Doitu"
 
 #: data/menu.ui.h:42
 msgid "Full_screen"
-msgstr "Paintaila o_soa"
+msgstr "Pantaila o_soa"
 
 #: data/menu.ui.h:43
 msgid "Edit _Properties"
