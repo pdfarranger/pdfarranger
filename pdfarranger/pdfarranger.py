@@ -2052,6 +2052,9 @@ class PdfArranger(Gtk.Application):
 
     def sw_scroll_event(self, _scrolledwindow, event):
         """Manages mouse scroll events in scrolledwindow"""
+        if event.state & Gdk.ModifierType.SHIFT_MASK:
+            # Scroll horizontally
+            return
         if event.direction == Gdk.ScrollDirection.SMOOTH:
             dy = event.get_scroll_deltas()[2]
             if dy < 0:
