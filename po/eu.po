@@ -279,7 +279,7 @@ msgstr "_Itxi"
 
 #: pdfarranger/pdfarranger.py:940
 msgid "Save changes to “{}” before closing?"
-msgstr "Aldaketak "{}"-n gorde nahi dituzu itxi aurretik?"
+msgstr "Aldaketak “{}”-n gorde nahi dituzu itxi aurretik?"
 
 #: pdfarranger/pdfarranger.py:943
 msgid "Save changes before closing?"
@@ -295,7 +295,7 @@ msgstr "_Irten"
 
 #: pdfarranger/pdfarranger.py:974
 msgid "Save changes to “{}” before quitting?"
-msgstr "Aldaketak "{}"-n gorde nahi dituzu irten aurretik?"
+msgstr "Aldaketak “{}”-n gorde nahi dituzu irten aurretik?"
 
 #: pdfarranger/pdfarranger.py:977
 msgid "Save changes before quitting?"
