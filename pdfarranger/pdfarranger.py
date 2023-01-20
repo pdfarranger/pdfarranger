@@ -999,13 +999,13 @@ class PdfArranger(Gtk.Application):
 
     def on_quit(self, _action, _param=None, _unknown=None):
         if self.disable_quit:
-            return True
+            return Gdk.EVENT_STOP
         elif self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and quit?')
                 confirm = self.confirm_dialog(msg, action=_('_Quit'))
                 if not confirm:
-                    return True
+                    return Gdk.EVENT_STOP
             else:
                 if self.save_file:
                     msg = _('Save changes to “{}” before quitting?')
@@ -1016,11 +1016,11 @@ class PdfArranger(Gtk.Application):
                 if response == 3:
                     self.post_action = 'CLOSE_APPLICATION'
                     self.save_or_choose()
-                    return True
+                    return Gdk.EVENT_STOP
                 elif response != 1:
-                    return True
+                    return Gdk.EVENT_STOP
         self.close_application()
-        return True
+        return Gdk.EVENT_STOP
 
     def close_application(self, _widget=None, _event=None, _data=None):
         """Termination"""
@@ -1772,7 +1772,7 @@ class PdfArranger(Gtk.Application):
         # When drag location is a valid drop location True is returned.
         model = iconview.get_model()
         if len(model) == 0:
-            return True
+            return Gdk.EVENT_STOP
         cell_width, _cell_height = self.cellthmb.get_fixed_size()
         row_distance = iconview.get_row_spacing() + 2 * iconview.get_item_padding()
         column_distance = iconview.get_column_spacing() + 2 * iconview.get_item_padding()
@@ -1798,15 +1798,15 @@ class PdfArranger(Gtk.Application):
             elif path == iconview.get_path_at_pos(x_s - cell_width * 0.6, y_s):
                 self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         elif search_pos == 'Left-Above' and iconview.get_drag_dest_item()[0]:
-            return True
+            return Gdk.EVENT_STOP
         elif not path or (path == model[-1].path and x_s < x):
             self.drag_path = model[-1].path
             self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
         else:
             iconview.stop_emission('drag_motion')
-            return False
+            return Gdk.EVENT_PROPAGATE
         iconview.set_drag_dest_item(self.drag_path, self.drag_pos)
-        return True
+        return Gdk.EVENT_STOP
 
     def iv_autoscroll(self, x, y, autoscroll_area):
         """Iconview auto-scrolling."""
@@ -1900,7 +1900,7 @@ class PdfArranger(Gtk.Application):
         if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS and self.click_path:
             self.pressed_button = None
             self.on_action_zoom_fit()
-            return True
+            return Gdk.EVENT_STOP
 
         # Change to 'move' cursor when pressing mouse wheel
         if event.button == 2:
@@ -1935,7 +1935,7 @@ class PdfArranger(Gtk.Application):
                         else:
                             iconview.unselect_path(path)
                 self.iv_selection_changed_event()
-            return 1
+            return Gdk.EVENT_STOP
 
         # Forget where cursor was when shift was pressed
         if event.button == 1 and not event.state & Gdk.ModifierType.SHIFT_MASK:
@@ -1948,7 +1948,7 @@ class PdfArranger(Gtk.Application):
                 self.pressed_button = event
                 if iconview.get_cursor()[1] != self.click_path:
                     self.iconview.set_cursor(self.click_path, None, False)
-                return 1  # prevent propagation i.e. (de-)selection
+                return Gdk.EVENT_STOP  # prevent propagation i.e. (de-)selection
 
         # Display right click menu
         if event.button == 3 and not self.iv_auto_scroll_timer:
@@ -1963,26 +1963,26 @@ class PdfArranger(Gtk.Application):
                 iconview.unselect_all()
             iconview.grab_focus()
             self.popup.popup(None, None, None, None, event.button, event.time)
-            return 1
+            return Gdk.EVENT_STOP
 
         # Go into drag-select mode if clicked between items
         if not self.click_path:
             if event.button == 1:
                 self.iv_drag_select.click(event)
             if event.state & Gdk.ModifierType.SHIFT_MASK:
-                return True  # Don't deselect all
+                return Gdk.EVENT_STOP  # Don't deselect all
 
             # Let iconview hide cursor. Then stop rubberbanding with the release event
             self.end_rubberbanding = True
             release_event = event.copy()
             release_event.type = Gdk.EventType.BUTTON_RELEASE
             release_event.put()
-        return None
+        return Gdk.EVENT_PROPAGATE
 
     def iv_key_press_event(self, iconview, event):
         """Manages keyboard press events on the iconview."""
         if event.state & Gdk.ModifierType.BUTTON1_MASK:
-            return True
+            return Gdk.EVENT_STOP
         if event.keyval in [Gdk.KEY_Up, Gdk.KEY_Down, Gdk.KEY_Left, Gdk.KEY_Right,
                               Gdk.KEY_Home, Gdk.KEY_End, Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
                               Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
@@ -1990,8 +1990,8 @@ class PdfArranger(Gtk.Application):
             with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
                 self.iv_cursor.handler(iconview, event)
             self.iv_selection_changed_event(None, move_cursor_event=True)
-            return True
-        return None
+            return Gdk.EVENT_STOP
+        return Gdk.EVENT_PROPAGATE
 
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
@@ -2059,7 +2059,7 @@ class PdfArranger(Gtk.Application):
         """Manages mouse scroll events in scrolledwindow"""
         if event.state & Gdk.ModifierType.SHIFT_MASK:
             # Scroll horizontally
-            return None
+            return Gdk.EVENT_PROPAGATE
         if event.direction == Gdk.ScrollDirection.SMOOTH:
             dy = event.get_scroll_deltas()[2]
             if dy < 0:
@@ -2067,13 +2067,13 @@ class PdfArranger(Gtk.Application):
             elif dy > 0:
                 direction = 'DOWN'
             else:
-                return None
+                return Gdk.EVENT_PROPAGATE
         elif event.direction == Gdk.ScrollDirection.UP:
             direction = 'UP'
         elif event.direction == Gdk.ScrollDirection.DOWN:
             direction = 'DOWN'
         else:
-            return None
+            return Gdk.EVENT_PROPAGATE
         if event.state & Gdk.ModifierType.CONTROL_MASK:
             # Zoom
             zoom_delta = 1 if direction == 'UP' else -1
@@ -2089,7 +2089,7 @@ class PdfArranger(Gtk.Application):
                     changed = self.iv_drag_select.motion(event, step=step)
                     if changed:
                         self.iv_selection_changed_event()
-        return True
+        return Gdk.EVENT_STOP
 
     def enable_zoom_buttons(self, out_enable, in_enable):
         if self.window.lookup_action("zoom-out"):
