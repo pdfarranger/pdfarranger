@@ -180,7 +180,7 @@ def malloc_trim_available():
         ctypes.CDLL('libc.so.6').malloc_trim(0)
     except (FileNotFoundError, AttributeError, OSError):
         print('malloc_trim not available. Application may not release memory properly.')
-        return
+        return None
     def mtrim():
         ctypes.CDLL('libc.so.6').malloc_trim(0)
     return mtrim
@@ -727,12 +727,13 @@ class PdfArranger(Gtk.Application):
 
     def quit_rendering(self):
         """Quit rendering."""
-        if self.rendering_thread:
-            self.rendering_thread.quit = True
-            # If thread is busy with page.render(cr) it might take some time for thread to quit.
-            # Therefore set a timeout here so app continues to stay responsive.
-            self.rendering_thread.join(timeout=0.15)
-            return self.rendering_thread.is_alive()
+        if self.rendering_thread is None:
+            return False
+        self.rendering_thread.quit = True
+        # If thread is busy with page.render(cr) it might take some time for thread to quit.
+        # Therefore set a timeout here so app continues to stay responsive.
+        self.rendering_thread.join(timeout=0.15)
+        return self.rendering_thread.is_alive()
 
     def silent_render(self):
         """Render when silent i.e. when no call for last 149ms.
@@ -1019,6 +1020,7 @@ class PdfArranger(Gtk.Application):
                 elif response != 1:
                     return True
         self.close_application()
+        return True
 
     def close_application(self, _widget=None, _event=None, _data=None):
         """Termination"""
@@ -1252,7 +1254,7 @@ class PdfArranger(Gtk.Application):
     def export_finished(self, exportmode, export_msg):
         """Check if export finished. Show any messages. Run any post action."""
         if self.export_process.is_alive():
-            return True
+            return True  # continue polling
         self.set_export_state(False)
         msg_type = None
         if not export_msg.empty():
@@ -1269,6 +1271,7 @@ class PdfArranger(Gtk.Application):
             elif self.post_action == 'CLOSE_APPLICATION':
                 self.close_application()
         self.post_action = None
+        return False  # cancel timer
 
     def set_export_state(self, enable, message=_("Saving…")):
         """Enable/disable app export state.
@@ -1974,6 +1977,7 @@ class PdfArranger(Gtk.Application):
             release_event = event.copy()
             release_event.type = Gdk.EventType.BUTTON_RELEASE
             release_event.put()
+        return None
 
     def iv_key_press_event(self, iconview, event):
         """Manages keyboard press events on the iconview."""
@@ -1987,6 +1991,7 @@ class PdfArranger(Gtk.Application):
                 self.iv_cursor.handler(iconview, event)
             self.iv_selection_changed_event(None, move_cursor_event=True)
             return True
+        return None
 
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
@@ -2054,7 +2059,7 @@ class PdfArranger(Gtk.Application):
         """Manages mouse scroll events in scrolledwindow"""
         if event.state & Gdk.ModifierType.SHIFT_MASK:
             # Scroll horizontally
-            return
+            return None
         if event.direction == Gdk.ScrollDirection.SMOOTH:
             dy = event.get_scroll_deltas()[2]
             if dy < 0:
@@ -2062,13 +2067,13 @@ class PdfArranger(Gtk.Application):
             elif dy > 0:
                 direction = 'DOWN'
             else:
-                return
+                return None
         elif event.direction == Gdk.ScrollDirection.UP:
             direction = 'UP'
         elif event.direction == Gdk.ScrollDirection.DOWN:
             direction = 'DOWN'
         else:
-            return
+            return None
         if event.state & Gdk.ModifierType.CONTROL_MASK:
             # Zoom
             zoom_delta = 1 if direction == 'UP' else -1
