@@ -289,7 +289,7 @@ class IconviewDragSelect:
     def motion(self, event=None, step=0):
         """Get drag location and select or deselect items."""
         if not self.click_location:
-            return
+            return False
         sw_vadj = self.app.sw.get_vadjustment()
         sw_vpos = sw_vadj.get_value()
         if event:
@@ -304,7 +304,7 @@ class IconviewDragSelect:
             event_y = self.event_y - self.sw_vpos + sw_vpos + step
         drag_location = self.get_location(self.event_x, event_y)
         if drag_location is None:
-            return
+            return False
         selection_changed = self.select(drag_location)
         return selection_changed
 
@@ -319,7 +319,7 @@ class IconviewDragSelect:
             self.range_start = int(drag_location + 0.5)
             self.range_end = int(self.click_location + 1)
         if self.range_start == range_start_old and self.range_end == range_end_old:
-            return
+            return False
         changed_range_start = min(self.range_start, range_start_old)
         changed_range_end = max(self.range_end, range_end_old)
         for page_nr in range(changed_range_start, changed_range_end):

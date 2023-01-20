@@ -544,6 +544,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         page = pdfdoc.document.get_page(p.npage - 1)
         w, h = page.get_size()
         self.mem_usage += w * scale * h * scale * 4 / (1024 * 1024)  # 4 byte/pixel
+        return False
 
     def update(self, p, ref, scale, resample, is_preview):
         """Render and emit updated thumbnails."""
