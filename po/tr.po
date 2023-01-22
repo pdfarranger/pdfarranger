@@ -2,15 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # Murathan BOSTANCI <murathan.bostanci@profelis.com.tr>, 2018
-# Oğuz Ersen <oguz@ersen.moe>, 2021, 2022.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022.
+# Oğuz Ersen <oguz@ersen.moe>, 2021-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-03 21:53+0300\n"
-"PO-Revision-Date: 2022-08-08 17:51+0300\n"
+"POT-Creation-Date: 2023-01-22 21:22+0300\n"
+"PO-Revision-Date: 2023-01-22 21:30+0300\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -18,7 +18,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+
+#: pdfarranger/config.py:210
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: pdfarranger/config.py:214 pdfarranger/pdfarranger.py:952
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:1083
+#: pdfarranger/pdfarranger.py:1132
+msgid "_Cancel"
+msgstr "_İptal"
+
+#: pdfarranger/config.py:215
+msgid "_OK"
+msgstr "_Tamam"
+
+#: pdfarranger/config.py:219
+msgid "Language"
+msgstr "Dil"
+
+#: pdfarranger/config.py:221
+msgid "(Requires restart)"
+msgstr "(Yeniden başlatma gerektirir)"
+
+#: pdfarranger/config.py:227
+msgid "Theme"
+msgstr "Tema"
+
+#: pdfarranger/config.py:229
+msgid "(Libhandy missing)"
+msgstr "(Libhandy eksik)"
+
+#: pdfarranger/config.py:240 pdfarranger/config.py:248
+msgid "System setting"
+msgstr "Sistem ayarı"
 
 #: pdfarranger/core.py:87
 msgid "page"
@@ -41,7 +74,7 @@ msgstr "“{}” belgesi kilitli ve açılmadan önce parola gerekiyor."
 msgid "Password"
 msgstr "Parola"
 
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1431
+#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1511
 msgid "Unknown file format"
 msgstr "Bilinmeyen dosya biçimi"
 
@@ -57,7 +90,7 @@ msgstr "Resim dosyası, img2pdf tarafından desteklenmiyor"
 msgid "Clipboard image"
 msgstr "Pano resmi"
 
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1441
+#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1521
 msgid "File is neither pdf nor image"
 msgstr "Dosya ne pdf ne de resimdir"
 
@@ -135,23 +168,23 @@ msgstr "Sayfa Boyutu"
 msgid "Insert Blank Page"
 msgstr "Boş Sayfa Ekle"
 
-#: pdfarranger/exporter.py:158
+#: pdfarranger/exporter.py:155
 msgid "Warning"
 msgstr "Uyarı"
 
-#: pdfarranger/exporter.py:163
+#: pdfarranger/exporter.py:160
 msgid "Forms and outlines are lost on saving."
 msgstr "Kaydedilirken formlar ve konturlar yitirilecek."
 
-#: pdfarranger/exporter.py:165
+#: pdfarranger/exporter.py:162
 msgid "Do not show this dialog again."
 msgstr "Bu pencereyi yeniden gösterme."
 
-#: pdfarranger/exporter.py:382
+#: pdfarranger/exporter.py:373
 msgid "Printing…"
 msgstr "Yazdırılıyor…"
 
-#: pdfarranger/exporter.py:394
+#: pdfarranger/exporter.py:385
 msgid "Rendering Preview…"
 msgstr "Ön İzleme Oluşturuluyor…"
 
@@ -203,7 +236,7 @@ msgstr "Özellik"
 msgid "Value"
 msgstr "Değer"
 
-#: pdfarranger/pdfarranger.py:260
+#: pdfarranger/pdfarranger.py:277
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -215,160 +248,164 @@ msgstr ""
 "döndürmesine, kırpmasına ve yeniden düzenlemesine yardımcı olan küçük bir "
 "python-gtk uygulamasıdır. pikepdf için bir ön yüzdür."
 
-#: pdfarranger/pdfarranger.py:271
+#: pdfarranger/pdfarranger.py:288
 msgid "Print the version of PDF Arranger and exit"
 msgstr "PDF Arranger sürümünü yazdır ve çık"
 
-#: pdfarranger/pdfarranger.py:279
+#: pdfarranger/pdfarranger.py:296
 msgid "File(s) to open"
 msgstr "Açılacak dosya(lar)"
 
-#: pdfarranger/pdfarranger.py:428
+#: pdfarranger/pdfarranger.py:456
 msgid "All pages must have the same size."
 msgstr "Tüm sayfalar aynı boyutta olmalıdır."
 
-#: pdfarranger/pdfarranger.py:456
+#: pdfarranger/pdfarranger.py:489
 msgid "All supported files"
 msgstr "Desteklenen tüm dosyalar"
 
-#: pdfarranger/pdfarranger.py:460
+#: pdfarranger/pdfarranger.py:493
 msgid "PDF files"
 msgstr "PDF dosyaları"
 
-#: pdfarranger/pdfarranger.py:468
+#: pdfarranger/pdfarranger.py:501
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: pdfarranger/pdfarranger.py:473
+#: pdfarranger/pdfarranger.py:506
 msgid "Supported image files"
 msgstr "Desteklenen resim dosyaları"
 
-#: pdfarranger/pdfarranger.py:693
+#: pdfarranger/pdfarranger.py:726
 msgid "Rendering…"
 msgstr "Oluşturuluyor…"
 
-#: pdfarranger/pdfarranger.py:771
+#: pdfarranger/pdfarranger.py:805
 msgid "untitled"
 msgstr "başlıksız"
 
-#: pdfarranger/pdfarranger.py:918 pdfarranger/pdfarranger.py:927
-#: pdfarranger/pdfarranger.py:1027 pdfarranger/pdfarranger.py:1052
-msgid "_Cancel"
-msgstr "_İptal"
-
-#: pdfarranger/pdfarranger.py:926
+#: pdfarranger/pdfarranger.py:960
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Kaydetmezseniz değişiklikleriniz yitecektir."
 
-#: pdfarranger/pdfarranger.py:927
+#: pdfarranger/pdfarranger.py:961
 msgid "Do_n’t Save"
 msgstr "Kaydet_me"
 
-#: pdfarranger/pdfarranger.py:927 pdfarranger/pdfarranger.py:1026
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:1082
 #: data/menu.ui.h:4
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: pdfarranger/pdfarranger.py:936
+#: pdfarranger/pdfarranger.py:970
 msgid "Discard changes and close?"
 msgstr "Değişiklikler atılsın ve kapatılsın mı?"
 
-#: pdfarranger/pdfarranger.py:937 data/menu.ui.h:45
+#: pdfarranger/pdfarranger.py:971 data/menu.ui.h:46
 msgid "_Close"
 msgstr "_Kapat"
 
-#: pdfarranger/pdfarranger.py:942
+#: pdfarranger/pdfarranger.py:976
 msgid "Save changes to “{}” before closing?"
 msgstr "Kapatmadan önce değişiklikler “{}” dosyasına kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:945
+#: pdfarranger/pdfarranger.py:979
 msgid "Save changes before closing?"
 msgstr "Kapatmadan önce değişiklikler kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:1005
 msgid "Discard changes and quit?"
 msgstr "Değişiklikler atılsın ve çıkılsın mı?"
 
-#: pdfarranger/pdfarranger.py:971 data/menu.ui.h:46
+#: pdfarranger/pdfarranger.py:1006 data/menu.ui.h:47
 msgid "_Quit"
 msgstr "_Çık"
 
-#: pdfarranger/pdfarranger.py:976
+#: pdfarranger/pdfarranger.py:1011
 msgid "Save changes to “{}” before quitting?"
 msgstr "Çıkmadan önce değişiklikler “{}” dosyasına kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:979
+#: pdfarranger/pdfarranger.py:1014
 msgid "Save changes before quitting?"
 msgstr "Çıkmadan önce değişiklikler kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:1021
+#: pdfarranger/pdfarranger.py:1077
 msgid "Save As…"
 msgstr "Farklı Kaydet…"
 
-#: pdfarranger/pdfarranger.py:1021
+#: pdfarranger/pdfarranger.py:1077
 msgid "Export…"
 msgstr "Dışa Aktar…"
 
-#: pdfarranger/pdfarranger.py:1051 data/menu.ui.h:1
+#: pdfarranger/pdfarranger.py:1118
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr "\"%s\" adında bir dosya zaten var. Değiştirmek istiyor musunuz?"
+
+#: pdfarranger/pdfarranger.py:1120
+msgid "Replace"
+msgstr "Değiştir"
+
+#: pdfarranger/pdfarranger.py:1131 data/menu.ui.h:1
 msgid "_Open"
 msgstr "_Aç"
 
-#: pdfarranger/pdfarranger.py:1094
+#: pdfarranger/pdfarranger.py:1174
 msgid "Open…"
 msgstr "Aç…"
 
-#: pdfarranger/pdfarranger.py:1165
+#: pdfarranger/pdfarranger.py:1237
 msgid "Saving produced some warnings"
 msgstr "Kaydetme bazı uyarılar üretti"
 
-#: pdfarranger/pdfarranger.py:1166
+#: pdfarranger/pdfarranger.py:1238
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr "Uyarılara rağmen belge(ler)de görünür sorun yoktur."
 
-#: pdfarranger/pdfarranger.py:1173
+#: pdfarranger/pdfarranger.py:1245
 msgid "Don't show warnings when saving again."
 msgstr "Kaydederken uyarıları yeniden gösterme."
 
-#: pdfarranger/pdfarranger.py:1203
+#: pdfarranger/pdfarranger.py:1276
 msgid "Saving…"
 msgstr "Kaydediliyor…"
 
-#: pdfarranger/pdfarranger.py:1237
+#: pdfarranger/pdfarranger.py:1315
 msgid "Import…"
 msgstr "İçe Aktar…"
 
-#: pdfarranger/pdfarranger.py:1331
+#: pdfarranger/pdfarranger.py:1409
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Yapıştırılan veri geçersiz. Yapıştırılmıyor."
 
-#: pdfarranger/pdfarranger.py:1435
+#: pdfarranger/pdfarranger.py:1515
 msgid "PDF document is damaged"
 msgstr "PDF belgesi hasarlı"
 
-#: pdfarranger/pdfarranger.py:2296
+#: pdfarranger/pdfarranger.py:2381
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr ""
 "%s, PDF dosyalarını yeniden düzenlemek ve değiştirmek için bir araçtır."
 
-#: pdfarranger/pdfarranger.py:2299
+#: pdfarranger/pdfarranger.py:2384
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr "libqpdf %s, pikepdf %s, GTK %s ve Python %s kullanmaktadır."
 
-#: pdfarranger/pdfarranger.py:2305
+#: pdfarranger/pdfarranger.py:2390
 msgid "Maintainers and contributors"
 msgstr "Bakımcılar ve katkıcılar"
 
-#: pdfarranger/pdfarranger.py:2310
+#: pdfarranger/pdfarranger.py:2395
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Genel Kamu Lisansı (GPL) Sürüm 3."
 
-#: pdfarranger/pdfarranger.py:2328
+#: pdfarranger/pdfarranger.py:2413
 msgid "Selected pages: "
 msgstr "Seçili sayfalar: "
 
-#: pdfarranger/pdfarranger.py:2333
+#: pdfarranger/pdfarranger.py:2418
 msgid "Page Size:"
 msgstr "Sayfa Boyutu:"
 
@@ -617,9 +654,13 @@ msgid "Edit _Properties"
 msgstr "_Özellikleri Düzenle"
 
 #: data/menu.ui.h:44
+msgid "Pre_ferences"
+msgstr "_Tercihler"
+
+#: data/menu.ui.h:45
 msgid "_About"
 msgstr "_Hakkında"
 
-#: data/menu.ui.h:47
+#: data/menu.ui.h:48
 msgid "Past_e Special"
 msgstr "Öz_el Yapıştır"
