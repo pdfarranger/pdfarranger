@@ -314,15 +314,15 @@ class PdfArranger(Gtk.Application):
 
     def set_color_scheme(self):
         if Handy:
-            scheme = Handy.ColorScheme.PREFER_LIGHT
-            if os.name == 'nt' and darkdetect.isDark():
-                scheme = Handy.ColorScheme.PREFER_DARK
-            theme = self.config.theme()
-            if theme == 'dark':
-                scheme = Handy.ColorScheme.FORCE_DARK
-            elif theme == 'light':
-                scheme = Handy.ColorScheme.FORCE_LIGHT
             try:
+                scheme = Handy.ColorScheme.PREFER_LIGHT
+                if os.name == 'nt' and darkdetect.isDark():
+                    scheme = Handy.ColorScheme.PREFER_DARK
+                theme = self.config.theme()
+                if theme == 'dark':
+                    scheme = Handy.ColorScheme.FORCE_DARK
+                elif theme == 'light':
+                    scheme = Handy.ColorScheme.FORCE_LIGHT
                 Handy.StyleManager.get_default().set_color_scheme(scheme)
             except AttributeError:
                 # This libhandy is too old. 1.5.90 needed ?
