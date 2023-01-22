@@ -252,6 +252,7 @@ class PdfArranger(Gtk.Application):
         self.metadata = {}
         self.pressed_button = None
         self.click_path = None
+        self.scroll_path = None
         self.rendering_thread = None
         self.export_process = None
         self.post_action = None
@@ -932,6 +933,9 @@ class PdfArranger(Gtk.Application):
         self.set_adjustment_limits()
         if self.vadj_percent is not None:
             self.vadj_percent_handler(restore=True)
+        if self.scroll_path:
+            GObject.idle_add(self.scroll_to_path2, self.scroll_path)
+            self.scroll_path = None
 
     def set_adjustment_limits(self):
         hscrollbar = self.sw.get_hscrollbar()
@@ -1340,12 +1344,27 @@ class PdfArranger(Gtk.Application):
                     row = model[-1]
                     path = row.path
                     self.iconview.select_path(path)
+        self.scroll_path = path
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
         self.iconview.grab_focus()
         self.silent_render()
         self.update_max_zoom_level()
         malloc_trim()
+
+    def scroll_to_path2(self, path):
+        """scroll_to_path() with modifications.
+
+        * Don't scroll to a oversized page that already is filling window
+        * Scroll only vertically
+        """
+        cell = self.iconview.get_cell_rect(path)[1]
+        if cell.y <= 0 and cell.y + cell.height >= self.sw.get_allocated_height():
+            return
+        sw_hadj = self.sw.get_hadjustment()
+        sw_hpos = sw_hadj.get_value()
+        self.iconview.scroll_to_path(path, False, 0, 0)
+        sw_hadj.set_value(sw_hpos)
 
     def copy_pages(self):
         """Collect data from selected pages"""
