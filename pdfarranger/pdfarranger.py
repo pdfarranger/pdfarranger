@@ -143,9 +143,10 @@ from . import metadata
 from . import pageutils
 from . import splitter
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
-from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
+from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer, LayerPage
 GObject.type_register(CellRendererImage)
 
+layer_support = exporter.layer_support()
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
@@ -268,6 +269,7 @@ class PdfArranger(Gtk.Application):
         self.disable_quit = False
         multiprocessing.set_start_method('spawn')
         self.quit_flag = multiprocessing.Event()
+        self.layer_pos = 0, 0
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -1399,7 +1401,26 @@ class PdfArranger(Gtk.Application):
             angle = int(tmp[3])
             scale = float(tmp[4])
             crop = [float(side) for side in tmp[5:9]]
-            pageadder.addpages(filename, npage, basename, angle, scale, crop)
+            layerpages = []
+            i = 9
+            while i < len(tmp):  # If page has overlay/underlay
+                lfilename = tmp[i]
+                lnpage = int(tmp[i + 1])
+                langle = int(tmp[i + 2])
+                lscale = float(tmp[i + 3])
+                laypos = tmp[i + 4]
+                lcrop = [float(side) for side in tmp[i + 5:i + 9]]
+                loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
+                doc_data = pageadder.get_pdfdoc(lfilename)
+                if doc_data is None:
+                    return
+                pdfdoc, lnfile, _ = doc_data
+                lcopyname = pdfdoc.copyname
+                lsize = pdfdoc.get_page(lnpage - 1).get_size()
+                lp = LayerPage(lnfile, lnpage, lcopyname, langle, lscale, lcrop, loffset, laypos, lsize)
+                layerpages.append(lp)
+                i += 13
+            pageadder.addpages(filename, npage, basename, angle, scale, crop, layerpages)
 
     def paste_pages(self, data, before, ref_to, select_added):
         """Paste pages to iconview"""
@@ -1481,7 +1502,7 @@ class PdfArranger(Gtk.Application):
         if not data:
             return
 
-        pastemodes = {0: 'AFTER', 1: 'BEFORE', 2: 'ODD', 3: 'EVEN'}
+        pastemodes = {0: 'AFTER', 1: 'BEFORE', 2: 'ODD', 3: 'EVEN', 4: 'OVERLAY', 5: 'UNDERLAY'}
         pastemode = pastemodes[mode.get_int32()]
 
         ref_to, before = self.set_paste_location(pastemode, data_is_filepaths)
@@ -1521,6 +1542,80 @@ class PdfArranger(Gtk.Application):
             self.iv_selection_changed_event()
             self.update_max_zoom_level()
             self.silent_render()
+        elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
+            self.paste_as_layer(data, laypos=pastemode)
+
+    def paste_as_layer(self, data, laypos):
+        tmp = data.pop(0).split('\n')
+        filename = tmp[0]
+        npage = int(tmp[1])
+        angle = int(tmp[3])
+        scale = float(tmp[4])
+        crop = [float(side) for side in tmp[5:9]]
+        doc_data = PageAdder(self).get_pdfdoc(filename)
+        if doc_data is None:
+            return
+        pdfdoc, nfile, _ = doc_data
+        copyname = pdfdoc.copyname
+        size_orig = pdfdoc.get_page(npage - 1).get_size()
+        size = list(size_orig) if angle in [0, 180] else list(reversed(size_orig))
+        lwidth = scale * size[0] * (1 - crop[0] - crop[1])
+        lheight = scale * size[1] * (1 - crop[2] - crop[3])
+        lsize = lwidth, lheight
+
+        selection = self.iconview.get_selected_items()
+        if not self.is_paste_layer_available(lsize, selection, tmp, data):
+            return
+        dpage = self.model[selection[-1]][0]
+        offset_fractions = pageutils.PastePageLayerDialog(self, dpage, lsize, laypos).get_offset()
+        if offset_fractions is None:
+            return
+        self.undomanager.commit("Add Layer")
+        self.set_unsaved(True)
+
+        off_x, off_y = offset_fractions  # Fraction of free space at left & top
+        for row in selection:
+            dpage = self.model[row][0]
+            dc = dpage.crop
+            dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
+
+            offs_left = dc[0] + off_x * (dpage.width_in_points() - lwidth) / dwidth
+            offs_top = dc[2] + off_y * (dpage.height_in_points() - lheight) / dheight
+            offs_right = 1 - offs_left - lwidth / dwidth
+            offs_bottom = 1 - offs_top - lheight / dheight
+            offset = [offs_left, offs_right, offs_top, offs_bottom]
+
+            layerpage = LayerPage(nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig)
+            dpage.layerpages.append(layerpage)
+            dpage.resample = -1
+        self.render()
+
+    def is_paste_layer_available(self, layer_size, selection, d1_data, rest_data):
+        if len(selection) == 0:
+            return False
+        msg = None
+        if not layer_support:
+            msg = _("Pikepdf >= 3 is needed for overlay/underlay support.")
+        elif len(rest_data) > 0:
+            msg = _("Only one page can be pasted as overlay/underlay.")
+        elif len(d1_data) > 9:
+            msg = _("A page with overlays/underlays can't be pasted as overlay/underlay.")
+        else:
+            lw, lh = layer_size
+            dpage = self.model[selection[-1]][0]
+            d1w, d1h = dpage.size_in_points()
+            for row in selection:
+                dpage = self.model[row][0]
+                dw, dh = dpage.size_in_points()
+                if lw > dw + 1e-2 or lh > dh + 1e-2:
+                    msg = _("The pasted page is too large.")
+                    break
+                if abs(d1w-dw) > 1e-2 or abs(d1h-dh) > 1e-2:
+                    msg = _("All pages must have the same size.")
+                    break
+        if msg is not None:
+            self.error_message_dialog(msg)
+        return msg is None
 
     def read_from_clipboard(self):
         """Read and pre-process data from clipboard.

@@ -287,6 +287,16 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="action">win.paste</attribute>
             <attribute name="target" type="i">3</attribute>
           </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As O_verlay…</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">4</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As _Underlay…</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">5</attribute>
+          </item>
         </section>
       </submenu>
     </section>
