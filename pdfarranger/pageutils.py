@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 import gettext
 import cairo
 import locale
@@ -43,6 +43,8 @@ def scale(model, selection, factor):
         if page.scale != f:
             changed = True
         page.resample = page.resample * f / page.scale
+        for lp in page.layerpages:
+            lp.scale = lp.scale * f / page.scale
         page.scale = f
         model.set_value(it, 0, page)
     return changed
@@ -207,6 +209,20 @@ class _CropWidget(Gtk.Frame):
         return [spin.get_value() / 100.0 for spin in self.spin_list]
 
 
+class BaseDialog(Gtk.Dialog):
+    def __init__(self, title, parent):
+        super().__init__(
+            title=title,
+            parent=parent,
+            flags=Gtk.DialogFlags.MODAL,
+            buttons=(
+                _("_Cancel"), Gtk.ResponseType.CANCEL,
+                _("_OK"), Gtk.ResponseType.OK,
+            ),
+        )
+        self.set_default_response(Gtk.ResponseType.OK)
+
+
 class Dialog(Gtk.Dialog):
     """ A dialog box to define margins for page cropping and page size or scale factor """
 
@@ -346,3 +362,152 @@ class BlankPageDialog(Gtk.Dialog):
         self.destroy()
         return r
 
+
+class PastePageLayerDialog():
+
+    def __init__(self, app, dpage, layer_size, laypos):
+        title = _("Overlay") if laypos == "OVERLAY" else _("Underlay")
+        self.d = BaseDialog(title, app.window)
+        self.app = app
+        self.dpage = dpage
+        self.layer_size = layer_size
+        self.surface = None
+        self.scale = 1
+        self.dwidth = self.dpage.width_in_points()
+        self.dheight = self.dpage.height_in_points()
+
+        self.lwidth = self.layer_size[0]
+        self.lheight = self.layer_size[1]
+        self.spin_scale_x = (self.dwidth - self.lwidth) / 100
+        self.spin_scale_y = (self.dheight - self.lheight) / 100
+        self.click_pos = 0, 0
+        self.spin_val = 0, 0
+
+        self.area = Gtk.DrawingArea()
+        self.area.set_size_request(400, 400)
+        self.area.set_events(self.area.get_events()
+                              | Gdk.EventMask.BUTTON_PRESS_MASK
+                              | Gdk.EventMask.POINTER_MOTION_MASK)
+        self.area.connect('draw', self.on_draw)
+        self.area.connect('configure-event', self.on_configure)
+        self.area.connect('button-press-event', self.button_press_event)
+        self.area.connect('motion-notify-event', self.motion_notify_event)
+        frame = Gtk.Frame(shadow_type=Gtk.ShadowType.IN)
+        frame.add(self.area)
+        self.d.vbox.pack_start(frame, True, True, 0)
+
+        self.spin_x = Gtk.SpinButton.new_with_range(0, 100, 1)
+        self.spin_x.set_activates_default(True)
+        self.spin_x.set_digits(1)
+        self.spin_y = Gtk.SpinButton.new_with_range(0, 100, 1)
+        self.spin_y.set_activates_default(True)
+        self.spin_y.set_digits(1)
+        self.spin_x.set_value(self.app.layer_pos[0])
+        self.spin_y.set_value(self.app.layer_pos[1])
+        self.spin_x.connect('value-changed', self.on_spinbutton_changed)
+        self.spin_y.connect('value-changed', self.on_spinbutton_changed)
+
+        xlabel1 = Gtk.Label(_("Horizontal offset"), halign=Gtk.Align.START)
+        xlabel2 = Gtk.Label(_("%"), halign=Gtk.Align.START)
+        ylabel1 = Gtk.Label(_("Vertical offset"), halign=Gtk.Align.START)
+        ylabel2 = Gtk.Label(_("%"), halign=Gtk.Align.START)
+        grid = Gtk.Grid(column_spacing=12, row_spacing=12, margin=12, halign=Gtk.Align.CENTER)
+        grid.attach(xlabel1, 0, 1, 1, 1)
+        grid.attach(self.spin_x, 1, 1, 1, 1)
+        grid.attach(xlabel2, 2, 1, 1, 1)
+        grid.attach(ylabel1, 0, 2, 1, 1)
+        grid.attach(self.spin_y, 1, 2, 1, 1)
+        grid.attach(ylabel2, 2, 2, 1, 1)
+        self.d.vbox.pack_start(grid, False, False, 8)
+        self.d.show_all()
+
+    def on_configure(self, area, _event):
+        self.init_surface()
+        aw = area.get_allocated_width()
+        ah = area.get_allocated_height()
+        dwidth = self.dpage.width_in_points()
+        dheight = self.dpage.height_in_points()
+        self.scale = min((aw - 100) / dwidth, (ah - 100) / dheight)
+        self.draw_page_boxes()
+
+    def on_draw(self, _area, cairo_ctx):
+        if self.surface is not None:
+            cairo_ctx.set_source_surface(self.surface, 0, 0)
+            cairo_ctx.paint()
+
+    def on_spinbutton_changed(self, _event):
+        self.init_surface()
+        self.draw_page_boxes()
+
+    def button_press_event(self, _area, event):
+        if event.button == 1:
+            self.click_pos = event.x, event.y
+            self.spin_val = self.spin_x.get_value(), self.spin_y.get_value()
+
+    def motion_notify_event(self, _area, event):
+        if event.state & Gdk.ModifierType.BUTTON1_MASK:
+            if self.scale * self.spin_scale_x > 0:
+                add_x = (event.x - self.click_pos[0]) / (self.scale * self.spin_scale_x)
+                self.spin_x.set_value(self.spin_val[0] + add_x)
+            if self.scale * self.spin_scale_y > 0:
+                add_y = (event.y - self.click_pos[1]) / (self.scale * self.spin_scale_y)
+                self.spin_y.set_value(self.spin_val[1] + add_y)
+            self.draw_page_boxes()
+
+    def init_surface(self):
+        aw = self.area.get_allocated_width()
+        ah = self.area.get_allocated_height()
+        self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, aw, ah)
+
+    def draw_page_boxes(self):
+        """Draw the page and the layer page (overlay/underlay)."""
+        cairo_ctx = cairo.Context(self.surface)
+
+        # Destination page rectangle
+        dwidth = int(0.5 + self.dpage.width_in_points() * self.scale)
+        dheight = int(0.5 + self.dpage.height_in_points() * self.scale)
+        dx = int(0.5 + (self.area.get_allocated_width() - dwidth) / 2)
+        dy = int(0.5 + (self.area.get_allocated_height() - dheight) / 2)
+
+        # Draw the page border
+        cairo_ctx.set_source_rgb(0, 0, 0)
+        cairo_ctx.rectangle(dx - 1, dy - 1, dwidth + 2, dheight + 2)
+        cairo_ctx.stroke()
+
+        # Fill white paper
+        cairo_ctx.set_source_rgb(1, 1, 1)
+        cairo_ctx.rectangle(dx, dy, dwidth, dheight)
+        cairo_ctx.fill()
+
+        # Layer page rectangle
+        lwidth = int(0.5 + self.layer_size[0] * self.scale)
+        lheight = int(0.5 + self.layer_size[1] * self.scale)
+        lx = dx + int(0.5 + self.spin_x.get_value() * self.spin_scale_x * self.scale)
+        ly = dy + int(0.5 + self.spin_y.get_value() * self.spin_scale_y * self.scale)
+
+        # Draw layer page border
+        cairo_ctx.set_source_rgb(0, 0, 0)
+        cairo_ctx.rectangle(lx, ly, lwidth, lheight)
+        cairo_ctx.stroke()
+
+        # Fill the layer page
+        cairo_ctx.set_source_rgb(0.5, 0.5, 0.5)
+        cairo_ctx.rectangle(lx + 1, ly + 1, lwidth - 2, lheight - 2)
+        cairo_ctx.fill()
+
+        # Invalidiate region
+        self.area.queue_draw_area(dx - 1, dy - 1, dwidth + 2, dheight + 2)
+
+    def get_offset(self):
+        """Get layer page x and y offset from top-left edge of the destination page.
+
+        The page is rotated as in iconview. The offset is a fraction of the available free space.
+        Available space: destination page width/height - layer page width/height
+        """
+        result = self.d.run()
+        r = None
+        if result == Gtk.ResponseType.OK:
+            self.app.layer_pos = self.spin_x.get_value(), self.spin_y.get_value()
+            r = self.spin_x.get_value() / 100, self.spin_y.get_value() / 100
+        self.d.destroy()
+        return r

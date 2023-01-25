@@ -60,7 +60,7 @@ _ = gettext.gettext
 
 
 class Page:
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename, layerpages):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
         #: The ID (from 1 to n) of the page in its owner PDF document
@@ -82,6 +82,7 @@ class Page:
         self.scale = scale
         #: The name of the original file
         self.basename = basename
+        self.layerpages = list(layerpages)
 
     def description(self):
         shortname = os.path.splitext(self.basename)[0]
@@ -126,20 +127,26 @@ class Page:
         self.crop = self.rotate_crop(self.crop, rt)
         self.angle = (self.angle + int(angle)) % 360
         self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
+        for lp in self.layerpages:
+            lp.rotate(angle)
         return True
 
     def unmodified(self):
-        return self.angle == 0 and self.crop == [0]*4 and self.scale == 1
+        u = self.angle == 0 and self.crop == [0]*4 and self.scale == 1 and len(self.layerpages) == 0
+        return u
 
     def serialize(self):
         """Convert to string for copy/past operations."""
-        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale] + list(self.crop)
+        lpdata = [lp.serialize() for lp in self.layerpages]
+        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale]
+        ts += list(self.crop) + list(lpdata)
         return "\n".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
         r.crop = list(r.crop)
         r.size = list(r.size)
+        r.layerpages = [lp.duplicate(incl_thumbnail) for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
             r.thumbnail = None
@@ -174,6 +181,67 @@ class Page:
                     new.crop = crop
                     newpages.append(new)
         return newpages
+
+
+class LayerPage:
+    """Page added as overlay or underlay on a Page."""
+
+    def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size):
+        self.thumbnail = None
+        self.nfile = nfile
+        self.npage = npage
+        self.copyname = copyname
+        self.angle = angle
+        self.scale = scale
+        #: Left, right, top, bottom crop
+        self.crop = crop
+        #: Left, right, top, bottom offset from dest page edges
+        self.offset = offset
+        #: OVERLAY or UNDERLAY
+        self.laypos = laypos
+        #: Width and height of the original page
+        self.size_orig = list(size)
+        #: Width and height
+        self.size = list(size) if angle in [0, 180] else list(reversed(size))
+
+    @staticmethod
+    def rotate_times(angle):
+        """Convert an angle in degree to a number of 90° rotation (integer)."""
+        return int(round(((-angle) % 360) / 90) % 4)
+
+    @staticmethod
+    def rotate_array(array, rotate_times):
+        """Rotate a given crop or offset array (left, right, top bottom) a number of times."""
+        perm = [0, 2, 1, 3]
+        for __ in range(rotate_times):
+            perm.append(perm.pop(0))
+        perm.insert(1, perm.pop(2))
+        return [array[x] for x in perm]
+
+    def rotate(self, angle):
+        rt = self.rotate_times(angle)
+        if rt == 0:
+            return False
+        self.crop = self.rotate_array(self.crop, rt)
+        self.offset = self.rotate_array(self.offset, rt)
+        self.angle = (self.angle + int(angle)) % 360
+        self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
+        return True
+
+    def serialize(self):
+        """Convert to string for copy/past operations."""
+        ts = [self.copyname, self.npage, self.angle, self.scale, self.laypos]
+        ts += list(self.crop) + list(self.offset)
+        return "\n".join([str(v) for v in ts])
+
+    def duplicate(self, incl_thumbnail=True):
+        r = copy.copy(self)
+        r.crop = list(r.crop)
+        r.offset = list(r.offset)
+        if incl_thumbnail == False:
+            del r.thumbnail  # to save ram
+            r.thumbnail = None
+        return r
 
 
 class PDFDocError(Exception):
@@ -400,7 +468,7 @@ class PageAdder:
             doc_added = True
         return pdfdoc, nfile, doc_added
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None):
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, layerpages=None):
         crop = [0] * 4 if crop is None else crop
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
@@ -421,6 +489,13 @@ class PageAdder:
         if page != -1:
             n_end = max(n_start, min(n_end, page))
 
+        layerpages = [] if layerpages is None else layerpages
+        for lp in layerpages:
+            doc_data = self.get_pdfdoc(lp.copyname, None)
+            if doc_data is None:
+                return
+            lp.nfile = doc_data[1]
+
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
             self.pages.append(
@@ -434,6 +509,7 @@ class PageAdder:
                     crop,
                     page.get_size(),
                     pdfdoc.basename,
+                    layerpages,
                 )
             )
 
@@ -583,11 +659,15 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 cr.translate(-wpix / 2, -hpix / 2)
             cr.scale(wpix / wpoi, hpix / hpoi)
             cr.translate(-p.crop[0] * p.size[0], -p.crop[2] * p.size[1])
+            self.add_layers(cr, p, layer='UNDERLAY')
+            cr.save()
             if rotation > 0:
                 cr.translate(p.size[0] / 2, p.size[1] / 2)
                 cr.rotate(rotation * pi / 180)
                 cr.translate(-p.size_orig[0] / 2, -p.size_orig[1] / 2)
             self.render(cr, p)
+            cr.restore()
+            self.add_layers(cr, p, layer='OVERLAY')
         if self.quit:
             return 0, 0
 
@@ -602,6 +682,31 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             priority=GObject.PRIORITY_LOW,
         )
         return thumbnail.get_width(), thumbnail.get_height()
+
+    def add_layers(self, cr, p, layer):
+        layerpages = p.layerpages if layer == 'OVERLAY' else reversed(p.layerpages)
+        for lp in layerpages:
+            if self.quit:
+                return
+            if layer != lp.laypos:
+                continue
+            cr.save()
+            cr.translate(p.size[0] * lp.offset[0], p.size[1] * lp.offset[2])
+            cr.scale(lp.scale / p.scale, lp.scale / p.scale)
+            x = lp.size[0] * lp.crop[0]
+            y = lp.size[1] * lp.crop[2]
+            w = lp.size[0] * (1 - lp.crop[0] - lp.crop[1])
+            h = lp.size[1] * (1 - lp.crop[2] - lp.crop[3])
+            cr.translate(-x, -y)
+            cr.rectangle(x, y, w, h)
+            cr.clip()
+            rotation = round((int(lp.angle) % 360) / 90) * 90
+            if rotation > 0:
+                cr.translate(lp.size[0] / 2, lp.size[1] / 2)
+                cr.rotate(rotation * pi / 180)
+                cr.translate(-lp.size_orig[0] / 2, -lp.size_orig[1] / 2)
+            self.render(cr, lp)
+            cr.restore()
 
     def finish(self):
         """Signal rendering ended (for statusbar and malloc_trim)."""

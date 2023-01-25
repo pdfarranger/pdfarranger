@@ -50,6 +50,8 @@ _DEFAULT_ACCELS = [
     ('copy', '<Primary>c'),
     ('paste(0)', '<Primary>v'),
     ('paste(1)', '<Primary><Shift>v'),
+    ('paste(4)', '<Primary><Shift>o'),
+    ('paste(5)', '<Primary><Shift>u'),
     ('select(0)', '<Primary>a'),
     ('select(1)', '<Primary><Shift>a'),
     ('main-menu', 'F10'),

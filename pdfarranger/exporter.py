@@ -23,6 +23,7 @@ import warnings
 import tempfile
 import io
 import gi
+import locale
 from . import metadata
 from gi.repository import Gtk
 gi.require_version("Poppler", "0.18")
@@ -30,6 +31,35 @@ from gi.repository import Poppler
 import gettext
 _ = gettext.gettext
 
+# pikepdf.Page.add_overlay()/add_underlay() can't place a page exactly
+# if for example LC_NUMERIC=fi_FI
+try:
+    locale.setlocale(locale.LC_NUMERIC, 'C')
+except locale.Error:
+    pass  # Gtk already prints a warning
+
+
+def layer_support():
+    """Pikepdf >= 3 has overlay/underlay support in pdfarranger."""
+    layer_support = True
+    pdf1 = pikepdf.Pdf.new()
+    pdf1.add_blank_page()
+    pdf2 = pikepdf.Pdf.new()
+    pdf2.add_blank_page()
+    try:
+        fpage = pdf1.copy_foreign(pdf2.pages[0])
+    except NotImplementedError:
+        # This is pikepdf >= 6
+        pass
+    else:
+        try:
+            pdf1.pages[0].add_overlay(fpage)
+        except AttributeError:
+            # This is pikepdf < 3
+            layer_support = False
+    pdf1.close()
+    pdf2.close()
+    return layer_support
 
 
 def create_blank_page(tmpdir, size):
@@ -75,7 +105,7 @@ def _intersect_rectangle(rect1, rect2):
     ]
 
 
-def _mediabox(page, crop):
+def _mediabox(page, crop=None):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
@@ -85,7 +115,7 @@ def _mediabox(page, crop):
         # reduced to their intersection with the media box"
         cmb = _intersect_rectangle(cmb, _normalize_rectangle(page.CropBox))
 
-    if crop == [0., 0., 0., 0.]:
+    if crop is None or crop == [0., 0., 0., 0.]:
         return cmb
     angle = page.Rotate if '/Rotate' in page else 0
     rotate_times = int(round(((angle) % 360) / 90) % 4)
@@ -176,12 +206,20 @@ def _update_angle(model_page, source_page, output_page):
     angle = model_page.angle
     angle0 = source_page.Rotate if '/Rotate' in source_page else 0
     if angle != 0:
-        output_page.Rotate = angle + angle0
+        new_angle = angle + angle0
+        if new_angle >= 360:
+            new_angle -= 360
+        output_page.Rotate = new_angle
 
 
 def _apply_geom_transform(pdf_output, new_page, row):
     _update_angle(row, new_page, new_page)
     new_page.MediaBox = _mediabox(new_page, row.crop)
+    # add_overlay() & add_underlay() will use TrimBox or CropBox if they exist
+    if '/TrimBox' in new_page:
+        del new_page.TrimBox
+    if '/CropBox' in new_page:
+        del new_page.CropBox
     return _scale(pdf_output, new_page, row.scale)
 
 
@@ -232,39 +270,80 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
     # all pages must be copied to pdf_output BEFORE applying geometrical
     # transformation. See https://github.com/pikepdf/pikepdf/issues/271
     copied_pages = {}
+    mediaboxes = []
     # Copy pages from the input PDF files to the output PDF file
     for row in pages:
         if quit_flag is not None and quit_flag.is_set():
             return
         current_page = pdf_input[row.nfile - 1].pages[row.npage - 1]
-        # if the page already exists in the output PDF, duplicate it
-        new_page = copied_pages.get((row.nfile, row.npage))
-        if new_page is None:
-            try:
-                # for backward compatibility with pikepdf <= 3
-                new_page = pdf_output.copy_foreign(current_page)
-            except NotImplementedError:
-                # This is pikepdf >= 6
-                new_page = current_page
-        # let pdf_output adopt new_page
-        pdf_output.pages.append(new_page)
-        new_page = pdf_output.pages[-1]
-        copied_pages[(row.nfile, row.npage)] = new_page
-        # Ensure annotations are copied rather than referenced
-        # https://github.com/pdfarranger/pdfarranger/issues/437
-        if pikepdf.Name.Annots in current_page:
-            pdf_temp = pikepdf.Pdf.new()
-            pdf_temp.pages.append(current_page)
-            indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
-            new_page.Annots = pdf_output.copy_foreign(indirect_annots)
+        mediaboxes.append(_mediabox(current_page))
+        _append_page(current_page, copied_pages, pdf_output, row)
+        # Layer pages are temporary added after the page they belong to
+        for lprow in row.layerpages:
+            layer_page = pdf_input[lprow.nfile - 1].pages[lprow.npage - 1]
+            _append_page(layer_page, copied_pages, pdf_output, lprow)
 
     # Apply geometrical transformations in the output PDF file
-    for page_id, row in enumerate(pages):
+    i = 0
+    for row in pages:
         if quit_flag is not None and quit_flag.is_set():
             return
-        pdf_output.pages[page_id] = _apply_geom_transform(
-            pdf_output, pdf_output.pages[page_id], row
-        )
+
+        pdf_output.pages[i] = _apply_geom_transform(pdf_output, pdf_output.pages[i], row)
+        for lprow in row.layerpages:
+            i += 1
+            pdf_output.pages[i] = _apply_geom_transform(pdf_output, pdf_output.pages[i], lprow)
+        i += 1
+
+    # Add overlays and underlays
+    for i, row in enumerate(pages):
+        # The dest page coordinates and size before geometrical transformations
+        dx1, dy1, dx2, dy2 = mediaboxes[i]
+        dw, dh = dx2 - dx1, dy2 - dy1
+
+        dpage = pdf_output.pages[i]
+        dangle0 = dpage.Rotate if '/Rotate' in dpage else 0
+        rotate_times = int(round(((dangle0) % 360) / 90) % 4)
+        for lprow in row.layerpages:
+            # Rotate the offsets so they are relative to dest page
+            offset = lprow.rotate_array(lprow.offset, rotate_times)
+            offs_left, offs_right, offs_top, offs_bottom = offset
+            x1 = row.scale * (dx1 + dw * offs_left)
+            y1 = row.scale * (dy1 + dh * offs_bottom)
+            x2 = row.scale * (dx1 + dw * (1 - offs_right))
+            y2 = row.scale * (dy1 + dh * (1 - offs_top))
+            rect = pikepdf.Rectangle(x1, y1, x2, y2)
+
+            layer_page = pdf_output.pages[i + 1]
+            if lprow.laypos == 'OVERLAY':
+                pdf_output.pages[i].add_overlay(layer_page, rect)
+            else:
+                pdf_output.pages[i].add_underlay(layer_page, rect)
+            # Remove the temporary added page
+            del pdf_output.pages[i + 1]
+
+
+def _append_page(current_page, copied_pages, pdf_output, row):
+    """Add a page to the output pdf. A page that already exist is duplicated."""
+    new_page = copied_pages.get((row.nfile, row.npage))
+    if new_page is None:
+        try:
+            # for backward compatibility with pikepdf <= 3
+            new_page = pdf_output.copy_foreign(current_page)
+        except NotImplementedError:
+            # This is pikepdf >= 6
+            new_page = current_page
+    # let pdf_output adopt new_page
+    pdf_output.pages.append(new_page)
+    new_page = pdf_output.pages[-1]
+    copied_pages[(row.nfile, row.npage)] = new_page
+    # Ensure annotations are copied rather than referenced
+    # https://github.com/pdfarranger/pdfarranger/issues/437
+    if pikepdf.Name.Annots in current_page:
+        pdf_temp = pikepdf.Pdf.new()
+        pdf_temp.pages.append(current_page)
+        indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
+        new_page.Annots = pdf_output.copy_foreign(indirect_annots)
 
 
 def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
@@ -390,15 +469,18 @@ class PrintOperation(Gtk.PrintOperation):
     def begin_print(self, operation, print_ctx, print_data):
         self.set_n_pages(len(self.app.model))
         self.app.set_export_state(True, self.message)
-        self.pdf_input = [None] * len(self.app.pdfqueue)
+        # Open pikepdf objects for all pages that has been modified
+        nfiles = set()
         for row in self.app.model:
             if row[0].unmodified():
                 continue
-            i = row[0].nfile - 1
-            if self.pdf_input[i] is not None:
-                continue
-            pdf = self.app.pdfqueue[i]
-            self.pdf_input[i] = pikepdf.open(pdf.copyname, password=pdf.password)
+            nfiles.add(row[0].nfile)
+            for lp in row[0].layerpages:
+                nfiles.add(lp.nfile)
+        self.pdf_input = [None] * len(self.app.pdfqueue)
+        for nfile in nfiles:
+            pdf = self.app.pdfqueue[nfile - 1]
+            self.pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
 
     def end_print(self, operation, print_ctx, print_data):
         self.app.set_export_state(False)
@@ -418,7 +500,7 @@ class PrintOperation(Gtk.PrintOperation):
                 page.render_for_printing(cairo_ctx)
         else:
             buf = io.BytesIO()
-            export_doc([self.pdf_input[p.nfile - 1]], [p], {}, [buf], None)
+            export_doc(self.pdf_input, [p], {}, [buf], None)
             page = Poppler.Document.new_from_data(buf.getvalue()).get_page(0)
             page.render_for_printing(cairo_ctx)
 
