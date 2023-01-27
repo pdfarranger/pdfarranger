@@ -1,7 +1,7 @@
 # If you change this file, please inform @dreua since I most likely have to
-# apply these changes to the other pdfarranger spec files I maintain, too.
+# apply these changes to the other pdfarranger spec file I maintain, too.
 
-# Note for future-me: meld ~/fedora-scm/pdfarranger/*.spec ~/git/pdfarranger/*.spec
+# Help for future-me: meld ~/fedora-scm/pdfarranger/*.spec ~/git/pdfarranger/*.spec
 
 # These must come from the calling environment
 %global repo %{getenv:GITHUB_REPOSITORY}
@@ -20,6 +20,9 @@ License:        GPLv3
 URL:            https://github.com/%{repo}
 Source0:        %{url}/archive/%{shortcommit}/%{name}-%{shortcommit}.tar.gz
 BuildArch:      noarch
+
+# https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:    %{ix86}
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
@@ -74,7 +77,7 @@ PDF Arranger is a fork of Konstantinos Poulios’s PDF-Shuffler.
 %py3_install_wheel %{python3_wheelname}
 %find_lang %{name}
 %if 0%{?fedora} > 31
-ln -s %{_bindir}/pdfarranger %{buildroot}%{_bindir}/pdfshuffler
+ln -s pdfarranger %{buildroot}%{_bindir}/pdfshuffler
 %endif
 
 %check
