@@ -255,6 +255,7 @@ class PdfArranger(Gtk.Application):
         self.rendering_thread = None
         self.export_process = None
         self.post_action = None
+        self.original_path = None
         self.save_file = None
         self.export_file = None
         self.drag_path = None
@@ -1145,6 +1146,7 @@ class PdfArranger(Gtk.Application):
     def on_action_new(self, _action=None, _param=None, _unknown=None, filenames=None):
         """Start a new instance."""
         filenames = filenames or []
+
         if os.name == 'nt':
             args = [str(sys.executable)]
             for filename in filenames:
@@ -1174,17 +1176,24 @@ class PdfArranger(Gtk.Application):
         response, chooser = self.open_dialog(_('Open…'))
 
         if response == Gtk.ResponseType.ACCEPT:
+            filenames = chooser.get_filenames()
             if self.is_unsaved or self.save_file:
-                self.on_action_new(filenames=chooser.get_filenames())
+                self.on_action_new(filenames)
             else:
                 adder = PageAdder(self)
-                for filename in chooser.get_filenames():
+                for filename in filenames:
                     adder.addpages(filename)
                 adder.commit(select_added=False, add_to_undomanager=True)
+            if filenames and len(filenames) == 1:
+                self.original_path = filename
         chooser.destroy()
 
     def on_action_save(self, _action, _param, _unknown):
-        self.save_or_choose()
+        savemode = 'ALL_TO_SINGLE'
+        if self.original_path:
+            self.save(savemode, [self.original_path])
+        else:
+            self.save_or_choose()
 
     def save_or_choose(self):
         """Saves to the previously exported file or shows the export dialog if
