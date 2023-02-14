@@ -21,7 +21,6 @@ import locale
 
 _ = gettext.gettext
 
-# TODO rename to pageutils
 
 def scale(model, selection, factor):
     """Set the scale factor of a selection of pages."""

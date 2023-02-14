@@ -140,7 +140,7 @@ _ = gettext.gettext
 from . import undo
 from . import exporter
 from . import metadata
-from . import croputils
+from . import pageutils
 from . import splitter
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
@@ -431,7 +431,7 @@ class PdfArranger(Gtk.Application):
         model = self.iconview.get_model()
         if len(selection) > 0:
             size = model[selection[-1]][0].size_in_points()
-        page_size = croputils.BlankPageDialog(size, self.window).run_get()
+        page_size = pageutils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)
             if len(selection) > 0:
@@ -2263,7 +2263,7 @@ class PdfArranger(Gtk.Application):
     def page_format_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping and page size"""
         selection = self.iconview.get_selected_items()
-        diag = croputils.Dialog(self.iconview.get_model(), selection, self.window)
+        diag = pageutils.Dialog(self.iconview.get_model(), selection, self.window)
         crop, newscale = diag.run_get()
         with self.render_lock():
             if crop is not None or newscale is not None:
@@ -2273,7 +2273,7 @@ class PdfArranger(Gtk.Application):
                 if self.crop(selection, crop):
                     updatestatus = True
             if newscale is not None:
-                if croputils.scale(self.model, selection, newscale):
+                if pageutils.scale(self.model, selection, newscale):
                     updatestatus = True
             if updatestatus:
                 self.set_unsaved(True)
@@ -2284,7 +2284,7 @@ class PdfArranger(Gtk.Application):
 
     def crop_white_borders(self, _action, _parameter, _unknown):
         selection = self.iconview.get_selected_items()
-        crop = croputils.white_borders(self.iconview.get_model(), selection, self.pdfqueue)
+        crop = pageutils.white_borders(self.iconview.get_model(), selection, self.pdfqueue)
         self.undomanager.commit("Crop white Borders")
         if self.crop(selection, crop):
             self.set_unsaved(True)
