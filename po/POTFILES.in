@@ -1,5 +1,5 @@
 pdfarranger/pdfarranger.py
 pdfarranger/metadata.py
-pdfarranger/croputils.py
+pdfarranger/pageutils.py
 data/pdfarranger.ui
 data/menu.ui
