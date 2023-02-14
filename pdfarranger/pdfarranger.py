@@ -36,6 +36,7 @@ import gettext
 import gc
 import subprocess
 import pikepdf
+import hashlib
 from urllib.request import url2pathname
 from functools import lru_cache
 from math import log
@@ -1366,7 +1367,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.scroll_to_path(path, False, 0, 0)
         sw_hadj.set_value(sw_hpos)
 
-    def copy_pages(self):
+    def copy_pages(self, add_hash=True):
         """Collect data from selected pages"""
 
         model = self.iconview.get_model()
@@ -1380,7 +1381,9 @@ class PdfArranger(Gtk.Application):
 
         if data:
             data = '\n;\n'.join(data)
-
+            if add_hash:
+                h = hashlib.sha256(data.encode('utf-8')).hexdigest()
+                data = h + '\n' + data
         return data
 
     @staticmethod
@@ -1397,37 +1400,6 @@ class PdfArranger(Gtk.Application):
             scale = float(tmp[4])
             crop = [float(side) for side in tmp[5:9]]
             pageadder.addpages(filename, npage, basename, angle, scale, crop)
-
-    def is_data_valid(self, data):
-        """Validate data to be pasted from clipboard."""
-        data_copy = data.copy()
-        data_valid = True
-        while data_copy:
-            try:
-                tmp = data_copy.pop(0).split('\n')
-                copyname = tmp[0]
-                npage = int(tmp[1])
-                # basename = tmp[2] but is not validated here
-                angle = int(tmp[3])
-                scale = float(tmp[4])
-                crop = [float(side) for side in tmp[5:9]]
-                if not (os.path.isfile(copyname) and
-                        npage > 0 and
-                        angle in [0, 90, 180, 270] and
-                        0 < scale <= 200.0 and
-                        all((cr >= 0.0 and cr <= 0.90) for cr in crop) and
-                        (crop[0] + crop[1] <= 0.90) and
-                        (crop[2] + crop[3] <= 0.90) and
-                        len(tmp) == 9):
-                    data_valid = False
-                    break
-            except (ValueError, IndexError):
-                data_valid = False
-                break
-        if not data_valid:
-            message = _('Pasted data not valid. Aborting paste.')
-            self.error_message_dialog(message)
-        return data_valid
 
     def paste_pages(self, data, before, ref_to, select_added):
         """Paste pages to iconview"""
@@ -1574,8 +1546,18 @@ class PdfArranger(Gtk.Application):
             data_is_filepaths = False
             if data.startswith('pdfarranger-clipboard\n'):
                 data = data.replace('pdfarranger-clipboard\n', '', 1)
-                data = data.split('\n;\n')
-                if not self.is_data_valid(data):
+                try:
+                    copy_hash = data[:data.index('\n')]
+                except ValueError:
+                    copy_hash = None
+                else:
+                    data = data.replace(copy_hash + '\n', '', 1)
+                    paste_hash = hashlib.sha256(data.encode('utf-8')).hexdigest()
+                if copy_hash is not None and copy_hash == paste_hash:
+                    data = data.split('\n;\n')
+                else:
+                    message = _("Pasted data not valid. Aborting paste.")
+                    self.error_message_dialog(message)
                     data = []
             else:
                 data_is_filepaths = True
@@ -1702,7 +1684,7 @@ class PdfArranger(Gtk.Application):
                 data = '\n;\n'.join(data)
         elif target == 'MODEL_ROW_EXTERN':
             self.target_is_intern = False
-            data = self.copy_pages()
+            data = self.copy_pages(add_hash=False)
         else:
             return
         selection_data.set(selection_data.get_target(), 8, data.encode())
