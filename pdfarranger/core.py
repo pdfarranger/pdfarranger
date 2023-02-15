@@ -354,15 +354,16 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None):
-        crop = [0] * 4 if crop is None else crop
+    def get_pdfdoc(self, filename,  basename=None):
+        """Get the pdfdoc object for the filename.
+
+        pdfqueue is searched for the filename. If it is not found a pdfdoc is created
+        and added to pdfqueue.
+        Returns: pdfdoc object, it's file number, if a new pdfdoc was created.
+        """
         pdfdoc = None
         nfile = None
-        c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
-        self.content.append(c)
-        self.pdfqueue_used = len(self.app.pdfqueue) > 0
-
-        # Check if added page or file already exist in pdfqueue
+        doc_added = False
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
             if basename is not None and filename == it_pdfdoc.copyname:
                 # File of copy-pasted page was found in pdfqueue
@@ -377,30 +378,43 @@ class PageAdder:
                 except OSError as e:
                     print(traceback.format_exc())
                     self.app.error_message_dialog(e)
-                    return
+                    return None
             for i, it_pdfdoc in enumerate(self.app.pdfqueue):
                 if self.stat_cache[filename] == it_pdfdoc.stat:
                     # Imported file was found in pdfqueue
                     pdfdoc = it_pdfdoc
                     nfile = i + 1
                     break
-
         if pdfdoc is None:
             try:
                 pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
                                 self.app.tmp_dir, self.app.window)
             except _UnknownPasswordException:
-                return
+                return None
             except PDFDocError as e:
                 print(e.message, file=sys.stderr)
                 self.app.error_message_dialog(e.message)
-                return
-            if (pdfdoc.copyname != pdfdoc.filename and basename is None and not
-                (filename.startswith(self.app.tmp_dir) and filename.endswith(".png"))):
-                self.app.import_directory = os.path.split(filename)[0]
-                self.app.export_directory = self.app.import_directory
+                return None
             self.app.pdfqueue.append(pdfdoc)
             nfile = len(self.app.pdfqueue)
+            doc_added = True
+        return pdfdoc, nfile, doc_added
+
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None):
+        crop = [0] * 4 if crop is None else crop
+        c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
+        self.content.append(c)
+        self.pdfqueue_used = len(self.app.pdfqueue) > 0
+
+        doc_data = self.get_pdfdoc(filename, basename)
+        if doc_data is None:
+            return
+        pdfdoc, nfile, doc_added = doc_data
+
+        if (doc_added and pdfdoc.copyname != pdfdoc.filename and basename is None and not
+                (filename.startswith(self.app.tmp_dir) and filename.endswith(".png"))):
+            self.app.import_directory = os.path.split(filename)[0]
+            self.app.export_directory = self.app.import_directory
 
         n_end = pdfdoc.document.get_n_pages()
         n_start = min(n_end, max(1, page))
