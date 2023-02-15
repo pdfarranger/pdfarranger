@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-30 18:26+0200\n"
-"PO-Revision-Date: 2022-07-31 20:12+0200\n"
+"PO-Revision-Date: 2023-02-15 16:09+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -168,11 +168,11 @@ msgstr "Ključne riječi"
 
 #: pdfarranger/metadata.py:45
 msgid "Producer"
-msgstr "Stvaralac"
+msgstr "PDF stvoren pomoću"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
-msgstr "Izvorni program"
+msgstr "Izvorni program dokumenta"
 
 #: pdfarranger/metadata.py:47
 msgid "Creator tool"
