@@ -273,7 +273,9 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():
         return
-    mdata = metadata.merge_doc(mdata, pdf_input)
+    if isinstance(files_out[0], str):
+        # Only needed when saving to file, not when printing
+        mdata = metadata.merge_doc(mdata, pdf_input)
     if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
@@ -291,8 +293,9 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
             _remove_unreferenced_resources(outpdf)
             outpdf.save(files_out[n])
     else:
-        _set_meta(mdata, pdf_input, pdf_output)
-        _remove_unreferenced_resources(pdf_output)
+        if isinstance(files_out[0], str):
+            _set_meta(mdata, pdf_input, pdf_output)
+            _remove_unreferenced_resources(pdf_output)
         pdf_output.save(files_out[0])
 
 
