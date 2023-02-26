@@ -223,22 +223,11 @@ class BaseDialog(Gtk.Dialog):
         self.set_default_response(Gtk.ResponseType.OK)
 
 
-class Dialog(Gtk.Dialog):
+class Dialog(BaseDialog):
     """ A dialog box to define margins for page cropping and page size or scale factor """
 
     def __init__(self, model, selection, window):
-        super().__init__(
-            title=_("Page format"),
-            parent=window,
-            flags=Gtk.DialogFlags.MODAL,
-            buttons=(
-                "_Cancel",
-                Gtk.ResponseType.CANCEL,
-                "_OK",
-                Gtk.ResponseType.OK,
-            ),
-        )
-        self.set_default_response(Gtk.ResponseType.OK)
+        super().__init__(title=_("Page format"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
         size = [page.scale * x for x in page.size]
@@ -331,20 +320,9 @@ def white_borders(model, selection, pdfqueue):
     return crop
 
 
-class BlankPageDialog(Gtk.Dialog):
+class BlankPageDialog(BaseDialog):
     def __init__(self, size, window):
-        super().__init__(
-            title=_("Insert Blank Page"),
-            parent=window,
-            flags=Gtk.DialogFlags.MODAL,
-            buttons=(
-                "_Cancel",
-                Gtk.ResponseType.CANCEL,
-                "_OK",
-                Gtk.ResponseType.OK,
-            ),
-        )
-        self.set_default_response(Gtk.ResponseType.OK)
+        super().__init__(title=_("Insert Blank Page"), parent=window)
         self.set_resizable(False)
         self.width_widget = _ScalingWidget(_("Width"), size[0])
         self.height_widget = _ScalingWidget(_("Height"), size[1])
