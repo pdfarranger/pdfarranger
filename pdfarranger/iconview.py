@@ -78,9 +78,6 @@ class CellRendererImage(Gtk.CellRenderer):
         window.translate(self.th1, self.th1)
         scale = self.page.resample * self.page.zoom
         window.scale(scale, scale)
-        x = int(self.page.crop[0] * w1)
-        y = int(self.page.crop[2] * h1)
-        window.translate(-x, -y)
         if rotation > 0:
             window.translate(w1 / 2, h1 / 2)
             window.rotate(rotation * pi / 180)
