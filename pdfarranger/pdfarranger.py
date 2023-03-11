@@ -817,7 +817,7 @@ class PdfArranger(Gtk.Application):
         self.set_title(title)
         return False
 
-    def update_thumbnail(self, _obj, ref, thumbnail, resample, scale, is_preview):
+    def update_thumbnail(self, _obj, ref, thumbnail, zoom, scale, is_preview):
         """Update thumbnail emitted from rendering thread."""
         if ref is None:
             # Rendering ended
@@ -830,7 +830,7 @@ class PdfArranger(Gtk.Application):
             # Page no longer exist
             return
         if (self.visible_range[0] <= path.get_indices()[0] <= self.visible_range[1] and
-            resample != 1 / self.zoom_scale):
+                zoom != self.zoom_scale):
             # Thumbnail is in the visible range but is not rendered for current zoom level
             self.silent_render()
             return
@@ -840,7 +840,7 @@ class PdfArranger(Gtk.Application):
             self.silent_render()
             return
         page.thumbnail = thumbnail
-        page.resample = resample
+        page.resample = 1 / zoom
         if is_preview:
             page.preview = thumbnail
         # Let iconview refresh the thumbnail (only) by selecting it

@@ -85,6 +85,7 @@ class Manager(object):
             for page in state:
                 # Do not reset the zoom level
                 page.zoom = self.app.zoom_scale
+                page.resample = -1
                 self.model.append([page, page.description()])
         self.app.update_iconview_geometry()
         self.app.update_max_zoom_level()
