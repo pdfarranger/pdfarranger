@@ -142,7 +142,6 @@ class Page:
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
             r.thumbnail = None
-            r.resample = -1
             r.preview = None
         return r
 
@@ -513,10 +512,9 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                     break
                 path = Gtk.TreePath.new_from_indices([num])
                 ref = Gtk.TreeRowReference.new(self.model, path)
-                p = copy.copy(self.model[path][0])
+                p = self.model[path][0].duplicate()
             if p.resample != 1 / p.zoom:
-                scale = p.scale * p.zoom
-                self.update(p, ref, scale, 1 / p.zoom, False)
+                self.update(p, ref, p.zoom, False)
         mem_limit = False
         for off in range(1, len(self.model)):
             for num in self.visible_end + off, self.visible_start - off:
@@ -527,66 +525,66 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                         continue
                     path = Gtk.TreePath.new_from_indices([num])
                     ref = Gtk.TreeRowReference.new(self.model, path)
-                    p = copy.copy(self.model[path][0])
+                    p = self.model[path][0].duplicate()
                 if off <= self.columns_nr * 5:
                     # Thumbnail
-                    scale = p.scale * p.zoom
-                    resample = 1 / p.zoom
+                    zoom = p.zoom
                     is_preview = False
                 elif mem_limit or p.resample < 0:
                     # Preview. Always render to about 4000 pixels = about 16kb
-                    preview_zoom_scale = (1 / p.scale) * (4000 / (p.size[0] * p.size[1])) ** .5
-                    scale = p.scale * preview_zoom_scale
-                    resample = 1 / preview_zoom_scale
+                    zoom = (1 / p.scale) * (4000 / (p.size[0] * p.size[1])) ** .5
                     is_preview = True
                 else:
                     # Thumbnail is distant and total mem usage is small
                     # -> don't update thumbnail, just take memory usage into account
-                    scale = p.scale / p.resample
-                    resample = p.resample
-                mem_limit = self.mem_at_limit(p, scale)
-                if p.resample != resample:
-                    self.update(p, ref, scale, resample, is_preview)
+                    zoom = 1 / p.resample
+                if p.resample != 1 / zoom:
+                    size = self.update(p, ref, zoom, is_preview)
+                else:
+                    size = p.thumbnail.get_width(), p.thumbnail.get_height()
+                mem_limit = self.mem_at_limit(size)
         self.finish()
 
-    def mem_at_limit(self, p, scale):
+    def mem_at_limit(self, size):
         """Estimate memory usage of rendered thumbnails. Return True when mem_usage > mem_limit."""
         mem_limit = 300  # Mb (About. Size will depend on thumbnail content.)
         if self.mem_usage > mem_limit:
             return True
-        pdfdoc = self.pdfqueue[p.nfile - 1]
-        page = pdfdoc.document.get_page(p.npage - 1)
-        w, h = page.get_size()
-        self.mem_usage += w * scale * h * scale * 4 / (1024 * 1024)  # 4 byte/pixel
+        self.mem_usage += size[0] * size[1] * 4 / (1024 * 1024)  # 4 byte/pixel
         return False
 
-    def update(self, p, ref, scale, resample, is_preview):
-        """Render and emit updated thumbnails."""
+    def render(self, cr, p):
         if self.quit:
             return
+        pdfdoc = self.pdfqueue[p.nfile - 1]
+        page = pdfdoc.get_page(p.npage - 1)
+        with pdfdoc.render_lock:
+            page.render(cr)
+
+    def update(self, p, ref, zoom, is_preview):
+        """Render and emit updated thumbnails."""
         if is_preview and p.preview:
             thumbnail = p.preview
         else:
-            pdfdoc = self.pdfqueue[p.nfile - 1]
-            page = pdfdoc.get_page(p.npage - 1)
-            w, h = page.get_size()
-            thumbnail = cairo.ImageSurface(
-                cairo.FORMAT_ARGB32, int(0.5 + w * scale), int(0.5 + h * scale)
-            )
+            wpoi = p.size_orig[0]
+            hpoi = p.size_orig[1]
+            wpix = int(0.5 + wpoi * p.scale * zoom)
+            hpix = int(0.5 + hpoi * p.scale * zoom)
+            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, wpix, hpix)
             cr = cairo.Context(thumbnail)
-            cr.scale(int(0.5 + w * scale) / w, int(0.5 + h * scale) / h)
-            with pdfdoc.render_lock:
-                page.render(cr)
+            cr.scale(wpix / wpoi, hpix / hpoi)
+            self.render(cr, p)
         GObject.idle_add(
             self.emit,
             "update_thumbnail",
             ref,
             thumbnail,
-            resample,
+            zoom,
             p.scale,
             is_preview,
             priority=GObject.PRIORITY_LOW,
         )
+        return thumbnail.get_width(), thumbnail.get_height()
 
     def finish(self):
         """Signal rendering ended (for statusbar and malloc_trim)."""
