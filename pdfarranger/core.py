@@ -41,6 +41,7 @@ from gi.repository import Gtk
 gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
+from math import pi
 
 
 try:
@@ -502,7 +503,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
         Thumbnails are rendered for the visible range and its near area. Memory usage is estimated
         and if it goes too high distant thumbnails are replaced with previews. Previews will be
-        rendered for all pages. The preview will exist as long as the page exist.
+        rendered for all pages.
         """
         for num in range(self.visible_start, self.visible_end + 1):
             if self.quit:
@@ -563,17 +564,33 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
     def update(self, p, ref, zoom, is_preview):
         """Render and emit updated thumbnails."""
-        if is_preview and p.preview:
+        if (is_preview and p.preview) and (p.resample != -1):
+            # Reuse the preview if it exist, unless it is marked for re-render
             thumbnail = p.preview
         else:
-            wpoi = p.size_orig[0]
-            hpoi = p.size_orig[1]
+            wpoi = p.size[0] * (1 - p.crop[0] - p.crop[1])
+            hpoi = p.size[1] * (1 - p.crop[2] - p.crop[3])
             wpix = int(0.5 + wpoi * p.scale * zoom)
             hpix = int(0.5 + hpoi * p.scale * zoom)
-            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, wpix, hpix)
+            wpix0, hpix0 = (wpix, hpix) if p.angle in [0, 180] else (hpix, wpix)
+            rotation = round((int(p.angle) % 360) / 90) * 90
+
+            thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, wpix0, hpix0)
             cr = cairo.Context(thumbnail)
+            if rotation > 0:
+                cr.translate(wpix0 / 2, hpix0 / 2)
+                cr.rotate(-rotation * pi / 180)
+                cr.translate(-wpix / 2, -hpix / 2)
             cr.scale(wpix / wpoi, hpix / hpoi)
+            cr.translate(-p.crop[0] * p.size[0], -p.crop[2] * p.size[1])
+            if rotation > 0:
+                cr.translate(p.size[0] / 2, p.size[1] / 2)
+                cr.rotate(rotation * pi / 180)
+                cr.translate(-p.size_orig[0] / 2, -p.size_orig[1] / 2)
             self.render(cr, p)
+        if self.quit:
+            return 0, 0
+
         GObject.idle_add(
             self.emit,
             "update_thumbnail",

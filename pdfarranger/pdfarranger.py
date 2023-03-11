@@ -2247,8 +2247,10 @@ class PdfArranger(Gtk.Application):
             for ref in ref_list:
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0)
+                page.resample = -1
                 newpages = page.split(leftcrops, topcrops)
                 for p in newpages:
+                    p.resample = -1
                     model.insert_after(iterator, [p, p.description()])
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
@@ -2299,6 +2301,7 @@ class PdfArranger(Gtk.Application):
             page = model.get_value(pos, 0)
             if page.crop != list(newcrop[id_sel]):
                 page.crop = list(newcrop[id_sel])
+                page.resample = -1
                 changed = True
             model.set_value(pos, 0, page)
         self.update_iconview_geometry()
