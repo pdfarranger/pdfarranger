@@ -207,7 +207,7 @@ class Config(object):
             if k != "enable_custom"
         ]
 
-    def preferences_dialog(self, parent, localedir, handy_available):
+    def preferences_dialog(self, parent, localedir):
         """A dialog where language and theme can be selected."""
         d = Gtk.Dialog(title=_("Preferences"),
                        parent=parent,
@@ -228,9 +228,7 @@ class Config(object):
         hbox2 = Gtk.Box(spacing=6, margin=8)
         frame2 = Gtk.Frame(label=_("Theme"), margin=8)
         combo2 = Gtk.ComboBoxText(margin=8)
-        label2 = Gtk.Label("" if handy_available else _("(Libhandy missing)"))
         hbox2.pack_start(combo2, False, False, 8)
-        hbox2.pack_start(label2, False, False, 8)
         frame2.add(hbox2)
         d.vbox.pack_start(frame2, False, False, 8)
 
@@ -255,7 +253,6 @@ class Config(object):
             combo2.set_active(themes.index(theme))
         else:
             combo2.set_active(0)
-        combo2.set_sensitive(handy_available)
 
         d.show_all()
         result = d.run()

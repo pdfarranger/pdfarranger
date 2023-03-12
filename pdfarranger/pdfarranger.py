@@ -95,12 +95,9 @@ import gi
 # check that we don't need GObject.threads_init()
 gi.check_version('3.10.2')
 gi.require_version('Gtk', '3.0')
+gi.require_version('Handy', '1')
 from gi.repository import Gtk
-try:
-    gi.require_version('Handy', '1')
-    from gi.repository import Handy
-except ValueError:
-    Handy = None
+from gi.repository import Handy
 
 if Gtk.check_version(3, 20, 0):
     raise Exception('You do not have the required version of GTK+ installed. ' +
@@ -161,7 +158,7 @@ def _install_workaround_bug29():
                 action.connect("activate", d[1], None)
                 self.add_action(action)
 
-        Gtk.ApplicationWindow.add_action_entries = func
+        Handy.ApplicationWindow.add_action_entries = func
 
 
 _install_workaround_bug29()
@@ -317,49 +314,32 @@ class PdfArranger(Gtk.Application):
         return f
 
     def set_color_scheme(self):
-        if Handy:
-            try:
-                scheme = Handy.ColorScheme.PREFER_LIGHT
-                if os.name == 'nt' and darkdetect.isDark():
-                    scheme = Handy.ColorScheme.PREFER_DARK
-                theme = self.config.theme()
-                if theme == 'dark':
-                    scheme = Handy.ColorScheme.FORCE_DARK
-                elif theme == 'light':
-                    scheme = Handy.ColorScheme.FORCE_LIGHT
-                Handy.StyleManager.get_default().set_color_scheme(scheme)
-            except AttributeError:
-                # This libhandy is too old. 1.5.90 needed ?
-                pass
+        try:
+            scheme = Handy.ColorScheme.PREFER_LIGHT
+            if os.name == 'nt' and darkdetect.isDark():
+                scheme = Handy.ColorScheme.PREFER_DARK
+            theme = self.config.theme()
+            if theme == 'dark':
+                scheme = Handy.ColorScheme.FORCE_DARK
+            elif theme == 'light':
+                scheme = Handy.ColorScheme.FORCE_LIGHT
+            Handy.StyleManager.get_default().set_color_scheme(scheme)
+        except AttributeError:
+            # This libhandy is too old. 1.5.90 needed ?
+            pass
 
     def __create_main_window(self):
-        """Create the Gtk.ApplicationWindow or Handy.ApplicationWindow"""
+        """Create the Handy.ApplicationWindow"""
         b = Gtk.Builder()
         b.set_translation_domain(DOMAIN)
         with open(self.__resource_path(DOMAIN + ".ui")) as ff:
             s = ff.read()
-            if Handy:
-                Handy.init()
-                s = s.replace("GtkHeaderBar", "HdyHeaderBar")
+            Handy.init()
             b.add_from_string(s)
         b.connect_signals(self)
         self.uiXML = b
         self.window = self.uiXML.get_object("main_window")
-        if Handy:
-            self.set_color_scheme()
-            # Add an intermediate vertical box
-            box = Gtk.Box()
-            box.props.orientation = Gtk.Orientation.VERTICAL
-            hd = self.uiXML.get_object("header_bar")
-            mb = self.uiXML.get_object("main_box")
-            self.window.remove(hd)
-            self.window.remove(mb)
-            # Replace the Gtk.ApplicationWindow by the Handy one
-            self.window = Handy.ApplicationWindow()
-            box.add(hd)
-            mb.props.expand = True
-            box.add(mb)
-            self.window.add(box)
+        self.set_color_scheme()
         self.window.set_default_icon_name(ICON_ID)
         return b
 
@@ -375,9 +355,8 @@ class PdfArranger(Gtk.Application):
         main_menu.set_menu_model(b.get_object("main_menu"))
 
     def __create_actions(self):
-        # Both Handy.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
-        # related some other are application related. As pdfarrager is a single window app does not
-        # matter that much.
+        # Handy.ApplicationWindow is Gio.ActionMap. Some action are window related some other are
+        # application related. As pdfarrager is a single window app does not matter that much.
         self.actions = [
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
@@ -479,8 +458,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def on_action_preferences(self, _action, _option, _unknown):
-        handy_available = True if Handy else False
-        self.config.preferences_dialog(self.window, localedir, handy_available)
+        self.config.preferences_dialog(self.window, localedir)
         self.set_color_scheme()
 
     def on_action_print(self, _action, _option, _unknown):
@@ -518,10 +496,7 @@ class PdfArranger(Gtk.Application):
         return filter_list
 
     def set_title(self, title):
-        if Handy:
-            self.uiXML.get_object('header_bar').set_title(title)
-        else:
-            self.window.set_title(title)
+        self.uiXML.get_object('header_bar').set_title(title)
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
