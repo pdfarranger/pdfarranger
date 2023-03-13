@@ -1852,6 +1852,12 @@ class PdfArranger(Gtk.Application):
 
     def iv_dnd_motion(self, iconview, context, x, y, etime):
         """Handles drag motion: autoscroll, select move or copy, select drag cursor location."""
+        # Block dnd when a modal dialog is open
+        for w in self.window.list_toplevels():
+            if w.get_modal():
+                iconview.stop_emission('drag_motion')
+                return Gdk.EVENT_PROPAGATE
+
         x, y = iconview.convert_widget_to_bin_window_coords(x, y)
 
         # Auto-scroll when drag up/down
