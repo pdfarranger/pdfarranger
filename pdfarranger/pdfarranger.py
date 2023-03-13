@@ -994,7 +994,9 @@ class PdfArranger(Gtk.Application):
         self.clear_data()
 
     def clear_data(self):
-        self.model.clear()
+        self.iconview.unselect_all()
+        with self.render_lock():
+            self.model.clear()
         self.pdfqueue = []
         self.metadata = {}
         self.undomanager.clear()
