@@ -239,7 +239,7 @@ class PdfArranger(Gtk.Application):
         self.is_unsaved = False
         self.zoom_level = None
         self.zoom_level_old = 0
-        self.zoom_level_limits = [-10, 40]
+        self.zoom_level_limits = [-10, 80]
         self.zoom_scale = None
         self.zoom_fit_page = False
         self.render_id = None
@@ -2203,9 +2203,9 @@ class PdfArranger(Gtk.Application):
         if len(self.model) == 0:
             return
         max_pixels = 6000000  # 6000000 pixels * 4 byte/pixel -> 23Mb
-        max_page_size = max(p.size[0] * p.size[1] * p.scale ** 2 for p, _ in self.model)
+        max_page_size = max(p.width_in_points() * p.height_in_points() for p, _ in self.model)
         max_zoom_scale = (max_pixels / max_page_size) ** .5
-        self.zoom_level_limits[1] = min(int(log(max_zoom_scale / .2) / log(1.1)), 40)
+        self.zoom_level_limits[1] = min(int(log(max_zoom_scale / .2) / log(1.1)), 80)
         self.zoom_set(self.zoom_level)
 
     def zoom_set(self, level):
@@ -2356,6 +2356,7 @@ class PdfArranger(Gtk.Application):
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
+        self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
     def edit_metadata(self, _action, _parameter, _unknown):
@@ -2392,6 +2393,7 @@ class PdfArranger(Gtk.Application):
         if self.crop(selection, crop):
             self.set_unsaved(True)
             self.update_statusbar()
+        self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
     def crop(self, selection, newcrop):
