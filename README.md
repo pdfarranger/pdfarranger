@@ -61,14 +61,15 @@ sudo pacman -S poppler-glib python-distutils-extra python-pip \
 
 ```
 sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobject \
-    gtk3 python3-cairo python3-wheel python3-pikepdf python3-img2pdf python3-dateutil
+    gtk3 python3-cairo python3-wheel python3-pikepdf python3-img2pdf python3-dateutil libhandy
 ```
 
 **On FreeBSD**
 
 ```
 sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip devel/py-python-distutils-extra \
-    graphics/poppler-glib textproc/intltool textproc/py-pikepdf x11-toolkits/gtk30
+    graphics/poppler-glib textproc/intltool textproc/py-pikepdf x11-toolkits/gtk30 \
+    x11-toolkits/libhandy
 ```
 
 **Then**
