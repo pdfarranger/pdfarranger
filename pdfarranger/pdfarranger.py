@@ -83,7 +83,6 @@ VERSION = '1.9.2'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
-    import darkdetect
     import keyboard  # to get control key state when drag to other instance
     # Add support for dnd to other instance and insert file at drop location in Windows
     os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
@@ -313,21 +312,6 @@ class PdfArranger(Gtk.Application):
             f = '/usr/local/share/{}/{}'.format(DOMAIN, path)
         return f
 
-    def set_color_scheme(self):
-        try:
-            scheme = Handy.ColorScheme.PREFER_LIGHT
-            if os.name == 'nt' and darkdetect.isDark():
-                scheme = Handy.ColorScheme.PREFER_DARK
-            theme = self.config.theme()
-            if theme == 'dark':
-                scheme = Handy.ColorScheme.FORCE_DARK
-            elif theme == 'light':
-                scheme = Handy.ColorScheme.FORCE_LIGHT
-            Handy.StyleManager.get_default().set_color_scheme(scheme)
-        except AttributeError:
-            # This libhandy is too old. 1.5.90 needed ?
-            pass
-
     def __create_main_window(self):
         """Create the Handy.ApplicationWindow"""
         b = Gtk.Builder()
@@ -339,7 +323,7 @@ class PdfArranger(Gtk.Application):
         b.connect_signals(self)
         self.uiXML = b
         self.window = self.uiXML.get_object("main_window")
-        self.set_color_scheme()
+        self.config.set_color_scheme()
         self.window.set_default_icon_name(ICON_ID)
         return b
 
@@ -458,8 +442,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def on_action_preferences(self, _action, _option, _unknown):
-        self.config.preferences_dialog(self.window, localedir)
-        self.set_color_scheme()
+        self.config.preferences_window(self.window, self.__resource_path, localedir)
 
     def on_action_print(self, _action, _option, _unknown):
         exporter.PrintOperation(self).run()

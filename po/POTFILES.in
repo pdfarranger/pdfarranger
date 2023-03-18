@@ -3,3 +3,4 @@ pdfarranger/metadata.py
 pdfarranger/pageutils.py
 data/pdfarranger.ui
 data/menu.ui
+data/preferences.ui

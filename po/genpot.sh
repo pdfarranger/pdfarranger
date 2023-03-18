@@ -24,5 +24,6 @@
 cd "$(dirname "$0")/.."
 intltool-extract --type=gettext/glade data/pdfarranger.ui
 intltool-extract --type=gettext/glade data/menu.ui
+intltool-extract --type=gettext/glade data/preferences.ui
 xgettext --from-code=utf-8 --language=Python --keyword=_ --keyword=N_ --output=po/pdfarranger.pot \
-  pdfarranger/*.py data/pdfarranger.ui.h data/menu.ui.h
+  pdfarranger/*.py data/pdfarranger.ui.h data/menu.ui.h data/preferences.ui.h

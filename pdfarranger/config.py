@@ -19,8 +19,12 @@ import configparser
 import os
 import sys
 import gettext
+if os.name == 'nt':
+    import darkdetect
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import Gtk
+from gi.repository import Handy
 
 _ = gettext.gettext
 
@@ -102,6 +106,19 @@ class Config(object):
         os.makedirs(p, exist_ok=True)
         return os.path.join(p, 'config.ini')
 
+    @staticmethod
+    def _compare_function(a, b, user_data):
+        """Comparison function for sorting ListStore"""
+        element_a = a.get_value()
+        element_b = b.get_value()
+
+        if element_a < element_b:
+            return -1
+        elif element_a > element_b:
+            return 1
+        else:
+            return 0
+
     def __init__(self, domain):
         self.domain = domain
         self.data = configparser.ConfigParser()
@@ -165,11 +182,34 @@ class Config(object):
     def set_language(self, language):
         self.data.set('preferences', 'language', language)
 
-    def theme(self):
-        return self.data.get('preferences', 'theme', fallback="")
+    def on_language_selected(self, widget, event, langs_store):
+        selected_index = widget.get_selected_index()
+        if selected_index > 0:
+            selected_lang = langs_store[selected_index].get_string()
+        else:
+            selected_lang = ""
+        self.set_language(selected_lang)
 
-    def set_theme(self, theme):
-        self.data.set('preferences', 'theme', theme)
+    def theme(self):
+        return self.data.getint('preferences', 'theme', fallback=0)
+
+    def set_theme(self, row, param):
+        self.data.set('preferences', 'theme', str(row.get_selected_index()))
+
+    def set_color_scheme(self):
+        try:
+            scheme = Handy.ColorScheme.PREFER_LIGHT
+            if os.name == 'nt' and darkdetect.isDark():
+                scheme = Handy.ColorScheme.PREFER_DARK
+            theme = self.theme()
+            if theme == 1:
+                scheme = Handy.ColorScheme.FORCE_LIGHT
+            elif theme == 2:
+                scheme = Handy.ColorScheme.FORCE_DARK
+            Handy.StyleManager.get_default().set_color_scheme(scheme)
+        except AttributeError:
+            # This libhandy is too old. 1.5.90 needed ?
+            pass
 
     def save(self):
         conffile = Config._config_file(self.domain)
@@ -207,60 +247,41 @@ class Config(object):
             if k != "enable_custom"
         ]
 
-    def preferences_dialog(self, parent, localedir):
-        """A dialog where language and theme can be selected."""
-        d = Gtk.Dialog(title=_("Preferences"),
-                       parent=parent,
-                       flags=Gtk.DialogFlags.MODAL,
-                       buttons=(
-                           _("_Cancel"), Gtk.ResponseType.CANCEL,
-                           _("_OK"), Gtk.ResponseType.OK,
-                        ),
-                       )
-        hbox = Gtk.Box(spacing=6, margin=8)
-        frame = Gtk.Frame(label=_("Language"), margin=8)
-        combo = Gtk.ComboBoxText(margin=8)
-        label = Gtk.Label(_("(Requires restart)"))
-        hbox.pack_start(combo, False, False, 8)
-        hbox.pack_start(label, False, False, 8)
-        frame.add(hbox)
-        d.vbox.pack_start(frame, False, False, 8)
-        hbox2 = Gtk.Box(spacing=6, margin=8)
-        frame2 = Gtk.Frame(label=_("Theme"), margin=8)
-        combo2 = Gtk.ComboBoxText(margin=8)
-        hbox2.pack_start(combo2, False, False, 8)
-        frame2.add(hbox2)
-        d.vbox.pack_start(frame2, False, False, 8)
+    def preferences_window(self, parent, resource_path, localedir):
+        """A window where language and theme can be selected."""
+        langs_store = Gio.ListStore.new(Handy.ValueObject)
 
-        langs = []
         if os.path.isdir(localedir):
-            langs = os.listdir(localedir)
-        langs.append("en")
-        langs.sort()
-        langs.insert(0, _("System setting"))
-        for lan in langs:
-            combo.append(None, lan)
-        lang = self.language()
-        if lang in langs:
-            combo.set_active(langs.index(lang))
-        else:
-            combo.set_active(0)
-        themes = [_("System setting"), "light", "dark"]
-        for the in themes:
-            combo2.append(None, the)
-        theme = self.theme()
-        if theme in themes:
-            combo2.set_active(themes.index(theme))
-        else:
-            combo2.set_active(0)
+            for lang in os.listdir(localedir):
+                langs_store.insert_sorted(Handy.ValueObject.new(lang), self._compare_function, None)
+        langs_store.insert_sorted(Handy.ValueObject.new("en"), self._compare_function, None)
+        langs_store.insert(0, Handy.ValueObject.new(_("System setting")))
 
-        d.show_all()
-        result = d.run()
-        if result == Gtk.ResponseType.OK:
-            num = combo.get_active()
-            language = langs[num] if num != 0 else ""
-            self.set_language(language)
-            num2 = combo2.get_active()
-            theme = themes[num2] if num2 != 0 else ""
-            self.set_theme(theme)
-        d.destroy()
+        theme_store = Gio.ListStore.new(Handy.ValueObject)
+
+        theme_store.insert(0, Handy.ValueObject.new(_("System setting")))
+        theme_store.insert(1, Handy.ValueObject.new(_("Light")))
+        theme_store.insert(2, Handy.ValueObject.new(_("Dark")))
+
+        builder = Gtk.Builder()
+        builder.set_translation_domain(self.domain)
+        builder.add_from_file(resource_path("preferences.ui"))
+
+        prefs = builder.get_object("prefs_window")
+        prefs.set_transient_for(parent)
+
+        langs_combo_row = builder.get_object("langs_combo_row")
+        langs_combo_row.bind_name_model(langs_store, Handy.ValueObject.dup_string)
+        for i, lang in enumerate(langs_store):
+            if lang.get_string() == self.language():
+                langs_combo_row.set_selected_index(i)
+                break
+        langs_combo_row.connect('notify::selected-index', self.on_language_selected, langs_store)
+
+        theme_combo_row = builder.get_object("theme_combo_row")
+        theme_combo_row.bind_name_model(theme_store, Handy.ValueObject.dup_string)
+        theme_combo_row.set_selected_index(self.theme())
+        theme_combo_row.connect('notify::selected-index', self.set_theme)
+        theme_combo_row.connect('notify::selected-index', lambda *args: self.set_color_scheme())
+
+        prefs.show_all()

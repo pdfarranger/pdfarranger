@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="HdyPreferencesWindow" id="prefs_window">
+    <property name="title" translatable="yes">Preferences</property>
+    <property name="search-enabled">False</property>
+    <child>
+      <object class="HdyPreferencesPage">
+        <property name="visible">True</property>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyComboRow" id="langs_combo_row">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Language</property>
+                <property name="subtitle" translatable="yes">Requires restart</property>
+              </object>
+            </child>
+            <child>
+              <object class="HdyComboRow" id="theme_combo_row">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Theme</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
