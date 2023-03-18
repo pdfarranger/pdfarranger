@@ -343,21 +343,16 @@ class BlankPageDialog(BaseDialog):
 
 class PastePageLayerDialog():
 
-    def __init__(self, app, dpage, layer_size, laypos):
+    def __init__(self, app, dpage, lpage, laypos):
         title = _("Overlay") if laypos == "OVERLAY" else _("Underlay")
         self.d = BaseDialog(title, app.window)
         self.app = app
         self.dpage = dpage
-        self.layer_size = layer_size
+        self.lpage = lpage
         self.surface = None
         self.scale = 1
-        self.dwidth = self.dpage.width_in_points()
-        self.dheight = self.dpage.height_in_points()
-
-        self.lwidth = self.layer_size[0]
-        self.lheight = self.layer_size[1]
-        self.spin_scale_x = (self.dwidth - self.lwidth) / 100
-        self.spin_scale_y = (self.dheight - self.lheight) / 100
+        self.spin_scale_x = (self.dpage.width_in_points() - self.lpage.width_in_points()) / 100
+        self.spin_scale_y = (self.dpage.height_in_points() - self.lpage.height_in_points()) / 100
         self.click_pos = 0, 0
         self.spin_val = 0, 0
 
@@ -373,6 +368,10 @@ class PastePageLayerDialog():
         frame = Gtk.Frame(shadow_type=Gtk.ShadowType.IN)
         frame.add(self.area)
         self.d.vbox.pack_start(frame, True, True, 0)
+        t1 = _("Layout for the first page in selection")
+        t2 = _("(same offset is applied to all pages)")
+        label = Gtk.Label(t1 + '\n' + t2, valign=Gtk.Align.START, justify=Gtk.Justification.CENTER)
+        self.d.vbox.pack_start(label, True, True, 0)
 
         self.spin_x = Gtk.SpinButton.new_with_range(0, 100, 1)
         self.spin_x.set_activates_default(True)
@@ -424,10 +423,10 @@ class PastePageLayerDialog():
 
     def motion_notify_event(self, _area, event):
         if event.state & Gdk.ModifierType.BUTTON1_MASK:
-            if self.scale * self.spin_scale_x > 0:
+            if self.scale * self.spin_scale_x != 0:
                 add_x = (event.x - self.click_pos[0]) / (self.scale * self.spin_scale_x)
                 self.spin_x.set_value(self.spin_val[0] + add_x)
-            if self.scale * self.spin_scale_y > 0:
+            if self.scale * self.spin_scale_y != 0:
                 add_y = (event.y - self.click_pos[1]) / (self.scale * self.spin_scale_y)
                 self.spin_y.set_value(self.spin_val[1] + add_y)
             self.draw_page_boxes()
@@ -440,47 +439,57 @@ class PastePageLayerDialog():
     def draw_page_boxes(self):
         """Draw the page and the layer page (overlay/underlay)."""
         cairo_ctx = cairo.Context(self.surface)
+        aw = self.area.get_allocated_width()
+        ah = self.area.get_allocated_height()
 
         # Destination page rectangle
-        dwidth = int(0.5 + self.dpage.width_in_points() * self.scale)
-        dheight = int(0.5 + self.dpage.height_in_points() * self.scale)
-        dx = int(0.5 + (self.area.get_allocated_width() - dwidth) / 2)
-        dy = int(0.5 + (self.area.get_allocated_height() - dheight) / 2)
+        dwf = self.dpage.width_in_points() * self.scale
+        dhf = self.dpage.height_in_points() * self.scale
+        dxf = (aw - dwf) / 2
+        dyf = (ah - dhf) / 2
+        dx = int(0.5 + dxf)
+        dy = int(0.5 + dyf)
+        dw = int(0.5 + dwf + dxf - dx)
+        dh = int(0.5 + dhf + dyf - dy)
 
-        # Draw the page border
-        cairo_ctx.set_source_rgb(0, 0, 0)
-        cairo_ctx.rectangle(dx - 1, dy - 1, dwidth + 2, dheight + 2)
-        cairo_ctx.stroke()
+        # Layer page rectangle
+        lwf = self.lpage.width_in_points() * self.scale
+        lhf = self.lpage.height_in_points() * self.scale
+        lxf = dxf + self.spin_x.get_value() * self.spin_scale_x * self.scale
+        lyf = dyf + self.spin_y.get_value() * self.spin_scale_y * self.scale
+        lx = int(0.5 + dxf + self.spin_x.get_value() * self.spin_scale_x * self.scale)
+        ly = int(0.5 + dyf + self.spin_y.get_value() * self.spin_scale_y * self.scale)
+        lw = int(0.5 + lwf + lxf - lx)
+        lh = int(0.5 + lhf + lyf - ly)
 
         # Fill white paper
         cairo_ctx.set_source_rgb(1, 1, 1)
-        cairo_ctx.rectangle(dx, dy, dwidth, dheight)
+        cairo_ctx.rectangle(dx + 1, dy + 1, dw - 2, dh - 2)
         cairo_ctx.fill()
-
-        # Layer page rectangle
-        lwidth = int(0.5 + self.layer_size[0] * self.scale)
-        lheight = int(0.5 + self.layer_size[1] * self.scale)
-        lx = dx + int(0.5 + self.spin_x.get_value() * self.spin_scale_x * self.scale)
-        ly = dy + int(0.5 + self.spin_y.get_value() * self.spin_scale_y * self.scale)
 
         # Draw layer page border
         cairo_ctx.set_source_rgb(0, 0, 0)
-        cairo_ctx.rectangle(lx, ly, lwidth, lheight)
+        cairo_ctx.rectangle(lx, ly, lw, lh)
         cairo_ctx.stroke()
 
         # Fill the layer page
         cairo_ctx.set_source_rgb(0.5, 0.5, 0.5)
-        cairo_ctx.rectangle(lx + 1, ly + 1, lwidth - 2, lheight - 2)
+        cairo_ctx.rectangle(lx + 1, ly + 1, lw - 2, lh - 2)
         cairo_ctx.fill()
 
+        # Draw the page border
+        cairo_ctx.set_source_rgb(0, 0, 0)
+        cairo_ctx.rectangle(dx, dy, dw, dh)
+        cairo_ctx.stroke()
+
         # Invalidiate region
-        self.area.queue_draw_area(dx - 1, dy - 1, dwidth + 2, dheight + 2)
+        self.area.queue_draw_area(0, 0, aw, ah)
 
     def get_offset(self):
         """Get layer page x and y offset from top-left edge of the destination page.
 
-        The page is rotated as in iconview. The offset is a fraction of the available free space.
-        Available space: destination page width/height - layer page width/height
+        The offset is the fraction of space positioned at left and top of the pasted layer,
+        where space is the differance in width and height between the layer and the page.
         """
         result = self.d.run()
         r = None

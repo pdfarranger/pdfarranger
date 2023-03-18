@@ -1514,71 +1514,77 @@ class PdfArranger(Gtk.Application):
             self.paste_as_layer(data, laypos=pastemode)
 
     def paste_as_layer(self, data, laypos):
-        filename, npage, _basename, angle, scale, crop, layerdata = data[0]
-        doc_data = PageAdder(self).get_pdfdoc(filename)
-        if doc_data is None:
-            return
-        pdfdoc, nfile, _ = doc_data
-        copyname = pdfdoc.copyname
-        size_orig = pdfdoc.get_page(npage - 1).get_size()
-        size = list(size_orig) if angle in [0, 180] else list(reversed(size_orig))
-        lwidth = scale * size[0] * (1 - crop[0] - crop[1])
-        lheight = scale * size[1] * (1 - crop[2] - crop[3])
-        lsize = lwidth, lheight
-
+        page_stack = []
+        pageadder = PageAdder(self)
+        for filename, npage, _basename, angle, scale, crop, layerdata in data:
+            d = [[filename, npage, angle, scale, laypos, crop, [0] * 4]] + layerdata
+            page_stack.append(pageadder.get_layerpages(d))
+            if page_stack is None:
+                return
         selection = self.iconview.get_selected_items()
-        if not self.is_paste_layer_available(lsize, selection, data):
+        if not self.is_paste_layer_available(selection):
             return
         dpage = self.model[selection[-1]][0]
-        offset_fractions = pageutils.PastePageLayerDialog(self, dpage, lsize, laypos).get_offset()
-        if offset_fractions is None:
+        lpage = page_stack[0][0]
+        offset_xy = pageutils.PastePageLayerDialog(self, dpage, lpage, laypos).get_offset()
+        if offset_xy is None:
             return
         self.undomanager.commit("Add Layer")
         self.set_unsaved(True)
 
-        off_x, off_y = offset_fractions  # Fraction of free space at left & top
-        for row in selection:
+        off_x, off_y = offset_xy  # Fraction of the page size differance at left & top
+        for num, row in enumerate(reversed(selection)):
             dpage = self.model[row][0]
-            dc = dpage.crop
+            layerpage_stack = page_stack[num % len(page_stack)]
+
+            # Add the "main" pasted page
+            lp0 = layerpage_stack[0].duplicate()
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
+            scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
+            scaley = (dpage.height_in_points() - lp0.height_in_points()) / dheight
+            lp0.offset[0] = dpage.crop[0] + off_x * scalex
+            lp0.offset[1] = 1 - lp0.offset[0] - lp0.width_in_points() / dwidth
+            lp0.offset[2] = dpage.crop[2] + off_y * scaley
+            lp0.offset[3] = 1 - lp0.offset[2] - lp0.height_in_points() / dheight
+            dpage.layerpages.append(lp0)
 
-            offs_left = dc[0] + off_x * (dpage.width_in_points() - lwidth) / dwidth
-            offs_top = dc[2] + off_y * (dpage.height_in_points() - lheight) / dheight
-            offs_right = 1 - offs_left - lwidth / dwidth
-            offs_bottom = 1 - offs_top - lheight / dheight
-            offset = [offs_left, offs_right, offs_top, offs_bottom]
+            # Add layers from the pasted page
+            nfirst = len(dpage.layerpages) - 1
+            scalex = (lp0.size[0] * lp0.scale) / (dpage.size[0] * dpage.scale)
+            scaley = (lp0.size[1] * lp0.scale) / (dpage.size[1] * dpage.scale)
+            sm1 = [scalex, scalex, scaley, scaley]
+            for lp in layerpage_stack[1:]:
+                lp = lp.duplicate()
+                scalex = (lp0.size[0] * lp0.scale) / (lp.size[0] * lp.scale)
+                scaley = (lp0.size[1] * lp0.scale) / (lp.size[1] * lp.scale)
+                sm2 = [scalex, scalex, scaley, scaley]
+                for i in range(4):  # left, right, top, bottom
+                    # Crop layer area outside of the old parent mediabox
+                    outside = max(0, lp0.crop[i] - lp.offset[i])
+                    lp.crop[i] += outside * sm2[i]
+                    lp.offset[i] += outside
+                    # Recalculate the offset relative to the new destination page
+                    lp.offset[i] = lp0.offset[i] + (lp.offset[i] - lp0.crop[i]) * sm1[i]
+                if lp.crop[0] + lp.crop[1] > 1 or lp.crop[2] + lp.crop[3] > 1:
+                    # The layer is outside of the visible area
+                    continue
+                # Mark as OVERLAY or UNDERLAY and add the layer at right place in stack
+                if lp.laypos != laypos:
+                    lp.laypos = laypos
+                    dpage.layerpages.insert(nfirst, lp)
+                else:
+                    dpage.layerpages.append(lp)
 
-            layerpage = LayerPage(nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig)
-            dpage.layerpages.append(layerpage)
             dpage.resample = -1
         self.render()
 
-    def is_paste_layer_available(self, layer_size, selection, data):
+    def is_paste_layer_available(self, selection):
         if len(selection) == 0:
             return False
-        msg = None
         if not layer_support:
             msg = _("Pikepdf >= 3 is needed for overlay/underlay support.")
-        elif len(data) > 1:
-            msg = _("Only one page can be pasted as overlay/underlay.")
-        elif len(data[0][-1]) > 0:
-            msg = _("A page with overlays/underlays can't be pasted as overlay/underlay.")
-        else:
-            lw, lh = layer_size
-            dpage = self.model[selection[-1]][0]
-            d1w, d1h = dpage.size_in_points()
-            for row in selection:
-                dpage = self.model[row][0]
-                dw, dh = dpage.size_in_points()
-                if lw > dw + 1e-2 or lh > dh + 1e-2:
-                    msg = _("The pasted page is too large.")
-                    break
-                if abs(d1w-dw) > 1e-2 or abs(d1h-dh) > 1e-2:
-                    msg = _("All pages must have the same size.")
-                    break
-        if msg is not None:
             self.error_message_dialog(msg)
-        return msg is None
+        return layer_support
 
     def read_from_clipboard(self):
         """Read and pre-process data from clipboard.

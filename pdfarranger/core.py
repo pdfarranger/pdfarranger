@@ -204,6 +204,14 @@ class LayerPage:
         #: Width and height
         self.size = list(size) if angle in [0, 180] else list(reversed(size))
 
+    def width_in_points(self):
+        """Return the page width in PDF points."""
+        return self.scale * self.size[0] * (1 - self.crop[0] - self.crop[1])
+
+    def height_in_points(self):
+        """Return the page height in PDF points."""
+        return self.scale * self.size[1] * (1 - self.crop[2] - self.crop[3])
+
     @staticmethod
     def rotate_times(angle):
         """Convert an angle in degree to a number of 90° rotation (integer)."""
