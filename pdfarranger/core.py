@@ -470,7 +470,23 @@ class PageAdder:
             doc_added = True
         return pdfdoc, nfile, doc_added
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, layerpages=None):
+    def get_layerpages(self, layerdata):
+        """Create LayerPage objects from layerdata."""
+        layerpages = []
+        if layerdata is None:
+            return layerpages
+        for filename, npage, angle, scale, laypos, crop, offset in layerdata:
+            doc_data = self.get_pdfdoc(filename)
+            if doc_data is None:
+                return None
+            pdfdoc, nfile, _ = doc_data
+            copyname = pdfdoc.copyname
+            size = pdfdoc.get_page(npage - 1).get_size()
+            ld = nfile, npage, copyname, angle, scale, crop, offset, laypos, size
+            layerpages.append(LayerPage(*ld))
+        return layerpages
+
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, layerdata=None):
         crop = [0] * 4 if crop is None else crop
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
@@ -491,12 +507,9 @@ class PageAdder:
         if page != -1:
             n_end = max(n_start, min(n_end, page))
 
-        layerpages = [] if layerpages is None else layerpages
-        for lp in layerpages:
-            doc_data = self.get_pdfdoc(lp.copyname, None)
-            if doc_data is None:
-                return
-            lp.nfile = doc_data[1]
+        layerpages = self.get_layerpages(layerdata)
+        if layerpages is None:
+            return
 
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
