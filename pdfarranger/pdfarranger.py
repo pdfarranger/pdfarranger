@@ -1390,40 +1390,6 @@ class PdfArranger(Gtk.Application):
                 data = h + '\n' + data
         return data
 
-    @staticmethod
-    def data_to_pageadder(data, pageadder):
-        """Data to pageadder."""
-        tmp = data.pop(0).split('\n')
-        filename = tmp[0]
-        npage = int(tmp[1])
-        if len(tmp) < 3:  # Only when paste files interleaved
-            pageadder.addpages(filename, npage)
-        else:
-            basename = tmp[2]
-            angle = int(tmp[3])
-            scale = float(tmp[4])
-            crop = [float(side) for side in tmp[5:9]]
-            layerpages = []
-            i = 9
-            while i < len(tmp):  # If page has overlay/underlay
-                lfilename = tmp[i]
-                lnpage = int(tmp[i + 1])
-                langle = int(tmp[i + 2])
-                lscale = float(tmp[i + 3])
-                laypos = tmp[i + 4]
-                lcrop = [float(side) for side in tmp[i + 5:i + 9]]
-                loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
-                doc_data = pageadder.get_pdfdoc(lfilename)
-                if doc_data is None:
-                    return
-                pdfdoc, lnfile, _ = doc_data
-                lcopyname = pdfdoc.copyname
-                lsize = pdfdoc.get_page(lnpage - 1).get_size()
-                lp = LayerPage(lnfile, lnpage, lcopyname, langle, lscale, lcrop, loffset, laypos, lsize)
-                layerpages.append(lp)
-                i += 13
-            pageadder.addpages(filename, npage, basename, angle, scale, crop, layerpages)
-
     def paste_pages(self, data, before, ref_to, select_added):
         """Paste pages to iconview"""
 
@@ -1433,8 +1399,8 @@ class PdfArranger(Gtk.Application):
         if not before and ref_to:
             data.reverse()
 
-        while data:
-            self.data_to_pageadder(data, pageadder)
+        for d in data:
+            pageadder.addpages(*d)
         return pageadder.commit(select_added, add_to_undomanager=True)
 
     def paste_files(self, filepaths, before, ref_to):
@@ -1457,8 +1423,8 @@ class PdfArranger(Gtk.Application):
         self.undomanager.commit("Paste")
         self.set_unsaved(True)
 
-        while data:
-            self.data_to_pageadder(data, pageadder)
+        for d in data:
+            pageadder.addpages(*d)
 
             pageadder.move(ref_to, before)
             pageadder.commit(select_added=False, add_to_undomanager=False)
@@ -1528,9 +1494,9 @@ class PdfArranger(Gtk.Application):
                             if num_pages is None:
                                 raise PDFDocError(filepath + ':\n' + _('PDF document is damaged'))
                             for page in range(1, num_pages + 1):
-                                filepaths.append('\n'.join([filepath, str(page)]))
+                                filepaths.append((filepath, page))
                         elif filemime.split('/')[0] == 'image':
-                            filepaths.append('\n'.join([filepath, str(1)]))
+                            filepaths.append((filepath, 1))
                         else:
                             raise PDFDocError(filepath + ':\n' + _('File is neither pdf nor image'))
                 except PDFDocError as e:
@@ -1548,12 +1514,7 @@ class PdfArranger(Gtk.Application):
             self.paste_as_layer(data, laypos=pastemode)
 
     def paste_as_layer(self, data, laypos):
-        tmp = data.pop(0).split('\n')
-        filename = tmp[0]
-        npage = int(tmp[1])
-        angle = int(tmp[3])
-        scale = float(tmp[4])
-        crop = [float(side) for side in tmp[5:9]]
+        filename, npage, _basename, angle, scale, crop, layerdata = data[0]
         doc_data = PageAdder(self).get_pdfdoc(filename)
         if doc_data is None:
             return
@@ -1566,7 +1527,7 @@ class PdfArranger(Gtk.Application):
         lsize = lwidth, lheight
 
         selection = self.iconview.get_selected_items()
-        if not self.is_paste_layer_available(lsize, selection, tmp, data):
+        if not self.is_paste_layer_available(lsize, selection, data):
             return
         dpage = self.model[selection[-1]][0]
         offset_fractions = pageutils.PastePageLayerDialog(self, dpage, lsize, laypos).get_offset()
@@ -1592,15 +1553,15 @@ class PdfArranger(Gtk.Application):
             dpage.resample = -1
         self.render()
 
-    def is_paste_layer_available(self, layer_size, selection, d1_data, rest_data):
+    def is_paste_layer_available(self, layer_size, selection, data):
         if len(selection) == 0:
             return False
         msg = None
         if not layer_support:
             msg = _("Pikepdf >= 3 is needed for overlay/underlay support.")
-        elif len(rest_data) > 0:
+        elif len(data) > 1:
             msg = _("Only one page can be pasted as overlay/underlay.")
-        elif len(d1_data) > 9:
+        elif len(data[0][-1]) > 0:
             msg = _("A page with overlays/underlays can't be pasted as overlay/underlay.")
         else:
             lw, lh = layer_size
@@ -1651,7 +1612,7 @@ class PdfArranger(Gtk.Application):
                     data = data.replace(copy_hash + '\n', '', 1)
                     paste_hash = hashlib.sha256(data.encode('utf-8')).hexdigest()
                 if copy_hash is not None and copy_hash == paste_hash:
-                    data = data.split('\n;\n')
+                    data = self.deserialize(data.split('\n;\n'))
                 else:
                     message = _("Pasted data not valid. Aborting paste.")
                     self.error_message_dialog(message)
@@ -1675,6 +1636,36 @@ class PdfArranger(Gtk.Application):
                         break
 
         return data, data_is_filepaths
+
+    @staticmethod
+    def deserialize(data):
+        """Deserialize data from copy & paste or drag & drop operation."""
+        d = []
+        while data:
+            tmp = data.pop(0).split('\n')
+            filename = tmp[0]
+            npage = int(tmp[1])
+            if len(tmp) < 3:  # Only when paste files interleaved
+                d.append((filename, npage))
+            else:
+                basename = tmp[2]
+                angle = int(tmp[3])
+                scale = float(tmp[4])
+                crop = [float(side) for side in tmp[5:9]]
+                layerdata = []
+                i = 9
+                while i < len(tmp):  # If page has overlay/underlay
+                    lfilename = tmp[i]
+                    lnpage = int(tmp[i + 1])
+                    langle = int(tmp[i + 2])
+                    lscale = float(tmp[i + 3])
+                    laypos = tmp[i + 4]
+                    lcrop = [float(side) for side in tmp[i + 5:i + 9]]
+                    loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
+                    layerdata.append([lfilename, lnpage, langle, lscale, laypos, lcrop, loffset])
+                    i += 13
+                d.append((filename, npage, basename, angle, scale, crop, layerdata))
+        return d
 
     def set_paste_location(self, pastemode, data_is_filepaths):
         """Sets reference where pages should be pasted and if before or after that."""
@@ -1825,6 +1816,7 @@ class PdfArranger(Gtk.Application):
             GObject.idle_add(self.render)
 
         elif target == 'MODEL_ROW_EXTERN':
+            data = self.deserialize(data)
             changed = self.paste_pages(data, before, ref_to, select_added=True)
             if changed and context.get_selected_action() & Gdk.DragAction.MOVE:
                 context.finish(True, True, etime)
