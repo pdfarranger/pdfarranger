@@ -433,8 +433,10 @@ class PageAdder:
         nfile = None
         doc_added = False
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
-            if basename is not None and filename == it_pdfdoc.copyname:
-                # File of copy-pasted page was found in pdfqueue
+            if filename == it_pdfdoc.copyname:
+                # File of copy-pasted page was found in pdfqueue.
+                # Files in tmp_dir are never modified by the app and are not expected
+                # to be modified by the user either -> files are equal if names match.
                 pdfdoc = it_pdfdoc
                 nfile = i + 1
                 break
