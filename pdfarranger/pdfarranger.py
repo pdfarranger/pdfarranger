@@ -269,7 +269,7 @@ class PdfArranger(Gtk.Application):
         self.disable_quit = False
         multiprocessing.set_start_method('spawn')
         self.quit_flag = multiprocessing.Event()
-        self.layer_pos = 0, 0
+        self.layer_pos = 50, 50
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
