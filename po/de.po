@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-13 00:51+0100\n"
-"PO-Revision-Date: 2023-01-13 00:59+0100\n"
+"PO-Revision-Date: 2023-04-04 01:43+0200\n"
 "Last-Translator: David Kyburz\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 2.3\n"
 
 #: pdfarranger/config.py:210
 msgid "Preferences"
@@ -72,7 +72,7 @@ msgstr "Das Passwort wird gespeichert, bis PDF Arranger geschlossen wird."
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
-"Das Dokument „{}“ ist gesperrt und ein Passwort wird benötigt, um es zu "
+"Das Dokument »{}« ist gesperrt und ein Passwort wird benötigt, um es zu "
 "öffnen."
 
 #: pdfarranger/core.py:213
@@ -187,11 +187,11 @@ msgstr "Diesen Dialog nicht mehr anzeigen."
 
 #: pdfarranger/exporter.py:373
 msgid "Printing…"
-msgstr "Drucken…"
+msgstr "Drucken …"
 
 #: pdfarranger/exporter.py:385
 msgid "Rendering Preview…"
-msgstr "Vorschau erstellen…"
+msgstr "Vorschau erstellen …"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -243,10 +243,9 @@ msgstr "Wert"
 
 #: pdfarranger/pdfarranger.py:277
 msgid ""
-"PDF Arranger is a small python-gtk application, which helps the user to "
-"merge or split pdf documents and rotate, crop and rearrange their pages "
-"using an interactive and intuitive graphical interface. It is a frontend for "
-"pikepdf."
+"PDF Arranger is a small python-gtk application, which helps the user to merge "
+"or split pdf documents and rotate, crop and rearrange their pages using an "
+"interactive and intuitive graphical interface. It is a frontend for pikepdf."
 msgstr ""
 "PDF Arranger ist eine kleine Python-GTK-Anwendung, die dem Benutzer hilft, "
 "PDF-Dokumente zusammenzuführen oder aufzuteilen und ihre Seiten mit Hilfe "
@@ -312,7 +311,7 @@ msgstr "_Schließen"
 
 #: pdfarranger/pdfarranger.py:975
 msgid "Save changes to “{}” before closing?"
-msgstr "Änderungen an „{}“ vor dem Schließen speichern?"
+msgstr "Änderungen an »{}« vor dem Schließen speichern?"
 
 #: pdfarranger/pdfarranger.py:978
 msgid "Save changes before closing?"
@@ -328,7 +327,7 @@ msgstr "Been_den"
 
 #: pdfarranger/pdfarranger.py:1010
 msgid "Save changes to “{}” before quitting?"
-msgstr "Änderungen an „{}“ vor dem Beenden speichern?"
+msgstr "Änderungen an »{}« vor dem Beenden speichern?"
 
 #: pdfarranger/pdfarranger.py:1013
 msgid "Save changes before quitting?"
@@ -336,7 +335,7 @@ msgstr "Änderungen vor dem Beenden speichern?"
 
 #: pdfarranger/pdfarranger.py:1055
 msgid "Save As…"
-msgstr "Speichern unter…"
+msgstr "Speichern unter …"
 
 #: pdfarranger/pdfarranger.py:1055
 msgid "Export…"
@@ -346,7 +345,7 @@ msgstr "Exportieren …"
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr ""
-"Eine Datei mit dem Namen \"%s\" existiert bereits. Möchten Sie diese ersetzen?"
+"Eine Datei mit dem Namen »%s« existiert bereits. Möchten Sie diese ersetzen?"
 
 #: pdfarranger/pdfarranger.py:1100
 msgid "Replace"
@@ -358,7 +357,7 @@ msgstr "_Öffnen"
 
 #: pdfarranger/pdfarranger.py:1156
 msgid "Open…"
-msgstr "Öffnen…"
+msgstr "Öffnen …"
 
 #: pdfarranger/pdfarranger.py:1217
 msgid "Saving produced some warnings"
@@ -376,7 +375,7 @@ msgstr "Beim erneuten Speichern keine Warnungen anzeigen."
 
 #: pdfarranger/pdfarranger.py:1255
 msgid "Saving…"
-msgstr "Speichern…"
+msgstr "Speichern …"
 
 #: pdfarranger/pdfarranger.py:1294
 msgid "Import…"
@@ -526,7 +525,7 @@ msgstr "_Alle Seiten in Einzeldateien exportieren …"
 
 #: data/menu.ui.h:10
 msgid "_Print…"
-msgstr "_Drucken…"
+msgstr "_Drucken …"
 
 #: data/menu.ui.h:11
 msgid "_Undo"
