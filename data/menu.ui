@@ -121,6 +121,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.split</attribute>
         </item>
         <item>
+          <attribute name="label" translatable="yes">_Merge Pages</attribute>
+          <attribute name="action">win.merge</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">Cu_t</attribute>
           <attribute name="action">win.cut</attribute>
         </item>
@@ -372,6 +376,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <item>
         <attribute name="label" translatable="yes">_Split Pages</attribute>
         <attribute name="action">win.split</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Merge Pages</attribute>
+        <attribute name="action">win.merge</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>

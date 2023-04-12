@@ -62,13 +62,15 @@ def layer_support():
     return layer_support
 
 
-def create_blank_page(tmpdir, size):
+def create_blank_page(tmpdir, size, npages=1):
     """
-    Create a temporary PDF file with a single empty page.
+    Create a temporary PDF file with npages empty pages.
     The size is in PDF unit (1/72 of inch).
     """
     f, filename = make_tmp_file(tmpdir)
     f.add_blank_page(page_size=size)
+    for __ in range(npages - 1):
+        f.pages.append(f.pages[0])
     f.save(filename)
     return filename
 

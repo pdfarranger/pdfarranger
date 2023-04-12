@@ -341,6 +341,95 @@ class BlankPageDialog(BaseDialog):
         return r
 
 
+class MergePagesDialog(BaseDialog):
+
+    def __init__(self, window, size, equal):
+        super().__init__(title=_("Merge Pages"), parent=window)
+        self.size = size
+        self.set_resizable(False)
+        max_margin = int(((14400 - max(*size)) / 2) * 25.4 / 72)
+        self.marg = Gtk.SpinButton.new_with_range(0, max_margin, 1)
+        self.marg.set_activates_default(True)
+        self.marg.connect('value-changed', self.on_sb_value_changed)
+        self.cols = Gtk.SpinButton.new_with_range(1, 2, 1)
+        self.cols.set_activates_default(True)
+        self.cols.connect('value-changed', self.on_sb_value_changed)
+        self.rows = Gtk.SpinButton.new_with_range(1, 1, 1)
+        self.rows.set_activates_default(True)
+        self.rows.connect('value-changed', self.on_sb_value_changed)
+
+        marg_lbl1 = Gtk.Label(_("Margin"), halign=Gtk.Align.START)
+        marg_lbl2 = Gtk.Label(_("mm"), halign=Gtk.Align.START)
+        cols_lbl1 = Gtk.Label(_("Columns"), halign=Gtk.Align.START)
+        rows_lbl1 = Gtk.Label(_("Rows"), halign=Gtk.Align.START)
+        grid1 = Gtk.Grid(column_spacing=12, row_spacing=12, margin=12, halign=Gtk.Align.CENTER)
+        grid1.attach(marg_lbl1, 0, 1, 1, 1)
+        grid1.attach(self.marg, 1, 1, 1, 1)
+        grid1.attach(marg_lbl2, 2, 1, 1, 1)
+        grid1.attach(cols_lbl1, 0, 2, 1, 1)
+        grid1.attach(self.cols, 1, 2, 1, 1)
+        grid1.attach(rows_lbl1, 0, 3, 1, 1)
+        grid1.attach(self.rows, 1, 3, 1, 1)
+        self.vbox.pack_start(grid1, False, False, 8)
+
+        self.hor = Gtk.RadioButton(label=_("Horizontal"), group=None)
+        vrt = Gtk.RadioButton(label=_("Vertical"), group=self.hor)
+        self.l_r = Gtk.RadioButton(label=_("Left to Right"), group=None)
+        r_l = Gtk.RadioButton(label=_("Right to Left"), group=self.l_r)
+        self.t_b = Gtk.RadioButton(label=_("Top to Bottom"), group=None)
+        b_t = Gtk.RadioButton(label=_("Bottom to Top"), group=self.t_b)
+        grid2 = Gtk.Grid(column_spacing=6, row_spacing=12, margin=12, halign=Gtk.Align.CENTER)
+        grid2.attach(self.hor, 0, 1, 1, 1)
+        grid2.attach(vrt, 1, 1, 1, 1)
+        grid2.attach(self.l_r, 0, 2, 1, 1)
+        grid2.attach(r_l, 1, 2, 1, 1)
+        grid2.attach(self.t_b, 0, 3, 1, 1)
+        grid2.attach(b_t, 1, 3, 1, 1)
+        frame1 = Gtk.Frame(label=_("Page Order"), margin=8)
+        frame1.add(grid2)
+        self.vbox.pack_start(frame1, False, False, 0)
+
+        t = "" if equal else _("Non-uniform page size - using max size")
+        warn_lbl = Gtk.Label(t, margin=8, wrap=True, width_chars=36, max_width_chars=36)
+        self.vbox.pack_start(warn_lbl, False, False, 0)
+        self.size_lbl = Gtk.Label(halign=Gtk.Align.CENTER, margin_bottom=16)
+        self.vbox.pack_start(self.size_lbl, False, False, 0)
+        self.show_all()
+
+    def size_with_margin(self):
+        width = self.size[0] + 2 * self.marg.get_value() * 72 / 25.4
+        height = self.size[1] + 2 * self.marg.get_value() * 72 / 25.4
+        return width, height
+
+    def on_sb_value_changed(self, _button):
+        width, height = self.size_with_margin()
+        self.cols.set_range(1, 14400 // width)
+        self.rows.set_range(1, 14400 // height)
+        cols = int(self.cols.get_value())
+        rows = int(self.rows.get_value())
+        width = str(round(cols * width * 25.4 / 72, 1))
+        height = str(round(rows * height * 25.4 / 72, 1))
+        t =  _("Merged page size:") + " " + width + _("mm") + " \u00D7 " + height + _("mm")
+        self.size_lbl.set_label(t)
+
+    def run_get(self):
+        self.cols.set_value(2)
+        result = self.run()
+        if result != Gtk.ResponseType.OK:
+            self.destroy()
+            return None
+        cols = int(self.cols.get_value())
+        rows = int(self.rows.get_value())
+        range_cols = range(cols) if self.l_r.get_active() else range(cols)[::-1]
+        range_rows = range(rows) if self.t_b.get_active() else range(rows)[::-1]
+        if self.hor.get_active():
+            order = [(row, col) for row in range_rows for col in range_cols]
+        else:
+            order = [(row, col) for col in range_cols for row in range_rows]
+        self.destroy()
+        return cols, rows, order, self.size_with_margin()
+
+
 class PastePageLayerDialog():
 
     def __init__(self, app, dpage, lpage, laypos):
