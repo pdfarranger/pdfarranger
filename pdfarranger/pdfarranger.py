@@ -401,6 +401,7 @@ class PdfArranger(Gtk.Application):
             ('undo', self.undomanager.undo),
             ('redo', self.undomanager.redo),
             ('split', self.split_pages),
+            ('merge', self.merge_pages),
             ('metadata', self.edit_metadata),
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
@@ -1511,9 +1512,10 @@ class PdfArranger(Gtk.Application):
             self.update_max_zoom_level()
             self.silent_render()
         elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
-            self.paste_as_layer(data, laypos=pastemode)
+            selection = self.iconview.get_selected_items()
+            self.paste_as_layer(data, selection, laypos=pastemode)
 
-    def paste_as_layer(self, data, laypos):
+    def paste_as_layer(self, data, destination, laypos, offset_xy=None):
         page_stack = []
         pageadder = PageAdder(self)
         for filename, npage, _basename, angle, scale, crop, layerdata in data:
@@ -1521,19 +1523,19 @@ class PdfArranger(Gtk.Application):
             page_stack.append(pageadder.get_layerpages(d))
             if page_stack is None:
                 return
-        selection = self.iconview.get_selected_items()
-        if not self.is_paste_layer_available(selection):
+        if not self.is_paste_layer_available(destination):
             return
-        dpage = self.model[selection[-1]][0]
+        dpage = self.model[destination[-1]][0]
         lpage = page_stack[0][0]
-        offset_xy = pageutils.PastePageLayerDialog(self, dpage, lpage, laypos).get_offset()
         if offset_xy is None:
-            return
-        self.undomanager.commit("Add Layer")
-        self.set_unsaved(True)
+            offset_xy = pageutils.PastePageLayerDialog(self, dpage, lpage, laypos).get_offset()
+            if offset_xy is None:
+                return
+            self.undomanager.commit("Add Layer")
+            self.set_unsaved(True)
 
         off_x, off_y = offset_xy  # Fraction of the page size differance at left & top
-        for num, row in enumerate(reversed(selection)):
+        for num, row in enumerate(reversed(destination)):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
 
@@ -1576,13 +1578,13 @@ class PdfArranger(Gtk.Application):
                     dpage.layerpages.append(lp)
 
             dpage.resample = -1
-        self.render()
+        self.silent_render()
 
     def is_paste_layer_available(self, selection):
         if len(selection) == 0:
             return False
         if not layer_support:
-            msg = _("Pikepdf >= 3 is needed for overlay/underlay support.")
+            msg = _("Pikepdf >= 3 is needed for overlay/underlay/merge support.")
             self.error_message_dialog(msg)
         return layer_support
 
@@ -2108,6 +2110,7 @@ class PdfArranger(Gtk.Application):
             ("cut", ne),
             ("copy", ne),
             ("split", ne),
+            ("merge", ne),
             ("select-same-file", ne),
             ("select-same-format", ne),
             ("crop-white-borders", ne),
@@ -2358,6 +2361,61 @@ class PdfArranger(Gtk.Application):
         self.iv_selection_changed_event()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
+
+    def get_size_info(self, selection):
+        sizes = [self.model[row][0].size_in_points() for row in reversed(selection)]
+        max_width = max(s[0] for s in sizes)
+        min_width = min(s[0] for s in sizes)
+        max_height = max(s[1] for s in sizes)
+        min_height = min(s[1] for s in sizes)
+        equal = max_width == min_width and max_height == min_height
+        return sizes, (max_width, max_height), equal
+
+    def merge_pages(self, _action, _parameter, _unknown):
+        """Merge selected pages."""
+        selection = self.iconview.get_selected_items()
+        if not self.is_paste_layer_available(selection):
+            return
+        data = self.copy_pages(add_hash=False)
+        data = self.deserialize(data.split('\n;\n'))
+        sizes, max_size, equal = self.get_size_info(selection)
+        r = pageutils.MergePagesDialog(self.window, max_size, equal).run_get()
+        if r is None:
+            return
+        cols, rows, add_order, size = r
+        self.undomanager.commit("Merge")
+        self.set_unsaved(True)
+        self.clear_selected()
+
+        ndpage = selection[-1].get_indices()[0]
+        before = ndpage < len(self.model)
+        ref = Gtk.TreeRowReference.new(self.model, selection[-1]) if before else None
+        wdpage, hdpage = size[0] * cols, size[1] * rows
+        ndpages = -(len(data) // -(cols * rows))
+        file = exporter.create_blank_page(self.tmp_dir, (wdpage, hdpage), ndpages)
+        adder = PageAdder(self)
+        adder.move(ref, before)
+        adder.addpages(file)
+        adder.commit(select_added=False, add_to_undomanager=False)
+
+        nlpage = 0
+        while ndpage < len(self.model) and nlpage < len(data):
+            for row, col in add_order:
+                wlpage, hlpage = sizes[nlpage]
+                wdiff, hdiff = wdpage - wlpage, hdpage - hlpage
+                off_x = off_y = 0.5
+                if wdiff != 0:
+                    off_x = (col * wdpage / cols + 0.5 * wdpage / cols - wlpage / 2) / wdiff
+                if hdiff != 0:
+                    off_y = (row * hdpage / rows + 0.5 * hdpage / rows - hlpage / 2) / hdiff
+                dest = self.model[ndpage].path
+                self.paste_as_layer([data[nlpage]], dest, 'OVERLAY', (off_x, off_y))
+                nlpage += 1
+                if nlpage > len(data) - 1:
+                    break
+            ndpage += 1
+        self.update_iconview_geometry()
+        self.update_max_zoom_level()
 
     def edit_metadata(self, _action, _parameter, _unknown):
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
