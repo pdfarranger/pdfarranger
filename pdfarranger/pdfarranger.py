@@ -143,7 +143,7 @@ from . import metadata
 from . import pageutils
 from . import splitter
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
-from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer, LayerPage
+from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
 layer_support = exporter.layer_support()
