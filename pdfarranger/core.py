@@ -146,7 +146,7 @@ class Page:
         r = copy.copy(self)
         r.crop = list(r.crop)
         r.size = list(r.size)
-        r.layerpages = [lp.duplicate(incl_thumbnail) for lp in r.layerpages]
+        r.layerpages = [lp.duplicate() for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
             r.thumbnail = None
@@ -187,7 +187,6 @@ class LayerPage:
     """Page added as overlay or underlay on a Page."""
 
     def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size):
-        self.thumbnail = None
         self.nfile = nfile
         self.npage = npage
         self.copyname = copyname
@@ -242,13 +241,10 @@ class LayerPage:
         ts += list(self.crop) + list(self.offset)
         return "\n".join([str(v) for v in ts])
 
-    def duplicate(self, incl_thumbnail=True):
+    def duplicate(self):
         r = copy.copy(self)
         r.crop = list(r.crop)
         r.offset = list(r.offset)
-        if incl_thumbnail == False:
-            del r.thumbnail  # to save ram
-            r.thumbnail = None
         return r
 
 
