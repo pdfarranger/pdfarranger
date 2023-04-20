@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 03:54+0200\n"
-"PO-Revision-Date: 2023-04-17 04:19+0200\n"
+"PO-Revision-Date: 2023-04-20 05:58+0200\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it\n"
@@ -121,7 +121,7 @@ msgstr "Titolo"
 
 #: pdfarranger/metadata.py:43
 msgid "Subject"
-msgstr "Soggetto"
+msgstr "Oggetto"
 
 #: pdfarranger/metadata.py:44
 msgid "Keywords"
@@ -133,15 +133,15 @@ msgstr "Produttore"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
-msgstr "Creatore"
+msgstr "Autore"
 
 #: pdfarranger/metadata.py:47
 msgid "Creator tool"
-msgstr "Strumento di creazione"
+msgstr "Applicazione"
 
 #: pdfarranger/metadata.py:48
 msgid "Created"
-msgstr "Creato"
+msgstr "Creato il"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -382,17 +382,17 @@ msgstr "Apri…"
 
 #: pdfarranger/pdfarranger.py:1246
 msgid "Saving produced some warnings"
-msgstr "Il salvataggio ha prodotto alcuni avvisi"
+msgstr "Il salvataggio ha prodotto alcuni avvertimenti"
 
 #: pdfarranger/pdfarranger.py:1247
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
-"Nonostante le avvertenze, i documenti non dovrebbero presentare problemi "
-"visibili."
+"Nonostante gli avvertimenti, i documenti non dovrebbero avere problemi"
+" visibili."
 
 #: pdfarranger/pdfarranger.py:1254
 msgid "Don't show warnings when saving again."
-msgstr "Non mostrare avvisi quando si salva di nuovo."
+msgstr "Non mostrare avvertimenti quando salvi di nuovo."
 
 #: pdfarranger/pdfarranger.py:1285
 msgid "Saving…"
@@ -538,11 +538,11 @@ msgstr "E_sporta"
 
 #: data/menu.ui.h:7
 msgid "E_xport Selection to a Single File…"
-msgstr "Es_porta selezione in un singolo file ..."
+msgstr "Es_porta selezione su un singolo file..."
 
 #: data/menu.ui.h:8
 msgid "Export Selection to _Individual Files…"
-msgstr "Esporta selezione in _file singoli..."
+msgstr "Esporta selezione in singoli _file..."
 
 #: data/menu.ui.h:9
 msgid "Export _All Pages to Individual Files…"
