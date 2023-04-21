@@ -1095,12 +1095,13 @@ class PdfArranger(Gtk.Application):
         if len(self.pdfqueue) > 0:
             f = self.save_file or self.pdfqueue[0].filename
             f_dir, basename = os.path.split(f)
+            tempdir = f_dir.startswith(tempfile.gettempdir()) and f_dir.endswith(DOMAIN)
             if exportmode == 'ALL_TO_SINGLE':
-                if f.endswith(".pdf") and f_dir != self.tmp_dir:
+                if f.endswith(".pdf") and not tempdir:
                     chooser.set_filename(f)  # Set name to existing file
             else:
                 shortname, ext = os.path.splitext(basename)
-                if self.export_file is None and f_dir == self.tmp_dir:
+                if self.export_file is None and tempdir:
                     shortname = ""
                 f = self.export_file or shortname + "-000" + ext
                 f = self.get_cnt_filename(f)
