@@ -122,8 +122,9 @@ from .config import Config
 def _set_language_locale():
     lang = Config(DOMAIN).language()
     if os.name == 'nt':
-        if not lang and GLib.get_language_names():
-            lang = GLib.get_language_names()[0]
+        if not lang:
+            winlang = ctypes.windll.kernel32.GetUserDefaultUILanguage()
+            lang = locale.windows_locale[winlang]
         os.environ['LANG'] = lang
     elif lang:
         if locale.getlocale(locale.LC_MESSAGES)[0] is None and lang != 'en':
