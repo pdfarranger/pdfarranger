@@ -68,7 +68,7 @@ sudo dnf install poppler-glib python3-distutils-extra python3-pip python3-gobjec
 
 ```
 sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip devel/py-python-distutils-extra \
-    graphics/poppler-glib textproc/intltool textproc/py-pikepdf x11-toolkits/gtk30 \
+    graphics/poppler-glib textproc/py-pikepdf x11-toolkits/gtk30 \
     x11-toolkits/libhandy
 ```
 
