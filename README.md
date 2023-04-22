@@ -36,7 +36,7 @@ You can change the default keyboard shortcuts. To do so, set `enable_custom` to 
 
 ## Set custom language
 
-Language can be selected in the `Preferences` dialog.
+Language can be selected in the `Preferences` dialog. (PDF Arranger > 1.9.2)
 
 ## Install from source
 
