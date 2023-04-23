@@ -87,6 +87,51 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <attribute name="label" translatable="yes">_Edit</attribute>
       <section>
         <item>
+          <attribute name="label" translatable="yes">_Delete</attribute>
+          <attribute name="action">win.delete</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Cu_t</attribute>
+          <attribute name="action">win.cut</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Copy</attribute>
+          <attribute name="action">win.copy</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste _After</attribute>
+          <attribute name="action">win.paste</attribute>
+          <attribute name="target" type="i">0</attribute>
+        </item>
+        <submenu>
+          <attribute name="label" translatable="yes">Past_e Special</attribute>
+          <item>
+            <attribute name="label" translatable="yes">Paste _Before</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">1</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As _Odd Pages</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">2</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As _Even Pages</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">3</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As O_verlay…</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">4</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Paste As _Underlay…</attribute>
+            <attribute name="action">win.paste</attribute>
+            <attribute name="target" type="i">5</attribute>
+          </item>
+        </submenu>
+        <item>
           <attribute name="label" translatable="yes">Rotate _Left</attribute>
           <attribute name="action">win.rotate</attribute>
           <attribute name="target" type="i">-90</attribute>
@@ -105,10 +150,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.crop-white-borders</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Delete</attribute>
-          <attribute name="action">win.delete</attribute>
-        </item>
-        <item>
           <attribute name="label" translatable="yes">Dupl_icate</attribute>
           <attribute name="action">win.duplicate</attribute>
         </item>
@@ -123,34 +164,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <item>
           <attribute name="label" translatable="yes">_Merge Pages</attribute>
           <attribute name="action">win.merge</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">Cu_t</attribute>
-          <attribute name="action">win.cut</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">_Copy</attribute>
-          <attribute name="action">win.copy</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">Paste _After</attribute>
-          <attribute name="action">win.paste</attribute>
-          <attribute name="target" type="i">0</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">Paste _Before</attribute>
-          <attribute name="action">win.paste</attribute>
-          <attribute name="target" type="i">1</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">Paste As _Odd Pages</attribute>
-          <attribute name="action">win.paste</attribute>
-          <attribute name="target" type="i">2</attribute>
-        </item>
-        <item>
-          <attribute name="label" translatable="yes">Paste As _Even Pages</attribute>
-          <attribute name="action">win.paste</attribute>
-          <attribute name="target" type="i">3</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>
