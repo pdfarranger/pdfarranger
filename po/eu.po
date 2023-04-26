@@ -259,8 +259,8 @@ msgid "Import…"
 msgstr "Inportatu…"
 
 #: data/menu.ui:156 data/menu.ui:385
-msgid "Insert Blan_k Page"
-msgstr "Txertatu orri _zuria"
+msgid "Insert Blan_k Page…"
+msgstr "Txertatu orri _zuria…"
 
 #: pdfarranger/pageutils.py:325
 msgid "Insert Blank Page"
@@ -688,7 +688,7 @@ msgid "_Invert Selection"
 msgstr "_Alderantzikatu hautapena"
 
 #: data/menu.ui:124 data/menu.ui:381
-msgid "_Merge Pages"
+msgid "_Merge Pages…"
 msgstr ""
 
 #: data/menu.ui:36
@@ -704,8 +704,8 @@ msgid "_Open"
 msgstr "_Ireki"
 
 #: data/menu.ui:100 data/menu.ui:361
-msgid "_Page Format"
-msgstr "Orriaren _formatua"
+msgid "_Page Format…"
+msgstr "Orriaren _formatua…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -733,8 +733,8 @@ msgid "_Select"
 msgstr "_Hautatu"
 
 #: data/menu.ui:120 data/menu.ui:377
-msgid "_Split Pages"
-msgstr "_Zatitu orrialdeak"
+msgid "_Split Pages…"
+msgstr "_Zatitu orrialdeak…"
 
 #: data/menu.ui:78
 msgid "_Undo"
