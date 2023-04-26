@@ -252,8 +252,8 @@ msgid "Import…"
 msgstr "Importa…"
 
 #: data/menu.ui:156 data/menu.ui:385
-msgid "Insert Blan_k Page"
-msgstr "Insereix una pàgina en blanc"
+msgid "Insert Blan_k Page…"
+msgstr "Insereix una pàgina en blanc…"
 
 #: pdfarranger/pageutils.py:325
 msgid "Insert Blank Page"
@@ -683,7 +683,7 @@ msgid "_Invert Selection"
 msgstr "Inverteix la selecció"
 
 #: data/menu.ui:124 data/menu.ui:381
-msgid "_Merge Pages"
+msgid "_Merge Pages…"
 msgstr ""
 
 #: data/menu.ui:36
@@ -699,8 +699,8 @@ msgid "_Open"
 msgstr "_Obrir"
 
 #: data/menu.ui:100 data/menu.ui:361
-msgid "_Page Format"
-msgstr "Format de la _pàgina"
+msgid "_Page Format…"
+msgstr "Format de la _pàgina…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -728,8 +728,8 @@ msgid "_Select"
 msgstr "Selecciona"
 
 #: data/menu.ui:120 data/menu.ui:377
-msgid "_Split Pages"
-msgstr "_Divideix les pàgines"
+msgid "_Split Pages…"
+msgstr "_Divideix les pàgines…"
 
 #: data/menu.ui:78
 msgid "_Undo"

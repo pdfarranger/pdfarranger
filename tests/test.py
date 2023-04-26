@@ -359,7 +359,7 @@ class TestBatch1(PdfArrangerTest):
     def test_06_page_format(self):
         self._popupmenu(0, ["Select", "Select Odd Pages"])
         self._assert_selected("1, 3, 5, 7")
-        self._popupmenu(0, "Page Format")
+        self._popupmenu(0, "Page Format…")
         dialog = self._app().child(roleName="dialog")
         croppanel = dialog.child(name="Crop Margins")
         from dogtail import predicate
@@ -381,7 +381,7 @@ class TestBatch1(PdfArrangerTest):
         lbefore = len(self._icons())
         self._popupmenu(0, ["Select", "Select Even Pages"])
         self._assert_selected("2, 4, 6, 8")
-        self._mainmenu(["Edit", "Split Pages"])
+        self._mainmenu(["Edit", "Split Pages…"])
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
@@ -543,7 +543,7 @@ class TestBatch5(PdfArrangerTest):
         self._popupmenu(0, ["Select", "Select All"])
         self._popupmenu(0, ["Crop White Borders"])
         self._scale_selected(150)
-        self._popupmenu(0, ["Insert Blank Page"])
+        self._popupmenu(0, ["Insert Blank Page…"])
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="OK").click()
         self._wait_cond(lambda: len(self._icons()) == 3)

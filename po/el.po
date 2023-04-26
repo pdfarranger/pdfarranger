@@ -261,8 +261,8 @@ msgid "Import…"
 msgstr "Εισαγωγή…"
 
 #: data/menu.ui:156 data/menu.ui:385
-msgid "Insert Blan_k Page"
-msgstr "Εισαγωγή _κενής σελίδας"
+msgid "Insert Blan_k Page…"
+msgstr "Εισαγωγή _κενής σελίδας…"
 
 #: pdfarranger/pageutils.py:325
 msgid "Insert Blank Page"
@@ -693,7 +693,7 @@ msgid "_Invert Selection"
 msgstr "Αντ_ιστροφή επιλογής"
 
 #: data/menu.ui:124 data/menu.ui:381
-msgid "_Merge Pages"
+msgid "_Merge Pages…"
 msgstr ""
 
 #: data/menu.ui:36
@@ -709,8 +709,8 @@ msgid "_Open"
 msgstr "Άν_οιγμα"
 
 #: data/menu.ui:100 data/menu.ui:361
-msgid "_Page Format"
-msgstr "Μορφή _σελίδας"
+msgid "_Page Format…"
+msgstr "Μορφή _σελίδας…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -738,8 +738,8 @@ msgid "_Select"
 msgstr "Επιλο_γή"
 
 #: data/menu.ui:120 data/menu.ui:377
-msgid "_Split Pages"
-msgstr "Διαχωρισμός _σελίδων"
+msgid "_Split Pages…"
+msgstr "Διαχωρισμός _σελίδων…"
 
 #: data/menu.ui:78
 msgid "_Undo"

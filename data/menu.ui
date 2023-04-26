@@ -142,7 +142,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">90</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Page Format</attribute>
+          <attribute name="label" translatable="yes">_Page Format…</attribute>
           <attribute name="action">win.page-format</attribute>
         </item>
         <item>
@@ -158,15 +158,15 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.reverse-order</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Split Pages</attribute>
+          <attribute name="label" translatable="yes">_Split Pages…</attribute>
           <attribute name="action">win.split</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Merge Pages</attribute>
+          <attribute name="label" translatable="yes">_Merge Pages…</attribute>
           <attribute name="action">win.merge</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>
+          <attribute name="label" translatable="yes">Insert Blan_k Page…</attribute>
           <attribute name="action">win.insert-blank-page</attribute>
         </item>
         <item>
@@ -371,7 +371,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="target" type="i">90</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Page Format</attribute>
+        <attribute name="label" translatable="yes">_Page Format…</attribute>
         <attribute name="action">win.page-format</attribute>
       </item>
       <item>
@@ -387,15 +387,15 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="action">win.reverse-order</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Split Pages</attribute>
+        <attribute name="label" translatable="yes">_Split Pages…</attribute>
         <attribute name="action">win.split</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Merge Pages</attribute>
+        <attribute name="label" translatable="yes">_Merge Pages…</attribute>
         <attribute name="action">win.merge</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">Insert Blan_k Page</attribute>
+        <attribute name="label" translatable="yes">Insert Blan_k Page…</attribute>
         <attribute name="action">win.insert-blank-page</attribute>
       </item>
       <item>
