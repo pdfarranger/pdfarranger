@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 18:26+0200\n"
+"POT-Creation-Date: 2023-04-29 22:45+0200\n"
 "PO-Revision-Date: 2023-01-19 20:27+0100\n"
 "Last-Translator: alexgabi\n"
 "Language-Team: Basque\n"
@@ -22,156 +22,86 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: pdfarranger/core.py:87
-msgid "page"
-msgstr "orrialde"
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#Zut"
 
-#: pdfarranger/core.py:191
-msgid "Password required"
-msgstr "Pasahitza beharrezkoa da"
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#Err"
 
-#: pdfarranger/core.py:202
-msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Pasahitza gogoratuko da PDF Arranger itxi arte."
-
-#: pdfarranger/core.py:203
-msgid ""
-"The document “{}” is locked and requires a password before it can be opened."
-msgstr "El documento “{}” requiere una contraseña para abrirlo."
-
-#: pdfarranger/core.py:213
-msgid "Password"
-msgstr "Pasahitza"
-
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1433
-msgid "Unknown file format"
-msgstr "Fitxategi formatu ezezaguna"
-
-#: pdfarranger/core.py:305
-msgid "Image files are only supported with img2pdf"
-msgstr "Irudi-fitxategiak img2pdf-rekin soilik onartzen dira"
-
-#: pdfarranger/core.py:311
-msgid "Image format is not supported by img2pdf"
-msgstr "Irudi formatua ez du onartzen img2pdf-ek"
-
-#: pdfarranger/core.py:314
-msgid "Clipboard image"
-msgstr "Arbeleko irudia"
-
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1443
-msgid "File is neither pdf nor image"
-msgstr "Fitxategia ez da ez pdf ez irudia"
-
-#: pdfarranger/croputils.py:115
-msgid "Scale factor"
-msgstr "Eskala-faktorea"
-
-#: pdfarranger/croputils.py:121
+#: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
+#: pdfarranger/pageutils.py:479
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:137
-msgid "mm"
-msgstr "mm"
-
-#: pdfarranger/croputils.py:147
-msgid "Left"
-msgstr "Ezkerra"
-
-#: pdfarranger/croputils.py:147
-msgid "Right"
-msgstr "Eskuina"
-
-#: pdfarranger/croputils.py:147
-msgid "Top"
-msgstr "Goian"
-
-#: pdfarranger/croputils.py:147
-msgid "Bottom"
-msgstr "Behean"
-
-#: pdfarranger/croputils.py:151
-msgid "Crop Margins"
-msgstr "Moztu marginak"
-
-#: pdfarranger/croputils.py:159
-msgid ""
-"Cropping does not remove any content from the PDF file, it only hides it."
-msgstr ""
-"Mozketak ez du PDF fitxategitik edukirik kentzen, ezkutatzen du soilik."
-
-#: pdfarranger/croputils.py:168
-#, python-format
-msgid "% of width"
-msgstr "zabaleraren %a"
-
-#: pdfarranger/croputils.py:168
+#: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of height"
 msgstr "altueraren %a"
 
-#: pdfarranger/croputils.py:215
-msgid "Page format"
-msgstr "Orriaren formatua"
+#: pdfarranger/pageutils.py:170
+#, python-format
+msgid "% of width"
+msgstr "zabaleraren %a"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:333
-msgid "Width"
-msgstr "Zabalera"
+#: pdfarranger/pdfarranger.py:2548
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s PDF fitxategiak berrantolatzeko eta aldatzeko tresna bat da."
 
-#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
-#: pdfarranger/croputils.py:334
-msgid "Height"
-msgstr "Altuera"
+#: pdfarranger/config.py:232
+msgid "(Libhandy missing)"
+msgstr ""
 
-#: pdfarranger/croputils.py:233
-msgid "Relative"
-msgstr "Erlatiboa"
+#: pdfarranger/config.py:224
+msgid "(Requires restart)"
+msgstr ""
 
-#: pdfarranger/croputils.py:236
-msgid "Page Size"
-msgstr "Orriaren tamaina"
+#: pdfarranger/pageutils.py:461
+msgid "(same offset is applied to all pages)"
+msgstr ""
 
-#: pdfarranger/croputils.py:321
-msgid "Insert Blank Page"
-msgstr "Txertatu orri zuria"
+#: pdfarranger/pdfarranger.py:1130
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr ""
 
-#: pdfarranger/exporter.py:130
-msgid "Warning"
-msgstr "Abisua"
+#: data/menu.ui:189 data/menu.ui:332
+msgid "All From _Same File"
+msgstr "Fitxategi bereko _guztiak"
 
-#: pdfarranger/exporter.py:135
-msgid "Forms and outlines are lost on saving."
-msgstr "Inprimakiak eta eskemak gordetzean galtzen dira."
+#: pdfarranger/pdfarranger.py:507
+msgid "All files"
+msgstr "Fitxategi guztiak"
 
-#: pdfarranger/exporter.py:137
-msgid "Do not show this dialog again."
-msgstr "Ez erakutsi elkarrizketa hau berriro."
+#: pdfarranger/pdfarranger.py:462
+msgid "All pages must have the same size."
+msgstr "Orrialde guztiek tamaina berdina izan behar dute."
 
-#: pdfarranger/exporter.py:342
-msgid "Printing…"
-msgstr "Inprimatzen…"
+#: pdfarranger/pdfarranger.py:495
+msgid "All supported files"
+msgstr "Onartutako irudi formatuak"
 
-#: pdfarranger/exporter.py:354
-msgid "Rendering Preview…"
-msgstr "Aurrebista errendatzen…"
+#: pdfarranger/pageutils.py:149
+msgid "Bottom"
+msgstr "Behean"
 
-#: pdfarranger/metadata.py:42
-msgid "Title"
-msgstr "Izenburua"
+#: pdfarranger/pageutils.py:380
+msgid "Bottom to Top"
+msgstr ""
 
-#: pdfarranger/metadata.py:43
-msgid "Subject"
-msgstr "Gaia"
+#: pdfarranger/core.py:386
+msgid "Clipboard image"
+msgstr "Arbeleko irudia"
 
-#: pdfarranger/metadata.py:44
-msgid "Keywords"
-msgstr "Gako-hitzak"
+#: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "Zutabeak"
 
-#: pdfarranger/metadata.py:45
-msgid "Producer"
-msgstr "Ekoizlea"
+#: pdfarranger/metadata.py:48
+msgid "Created"
+msgstr "Sortua"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
@@ -181,31 +111,231 @@ msgstr "Sortzailea"
 msgid "Creator tool"
 msgstr "Sortzaile tresna"
 
-#: pdfarranger/metadata.py:48
-msgid "Created"
-msgstr "Sortua"
+#: pdfarranger/pageutils.py:153
+msgid "Crop Margins"
+msgstr "Moztu marginak"
 
-#: pdfarranger/metadata.py:49
-msgid "Modified"
-msgstr "Aldatua"
+#: data/menu.ui:104 data/menu.ui:365
+msgid "Crop White Borders"
+msgstr "Moztu ertz zuriak"
 
-#: pdfarranger/metadata.py:169
-msgid "Invalid date format. Input discarded."
-msgstr "Data-formatu baliogabea. Sarrera baztertu da."
+#: pdfarranger/pageutils.py:161
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Mozketak ez du PDF fitxategitik edukirik kentzen, ezkutatzen du soilik."
+
+#: data/menu.ui:128 data/menu.ui:264
+msgid "Cu_t"
+msgstr "_Moztu"
+
+#: pdfarranger/pdfarranger.py:1250
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr "Abisuak izan arren dokumentuek ez lukete arazorik izan behar."
+
+#: pdfarranger/pdfarranger.py:979
+msgid "Discard changes and close?"
+msgstr "Aldaketak baztertu eta itxi?"
+
+#: pdfarranger/pdfarranger.py:1016
+msgid "Discard changes and quit?"
+msgstr "Aldaketak baztertu eta irten?"
+
+#: pdfarranger/exporter.py:194
+msgid "Do not show this dialog again."
+msgstr "Ez erakutsi elkarrizketa hau berriro."
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Do_n’t Save"
+msgstr "E_z gorde"
+
+#: pdfarranger/pdfarranger.py:1257
+msgid "Don't show warnings when saving again."
+msgstr "Ez erakutsi abisurik berriro gordetzean."
+
+#: data/menu.ui:112 data/menu.ui:369
+msgid "Dupl_icate"
+msgstr "B_ikoiztu"
+
+#: data/menu.ui:52 data/menu.ui:395
+msgid "E_xport"
+msgstr "E_sportatu"
+
+#: data/menu.ui:55 data/menu.ui:398
+msgid "E_xport Selection to a Single File…"
+msgstr "E_sportatu aukeraketa fitxategi bakar batera…"
+
+#: data/menu.ui:228
+msgid "Edit _Properties"
+msgstr "Editatu _propietateak"
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Editatu propietateak"
 
-#: pdfarranger/metadata.py:212
-msgid "Property"
-msgstr "Jabetza"
+#: pdfarranger/splitter.py:62
+msgid "Equal column width"
+msgstr "Zutabeen zabalera berdina"
 
-#: pdfarranger/metadata.py:212
-msgid "Value"
-msgstr "Balioa"
+#: pdfarranger/splitter.py:62
+msgid "Equal row height"
+msgstr "Errenkaden altuera berdina"
 
-#: pdfarranger/pdfarranger.py:260
+#: data/menu.ui:60 data/menu.ui:403
+msgid "Export Selection to _Individual Files…"
+msgstr "Esportatu hautapena _banakako fitxategietara…"
+
+#: data/menu.ui:65 data/menu.ui:408
+msgid "Export _All Pages to Individual Files…"
+msgstr "Esportatu _orri guztiak fitxategi indibidualetara…"
+
+#: pdfarranger/pdfarranger.py:1088
+msgid "Export…"
+msgstr "Esportatu…"
+
+#: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
+msgid "File is neither pdf nor image"
+msgstr "Fitxategia ez da ez pdf ez irudia"
+
+#: pdfarranger/pdfarranger.py:301
+msgid "File(s) to open"
+msgstr "Ireki beharreko fitxategia(k)"
+
+#: pdfarranger/config.py:237
+msgid "For more options see:"
+msgstr ""
+
+#: pdfarranger/exporter.py:192
+msgid "Forms and outlines are lost on saving."
+msgstr "Inprimakiak eta eskemak gordetzean galtzen dira."
+
+#: data/menu.ui:221
+msgid "Full_screen"
+msgstr "Pantaila o_soa"
+
+#: pdfarranger/pdfarranger.py:2562
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public License (GPL) 3. bertsioa."
+
+#: data/menu.ui:160 data/menu.ui:389
+msgid "Generate Booklet"
+msgstr "Sortu liburuxka"
+
+#: pdfarranger/pageutils.py:236 pdfarranger/pageutils.py:240
+#: pdfarranger/pageutils.py:328
+msgid "Height"
+msgstr "Altuera"
+
+#: pdfarranger/splitter.py:88
+msgid "Height in %"
+msgstr "Altuera %-tan"
+
+#: pdfarranger/pageutils.py:375
+msgid "Horizontal"
+msgstr ""
+
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "Zati horizontalak"
+
+#: pdfarranger/pageutils.py:476
+msgid "Horizontal offset"
+msgstr ""
+
+#: pdfarranger/core.py:377
+msgid "Image files are only supported with img2pdf"
+msgstr "Irudi-fitxategiak img2pdf-rekin soilik onartzen dira"
+
+#: pdfarranger/core.py:383
+msgid "Image format is not supported by img2pdf"
+msgstr "Irudi formatua ez du onartzen img2pdf-ek"
+
+#: data/pdfarranger.ui:58
+msgid "Import"
+msgstr "Inportatu"
+
+#: pdfarranger/pdfarranger.py:1327
+msgid "Import…"
+msgstr "Inportatu…"
+
+#: data/menu.ui:156 data/menu.ui:385
+msgid "Insert Blan_k Page"
+msgstr "Txertatu orri _zuria"
+
+#: pdfarranger/pageutils.py:325
+msgid "Insert Blank Page"
+msgstr "Txertatu orri zuria"
+
+#: pdfarranger/metadata.py:169
+msgid "Invalid date format. Input discarded."
+msgstr "Data-formatu baliogabea. Sarrera baztertu da."
+
+#: pdfarranger/pdfarranger.py:2551
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Erabiltzen du libqpdf %s, pikepdf %s, GTK %s eta Python %s."
+
+#: pdfarranger/metadata.py:44
+msgid "Keywords"
+msgstr "Gako-hitzak"
+
+#: pdfarranger/config.py:222
+msgid "Language"
+msgstr ""
+
+#: pdfarranger/pageutils.py:460
+msgid "Layout for the first page in selection"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Left"
+msgstr "Ezkerra"
+
+#: pdfarranger/pageutils.py:377
+msgid "Left to Right"
+msgstr ""
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "Menu nagusia"
+
+#: pdfarranger/pdfarranger.py:2557
+msgid "Maintainers and contributors"
+msgstr "Laguntzaileak eta babesleak"
+
+#: pdfarranger/pageutils.py:361
+msgid "Margin"
+msgstr ""
+
+#: pdfarranger/pageutils.py:347
+msgid "Merge Pages"
+msgstr ""
+
+#: pdfarranger/pageutils.py:412
+msgid "Merged page size:"
+msgstr ""
+
+#: pdfarranger/metadata.py:49
+msgid "Modified"
+msgstr "Aldatua"
+
+#: pdfarranger/pageutils.py:392
+msgid "Non-uniform page size - using max size"
+msgstr ""
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "Ireki"
+
+#: pdfarranger/pdfarranger.py:1186
+msgid "Open…"
+msgstr "Ireki…"
+
+#: pdfarranger/pageutils.py:436
+msgid "Overlay"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:282
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -217,408 +347,412 @@ msgstr ""
 "laguntzen diona interfaze grafiko interaktibo eta intuitibo bat erabiliz. "
 "Pikepdf-rako interfaze bat da."
 
-#: pdfarranger/pdfarranger.py:271
-msgid "Print the version of PDF Arranger and exit"
-msgstr "Inprimatu PDF Arranger-en bertsioa eta irten"
-
-#: pdfarranger/pdfarranger.py:279
-msgid "File(s) to open"
-msgstr "Ireki beharreko fitxategia(k)"
-
-#: pdfarranger/pdfarranger.py:428
-msgid "All pages must have the same size."
-msgstr "Orrialde guztiek tamaina berdina izan behar dute."
-
-#: pdfarranger/pdfarranger.py:456
-msgid "All supported files"
-msgstr "Onartutako irudi formatuak"
-
-#: pdfarranger/pdfarranger.py:460
-msgid "PDF files"
-msgstr "PDF fitxategiak"
-
-#: pdfarranger/pdfarranger.py:467
-msgid "All files"
-msgstr "Fitxategi guztiak"
-
-#: pdfarranger/pdfarranger.py:472
-msgid "Supported image files"
-msgstr "Onartutako irudi-fitxategiak"
-
-#: pdfarranger/pdfarranger.py:691
-msgid "Rendering…"
-msgstr "Errendatzen…"
-
-#: pdfarranger/pdfarranger.py:769
-msgid "untitled"
-msgstr "izenbururik gabe"
-
-#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
-msgid "_Cancel"
-msgstr "_Utzi"
-
-#: pdfarranger/pdfarranger.py:924
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Zure aldaketak galduko dira gordetzen ez badituzu."
-
-#: pdfarranger/pdfarranger.py:925
-msgid "Do_n’t Save"
-msgstr "E_z gorde"
-
-#: pdfarranger/pdfarranger.py:925 data/menu.ui.h:4
-msgid "_Save"
-msgstr "_Gorde"
-
-#: pdfarranger/pdfarranger.py:934
-msgid "Discard changes and close?"
-msgstr "Aldaketak baztertu eta itxi?"
-
-#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
-msgid "_Close"
-msgstr "_Itxi"
-
-#: pdfarranger/pdfarranger.py:940
-msgid "Save changes to “{}” before closing?"
-msgstr "Aldaketak “{}”-n gorde nahi dituzu itxi aurretik?"
-
-#: pdfarranger/pdfarranger.py:943
-msgid "Save changes before closing?"
-msgstr "Aldaketak itxi aurretik gorde nahi dituzu?"
-
-#: pdfarranger/pdfarranger.py:968
-msgid "Discard changes and quit?"
-msgstr "Aldaketak baztertu eta irten?"
-
-#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
-msgid "_Quit"
-msgstr "_Irten"
-
-#: pdfarranger/pdfarranger.py:974
-msgid "Save changes to “{}” before quitting?"
-msgstr "Aldaketak “{}”-n gorde nahi dituzu irten aurretik?"
-
-#: pdfarranger/pdfarranger.py:977
-msgid "Save changes before quitting?"
-msgstr "Aldaketak irten aurretik gorde nahi dituzu?"
-
-#: pdfarranger/pdfarranger.py:1019
-msgid "Save As…"
-msgstr "Gorde honela…"
-
-#: pdfarranger/pdfarranger.py:1019
-msgid "Export…"
-msgstr "Esportatu…"
-
-#: pdfarranger/pdfarranger.py:1096
-msgid "Open…"
-msgstr "Ireki…"
-
-#: pdfarranger/pdfarranger.py:1167
-msgid "Saving produced some warnings"
-msgstr "Gordetzeak abisu batzuk sortu ditu"
-
-#: pdfarranger/pdfarranger.py:1168
-msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr "Abisuak izan arren dokumentuek ez lukete arazorik izan behar."
-
-#: pdfarranger/pdfarranger.py:1175
-msgid "Don't show warnings when saving again."
-msgstr "Ez erakutsi abisurik berriro gordetzean."
-
-#: pdfarranger/pdfarranger.py:1205
-msgid "Saving…"
-msgstr "Gordetzen…"
-
-#: pdfarranger/pdfarranger.py:1239
-msgid "Import…"
-msgstr "Inportatu…"
-
-#: pdfarranger/pdfarranger.py:1333
-msgid "Pasted data not valid. Aborting paste."
-msgstr "Itsatsitako datuak baliogabeak dira. Utzi itsastea."
-
-#: pdfarranger/pdfarranger.py:1437
+#: pdfarranger/pdfarranger.py:1498
 msgid "PDF document is damaged"
 msgstr "PDF dokumentua hondatuta dago"
 
-#: pdfarranger/pdfarranger.py:2298
-#, python-format
-msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "%s PDF fitxategiak berrantolatzeko eta aldatzeko tresna bat da."
+#: pdfarranger/pdfarranger.py:499
+msgid "PDF files"
+msgstr "PDF fitxategiak"
 
-#: pdfarranger/pdfarranger.py:2301
-#, python-format
-msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "Erabiltzen du libqpdf %s, pikepdf %s, GTK %s eta Python %s."
+#: pdfarranger/pageutils.py:388
+msgid "Page Order"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:2307
-msgid "Maintainers and contributors"
-msgstr "Laguntzaileak eta babesleak"
+#: pdfarranger/pageutils.py:241
+msgid "Page Size"
+msgstr "Orriaren tamaina"
 
-#: pdfarranger/pdfarranger.py:2312
-msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU General Public License (GPL) 3. bertsioa."
-
-#: pdfarranger/pdfarranger.py:2330
-msgid "Selected pages: "
-msgstr "Hautatutako orrialdeak: "
-
-#: pdfarranger/pdfarranger.py:2335
+#: pdfarranger/pdfarranger.py:2585
 msgid "Page Size:"
 msgstr "Orriaren tamaina:"
+
+#: pdfarranger/pageutils.py:230
+msgid "Page format"
+msgstr "Orriaren formatua"
+
+#: pdfarranger/core.py:285
+msgid "Password"
+msgstr "Pasahitza"
+
+#: pdfarranger/core.py:263
+msgid "Password required"
+msgstr "Pasahitza beharrezkoa da"
+
+#: data/menu.ui:277
+msgid "Past_e Special"
+msgstr "Itsatsi berezia"
+
+#: data/menu.ui:295
+msgid "Paste As O_verlay…"
+msgstr ""
+
+#: data/menu.ui:151 data/menu.ui:290
+msgid "Paste As _Even Pages"
+msgstr "Itsatsi orrialde bikoitia gisa"
+
+#: data/menu.ui:146 data/menu.ui:285
+msgid "Paste As _Odd Pages"
+msgstr "Itsatsi orrialde bakoitia gisa"
+
+#: data/menu.ui:300
+msgid "Paste As _Underlay…"
+msgstr ""
+
+#: data/menu.ui:136 data/menu.ui:272
+msgid "Paste _After"
+msgstr "Itsatsi _ondoren"
+
+#: data/menu.ui:141 data/menu.ui:280
+msgid "Paste _Before"
+msgstr "Itsatsi aurrean"
+
+#: pdfarranger/pdfarranger.py:1627
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Itsatsitako datuak baliogabeak dira. Utzi itsastea."
+
+#: pdfarranger/pdfarranger.py:1589
+msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
+msgstr ""
+
+#: data/menu.ui:234
+msgid "Pre_ferences"
+msgstr ""
+
+#: pdfarranger/config.py:212
+msgid "Preferences"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:293
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Inprimatu PDF Arranger-en bertsioa eta irten"
+
+#: pdfarranger/exporter.py:457
+msgid "Printing…"
+msgstr "Inprimatzen…"
+
+#: pdfarranger/metadata.py:45
+msgid "Producer"
+msgstr "Ekoizlea"
+
+#: pdfarranger/metadata.py:212
+msgid "Property"
+msgstr "Jabetza"
+
+#: data/menu.ui:116 data/menu.ui:373
+msgid "Re_verse Order"
+msgstr "Al_derantzizkatu ordena"
+
+#: pdfarranger/pageutils.py:238
+msgid "Relative"
+msgstr "Erlatiboa"
+
+#: pdfarranger/exporter.py:469
+msgid "Rendering Preview…"
+msgstr "Aurrebista errendatzen…"
+
+#: pdfarranger/pdfarranger.py:732
+msgid "Rendering…"
+msgstr "Errendatzen…"
+
+#: pdfarranger/pdfarranger.py:1132
+msgid "Replace"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Right"
+msgstr "Eskuina"
+
+#: pdfarranger/pageutils.py:378
+msgid "Right to Left"
+msgstr ""
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "Biratu ezkerrera"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "Biratu eskuinera"
+
+#: data/menu.ui:90 data/menu.ui:351
+msgid "Rotate _Left"
+msgstr "Biratu e_zkerrera"
+
+#: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "Errenkadak"
+
+#: data/menu.ui:194 data/menu.ui:337
+msgid "Same Page _Format"
+msgstr "Orrialdeko _formatu bera"
+
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "Gorde"
+
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "Gorde honela"
+
+#: pdfarranger/pdfarranger.py:1088
+msgid "Save As…"
+msgstr "Gorde honela…"
+
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "Gorde _honela…"
+
+#: pdfarranger/pdfarranger.py:988
+msgid "Save changes before closing?"
+msgstr "Aldaketak itxi aurretik gorde nahi dituzu?"
+
+#: pdfarranger/pdfarranger.py:1025
+msgid "Save changes before quitting?"
+msgstr "Aldaketak irten aurretik gorde nahi dituzu?"
+
+#: pdfarranger/pdfarranger.py:985
+msgid "Save changes to “{}” before closing?"
+msgstr "Aldaketak “{}”-n gorde nahi dituzu itxi aurretik?"
+
+#: pdfarranger/pdfarranger.py:1022
+msgid "Save changes to “{}” before quitting?"
+msgstr "Aldaketak “{}”-n gorde nahi dituzu irten aurretik?"
+
+#: pdfarranger/pdfarranger.py:1249
+msgid "Saving produced some warnings"
+msgstr "Gordetzeak abisu batzuk sortu ditu"
+
+#: pdfarranger/pdfarranger.py:1288
+msgid "Saving…"
+msgstr "Gordetzen…"
+
+#: pdfarranger/pageutils.py:116
+msgid "Scale factor"
+msgstr "Eskala-faktorea"
+
+#: data/menu.ui:169 data/menu.ui:312
+msgid "Select _All"
+msgstr "Hautatu _guztiak"
+
+#: data/menu.ui:184 data/menu.ui:327
+msgid "Select _Even Pages"
+msgstr "Hautatu orrialde b_ikoitiak"
+
+#: data/menu.ui:179 data/menu.ui:322
+msgid "Select _Odd Pages"
+msgstr "Hautatu orrialde b_akoitiak"
+
+#: pdfarranger/pdfarranger.py:2580
+msgid "Selected pages: "
+msgstr "Hautatutako orrialdeak: "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
 msgstr "Zatitu orrialdeak"
 
-#: pdfarranger/splitter.py:60
-msgid "Columns"
-msgstr "Zutabeak"
+#: pdfarranger/metadata.py:43
+msgid "Subject"
+msgstr "Gaia"
 
-#: pdfarranger/splitter.py:60
-msgid "Rows"
-msgstr "Errenkadak"
+#: pdfarranger/pdfarranger.py:512
+msgid "Supported image files"
+msgstr "Onartutako irudi-fitxategiak"
+
+#: pdfarranger/config.py:248 pdfarranger/config.py:256
+msgid "System setting"
+msgstr ""
+
+#: pdfarranger/core.py:275
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "El documento “{}” requiere una contraseña para abrirlo."
+
+#: pdfarranger/core.py:274
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Pasahitza gogoratuko da PDF Arranger itxi arte."
+
+#: pdfarranger/config.py:230
+msgid "Theme"
+msgstr ""
+
+#: pdfarranger/metadata.py:42
+msgid "Title"
+msgstr "Izenburua"
+
+#: pdfarranger/pageutils.py:149
+msgid "Top"
+msgstr "Goian"
+
+#: pdfarranger/pageutils.py:379
+msgid "Top to Bottom"
+msgstr ""
+
+#: pdfarranger/pageutils.py:436
+msgid "Underlay"
+msgstr ""
+
+#: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
+msgid "Unknown file format"
+msgstr "Fitxategi formatu ezezaguna"
+
+#: pdfarranger/metadata.py:212
+msgid "Value"
+msgstr "Balioa"
+
+#: pdfarranger/pageutils.py:376
+msgid "Vertical"
+msgstr ""
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Zati bertikalak"
 
-#: pdfarranger/splitter.py:61
-msgid "Horizontal Splits"
-msgstr "Zati horizontalak"
+#: pdfarranger/pageutils.py:478
+msgid "Vertical offset"
+msgstr ""
 
-#: pdfarranger/splitter.py:62
-msgid "Equal column width"
-msgstr "Zutabeen zabalera berdina"
+#: pdfarranger/exporter.py:187
+msgid "Warning"
+msgstr "Abisua"
 
-#: pdfarranger/splitter.py:62
-msgid "Equal row height"
-msgstr "Errenkaden altuera berdina"
-
-#: pdfarranger/splitter.py:87
-msgid "#Col"
-msgstr "#Zut"
-
-#: pdfarranger/splitter.py:87
-msgid "#Row"
-msgstr "#Err"
+#: pdfarranger/pageutils.py:235 pdfarranger/pageutils.py:239
+#: pdfarranger/pageutils.py:327
+msgid "Width"
+msgstr "Zabalera"
 
 #: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Zabalera %-tan"
 
-#: pdfarranger/splitter.py:88
-msgid "Height in %"
-msgstr "Altuera %-tan"
+#: pdfarranger/pdfarranger.py:969
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Zure aldaketak galduko dira gordetzen ez badituzu."
 
-#: data/pdfarranger.ui.h:1
-msgid "Open"
-msgstr "Ireki"
-
-#: data/pdfarranger.ui.h:2
-msgid "Import"
-msgstr "Inportatu"
-
-#: data/pdfarranger.ui.h:3
-msgid "Save"
-msgstr "Gorde"
-
-#: data/pdfarranger.ui.h:4
-msgid "Save As"
-msgstr "Gorde honela"
-
-#: data/pdfarranger.ui.h:5
-msgid "Main Menu"
-msgstr "Menu nagusia"
-
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui:144
 msgid "Zoom In"
 msgstr "Handiagotu"
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui:167
 msgid "Zoom Out"
 msgstr "Txikiagotu"
 
-#: data/pdfarranger.ui.h:8
-msgid "Rotate Left"
-msgstr "Biratu ezkerrera"
-
-#: data/pdfarranger.ui.h:9
-msgid "Rotate Right"
-msgstr "Biratu eskuinera"
-
-#: data/menu.ui.h:1
-msgid "_Open"
-msgstr "_Ireki"
-
-#: data/menu.ui.h:2
-msgid "_Import"
-msgstr "_Inportatu"
-
-#: data/menu.ui.h:3
-msgid "_New Window"
-msgstr "_Leiho berria"
-
-#: data/menu.ui.h:5
-msgid "Save _As…"
-msgstr "Gorde _honela…"
-
-#: data/menu.ui.h:6
-msgid "E_xport"
-msgstr "E_sportatu"
-
-#: data/menu.ui.h:7
-msgid "E_xport Selection to a Single File…"
-msgstr "E_sportatu aukeraketa fitxategi bakar batera…"
-
-#: data/menu.ui.h:8
-msgid "Export Selection to _Individual Files…"
-msgstr "Esportatu hautapena _banakako fitxategietara…"
-
-#: data/menu.ui.h:9
-msgid "Export _All Pages to Individual Files…"
-msgstr "Esportatu _orri guztiak fitxategi indibidualetara…"
-
-#: data/menu.ui.h:10
-msgid "_Print…"
-msgstr "_Inprimatu…"
-
-#: data/menu.ui.h:11
-msgid "_Undo"
-msgstr "_Desegin"
-
-#: data/menu.ui.h:12
-msgid "_Redo"
-msgstr "_Berregin"
-
-#: data/menu.ui.h:13
-msgid "_Edit"
-msgstr "_Editatu"
-
-#: data/menu.ui.h:14
-msgid "Rotate _Left"
-msgstr "Biratu e_zkerrera"
-
-#: data/menu.ui.h:15
-msgid "_Rotate Right"
-msgstr "Biratu e_skuinera"
-
-#: data/menu.ui.h:16
-msgid "_Page Format"
-msgstr "Orriaren _formatua"
-
-#: data/menu.ui.h:17
-msgid "Crop White Borders"
-msgstr "Moztu ertz zuriak"
-
-#: data/menu.ui.h:18
-msgid "_Delete"
-msgstr "_Ezabatu"
-
-#: data/menu.ui.h:19
-msgid "Dupl_icate"
-msgstr "B_ikoiztu"
-
-#: data/menu.ui.h:20
-msgid "Re_verse Order"
-msgstr "Al_derantzizkatu ordena"
-
-#: data/menu.ui.h:21
-msgid "_Split Pages"
-msgstr "_Zatitu orrialdeak"
-
-#: data/menu.ui.h:22
-msgid "Cu_t"
-msgstr "_Moztu"
-
-#: data/menu.ui.h:23
-msgid "_Copy"
-msgstr "_Kopiatu"
-
-#: data/menu.ui.h:24
-msgid "Paste _After"
-msgstr "Itsatsi _ondoren"
-
-#: data/menu.ui.h:25
-msgid "Paste _Before"
-msgstr "Itsatsi aurrean"
-
-#: data/menu.ui.h:26
-msgid "Paste As _Odd Pages"
-msgstr "Itsatsi orrialde bakoitia gisa"
-
-#: data/menu.ui.h:27
-msgid "Paste As _Even Pages"
-msgstr "Itsatsi orrialde bikoitia gisa"
-
-#: data/menu.ui.h:28
-msgid "Insert Blan_k Page"
-msgstr "Txertatu orri _zuria"
-
-#: data/menu.ui.h:29
-msgid "Generate Booklet"
-msgstr "Sortu liburuxka"
-
-#: data/menu.ui.h:30
-msgid "_Select"
-msgstr "_Hautatu"
-
-#: data/menu.ui.h:31
-msgid "Select _All"
-msgstr "Hautatu _guztiak"
-
-#: data/menu.ui.h:32
-msgid "_Deselect All"
-msgstr "_Desautatu guztiak"
-
-#: data/menu.ui.h:33
-msgid "Select _Odd Pages"
-msgstr "Hautatu orrialde b_akoitiak"
-
-#: data/menu.ui.h:34
-msgid "Select _Even Pages"
-msgstr "Hautatu orrialde b_ikoitiak"
-
-#: data/menu.ui.h:35
-msgid "All From _Same File"
-msgstr "Fitxategi bereko _guztiak"
-
-#: data/menu.ui.h:36
-msgid "Same Page _Format"
-msgstr "Orrialdeko _formatu bera"
-
-#: data/menu.ui.h:37
-msgid "_Invert Selection"
-msgstr "_Alderantzikatu hautapena"
-
-#: data/menu.ui.h:38
-msgid "_View"
-msgstr "_Ikusi"
-
-#: data/menu.ui.h:39
-msgid "Zoom _In"
-msgstr "_Handiagotu"
-
-#: data/menu.ui.h:40
-msgid "Zoom _Out"
-msgstr "_Txikiagotu"
-
-#: data/menu.ui.h:41
+#: data/menu.ui:217
 msgid "Zoom _Fit"
 msgstr "_Doitu"
 
-#: data/menu.ui.h:42
-msgid "Full_screen"
-msgstr "Pantaila o_soa"
+#: data/menu.ui:209
+msgid "Zoom _In"
+msgstr "_Handiagotu"
 
-#: data/menu.ui.h:43
-msgid "Edit _Properties"
-msgstr "Editatu _propietateak"
+#: data/menu.ui:213
+msgid "Zoom _Out"
+msgstr "_Txikiagotu"
 
-#: data/menu.ui.h:44
+#: data/menu.ui:240
 msgid "_About"
 msgstr "_Honi buruz"
 
-#: data/menu.ui.h:47
-msgid "Past_e Special"
-msgstr "Itsatsi berezia"
+#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+msgid "_Close"
+msgstr "_Itxi"
+
+#: data/menu.ui:132 data/menu.ui:268
+msgid "_Copy"
+msgstr "_Kopiatu"
+
+#: data/menu.ui:108 data/menu.ui:260
+msgid "_Delete"
+msgstr "_Ezabatu"
+
+#: data/menu.ui:174 data/menu.ui:317
+msgid "_Deselect All"
+msgstr "_Desautatu guztiak"
+
+#: data/menu.ui:87
+msgid "_Edit"
+msgstr "_Editatu"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "_Inportatu"
+
+#: data/menu.ui:199 data/menu.ui:342
+msgid "_Invert Selection"
+msgstr "_Alderantzikatu hautapena"
+
+#: data/menu.ui:124 data/menu.ui:381
+msgid "_Merge Pages"
+msgstr ""
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "_Leiho berria"
+
+#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+msgid "_OK"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
+msgid "_Open"
+msgstr "_Ireki"
+
+#: data/menu.ui:100 data/menu.ui:361
+msgid "_Page Format"
+msgstr "Orriaren _formatua"
+
+#: data/menu.ui:71
+msgid "_Print…"
+msgstr "_Inprimatu…"
+
+#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+msgid "_Quit"
+msgstr "_Irten"
+
+#: data/menu.ui:82
+msgid "_Redo"
+msgstr "_Berregin"
+
+#: data/menu.ui:95 data/menu.ui:356
+msgid "_Rotate Right"
+msgstr "Biratu e_skuinera"
+
+#: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "_Gorde"
+
+#: data/menu.ui:166 data/menu.ui:309
+msgid "_Select"
+msgstr "_Hautatu"
+
+#: data/menu.ui:120 data/menu.ui:377
+msgid "_Split Pages"
+msgstr "_Zatitu orrialdeak"
+
+#: data/menu.ui:78
+msgid "_Undo"
+msgstr "_Desegin"
+
+#: data/menu.ui:206
+msgid "_View"
+msgstr "_Ikusi"
+
+#: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
+#: pdfarranger/pageutils.py:412
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/core.py:89
+msgid "page"
+msgstr "orrialde"
+
+#: pdfarranger/pdfarranger.py:811
+msgid "untitled"
+msgstr "izenbururik gabe"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Arranger 1.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-18 09:23+0300\n"
+"POT-Creation-Date: 2023-04-29 22:45+0200\n"
 "PO-Revision-Date: 2022-05-18 17:30+0300\n"
 "Last-Translator: Manussos Pulinakis <manussos@protonmail.com>\n"
 "Language-Team: \n"
@@ -23,149 +23,86 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: pdfarranger/core.py:87
-msgid "page"
-msgstr "σελίδα"
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#Στήλη"
 
-#: pdfarranger/core.py:191
-msgid "Password required"
-msgstr "Απαιτείται κωδικός"
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#Σειρά"
 
-#: pdfarranger/core.py:202
-msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
-
-#: pdfarranger/core.py:203
-msgid "The document “{}” is locked and requires a password before it can be opened."
-msgstr "Το έγγραφο “{}” είναι κλειδωμένο και απαιτείται κωδικός για το άνοιγμά του."
-
-#: pdfarranger/core.py:213
-msgid "Password"
-msgstr "Κωδικός"
-
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
-msgid "Unknown file format"
-msgstr "Άγνωστη μορφή αρχείου"
-
-#: pdfarranger/core.py:305
-msgid "Image files are only supported with img2pdf"
-msgstr "Τα αρχεία εικόνας υποστηρίζονται μόνο μέσω img2pdf"
-
-#: pdfarranger/core.py:311
-msgid "Image format is not supported by img2pdf"
-msgstr "Η διαμόρφωση του αρχείου εικόνας δεν υποστηρίζεται από το img2pdf"
-
-#: pdfarranger/core.py:313 pdfarranger/pdfarranger.py:1439
-msgid "File is neither pdf nor image"
-msgstr "Το αρχείο δεν είναι ούτε pdf ούτε εικόνα"
-
-#: pdfarranger/croputils.py:115
-msgid "Scale factor"
-msgstr "Συντελεστής κλίμακας"
-
-#: pdfarranger/croputils.py:121
+#: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
+#: pdfarranger/pageutils.py:479
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:137
-msgid "mm"
-msgstr "χιλ"
-
-#: pdfarranger/croputils.py:147
-msgid "Left"
-msgstr "Αριστερά"
-
-#: pdfarranger/croputils.py:147
-msgid "Right"
-msgstr "Δεξιά"
-
-#: pdfarranger/croputils.py:147
-msgid "Top"
-msgstr "Πάνω"
-
-#: pdfarranger/croputils.py:147
-msgid "Bottom"
-msgstr "Κάτω"
-
-#: pdfarranger/croputils.py:151
-msgid "Crop Margins"
-msgstr "Απομάκρυνση περιθωρίων"
-
-#: pdfarranger/croputils.py:159
-msgid "Cropping does not remove any content from the PDF file, it only hides it."
-msgstr "Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
-
-#: pdfarranger/croputils.py:168
-#, python-format
-msgid "% of width"
-msgstr "% του πλάτους"
-
-#: pdfarranger/croputils.py:168
+#: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of height"
 msgstr "% του ύψους"
 
-#: pdfarranger/croputils.py:215
-msgid "Page format"
-msgstr "Μορφοποίηση σελίδας"
+#: pdfarranger/pageutils.py:170
+#, python-format
+msgid "% of width"
+msgstr "% του πλάτους"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:333
-msgid "Width"
-msgstr "Πλάτος"
+#: pdfarranger/pdfarranger.py:2548
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF."
 
-#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
-#: pdfarranger/croputils.py:334
-msgid "Height"
-msgstr "Ύψος"
+#: pdfarranger/config.py:232
+msgid "(Libhandy missing)"
+msgstr ""
 
-#: pdfarranger/croputils.py:233
-msgid "Relative"
-msgstr "Σχετικό"
+#: pdfarranger/config.py:224
+msgid "(Requires restart)"
+msgstr ""
 
-#: pdfarranger/croputils.py:236
-msgid "Page Size"
-msgstr "Μέγεθος σελίδας"
+#: pdfarranger/pageutils.py:461
+msgid "(same offset is applied to all pages)"
+msgstr ""
 
-#: pdfarranger/croputils.py:321
-msgid "Insert Blank Page"
-msgstr "Εισαγωγή κενής σελίδας"
+#: pdfarranger/pdfarranger.py:1130
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr ""
 
-#: pdfarranger/exporter.py:130
-msgid "Warning"
-msgstr "Προειδοποίηση"
+#: data/menu.ui:189 data/menu.ui:332
+msgid "All From _Same File"
+msgstr "Όλε_ς του ίδιου αρχείου"
 
-#: pdfarranger/exporter.py:135
-msgid "Forms and outlines are lost on saving."
-msgstr "Τυγχόν φόρμες και περιθώρια χάνονται κατά την αποθήκευση."
+#: pdfarranger/pdfarranger.py:507
+msgid "All files"
+msgstr "Όλα τα αρχεία"
 
-#: pdfarranger/exporter.py:137
-msgid "Do not show this dialog again."
-msgstr "Να μην ξαναεμφανιστεί αυτό το παράθυρο διαλόγου."
+#: pdfarranger/pdfarranger.py:462
+msgid "All pages must have the same size."
+msgstr "Όλες οι σελίδες πρέπει να έχουν το ίδιο μέγεθος."
 
-#: pdfarranger/exporter.py:339
-msgid "Printing…"
-msgstr "Εκτύπωση…"
+#: pdfarranger/pdfarranger.py:495
+msgid "All supported files"
+msgstr "Όλα τα υποστηριζόμενα αρχεία"
 
-#: pdfarranger/exporter.py:351
-msgid "Rendering Preview…"
-msgstr "Προεπισκόπηση…"
+#: pdfarranger/pageutils.py:149
+msgid "Bottom"
+msgstr "Κάτω"
 
-#: pdfarranger/metadata.py:42
-msgid "Title"
-msgstr "Τίτλος"
+#: pdfarranger/pageutils.py:380
+msgid "Bottom to Top"
+msgstr ""
 
-#: pdfarranger/metadata.py:43
-msgid "Subject"
-msgstr "Θέμα"
+#: pdfarranger/core.py:386
+msgid "Clipboard image"
+msgstr ""
 
-#: pdfarranger/metadata.py:44
-msgid "Keywords"
-msgstr "Λέξεις κλειδιά"
+#: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "Στήλες"
 
-#: pdfarranger/metadata.py:45
-msgid "Producer"
-msgstr "Παραγωγός"
+#: pdfarranger/metadata.py:48
+msgid "Created"
+msgstr "Δημιουργήθηκε"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
@@ -175,444 +112,652 @@ msgstr "Δημιουργός"
 msgid "Creator tool"
 msgstr "Εργαλείο δημιουργίας"
 
-#: pdfarranger/metadata.py:48
-msgid "Created"
-msgstr "Δημιουργήθηκε"
+#: pdfarranger/pageutils.py:153
+msgid "Crop Margins"
+msgstr "Απομάκρυνση περιθωρίων"
 
-#: pdfarranger/metadata.py:49
-msgid "Modified"
-msgstr "Τροποποιήθηκε"
+#: data/menu.ui:104 data/menu.ui:365
+msgid "Crop White Borders"
+msgstr "Περικοπή λευκών περιθωρίων"
 
-#: pdfarranger/metadata.py:169
-msgid "Invalid date format. Input discarded."
-msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+#: pdfarranger/pageutils.py:161
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr ""
+"Η περικοπή δεν αφαιρεί περιεχόμενο από το αρχείο PDF, το αποκρύπτει μόνο."
+
+#: data/menu.ui:128 data/menu.ui:264
+msgid "Cu_t"
+msgstr "Απο_κοπή"
+
+#: pdfarranger/pdfarranger.py:1250
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+"Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχει ορατά προβλήματα."
+
+#: pdfarranger/pdfarranger.py:979
+msgid "Discard changes and close?"
+msgstr "Απόρριψη αλλαγών και κλείσιμο;"
+
+#: pdfarranger/pdfarranger.py:1016
+msgid "Discard changes and quit?"
+msgstr "Απόρριψη αλλαγών και έξοδος;"
+
+#: pdfarranger/exporter.py:194
+msgid "Do not show this dialog again."
+msgstr "Να μην ξαναεμφανιστεί αυτό το παράθυρο διαλόγου."
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Do_n’t Save"
+msgstr "_Χωρίς αποθήκευση"
+
+#: pdfarranger/pdfarranger.py:1257
+msgid "Don't show warnings when saving again."
+msgstr "Να μην εμφανίζονται ειδοποιήσεις κατά την αποθήκευση."
+
+#: data/menu.ui:112 data/menu.ui:369
+msgid "Dupl_icate"
+msgstr "Δ_ιπλότυπο"
+
+#: data/menu.ui:52 data/menu.ui:395
+msgid "E_xport"
+msgstr "Ε_ξαγωγή"
+
+#: data/menu.ui:55 data/menu.ui:398
+msgid "E_xport Selection to a Single File…"
+msgstr "Ε_ξαγωγή επιλογής σε μονό αρχείο…"
+
+#: data/menu.ui:228
+msgid "Edit _Properties"
+msgstr "Επεξεργασία _ιδιοτήτων"
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "Επεξεργασία ιδιοτήτων"
 
-#: pdfarranger/metadata.py:212
-msgid "Property"
-msgstr "Ιδιότητα"
+#: pdfarranger/splitter.py:62
+msgid "Equal column width"
+msgstr "Ίσο πλάτος στήλης"
 
-#: pdfarranger/metadata.py:212
-msgid "Value"
-msgstr "Τιμή"
+#: pdfarranger/splitter.py:62
+msgid "Equal row height"
+msgstr "Ίσο ύψος σειράς"
 
-#: pdfarranger/pdfarranger.py:257
+#: data/menu.ui:60 data/menu.ui:403
+msgid "Export Selection to _Individual Files…"
+msgstr "Εξαγωγή επιλογής σε ξεχωρ_ιστά αρχεία…"
+
+#: data/menu.ui:65 data/menu.ui:408
+msgid "Export _All Pages to Individual Files…"
+msgstr "Εξαγωγή _όλων των σελίδων σε ξεχωριστά αρχεία…"
+
+#: pdfarranger/pdfarranger.py:1088
+msgid "Export…"
+msgstr "Εξαγωγή…"
+
+#: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
+msgid "File is neither pdf nor image"
+msgstr "Το αρχείο δεν είναι ούτε pdf ούτε εικόνα"
+
+#: pdfarranger/pdfarranger.py:301
+msgid "File(s) to open"
+msgstr "Αρχείο/α για άνοιγμα"
+
+#: pdfarranger/config.py:237
+msgid "For more options see:"
+msgstr ""
+
+#: pdfarranger/exporter.py:192
+msgid "Forms and outlines are lost on saving."
+msgstr "Τυγχόν φόρμες και περιθώρια χάνονται κατά την αποθήκευση."
+
+#: data/menu.ui:221
+msgid "Full_screen"
+msgstr "Π_λήρης οθόνη"
+
+#: pdfarranger/pdfarranger.py:2562
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "Γενική Άδεια Δημόσιας Χρήσης GNU (GPL) Έκδοση 3η."
+
+#: data/menu.ui:160 data/menu.ui:389
+msgid "Generate Booklet"
+msgstr "Δημιουργία ένθετου"
+
+#: pdfarranger/pageutils.py:236 pdfarranger/pageutils.py:240
+#: pdfarranger/pageutils.py:328
+msgid "Height"
+msgstr "Ύψος"
+
+#: pdfarranger/splitter.py:88
+msgid "Height in %"
+msgstr "Ύψος σε %"
+
+#: pdfarranger/pageutils.py:375
+msgid "Horizontal"
+msgstr ""
+
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "Οριζόντιοι διαχωρισμοί"
+
+#: pdfarranger/pageutils.py:476
+msgid "Horizontal offset"
+msgstr ""
+
+#: pdfarranger/core.py:377
+msgid "Image files are only supported with img2pdf"
+msgstr "Τα αρχεία εικόνας υποστηρίζονται μόνο μέσω img2pdf"
+
+#: pdfarranger/core.py:383
+msgid "Image format is not supported by img2pdf"
+msgstr "Η διαμόρφωση του αρχείου εικόνας δεν υποστηρίζεται από το img2pdf"
+
+#: data/pdfarranger.ui:58
+msgid "Import"
+msgstr "Εισαγωγή"
+
+#: pdfarranger/pdfarranger.py:1327
+msgid "Import…"
+msgstr "Εισαγωγή…"
+
+#: data/menu.ui:156 data/menu.ui:385
+msgid "Insert Blan_k Page"
+msgstr "Εισαγωγή _κενής σελίδας"
+
+#: pdfarranger/pageutils.py:325
+msgid "Insert Blank Page"
+msgstr "Εισαγωγή κενής σελίδας"
+
+#: pdfarranger/metadata.py:169
+msgid "Invalid date format. Input discarded."
+msgstr "Εσφαλμένη μορφή ημερομηνίας. Η ενέργεια απορρίφθηκε."
+
+#: pdfarranger/pdfarranger.py:2551
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Χρησιμοποιεί τα libqpdf %s, pikepdf %s, GTK %s και Python %s."
+
+#: pdfarranger/metadata.py:44
+msgid "Keywords"
+msgstr "Λέξεις κλειδιά"
+
+#: pdfarranger/config.py:222
+msgid "Language"
+msgstr ""
+
+#: pdfarranger/pageutils.py:460
+msgid "Layout for the first page in selection"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Left"
+msgstr "Αριστερά"
+
+#: pdfarranger/pageutils.py:377
+msgid "Left to Right"
+msgstr ""
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "Κεντρικό μενού"
+
+#: pdfarranger/pdfarranger.py:2557
+msgid "Maintainers and contributors"
+msgstr "Συντηρητές και συνεισφέροντες"
+
+#: pdfarranger/pageutils.py:361
+msgid "Margin"
+msgstr ""
+
+#: pdfarranger/pageutils.py:347
+msgid "Merge Pages"
+msgstr ""
+
+#: pdfarranger/pageutils.py:412
+msgid "Merged page size:"
+msgstr ""
+
+#: pdfarranger/metadata.py:49
+msgid "Modified"
+msgstr "Τροποποιήθηκε"
+
+#: pdfarranger/pageutils.py:392
+msgid "Non-uniform page size - using max size"
+msgstr ""
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "Άνοιγμα"
+
+#: pdfarranger/pdfarranger.py:1186
+msgid "Open…"
+msgstr "Άνοιγμα…"
+
+#: pdfarranger/pageutils.py:436
+msgid "Overlay"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:282
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
-"Το PDF Arranger είναι μια μικρή εφαρμογή, που βοηθά τον χρήστη να συγχωνεύσει ή "
-"να διαχωρίσει αρχεία τύπου PDF καθώς και να περιστρέψει, περικόψει και "
-"αναδιατάξει τις σελίδες τους χρησιμοποιώντας ένα διαδραστικό και διαισθητικό "
-"γραφικό περιβάλλον. Είναι δηλαδή ένα γραφικό περιβάλλον για το pikepdf."
+"Το PDF Arranger είναι μια μικρή εφαρμογή, που βοηθά τον χρήστη να "
+"συγχωνεύσει ή να διαχωρίσει αρχεία τύπου PDF καθώς και να περιστρέψει, "
+"περικόψει και αναδιατάξει τις σελίδες τους χρησιμοποιώντας ένα διαδραστικό "
+"και διαισθητικό γραφικό περιβάλλον. Είναι δηλαδή ένα γραφικό περιβάλλον για "
+"το pikepdf."
 
-#: pdfarranger/pdfarranger.py:268
-msgid "Print the version of PDF Arranger and exit"
-msgstr "Εμφάνιση της έκδοσης του PDF Arranger και έξοδος"
-
-#: pdfarranger/pdfarranger.py:276
-msgid "File(s) to open"
-msgstr "Αρχείο/α για άνοιγμα"
-
-#: pdfarranger/pdfarranger.py:425
-msgid "All pages must have the same size."
-msgstr "Όλες οι σελίδες πρέπει να έχουν το ίδιο μέγεθος."
-
-#: pdfarranger/pdfarranger.py:453
-msgid "All supported files"
-msgstr "Όλα τα υποστηριζόμενα αρχεία"
-
-#: pdfarranger/pdfarranger.py:457
-msgid "PDF files"
-msgstr "Αρχεία PDF"
-
-#: pdfarranger/pdfarranger.py:464
-msgid "All files"
-msgstr "Όλα τα αρχεία"
-
-#: pdfarranger/pdfarranger.py:469
-msgid "Supported image files"
-msgstr "Υποστηριζόμενα αρχεία εικόνας"
-
-#: pdfarranger/pdfarranger.py:687
-msgid "Rendering…"
-msgstr "Σχεδίαση…"
-
-#: pdfarranger/pdfarranger.py:765
-msgid "untitled"
-msgstr "χωρίς τίτλο"
-
-#: pdfarranger/pdfarranger.py:912 pdfarranger/pdfarranger.py:921
-msgid "_Cancel"
-msgstr "_Ακύρωση"
-
-#: pdfarranger/pdfarranger.py:920
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Οι αλλαγές θα χαθούν αν δεν αποθηκεύσετε."
-
-#: pdfarranger/pdfarranger.py:921
-msgid "Do_n’t Save"
-msgstr "_Χωρίς αποθήκευση"
-
-#: pdfarranger/pdfarranger.py:921 data/menu.ui.h:4
-msgid "_Save"
-msgstr "Αποθήκευ_ση"
-
-#: pdfarranger/pdfarranger.py:930
-msgid "Discard changes and close?"
-msgstr "Απόρριψη αλλαγών και κλείσιμο;"
-
-#: pdfarranger/pdfarranger.py:931 data/menu.ui.h:45
-msgid "_Close"
-msgstr "_Κλείσιμο"
-
-#: pdfarranger/pdfarranger.py:936
-msgid "Save changes to “{}” before closing?"
-msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν το κλείσιμο;"
-
-#: pdfarranger/pdfarranger.py:939
-msgid "Save changes before closing?"
-msgstr "Να αποθηκευτούν οι αλλαγές πριν το κλείσιμο;"
-
-#: pdfarranger/pdfarranger.py:964
-msgid "Discard changes and quit?"
-msgstr "Απόρριψη αλλαγών και έξοδος;"
-
-#: pdfarranger/pdfarranger.py:965 data/menu.ui.h:46
-msgid "_Quit"
-msgstr "Έξ_οδος"
-
-#: pdfarranger/pdfarranger.py:970
-msgid "Save changes to “{}” before quitting?"
-msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν την έξοδο;"
-
-#: pdfarranger/pdfarranger.py:973
-msgid "Save changes before quitting?"
-msgstr "Να αποθηκευτούν οι αλλαγές πριν την έξοδο;"
-
-#: pdfarranger/pdfarranger.py:1015
-msgid "Save As…"
-msgstr "Αποθήκευση ως…"
-
-#: pdfarranger/pdfarranger.py:1015
-msgid "Export…"
-msgstr "Εξαγωγή…"
-
-#: pdfarranger/pdfarranger.py:1092
-msgid "Open…"
-msgstr "Άνοιγμα…"
-
-#: pdfarranger/pdfarranger.py:1163
-msgid "Saving produced some warnings"
-msgstr "Η αποθήκευση παρήγαγε ορισμένες προειδοποιήσεις"
-
-#: pdfarranger/pdfarranger.py:1164
-msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr "Παρά τις προειδοποιήσεις, τα έγγραφα δεν πρέπει να έχει ορατά προβλήματα."
-
-#: pdfarranger/pdfarranger.py:1171
-msgid "Don't show warnings when saving again."
-msgstr "Να μην εμφανίζονται ειδοποιήσεις κατά την αποθήκευση."
-
-#: pdfarranger/pdfarranger.py:1201
-msgid "Saving…"
-msgstr "Γίνεται αποθήκευση…"
-
-#: pdfarranger/pdfarranger.py:1235
-msgid "Import…"
-msgstr "Εισαγωγή…"
-
-#: pdfarranger/pdfarranger.py:1329
-msgid "Pasted data not valid. Aborting paste."
-msgstr "Δεδομένα επικόλλησης μη έγκυρα. Η επικόλληση ακυρώθηκε."
-
-#: pdfarranger/pdfarranger.py:1433
+#: pdfarranger/pdfarranger.py:1498
 msgid "PDF document is damaged"
 msgstr "Το έγγραφο PDF είναι κατεστραμένο"
 
-#: pdfarranger/pdfarranger.py:2272
-#, python-format
-msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "Το %s είναι ένα εργαλείο για αναδιάταξη και τροποποίηση αρχείων PDF."
+#: pdfarranger/pdfarranger.py:499
+msgid "PDF files"
+msgstr "Αρχεία PDF"
 
-#: pdfarranger/pdfarranger.py:2275
-#, python-format
-msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "Χρησιμοποιεί τα libqpdf %s, pikepdf %s, GTK %s και Python %s."
+#: pdfarranger/pageutils.py:388
+msgid "Page Order"
+msgstr ""
 
-#: pdfarranger/pdfarranger.py:2281
-msgid "Maintainers and contributors"
-msgstr "Συντηρητές και συνεισφέροντες"
+#: pdfarranger/pageutils.py:241
+msgid "Page Size"
+msgstr "Μέγεθος σελίδας"
 
-#: pdfarranger/pdfarranger.py:2286
-msgid "GNU General Public License (GPL) Version 3."
-msgstr "Γενική Άδεια Δημόσιας Χρήσης GNU (GPL) Έκδοση 3η."
-
-#: pdfarranger/pdfarranger.py:2304
-msgid "Selected pages: "
-msgstr "Επιλεγμένες σελίδες: "
-
-#: pdfarranger/pdfarranger.py:2309
+#: pdfarranger/pdfarranger.py:2585
 msgid "Page Size:"
 msgstr "Μέγεθος σελίδας:"
+
+#: pdfarranger/pageutils.py:230
+msgid "Page format"
+msgstr "Μορφοποίηση σελίδας"
+
+#: pdfarranger/core.py:285
+msgid "Password"
+msgstr "Κωδικός"
+
+#: pdfarranger/core.py:263
+msgid "Password required"
+msgstr "Απαιτείται κωδικός"
+
+#: data/menu.ui:277
+msgid "Past_e Special"
+msgstr "_Ειδική επικόλληση"
+
+#: data/menu.ui:295
+msgid "Paste As O_verlay…"
+msgstr ""
+
+#: data/menu.ui:151 data/menu.ui:290
+msgid "Paste As _Even Pages"
+msgstr "Επικόλληση ως ζυγ_ές σελίδες"
+
+#: data/menu.ui:146 data/menu.ui:285
+msgid "Paste As _Odd Pages"
+msgstr "Επικόλληση ως μ_ονές σελίδες"
+
+#: data/menu.ui:300
+msgid "Paste As _Underlay…"
+msgstr ""
+
+#: data/menu.ui:136 data/menu.ui:272
+msgid "Paste _After"
+msgstr "Επικόλληση μετ_ά"
+
+#: data/menu.ui:141 data/menu.ui:280
+msgid "Paste _Before"
+msgstr "Επικόλληση _πριν"
+
+#: pdfarranger/pdfarranger.py:1627
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Δεδομένα επικόλλησης μη έγκυρα. Η επικόλληση ακυρώθηκε."
+
+#: pdfarranger/pdfarranger.py:1589
+msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
+msgstr ""
+
+#: data/menu.ui:234
+msgid "Pre_ferences"
+msgstr ""
+
+#: pdfarranger/config.py:212
+msgid "Preferences"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:293
+msgid "Print the version of PDF Arranger and exit"
+msgstr "Εμφάνιση της έκδοσης του PDF Arranger και έξοδος"
+
+#: pdfarranger/exporter.py:457
+msgid "Printing…"
+msgstr "Εκτύπωση…"
+
+#: pdfarranger/metadata.py:45
+msgid "Producer"
+msgstr "Παραγωγός"
+
+#: pdfarranger/metadata.py:212
+msgid "Property"
+msgstr "Ιδιότητα"
+
+#: data/menu.ui:116 data/menu.ui:373
+msgid "Re_verse Order"
+msgstr "Αναστρο_φή σειράς"
+
+#: pdfarranger/pageutils.py:238
+msgid "Relative"
+msgstr "Σχετικό"
+
+#: pdfarranger/exporter.py:469
+msgid "Rendering Preview…"
+msgstr "Προεπισκόπηση…"
+
+#: pdfarranger/pdfarranger.py:732
+msgid "Rendering…"
+msgstr "Σχεδίαση…"
+
+#: pdfarranger/pdfarranger.py:1132
+msgid "Replace"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Right"
+msgstr "Δεξιά"
+
+#: pdfarranger/pageutils.py:378
+msgid "Right to Left"
+msgstr ""
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "Περιστροφή αριστερά"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "Περιστροφή δεξιά"
+
+#: data/menu.ui:90 data/menu.ui:351
+msgid "Rotate _Left"
+msgstr "Περιστροφή _αριστερά"
+
+#: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "Σειρές"
+
+#: data/menu.ui:194 data/menu.ui:337
+msgid "Same Page _Format"
+msgstr "Ίδια μορ_φή σελίδας"
+
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "Αποθήκευση ως"
+
+#: pdfarranger/pdfarranger.py:1088
+msgid "Save As…"
+msgstr "Αποθήκευση ως…"
+
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "_Αποθήκευση ως…"
+
+#: pdfarranger/pdfarranger.py:988
+msgid "Save changes before closing?"
+msgstr "Να αποθηκευτούν οι αλλαγές πριν το κλείσιμο;"
+
+#: pdfarranger/pdfarranger.py:1025
+msgid "Save changes before quitting?"
+msgstr "Να αποθηκευτούν οι αλλαγές πριν την έξοδο;"
+
+#: pdfarranger/pdfarranger.py:985
+msgid "Save changes to “{}” before closing?"
+msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν το κλείσιμο;"
+
+#: pdfarranger/pdfarranger.py:1022
+msgid "Save changes to “{}” before quitting?"
+msgstr "Να αποθηκευτούν οι αλλαγές στο “{}” πριν την έξοδο;"
+
+#: pdfarranger/pdfarranger.py:1249
+msgid "Saving produced some warnings"
+msgstr "Η αποθήκευση παρήγαγε ορισμένες προειδοποιήσεις"
+
+#: pdfarranger/pdfarranger.py:1288
+msgid "Saving…"
+msgstr "Γίνεται αποθήκευση…"
+
+#: pdfarranger/pageutils.py:116
+msgid "Scale factor"
+msgstr "Συντελεστής κλίμακας"
+
+#: data/menu.ui:169 data/menu.ui:312
+msgid "Select _All"
+msgstr "Επιλογή ό_λων"
+
+#: data/menu.ui:184 data/menu.ui:327
+msgid "Select _Even Pages"
+msgstr "_Επιλογή ζυγών σελίδων"
+
+#: data/menu.ui:179 data/menu.ui:322
+msgid "Select _Odd Pages"
+msgstr "Επιλογή μ_ονών σελίδων"
+
+#: pdfarranger/pdfarranger.py:2580
+msgid "Selected pages: "
+msgstr "Επιλεγμένες σελίδες: "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
 msgstr "Διαχωρισμός σελίδων"
 
-#: pdfarranger/splitter.py:58
-msgid "Columns"
-msgstr "Στήλες"
+#: pdfarranger/metadata.py:43
+msgid "Subject"
+msgstr "Θέμα"
 
-#: pdfarranger/splitter.py:58
-msgid "Rows"
-msgstr "Σειρές"
+#: pdfarranger/pdfarranger.py:512
+msgid "Supported image files"
+msgstr "Υποστηριζόμενα αρχεία εικόνας"
 
-#: pdfarranger/splitter.py:59
+#: pdfarranger/config.py:248 pdfarranger/config.py:256
+msgid "System setting"
+msgstr ""
+
+#: pdfarranger/core.py:275
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr ""
+"Το έγγραφο “{}” είναι κλειδωμένο και απαιτείται κωδικός για το άνοιγμά του."
+
+#: pdfarranger/core.py:274
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr ""
+"Ο κωδικός θα παραμείνει αποθηκευμένος μέχρι να κλείσετε το PDF Arranger."
+
+#: pdfarranger/config.py:230
+msgid "Theme"
+msgstr ""
+
+#: pdfarranger/metadata.py:42
+msgid "Title"
+msgstr "Τίτλος"
+
+#: pdfarranger/pageutils.py:149
+msgid "Top"
+msgstr "Πάνω"
+
+#: pdfarranger/pageutils.py:379
+msgid "Top to Bottom"
+msgstr ""
+
+#: pdfarranger/pageutils.py:436
+msgid "Underlay"
+msgstr ""
+
+#: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
+msgid "Unknown file format"
+msgstr "Άγνωστη μορφή αρχείου"
+
+#: pdfarranger/metadata.py:212
+msgid "Value"
+msgstr "Τιμή"
+
+#: pdfarranger/pageutils.py:376
+msgid "Vertical"
+msgstr ""
+
+#: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
 msgstr "Κάθετοι διαχωρισμοί"
 
-#: pdfarranger/splitter.py:59
-msgid "Horizontal Splits"
-msgstr "Οριζόντιοι διαχωρισμοί"
+#: pdfarranger/pageutils.py:478
+msgid "Vertical offset"
+msgstr ""
 
-#: pdfarranger/splitter.py:60
-msgid "Equal column width"
-msgstr "Ίσο πλάτος στήλης"
+#: pdfarranger/exporter.py:187
+msgid "Warning"
+msgstr "Προειδοποίηση"
 
-#: pdfarranger/splitter.py:60
-msgid "Equal row height"
-msgstr "Ίσο ύψος σειράς"
+#: pdfarranger/pageutils.py:235 pdfarranger/pageutils.py:239
+#: pdfarranger/pageutils.py:327
+msgid "Width"
+msgstr "Πλάτος"
 
-#: pdfarranger/splitter.py:85
-msgid "#Col"
-msgstr "#Στήλη"
-
-#: pdfarranger/splitter.py:85
-msgid "#Row"
-msgstr "#Σειρά"
-
-#: pdfarranger/splitter.py:86
+#: pdfarranger/splitter.py:88
 msgid "Width in %"
 msgstr "Πλάτος σε %"
 
-#: pdfarranger/splitter.py:86
-msgid "Height in %"
-msgstr "Ύψος σε %"
+#: pdfarranger/pdfarranger.py:969
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Οι αλλαγές θα χαθούν αν δεν αποθηκεύσετε."
 
-#: data/pdfarranger.ui.h:1
-msgid "Open"
-msgstr "Άνοιγμα"
-
-#: data/pdfarranger.ui.h:2
-msgid "Import"
-msgstr "Εισαγωγή"
-
-#: data/pdfarranger.ui.h:3
-msgid "Save"
-msgstr "Αποθήκευση"
-
-#: data/pdfarranger.ui.h:4
-msgid "Save As"
-msgstr "Αποθήκευση ως"
-
-#: data/pdfarranger.ui.h:5
-msgid "Main Menu"
-msgstr "Κεντρικό μενού"
-
-#: data/pdfarranger.ui.h:6
+#: data/pdfarranger.ui:144
 msgid "Zoom In"
 msgstr "Μεγέθυνση"
 
-#: data/pdfarranger.ui.h:7
+#: data/pdfarranger.ui:167
 msgid "Zoom Out"
 msgstr "Σμίκρυνση"
 
-#: data/pdfarranger.ui.h:8
-msgid "Rotate Left"
-msgstr "Περιστροφή αριστερά"
-
-#: data/pdfarranger.ui.h:9
-msgid "Rotate Right"
-msgstr "Περιστροφή δεξιά"
-
-#: data/menu.ui.h:1
-msgid "_Open"
-msgstr "Άν_οιγμα"
-
-#: data/menu.ui.h:2
-msgid "_Import"
-msgstr "Ε_ισαγωγή"
-
-#: data/menu.ui.h:3
-msgid "_New Window"
-msgstr "_Νέο παράθυρο"
-
-#: data/menu.ui.h:5
-msgid "Save _As…"
-msgstr "_Αποθήκευση ως…"
-
-#: data/menu.ui.h:6
-msgid "E_xport"
-msgstr "Ε_ξαγωγή"
-
-#: data/menu.ui.h:7
-msgid "E_xport Selection to a Single File…"
-msgstr "Ε_ξαγωγή επιλογής σε μονό αρχείο…"
-
-#: data/menu.ui.h:8
-msgid "Export Selection to _Individual Files…"
-msgstr "Εξαγωγή επιλογής σε ξεχωρ_ιστά αρχεία…"
-
-#: data/menu.ui.h:9
-msgid "Export _All Pages to Individual Files…"
-msgstr "Εξαγωγή _όλων των σελίδων σε ξεχωριστά αρχεία…"
-
-#: data/menu.ui.h:10
-msgid "_Print…"
-msgstr "Εκτύ_πωση…"
-
-#: data/menu.ui.h:11
-msgid "_Undo"
-msgstr "Αναί_ρεση"
-
-#: data/menu.ui.h:12
-msgid "_Redo"
-msgstr "Επανάλη_ψη"
-
-#: data/menu.ui.h:13
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: data/menu.ui.h:14
-msgid "Rotate _Left"
-msgstr "Περιστροφή _αριστερά"
-
-#: data/menu.ui.h:15
-msgid "_Rotate Right"
-msgstr "_Περιστροφή δεξιά"
-
-#: data/menu.ui.h:16
-msgid "_Page Format"
-msgstr "Μορφή _σελίδας"
-
-#: data/menu.ui.h:17
-msgid "Crop White Borders"
-msgstr "Περικοπή λευκών περιθωρίων"
-
-#: data/menu.ui.h:18
-msgid "_Delete"
-msgstr "_Διαγραφή"
-
-#: data/menu.ui.h:19
-msgid "Dupl_icate"
-msgstr "Δ_ιπλότυπο"
-
-#: data/menu.ui.h:20
-msgid "Re_verse Order"
-msgstr "Αναστρο_φή σειράς"
-
-#: data/menu.ui.h:21
-msgid "_Split Pages"
-msgstr "Διαχωρισμός _σελίδων"
-
-#: data/menu.ui.h:22
-msgid "Cu_t"
-msgstr "Απο_κοπή"
-
-#: data/menu.ui.h:23
-msgid "_Copy"
-msgstr "Αντι_γραφή"
-
-#: data/menu.ui.h:24
-msgid "Paste _After"
-msgstr "Επικόλληση μετ_ά"
-
-#: data/menu.ui.h:25
-msgid "Paste _Before"
-msgstr "Επικόλληση _πριν"
-
-#: data/menu.ui.h:26
-msgid "Paste As _Odd Pages"
-msgstr "Επικόλληση ως μ_ονές σελίδες"
-
-#: data/menu.ui.h:27
-msgid "Paste As _Even Pages"
-msgstr "Επικόλληση ως ζυγ_ές σελίδες"
-
-#: data/menu.ui.h:28
-msgid "Insert Blan_k Page"
-msgstr "Εισαγωγή _κενής σελίδας"
-
-#: data/menu.ui.h:29
-msgid "Generate Booklet"
-msgstr "Δημιουργία ένθετου"
-
-#: data/menu.ui.h:30
-msgid "_Select"
-msgstr "Επιλο_γή"
-
-#: data/menu.ui.h:31
-msgid "Select _All"
-msgstr "Επιλογή ό_λων"
-
-#: data/menu.ui.h:32
-msgid "_Deselect All"
-msgstr "_Αποεπιλογή όλων"
-
-#: data/menu.ui.h:33
-msgid "Select _Odd Pages"
-msgstr "Επιλογή μ_ονών σελίδων"
-
-#: data/menu.ui.h:34
-msgid "Select _Even Pages"
-msgstr "_Επιλογή ζυγών σελίδων"
-
-#: data/menu.ui.h:35
-msgid "All From _Same File"
-msgstr "Όλε_ς του ίδιου αρχείου"
-
-#: data/menu.ui.h:36
-msgid "Same Page _Format"
-msgstr "Ίδια μορ_φή σελίδας"
-
-#: data/menu.ui.h:37
-msgid "_Invert Selection"
-msgstr "Αντ_ιστροφή επιλογής"
-
-#: data/menu.ui.h:38
-msgid "_View"
-msgstr "Προ_βολή"
-
-#: data/menu.ui.h:39
-msgid "Zoom _In"
-msgstr "_Μεγέθυνση"
-
-#: data/menu.ui.h:40
-msgid "Zoom _Out"
-msgstr "_Σμίκρυνση"
-
-#: data/menu.ui.h:41
+#: data/menu.ui:217
 msgid "Zoom _Fit"
 msgstr "Προσαρμο_γή"
 
-#: data/menu.ui.h:42
-msgid "Full_screen"
-msgstr "Π_λήρης οθόνη"
+#: data/menu.ui:209
+msgid "Zoom _In"
+msgstr "_Μεγέθυνση"
 
-#: data/menu.ui.h:43
-msgid "Edit _Properties"
-msgstr "Επεξεργασία _ιδιοτήτων"
+#: data/menu.ui:213
+msgid "Zoom _Out"
+msgstr "_Σμίκρυνση"
 
-#: data/menu.ui.h:44
+#: data/menu.ui:240
 msgid "_About"
 msgstr "Σ_χετικά"
 
-#: data/menu.ui.h:47
-msgid "Past_e Special"
-msgstr "_Ειδική επικόλληση"
+#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
+msgid "_Cancel"
+msgstr "_Ακύρωση"
+
+#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+msgid "_Close"
+msgstr "_Κλείσιμο"
+
+#: data/menu.ui:132 data/menu.ui:268
+msgid "_Copy"
+msgstr "Αντι_γραφή"
+
+#: data/menu.ui:108 data/menu.ui:260
+msgid "_Delete"
+msgstr "_Διαγραφή"
+
+#: data/menu.ui:174 data/menu.ui:317
+msgid "_Deselect All"
+msgstr "_Αποεπιλογή όλων"
+
+#: data/menu.ui:87
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "Ε_ισαγωγή"
+
+#: data/menu.ui:199 data/menu.ui:342
+msgid "_Invert Selection"
+msgstr "Αντ_ιστροφή επιλογής"
+
+#: data/menu.ui:124 data/menu.ui:381
+msgid "_Merge Pages"
+msgstr ""
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "_Νέο παράθυρο"
+
+#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+msgid "_OK"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
+msgid "_Open"
+msgstr "Άν_οιγμα"
+
+#: data/menu.ui:100 data/menu.ui:361
+msgid "_Page Format"
+msgstr "Μορφή _σελίδας"
+
+#: data/menu.ui:71
+msgid "_Print…"
+msgstr "Εκτύ_πωση…"
+
+#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+msgid "_Quit"
+msgstr "Έξ_οδος"
+
+#: data/menu.ui:82
+msgid "_Redo"
+msgstr "Επανάλη_ψη"
+
+#: data/menu.ui:95 data/menu.ui:356
+msgid "_Rotate Right"
+msgstr "_Περιστροφή δεξιά"
+
+#: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "Αποθήκευ_ση"
+
+#: data/menu.ui:166 data/menu.ui:309
+msgid "_Select"
+msgstr "Επιλο_γή"
+
+#: data/menu.ui:120 data/menu.ui:377
+msgid "_Split Pages"
+msgstr "Διαχωρισμός _σελίδων"
+
+#: data/menu.ui:78
+msgid "_Undo"
+msgstr "Αναί_ρεση"
+
+#: data/menu.ui:206
+msgid "_View"
+msgstr "Προ_βολή"
+
+#: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
+#: pdfarranger/pageutils.py:412
+msgid "mm"
+msgstr "χιλ"
+
+#: pdfarranger/core.py:89
+msgid "page"
+msgstr "σελίδα"
+
+#: pdfarranger/pdfarranger.py:811
+msgid "untitled"
+msgstr "χωρίς τίτλο"
