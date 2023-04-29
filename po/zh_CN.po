@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-23 18:00+0200\n"
+"POT-Creation-Date: 2023-04-29 22:45+0200\n"
 "PO-Revision-Date: 2014-11-05 07:31+0000\n"
 "Last-Translator: Dean Lee <xslidian@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
@@ -20,155 +20,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: pdfarranger/core.py:87
-msgid "page"
-msgstr "页面"
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#Col"
 
-#: pdfarranger/core.py:191
-msgid "Password required"
-msgstr "需要密码"
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#Row"
 
-#: pdfarranger/core.py:202
-msgid "The password will be remembered until you close PDF Arranger."
-msgstr "密码将被记住，直到您关闭 PDF Arranger。"
-
-#: pdfarranger/core.py:203
-msgid ""
-"The document “{}” is locked and requires a password before it can be opened."
-msgstr "文档“{}”被锁定，需要密码才能打开。"
-
-#: pdfarranger/core.py:213
-msgid "Password"
-msgstr "密码"
-
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
-msgid "Unknown file format"
-msgstr "未知文件格式"
-
-#: pdfarranger/core.py:305
-msgid "Image files are only supported with img2pdf"
-msgstr "图像文件仅支持 img2pdf"
-
-#: pdfarranger/core.py:311
-msgid "Image format is not supported by img2pdf"
-msgstr "img2pdf 不支持图片格式"
-
-#: pdfarranger/core.py:314
-msgid "Clipboard image"
-msgstr "剪贴板图像"
-
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
-msgid "File is neither pdf nor image"
-msgstr "文件既不是 PDF 也不是图像"
-
-#: pdfarranger/croputils.py:115
-msgid "Scale factor"
-msgstr "比例因子"
-
-#: pdfarranger/croputils.py:121
+#: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
+#: pdfarranger/pageutils.py:479
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:137
-msgid "mm"
-msgstr "mm"
-
-#: pdfarranger/croputils.py:147
-msgid "Left"
-msgstr "左边"
-
-#: pdfarranger/croputils.py:147
-msgid "Right"
-msgstr "右边"
-
-#: pdfarranger/croputils.py:147
-msgid "Top"
-msgstr "顶部"
-
-#: pdfarranger/croputils.py:147
-msgid "Bottom"
-msgstr "底部"
-
-#: pdfarranger/croputils.py:151
-msgid "Crop Margins"
-msgstr "裁剪边距"
-
-#: pdfarranger/croputils.py:159
-msgid ""
-"Cropping does not remove any content from the PDF file, it only hides it."
-msgstr "裁剪不会从 PDF 文件中删除任何内容，只会将其隐藏。"
-
-#: pdfarranger/croputils.py:168
-#, python-format
-msgid "% of width"
-msgstr "% 宽度"
-
-#: pdfarranger/croputils.py:168
+#: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of height"
 msgstr "% 高度"
 
-#: pdfarranger/croputils.py:215
-msgid "Page format"
-msgstr "页面格式"
+#: pdfarranger/pageutils.py:170
+#, python-format
+msgid "% of width"
+msgstr "% 宽度"
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:333
-msgid "Width"
-msgstr "宽度"
+#: pdfarranger/pdfarranger.py:2548
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s 是用于重新排列和修改 PDF 文件的工具。"
 
-#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
-#: pdfarranger/croputils.py:334
-msgid "Height"
-msgstr "高度"
+#: pdfarranger/config.py:232
+msgid "(Libhandy missing)"
+msgstr ""
 
-#: pdfarranger/croputils.py:233
-msgid "Relative"
-msgstr "相对"
+#: pdfarranger/config.py:224
+msgid "(Requires restart)"
+msgstr ""
 
-#: pdfarranger/croputils.py:236
-msgid "Page Size"
-msgstr "页面大小"
+#: pdfarranger/pageutils.py:461
+msgid "(same offset is applied to all pages)"
+msgstr ""
 
-#: pdfarranger/croputils.py:321
-msgid "Insert Blank Page"
-msgstr "插入空白页面"
+#: pdfarranger/pdfarranger.py:1130
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr ""
 
-#: pdfarranger/exporter.py:130
-msgid "Warning"
-msgstr "警告"
+#: data/menu.ui:189 data/menu.ui:332
+msgid "All From _Same File"
+msgstr "所有来自同一文件(_S)"
 
-#: pdfarranger/exporter.py:135
-msgid "Forms and outlines are lost on saving."
-msgstr "保存时会丢失表格和轮廓。"
+#: pdfarranger/pdfarranger.py:507
+msgid "All files"
+msgstr "所有文件"
 
-#: pdfarranger/exporter.py:137
-msgid "Do not show this dialog again."
-msgstr "不要再显示此对话框。"
+#: pdfarranger/pdfarranger.py:462
+msgid "All pages must have the same size."
+msgstr "所有页面必须具有相同的大小。"
 
-#: pdfarranger/exporter.py:342
-msgid "Printing…"
-msgstr "正在打印..."
+#: pdfarranger/pdfarranger.py:495
+msgid "All supported files"
+msgstr "所有支持的文件"
 
-#: pdfarranger/exporter.py:354
-msgid "Rendering Preview…"
-msgstr "渲染预览…"
+#: pdfarranger/pageutils.py:149
+msgid "Bottom"
+msgstr "底部"
 
-#: pdfarranger/metadata.py:42
-msgid "Title"
-msgstr "标题"
+#: pdfarranger/pageutils.py:380
+msgid "Bottom to Top"
+msgstr ""
 
-#: pdfarranger/metadata.py:43
-msgid "Subject"
-msgstr "主题"
+#: pdfarranger/core.py:386
+msgid "Clipboard image"
+msgstr "剪贴板图像"
 
-#: pdfarranger/metadata.py:44
-msgid "Keywords"
-msgstr "关键词"
+#: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "列"
 
-#: pdfarranger/metadata.py:45
-msgid "Producer"
-msgstr "制作者"
+#: pdfarranger/metadata.py:48
+msgid "Created"
+msgstr "已创建"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
@@ -178,213 +109,66 @@ msgstr "创建者"
 msgid "Creator tool"
 msgstr "创建者工具"
 
-#: pdfarranger/metadata.py:48
-msgid "Created"
-msgstr "已创建"
+#: pdfarranger/pageutils.py:153
+msgid "Crop Margins"
+msgstr "裁剪边距"
 
-#: pdfarranger/metadata.py:49
-msgid "Modified"
-msgstr "已修改"
+#: data/menu.ui:104 data/menu.ui:365
+msgid "Crop White Borders"
+msgstr "裁剪白色边框"
 
-#: pdfarranger/metadata.py:169
-msgid "Invalid date format. Input discarded."
-msgstr "日期格式无效。 输入已放弃。"
+#: pdfarranger/pageutils.py:161
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr "裁剪不会从 PDF 文件中删除任何内容，只会将其隐藏。"
+
+#: data/menu.ui:128 data/menu.ui:264
+msgid "Cu_t"
+msgstr "剪切(_T)"
+
+#: pdfarranger/pdfarranger.py:1250
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr "尽管有警告，但文档应该没有明显的问题。"
+
+#: pdfarranger/pdfarranger.py:979
+msgid "Discard changes and close?"
+msgstr "放弃更改并关闭？"
+
+#: pdfarranger/pdfarranger.py:1016
+msgid "Discard changes and quit?"
+msgstr "放弃更改并退出？"
+
+#: pdfarranger/exporter.py:194
+msgid "Do not show this dialog again."
+msgstr "不要再显示此对话框。"
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Do_n’t Save"
+msgstr "不保存(_N)"
+
+#: pdfarranger/pdfarranger.py:1257
+msgid "Don't show warnings when saving again."
+msgstr "再次保存时不显示警告。"
+
+#: data/menu.ui:112 data/menu.ui:369
+msgid "Dupl_icate"
+msgstr "重复(_I)"
+
+#: data/menu.ui:52 data/menu.ui:395
+msgid "E_xport"
+msgstr "导出(_X)"
+
+#: data/menu.ui:55 data/menu.ui:398
+msgid "E_xport Selection to a Single File…"
+msgstr "导出所选到单个文件(_X)..."
+
+#: data/menu.ui:228
+msgid "Edit _Properties"
+msgstr "编辑属性(_P)"
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "编辑属性"
-
-#: pdfarranger/metadata.py:212
-msgid "Property"
-msgstr "属性"
-
-#: pdfarranger/metadata.py:212
-msgid "Value"
-msgstr "值"
-
-#: pdfarranger/pdfarranger.py:260
-msgid ""
-"PDF Arranger is a small python-gtk application, which helps the user to "
-"merge or split pdf documents and rotate, crop and rearrange their pages "
-"using an interactive and intuitive graphical interface. It is a frontend for "
-"pikepdf."
-msgstr "PDF Arranger 是一个小型的 python-gtk 应用程序，它可以帮助用户使用交互式和直观的图形界面来合并或拆分 pdf 文档以及旋转、裁剪和重新排列他们的页面。 它是 pikepdf 的前端。"
-
-#: pdfarranger/pdfarranger.py:271
-msgid "Print the version of PDF Arranger and exit"
-msgstr "打印 PDF Arranger 版本并退出"
-
-#: pdfarranger/pdfarranger.py:279
-msgid "File(s) to open"
-msgstr "要打开的文件"
-
-#: pdfarranger/pdfarranger.py:428
-msgid "All pages must have the same size."
-msgstr "所有页面必须具有相同的大小。"
-
-#: pdfarranger/pdfarranger.py:456
-msgid "All supported files"
-msgstr "所有支持的文件"
-
-#: pdfarranger/pdfarranger.py:460
-msgid "PDF files"
-msgstr "PDF 文件"
-
-#: pdfarranger/pdfarranger.py:467
-msgid "All files"
-msgstr "所有文件"
-
-#: pdfarranger/pdfarranger.py:472
-msgid "Supported image files"
-msgstr "支持的图像文件"
-
-#: pdfarranger/pdfarranger.py:691
-msgid "Rendering…"
-msgstr "正在渲染..."
-
-#: pdfarranger/pdfarranger.py:769
-msgid "untitled"
-msgstr "未命名"
-
-#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
-#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
-msgid "_Cancel"
-msgstr "取消(_C)"
-
-#: pdfarranger/pdfarranger.py:924
-msgid "Your changes will be lost if you don’t save them."
-msgstr "如果您不保存，您的更改将会丢失。"
-
-#: pdfarranger/pdfarranger.py:925
-msgid "Do_n’t Save"
-msgstr "不保存(_N)"
-
-#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
-#: data/menu.ui.h:4
-msgid "_Save"
-msgstr "保存(_S)"
-
-#: pdfarranger/pdfarranger.py:934
-msgid "Discard changes and close?"
-msgstr "放弃更改并关闭？"
-
-#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
-msgid "_Close"
-msgstr "关闭(_C)"
-
-#: pdfarranger/pdfarranger.py:940
-msgid "Save changes to “{}” before closing?"
-msgstr "在关闭之前保存对“{}”的更改？"
-
-#: pdfarranger/pdfarranger.py:943
-msgid "Save changes before closing?"
-msgstr "关闭前保存更改？"
-
-#: pdfarranger/pdfarranger.py:968
-msgid "Discard changes and quit?"
-msgstr "放弃更改并退出？"
-
-#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
-msgid "_Quit"
-msgstr "退出(_Q)"
-
-#: pdfarranger/pdfarranger.py:974
-msgid "Save changes to “{}” before quitting?"
-msgstr "退出前保存对“{}”的更改？"
-
-#: pdfarranger/pdfarranger.py:977
-msgid "Save changes before quitting?"
-msgstr "退出前保存更改？"
-
-#: pdfarranger/pdfarranger.py:1019
-msgid "Save As…"
-msgstr "保存为"
-
-#: pdfarranger/pdfarranger.py:1019
-msgid "Export…"
-msgstr "导出..."
-
-#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
-msgid "_Open"
-msgstr "打开(_O)"
-
-#: pdfarranger/pdfarranger.py:1092
-msgid "Open…"
-msgstr "打开..."
-
-#: pdfarranger/pdfarranger.py:1163
-msgid "Saving produced some warnings"
-msgstr "保存会产生一些警告"
-
-#: pdfarranger/pdfarranger.py:1164
-msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr "尽管有警告，但文档应该没有明显的问题。"
-
-#: pdfarranger/pdfarranger.py:1171
-msgid "Don't show warnings when saving again."
-msgstr "再次保存时不显示警告。"
-
-#: pdfarranger/pdfarranger.py:1201
-msgid "Saving…"
-msgstr "正在保存..."
-
-#: pdfarranger/pdfarranger.py:1235
-msgid "Import…"
-msgstr "导入..."
-
-#: pdfarranger/pdfarranger.py:1329
-msgid "Pasted data not valid. Aborting paste."
-msgstr "粘贴的数据无效。 中止粘贴。"
-
-#: pdfarranger/pdfarranger.py:1433
-msgid "PDF document is damaged"
-msgstr "PDF 文件已损坏"
-
-#: pdfarranger/pdfarranger.py:2294
-#, python-format
-msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "%s 是用于重新排列和修改 PDF 文件的工具。"
-
-#: pdfarranger/pdfarranger.py:2297
-#, python-format
-msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "它使用 libqpdf %s、pikepdf %s、GTK %s 和 Python %s。"
-
-#: pdfarranger/pdfarranger.py:2303
-msgid "Maintainers and contributors"
-msgstr "维护者和贡献者"
-
-#: pdfarranger/pdfarranger.py:2308
-msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU 通用公共许可证 (GPL) 第 3 版。"
-
-#: pdfarranger/pdfarranger.py:2326
-msgid "Selected pages: "
-msgstr "所选页面："
-
-#: pdfarranger/pdfarranger.py:2331
-msgid "Page Size:"
-msgstr "页面大小"
-
-#: pdfarranger/splitter.py:26
-msgid "Split Pages"
-msgstr "拆分页面"
-
-#: pdfarranger/splitter.py:60
-msgid "Columns"
-msgstr "列"
-
-#: pdfarranger/splitter.py:60
-msgid "Rows"
-msgstr "行"
-
-#: pdfarranger/splitter.py:61
-msgid "Vertical Splits"
-msgstr "垂直拆分"
-
-#: pdfarranger/splitter.py:61
-msgid "Horizontal Splits"
-msgstr "水平拆分"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal column width"
@@ -394,226 +178,577 @@ msgstr "列宽相等"
 msgid "Equal row height"
 msgstr "行高相等"
 
-#: pdfarranger/splitter.py:87
-msgid "#Col"
-msgstr "#Col"
+#: data/menu.ui:60 data/menu.ui:403
+msgid "Export Selection to _Individual Files…"
+msgstr "导出所选到个体文件(_I)..."
 
-#: pdfarranger/splitter.py:87
-msgid "#Row"
-msgstr "#Row"
+#: data/menu.ui:65 data/menu.ui:408
+msgid "Export _All Pages to Individual Files…"
+msgstr "所有页面导出到单个文件(_A)..."
 
-#: pdfarranger/splitter.py:88
-msgid "Width in %"
-msgstr "宽度 %"
+#: pdfarranger/pdfarranger.py:1088
+msgid "Export…"
+msgstr "导出..."
+
+#: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
+msgid "File is neither pdf nor image"
+msgstr "文件既不是 PDF 也不是图像"
+
+#: pdfarranger/pdfarranger.py:301
+msgid "File(s) to open"
+msgstr "要打开的文件"
+
+#: pdfarranger/config.py:237
+msgid "For more options see:"
+msgstr ""
+
+#: pdfarranger/exporter.py:192
+msgid "Forms and outlines are lost on saving."
+msgstr "保存时会丢失表格和轮廓。"
+
+#: data/menu.ui:221
+msgid "Full_screen"
+msgstr "全屏幕(_C)"
+
+#: pdfarranger/pdfarranger.py:2562
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU 通用公共许可证 (GPL) 第 3 版。"
+
+#: data/menu.ui:160 data/menu.ui:389
+msgid "Generate Booklet"
+msgstr "生成手册"
+
+#: pdfarranger/pageutils.py:236 pdfarranger/pageutils.py:240
+#: pdfarranger/pageutils.py:328
+msgid "Height"
+msgstr "高度"
 
 #: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "高度 %"
 
-#: data/pdfarranger.ui.h:1
-msgid "Open"
-msgstr "打开"
+#: pdfarranger/pageutils.py:375
+msgid "Horizontal"
+msgstr ""
 
-#: data/pdfarranger.ui.h:2
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "水平拆分"
+
+#: pdfarranger/pageutils.py:476
+msgid "Horizontal offset"
+msgstr ""
+
+#: pdfarranger/core.py:377
+msgid "Image files are only supported with img2pdf"
+msgstr "图像文件仅支持 img2pdf"
+
+#: pdfarranger/core.py:383
+msgid "Image format is not supported by img2pdf"
+msgstr "img2pdf 不支持图片格式"
+
+#: data/pdfarranger.ui:58
 msgid "Import"
 msgstr "导入"
 
-#: data/pdfarranger.ui.h:3
-msgid "Save"
-msgstr "保存"
+#: pdfarranger/pdfarranger.py:1327
+msgid "Import…"
+msgstr "导入..."
 
-#: data/pdfarranger.ui.h:4
-msgid "Save As"
-msgstr "另存为"
-
-#: data/pdfarranger.ui.h:5
-msgid "Main Menu"
-msgstr "主菜单"
-
-#: data/pdfarranger.ui.h:6
-msgid "Zoom In"
-msgstr "放大"
-
-#: data/pdfarranger.ui.h:7
-msgid "Zoom Out"
-msgstr "缩小"
-
-#: data/pdfarranger.ui.h:8
-msgid "Rotate Left"
-msgstr "向左旋转"
-
-#: data/pdfarranger.ui.h:9
-msgid "Rotate Right"
-msgstr "向右旋转"
-
-#: data/menu.ui.h:2
-msgid "_Import"
-msgstr "导入(_I)"
-
-#: data/menu.ui.h:3
-msgid "_New Window"
-msgstr "新建窗口(_N)"
-
-#: data/menu.ui.h:5
-msgid "Save _As…"
-msgstr "另存为(_A)..."
-
-#: data/menu.ui.h:6
-msgid "E_xport"
-msgstr "导出(_X)"
-
-#: data/menu.ui.h:7
-msgid "E_xport Selection to a Single File…"
-msgstr "导出所选到单个文件(_X)..."
-
-#: data/menu.ui.h:8
-msgid "Export Selection to _Individual Files…"
-msgstr "导出所选到个体文件(_I)..."
-
-#: data/menu.ui.h:9
-msgid "Export _All Pages to Individual Files…"
-msgstr "所有页面导出到单个文件(_A)..."
-
-#: data/menu.ui.h:10
-msgid "_Print…"
-msgstr "打印(_P)"
-
-#: data/menu.ui.h:11
-msgid "_Undo"
-msgstr "撤销(_U)"
-
-#: data/menu.ui.h:12
-msgid "_Redo"
-msgstr "重做(_R)"
-
-#: data/menu.ui.h:13
-msgid "_Edit"
-msgstr "编辑(_E)"
-
-#: data/menu.ui.h:14
-msgid "Rotate _Left"
-msgstr "向左旋转(_L)"
-
-#: data/menu.ui.h:15
-msgid "_Rotate Right"
-msgstr "向右旋转(_R)"
-
-#: data/menu.ui.h:16
-msgid "_Page Format"
-msgstr "页面格式(_P)"
-
-#: data/menu.ui.h:17
-msgid "Crop White Borders"
-msgstr "裁剪白色边框"
-
-#: data/menu.ui.h:18
-msgid "_Delete"
-msgstr "删除(_D)"
-
-#: data/menu.ui.h:19
-msgid "Dupl_icate"
-msgstr "重复(_I)"
-
-#: data/menu.ui.h:20
-msgid "Re_verse Order"
-msgstr "相反顺序(_V)"
-
-#: data/menu.ui.h:21
-msgid "_Split Pages"
-msgstr "拆分页面(_S)"
-
-#: data/menu.ui.h:22
-msgid "Cu_t"
-msgstr "剪切(_T)"
-
-#: data/menu.ui.h:23
-msgid "_Copy"
-msgstr "复制(_C)"
-
-#: data/menu.ui.h:24
-msgid "Paste _After"
-msgstr "粘贴之后(_A)"
-
-#: data/menu.ui.h:25
-msgid "Paste _Before"
-msgstr "粘贴之前(_B)"
-
-#: data/menu.ui.h:26
-msgid "Paste As _Odd Pages"
-msgstr "粘贴为奇数页(_O)"
-
-#: data/menu.ui.h:27
-msgid "Paste As _Even Pages"
-msgstr "粘贴为偶数页(_F)"
-
-#: data/menu.ui.h:28
+#: data/menu.ui:156 data/menu.ui:385
 msgid "Insert Blan_k Page"
 msgstr "插入空白页面(_K)"
 
-#: data/menu.ui.h:29
-msgid "Generate Booklet"
-msgstr "生成手册"
+#: pdfarranger/pageutils.py:325
+msgid "Insert Blank Page"
+msgstr "插入空白页面"
 
-#: data/menu.ui.h:30
-msgid "_Select"
-msgstr "选择(_S)"
+#: pdfarranger/metadata.py:169
+msgid "Invalid date format. Input discarded."
+msgstr "日期格式无效。 输入已放弃。"
 
-#: data/menu.ui.h:31
-msgid "Select _All"
-msgstr "全选(_A)"
+#: pdfarranger/pdfarranger.py:2551
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "它使用 libqpdf %s、pikepdf %s、GTK %s 和 Python %s。"
 
-#: data/menu.ui.h:32
-msgid "_Deselect All"
-msgstr "取消全选(_D)"
+#: pdfarranger/metadata.py:44
+msgid "Keywords"
+msgstr "关键词"
 
-#: data/menu.ui.h:33
-msgid "Select _Odd Pages"
-msgstr "选择奇数页面(_O)"
+#: pdfarranger/config.py:222
+msgid "Language"
+msgstr ""
 
-#: data/menu.ui.h:34
-msgid "Select _Even Pages"
-msgstr "选择偶数页面(_E)"
+#: pdfarranger/pageutils.py:460
+msgid "Layout for the first page in selection"
+msgstr ""
 
-#: data/menu.ui.h:35
-msgid "All From _Same File"
-msgstr "所有来自同一文件(_S)"
+#: pdfarranger/pageutils.py:149
+msgid "Left"
+msgstr "左边"
 
-#: data/menu.ui.h:36
+#: pdfarranger/pageutils.py:377
+msgid "Left to Right"
+msgstr ""
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "主菜单"
+
+#: pdfarranger/pdfarranger.py:2557
+msgid "Maintainers and contributors"
+msgstr "维护者和贡献者"
+
+#: pdfarranger/pageutils.py:361
+msgid "Margin"
+msgstr ""
+
+#: pdfarranger/pageutils.py:347
+msgid "Merge Pages"
+msgstr ""
+
+#: pdfarranger/pageutils.py:412
+msgid "Merged page size:"
+msgstr ""
+
+#: pdfarranger/metadata.py:49
+msgid "Modified"
+msgstr "已修改"
+
+#: pdfarranger/pageutils.py:392
+msgid "Non-uniform page size - using max size"
+msgstr ""
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "打开"
+
+#: pdfarranger/pdfarranger.py:1186
+msgid "Open…"
+msgstr "打开..."
+
+#: pdfarranger/pageutils.py:436
+msgid "Overlay"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:282
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"PDF Arranger 是一个小型的 python-gtk 应用程序，它可以帮助用户使用交互式和直观"
+"的图形界面来合并或拆分 pdf 文档以及旋转、裁剪和重新排列他们的页面。 它是 "
+"pikepdf 的前端。"
+
+#: pdfarranger/pdfarranger.py:1498
+msgid "PDF document is damaged"
+msgstr "PDF 文件已损坏"
+
+#: pdfarranger/pdfarranger.py:499
+msgid "PDF files"
+msgstr "PDF 文件"
+
+#: pdfarranger/pageutils.py:388
+msgid "Page Order"
+msgstr ""
+
+#: pdfarranger/pageutils.py:241
+msgid "Page Size"
+msgstr "页面大小"
+
+#: pdfarranger/pdfarranger.py:2585
+msgid "Page Size:"
+msgstr "页面大小"
+
+#: pdfarranger/pageutils.py:230
+msgid "Page format"
+msgstr "页面格式"
+
+#: pdfarranger/core.py:285
+msgid "Password"
+msgstr "密码"
+
+#: pdfarranger/core.py:263
+msgid "Password required"
+msgstr "需要密码"
+
+#: data/menu.ui:277
+msgid "Past_e Special"
+msgstr "特殊粘贴(_E)"
+
+#: data/menu.ui:295
+msgid "Paste As O_verlay…"
+msgstr ""
+
+#: data/menu.ui:151 data/menu.ui:290
+msgid "Paste As _Even Pages"
+msgstr "粘贴为偶数页(_F)"
+
+#: data/menu.ui:146 data/menu.ui:285
+msgid "Paste As _Odd Pages"
+msgstr "粘贴为奇数页(_O)"
+
+#: data/menu.ui:300
+msgid "Paste As _Underlay…"
+msgstr ""
+
+#: data/menu.ui:136 data/menu.ui:272
+msgid "Paste _After"
+msgstr "粘贴之后(_A)"
+
+#: data/menu.ui:141 data/menu.ui:280
+msgid "Paste _Before"
+msgstr "粘贴之前(_B)"
+
+#: pdfarranger/pdfarranger.py:1627
+msgid "Pasted data not valid. Aborting paste."
+msgstr "粘贴的数据无效。 中止粘贴。"
+
+#: pdfarranger/pdfarranger.py:1589
+msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
+msgstr ""
+
+#: data/menu.ui:234
+msgid "Pre_ferences"
+msgstr ""
+
+#: pdfarranger/config.py:212
+msgid "Preferences"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:293
+msgid "Print the version of PDF Arranger and exit"
+msgstr "打印 PDF Arranger 版本并退出"
+
+#: pdfarranger/exporter.py:457
+msgid "Printing…"
+msgstr "正在打印..."
+
+#: pdfarranger/metadata.py:45
+msgid "Producer"
+msgstr "制作者"
+
+#: pdfarranger/metadata.py:212
+msgid "Property"
+msgstr "属性"
+
+#: data/menu.ui:116 data/menu.ui:373
+msgid "Re_verse Order"
+msgstr "相反顺序(_V)"
+
+#: pdfarranger/pageutils.py:238
+msgid "Relative"
+msgstr "相对"
+
+#: pdfarranger/exporter.py:469
+msgid "Rendering Preview…"
+msgstr "渲染预览…"
+
+#: pdfarranger/pdfarranger.py:732
+msgid "Rendering…"
+msgstr "正在渲染..."
+
+#: pdfarranger/pdfarranger.py:1132
+msgid "Replace"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Right"
+msgstr "右边"
+
+#: pdfarranger/pageutils.py:378
+msgid "Right to Left"
+msgstr ""
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "向左旋转"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "向右旋转"
+
+#: data/menu.ui:90 data/menu.ui:351
+msgid "Rotate _Left"
+msgstr "向左旋转(_L)"
+
+#: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "行"
+
+#: data/menu.ui:194 data/menu.ui:337
 msgid "Same Page _Format"
 msgstr "相同页面格式(_F)"
 
-#: data/menu.ui.h:37
-msgid "_Invert Selection"
-msgstr "反向选择(_I)"
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "保存"
 
-#: data/menu.ui.h:38
-msgid "_View"
-msgstr "查看(_V)"
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "另存为"
 
-#: data/menu.ui.h:39
-msgid "Zoom _In"
-msgstr "放大(_I)"
+#: pdfarranger/pdfarranger.py:1088
+msgid "Save As…"
+msgstr "保存为"
 
-#: data/menu.ui.h:40
-msgid "Zoom _Out"
-msgstr "缩小(_O)"
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "另存为(_A)..."
 
-#: data/menu.ui.h:41
+#: pdfarranger/pdfarranger.py:988
+msgid "Save changes before closing?"
+msgstr "关闭前保存更改？"
+
+#: pdfarranger/pdfarranger.py:1025
+msgid "Save changes before quitting?"
+msgstr "退出前保存更改？"
+
+#: pdfarranger/pdfarranger.py:985
+msgid "Save changes to “{}” before closing?"
+msgstr "在关闭之前保存对“{}”的更改？"
+
+#: pdfarranger/pdfarranger.py:1022
+msgid "Save changes to “{}” before quitting?"
+msgstr "退出前保存对“{}”的更改？"
+
+#: pdfarranger/pdfarranger.py:1249
+msgid "Saving produced some warnings"
+msgstr "保存会产生一些警告"
+
+#: pdfarranger/pdfarranger.py:1288
+msgid "Saving…"
+msgstr "正在保存..."
+
+#: pdfarranger/pageutils.py:116
+msgid "Scale factor"
+msgstr "比例因子"
+
+#: data/menu.ui:169 data/menu.ui:312
+msgid "Select _All"
+msgstr "全选(_A)"
+
+#: data/menu.ui:184 data/menu.ui:327
+msgid "Select _Even Pages"
+msgstr "选择偶数页面(_E)"
+
+#: data/menu.ui:179 data/menu.ui:322
+msgid "Select _Odd Pages"
+msgstr "选择奇数页面(_O)"
+
+#: pdfarranger/pdfarranger.py:2580
+msgid "Selected pages: "
+msgstr "所选页面："
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "拆分页面"
+
+#: pdfarranger/metadata.py:43
+msgid "Subject"
+msgstr "主题"
+
+#: pdfarranger/pdfarranger.py:512
+msgid "Supported image files"
+msgstr "支持的图像文件"
+
+#: pdfarranger/config.py:248 pdfarranger/config.py:256
+msgid "System setting"
+msgstr ""
+
+#: pdfarranger/core.py:275
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "文档“{}”被锁定，需要密码才能打开。"
+
+#: pdfarranger/core.py:274
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "密码将被记住，直到您关闭 PDF Arranger。"
+
+#: pdfarranger/config.py:230
+msgid "Theme"
+msgstr ""
+
+#: pdfarranger/metadata.py:42
+msgid "Title"
+msgstr "标题"
+
+#: pdfarranger/pageutils.py:149
+msgid "Top"
+msgstr "顶部"
+
+#: pdfarranger/pageutils.py:379
+msgid "Top to Bottom"
+msgstr ""
+
+#: pdfarranger/pageutils.py:436
+msgid "Underlay"
+msgstr ""
+
+#: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
+msgid "Unknown file format"
+msgstr "未知文件格式"
+
+#: pdfarranger/metadata.py:212
+msgid "Value"
+msgstr "值"
+
+#: pdfarranger/pageutils.py:376
+msgid "Vertical"
+msgstr ""
+
+#: pdfarranger/splitter.py:61
+msgid "Vertical Splits"
+msgstr "垂直拆分"
+
+#: pdfarranger/pageutils.py:478
+msgid "Vertical offset"
+msgstr ""
+
+#: pdfarranger/exporter.py:187
+msgid "Warning"
+msgstr "警告"
+
+#: pdfarranger/pageutils.py:235 pdfarranger/pageutils.py:239
+#: pdfarranger/pageutils.py:327
+msgid "Width"
+msgstr "宽度"
+
+#: pdfarranger/splitter.py:88
+msgid "Width in %"
+msgstr "宽度 %"
+
+#: pdfarranger/pdfarranger.py:969
+msgid "Your changes will be lost if you don’t save them."
+msgstr "如果您不保存，您的更改将会丢失。"
+
+#: data/pdfarranger.ui:144
+msgid "Zoom In"
+msgstr "放大"
+
+#: data/pdfarranger.ui:167
+msgid "Zoom Out"
+msgstr "缩小"
+
+#: data/menu.ui:217
 msgid "Zoom _Fit"
 msgstr "缩放适合(_F)"
 
-#: data/menu.ui.h:42
-msgid "Full_screen"
-msgstr "全屏幕(_C)"
+#: data/menu.ui:209
+msgid "Zoom _In"
+msgstr "放大(_I)"
 
-#: data/menu.ui.h:43
-msgid "Edit _Properties"
-msgstr "编辑属性(_P)"
+#: data/menu.ui:213
+msgid "Zoom _Out"
+msgstr "缩小(_O)"
 
-#: data/menu.ui.h:44
+#: data/menu.ui:240
 msgid "_About"
 msgstr "关于(_A)"
 
-#: data/menu.ui.h:47
-msgid "Past_e Special"
-msgstr "特殊粘贴(_E)"
+#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
+msgid "_Cancel"
+msgstr "取消(_C)"
+
+#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+msgid "_Close"
+msgstr "关闭(_C)"
+
+#: data/menu.ui:132 data/menu.ui:268
+msgid "_Copy"
+msgstr "复制(_C)"
+
+#: data/menu.ui:108 data/menu.ui:260
+msgid "_Delete"
+msgstr "删除(_D)"
+
+#: data/menu.ui:174 data/menu.ui:317
+msgid "_Deselect All"
+msgstr "取消全选(_D)"
+
+#: data/menu.ui:87
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "导入(_I)"
+
+#: data/menu.ui:199 data/menu.ui:342
+msgid "_Invert Selection"
+msgstr "反向选择(_I)"
+
+#: data/menu.ui:124 data/menu.ui:381
+msgid "_Merge Pages"
+msgstr ""
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "新建窗口(_N)"
+
+#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+msgid "_OK"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
+msgid "_Open"
+msgstr "打开(_O)"
+
+#: data/menu.ui:100 data/menu.ui:361
+msgid "_Page Format"
+msgstr "页面格式(_P)"
+
+#: data/menu.ui:71
+msgid "_Print…"
+msgstr "打印(_P)"
+
+#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#: data/menu.ui:82
+msgid "_Redo"
+msgstr "重做(_R)"
+
+#: data/menu.ui:95 data/menu.ui:356
+msgid "_Rotate Right"
+msgstr "向右旋转(_R)"
+
+#: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: data/menu.ui:166 data/menu.ui:309
+msgid "_Select"
+msgstr "选择(_S)"
+
+#: data/menu.ui:120 data/menu.ui:377
+msgid "_Split Pages"
+msgstr "拆分页面(_S)"
+
+#: data/menu.ui:78
+msgid "_Undo"
+msgstr "撤销(_U)"
+
+#: data/menu.ui:206
+msgid "_View"
+msgstr "查看(_V)"
+
+#: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
+#: pdfarranger/pageutils.py:412
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/core.py:89
+msgid "page"
+msgstr "页面"
+
+#: pdfarranger/pdfarranger.py:811
+msgid "untitled"
+msgstr "未命名"

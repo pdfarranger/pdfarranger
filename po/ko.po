@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-13 15:24+0200\n"
+"POT-Creation-Date: 2023-04-29 22:45+0200\n"
 "PO-Revision-Date: 2021-11-26 15:38+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,142 +18,86 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pdfarranger/core.py:87
-msgid "page"
-msgstr "페이지"
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#Col"
 
-#: pdfarranger/core.py:191
-msgid "Password required"
-msgstr "비밀번호 필요"
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#Row"
 
-#: pdfarranger/core.py:202
-msgid "The password will be remembered until you close PDF Arranger."
-msgstr "PDF 편집기를 닫기 전까지 비밀번호를 기억합니다."
-
-#: pdfarranger/core.py:203
-msgid ""
-"The document “{}” is locked and requires a password before it can be opened."
-msgstr "보호된 문서인 \"{}\"(을)를 열기 전에 비밀번호를 입력해야 합니다."
-
-#: pdfarranger/core.py:213
-msgid "Password"
-msgstr "비밀번호"
-
-#: pdfarranger/core.py:289 pdfarranger/pdfarranger.py:1429
-msgid "Unknown file format"
-msgstr "알 수 없는 형식"
-
-#: pdfarranger/core.py:305
-msgid "Image files are only supported with img2pdf"
-msgstr "이미지 파일은 img2pdf만 지원합니다"
-
-#: pdfarranger/core.py:311
-msgid "Image format is not supported by img2pdf"
-msgstr "해당 이미지 형식은 img2pdf에서 지원하지 않습니다"
-
-#: pdfarranger/core.py:314
-msgid "Clipboard image"
-msgstr "클립보드 이미지"
-
-#: pdfarranger/core.py:316 pdfarranger/pdfarranger.py:1439
-msgid "File is neither pdf nor image"
-msgstr "PDF 및 그림 파일이 아닙니다"
-
-#: pdfarranger/croputils.py:115
-msgid "Scale factor"
-msgstr "확대 상수"
-
-#: pdfarranger/croputils.py:121
+#: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
+#: pdfarranger/pageutils.py:479
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/croputils.py:137
-msgid "mm"
-msgstr "mm"
+#: pdfarranger/pageutils.py:170
+#, python-format
+msgid "% of height"
+msgstr ""
 
-#: pdfarranger/croputils.py:147
-msgid "Left"
-msgstr "왼쪽"
-
-#: pdfarranger/croputils.py:147
-msgid "Right"
-msgstr "오른쪽"
-
-#: pdfarranger/croputils.py:147
-msgid "Top"
-msgstr "위"
-
-#: pdfarranger/croputils.py:147
-msgid "Bottom"
-msgstr "아래"
-
-#: pdfarranger/croputils.py:151
-msgid "Crop Margins"
-msgstr "차이 잘라내기"
-
-#: pdfarranger/croputils.py:159
-msgid ""
-"Cropping does not remove any content from the PDF file, it only hides it."
-msgstr "잘라내기는 PDF 파일의 내용을 삭제하지 않으며, 해당 영역만 숨깁니다."
-
-#: pdfarranger/croputils.py:168
+#: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of width"
 msgstr ""
 
-#: pdfarranger/croputils.py:215
-msgid "Page format"
-msgstr "용지 크기"
+#: pdfarranger/pdfarranger.py:2548
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s는 PDF 파일을 재정렬하거나 수정하는 도구입니다."
 
-#: pdfarranger/croputils.py:230 pdfarranger/croputils.py:234
-#: pdfarranger/croputils.py:333
-msgid "Width"
-msgstr "너비"
-
-#: pdfarranger/croputils.py:231 pdfarranger/croputils.py:235
-#: pdfarranger/croputils.py:334
-msgid "Height"
-msgstr "높이"
-
-#: pdfarranger/croputils.py:233
-msgid "Relative"
+#: pdfarranger/config.py:232
+msgid "(Libhandy missing)"
 msgstr ""
 
-#: pdfarranger/croputils.py:236
-msgid "Page Size"
-msgstr "용지 크기"
+#: pdfarranger/config.py:224
+msgid "(Requires restart)"
+msgstr ""
 
-#: pdfarranger/croputils.py:321
-msgid "Insert Blank Page"
-msgstr "빈 페이지 삽입"
+#: pdfarranger/pageutils.py:461
+msgid "(same offset is applied to all pages)"
+msgstr ""
 
-#: pdfarranger/exporter.py:130
-msgid "Warning"
-msgstr "경고"
+#: pdfarranger/pdfarranger.py:1130
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr ""
 
-#: pdfarranger/exporter.py:135
-msgid "Forms and outlines are lost on saving."
-msgstr "폼과 윤곽선은 저장 시 사라집니다."
+#: data/menu.ui:189 data/menu.ui:332
+msgid "All From _Same File"
+msgstr "같은 파일에서 선택(_S)"
 
-#: pdfarranger/exporter.py:137
-msgid "Do not show this dialog again."
-msgstr "이 대화상자를 다시 표시하지 않습니다."
+#: pdfarranger/pdfarranger.py:507
+msgid "All files"
+msgstr "모든 파일"
 
-#: pdfarranger/metadata.py:42
-msgid "Title"
-msgstr "제목"
+#: pdfarranger/pdfarranger.py:462
+msgid "All pages must have the same size."
+msgstr "모든 페이지는 같은 크기이여야만 합니다."
 
-#: pdfarranger/metadata.py:43
-msgid "Subject"
-msgstr "주제"
+#: pdfarranger/pdfarranger.py:495
+msgid "All supported files"
+msgstr "지원하는 모든 파일"
 
-#: pdfarranger/metadata.py:44
-msgid "Keywords"
-msgstr "검색어"
+#: pdfarranger/pageutils.py:149
+msgid "Bottom"
+msgstr "아래"
 
-#: pdfarranger/metadata.py:45
-msgid "Producer"
-msgstr "글쓴이"
+#: pdfarranger/pageutils.py:380
+msgid "Bottom to Top"
+msgstr ""
+
+#: pdfarranger/core.py:386
+msgid "Clipboard image"
+msgstr "클립보드 이미지"
+
+#: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "행"
+
+#: pdfarranger/metadata.py:48
+msgid "Created"
+msgstr "만든 날짜"
 
 #: pdfarranger/metadata.py:46
 msgid "Creator"
@@ -163,199 +107,66 @@ msgstr "만든이"
 msgid "Creator tool"
 msgstr "만든 도구"
 
-#: pdfarranger/metadata.py:48
-msgid "Created"
-msgstr "만든 날짜"
+#: pdfarranger/pageutils.py:153
+msgid "Crop Margins"
+msgstr "차이 잘라내기"
 
-#: pdfarranger/metadata.py:49
-msgid "Modified"
-msgstr "수정 날짜"
+#: data/menu.ui:104 data/menu.ui:365
+msgid "Crop White Borders"
+msgstr "흰 테두리 잘라내기"
 
-#: pdfarranger/metadata.py:169
-msgid "Invalid date format. Input discarded."
-msgstr "잘못된 날짜 형식입니다."
+#: pdfarranger/pageutils.py:161
+msgid ""
+"Cropping does not remove any content from the PDF file, it only hides it."
+msgstr "잘라내기는 PDF 파일의 내용을 삭제하지 않으며, 해당 영역만 숨깁니다."
+
+#: data/menu.ui:128 data/menu.ui:264
+msgid "Cu_t"
+msgstr "잘라내기(_T)"
+
+#: pdfarranger/pdfarranger.py:1250
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:979
+msgid "Discard changes and close?"
+msgstr "변경 사항을 저장하지 않고 닫으시겠습니까?"
+
+#: pdfarranger/pdfarranger.py:1016
+msgid "Discard changes and quit?"
+msgstr "변경 사항을 저장하지 않고 종료하시겠습니까?"
+
+#: pdfarranger/exporter.py:194
+msgid "Do not show this dialog again."
+msgstr "이 대화상자를 다시 표시하지 않습니다."
+
+#: pdfarranger/pdfarranger.py:970
+msgid "Do_n’t Save"
+msgstr "저장 안 함(_N)"
+
+#: pdfarranger/pdfarranger.py:1257
+msgid "Don't show warnings when saving again."
+msgstr ""
+
+#: data/menu.ui:112 data/menu.ui:369
+msgid "Dupl_icate"
+msgstr "복제(_I)"
+
+#: data/menu.ui:52 data/menu.ui:395
+msgid "E_xport"
+msgstr "내보내기(_X)"
+
+#: data/menu.ui:55 data/menu.ui:398
+msgid "E_xport Selection to a Single File…"
+msgstr "선택된 내용들을 하나의 파일로 내보내기…(_X)"
+
+#: data/menu.ui:228
+msgid "Edit _Properties"
+msgstr "정보 편집(_E)"
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
 msgstr "정보 편집"
-
-#: pdfarranger/metadata.py:212
-msgid "Property"
-msgstr "우선도"
-
-#: pdfarranger/metadata.py:212
-msgid "Value"
-msgstr "값"
-
-#: pdfarranger/pdfarranger.py:260
-msgid ""
-"PDF Arranger is a small python-gtk application, which helps the user to "
-"merge or split pdf documents and rotate, crop and rearrange their pages "
-"using an interactive and intuitive graphical interface. It is a frontend for "
-"pikepdf."
-msgstr ""
-"PDF 편집기는 사용자가 PDF 문서를 합치거나 나누고 페이지를 재정렬할 수 있는 다"
-"기능 그래픽 인터페이스를 사용하는 간단한 python-gtk 프로그램입니다."
-
-#: pdfarranger/pdfarranger.py:271
-msgid "Print the version of PDF Arranger and exit"
-msgstr "PDF 편집기의 버전을 출력한 후 닫기"
-
-#: pdfarranger/pdfarranger.py:279
-msgid "File(s) to open"
-msgstr "파일 선택"
-
-#: pdfarranger/pdfarranger.py:428
-msgid "All pages must have the same size."
-msgstr "모든 페이지는 같은 크기이여야만 합니다."
-
-#: pdfarranger/pdfarranger.py:456
-msgid "All supported files"
-msgstr "지원하는 모든 파일"
-
-#: pdfarranger/pdfarranger.py:460
-msgid "PDF files"
-msgstr "PDF 파일"
-
-#: pdfarranger/pdfarranger.py:467
-msgid "All files"
-msgstr "모든 파일"
-
-#: pdfarranger/pdfarranger.py:472
-msgid "Supported image files"
-msgstr "지원하는 이미지 파일"
-
-#: pdfarranger/pdfarranger.py:691
-msgid "Rendering…"
-msgstr "렌더링 중…"
-
-#: pdfarranger/pdfarranger.py:769
-msgid "untitled"
-msgstr "제목 없음"
-
-#: pdfarranger/pdfarranger.py:916 pdfarranger/pdfarranger.py:925
-#: pdfarranger/pdfarranger.py:1025 pdfarranger/pdfarranger.py:1050
-msgid "_Cancel"
-msgstr "취소(_C)"
-
-#: pdfarranger/pdfarranger.py:924
-msgid "Your changes will be lost if you don’t save them."
-msgstr "저장하지 않으면 편집한 사항을 잃게 됩니다."
-
-#: pdfarranger/pdfarranger.py:925
-msgid "Do_n’t Save"
-msgstr "저장 안 함(_N)"
-
-#: pdfarranger/pdfarranger.py:925 pdfarranger/pdfarranger.py:1024
-#: data/menu.ui.h:4
-msgid "_Save"
-msgstr "저장(_S)"
-
-#: pdfarranger/pdfarranger.py:934
-msgid "Discard changes and close?"
-msgstr "변경 사항을 저장하지 않고 닫으시겠습니까?"
-
-#: pdfarranger/pdfarranger.py:935 data/menu.ui.h:45
-msgid "_Close"
-msgstr "닫기(_C)"
-
-#: pdfarranger/pdfarranger.py:940
-msgid "Save changes to “{}” before closing?"
-msgstr "닫기 전에 \"{}\"을 편집한 사항을 저장하시겠습니까?"
-
-#: pdfarranger/pdfarranger.py:943
-msgid "Save changes before closing?"
-msgstr "닫기 전에 펀집한 사항을 저장하시겠습니까?"
-
-#: pdfarranger/pdfarranger.py:968
-msgid "Discard changes and quit?"
-msgstr "변경 사항을 저장하지 않고 종료하시겠습니까?"
-
-#: pdfarranger/pdfarranger.py:969 data/menu.ui.h:46
-msgid "_Quit"
-msgstr "종료(_Q)"
-
-#: pdfarranger/pdfarranger.py:1019
-msgid "Export…"
-msgstr "내보내기…"
-
-#: pdfarranger/pdfarranger.py:1049 data/menu.ui.h:1
-msgid "_Open"
-msgstr "열기(O)"
-
-#: pdfarranger/pdfarranger.py:1092
-msgid "Open…"
-msgstr "열기…"
-
-#: pdfarranger/pdfarranger.py:1163
-msgid "Saving produced some warnings"
-msgstr "만들어진 몇몇 경고를 포함하여 저장하는 중"
-
-#: pdfarranger/pdfarranger.py:1164
-msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:1201
-msgid "Saving…"
-msgstr "저장 중…"
-
-#: pdfarranger/pdfarranger.py:1235
-msgid "Import…"
-msgstr "불러오기…"
-
-#: pdfarranger/pdfarranger.py:1329
-msgid "Pasted data not valid. Aborting paste."
-msgstr "붙여넣은 데이터가 잘못되었습니다."
-
-#: pdfarranger/pdfarranger.py:1433
-msgid "PDF document is damaged"
-msgstr "PDF 문서가 손상되었습니다"
-
-#: pdfarranger/pdfarranger.py:2294
-#, python-format
-msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "%s는 PDF 파일을 재정렬하거나 수정하는 도구입니다."
-
-#: pdfarranger/pdfarranger.py:2297
-#, python-format
-msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
-
-#: pdfarranger/pdfarranger.py:2303
-msgid "Maintainers and contributors"
-msgstr "만든 사람과 기여자"
-
-#: pdfarranger/pdfarranger.py:2308
-msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU General Public License (GPL) 버전 3을 사용합니다."
-
-#: pdfarranger/pdfarranger.py:2326
-msgid "Selected pages: "
-msgstr "선택된 페이지: "
-
-#: pdfarranger/pdfarranger.py:2331
-msgid "Page Size:"
-msgstr "페이지 크기:"
-
-#: pdfarranger/splitter.py:26
-msgid "Split Pages"
-msgstr "페이지 나누기"
-
-#: pdfarranger/splitter.py:60
-msgid "Columns"
-msgstr "행"
-
-#: pdfarranger/splitter.py:60
-msgid "Rows"
-msgstr "열"
-
-#: pdfarranger/splitter.py:61
-msgid "Vertical Splits"
-msgstr "세로로 나누기"
-
-#: pdfarranger/splitter.py:61
-msgid "Horizontal Splits"
-msgstr "가로로 나누기"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal column width"
@@ -365,218 +176,576 @@ msgstr "행 너비 맞추기"
 msgid "Equal row height"
 msgstr "열 높이 맞추기"
 
-#: pdfarranger/splitter.py:87
-msgid "#Col"
-msgstr "#Col"
+#: data/menu.ui:60 data/menu.ui:403
+msgid "Export Selection to _Individual Files…"
+msgstr "선택된 내용들을 개별의 파일로 내보내기…(_I)"
 
-#: pdfarranger/splitter.py:87
-msgid "#Row"
-msgstr "#Row"
+#: data/menu.ui:65 data/menu.ui:408
+msgid "Export _All Pages to Individual Files…"
+msgstr "모든 페이지를 개별의 파일로 내보내기…(_A)"
 
-#: pdfarranger/splitter.py:88
-msgid "Width in %"
-msgstr "너비(%)"
+#: pdfarranger/pdfarranger.py:1088
+msgid "Export…"
+msgstr "내보내기…"
+
+#: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
+msgid "File is neither pdf nor image"
+msgstr "PDF 및 그림 파일이 아닙니다"
+
+#: pdfarranger/pdfarranger.py:301
+msgid "File(s) to open"
+msgstr "파일 선택"
+
+#: pdfarranger/config.py:237
+msgid "For more options see:"
+msgstr ""
+
+#: pdfarranger/exporter.py:192
+msgid "Forms and outlines are lost on saving."
+msgstr "폼과 윤곽선은 저장 시 사라집니다."
+
+#: data/menu.ui:221
+msgid "Full_screen"
+msgstr "전체 화면(_S)"
+
+#: pdfarranger/pdfarranger.py:2562
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public License (GPL) 버전 3을 사용합니다."
+
+#: data/menu.ui:160 data/menu.ui:389
+msgid "Generate Booklet"
+msgstr "북클렛 만들기"
+
+#: pdfarranger/pageutils.py:236 pdfarranger/pageutils.py:240
+#: pdfarranger/pageutils.py:328
+msgid "Height"
+msgstr "높이"
 
 #: pdfarranger/splitter.py:88
 msgid "Height in %"
 msgstr "높이(%)"
 
-#: data/pdfarranger.ui.h:1
-msgid "Open"
-msgstr "열기"
+#: pdfarranger/pageutils.py:375
+msgid "Horizontal"
+msgstr ""
 
-#: data/pdfarranger.ui.h:3
-msgid "Save"
-msgstr "저장"
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "가로로 나누기"
 
-#: data/pdfarranger.ui.h:4
-msgid "Save As"
-msgstr "다른 이름으로 저장"
+#: pdfarranger/pageutils.py:476
+msgid "Horizontal offset"
+msgstr ""
 
-#: data/pdfarranger.ui.h:5
-msgid "Main Menu"
-msgstr "메인 메뉴"
+#: pdfarranger/core.py:377
+msgid "Image files are only supported with img2pdf"
+msgstr "이미지 파일은 img2pdf만 지원합니다"
 
-#: data/pdfarranger.ui.h:6
-msgid "Zoom In"
-msgstr "확대"
+#: pdfarranger/core.py:383
+msgid "Image format is not supported by img2pdf"
+msgstr "해당 이미지 형식은 img2pdf에서 지원하지 않습니다"
 
-#: data/pdfarranger.ui.h:7
-msgid "Zoom Out"
-msgstr "축소"
+#: data/pdfarranger.ui:58
+msgid "Import"
+msgstr ""
 
-#: data/pdfarranger.ui.h:8
-msgid "Rotate Left"
-msgstr "왼쪽으로 회전"
+#: pdfarranger/pdfarranger.py:1327
+msgid "Import…"
+msgstr "불러오기…"
 
-#: data/pdfarranger.ui.h:9
-msgid "Rotate Right"
-msgstr "오른쪽으로 회전"
-
-#: data/menu.ui.h:2
-msgid "_Import"
-msgstr "불러오기(_I)"
-
-#: data/menu.ui.h:3
-msgid "_New Window"
-msgstr "새 창(_N)"
-
-#: data/menu.ui.h:5
-msgid "Save _As…"
-msgstr "다른 이름으로 저장…(_A)"
-
-#: data/menu.ui.h:6
-msgid "E_xport"
-msgstr "내보내기(_X)"
-
-#: data/menu.ui.h:7
-msgid "E_xport Selection to a Single File…"
-msgstr "선택된 내용들을 하나의 파일로 내보내기…(_X)"
-
-#: data/menu.ui.h:8
-msgid "Export Selection to _Individual Files…"
-msgstr "선택된 내용들을 개별의 파일로 내보내기…(_I)"
-
-#: data/menu.ui.h:9
-msgid "Export _All Pages to Individual Files…"
-msgstr "모든 페이지를 개별의 파일로 내보내기…(_A)"
-
-#: data/menu.ui.h:10
-msgid "_Print…"
-msgstr "인쇄…(_P)"
-
-#: data/menu.ui.h:11
-msgid "_Undo"
-msgstr "실행 취소(_U)"
-
-#: data/menu.ui.h:12
-msgid "_Redo"
-msgstr "다시 실행(_R)"
-
-#: data/menu.ui.h:13
-msgid "_Edit"
-msgstr "편집(_E)"
-
-#: data/menu.ui.h:14
-msgid "Rotate _Left"
-msgstr "왼쪽으로 회전(_L)"
-
-#: data/menu.ui.h:15
-msgid "_Rotate Right"
-msgstr "오른쪽으로 회전(_R)"
-
-#: data/menu.ui.h:16
-msgid "_Page Format"
-msgstr "용지 크기(_P)"
-
-#: data/menu.ui.h:17
-msgid "Crop White Borders"
-msgstr "흰 테두리 잘라내기"
-
-#: data/menu.ui.h:18
-msgid "_Delete"
-msgstr "삭제(_D)"
-
-#: data/menu.ui.h:19
-msgid "Dupl_icate"
-msgstr "복제(_I)"
-
-#: data/menu.ui.h:20
-msgid "Re_verse Order"
-msgstr "순서 바꾸기(_V)"
-
-#: data/menu.ui.h:21
-msgid "_Split Pages"
-msgstr "페이지 나누기(_S)"
-
-#: data/menu.ui.h:22
-msgid "Cu_t"
-msgstr "잘라내기(_T)"
-
-#: data/menu.ui.h:23
-msgid "_Copy"
-msgstr "복사(_C)"
-
-#: data/menu.ui.h:24
-msgid "Paste _After"
-msgstr "뒤 페이지에 붙여넣기(_A)"
-
-#: data/menu.ui.h:25
-msgid "Paste _Before"
-msgstr "앞 페이지에 붙여넣기(_B)"
-
-#: data/menu.ui.h:26
-msgid "Paste As _Odd Pages"
-msgstr "홀수 페이지마다 붙여넣기(_O)"
-
-#: data/menu.ui.h:27
-msgid "Paste As _Even Pages"
-msgstr "짝수 페이지마다 붙여넣기(_E)"
-
-#: data/menu.ui.h:28
+#: data/menu.ui:156 data/menu.ui:385
 msgid "Insert Blan_k Page"
 msgstr "빈 페이지 삽입(_K)"
 
-#: data/menu.ui.h:29
-msgid "Generate Booklet"
-msgstr "북클렛 만들기"
+#: pdfarranger/pageutils.py:325
+msgid "Insert Blank Page"
+msgstr "빈 페이지 삽입"
 
-#: data/menu.ui.h:30
-msgid "_Select"
-msgstr "선택(_S)"
+#: pdfarranger/metadata.py:169
+msgid "Invalid date format. Input discarded."
+msgstr "잘못된 날짜 형식입니다."
 
-#: data/menu.ui.h:31
-msgid "Select _All"
-msgstr "모두 선택(_A)"
+#: pdfarranger/pdfarranger.py:2551
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr ""
 
-#: data/menu.ui.h:32
-msgid "_Deselect All"
-msgstr "모두 선택 해제(_D)"
+#: pdfarranger/metadata.py:44
+msgid "Keywords"
+msgstr "검색어"
 
-#: data/menu.ui.h:33
-msgid "Select _Odd Pages"
-msgstr "홀수 페이지만 선택(_O)"
+#: pdfarranger/config.py:222
+msgid "Language"
+msgstr ""
 
-#: data/menu.ui.h:34
-msgid "Select _Even Pages"
-msgstr "짝수 페이지만 선택(_E)"
+#: pdfarranger/pageutils.py:460
+msgid "Layout for the first page in selection"
+msgstr ""
 
-#: data/menu.ui.h:35
-msgid "All From _Same File"
-msgstr "같은 파일에서 선택(_S)"
+#: pdfarranger/pageutils.py:149
+msgid "Left"
+msgstr "왼쪽"
 
-#: data/menu.ui.h:36
+#: pdfarranger/pageutils.py:377
+msgid "Left to Right"
+msgstr ""
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "메인 메뉴"
+
+#: pdfarranger/pdfarranger.py:2557
+msgid "Maintainers and contributors"
+msgstr "만든 사람과 기여자"
+
+#: pdfarranger/pageutils.py:361
+msgid "Margin"
+msgstr ""
+
+#: pdfarranger/pageutils.py:347
+msgid "Merge Pages"
+msgstr ""
+
+#: pdfarranger/pageutils.py:412
+msgid "Merged page size:"
+msgstr ""
+
+#: pdfarranger/metadata.py:49
+msgid "Modified"
+msgstr "수정 날짜"
+
+#: pdfarranger/pageutils.py:392
+msgid "Non-uniform page size - using max size"
+msgstr ""
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "열기"
+
+#: pdfarranger/pdfarranger.py:1186
+msgid "Open…"
+msgstr "열기…"
+
+#: pdfarranger/pageutils.py:436
+msgid "Overlay"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:282
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"PDF 편집기는 사용자가 PDF 문서를 합치거나 나누고 페이지를 재정렬할 수 있는 다"
+"기능 그래픽 인터페이스를 사용하는 간단한 python-gtk 프로그램입니다."
+
+#: pdfarranger/pdfarranger.py:1498
+msgid "PDF document is damaged"
+msgstr "PDF 문서가 손상되었습니다"
+
+#: pdfarranger/pdfarranger.py:499
+msgid "PDF files"
+msgstr "PDF 파일"
+
+#: pdfarranger/pageutils.py:388
+msgid "Page Order"
+msgstr ""
+
+#: pdfarranger/pageutils.py:241
+msgid "Page Size"
+msgstr "용지 크기"
+
+#: pdfarranger/pdfarranger.py:2585
+msgid "Page Size:"
+msgstr "페이지 크기:"
+
+#: pdfarranger/pageutils.py:230
+msgid "Page format"
+msgstr "용지 크기"
+
+#: pdfarranger/core.py:285
+msgid "Password"
+msgstr "비밀번호"
+
+#: pdfarranger/core.py:263
+msgid "Password required"
+msgstr "비밀번호 필요"
+
+#: data/menu.ui:277
+msgid "Past_e Special"
+msgstr "다른 방식으로 붙여놓기(_E)"
+
+#: data/menu.ui:295
+msgid "Paste As O_verlay…"
+msgstr ""
+
+#: data/menu.ui:151 data/menu.ui:290
+msgid "Paste As _Even Pages"
+msgstr "짝수 페이지마다 붙여넣기(_E)"
+
+#: data/menu.ui:146 data/menu.ui:285
+msgid "Paste As _Odd Pages"
+msgstr "홀수 페이지마다 붙여넣기(_O)"
+
+#: data/menu.ui:300
+msgid "Paste As _Underlay…"
+msgstr ""
+
+#: data/menu.ui:136 data/menu.ui:272
+msgid "Paste _After"
+msgstr "뒤 페이지에 붙여넣기(_A)"
+
+#: data/menu.ui:141 data/menu.ui:280
+msgid "Paste _Before"
+msgstr "앞 페이지에 붙여넣기(_B)"
+
+#: pdfarranger/pdfarranger.py:1627
+msgid "Pasted data not valid. Aborting paste."
+msgstr "붙여넣은 데이터가 잘못되었습니다."
+
+#: pdfarranger/pdfarranger.py:1589
+msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
+msgstr ""
+
+#: data/menu.ui:234
+msgid "Pre_ferences"
+msgstr ""
+
+#: pdfarranger/config.py:212
+msgid "Preferences"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:293
+msgid "Print the version of PDF Arranger and exit"
+msgstr "PDF 편집기의 버전을 출력한 후 닫기"
+
+#: pdfarranger/exporter.py:457
+msgid "Printing…"
+msgstr ""
+
+#: pdfarranger/metadata.py:45
+msgid "Producer"
+msgstr "글쓴이"
+
+#: pdfarranger/metadata.py:212
+msgid "Property"
+msgstr "우선도"
+
+#: data/menu.ui:116 data/menu.ui:373
+msgid "Re_verse Order"
+msgstr "순서 바꾸기(_V)"
+
+#: pdfarranger/pageutils.py:238
+msgid "Relative"
+msgstr ""
+
+#: pdfarranger/exporter.py:469
+msgid "Rendering Preview…"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:732
+msgid "Rendering…"
+msgstr "렌더링 중…"
+
+#: pdfarranger/pdfarranger.py:1132
+msgid "Replace"
+msgstr ""
+
+#: pdfarranger/pageutils.py:149
+msgid "Right"
+msgstr "오른쪽"
+
+#: pdfarranger/pageutils.py:378
+msgid "Right to Left"
+msgstr ""
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "왼쪽으로 회전"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "오른쪽으로 회전"
+
+#: data/menu.ui:90 data/menu.ui:351
+msgid "Rotate _Left"
+msgstr "왼쪽으로 회전(_L)"
+
+#: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "열"
+
+#: data/menu.ui:194 data/menu.ui:337
 msgid "Same Page _Format"
 msgstr "같은 페이지 형식(_F)"
 
-#: data/menu.ui.h:37
-msgid "_Invert Selection"
-msgstr "선택 반전(_I)"
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "저장"
 
-#: data/menu.ui.h:38
-msgid "_View"
-msgstr "보기(_V)"
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "다른 이름으로 저장"
 
-#: data/menu.ui.h:39
+#: pdfarranger/pdfarranger.py:1088
+msgid "Save As…"
+msgstr ""
+
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "다른 이름으로 저장…(_A)"
+
+#: pdfarranger/pdfarranger.py:988
+msgid "Save changes before closing?"
+msgstr "닫기 전에 펀집한 사항을 저장하시겠습니까?"
+
+#: pdfarranger/pdfarranger.py:1025
+msgid "Save changes before quitting?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:985
+msgid "Save changes to “{}” before closing?"
+msgstr "닫기 전에 \"{}\"을 편집한 사항을 저장하시겠습니까?"
+
+#: pdfarranger/pdfarranger.py:1022
+msgid "Save changes to “{}” before quitting?"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1249
+msgid "Saving produced some warnings"
+msgstr "만들어진 몇몇 경고를 포함하여 저장하는 중"
+
+#: pdfarranger/pdfarranger.py:1288
+msgid "Saving…"
+msgstr "저장 중…"
+
+#: pdfarranger/pageutils.py:116
+msgid "Scale factor"
+msgstr "확대 상수"
+
+#: data/menu.ui:169 data/menu.ui:312
+msgid "Select _All"
+msgstr "모두 선택(_A)"
+
+#: data/menu.ui:184 data/menu.ui:327
+msgid "Select _Even Pages"
+msgstr "짝수 페이지만 선택(_E)"
+
+#: data/menu.ui:179 data/menu.ui:322
+msgid "Select _Odd Pages"
+msgstr "홀수 페이지만 선택(_O)"
+
+#: pdfarranger/pdfarranger.py:2580
+msgid "Selected pages: "
+msgstr "선택된 페이지: "
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "페이지 나누기"
+
+#: pdfarranger/metadata.py:43
+msgid "Subject"
+msgstr "주제"
+
+#: pdfarranger/pdfarranger.py:512
+msgid "Supported image files"
+msgstr "지원하는 이미지 파일"
+
+#: pdfarranger/config.py:248 pdfarranger/config.py:256
+msgid "System setting"
+msgstr ""
+
+#: pdfarranger/core.py:275
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "보호된 문서인 \"{}\"(을)를 열기 전에 비밀번호를 입력해야 합니다."
+
+#: pdfarranger/core.py:274
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "PDF 편집기를 닫기 전까지 비밀번호를 기억합니다."
+
+#: pdfarranger/config.py:230
+msgid "Theme"
+msgstr ""
+
+#: pdfarranger/metadata.py:42
+msgid "Title"
+msgstr "제목"
+
+#: pdfarranger/pageutils.py:149
+msgid "Top"
+msgstr "위"
+
+#: pdfarranger/pageutils.py:379
+msgid "Top to Bottom"
+msgstr ""
+
+#: pdfarranger/pageutils.py:436
+msgid "Underlay"
+msgstr ""
+
+#: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
+msgid "Unknown file format"
+msgstr "알 수 없는 형식"
+
+#: pdfarranger/metadata.py:212
+msgid "Value"
+msgstr "값"
+
+#: pdfarranger/pageutils.py:376
+msgid "Vertical"
+msgstr ""
+
+#: pdfarranger/splitter.py:61
+msgid "Vertical Splits"
+msgstr "세로로 나누기"
+
+#: pdfarranger/pageutils.py:478
+msgid "Vertical offset"
+msgstr ""
+
+#: pdfarranger/exporter.py:187
+msgid "Warning"
+msgstr "경고"
+
+#: pdfarranger/pageutils.py:235 pdfarranger/pageutils.py:239
+#: pdfarranger/pageutils.py:327
+msgid "Width"
+msgstr "너비"
+
+#: pdfarranger/splitter.py:88
+msgid "Width in %"
+msgstr "너비(%)"
+
+#: pdfarranger/pdfarranger.py:969
+msgid "Your changes will be lost if you don’t save them."
+msgstr "저장하지 않으면 편집한 사항을 잃게 됩니다."
+
+#: data/pdfarranger.ui:144
+msgid "Zoom In"
+msgstr "확대"
+
+#: data/pdfarranger.ui:167
+msgid "Zoom Out"
+msgstr "축소"
+
+#: data/menu.ui:217
+msgid "Zoom _Fit"
+msgstr ""
+
+#: data/menu.ui:209
 msgid "Zoom _In"
 msgstr "확대(_I)"
 
-#: data/menu.ui.h:40
+#: data/menu.ui:213
 msgid "Zoom _Out"
 msgstr "축소(_O)"
 
-#: data/menu.ui.h:42
-msgid "Full_screen"
-msgstr "전체 화면(_S)"
-
-#: data/menu.ui.h:43
-msgid "Edit _Properties"
-msgstr "정보 편집(_E)"
-
-#: data/menu.ui.h:44
+#: data/menu.ui:240
 msgid "_About"
 msgstr "정보(_A)"
 
-#: data/menu.ui.h:47
-msgid "Past_e Special"
-msgstr "다른 방식으로 붙여놓기(_E)"
+#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
+#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
+msgid "_Cancel"
+msgstr "취소(_C)"
+
+#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+msgid "_Close"
+msgstr "닫기(_C)"
+
+#: data/menu.ui:132 data/menu.ui:268
+msgid "_Copy"
+msgstr "복사(_C)"
+
+#: data/menu.ui:108 data/menu.ui:260
+msgid "_Delete"
+msgstr "삭제(_D)"
+
+#: data/menu.ui:174 data/menu.ui:317
+msgid "_Deselect All"
+msgstr "모두 선택 해제(_D)"
+
+#: data/menu.ui:87
+msgid "_Edit"
+msgstr "편집(_E)"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "불러오기(_I)"
+
+#: data/menu.ui:199 data/menu.ui:342
+msgid "_Invert Selection"
+msgstr "선택 반전(_I)"
+
+#: data/menu.ui:124 data/menu.ui:381
+msgid "_Merge Pages"
+msgstr ""
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "새 창(_N)"
+
+#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+msgid "_OK"
+msgstr ""
+
+#: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
+msgid "_Open"
+msgstr "열기(O)"
+
+#: data/menu.ui:100 data/menu.ui:361
+msgid "_Page Format"
+msgstr "용지 크기(_P)"
+
+#: data/menu.ui:71
+msgid "_Print…"
+msgstr "인쇄…(_P)"
+
+#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+msgid "_Quit"
+msgstr "종료(_Q)"
+
+#: data/menu.ui:82
+msgid "_Redo"
+msgstr "다시 실행(_R)"
+
+#: data/menu.ui:95 data/menu.ui:356
+msgid "_Rotate Right"
+msgstr "오른쪽으로 회전(_R)"
+
+#: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "저장(_S)"
+
+#: data/menu.ui:166 data/menu.ui:309
+msgid "_Select"
+msgstr "선택(_S)"
+
+#: data/menu.ui:120 data/menu.ui:377
+msgid "_Split Pages"
+msgstr "페이지 나누기(_S)"
+
+#: data/menu.ui:78
+msgid "_Undo"
+msgstr "실행 취소(_U)"
+
+#: data/menu.ui:206
+msgid "_View"
+msgstr "보기(_V)"
+
+#: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
+#: pdfarranger/pageutils.py:412
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/core.py:89
+msgid "page"
+msgstr "페이지"
+
+#: pdfarranger/pdfarranger.py:811
+msgid "untitled"
+msgstr "제목 없음"
