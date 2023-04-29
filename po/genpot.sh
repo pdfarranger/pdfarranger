@@ -22,4 +22,4 @@
 
 # Make translation files
 cd "$(dirname "$0")/.."
-xgettext --from-code=utf-8 --output=po/pdfarranger.pot pdfarranger/*.py data/*.ui
+xgettext -s --from-code=utf-8 --output=po/pdfarranger.pot pdfarranger/*.py data/*.ui
