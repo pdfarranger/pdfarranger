@@ -22,13 +22,12 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
  mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip mingw-w64-x86_64-libhandy \
- mingw-w64-x86_64-python-setuptools-scm git python-pip intltool
+ mingw-w64-x86_64-python-setuptools-scm git python-pip
 ```
 
 and
 
 ```
-pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
 /mingw64/bin/python3 -m pip install --user keyboard darkdetect https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 ```
 
