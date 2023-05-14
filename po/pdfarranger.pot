@@ -31,12 +31,10 @@ msgid "%"
 msgstr ""
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of height"
 msgstr ""
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of width"
 msgstr ""
 
