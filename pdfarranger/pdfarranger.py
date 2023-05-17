@@ -2417,6 +2417,7 @@ class PdfArranger(Gtk.Application):
                     break
             ndpage += 1
         self.update_iconview_geometry()
+        self.iv_selection_changed_event()
         self.update_max_zoom_level()
 
     def edit_metadata(self, _action, _parameter, _unknown):
