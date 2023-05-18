@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2022-08-05 13:05+0300\n"
+"PO-Revision-Date: 2023-05-18 07:19+0300\n"
 "Last-Translator: kbengs\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
@@ -48,20 +48,20 @@ msgstr "%s är ett verktyg för att arrangera om och modifiera PDF filer."
 
 #: pdfarranger/config.py:232
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy saknas)"
 
 #: pdfarranger/config.py:224
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Kräver omstart)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(samma offset tillämpas på alla sidor)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr ""
+msgstr "En fil med namnet \"%s\" finns redan. Vill du skriva över den?"
 
 #: data/menu.ui:189 data/menu.ui:332
 msgid "All From _Same File"
@@ -85,7 +85,7 @@ msgstr "Under"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "Nerifrån uppåt"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
@@ -199,7 +199,7 @@ msgstr "Fil(er) att öppna"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "För fler inställningar se:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -228,7 +228,7 @@ msgstr "Höjd i %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontell"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -236,7 +236,7 @@ msgstr "Horisontell delning"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Horizontell offset"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -277,11 +277,11 @@ msgstr "Nyckelord"
 
 #: pdfarranger/config.py:222
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Layouten för första sidan i markeringen"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -289,7 +289,7 @@ msgstr "Vänster"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "Vänster till höger"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -301,15 +301,15 @@ msgstr "Administratörer och bidragsgivare"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Marginal"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Slå samman sidor"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Sammanslagna sidstorleken:"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -317,7 +317,7 @@ msgstr "Ändrad"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Sidorna har olika storlek - max storleken används"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -329,7 +329,7 @@ msgstr "Öppna…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "Klistra in ovanpå"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -353,7 +353,7 @@ msgstr "PDF filer"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Sidordning"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -381,7 +381,7 @@ msgstr "Klistra in _special"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Klistra in ovanp_å…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -393,7 +393,7 @@ msgstr "Klistra in som _udda sidor"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Klistra in unde_r…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -409,15 +409,15 @@ msgstr "Inklistrat data är inte giltigt. Inklistringen avbryts."
 
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
-msgstr ""
+msgstr "Pikepdf >= 3 behövs för stöd av lager/slå samman sidor."
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
-msgstr ""
+msgstr "_Inställningar"
 
 #: pdfarranger/config.py:212
 msgid "Preferences"
-msgstr ""
+msgstr "Inställningar"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
@@ -453,7 +453,7 @@ msgstr "Renderar…"
 
 #: pdfarranger/pdfarranger.py:1132
 msgid "Replace"
-msgstr ""
+msgstr "Ersätt"
 
 #: pdfarranger/pageutils.py:149
 msgid "Right"
@@ -461,7 +461,7 @@ msgstr "Höger"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "Höger till vänster"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -557,7 +557,7 @@ msgstr "Bildfiler som stöds"
 
 #: pdfarranger/config.py:248 pdfarranger/config.py:256
 msgid "System setting"
-msgstr ""
+msgstr "Systemets inställning"
 
 #: pdfarranger/core.py:275
 msgid ""
@@ -570,7 +570,7 @@ msgstr "Lösenordet kommer att vara sparat tills du stänger PDF Arranger."
 
 #: pdfarranger/config.py:230
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -582,11 +582,11 @@ msgstr "Över"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "Uppifrån neråt"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "Klistra in under"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -598,7 +598,7 @@ msgstr "Innehåll"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikal"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -606,7 +606,7 @@ msgstr "Vertikal delning"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Vertikal offset"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -685,7 +685,7 @@ msgstr "_Invertera markeringen"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "Sl_å samman sidor…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -693,7 +693,7 @@ msgstr "_Nytt fönster"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"
