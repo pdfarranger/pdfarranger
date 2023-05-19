@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2023-04-29 18:08+0200\n"
+"PO-Revision-Date: 2023-05-19 09:47+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -32,12 +32,10 @@ msgid "%"
 msgstr "%"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of height"
 msgstr "% de la nautor"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of width"
 msgstr "% de la largor"
 
@@ -48,15 +46,15 @@ msgstr "%s es una aisina per reorganizar e modificar los fichièrs PDF."
 
 #: pdfarranger/config.py:232
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy mancanta)"
 
 #: pdfarranger/config.py:224
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Reaviada necessària)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(lo meteis descalatge es aplicat a totas las paginas)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
@@ -85,7 +83,7 @@ msgstr "En bas"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "D'aval cap amont"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
@@ -200,7 +198,7 @@ msgstr "Fichièr(s) de dobrir"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "Per mai d’opcions vejatz :"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -229,7 +227,7 @@ msgstr "Nautor en %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Orizontal"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -237,7 +235,7 @@ msgstr "Partison orizontal"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Descalatge orizontal"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -278,11 +276,11 @@ msgstr "Mots clau"
 
 #: pdfarranger/config.py:222
 msgid "Language"
-msgstr ""
+msgstr "Lenga "
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Disposicion de la primièra pagina en seleccion"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -290,7 +288,7 @@ msgstr "Esquèrra"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "D’esquèrra a drecha"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -302,15 +300,15 @@ msgstr "Manteneires e contributors"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Marge"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Marge de las paginas"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Talha de las paginas amb marge :"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -318,7 +316,7 @@ msgstr "Modificacion"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Talha de pagina non unifòrma - utilizacion de la talha max"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -330,7 +328,7 @@ msgstr "Dobrir…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "Superposicion"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -354,7 +352,7 @@ msgstr "Fichièrs PDF"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Òrdre de las paginas"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -382,7 +380,7 @@ msgstr "Emp_egament especial"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Pegar coma s_uperposicion…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -394,7 +392,7 @@ msgstr "Pegar coma paginas _imparas"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Pegar coma j_os jaç…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -411,14 +409,16 @@ msgstr "Donadas pegadas invalidas. Abandon de l’empegament."
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
 msgstr ""
+"Pikepdf >= 3 es requerit per la presa en carga de la fusion d’incrustacion "
+"sus o jos la pagina."
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
-msgstr ""
+msgstr "Pre_feréncias"
 
 #: pdfarranger/config.py:212
 msgid "Preferences"
-msgstr ""
+msgstr "Preferéncias"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
@@ -462,7 +462,7 @@ msgstr "Drecha"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "De drecha a esquèrra"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -558,7 +558,7 @@ msgstr "Fichièrs imatge preses en carga"
 
 #: pdfarranger/config.py:248 pdfarranger/config.py:256
 msgid "System setting"
-msgstr ""
+msgstr "Paramètres sistèma"
 
 #: pdfarranger/core.py:275
 msgid ""
@@ -571,7 +571,7 @@ msgstr "S’enregistrarà lo senhal fins que tampetz PDF Arranger."
 
 #: pdfarranger/config.py:230
 msgid "Theme"
-msgstr ""
+msgstr "Tèma"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -583,11 +583,11 @@ msgstr "Ennaut"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "D'amont cap aval"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "Jos jaç"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -599,7 +599,7 @@ msgstr "Valor"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -607,7 +607,7 @@ msgstr "Partison vertical"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Descalatge vertical"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -686,7 +686,7 @@ msgstr "_Inversar la seleccion"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "_Marge de las paginas…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -694,7 +694,7 @@ msgstr "Fenèstra _novèla"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_D'acòrdi"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"
