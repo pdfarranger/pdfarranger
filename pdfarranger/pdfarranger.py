@@ -1523,7 +1523,7 @@ class PdfArranger(Gtk.Application):
         for filename, npage, _basename, angle, scale, crop, layerdata in data:
             d = [[filename, npage, angle, scale, laypos, crop, [0] * 4]] + layerdata
             page_stack.append(pageadder.get_layerpages(d))
-            if page_stack is None:
+            if page_stack[-1] is None:
                 return
         if not self.is_paste_layer_available(destination):
             return
