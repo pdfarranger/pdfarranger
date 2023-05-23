@@ -31,6 +31,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="sv">Slå samman, arrangera om, dela, rotera och beskär PDF filer</summary>
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
+  <summary xml:lang="uk">Додаток для об'єднання, зміни порядку сторінок, розділу, обертання та обрізання PDF документів</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1"/>
@@ -145,6 +146,14 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="tr">
       pikepdf için bir önyüzdür.
+    </p>
+    <p xml:lang="uk">
+      PDF Arranger це маленький python-gtk додаток, який допоможе користувачу зливати разом
+      або розділяти pdf документи і перегортати, обрізати і переставляти місцями сторінки за
+      допомогою інтерактивного і інтуітивного графічного інтерфейсу.
+    </p>
+    <p xml:lang="uk">
+      Це графічна оболонка для pikepdf.
     </p>
   </description>
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
