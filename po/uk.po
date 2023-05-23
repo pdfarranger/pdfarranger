@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2023-05-23 11:50+0300\n"
+"PO-Revision-Date: 2023-05-23 12:35+0300\n"
 "Last-Translator: volkov <volkovissocool@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -121,7 +121,7 @@ msgstr "Обрізання не видаляє нічого із вмісту PD
 
 #: data/menu.ui:128 data/menu.ui:264
 msgid "Cu_t"
-msgstr "_Вирізати"
+msgstr "Ви_різати"
 
 #: pdfarranger/pdfarranger.py:1250
 msgid "Despite the warnings the document(s) should have no visible issues."
@@ -158,11 +158,11 @@ msgstr "_Експортувати"
 
 #: data/menu.ui:55 data/menu.ui:398
 msgid "E_xport Selection to a Single File…"
-msgstr "_Експортувати обране в один файл…"
+msgstr "Експортувати обране в _один файл…"
 
 #: data/menu.ui:228
 msgid "Edit _Properties"
-msgstr "Редагувати _властивості"
+msgstr "Редагувати влас_тивості"
 
 #: pdfarranger/metadata.py:198
 msgid "Edit properties"
@@ -178,7 +178,7 @@ msgstr "Рівна висота рядків"
 
 #: data/menu.ui:60 data/menu.ui:403
 msgid "Export Selection to _Individual Files…"
-msgstr "Експортувати обране на _індивідуальні файли…"
+msgstr "Експортувати обране в _індивідуальні файли…"
 
 #: data/menu.ui:65 data/menu.ui:408
 msgid "Export _All Pages to Individual Files…"
@@ -396,7 +396,7 @@ msgstr "Вставити як підкладку…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
-msgstr "Вставити _після"
+msgstr "Вставити піс_ля"
 
 #: data/menu.ui:141 data/menu.ui:280
 msgid "Paste _Before"
@@ -473,7 +473,7 @@ msgstr "Перегорнути вправо"
 
 #: data/menu.ui:90 data/menu.ui:351
 msgid "Rotate _Left"
-msgstr "Перегорнути _вліво"
+msgstr "Перегорнути в_ліво"
 
 #: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
 msgid "Rows"
@@ -649,7 +649,7 @@ msgstr "З_меншити"
 
 #: data/menu.ui:240
 msgid "_About"
-msgstr "_Про програму"
+msgstr "Про програ_му"
 
 #: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
 #: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
@@ -659,7 +659,7 @@ msgstr "_Скасувати"
 
 #: pdfarranger/pdfarranger.py:980 data/menu.ui:246
 msgid "_Close"
-msgstr "_Закрити"
+msgstr "За_крити"
 
 #: data/menu.ui:132 data/menu.ui:268
 msgid "_Copy"
@@ -711,7 +711,7 @@ msgstr "_Друк…"
 
 #: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
 msgid "_Quit"
-msgstr "_Вийти"
+msgstr "Ви_йти"
 
 #: data/menu.ui:82
 msgid "_Redo"
@@ -719,7 +719,7 @@ msgstr "_Повторити дію"
 
 #: data/menu.ui:95 data/menu.ui:356
 msgid "_Rotate Right"
-msgstr "_Гортати вправо"
+msgstr "Гортати в_право"
 
 #: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
 #: data/menu.ui:42
@@ -740,7 +740,7 @@ msgstr "_Скасувати дію"
 
 #: data/menu.ui:206
 msgid "_View"
-msgstr "_Перегляд"
+msgstr "Перегля_д"
 
 #: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
 #: pdfarranger/pageutils.py:412
