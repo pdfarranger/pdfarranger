@@ -55,6 +55,7 @@ _DEFAULT_ACCELS = [
     ('select(0)', '<Primary>a'),
     ('select(1)', '<Primary><Shift>a'),
     ('main-menu', 'F10'),
+    ('metadata', '<Alt>Return'),
 ]
 
 
