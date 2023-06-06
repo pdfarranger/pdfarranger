@@ -186,4 +186,12 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   </releases>
   <project_license>GPL-3.0-or-later</project_license>
   <url type="bugtracker">https://github.com/pdfarranger/pdfarranger/issues</url>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">520</display_length>
+  </requires>
 </component>
