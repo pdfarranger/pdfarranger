@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2023-06-07 14:30+0100\n"
+"PO-Revision-Date: 2023-06-07 14:34+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
@@ -240,7 +240,7 @@ msgstr "Separação horizontal"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr "Desvio horizontal"
+msgstr "Deslocamento horizontal"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
