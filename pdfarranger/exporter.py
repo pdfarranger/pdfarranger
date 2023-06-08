@@ -401,7 +401,11 @@ def num_pages(filepath):
 def generate_booklet(pdfqueue, tmp_dir, pages):
     file, filename = make_tmp_file(tmp_dir)
     content_dict = pikepdf.Dictionary({})
-    file_indexes = {p.nfile for p in pages}
+    file_indexes = set()
+    for p in pages:
+        file_indexes.add(p.nfile)
+        for lp in p.layerpages:
+            file_indexes.add(lp.nfile)
     source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
     _copy_n_transform(source_files, file, pages)
     to_remove = len(file.pages)
