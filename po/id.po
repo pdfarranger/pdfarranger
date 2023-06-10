@@ -210,7 +210,7 @@ msgstr "Formulir dan garis-garis kerangka hilang saat disimpan"
 
 #: data/menu.ui:234
 msgid "Full_screen"
-msgstr ""
+msgstr "Layar_penuh"
 
 #: pdfarranger/pdfarranger.py:2563
 msgid "GNU General Public License (GPL) Version 3."
@@ -251,7 +251,7 @@ msgstr "File gambar tidak didukung dengan img2pdf"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
-msgstr ""
+msgstr "Impor"
 
 #: pdfarranger/pdfarranger.py:1327
 msgid "Import…"
@@ -267,7 +267,7 @@ msgstr "Sisipkan Halaman Kosong"
 
 #: pdfarranger/metadata.py:170
 msgid "Invalid date format. Input discarded."
-msgstr "Format tanggal tidak valid. Input dibuang."
+msgstr "Format tanggal tidak valid. Input dibatalkan."
 
 #: pdfarranger/pdfarranger.py:2552
 #, python-format
@@ -296,7 +296,7 @@ msgstr "Kiri ke Kanan"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
-msgstr ""
+msgstr "Menu Utama"
 
 #: pdfarranger/pdfarranger.py:2558
 msgid "Maintainers and contributors"
@@ -324,7 +324,7 @@ msgstr "Ukuran halaman yang tidak seragam - menggunakan ukuran maksimum."
 
 #: data/pdfarranger.ui:37
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: pdfarranger/pdfarranger.py:1186
 msgid "Open…"
@@ -380,31 +380,31 @@ msgstr "Kata Sandi diperlukan"
 
 #: data/menu.ui:107 data/menu.ui:290
 msgid "Past_e Special"
-msgstr ""
+msgstr "Temp_el Spesial"
 
 #: data/menu.ui:124 data/menu.ui:308
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Tempel Sebagai O_verlay…"
 
 #: data/menu.ui:119 data/menu.ui:303
 msgid "Paste As _Even Pages"
-msgstr ""
+msgstr "Tempel Sebagai Halaman _Genap"
 
 #: data/menu.ui:114 data/menu.ui:298
 msgid "Paste As _Odd Pages"
-msgstr ""
+msgstr "Tempel Sebagai Halaman _Ganjil"
 
 #: data/menu.ui:129 data/menu.ui:313
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Tempel Sebagai _Underlay…"
 
 #: data/menu.ui:102 data/menu.ui:285
 msgid "Paste _After"
-msgstr ""
+msgstr "Tempel _Setelah"
 
 #: data/menu.ui:109 data/menu.ui:293
 msgid "Paste _Before"
-msgstr ""
+msgstr "Tempel _Sebelum"
 
 #: pdfarranger/pdfarranger.py:1627
 msgid "Pasted data not valid. Aborting paste."
@@ -418,7 +418,7 @@ msgstr ""
 
 #: data/menu.ui:247
 msgid "Pre_ferences"
-msgstr ""
+msgstr "Pre_ferensi"
 
 #: pdfarranger/config.py:213
 msgid "Preferences"
@@ -442,7 +442,7 @@ msgstr "Properti"
 
 #: data/menu.ui:157 data/menu.ui:386
 msgid "Re_verse Order"
-msgstr ""
+msgstr "Ba_likkan Urutan"
 
 #: pdfarranger/pageutils.py:238
 msgid "Relative"
@@ -470,15 +470,15 @@ msgstr "Kanan ke Kiri"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
-msgstr ""
+msgstr "Rotasi ke Kiri"
 
 #: data/pdfarranger.ui:227
 msgid "Rotate Right"
-msgstr ""
+msgstr "Rotasi ke Kanan"
 
 #: data/menu.ui:135 data/menu.ui:364
 msgid "Rotate _Left"
-msgstr ""
+msgstr "Rotasi ke _Kiri"
 
 #: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
 msgid "Rows"
@@ -486,15 +486,15 @@ msgstr "Baris"
 
 #: data/menu.ui:207 data/menu.ui:350
 msgid "Same Page _Format"
-msgstr ""
+msgstr "_Format Halaman yang Sama"
 
 #: data/pdfarranger.ui:78
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: data/pdfarranger.ui:97
 msgid "Save As"
-msgstr ""
+msgstr "Simpan Sebagai"
 
 #: pdfarranger/pdfarranger.py:1088
 msgid "Save As…"
@@ -502,7 +502,7 @@ msgstr "Simpan Sebagai…"
 
 #: data/menu.ui:47
 msgid "Save _As…"
-msgstr ""
+msgstr "Simpan _Sebagai…"
 
 #: pdfarranger/pdfarranger.py:988
 msgid "Save changes before closing?"
@@ -534,15 +534,15 @@ msgstr "Faktor Skala"
 
 #: data/menu.ui:182 data/menu.ui:325
 msgid "Select _All"
-msgstr ""
+msgstr "Pilih _Semua"
 
 #: data/menu.ui:197 data/menu.ui:340
 msgid "Select _Even Pages"
-msgstr ""
+msgstr "Pilih Halaman _Genap"
 
 #: data/menu.ui:192 data/menu.ui:335
 msgid "Select _Odd Pages"
-msgstr ""
+msgstr "Pilih Halaman _Ganjil"
 
 #: pdfarranger/pdfarranger.py:2581
 msgid "Selected pages: "
@@ -640,15 +640,15 @@ msgstr "Zoom Perkecil"
 
 #: data/menu.ui:230
 msgid "Zoom _Fit"
-msgstr ""
+msgstr "_Sesuaikan Zoom"
 
 #: data/menu.ui:222
 msgid "Zoom _In"
-msgstr ""
+msgstr "Zoom _Perbesar"
 
 #: data/menu.ui:226
 msgid "Zoom _Out"
-msgstr "Z_oom Perkecil"
+msgstr "Zoom _Perkecil"
 
 #: data/menu.ui:253
 msgid "_About"
@@ -690,7 +690,7 @@ msgstr "Pi_lih Sebaliknya"
 
 #: data/menu.ui:165 data/menu.ui:394
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "_Gabungkan Halaman…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -710,7 +710,7 @@ msgstr "_Format Halaman…"
 
 #: data/menu.ui:71
 msgid "_Print…"
-msgstr ""
+msgstr "_Cetak…"
 
 #: pdfarranger/pdfarranger.py:1017 data/menu.ui:265
 msgid "_Quit"
@@ -743,7 +743,7 @@ msgstr "_Batalkan Tindakan Terakhir"
 
 #: data/menu.ui:219
 msgid "_View"
-msgstr ""
+msgstr "_Lihat"
 
 #: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
 #: pdfarranger/pageutils.py:412
