@@ -6,13 +6,16 @@ License version 3 or later.
 See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 -->
 <component type="desktop-application">
-  <id>com.github.jeromerobert.pdfarranger</id>
+  <id>com.github.jeromerobert.pdfarranger</id>  
+  <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
+
   <name>PDF Arranger</name>
-  <name xml:lang="ko">PDF 편집기</name>
+  <name xml:lang="ca">Arranjador de PDF</name>
   <name xml:lang="hr">PDF uređivač</name>
   <name xml:lang="hu">PDF-rendező</name>
+  <name xml:lang="ko">PDF 편집기</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
-  <name xml:lang="ca">Arranjador de PDF</name>
+  
   <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
   <summary xml:lang="ca">Fusionador, arranjador, divisor, rotador i retallador de PDF</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
@@ -23,18 +26,27 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="fr">Fusionner, réorganiser, découper, pivoter et recadrer des documents PDF</summary>
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
   <summary xml:lang="hu">PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása</summary>
-  <summary xml:lang="nl">Een programma voor het samenvoegen, herordenen, opsplitsen, draaien en bijsnijden van pdf-bestanden</summary>
   <summary xml:lang="is">Forrit til að sameina, endurraða, skipta upp, snúa og skera utan af síðum í PDF-skjölum</summary>
+  <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
+  <summary xml:lang="nl">Een programma voor het samenvoegen, herordenen, opsplitsen, draaien en bijsnijden van pdf-bestanden</summary>
   <summary xml:lang="pt">Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF</summary>
   <summary xml:lang="ru">Приложение для объединения, изменения порядка страниц, разделения, вращение и обрезки документов PDF</summary>
   <summary xml:lang="sk">Grafický nástroj na manipuláciu s PDF</summary>
   <summary xml:lang="sv">Slå samman, arrangera om, dela, rotera och beskär PDF filer</summary>
-  <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <summary xml:lang="uk">Додаток для об'єднання, зміни порядку сторінок, розділу, обертання та обрізання PDF документів</summary>
-  <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
+
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1"/>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer_name>Jerome Robert et al.</developer_name>
+  <update_contact>jeromerobert@gmx.com</update_contact>
+  
+  <categories>
+    <category>Education</category>
+    <category>Office</category>
+  </categories>
+  
   <description>
     <p>
       PDF Arranger is a small application, which helps the user to merge or split pdf
@@ -156,41 +168,47 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       Це графічна оболонка для pikepdf.
     </p>
   </description>
-  <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
+    
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
       <caption/>
     </screenshot>
   </screenshots>
-  <update_contact>jeromerobert@gmx.com</update_contact>
+
   <releases>
-    <release date="2022-11-27" version="1.9.2"/>
-    <release date="2022-09-24" version="1.9.1"/>
-    <release date="2022-09-17" version="1.9.0"/>
-    <release date="2021-12-25" version="1.8.2"/>
-    <release date="2021-12-10" version="1.8.1"/>
-    <release date="2021-11-13" version="1.8.0"/>
-    <release date="2021-03-13" version="1.7.1"/>
-    <release date="2021-01-24" version="1.7.0"/>
-    <release date="2020-08-01" version="1.6.2"/>
-    <release date="2020-07-31" version="1.6.1"/>
-    <release date="2020-07-15" version="1.6.0"/>
-    <release date="2020-05-16" version="1.5.3"/>
-    <release date="2020-05-16" version="1.5.2"/>
-    <release date="2020-04-20" version="1.5.1"/>
-    <release date="2020-04-14" version="1.5.0"/>
-    <release date="2020-03-16" version="1.4.2"/>
-    <release date="2020-02-09" version="1.4.1"/>
-    <release date="2020-01-26" version="1.4.0"/>
+    
+    <release date="2022-11-27" version="1.9.2">
+      <url>https://github.com/pdfarranger/pdfarranger/releases</url>
+      <description>
+        <ul>
+          <li>Fixes</li>
+          <li>New and improved features</li>
+          <li>User interface improvements</li>
+        </ul>
+
+        <ul>
+          <li xml:lang="hu">Javítások</li>
+          <li xml:lang="hu">Új és továbbfejlesztett jellemzők</li>
+          <li xml:lang="hu">Felhasználói felület fejlesztései</li>
+        </ul>        
+      </description>
+    </release>
+    
   </releases>
-  <project_license>GPL-3.0-or-later</project_license>
+
+  <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
   <url type="bugtracker">https://github.com/pdfarranger/pdfarranger/issues</url>
+  <url type="help">https://github.com/pdfarranger/pdfarranger/issues</url>
+  <url type="donate">https://github.com/pdfarranger/pdfarranger#for-developers</url>
+  <url type="translate">https://github.com/pdfarranger/pdfarranger#for-translators</url>
+
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
     <control>touch</control>
   </supports>
+  
   <requires>
     <display_length compare="ge">520</display_length>
   </requires>
