@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# PDF Arranger.
+# Copyright (C) 2023 PDF Arranger Contributors
+# This file is distributed under the same license as the PDF Arranger package.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2022-05-25 13:33+0300\n"
+"PO-Revision-Date: 2023-06-12 11:22+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -49,20 +49,20 @@ msgstr "%s הוא כלי לסידור מחדש ועריכה של קובצי PDF.
 
 #: pdfarranger/config.py:232
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy חסרה)"
 
 #: pdfarranger/config.py:224
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(נדרשת הפעלה מחדש)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(אותו ההיסט חל על כל העמודים)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr ""
+msgstr "כבר קיים קובץ בשם „%s”. להחליף אותו?"
 
 #: data/menu.ui:189 data/menu.ui:332
 msgid "All From _Same File"
@@ -86,11 +86,11 @@ msgstr "למטה"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "מלמטה למעלה"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
-msgstr ""
+msgstr "תמונה בלוח גזירים"
 
 #: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
 msgid "Columns"
@@ -199,7 +199,7 @@ msgstr "קבצים לפתיחה"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "לאפשרויות נוספות ר׳:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -228,7 +228,7 @@ msgstr "גובה ב־%"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "אופקי"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -236,7 +236,7 @@ msgstr "פיצולים אופקיים"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "היסט אופקי"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -277,11 +277,11 @@ msgstr "מילות חיפוש"
 
 #: pdfarranger/config.py:222
 msgid "Language"
-msgstr ""
+msgstr "שפה"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "פריסה עבור העמוד הראשון בבחירה"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -289,7 +289,7 @@ msgstr "שמאל"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "משמאל לימין"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -301,15 +301,15 @@ msgstr "מתחזקים ומתנדבים"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "שול"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "מיזוג עמודים"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "גודל העמוד הממוזג:"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -317,7 +317,7 @@ msgstr "נערך"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "גודל עמודים לא אחיד - נעשה שימוש בגודל המרבי"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -329,7 +329,7 @@ msgstr "פתיחה…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "שכבת על"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -352,7 +352,7 @@ msgstr "קובצי PDF"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "סדר עמודים"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -380,7 +380,7 @@ msgstr "הדבקה _מיוחדת"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "הדבקה כ_שכבת על…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -392,7 +392,7 @@ msgstr "הדבקה כדפים א_י־זוגיים"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "הדבקה כשכבת _רקע…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -408,15 +408,15 @@ msgstr "הנתונים שהודבקו שגויים. ההדבקה מבוטלת."
 
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
-msgstr ""
+msgstr "Pikepdf >= 3 נחוץ לטובת תמיכה בשכבת על/שכבת רקע/מיזוג."
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
-msgstr ""
+msgstr "ה_עדפות"
 
 #: pdfarranger/config.py:212
 msgid "Preferences"
-msgstr ""
+msgstr "העדפות"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
@@ -452,7 +452,7 @@ msgstr "מתבצע עיבוד…"
 
 #: pdfarranger/pdfarranger.py:1132
 msgid "Replace"
-msgstr ""
+msgstr "החלפה"
 
 #: pdfarranger/pageutils.py:149
 msgid "Right"
@@ -460,7 +460,7 @@ msgstr "ימין"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "מימין לשמאל"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -556,7 +556,7 @@ msgstr "קובצי התמונה הנתמכים"
 
 #: pdfarranger/config.py:248 pdfarranger/config.py:256
 msgid "System setting"
-msgstr ""
+msgstr "הגדרת המערכת"
 
 #: pdfarranger/core.py:275
 msgid ""
@@ -569,7 +569,7 @@ msgstr "הססמה תישמר עד לסגירת PDF Arranger."
 
 #: pdfarranger/config.py:230
 msgid "Theme"
-msgstr ""
+msgstr "ערכת עיצוב"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -581,11 +581,11 @@ msgstr "למעלה"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "מלמעלה למטה"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "שכבת רקע"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -597,7 +597,7 @@ msgstr "ערך"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "אנכי"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -605,7 +605,7 @@ msgstr "פיצולים אנכיים"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "היסט אנכי"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -684,7 +684,7 @@ msgstr "היפוך ה_בחירה"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "מי_זוג עמודים…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -692,7 +692,7 @@ msgstr "_חלון חדש"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_אישור"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"
