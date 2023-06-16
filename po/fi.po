@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2021-11-02 18:29+0200\n"
+"PO-Revision-Date: 2023-06-16 05:49+0300\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -34,34 +34,34 @@ msgstr "%"
 #: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of height"
-msgstr ""
+msgstr "% korkeudesta"
 
 #: pdfarranger/pageutils.py:170
 #, python-format
 msgid "% of width"
-msgstr ""
+msgstr "% leveydestä"
 
 #: pdfarranger/pdfarranger.py:2548
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s on työkalu PDF-tiedostojen järjestämiseen ja muokkaamiseen."
 
 #: pdfarranger/config.py:232
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy puuttuu)"
 
 #: pdfarranger/config.py:224
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Vaatii uudelleenkäynnistyksen)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(kaikki sivut käyttää sama siirtymä)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr ""
+msgstr "Tiedosto nimellä \"%s\" on jo olemassa. Haluatko korvata sen?"
 
 #: data/menu.ui:189 data/menu.ui:332
 msgid "All From _Same File"
@@ -73,7 +73,7 @@ msgstr "Kaikki tiedostot"
 
 #: pdfarranger/pdfarranger.py:462
 msgid "All pages must have the same size."
-msgstr "Kaikki sivut on oltava saman kokoiset."
+msgstr "Kaikki sivut on oltava samankokoiset."
 
 #: pdfarranger/pdfarranger.py:495
 msgid "All supported files"
@@ -85,11 +85,11 @@ msgstr "Alla"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "Alhaalta ylöspäin"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
-msgstr ""
+msgstr "Leikepöytä kuva"
 
 #: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
 msgid "Columns"
@@ -127,14 +127,15 @@ msgstr "_Leikkaa"
 #: pdfarranger/pdfarranger.py:1250
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
+"Varoituksista huolimatta tiedostoissa ei pitäisi olla näkyviä ongelmia."
 
 #: pdfarranger/pdfarranger.py:979
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Hylkää muutokset ja sulje tiedosto?"
 
 #: pdfarranger/pdfarranger.py:1016
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Hylkää muutokset ja sulje ohjelma?"
 
 #: pdfarranger/exporter.py:194
 msgid "Do not show this dialog again."
@@ -146,7 +147,7 @@ msgstr "_Älä tallenna"
 
 #: pdfarranger/pdfarranger.py:1257
 msgid "Don't show warnings when saving again."
-msgstr ""
+msgstr "Älä näytä varoituksia tallennettaessa."
 
 #: data/menu.ui:112 data/menu.ui:369
 msgid "Dupl_icate"
@@ -198,7 +199,7 @@ msgstr "Tiedostoja avattavaksi"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "Käytetty asetustiedosto:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -206,7 +207,7 @@ msgstr "Lomakkeet ja kirjanmerkit menetetään tallennettaessa."
 
 #: data/menu.ui:221
 msgid "Full_screen"
-msgstr ""
+msgstr "Koko _näyttö"
 
 #: pdfarranger/pdfarranger.py:2562
 msgid "GNU General Public License (GPL) Version 3."
@@ -227,7 +228,7 @@ msgstr "Korkeus %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Vaakasuora"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -235,7 +236,7 @@ msgstr "Vaakasuora jako"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Vaakasuuntainen siirtymä"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -247,7 +248,7 @@ msgstr "Img2pdf ei tue kuvamuotoa"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
-msgstr ""
+msgstr "Tuo"
 
 #: pdfarranger/pdfarranger.py:1327
 msgid "Import…"
@@ -268,7 +269,7 @@ msgstr "Päivämäärämuoto on virheellinen."
 #: pdfarranger/pdfarranger.py:2551
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "libqpdf %s, pikepdf %s, GTK %s ja Python %s."
 
 #: pdfarranger/metadata.py:44
 msgid "Keywords"
@@ -276,11 +277,11 @@ msgstr "Avainsanat"
 
 #: pdfarranger/config.py:222
 msgid "Language"
-msgstr ""
+msgstr "Kieli"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Valinnan ensimmäisen sivun asettelu"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -288,7 +289,7 @@ msgstr "Vasen"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "Vasemmalta oikealle"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -300,15 +301,15 @@ msgstr "Ylläpitäjät ja avustajat"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Marginaali"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Yhdistä sivuja"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Yhdistetyn sivun koko:"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -316,19 +317,19 @@ msgstr "Muokattu"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Vaihteleva sivukoko - enimmäiskoko käytetään"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
-msgstr ""
+msgstr "Avaa"
 
 #: pdfarranger/pdfarranger.py:1186
 msgid "Open…"
-msgstr ""
+msgstr "Avaa…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "Liitä ylle"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -350,7 +351,7 @@ msgstr "PDF tiedostot"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Sivujärjestys"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -378,7 +379,7 @@ msgstr "Liitä määräte_n"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Liitä _ylle…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -390,7 +391,7 @@ msgstr "Liitä paritto_mina sivuina"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Liitä _alle…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -406,15 +407,15 @@ msgstr "Liitetty data ei hyväksytty."
 
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
-msgstr ""
+msgstr "Liitä ylle/liitä alle/yhdistä vaatii Pikepdf >= 3"
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
-msgstr ""
+msgstr "Asetukse_t"
 
 #: pdfarranger/config.py:212
 msgid "Preferences"
-msgstr ""
+msgstr "Asetukset"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
@@ -422,7 +423,7 @@ msgstr "Tulosta PDF Arranger versio ja sulje"
 
 #: pdfarranger/exporter.py:457
 msgid "Printing…"
-msgstr ""
+msgstr "Tulostaa…"
 
 #: pdfarranger/metadata.py:45
 msgid "Producer"
@@ -442,7 +443,7 @@ msgstr "Suhteellinen"
 
 #: pdfarranger/exporter.py:469
 msgid "Rendering Preview…"
-msgstr ""
+msgstr "Renderöi esikatselua…"
 
 #: pdfarranger/pdfarranger.py:732
 msgid "Rendering…"
@@ -450,7 +451,7 @@ msgstr "Renderöi…"
 
 #: pdfarranger/pdfarranger.py:1132
 msgid "Replace"
-msgstr ""
+msgstr "Korvaa"
 
 #: pdfarranger/pageutils.py:149
 msgid "Right"
@@ -458,7 +459,7 @@ msgstr "Oikea"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "Oikealta vasemmalle"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -490,7 +491,7 @@ msgstr "Tallenna nimellä"
 
 #: pdfarranger/pdfarranger.py:1088
 msgid "Save As…"
-msgstr ""
+msgstr "Tallenna nimellä…"
 
 #: data/menu.ui:47
 msgid "Save _As…"
@@ -498,11 +499,11 @@ msgstr "Tallenna _nimellä…"
 
 #: pdfarranger/pdfarranger.py:988
 msgid "Save changes before closing?"
-msgstr "Tallenna muutokset ennen sulkemista?"
+msgstr "Tallenna muutokset ennen tiedoston sulkemista?"
 
 #: pdfarranger/pdfarranger.py:1025
 msgid "Save changes before quitting?"
-msgstr ""
+msgstr "Tallenna muutokset ennen ohjelman sulkemista?"
 
 #: pdfarranger/pdfarranger.py:985
 msgid "Save changes to “{}” before closing?"
@@ -510,15 +511,15 @@ msgstr "Tallenna muutokset “{}” ennen sulkemista?"
 
 #: pdfarranger/pdfarranger.py:1022
 msgid "Save changes to “{}” before quitting?"
-msgstr ""
+msgstr "Tallenna muutokset “{}” ennen sulkemista?"
 
 #: pdfarranger/pdfarranger.py:1249
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "Tallentamisprosessi tuotti varoituksia"
 
 #: pdfarranger/pdfarranger.py:1288
 msgid "Saving…"
-msgstr ""
+msgstr "Tallentaa…"
 
 #: pdfarranger/pageutils.py:116
 msgid "Scale factor"
@@ -554,7 +555,7 @@ msgstr "Tuetut kuvatiedostot"
 
 #: pdfarranger/config.py:248 pdfarranger/config.py:256
 msgid "System setting"
-msgstr ""
+msgstr "Järjestelmäasetus"
 
 #: pdfarranger/core.py:275
 msgid ""
@@ -568,7 +569,7 @@ msgstr "Salasana pysyy muistissa kunnes ohjelma suljetaan."
 
 #: pdfarranger/config.py:230
 msgid "Theme"
-msgstr ""
+msgstr "Teema"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -580,11 +581,11 @@ msgstr "Yllä"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "Ylhäältä alaspäin"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "Liitä alle"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -596,7 +597,7 @@ msgstr "Arvo"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Pystysuora"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -604,7 +605,7 @@ msgstr "Pystysuora jako"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Pystysuuntainen siirtymä"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -633,7 +634,7 @@ msgstr "Loitonna"
 
 #: data/menu.ui:217
 msgid "Zoom _Fit"
-msgstr ""
+msgstr "Koko _ikkuna"
 
 #: data/menu.ui:209
 msgid "Zoom _In"
@@ -655,7 +656,7 @@ msgstr "_Peru"
 
 #: pdfarranger/pdfarranger.py:980 data/menu.ui:246
 msgid "_Close"
-msgstr ""
+msgstr "_Sulje tiedosto"
 
 #: data/menu.ui:132 data/menu.ui:268
 msgid "_Copy"
@@ -683,7 +684,7 @@ msgstr "K_äänteinen valinta"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "_Yhdistä sivuja…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -691,11 +692,11 @@ msgstr "_Uusi ikkuna"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"
-msgstr ""
+msgstr "_Avaa"
 
 #: data/menu.ui:100 data/menu.ui:361
 msgid "_Page Format…"
@@ -703,11 +704,11 @@ msgstr "Sivun m_uoto…"
 
 #: data/menu.ui:71
 msgid "_Print…"
-msgstr ""
+msgstr "_Tulosta…"
 
 #: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
 msgid "_Quit"
-msgstr "_Sulje"
+msgstr "_Sulje ohjelma"
 
 #: data/menu.ui:82
 msgid "_Redo"
@@ -736,7 +737,7 @@ msgstr "_Kumoa"
 
 #: data/menu.ui:206
 msgid "_View"
-msgstr ""
+msgstr "_Näytä"
 
 #: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
 #: pdfarranger/pageutils.py:412
