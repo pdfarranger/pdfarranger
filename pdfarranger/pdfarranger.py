@@ -1186,7 +1186,7 @@ class PdfArranger(Gtk.Application):
         response, chooser = self.open_dialog(_('Open…'))
 
         if response == Gtk.ResponseType.ACCEPT:
-            if self.is_unsaved or self.save_file:
+            if len(self.pdfqueue) > 0 or len(self.metadata) > 0:
                 self.on_action_new(filenames=chooser.get_filenames())
             else:
                 adder = PageAdder(self)
