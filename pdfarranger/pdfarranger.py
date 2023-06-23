@@ -2388,6 +2388,7 @@ class PdfArranger(Gtk.Application):
         self.undomanager.commit("Merge")
         self.set_unsaved(True)
         self.clear_selected()
+        self.iconview.unselect_all()
 
         ndpage = selection[-1].get_indices()[0]
         before = ndpage < len(self.model)
@@ -2398,7 +2399,8 @@ class PdfArranger(Gtk.Application):
         adder = PageAdder(self)
         adder.move(ref, before)
         adder.addpages(file)
-        adder.commit(select_added=False, add_to_undomanager=False)
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            adder.commit(select_added=True, add_to_undomanager=False)
 
         nlpage = 0
         while ndpage < len(self.model) and nlpage < len(data):
