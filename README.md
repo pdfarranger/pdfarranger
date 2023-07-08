@@ -77,6 +77,16 @@ sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip \
 pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/main
 ```
 
+On Ubuntu, if *PDF Arranger* doesn't show up in the Launcher, it may be added with the following steps:
+
+1. Install one of the following apt repositories:
+
+   - Ubuntu 19.04 or newer: `sudo add-apt-repository universe`
+
+   - Older versions of Ubuntu and other Ubuntu-based distributions, such as Linux Mint: `sudo add-apt-repository ppa:linuxuprising/apps`
+
+2. Run `sudo apt update; sudo apt install pdfarranger`
+
 In addition, *PDF Arranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
 
 ## For developers
@@ -121,3 +131,7 @@ For Windows see [Win32.md](Win32.md).
 *   If you don’t want or can’t use the developers tooling (`git`,
     `po/genpot.sh`, `python`, …) you can edit, download or upload the `*.po`
     files from the GitHub web pages.
+    
+## To Uninstall
+
+`pip uninstall pdfarranger`
