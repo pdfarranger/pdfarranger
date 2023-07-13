@@ -43,13 +43,8 @@ Requires:       python3-cairo
 Requires:       poppler-glib
 Requires:       python3-dateutil >= 2.4.0
 
-%if 0%{?fedora} > 31
-# replace pdfshuffler for Fedora 32+ since it is python2 only (#1738935)
 Provides:       pdfshuffler = %{version}-%{release}
-# Current pdfshuffler is 0.6.0-17. I obsolete everything < 0.6.1 here
-# because there might be new releases but they won't add python3 support.
 Obsoletes:      pdfshuffler < 0.6.1-1
-%endif
 
 # The repository changed to pdfarranger/pdfarranger but we leave the app_id
 # for now.
@@ -75,9 +70,7 @@ PDF Arranger is a fork of Konstantinos Poulios’s PDF-Shuffler.
 %install
 %py3_install_wheel %{python3_wheelname}
 %find_lang %{name}
-%if 0%{?fedora} > 31
 ln -s pdfarranger %{buildroot}%{_bindir}/pdfshuffler
-%endif
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{app_id}.desktop
