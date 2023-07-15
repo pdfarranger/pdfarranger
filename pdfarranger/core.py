@@ -60,7 +60,7 @@ _ = gettext.gettext
 
 
 class Page:
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename, layerpages):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size_orig, basename, layerpages):
         #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
         #: The ID (from 1 to n) of the page in its owner PDF document
@@ -71,9 +71,9 @@ class Page:
         #: Left, right, top, bottom crop
         self.crop = list(crop)
         #: Width and height of the original page
-        self.size_orig = list(size)
+        self.size_orig = list(size_orig)
         #: Width and height
-        self.size = list(size) if angle in [0, 180] else list(reversed(size))
+        self.size = list(size_orig) if angle in [0, 180] else list(reversed(size_orig))
         self.angle = angle
         self.thumbnail = None
         self.resample = -1
@@ -83,6 +83,10 @@ class Page:
         #: The name of the original file
         self.basename = basename
         self.layerpages = list(layerpages)
+
+    def __repr__(self):
+        return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', {self.angle}, "
+                f"{self.scale}, {self.crop}, {self.size_orig}, '{self.basename}', {self.layerpages})")
 
     def description(self):
         shortname = os.path.splitext(self.basename)[0]
@@ -186,7 +190,7 @@ class Page:
 class LayerPage:
     """Page added as overlay or underlay on a Page."""
 
-    def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size):
+    def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig):
         self.nfile = nfile
         self.npage = npage
         self.copyname = copyname
@@ -199,9 +203,13 @@ class LayerPage:
         #: OVERLAY or UNDERLAY
         self.laypos = laypos
         #: Width and height of the original page
-        self.size_orig = list(size)
+        self.size_orig = list(size_orig)
         #: Width and height
-        self.size = list(size) if angle in [0, 180] else list(reversed(size))
+        self.size = list(size_orig) if angle in [0, 180] else list(reversed(size_orig))
+
+    def __repr__(self):
+        return (f"LayerPage({self.nfile}, {self.npage}, '{self.copyname}', {self.angle}, "
+                f"{self.scale}, {self.crop}, {self.offset}, '{self.laypos}', {self.size_orig})")
 
     def width_in_points(self):
         """Return the page width in PDF points."""
