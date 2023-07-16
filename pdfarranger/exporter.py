@@ -400,6 +400,7 @@ def num_pages(filepath):
 
 
 def generate_booklet(pdfqueue, tmp_dir, pages):
+    pre_pike_2_7 = version.parse(pikepdf.__version__) < version.Version('2.7.0')
     file, filename = make_tmp_file(tmp_dir)
     content_dict = pikepdf.Dictionary({})
     file_indexes = set()
@@ -448,7 +449,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
             )
 
         # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-        if version.parse(pikepdf.__version__) < version.Version('2.7.0'):
+        if pre_pike_2_7:
             newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
     for __ in range(to_remove):
