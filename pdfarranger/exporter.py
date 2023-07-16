@@ -375,7 +375,8 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
             outpdf.save(files_out[n])
     else:
         if isinstance(files_out[0], str):
-            _set_meta(mdata, pdf_input, pdf_output)
+            if not test_mode:
+                _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
         if test_mode:
             pdf_output.save(files_out[0], qdf=True, static_id=True)
