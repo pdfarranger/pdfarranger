@@ -24,6 +24,7 @@ import tempfile
 import io
 import gi
 import locale
+import packaging.version as version
 from . import metadata
 from gi.repository import Gtk
 gi.require_version("Poppler", "0.18")
@@ -447,7 +448,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
             )
 
         # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-        if pikepdf.__version__ < '2.7.0':
+        if version.parse(pikepdf.__version__) < version.Version('2.7.0'):
             newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
     for __ in range(to_remove):
