@@ -348,7 +348,7 @@ def _append_page(current_page, copied_pages, pdf_output, row):
         new_page.Annots = pdf_output.copy_foreign(indirect_annots)
 
 
-def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
+def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
@@ -377,14 +377,17 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
         if isinstance(files_out[0], str):
             _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
-        pdf_output.save(files_out[0])
+        if test_mode:
+            pdf_output.save(files_out[0], qdf=True, static_id=True)
+        else:
+            pdf_output.save(files_out[0])
 
 
-def export(files, pages, mdata, files_out, quit_flag, _export_msg):
+def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
-    export_doc(pdf_input, pages, mdata, files_out, quit_flag)
+    export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
 
 
 def num_pages(filepath):
