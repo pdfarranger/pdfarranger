@@ -57,7 +57,7 @@ PDF Arranger is a fork of Konstantinos Poulios’s PDF-Shuffler.
 %autosetup -p1 -n %{name}-%{sha}
 
 %generate_buildrequires
-%pyproject_buildrequires
+%pyproject_buildrequires -R
 
 %build
 %pyproject_wheel
