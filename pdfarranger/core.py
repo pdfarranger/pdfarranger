@@ -61,27 +61,27 @@ _ = gettext.gettext
 
 class Page:
     def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size_orig, basename, layerpages):
-        #: The ID (from 1 to n) of the PDF file owning the page
         self.nfile = nfile
-        #: The ID (from 1 to n) of the page in its owner PDF document
+        """The ID (from 1 to n) of the PDF file owning the page"""
         self.npage = npage
+        """The ID (from 1 to n) of the page in its owner PDF document"""
         self.zoom = zoom
-        #: Filepath to the temporary stored file
         self.copyname = copyname
-        #: Left, right, top, bottom crop
+        """Filepath to the temporary stored file"""
         self.crop = list(crop)
-        #: Width and height of the original page
+        """Left, right, top, bottom crop"""
         self.size_orig = list(size_orig)
-        #: Width and height
+        """Width and height of the original page"""
         self.size = list(size_orig) if angle in [0, 180] else list(reversed(size_orig))
+        """Width and height (rotated)"""
         self.angle = angle
         self.thumbnail = None
         self.resample = -1
-        #: A low resolution thumbnail
         self.preview = None
+        """A low resolution thumbnail"""
         self.scale = scale
-        #: The name of the original file
         self.basename = basename
+        """The name of the original file"""
         self.layerpages = list(layerpages)
 
     def __repr__(self):
