@@ -22,14 +22,11 @@
 
 from setuptools import Command
 from setuptools import setup
-from setuptools import __version__ as setuptools_version
-
-# support distros that ship old setuptools
-setuptools_version = tuple(int(n) for n in setuptools_version.split('.')[:2])
-if setuptools_version < (65, 2):
-    from distutils.command.build import build
-else:
-    from setuptools.command.build import build
+# for the time being do not use setuptools.command because:
+# * setuptools is to old in many distro (ex: Ubuntu 22.04)
+# * The Fedora package relies on wheel so it would not contains translation and
+#   icons
+from setuptools.command.build import build
 
 from os.path import join
 import glob
