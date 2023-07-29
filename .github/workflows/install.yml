@@ -22,18 +22,24 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
     - name: Combine Coverage
       run: python3 -m coverage combine
-    - name: Codecov
-      run: curl -s https://codecov.io/bash | bash
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
   build-pikepdf-6:
     runs-on: ubuntu-latest
     # PikePDF 6.0.1
     container: jeromerobert/pdfarranger-docker-ci:1.5.0
+    env:
+      PDFARRANGER_COVERAGE: 1
     steps:
     - uses: actions/checkout@v3
     - name: Install
       run: pip3 install .[image]
     - name: Tests
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
+    - name: Combine Coverage
+      run: python3 -m coverage combine
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
   build-old-pikepdf:
     runs-on: ubuntu-latest
     # PikePDF 1.19
