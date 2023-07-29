@@ -18,8 +18,10 @@ jobs:
       run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
       run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
-    - name: Tests and Coverage
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
     - name: Combine Coverage
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
@@ -34,8 +36,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install
       run: pip3 install .[image]
-    - name: Tests
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
     - name: Combine Coverage
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
