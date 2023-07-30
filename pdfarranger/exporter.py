@@ -380,7 +380,8 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
                 _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
         if test_mode:
-            pdf_output.save(files_out[0], qdf=True, static_id=True)
+            pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
+                            stream_decode_level=pikepdf.StreamDecodeLevel.all)
         else:
             pdf_output.save(files_out[0])
 
