@@ -1,0 +1,488 @@
+%PDF-1.3
+%¿÷¢þ
+%QDF-1.0
+
+%% Original object ID: 1 0
+1 0 obj
+<<
+  /Pages 2 0 R
+  /Type /Catalog
+>>
+endobj
+
+%% Original object ID: 2 0
+2 0 obj
+<<
+  /Count 2
+  /Kids [
+    3 0 R
+    4 0 R
+  ]
+  /Type /Pages
+>>
+endobj
+
+%% Page 1
+%% Original object ID: 26 0
+3 0 obj
+<<
+  /Annots 5 0 R
+  /Contents 6 0 R
+  /MediaBox [
+    0
+    0
+    612
+    792
+  ]
+  /Parent 2 0 R
+  /Resources <<
+    /Font <<
+      /F1 8 0 R
+    >>
+    /ProcSet [
+      /PDF
+      /Text
+    ]
+  >>
+  /Rotate 90
+  /Type /Page
+>>
+endobj
+
+%% Page 2
+%% Original object ID: 27 0
+4 0 obj
+<<
+  /Annots 9 0 R
+  /Contents 6 0 R
+  /MediaBox [
+    0
+    0
+    612
+    792
+  ]
+  /Parent 2 0 R
+  /Resources <<
+    /Font <<
+      /F1 8 0 R
+    >>
+    /ProcSet [
+      /PDF
+      /Text
+    ]
+  >>
+  /Rotate 180
+  /Type /Page
+>>
+endobj
+
+%% Original object ID: 13 0
+5 0 obj
+[
+  10 0 R
+  11 0 R
+  12 0 R
+  13 0 R
+  14 0 R
+]
+endobj
+
+%% Contents for page 2
+%% Original object ID: 9 0
+6 0 obj
+<<
+  /Length 7 0 R
+>>
+stream
+0.1 w
+q 0 0.028 595.275 841.861 re
+W* n
+q 0 0 0 rg
+BT
+56.8 732.589 Td /F1 8 Tf(    Rectangle) Tj
+ET
+Q
+q 0 0 0 rg
+BT
+92.3 663.589 Td /F1 8 Tf (Highlight) Tj
+ET
+Q
+q 0 0 0 rg
+BT
+56.8 566.989 Td /F1 8 Tf (inline note) Tj
+ET
+Q
+q 0 0 0 rg
+BT
+56.8 539.389 Td /F1 8 Tf (----------) Tj
+ET
+Q
+q 0 0 0 rg
+BT
+56.8 484.189 Td /F1 8 Tf (Typewriter) Tj
+ET
+Q
+q 0 0 0 rg
+BT
+56.8 428.989 Td /F1 8 Tf (Popup) Tj
+ET
+Q
+Q 
+
+endstream
+endobj
+
+%QDF: ignore_newline
+7 0 obj
+400
+endobj
+
+%% Original object ID: 12 0
+8 0 obj
+<<
+  /BaseFont /Courier
+  /Encoding /WinAnsiEncoding
+  /Subtype /Type1
+  /Type /Font
+>>
+endobj
+
+%% Original object ID: 20 0
+9 0 obj
+[
+  15 0 R
+  16 0 R
+  17 0 R
+  18 0 R
+  19 0 R
+]
+endobj
+
+%% Original object ID: 14 0
+10 0 obj
+<<
+  /Border [
+    0
+    0
+    5
+  ]
+  /C [
+    1
+    0.6666666667
+    0
+  ]
+  /CA 0.8
+  /Contents <feff>
+  /F 4
+  /Rect [
+    71.32546
+    726.063953
+    125.166469
+    745.507135
+  ]
+  /Subtype /Square
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 15 0
+11 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff>
+  /F 4
+  /QuadPoints [
+    92.0276617597
+    675.0934997344
+    138.0414926395
+    675.0934997344
+    92.0276617597
+    659.2766126267
+    138.0414926395
+    659.2766126267
+  ]
+  /Rect [
+    91.862752
+    659.401616
+    137.932894
+    675.233921
+  ]
+  /Subtype /Highlight
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 16 0
+12 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff0069006e006c0069006e00650020006e006f00740065>
+  /F 20
+  /IT /FreeText
+  /Q 0
+  /Rect [
+    57.17138
+    549.131001
+    107.404487
+    563.852267
+  ]
+  /Subtype /FreeText
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 17 0
+13 0 obj
+<<
+  /Border [
+    0
+    0
+    0
+  ]
+  /CA 1
+  /Contents <feff0057007200690074006500740079007000650072000a>
+  /F 20
+  /IT /FreeTextTypeWriter
+  /Q 0
+  /Rect [
+    56.338788
+    455.430421
+    112.122513
+    478.580027
+  ]
+  /Subtype /FreeText
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 18 0
+14 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff0070006f0070002d00750070>
+  /F 4
+  /Rect [
+    61.611876
+    405.70976
+    79.470994
+    423.583599
+  ]
+  /Subtype /Text
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 21 0
+15 0 obj
+<<
+  /Border [
+    0
+    0
+    5
+  ]
+  /C [
+    1
+    0.6666666667
+    0
+  ]
+  /CA 0.8
+  /Contents <feff>
+  /F 4
+  /Rect [
+    71.32546
+    726.063953
+    125.166469
+    745.507135
+  ]
+  /Subtype /Square
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 22 0
+16 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff>
+  /F 4
+  /QuadPoints [
+    92.0276617597
+    675.0934997344
+    138.0414926395
+    675.0934997344
+    92.0276617597
+    659.2766126267
+    138.0414926395
+    659.2766126267
+  ]
+  /Rect [
+    91.862752
+    659.401616
+    137.932894
+    675.233921
+  ]
+  /Subtype /Highlight
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 23 0
+17 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff0069006e006c0069006e00650020006e006f00740065>
+  /F 20
+  /IT /FreeText
+  /Q 0
+  /Rect [
+    57.17138
+    549.131001
+    107.404487
+    563.852267
+  ]
+  /Subtype /FreeText
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 24 0
+18 0 obj
+<<
+  /Border [
+    0
+    0
+    0
+  ]
+  /CA 1
+  /Contents <feff0057007200690074006500740079007000650072000a>
+  /F 20
+  /IT /FreeTextTypeWriter
+  /Q 0
+  /Rect [
+    56.338788
+    455.430421
+    112.122513
+    478.580027
+  ]
+  /Subtype /FreeText
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 25 0
+19 0 obj
+<<
+  /Border [
+    0
+    0
+    1
+  ]
+  /C [
+    1
+    1
+    0
+  ]
+  /CA 1
+  /Contents <feff0070006f0070002d00750070>
+  /F 4
+  /Rect [
+    61.611876
+    405.70976
+    79.470994
+    423.583599
+  ]
+  /Subtype /Text
+  /T <feff006d0061006e0066007200650064>
+  /Type /Annot
+>>
+endobj
+
+xref
+0 20
+0000000000 65535 f 
+0000000052 00000 n 
+0000000133 00000 n 
+0000000253 00000 n 
+0000000537 00000 n 
+0000000812 00000 n 
+0000000927 00000 n 
+0000001404 00000 n 
+0000001452 00000 n 
+0000001584 00000 n 
+0000001677 00000 n 
+0000001984 00000 n 
+0000002452 00000 n 
+0000002816 00000 n 
+0000003162 00000 n 
+0000003477 00000 n 
+0000003784 00000 n 
+0000004252 00000 n 
+0000004616 00000 n 
+0000004962 00000 n 
+trailer <<
+  /Root 1 0 R
+  /Size 20
+  /ID [<31415926535897932384626433832795><31415926535897932384626433832795>]
+>>
+startxref
+5249
+%%EOF
