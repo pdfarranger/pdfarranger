@@ -34,7 +34,6 @@ parts:
     source: https://github.com/pdfarranger/pdfarranger.git
     parse-info:
       - usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
-    source-tag: '1.10.0'
     source-depth: 1
     python-packages:
       - distutils-extra-python==2.39.2
