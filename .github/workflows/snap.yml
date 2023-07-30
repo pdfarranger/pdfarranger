@@ -1,0 +1,31 @@
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    types: [ "review_requested", "ready_for_review" ]
+  workflow_dispatch:
+name: Snap
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  snap:
+    name: "Test if the Snap can be built from the latest commit in the branch"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64]
+      fail-fast: false
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+      - name: Build Snap
+        uses: snapcore/action-build@v1
+        id: snapcraft-build
+        with:
+          snapcraft-args: "-v"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.snapcraft-build.outputs.snap }}
+          path: ${{ steps.snapcraft-build.outputs.snap }}
