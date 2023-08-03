@@ -53,28 +53,39 @@ class LayerPage:
 
 class ExporterTest(unittest.TestCase):
 
-    def case(self, test, files, *pages, ignore=None):
+    def case(self, test, files, *pages, ignore=None, ignore_8=None):
         """Run a single test case."""
         if version.parse(pikepdf.__version__) < version.Version('6.0.1'):
             # will disappear in v11
-            pass
+            return
+        elif version.parse(pikepdf.__version__) < version.Version('8.0.0'):
+            expected_file = file(f'test{test}_out')
         else:
-            export(files, pages, [], [file('out')], None, None, True)
-            with open(file('out'), 'rb') as f:
-                actual = f.readlines()
-            with open(file(f'test{test}_out'), 'rb') as f:
-                expected = f.readlines()
-            if ignore is not None:
-                ignore.sort()
-                ignore.reverse()
-                for i in ignore:
-                    del expected[i - 1]
-                    del actual[i - 1]
-            self.assertEqual(actual, expected)
+            ignore = ignore_8
+            expected_file = file(f'test{test}_8_out')
 
-    def basic(self, test, *pages, ignore=None):
+        export(files, pages, [], [file('out')], None, None, True)
+        with open(file('out'), 'rb') as f:
+            actual = f.readlines()
+        with open(expected_file, 'rb') as f:
+            expected = f.readlines()
+        if ignore is not None:
+            ignore.sort()
+            ignore.reverse()
+            for i in ignore:
+                del expected[i - 1]
+                del actual[i - 1]
+        self.assertEqual(actual, expected)
+
+
+    def basic(self, test, *pages, ignore=None, ignore_8=None):
         """Test with basic.pdf as single input file."""
-        self.case(test, [(file('basic'), '')], *pages, ignore=ignore)
+        self.case(test, [(file('basic'), '')], *pages, ignore=ignore, ignore_8=ignore_8)
+
+    def outlines(self, test, *pages, ignore_8=None):
+        """Test with outlines.pdf as single input file."""
+        if version.parse(pikepdf.__version__) >= version.Version('8.0.0'):
+            self.case(test, [(file('outlines'), '')], *pages, ignore=None, ignore_8=ignore_8)
 
     def test01(self):
         """No transformations"""
@@ -103,26 +114,26 @@ class ExporterTest(unittest.TestCase):
 
     def test07(self):
         """Overlay page"""
-        self.basic(7, Page(1, layerpages=[LayerPage(6)]), ignore=[38, 57])
+        self.basic(7, Page(1, layerpages=[LayerPage(6)]), ignore=[38, 57], ignore_8=[38, 58])
 
     def test08(self):
         """Underlay page"""
-        self.basic(8, Page(1, layerpages=[LayerPage(7, laypos='UNDERLAY')]), ignore=[38, 54])
+        self.basic(8, Page(1, layerpages=[LayerPage(7, laypos='UNDERLAY')]), ignore=[38, 54], ignore_8=[38, 55])
 
     def test09(self):
         """Rotate overlay"""
         self.basic(9, Page(1, layerpages=[LayerPage(6, angle=90)]),
-                   Page(1, layerpages=[LayerPage(6, angle=180)]), ignore=[39, 60, 79, 151])
+                   Page(1, layerpages=[LayerPage(6, angle=180)]), ignore=[39, 60, 79, 151], ignore_8=[39, 61, 81, 149])
 
     def test10(self):
         """Offset overlay horizontal"""
         self.basic(10, Page(1, layerpages=[LayerPage(6, offset=[.5, 0, 0, 0]), LayerPage(6, offset=[0, 0.5, 0, 0])]),
-                   ignore=[38, 39, 59, 64, 75, 116])
+                   ignore=[38, 39, 59, 64, 75, 116], ignore_8= [38, 39, 60, 65, 74, 121])
 
     def test11(self):
         """Offset overlay vertical"""
         self.basic(11, Page(1, layerpages=[LayerPage(6, offset=[0, 0, 0.5, 0]), LayerPage(6, offset=[0, 0, 0, 0.5])]),
-                   ignore=[38, 39, 59, 64, 75, 116])
+                   ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
 
     def test12(self):
         """Duplicate page with annotations"""
@@ -142,7 +153,7 @@ class ExporterTest(unittest.TestCase):
 
     def test16(self):
         """Overlay page with annotations"""
-        self.basic(16, Page(1, layerpages=[LayerPage(5)]), ignore=[38, 57])
+        self.basic(16, Page(1, layerpages=[LayerPage(5)]), ignore=[38, 57], ignore_8=[38, 58])
 
     def test17(self):
         """File with missing MediaBox"""
@@ -151,3 +162,23 @@ class ExporterTest(unittest.TestCase):
     def test18(self):
         """Encrypted file"""
         self.case(18, [('./tests/test_encrypted.pdf', 'foobar')], Page(1), Page(2))
+
+    def test19(self):
+        """Copy file with outlines"""
+        self.outlines(19, Page(1), Page(2), Page(3), Page(4))
+
+    def test20(self):
+        """Reorder pages in file with outlines"""
+        self.outlines(20, Page(4), Page(2), Page(1), Page(3))
+
+    def test21(self):
+        """Duplicate pages in file with outlines"""
+        self.outlines(21, Page(4), Page(2), Page(3), Page(4))
+
+    def test22(self):
+        """Rotate pages in file with outlines"""
+        self.outlines(22, Page(1), Page(2, angle=90), Page(3, angle=180), Page(4, angle=270))
+
+    def test23(self):
+        """Scale pages in file with outlines"""
+        self.outlines(23, Page(1), Page(2, scale=0.5), Page(3), Page(4))
