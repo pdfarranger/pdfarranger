@@ -53,13 +53,13 @@ class LayerPage:
 
 class ExporterTest(unittest.TestCase):
 
-    def basic(self, test, *pages, ignore=None):
-        """Test with basic.pdf as single input file."""
+    def case(self, test, files, *pages, ignore=None):
+        """Run a single test case."""
         if version.parse(pikepdf.__version__) < version.Version('6.0.1'):
             # will disappear in v11
             pass
         else:
-            export([(file('basic'), '')], pages, [], [file('out')], None, None, True)
+            export(files, pages, [], [file('out')], None, None, True)
             with open(file('out'), 'rb') as f:
                 actual = f.readlines()
             with open(file(f'test{test}_out'), 'rb') as f:
@@ -72,40 +72,44 @@ class ExporterTest(unittest.TestCase):
                     del actual[i - 1]
             self.assertEqual(actual, expected)
 
-    def test1(self):
+    def basic(self, test, *pages, ignore=None):
+        """Test with basic.pdf as single input file."""
+        self.case(test, [(file('basic'), '')], *pages, ignore=ignore)
+
+    def test01(self):
         """No transformations"""
         self.basic(1, Page(1), Page(2))
 
-    def test2(self):
+    def test02(self):
         """Rotate pages"""
         self.basic(2, Page(1, angle=90), Page(2, angle=180))
 
-    def test3(self):
+    def test03(self):
         """Rotate pages with existing /Rotate"""
         self.basic(3, Page(3, angle=90), Page(3, angle=180))
 
-    def test4(self):
+    def test04(self):
         """Scale page"""
         self.basic(4, Page(1, scale=0.25))
 
-    def test5(self):
+    def test05(self):
         """Crop page"""
         self.basic(5, Page(1, crop=[0.1, 0.2, 0.3, 0.4]))
 
-    def test6(self):
+    def test06(self):
         """Rotate and crop page"""
         self.basic(6, Page(1, angle=90, crop=[0.1, 0.2, 0.3, 0.4]), Page(1, angle=180, crop=[0.1, 0.2, 0.3, 0.4]),
                    Page(1, angle=270, crop=[0.1, 0.2, 0.3, 0.4]))
 
-    def test7(self):
+    def test07(self):
         """Overlay page"""
         self.basic(7, Page(1, layerpages=[LayerPage(6)]), ignore=[38, 57])
 
-    def test8(self):
+    def test08(self):
         """Underlay page"""
         self.basic(8, Page(1, layerpages=[LayerPage(7, laypos='UNDERLAY')]), ignore=[38, 54])
 
-    def test9(self):
+    def test09(self):
         """Rotate overlay"""
         self.basic(9, Page(1, layerpages=[LayerPage(6, angle=90)]),
                    Page(1, layerpages=[LayerPage(6, angle=180)]), ignore=[39, 60, 79, 151])
@@ -139,3 +143,11 @@ class ExporterTest(unittest.TestCase):
     def test16(self):
         """Overlay page with annotations"""
         self.basic(16, Page(1, layerpages=[LayerPage(5)]), ignore=[38, 57])
+
+    def test17(self):
+        """File with missing MediaBox"""
+        self.case(17, [('./tests/test.pdf', '')], Page(1), Page(2))
+
+    def test18(self):
+        """Encrypted file"""
+        self.case(18, [('./tests/test_encrypted.pdf', 'foobar')], Page(1), Page(2))
