@@ -1190,7 +1190,9 @@ class PdfArranger(Gtk.Application):
                 self.on_action_new(filenames=chooser.get_filenames())
             else:
                 adder = PageAdder(self)
-                for filename in chooser.get_filenames():
+                filenames = chooser.get_filenames()
+                filenames = reversed(filenames) if os.name == 'nt' else filenames
+                for filename in filenames:
                     adder.addpages(filename)
                 adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
@@ -1328,7 +1330,9 @@ class PdfArranger(Gtk.Application):
 
         if response == Gtk.ResponseType.ACCEPT:
             adder = PageAdder(self)
-            for filename in chooser.get_filenames():
+            filenames = chooser.get_filenames()
+            filenames = reversed(filenames) if os.name == 'nt' else filenames
+            for filename in filenames:
                 adder.addpages(filename)
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
