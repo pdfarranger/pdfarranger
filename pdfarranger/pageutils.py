@@ -228,25 +228,12 @@ class BaseDialog(Gtk.Dialog):
 
 
 class Dialog(BaseDialog):
-    """ A dialog box to define margins for page cropping and page size or scale factor """
+    """ A dialog box to define margins for page cropping"""
 
     def __init__(self, model, selection, window):
-        super().__init__(title=_("Page format"), parent=window)
+        super().__init__(title=_("Crop margins"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
-        size = [page.scale * x for x in page.size]
-        rel_widget = _RelativeScalingWidget(page.scale)
-        width_widget = _ScalingWidget(_("Width"), size[0])
-        height_widget = _ScalingWidget(_("Height"), size[1])
-        self.scale_stack = _RadioStackSwitcher()
-        self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
-        self.scale_stack.add_named(width_widget, "Width", _("Width"))
-        self.scale_stack.add_named(height_widget, "Height", _("Height"))
-        pagesizeframe = Gtk.Frame(label=_("Page Size"))
-        pagesizeframe.props.margin = 8
-        pagesizeframe.props.margin_bottom = 0
-        pagesizeframe.add(self.scale_stack)
-        self.vbox.pack_start(pagesizeframe, True, True, 0)
         self.crop_widget = _CropWidget(model, selection)
         self.crop_widget.props.margin = 8
         self.vbox.pack_start(self.crop_widget, False, False, 0)
@@ -257,9 +244,39 @@ class Dialog(BaseDialog):
         """ Open the dialog and return the crop value """
         result = self.run()
         crop = None
-        val = None
         if result == Gtk.ResponseType.OK:
             crop = [self.crop_widget.get_crop()] * len(self.selection)
+        self.destroy()
+        return crop
+
+
+class ScaleDialog(BaseDialog):
+    """ A dialog box to define page size or scale factor """
+
+    def __init__(self, model, selection, window):
+        super().__init__(title=_("Page size"), parent=window)
+        self.set_resizable(False)
+        page = model.get_value(model.get_iter(selection[-1]), 0)
+        size = [page.scale * x for x in page.size]
+        rel_widget = _RelativeScalingWidget(page.scale)
+        width_widget = _ScalingWidget(_("Width"), size[0])
+        height_widget = _ScalingWidget(_("Height"), size[1])
+        self.scale_stack = _RadioStackSwitcher()
+        self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
+        self.scale_stack.add_named(width_widget, "Width", _("Width"))
+        self.scale_stack.add_named(height_widget, "Height", _("Height"))
+        pagesizeframe = Gtk.Frame(shadow_type=Gtk.ShadowType.NONE)
+        pagesizeframe.props.margin = 8
+        pagesizeframe.add(self.scale_stack)
+        self.vbox.pack_start(pagesizeframe, True, True, 0)
+        self.show_all()
+        self.selection = selection
+
+    def run_get(self):
+        """ Open the dialog and return the size value """
+        result = self.run()
+        val = None
+        if result == Gtk.ResponseType.OK:
             val = self.scale_stack.selected_child.get_value()
             if self.scale_stack.selected_name == "Width":
                 val = val, 0
@@ -267,7 +284,7 @@ class Dialog(BaseDialog):
                 val = 0, val
             # else val is a relative scale so we return it as is
         self.destroy()
-        return crop, val
+        return val
 
 
 def white_borders(model, selection, pdfqueue):
