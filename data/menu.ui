@@ -142,8 +142,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">90</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Page Format…</attribute>
-          <attribute name="action">win.page-format</attribute>
+          <attribute name="label" translatable="yes">_Page Size…</attribute>
+          <attribute name="action">win.page-size</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Crop…</attribute>
+          <attribute name="action">win.crop</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Crop White Borders</attribute>
@@ -371,8 +375,12 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="target" type="i">90</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Page Format…</attribute>
-        <attribute name="action">win.page-format</attribute>
+        <attribute name="label" translatable="yes">_Page Size…</attribute>
+        <attribute name="action">win.page-size</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Crop…</attribute>
+        <attribute name="action">win.crop</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Crop White Borders</attribute>

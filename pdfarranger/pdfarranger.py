@@ -384,7 +384,8 @@ class PdfArranger(Gtk.Application):
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
-            ('page-format', self.page_format_dialog),
+            ('page-size', self.page_size_dialog),
+            ('crop', self.crop_dialog),
             ('crop-white-borders', self.crop_white_borders),
             ('export-selection', self.choose_export_selection_pdf_name, 'i'),
             ('export-all', self.on_action_export_all),
@@ -2115,7 +2116,8 @@ class PdfArranger(Gtk.Application):
             ("reverse-order", self.reverse_order_available(selection)),
             ("delete", ne),
             ("duplicate", ne),
-            ("page-format", ne),
+            ("page-size", ne),
+            ("crop", ne),
             ("rotate", ne),
             ("export-selection", ne),
             ("cut", ne),
@@ -2436,24 +2438,33 @@ class PdfArranger(Gtk.Application):
         if metadata.edit(self.metadata, files, self.window):
             self.set_unsaved(True)
 
-    def page_format_dialog(self, _action, _parameter, _unknown):
-        """Opens a dialog box to define margins for page cropping and page size"""
+    def page_size_dialog(self, _action, _parameter, _unknown):
+        """Opens a dialog box to define page size."""
+        selection = self.iconview.get_selected_items()
+        diag = pageutils.ScaleDialog(self.iconview.get_model(), selection, self.window)
+        newscale = diag.run_get()
+        if newscale is None:
+            return
+        if not pageutils.scale(self.model, selection, newscale):
+            return
+        self.undomanager.commit("Size")
+        self.set_unsaved(True)
+        self.update_statusbar()
+        self.update_iconview_geometry()
+        self.update_max_zoom_level()
+        GObject.idle_add(self.render)
+
+    def crop_dialog(self, _action, _parameter, _unknown):
+        """Opens a dialog box to define margins for page cropping."""
         selection = self.iconview.get_selected_items()
         diag = pageutils.Dialog(self.iconview.get_model(), selection, self.window)
-        crop, newscale = diag.run_get()
+        crop = diag.run_get()
         with self.render_lock():
-            if crop is not None or newscale is not None:
-                self.undomanager.commit("Format")
-            updatestatus = False
             if crop is not None:
+                self.undomanager.commit("Crop")
                 if self.crop(selection, crop):
-                    updatestatus = True
-            if newscale is not None:
-                if pageutils.scale(self.model, selection, newscale):
-                    updatestatus = True
-            if updatestatus:
-                self.set_unsaved(True)
-                self.update_statusbar()
+                    self.set_unsaved(True)
+                    self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
