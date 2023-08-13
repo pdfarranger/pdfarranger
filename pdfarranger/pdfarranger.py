@@ -271,7 +271,7 @@ class PdfArranger(Gtk.Application):
         self.disable_quit = False
         multiprocessing.set_start_method('spawn')
         self.quit_flag = multiprocessing.Event()
-        self.layer_pos = 50, 50
+        self.layer_pos = 0.5, 0.5
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -1533,11 +1533,13 @@ class PdfArranger(Gtk.Application):
         if not self.is_paste_layer_available(destination):
             return
         dpage = self.model[destination[-1]][0]
-        lpage = page_stack[0][0]
+        lpage_stack = page_stack[0]
         if offset_xy is None:
-            offset_xy = pageutils.PastePageLayerDialog(self, dpage, lpage, laypos).get_offset()
+            a = self.window, dpage, lpage_stack, self.model, self.pdfqueue, laypos, self.layer_pos
+            offset_xy = pageutils.PastePageLayerDialog(*a).get_offset()
             if offset_xy is None:
                 return
+            self.layer_pos = offset_xy
             self.undomanager.commit("Add Layer")
             self.set_unsaved(True)
 
