@@ -148,12 +148,12 @@ class _ScalingWidget(Gtk.Box):
         return self.entry.get_value() / 25.4 * 72
 
 
-class _CropWidget(Gtk.Frame):
+class _CropHideWidget(Gtk.Frame):
     sides = ('L', 'R', 'T', 'B')
     side_names = {'L': _('Left'), 'R': _('Right'), 'T': _('Top'), 'B': _('Bottom')}
     opposite_sides = {'L': 'R', 'R': 'L', 'T': 'B', 'B': 'T'}
 
-    def __init__(self, crop, margin=12):
+    def __init__(self, val, margin=12):
         super().__init__(shadow_type=Gtk.ShadowType.NONE)
         grid = Gtk.Grid(halign=Gtk.Align.CENTER)
         grid.set_column_spacing(margin)
@@ -162,7 +162,7 @@ class _CropWidget(Gtk.Frame):
         self.add(grid)
         label = Gtk.Label(
             label=_(
-                'Cropping does not remove any content '
+                'Cropping/hiding does not remove any content '
                 'from the PDF file, it only hides it.'
             )
         )
@@ -174,13 +174,13 @@ class _CropWidget(Gtk.Frame):
         self.spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
 
-        for row, side in enumerate(_CropWidget.sides):
-            label = Gtk.Label(label=_CropWidget.side_names[side])
+        for row, side in enumerate(_CropHideWidget.sides):
+            label = Gtk.Label(label=_CropHideWidget.side_names[side])
             label.set_alignment(0.0, 0.5)
             grid.attach(label, 0, row + 1, 1, 1)
 
             adj = Gtk.Adjustment(
-                value=100.0 * crop.pop(0),
+                value=100.0 * val.pop(0),
                 lower=0.0,
                 upper=90.0,
                 step_increment=1.0,
@@ -211,9 +211,9 @@ class _CropWidget(Gtk.Frame):
     def set_spinb_changed_callback(self, callback):
         self.spin_changed_callback = callback
 
-    def set_val(self, crop):
+    def set_val(self, val):
         for i, spin in enumerate(self.spin_list):
-            spin.set_value(crop[i] * 100)
+            spin.set_value(val[i] * 100)
 
     def get_val(self):
         return Sides(*(spin.get_value() / 100.0 for spin in self.spin_list))
@@ -497,7 +497,7 @@ class _OffsetWidget(Gtk.Frame):
 
 
 class DrawingAreaWidget(Gtk.Box):
-    """A widget which draws a page. It has tools for editing a rectangle (crop/offset)."""
+    """A widget which draws a page. It has tools for editing a rectangle (crop/hide/offset)."""
 
     def __init__(self, page, pdfqueue, spinbutton_widget=None, draw_on_page_func=None):
         super().__init__(orientation=Gtk.Orientation.VERTICAL)
@@ -664,7 +664,7 @@ class DrawingAreaWidget(Gtk.Box):
         self.set_cursor(sc)
 
     def get_suggested_cursor(self, event):
-        """Get appropriate cursor when moving mouse over adjust rect (crop/offset)."""
+        """Get appropriate cursor when moving mouse over adjust rect (crop/hide/offset)."""
         margin = 5
         r = self.adjust_rect
         if self.allow_adjust_rect_resize:
@@ -802,6 +802,31 @@ class DrawingAreaWidget(Gtk.Box):
         cr.identity_matrix()
         cr.set_line_width(1)
 
+        if dpage.hide != Sides():
+            # Draw the hide rectangle. For the Hide dialog this will be the crop rectangle
+            dwfull = dpage.scale * dpage.size.width * dpage.zoom
+            dhfull = dpage.scale * dpage.size.height * dpage.zoom
+            rx = round(dx + (dpage.hide.left - dpage.crop.left) * dwfull) - .5
+            ry = round(dy + (dpage.hide.top - dpage.crop.top) * dhfull) - .5
+            rw = round(dwfull * (1 - dpage.hide.left - dpage.hide.right)) + 1
+            rh = round(dhfull * (1 - dpage.hide.top - dpage.hide.bottom)) + 1
+            hide_rect = [rx, ry, rw, rh]
+
+            cr.set_source_rgba(1, 1, 1, .7)
+            cr.rectangle(*hide_rect)
+            cr.stroke()
+            cr.set_source_rgba(0, 0, 0, .3)
+            cr.set_dash([8, 8])
+            cr.rectangle(*hide_rect)
+            cr.stroke()
+
+            # Darken the area outside of rectangle
+            cr.set_source_rgba(0, 0, 0, .3)
+            cr.rectangle(dx, dy, dw, dh)
+            cr.rectangle(*hide_rect)
+            cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+            cr.fill()
+
         if callable(self.draw_on_page):
             self.adjust_rect = self.draw_on_page(cr, dx, dy, dw, dh, self.damodel)
             # Draw the adjust rectangle
@@ -822,15 +847,16 @@ class DrawingAreaWidget(Gtk.Box):
         self.da.queue_draw_area(*r)
 
 
-class CropDialog():
-    def __init__(self, window, selection, model, pdfqueue, is_unsaved, update_val_func):
-        title = _("Crop Margins")
-        init_values = [model[row][0].crop for row in selection]
+class CropHideDialog():
+    def __init__(self, window, selection, model, pdfqueue, is_unsaved, mode, update_val_func):
+        title = _("Crop Margins") if mode == 'CROP' else _("Hide Margins")
+        init_values = [getattr(model[row][0], mode.lower()) for row in selection]
         self.updated_values = init_values
-        self.spinbutton_widget = _CropWidget(list(init_values[-1]), margin=8)
+        self.spinbutton_widget = _CropHideWidget(list(init_values[-1]), margin=8)
         page = model[selection[-1]][0]
         dawidget = DrawingAreaWidget(page, pdfqueue, self.spinbutton_widget, self.draw_on_page)
         page = dawidget.damodel[0][0]
+        page.hide = page.crop if mode == 'HIDE' else page.hide
         page.crop = Sides()
 
         prepend_butt = (_("_Revert"), Gtk.ResponseType.REJECT, _("_Apply"), Gtk.ResponseType.APPLY)
@@ -848,7 +874,7 @@ class CropDialog():
         rw = round(dw * (1 - v.left - v.right)) + 1
         rh = round(dh * (1 - v.top - v.bottom)) + 1
 
-        # Darken area outside of crop rectangle
+        # Darken area outside of crop or hide rectangle
         cr.set_source_rgba(0, 0, 0, .3)
         cr.set_dash([])
         cr.rectangle(dx, dy, dw, dh)
@@ -882,6 +908,7 @@ class PastePageLayerDialog():
         lpage.zoom = dpage.zoom
         lpage.resample = -1
         lpage.thumbnail = None
+        lpage.hide = Sides()
         self.spinbutton_widget = _OffsetWidget(layer_pos, dpage, lpage)
         dawidget = DrawingAreaWidget(dpage, pdfqueue, self.spinbutton_widget, self.draw_on_page)
         dawidget.allow_adjust_rect_resize = False
