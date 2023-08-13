@@ -29,6 +29,7 @@ _DEFAULT_ACCELS = [
     ('delete', 'Delete'),
     ('page-size', 's'),
     ('crop', 'c'),
+    ('hide', 'h'),
     ('rotate(90)', '<Primary>Right'),
     ('rotate(-90)', '<Primary>Left'),
     ('save', '<Primary>s'),

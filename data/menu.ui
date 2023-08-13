@@ -150,6 +150,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.crop</attribute>
         </item>
         <item>
+          <attribute name="label" translatable="yes">_Hide Margins…</attribute>
+          <attribute name="action">win.hide</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">Crop White Borders</attribute>
           <attribute name="action">win.crop-white-borders</attribute>
         </item>
@@ -381,6 +385,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <item>
         <attribute name="label" translatable="yes">_Crop Margins…</attribute>
         <attribute name="action">win.crop</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Hide Margins…</attribute>
+        <attribute name="action">win.hide</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Crop White Borders</attribute>
