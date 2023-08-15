@@ -6,6 +6,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PDFARRANGER_COVERAGE: 1
+    steps:
+    - name: Install APT packages
+      run: sudo apt-get -y install gettext appstream python3-dogtail desktop-file-utils xvfb gir1.2-poppler-0.18
+    - uses: actions/checkout@v3
+    - name: Upgrade pip
+      run: pip install --upgrade pip
+    - name: Install
+      run: pip3 install --upgrade .[image] coverage
+    - name: AppStream
+      run: appstreamcli validate $HOME/.local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
+    - name: Validate Desktop File
+      run: desktop-file-validate $HOME/.local/share/applications/com.github.jeromerobert.pdfarranger.desktop
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Combine Coverage
+      run: python3 -m coverage combine
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+  build-pikepdf-4:
+    runs-on: ubuntu-latest
     # PikePDF 4.4.1
     container: jeromerobert/pdfarranger-docker-ci:1.4.1
     env:
@@ -44,7 +68,7 @@ jobs:
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
-  build-old-pikepdf:
+  build-pikepdf-1:
     runs-on: ubuntu-latest
     # PikePDF 1.19
     container: jeromerobert/pdfarranger-docker-ci:1.3.1
