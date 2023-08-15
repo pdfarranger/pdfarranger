@@ -83,8 +83,11 @@ class XvfbManager:
         os.environ["DBUS_SESSION_BUS_ADDRESS"] = self.dbus_addr
 
     def kill(self):
-        self.dbus_proc.kill()
-        self.dbus_proc.wait()
+        if "GITHUB_ACTIONS" not in os.environ:
+            # Workaround. On GHA killing dbus also kill this python process.
+            # And we don't care about zombie processes on GHA
+            self.dbus_proc.kill()
+            self.dbus_proc.wait()
         self.xvfb_proc.kill()
         self.xvfb_proc.wait()
 
