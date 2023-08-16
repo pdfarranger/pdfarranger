@@ -2456,15 +2456,15 @@ class PdfArranger(Gtk.Application):
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
-        selection = self.iconview.get_selected_items()
-        diag = pageutils.Dialog(self.iconview.get_model(), selection, self.window)
-        crop = diag.run_get()
-        with self.render_lock():
-            if crop is not None:
-                self.undomanager.commit("Crop")
-                if self.crop(selection, crop):
-                    self.set_unsaved(True)
-                    self.update_statusbar()
+        s = self.iconview.get_selected_items()
+        a = self.window, s, self.model, self.pdfqueue, self.is_unsaved, self.update_crop
+        pageutils.CropDialog(*a)
+
+    def update_crop(self, crops, selection, is_unsaved):
+        self.undomanager.commit("Crop")
+        self.crop(selection, crops)
+        self.set_unsaved(is_unsaved)
+        self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
