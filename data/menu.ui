@@ -146,7 +146,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.page-size</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Crop…</attribute>
+          <attribute name="label" translatable="yes">_Crop Margins…</attribute>
           <attribute name="action">win.crop</attribute>
         </item>
         <item>
@@ -379,7 +379,7 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="action">win.page-size</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Crop…</attribute>
+        <attribute name="label" translatable="yes">_Crop Margins…</attribute>
         <attribute name="action">win.crop</attribute>
       </item>
       <item>

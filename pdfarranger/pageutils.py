@@ -153,9 +153,9 @@ class _CropWidget(Gtk.Frame):
     side_names = {'L': _('Left'), 'R': _('Right'), 'T': _('Top'), 'B': _('Bottom')}
     opposite_sides = {'L': 'R', 'R': 'L', 'T': 'B', 'B': 'T'}
 
-    def __init__(self, model, selection, margin=12):
-        super().__init__(label=_('Crop Margins'))
-        grid = Gtk.Grid()
+    def __init__(self, crop, margin=12):
+        super().__init__(shadow_type=Gtk.ShadowType.NONE)
+        grid = Gtk.Grid(halign=Gtk.Align.CENTER)
         grid.set_column_spacing(margin)
         grid.set_row_spacing(margin)
         grid.props.margin = margin
@@ -170,12 +170,9 @@ class _CropWidget(Gtk.Frame):
         label.set_line_wrap(True)
         label.set_max_width_chars(38)
         grid.attach(label, 0, 0, 3, 1)
+        self.spin_changed_callback = None
         self.spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
-        crop = [0.0, 0.0, 0.0, 0.0]
-        if selection:
-            pos = model.get_iter(selection[0])
-            crop = list(model.get_value(pos, 0).crop)
 
         for row, side in enumerate(_CropWidget.sides):
             label = Gtk.Label(label=_CropWidget.side_names[side])
@@ -192,7 +189,7 @@ class _CropWidget(Gtk.Frame):
             )
             spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
             spin.set_activates_default(True)
-            spin.connect('value-changed', self.__set_crop_value, self, side)
+            spin.connect('value-changed', self.__set_value, self, side)
             self.spin_list.append(spin)
             grid.attach(spin, 1, row + 1, 1, 1)
 
@@ -201,53 +198,41 @@ class _CropWidget(Gtk.Frame):
             grid.attach(label, 2, row + 1, 1, 1)
 
     @staticmethod
-    def __set_crop_value(spinbutton, self, side):
+    def __set_value(spinbutton, self, side):
         opp_side = self.opposite_sides[side]
         adj = self.spin_list[self.sides.index(opp_side)].get_adjustment()
         limit = 90.0 - spinbutton.get_value()
         adj.set_upper(limit)
         opp_spinner = self.spin_list[self.sides.index(opp_side)]
         opp_spinner.set_value(min(opp_spinner.get_value(), limit))
+        if callable(self.spin_changed_callback):
+            self.spin_changed_callback()
 
-    def get_crop(self):
-        return [spin.get_value() / 100.0 for spin in self.spin_list]
+    def set_spinb_changed_callback(self, callback):
+        self.spin_changed_callback = callback
+
+    def set_val(self, crop):
+        for i, spin in enumerate(self.spin_list):
+            spin.set_value(crop[i] * 100)
+
+    def get_val(self):
+        return Sides(*(spin.get_value() / 100.0 for spin in self.spin_list))
 
 
 class BaseDialog(Gtk.Dialog):
-    def __init__(self, title, parent):
+    def __init__(self, title, parent, prepend_buttons=None):
+        buttons = () if prepend_buttons is None else prepend_buttons
+        buttons += (
+            _("_Cancel"), Gtk.ResponseType.CANCEL,
+            _("_OK"), Gtk.ResponseType.OK,
+        )
         super().__init__(
             title=title,
             parent=parent,
             flags=Gtk.DialogFlags.MODAL,
-            buttons=(
-                _("_Cancel"), Gtk.ResponseType.CANCEL,
-                _("_OK"), Gtk.ResponseType.OK,
-            ),
+            buttons=buttons,
         )
         self.set_default_response(Gtk.ResponseType.OK)
-
-
-class Dialog(BaseDialog):
-    """ A dialog box to define margins for page cropping"""
-
-    def __init__(self, model, selection, window):
-        super().__init__(title=_("Crop margins"), parent=window)
-        self.set_resizable(False)
-        page = model.get_value(model.get_iter(selection[-1]), 0)
-        self.crop_widget = _CropWidget(model, selection)
-        self.crop_widget.props.margin = 8
-        self.vbox.pack_start(self.crop_widget, False, False, 0)
-        self.show_all()
-        self.selection = selection
-
-    def run_get(self):
-        """ Open the dialog and return the crop value """
-        result = self.run()
-        crop = None
-        if result == Gtk.ResponseType.OK:
-            crop = [self.crop_widget.get_crop()] * len(self.selection)
-        self.destroy()
-        return crop
 
 
 class ScaleDialog(BaseDialog):
@@ -512,7 +497,7 @@ class _OffsetWidget(Gtk.Frame):
 
 
 class DrawingAreaWidget(Gtk.Box):
-    """A widget which draws a page. It has tools for editing a rectangle (offset)."""
+    """A widget which draws a page. It has tools for editing a rectangle (crop/offset)."""
 
     def __init__(self, page, pdfqueue, spinbutton_widget=None, draw_on_page_func=None):
         super().__init__(orientation=Gtk.Orientation.VERTICAL)
@@ -679,7 +664,7 @@ class DrawingAreaWidget(Gtk.Box):
         self.set_cursor(sc)
 
     def get_suggested_cursor(self, event):
-        """Get appropriate cursor when moving mouse over adjust rect (offset)."""
+        """Get appropriate cursor when moving mouse over adjust rect (crop/offset)."""
         margin = 5
         r = self.adjust_rect
         if self.allow_adjust_rect_resize:
@@ -835,6 +820,58 @@ class DrawingAreaWidget(Gtk.Box):
         va = self.sw.get_vadjustment()
         r = ha.get_value(), va.get_value(), ha.get_page_size(), va.get_page_size()
         self.da.queue_draw_area(*r)
+
+
+class CropDialog():
+    def __init__(self, window, selection, model, pdfqueue, is_unsaved, update_val_func):
+        title = _("Crop Margins")
+        init_values = [model[row][0].crop for row in selection]
+        self.updated_values = init_values
+        self.spinbutton_widget = _CropWidget(list(init_values[-1]), margin=8)
+        page = model[selection[-1]][0]
+        dawidget = DrawingAreaWidget(page, pdfqueue, self.spinbutton_widget, self.draw_on_page)
+        page = dawidget.damodel[0][0]
+        page.crop = Sides()
+
+        prepend_butt = (_("_Revert"), Gtk.ResponseType.REJECT, _("_Apply"), Gtk.ResponseType.APPLY)
+        d = BaseDialog(title, window, prepend_butt)
+        d.connect('response', self.on_response, selection, init_values, is_unsaved, update_val_func)
+        d.vbox.pack_start(dawidget, True, True, 0)
+        d.set_size_request(350, 500)
+        d.show_all()
+
+    def draw_on_page(self, cr, dx, dy, dw, dh, _damodel):
+        """Draw on the thumbnail page."""
+        v = self.spinbutton_widget.get_val()
+        rx = round(dx + v.left * dw) - .5
+        ry = round(dy + v.top * dh) - .5
+        rw = round(dw * (1 - v.left - v.right)) + 1
+        rh = round(dh * (1 - v.top - v.bottom)) + 1
+
+        # Darken area outside of crop rectangle
+        cr.set_source_rgba(0, 0, 0, .3)
+        cr.set_dash([])
+        cr.rectangle(dx, dy, dw, dh)
+        cr.rectangle(rx, ry, rw, rh)
+        cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+        cr.fill()
+
+        return [rx, ry, rw, rh]
+
+    def on_response(self, dialog, response, selection, init_values, is_unsaved, update_val_func):
+        if response == Gtk.ResponseType.REJECT:
+            self.spinbutton_widget.set_val(init_values[-1])
+            self.updated_values = init_values
+            update_val_func(self.updated_values, selection, is_unsaved)
+            return
+        if response in [Gtk.ResponseType.OK, Gtk.ResponseType.APPLY]:
+            new_val = self.spinbutton_widget.get_val()
+            if any([new_val != val for val in self.updated_values]):
+                self.updated_values = [new_val] * len(selection)
+                update_val_func(self.updated_values, selection, True)
+        if response == Gtk.ResponseType.APPLY:
+            return
+        dialog.destroy()
 
 
 class PastePageLayerDialog():
