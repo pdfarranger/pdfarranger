@@ -67,7 +67,31 @@ def layer_support():
     return layer_support
 
 
-def create_blank_page(tmpdir, size, npages=1):
+def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
+    """Search pdfqueue for a matching pdf with blank pages. Create it if it does not exist.
+
+    Some notes:
+    Blank pdf documents are created prior to export (vs created as needed at export)
+    because it will keep code simpler. For example rendering of thumbnails require no
+    extra for rendering of a blank page.
+
+    A document with several blank pages is needed if the page number under thumbnail
+    need to be something else than 1.
+    """
+    for i, pdfdoc in enumerate(pdfqueue):
+        if size == pdfdoc.blank_size and npages <= pdfdoc.document.get_n_pages():
+            filename = pdfdoc.copyname
+            nfile = i + 1
+            return filename, nfile
+    filename = _create_blank_page(tmpdir, size, npages)
+    doc_data = pageadder.get_pdfdoc(filename, basename=None, blank_size=size)
+    if doc_data is None:
+        return None, None
+    nfile = doc_data[1]
+    return filename, nfile
+
+
+def _create_blank_page(tmpdir, size, npages=1):
     """
     Create a temporary PDF file with npages empty pages.
     The size is in PDF unit (1/72 of inch).

@@ -442,7 +442,10 @@ class PdfArranger(Gtk.Application):
             adder = PageAdder(self)
             if len(selection) > 0:
                 adder.move(Gtk.TreeRowReference.new(model, selection[-1]), False)
-            adder.addpages(exporter.create_blank_page(self.tmp_dir, page_size))
+            file, _ = exporter.get_blank_doc(adder, self.pdfqueue, self.tmp_dir, page_size)
+            if file is None:
+                return
+            adder.addpages(file)
             adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _action, _option, _unknown):
@@ -468,8 +471,11 @@ class PdfArranger(Gtk.Application):
         # We need a multiple of 4
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
         if blank_page_count > 0:
-            file = exporter.create_blank_page(self.tmp_dir, pages[0].size_in_points())
             adder = PageAdder(self)
+            a = adder, self.pdfqueue, self.tmp_dir, pages[0].size_in_points()
+            file, _npage = exporter.get_blank_doc(*a)
+            if file is None:
+                return
             for __ in range(blank_page_count):
                 adder.addpages(file)
             pages += adder.pages
@@ -2406,8 +2412,11 @@ class PdfArranger(Gtk.Application):
         ref = Gtk.TreeRowReference.new(self.model, selection[-1]) if before else None
         wdpage, hdpage = size[0] * cols, size[1] * rows
         ndpages = -(len(data) // -(cols * rows))
-        file = exporter.create_blank_page(self.tmp_dir, (wdpage, hdpage), ndpages)
         adder = PageAdder(self)
+        a = adder, self.pdfqueue, self.tmp_dir, (wdpage, hdpage), ndpages
+        file, _ = exporter.get_blank_doc(*a)
+        if file is None:
+            return
         adder.move(ref, before)
         adder.addpages(file)
         with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
