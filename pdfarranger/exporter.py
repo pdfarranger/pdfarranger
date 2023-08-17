@@ -391,7 +391,7 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
     # # Add overlays and underlays
     for i, page in enumerate(pages):
         # The dest page coordinates and size before geometrical transformations
-        dx1, dy1, dx2, dy2 = mediaboxes[i]
+        dx1, dy1, dx2, dy2 = [float(m) for m in mediaboxes[i]]
         dw, dh = dx2 - dx1, dy2 - dy1
 
         # Call to rotate in _apply_geom_transform_job ensures /Rotate exists
