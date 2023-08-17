@@ -513,7 +513,7 @@ class PDFDoc:
                 if not askpass:
                     raise e
 
-    def __init__(self, filename, basename, stat, tmp_dir, parent):
+    def __init__(self, filename, basename, blank_size, stat, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
         self.stat = stat
@@ -521,6 +521,7 @@ class PDFDoc:
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
             self.basename = basename
+        self.blank_size = blank_size  # != None if page is blank
         self.password = ""
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
@@ -592,7 +593,7 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def get_pdfdoc(self, filename: str, basename: Optional[str] = None) -> Optional[Tuple[PDFDoc, int, bool]]:
+    def get_pdfdoc(self, filename: str, basename: Optional[str] = None, blank_size=None) -> Optional[Tuple[PDFDoc, int, bool]]:
         """Get the pdfdoc object for the filename.
 
         pdfqueue is searched for the filename. If it is not found a pdfdoc is created
@@ -620,7 +621,7 @@ class PageAdder:
                 return it_pdfdoc, i + 1, False
 
         try:
-            pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
+            pdfdoc = PDFDoc(filename, basename, blank_size, self.stat_cache[filename],
                             self.app.tmp_dir, self.app.window)
             self.app.pdfqueue.append(pdfdoc)
             return pdfdoc, len(self.app.pdfqueue), True
