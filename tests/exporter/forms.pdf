@@ -1,0 +1,352 @@
+%PDF-1.6
+%¿÷¢þ
+%QDF-1.0
+
+%% Original object ID: 1 0
+1 0 obj
+<<
+  /AcroForm <<
+    /DR 2 0 R
+    /Fields [
+      3 0 R
+      4 0 R
+    ]
+  >>
+  /Pages 5 0 R
+  /Type /Catalog
+>>
+endobj
+
+%% Original object ID: 2 0
+2 0 obj
+<<
+  /Font <<
+    /F1 6 0 R
+    /ZaDb 7 0 R
+  >>
+>>
+endobj
+
+%% Original object ID: 3 0
+3 0 obj
+<<
+  /AP <<
+    /N 8 0 R
+  >>
+  /DA (0 0 0 rg /F1 12 Tf)
+  /DV (******)
+  /FT /Tx
+  /Ff 0
+  /Rect [
+    150
+    550
+    298
+    570
+  ]
+  /Subtype /Widget
+  /T (t1)
+  /Type /Annot
+  /V (******)
+>>
+endobj
+
+%% Original object ID: 4 0
+4 0 obj
+<<
+  /DV /1
+  /FT /Btn
+  /Ff 49152
+  /Kids [
+    10 0 R
+    11 0 R
+    12 0 R
+  ]
+  /T (r1)
+  /V /1
+>>
+endobj
+
+%% Original object ID: 5 0
+5 0 obj
+<<
+  /Count 1
+  /Kids [
+    13 0 R
+  ]
+  /Type /Pages
+>>
+endobj
+
+%% Original object ID: 6 0
+6 0 obj
+<<
+  /BaseFont /Courier
+  /Encoding /WinAnsiEncoding
+  /Subtype /Type1
+  /Type /Font
+>>
+endobj
+
+%% Original object ID: 7 0
+7 0 obj
+<<
+  /BaseFont /ZapfDingbats
+  /Subtype /Type1
+  /Type /Font
+>>
+endobj
+
+%% Original object ID: 8 0
+8 0 obj
+<<
+  /BBox [
+    -2
+    -2
+    148
+    10
+  ]
+  /Resources 2 0 R
+  /Subtype /Form
+  /Type /XObject
+  /Length 9 0 R
+>>
+stream
+/Tx BMC
+q
+BT
+  /F1 10 Tf
+  (******) Tj
+ET
+Q
+EMC
+endstream
+endobj
+
+9 0 obj
+48
+endobj
+
+%% Original object ID: 10 0
+10 0 obj
+<<
+  /AP <<
+    /N <<
+      /1 14 0 R
+      /Off 16 0 R
+    >>
+  >>
+  /AS /1
+  /DA (/F1 0 Tf)
+  /F 4
+  /FT /Btn
+  /MK <<
+    /CA (l)
+  >>
+  /Parent 4 0 R
+  /Rect [
+    150
+    650
+    165
+    665
+  ]
+  /Subtype /Widget
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 11 0
+11 0 obj
+<<
+  /AP <<
+    /N <<
+      /2 14 0 R
+      /Off 16 0 R
+    >>
+  >>
+  /AS /Off
+  /DA (/F1 0 Tf)
+  /F 4
+  /FT /Btn
+  /MK <<
+    /CA (l)
+  >>
+  /Parent 4 0 R
+  /Rect [
+    150
+    630
+    165
+    645
+  ]
+  /Subtype /Widget
+  /Type /Annot
+>>
+endobj
+
+%% Original object ID: 12 0
+12 0 obj
+<<
+  /AP <<
+    /N <<
+      /3 14 0 R
+      /Off 16 0 R
+    >>
+  >>
+  /AS /Off
+  /DA (/F1 0 Tf)
+  /F 4
+  /FT /Btn
+  /MK <<
+    /CA (l)
+  >>
+  /Parent 4 0 R
+  /Rect [
+    150
+    610
+    165
+    625
+  ]
+  /Subtype /Widget
+  /Type /Annot
+>>
+endobj
+
+%% Page 1
+%% Original object ID: 13 0
+13 0 obj
+<<
+  /Annots [
+    3 0 R
+    10 0 R
+    11 0 R
+    12 0 R
+  ]
+  /Contents 18 0 R
+  /MediaBox [
+    0
+    0
+    612
+    792
+  ]
+  /Parent 5 0 R
+  /Resources 2 0 R
+  /Type /Page
+>>
+endobj
+
+%% Original object ID: 14 0
+14 0 obj
+<<
+  /BBox [
+    0
+    0
+    15
+    15
+  ]
+  /Resources 2 0 R
+  /Subtype /Form
+  /Type /XObject
+  /Length 15 0 R
+>>
+stream
+q
+0 1 0 rg
+BT
+/ZaDb 12 Tf
+0 0 Td
+( 4 ) Tj
+ET
+Q
+endstream
+endobj
+
+15 0 obj
+47
+endobj
+
+%% Original object ID: 16 0
+16 0 obj
+<<
+  /BBox [
+    0
+    0
+    15
+    15
+  ]
+  /Resources 2 0 R
+  /Subtype /Form
+  /Type /XObject
+  /Length 17 0 R
+>>
+stream
+q
+1 0 0 rg
+BT
+/ZaDb 12 Tf
+0 0 Td
+( 8 ) Tj
+ET
+Q
+endstream
+endobj
+
+17 0 obj
+47
+endobj
+
+%% Contents for page 1
+%% Original object ID: 18 0
+18 0 obj
+<<
+  /Length 19 0 R
+>>
+stream
+q
+1 1 1 rg
+150 550 150 20 re
+B
+Q
+q
+/F1 16 Tf
+20 TL
+170 650 Td
+(Radio Button 1) Tj
+(Radio Button 2) '
+(Radio Button 3) '
+Q
+endstream
+endobj
+
+19 0 obj
+122
+endobj
+
+xref
+0 20
+0000000000 65535 f 
+0000000052 00000 n 
+0000000211 00000 n 
+0000000306 00000 n 
+0000000546 00000 n 
+0000000692 00000 n 
+0000000792 00000 n 
+0000000923 00000 n 
+0000001030 00000 n 
+0000001229 00000 n 
+0000001276 00000 n 
+0000001558 00000 n 
+0000001842 00000 n 
+0000002136 00000 n 
+0000002360 00000 n 
+0000002557 00000 n 
+0000002605 00000 n 
+0000002802 00000 n 
+0000002873 00000 n 
+0000003052 00000 n 
+trailer <<
+  /Root 1 0 R
+  /Size 20
+  /ID [<a2f146daeb6d814a742556489dab9882><31415926535897932384626433832795>]
+>>
+startxref
+3073
+%%EOF
