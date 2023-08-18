@@ -182,3 +182,11 @@ class ExporterTest(unittest.TestCase):
     def test23(self):
         """Scale pages in file with outlines"""
         self.outlines(23, Page(1), Page(2, scale=0.5), Page(3), Page(4))
+
+    def test24(self):
+        """Import page with interactive form elements"""
+        self.case(24, [(file('basic'), ''), (file('forms'), '')], Page(1), Page(1, nfile=2))
+
+    def test25(self):
+        """Duplicate page with interactive form elements"""
+        self.case(25, [(file('forms'), '')], Page(1), Page(1))
