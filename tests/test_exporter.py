@@ -125,6 +125,14 @@ class ExporterTest(unittest.TestCase):
         self.basic(9, Page(1, layerpages=[LayerPage(6, angle=90)]),
                    Page(1, layerpages=[LayerPage(6, angle=180)]), ignore=[39, 60, 79, 151], ignore_8=[39, 61, 81, 149])
 
+    def test095(self):
+        """Overlay page with itself - MediaBox with non-integer values"""
+        self.case(95, [(file('overlay'), '')], Page(1, layerpages=[LayerPage(1)]), ignore=[45, 72], ignore_8=[45, 73])
+
+    def test096(self):
+        """Overlay page with itself - MediaBox with non-standard corners"""
+        self.case(96, [(file('overlay'), '')], Page(2, layerpages=[LayerPage(2)]), ignore=[45, 72], ignore_8=[45, 73])
+
     def test10(self):
         """Offset overlay horizontal"""
         self.basic(10, Page(1, layerpages=[LayerPage(6, offset=[.5, 0, 0, 0]), LayerPage(6, offset=[0, 0.5, 0, 0])]),
