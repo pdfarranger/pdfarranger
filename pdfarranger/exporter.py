@@ -376,12 +376,12 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
             page.mediabox = pikepdf.Array((0, 0, 612, 792))
 
     # We don't need to call _append_page as the Job interface copies pages / annotations as necessary.
-    mediaboxes:List[pikepdf.Object] = []
+    mediaboxes:List[pikepdf.Rectangle] = []
     i = 0
     for page in pages:
         if quit_flag is not None and quit_flag.is_set():
             return
-        mediaboxes.append(pdf_output.pages[i].mediabox)
+        mediaboxes.append(pikepdf.Rectangle(pdf_output.pages[i].mediabox))
         _apply_geom_transform_job(pdf_output, pdf_output.pages[i], page)
         for lpage in page.layerpages:
             i += 1
@@ -391,8 +391,7 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
     # # Add overlays and underlays
     for i, page in enumerate(pages):
         # The dest page coordinates and size before geometrical transformations
-        dx1, dy1, dx2, dy2 = [float(m) for m in mediaboxes[i]]
-        dw, dh = dx2 - dx1, dy2 - dy1
+        mb = mediaboxes[i]
 
         # Call to rotate in _apply_geom_transform_job ensures /Rotate exists
         rotate_times = int(round((pdf_output.pages[i].Rotate % 360) / 90) % 4)
@@ -400,10 +399,10 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
             # Rotate the offsets so they are relative to dest page
             offset = lpage.rotate_array(lpage.offset, rotate_times)
             offs_left, offs_right, offs_top, offs_bottom = offset
-            x1 = page.scale * (dx1 + dw * offs_left)
-            y1 = page.scale * (dy1 + dh * offs_bottom)
-            x2 = page.scale * (dx1 + dw * (1 - offs_right))
-            y2 = page.scale * (dy1 + dh * (1 - offs_top))
+            x1 = page.scale * (mb.llx + mb.width * offs_left)
+            y1 = page.scale * (mb.lly + mb.height * offs_bottom)
+            x2 = page.scale * (mb.llx + mb.width * (1 - offs_right))
+            y2 = page.scale * (mb.lly + mb.height * (1 - offs_top))
             rect = pikepdf.Rectangle(x1, y1, x2, y2)
 
             if lpage.laypos == 'OVERLAY':
