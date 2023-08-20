@@ -150,11 +150,22 @@ class PdfArrangerTest(unittest.TestCase):
         config.searchBackoffDuration = 0.1
 
     def _app(self):
-        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
-        from dogtail.tree import root
-        a = root.application("__main__.py")
+        """Return the first instance of pdfarranger"""
+        self._wait_cond(lambda: len(self._apps()) > 0)
+        a =  self._apps()[0]
         self.assertFalse(a.dead)
         return a
+
+    def _apps(self):
+        """Return all instances of pdfarranger"""
+        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
+        from dogtail.tree import root
+
+        return [
+            a
+            for a in root.applications()
+            if a.name == "__main__.py" or a.name == "pdfarranger"
+        ]
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
@@ -225,9 +236,9 @@ class PdfArrangerTest(unittest.TestCase):
     def _process(self):
         return self.__class__.pdfarranger.process
 
-    def _import_file(self, filename):
+    def _import_file(self, filename, open_action=False):
         """Try to import a file with a file chooser and return that file chooser object"""
-        self._mainmenu("Import")
+        self._mainmenu("Open" if open_action else "Import")
         filechooser = self._app().child(roleName='file chooser')
         treeview = filechooser.child(roleName="table", name="Files")
         treeview.keyCombo("<ctrl>L")
@@ -267,10 +278,14 @@ class PdfArrangerTest(unittest.TestCase):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def _quit_without_saving(self):
+    def _quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+
+    def _quit_without_saving(self):
+        self._quit()
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Don’t Save").click()
+        # check that process actually exit
         self._process().wait(timeout=22)
 
     @classmethod
@@ -416,7 +431,7 @@ class TestBatch1(PdfArrangerTest):
         dialog.child(name="Cancel").click()
         self._app().keyCombo("<ctrl>s")
         self._wait_saving()
-        self._app().keyCombo("<ctrl>q")
+        self._quit()
         # check that process actually exit
         self._process().wait(timeout=22)
 
@@ -450,11 +465,7 @@ class TestBatch2(PdfArrangerTest):
         self._wait_cond(lambda: dialog.dead)
 
     def test_07_quit(self):
-        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
-        dialog = self._app().child(roleName="alert")
-        dialog.child(name="Don’t Save").click()
-        # check that process actually exit
-        self._process().wait(timeout=22)
+        self._quit_without_saving()
 
 
 class TestBatch3(PdfArrangerTest):
@@ -485,7 +496,7 @@ class TestBatch3(PdfArrangerTest):
         app = self._app()
         app.keyCombo("<ctrl>z")  # undo
         app.keyCombo("<ctrl>y")  # redo
-        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+        self._quit()
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Save").click()
         filechooser = self._app().child(roleName="file chooser")
@@ -536,9 +547,6 @@ class TestBatch4(PdfArrangerTest):
 
 class TestBatch5(PdfArrangerTest):
     """Test booklet and blank pages"""
-    # Kill X11 after that batch
-    LAST = True
-
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -575,3 +583,34 @@ class TestBatch5(PdfArrangerTest):
 
     def test_06_quit(self):
         self._quit_without_saving()
+
+
+class TestBatch6(PdfArrangerTest):
+    """Test Open action"""
+
+    # Kill X11 after that batch
+    LAST = True
+
+    def test_01_open_empty(self):
+        self._start()
+
+    def test_02_open(self):
+        filechooser = self._import_file("tests/test.pdf", open_action=True)
+        self._wait_cond(lambda: filechooser.dead)
+
+    def test_03_open_again(self):
+        """Create a new pdfarranger instance"""
+        self.assertEqual(len(self._apps()), 1)
+        filechooser = self._import_file("tests/test.pdf", open_action=True)
+        self._wait_cond(lambda: filechooser.dead)
+        self._wait_cond(lambda: len(self._apps()) == 2)
+
+    def test_04_quit(self):
+        """Quit the second instance"""
+        self._quit()
+        self._wait_cond(lambda: len(self._apps()) == 1)
+
+    def test_05_quit(self):
+        """Quit the first instance"""
+        self._quit()
+        self._process().wait(timeout=22)
