@@ -34,7 +34,7 @@ from gi.repository import Poppler
 import gettext
 _ = gettext.gettext
 
-from .core import Page
+from .core import Page, Sides
 
 # pikepdf.Page.add_overlay()/add_underlay() can't place a page exactly
 # if for example LC_NUMERIC=fi_FI
@@ -112,7 +112,7 @@ def _intersect_rectangle(rect1, rect2):
     ]
 
 
-def _mediabox(page, crop=None):
+def _mediabox(page, crop=Sides()):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
@@ -122,7 +122,7 @@ def _mediabox(page, crop=None):
         # reduced to their intersection with the media box"
         cmb = _intersect_rectangle(cmb, _normalize_rectangle(page.CropBox))
 
-    if crop is None or crop == [0., 0., 0., 0.]:
+    if crop == Sides():
         return cmb
     angle = page.Rotate if '/Rotate' in page else 0
     rotate_times = int(round(((angle) % 360) / 90) % 4)
@@ -132,12 +132,12 @@ def _mediabox(page, crop=None):
         for _ in range(rotate_times):
             perm.append(perm.pop(0))
         perm.insert(1, perm.pop(2))
-        crop = [crop_init[perm[side]] for side in range(4)]
+        crop = Sides(*(crop_init[perm[side]] for side in range(4)))
     x1, y1, x2, y2 = [float(x) for x in cmb]
-    x1_new = x1 + (x2 - x1) * crop[0]
-    x2_new = x2 - (x2 - x1) * crop[1]
-    y1_new = y1 + (y2 - y1) * crop[3]
-    y2_new = y2 - (y2 - y1) * crop[2]
+    x1_new = x1 + (x2 - x1) * crop.left
+    x2_new = x2 - (x2 - x1) * crop.right
+    y1_new = y1 + (y2 - y1) * crop.bottom
+    y2_new = y2 - (y2 - y1) * crop.top
     return [x1_new, y1_new, x2_new, y2_new]
 
 

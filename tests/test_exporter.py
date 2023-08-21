@@ -7,7 +7,7 @@ import pikepdf
 
 from pdfarranger.exporter import export
 from pdfarranger.core import LayerPage as LPage
-
+from pdfarranger.core import Dims, Sides
 
 # The test files used for the tests in this file are in QDF format (see
 # https://qpdf.readthedocs.io/en/stable/qdf.html).  They can be inspected with a simple text editor or compared with
@@ -26,8 +26,8 @@ class Page:
     copyname: str = file('basic')
     angle: int = 0
     scale: float = 1.0
-    crop: List[float] = field(default_factory=lambda: list((0, 0, 0, 0)))
-    size_orig: List[float] = field(default_factory=lambda: list((612, 792)))
+    crop: Sides = Sides()
+    size_orig: Dims = Dims(612, 792)
     layerpages: List[Any] = field(default_factory=list)
 
 
@@ -39,14 +39,14 @@ class LayerPage:
     copyname: str = file('basic')
     angle: int = 0
     scale: float = 1.0
-    crop: List[float] = field(default_factory=lambda: list((0, 0, 0, 0)))
+    crop: Sides = Sides()
     offset: List[float] = field(default_factory=lambda: list((0, 0, 0, 0)))
     laypos: str = 'OVERLAY'
-    size_orig: List[float] = field(default_factory=lambda: list((612, 792)))
+    size_orig: Dims = Dims(612, 792)
     layerpages: List[Any] = field(default_factory=list)
 
     @staticmethod
-    def rotate_array(array, rotate_times) -> List[float]:
+    def rotate_array(array: Sides, rotate_times: int) -> Sides:
         return LPage.rotate_array(array, rotate_times)
 
 
@@ -103,12 +103,12 @@ class ExporterTest(unittest.TestCase):
 
     def test05(self):
         """Crop page"""
-        self.basic(5, Page(1, crop=[0.1, 0.2, 0.3, 0.4]))
+        self.basic(5, Page(1, crop=Sides(0.1, 0.2, 0.3, 0.4)))
 
     def test06(self):
         """Rotate and crop page"""
-        self.basic(6, Page(1, angle=90, crop=[0.1, 0.2, 0.3, 0.4]), Page(1, angle=180, crop=[0.1, 0.2, 0.3, 0.4]),
-                   Page(1, angle=270, crop=[0.1, 0.2, 0.3, 0.4]))
+        self.basic(6, Page(1, angle=90, crop=Sides(0.1, 0.2, 0.3, 0.4)), Page(1, angle=180, crop=Sides(0.1, 0.2, 0.3, 0.4)),
+                   Page(1, angle=270, crop=Sides(0.1, 0.2, 0.3, 0.4)))
 
     def test07(self):
         """Overlay page"""
@@ -155,7 +155,7 @@ class ExporterTest(unittest.TestCase):
 
     def test15(self):
         """Crop page with annotations"""
-        self.basic(15, Page(5, crop=[0.05, 0.075, 0.2, 0.3]))
+        self.basic(15, Page(5, crop=Sides(0.05, 0.075, 0.2, 0.3)))
 
     def test16(self):
         """Overlay page with annotations"""
