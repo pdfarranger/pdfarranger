@@ -32,6 +32,7 @@ import pathlib
 import shutil
 import tempfile
 import threading
+from typing import Optional, Tuple
 import gettext
 import gi
 from gi.repository import GObject
@@ -419,53 +420,44 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def get_pdfdoc(self, filename,  basename=None):
+    def get_pdfdoc(self, filename: str, basename: Optional[str] = None) -> Optional[Tuple[PDFDoc, int, bool]]:
         """Get the pdfdoc object for the filename.
 
         pdfqueue is searched for the filename. If it is not found a pdfdoc is created
         and added to pdfqueue.
         Returns: pdfdoc object, it's file number, if a new pdfdoc was created.
         """
-        pdfdoc = None
-        nfile = None
-        doc_added = False
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
             if filename == it_pdfdoc.copyname:
                 # File of copy-pasted page was found in pdfqueue.
                 # Files in tmp_dir are never modified by the app and are not expected
                 # to be modified by the user either -> files are equal if names match.
-                pdfdoc = it_pdfdoc
-                nfile = i + 1
-                break
-        if pdfdoc is None:
-            if not filename in self.stat_cache:
-                try:
-                    s = os.stat(filename)
-                    self.stat_cache[filename] = s.st_dev, s.st_ino, s.st_mtime
-                except OSError as e:
-                    print(traceback.format_exc())
-                    self.app.error_message_dialog(e)
-                    return None
-            for i, it_pdfdoc in enumerate(self.app.pdfqueue):
-                if self.stat_cache[filename] == it_pdfdoc.stat:
-                    # Imported file was found in pdfqueue
-                    pdfdoc = it_pdfdoc
-                    nfile = i + 1
-                    break
-        if pdfdoc is None:
+                return it_pdfdoc, i + 1, False
+
+        if not filename in self.stat_cache:
             try:
-                pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
-                                self.app.tmp_dir, self.app.window)
-            except _UnknownPasswordException:
+                s = os.stat(filename)
+                self.stat_cache[filename] = s.st_dev, s.st_ino, s.st_mtime
+            except OSError as e:
+                print(traceback.format_exc())
+                self.app.error_message_dialog(e)
                 return None
-            except PDFDocError as e:
-                print(e.message, file=sys.stderr)
-                self.app.error_message_dialog(e.message)
-                return None
+        for i, it_pdfdoc in enumerate(self.app.pdfqueue):
+            if self.stat_cache[filename] == it_pdfdoc.stat:
+                # Imported file was found in pdfqueue
+                return it_pdfdoc, i + 1, False
+
+        try:
+            pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
+                            self.app.tmp_dir, self.app.window)
             self.app.pdfqueue.append(pdfdoc)
-            nfile = len(self.app.pdfqueue)
-            doc_added = True
-        return pdfdoc, nfile, doc_added
+            return pdfdoc, len(self.app.pdfqueue), True
+        except _UnknownPasswordException:
+            return None
+        except PDFDocError as e:
+            print(e.message, file=sys.stderr)
+            self.app.error_message_dialog(e.message)
+            return None
 
     def get_layerpages(self, layerdata):
         """Create LayerPage objects from layerdata."""
