@@ -232,10 +232,10 @@ class LayerPage(BasePage):
 
     def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig: Dims):
         super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
-        #: Left, right, top, bottom offset from dest page edges
-        self.offset = offset
-        #: OVERLAY or UNDERLAY
+        self.offset = Sides(*offset)
+        """Left, right, top, bottom offset from dest page edges"""
         self.laypos = laypos
+        """OVERLAY or UNDERLAY"""
 
     def __repr__(self):
         return (f"LayerPage({self.nfile}, {self.npage}, '{self.copyname}', {self.angle}, "
@@ -723,7 +723,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             if layer != lp.laypos:
                 continue
             cr.save()
-            cr.translate(p.size.width * lp.offset[0], p.size.height * lp.offset[2])
+            cr.translate(p.size.width * lp.offset.left, p.size.height * lp.offset.top)
             cr.scale(lp.scale / p.scale, lp.scale / p.scale)
             x = lp.size.width * lp.crop.left
             y = lp.size.height * lp.crop.top

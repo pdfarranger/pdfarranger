@@ -40,7 +40,7 @@ class LayerPage:
     angle: int = 0
     scale: float = 1.0
     crop: Sides = Sides()
-    offset: List[float] = field(default_factory=lambda: list((0, 0, 0, 0)))
+    offset: Sides = Sides()
     laypos: str = 'OVERLAY'
     size_orig: Dims = Dims(612, 792)
     layerpages: List[Any] = field(default_factory=list)
@@ -133,12 +133,14 @@ class ExporterTest(unittest.TestCase):
 
     def test10(self):
         """Offset overlay horizontal"""
-        self.basic(10, Page(1, layerpages=[LayerPage(6, offset=[.5, 0, 0, 0]), LayerPage(6, offset=[0, 0.5, 0, 0])]),
+        self.basic(10, Page(1, layerpages=[LayerPage(6, offset=Sides(.5, 0, 0, 0)),
+                                           LayerPage(6, offset=Sides(0, 0.5, 0, 0))]),
                    ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
 
     def test11(self):
         """Offset overlay vertical"""
-        self.basic(11, Page(1, layerpages=[LayerPage(6, offset=[0, 0, 0.5, 0]), LayerPage(6, offset=[0, 0, 0, 0.5])]),
+        self.basic(11, Page(1, layerpages=[LayerPage(6, offset=Sides(0, 0, 0.5, 0)),
+                                           LayerPage(6, offset=Sides(0, 0, 0, 0.5))]),
                    ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
 
     def test12(self):

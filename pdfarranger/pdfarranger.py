@@ -1526,7 +1526,7 @@ class PdfArranger(Gtk.Application):
         page_stack = []
         pageadder = PageAdder(self)
         for filename, npage, _basename, angle, scale, crop, layerdata in data:
-            d = [[filename, npage, angle, scale, laypos, crop, [0] * 4]] + layerdata
+            d = [[filename, npage, angle, scale, laypos, crop, Sides()]] + layerdata
             page_stack.append(pageadder.get_layerpages(d))
             if page_stack[-1] is None:
                 return
@@ -1551,10 +1551,10 @@ class PdfArranger(Gtk.Application):
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
             scaley = (dpage.height_in_points() - lp0.height_in_points()) / dheight
-            lp0.offset[0] = dpage.crop.left + off_x * scalex
-            lp0.offset[1] = 1 - lp0.offset[0] - lp0.width_in_points() / dwidth
-            lp0.offset[2] = dpage.crop.top + off_y * scaley
-            lp0.offset[3] = 1 - lp0.offset[2] - lp0.height_in_points() / dheight
+            lp0.offset = Sides(left=dpage.crop.left + off_x * scalex,
+                               right=1 - lp0.offset.left - lp0.width_in_points() / dwidth,
+                               top=dpage.crop.top + off_y * scaley,
+                               bottom=1 - lp0.offset.top - lp0.height_in_points() / dheight)
             dpage.layerpages.append(lp0)
 
             # Add layers from the pasted page
