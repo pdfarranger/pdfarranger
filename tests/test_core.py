@@ -1,7 +1,7 @@
 import unittest
 
 from pdfarranger.core import LayerPage as LPage
-from pdfarranger.core import Dims, Page
+from pdfarranger.core import Dims, Page, Sides
 
 
 class PTest(unittest.TestCase):
@@ -10,43 +10,44 @@ class PTest(unittest.TestCase):
     @staticmethod
     def _lpage1() -> LPage:
         """Sample layer page 1"""
-        return LPage(2, 4, 'lcopy', 90, 2, [0.11, 0.21, 0.31, 0.41], [0.12, 0.22, 0.32, 0.42], 'OVERLAY',
+        return LPage(2, 4, 'lcopy', 90, 2, Sides(0.11, 0.21, 0.31, 0.41), Sides(0.12, 0.22, 0.32, 0.42), 'OVERLAY',
                      Dims(10.33, 20.33))
 
     @staticmethod
     def _lpage1_90() -> LPage:
         """Sample layer page 1 rotated 90 degrees"""
-        return LPage(2, 4, 'lcopy', 180, 2, [0.41, 0.31, 0.11, 0.21], [0.42, 0.32, 0.12, 0.22], 'OVERLAY',
+        return LPage(2, 4, 'lcopy', 180, 2, Sides(0.41, 0.31, 0.11, 0.21), Sides(0.42, 0.32, 0.12, 0.22), 'OVERLAY',
                      Dims(10.33, 20.33))
 
     @staticmethod
     def _lpage1_180() -> LPage:
         """Sample layer page 1 rotated 180 degrees"""
-        return LPage(2, 4, 'lcopy', 270, 2, [0.21, 0.11, 0.41, 0.31], [0.22, 0.12, 0.42, 0.32], 'OVERLAY',
+        return LPage(2, 4, 'lcopy', 270, 2, Sides(0.21, 0.11, 0.41, 0.31), Sides(0.22, 0.12, 0.42, 0.32), 'OVERLAY',
                      Dims(10.33, 20.33))
 
     @staticmethod
     def _lpage1_270() -> LPage:
         """Sample layer page 1 rotated 180 degrees"""
-        return LPage(2, 4, 'lcopy', 0, 2, [0.31, 0.41, 0.21, 0.11], [0.32, 0.42, 0.22, 0.12], 'OVERLAY',
+        return LPage(2, 4, 'lcopy', 0, 2, Sides(0.31, 0.41, 0.21, 0.11), Sides(0.32, 0.42, 0.22, 0.12), 'OVERLAY',
                      Dims(10.33, 20.33))
 
     def _page1(self) -> Page:
         """Sample page 1"""
-        return Page(1, 2, 0.55, 'copy', 0, 2, [0.1, 0.2, 0.3, 0.4], Dims(100.33, 200.66), 'base', [self._lpage1()])
+        return Page(1, 2, 0.55, 'copy', 0, 2, Sides(0.1, 0.2, 0.3, 0.4), Dims(100.33, 200.66), 'base', [self._lpage1()])
 
     def _page1_90(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.55, 'copy', 90, 2, [0.4, 0.3, 0.1, 0.2], Dims(100.33, 200.66), 'base', [self._lpage1_90()])
+        return Page(1, 2, 0.55, 'copy', 90, 2, Sides(0.4, 0.3, 0.1, 0.2), Dims(100.33, 200.66), 'base',
+                    [self._lpage1_90()])
 
     def _page1_180(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.55, 'copy', 180, 2, [0.2, 0.1, 0.4, 0.3], Dims(100.33, 200.66), 'base',
+        return Page(1, 2, 0.55, 'copy', 180, 2, Sides(0.2, 0.1, 0.4, 0.3), Dims(100.33, 200.66), 'base',
                     [self._lpage1_180()])
 
     def _page1_270(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.55, 'copy', 270, 2, [0.3, 0.4, 0.2, 0.1], Dims(100.33, 200.66), 'base',
+        return Page(1, 2, 0.55, 'copy', 270, 2, Sides(0.3, 0.4, 0.2, 0.1), Dims(100.33, 200.66), 'base',
                     [self._lpage1_270()])
 
 

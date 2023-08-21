@@ -62,6 +62,13 @@ _ = gettext.gettext
 Numeric = Union[float, int]
 
 
+class Sides(NamedTuple):
+    left: Numeric = 0
+    right: Numeric = 0
+    top: Numeric = 0
+    bottom: Numeric = 0
+
+
 class Dims(NamedTuple):
     width: Numeric
     height: Numeric
@@ -78,15 +85,15 @@ class Dims(NamedTuple):
         """Scale by factor and round to nearest int"""
         return Dims(int(self.width * factor + 0.5), int(self.height * factor + 0.5))
 
-    def cropped(self, crop) -> "Dims":
+    def cropped(self, crop: Sides) -> "Dims":
         """Crop using crop array"""
-        return Dims(self.width * (1 - crop[0] - crop[1]), self.height * (1 - crop[2] - crop[3]))
+        return Dims(self.width * (1 - crop.left - crop.right), self.height * (1 - crop.top - crop.bottom))
 
 
 class BasePage:
     """Common base class for Page and LayerPage"""
 
-    def __init__(self, nfile, npage, copyname, angle, scale, crop, size_orig: Dims):
+    def __init__(self, nfile, npage, copyname, angle, scale, crop: Sides, size_orig: Dims):
         self.nfile = nfile
         """The ID (from 1 to n) of the PDF file owning the page"""
         self.npage = npage
@@ -95,7 +102,7 @@ class BasePage:
         """Filepath to the temporary stored file"""
         self.angle = angle
         self.scale = scale
-        self.crop = list(crop)
+        self.crop = crop
         """Left, right, top, bottom crop"""
         self.size_orig = size_orig
         """Width and height of the original page"""
@@ -121,8 +128,8 @@ class BasePage:
 
 
 class Page(BasePage):
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size_orig: Dims, basename, layerpages):
-        super().__init__(nfile, npage, copyname, angle, scale, crop, size_orig)
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, size_orig: Dims, basename, layerpages):
+        super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
         self.zoom = zoom
         self.thumbnail = None
         self.resample = -1
@@ -151,13 +158,13 @@ class Page(BasePage):
         return self.size_in_points().int_scaled(self.zoom)
 
     @staticmethod
-    def rotate_crop(croparray, rotate_times):
+    def rotate_crop(croparray: Sides, rotate_times: int) -> Sides:
         """Rotate a given crop array (left, right, top bottom) a number of time"""
         perm = [0, 2, 1, 3]
         for __ in range(rotate_times):
             perm.append(perm.pop(0))
         perm.insert(1, perm.pop(2))
-        return [croparray[x] for x in perm]
+        return Sides(*(croparray[x] for x in perm))
 
     def rotate(self, angle):
         rt = self.rotate_times(angle)
@@ -171,7 +178,7 @@ class Page(BasePage):
         return True
 
     def unmodified(self):
-        u = self.angle == 0 and self.crop == [0]*4 and self.scale == 1 and len(self.layerpages) == 0
+        u = self.angle == 0 and self.crop == Sides() and self.scale == 1 and len(self.layerpages) == 0
         return u
 
     def serialize(self):
@@ -183,7 +190,6 @@ class Page(BasePage):
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
-        r.crop = list(r.crop)
         r.layerpages = [lp.duplicate() for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
@@ -209,7 +215,7 @@ class Page(BasePage):
                 leftcrop = left + l
                 col_width = r - l
                 rightcrop = 1 - (leftcrop + col_width)
-                crop = [leftcrop, rightcrop, topcrop, bottomcrop]
+                crop = Sides(leftcrop, rightcrop, topcrop, bottomcrop)
                 if l == 0.0 and t == 0.0:
                     # Update the original page
                     self.crop = crop
@@ -225,7 +231,7 @@ class LayerPage(BasePage):
     """Page added as overlay or underlay on a Page."""
 
     def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig: Dims):
-        super().__init__(nfile, npage, copyname, angle, scale, crop, size_orig)
+        super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
         #: Left, right, top, bottom offset from dest page edges
         self.offset = offset
         #: OVERLAY or UNDERLAY
@@ -236,13 +242,13 @@ class LayerPage(BasePage):
                 f"{self.scale}, {self.crop}, {self.offset}, '{self.laypos}', {self.size_orig})")
 
     @staticmethod
-    def rotate_array(array, rotate_times):
+    def rotate_array(array: Sides, rotate_times: int) -> Sides:
         """Rotate a given crop or offset array (left, right, top bottom) a number of times."""
         perm = [0, 2, 1, 3]
         for __ in range(rotate_times):
             perm.append(perm.pop(0))
         perm.insert(1, perm.pop(2))
-        return [array[x] for x in perm]
+        return Sides(*(array[x] for x in perm))
 
     def rotate(self, angle):
         rt = self.rotate_times(angle)
@@ -262,8 +268,6 @@ class LayerPage(BasePage):
 
     def duplicate(self):
         r = copy.copy(self)
-        r.crop = list(r.crop)
-        r.offset = list(r.offset)
         return r
 
 
@@ -500,8 +504,7 @@ class PageAdder:
             layerpages.append(LayerPage(*ld))
         return layerpages
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, layerdata=None):
-        crop = [0] * 4 if crop is None else crop
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), layerdata=None):
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
@@ -673,8 +676,8 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             # Reuse the preview if it exist, unless it is marked for re-render
             thumbnail = p.preview
         else:
-            wpoi = p.size.width * (1 - p.crop[0] - p.crop[1])
-            hpoi = p.size.height * (1 - p.crop[2] - p.crop[3])
+            wpoi = p.size.width * (1 - p.crop.left - p.crop.right)
+            hpoi = p.size.height * (1 - p.crop.top - p.crop.bottom)
             wpix = int(0.5 + wpoi * p.scale * zoom)
             hpix = int(0.5 + hpoi * p.scale * zoom)
             wpix0, hpix0 = (wpix, hpix) if p.angle in [0, 180] else (hpix, wpix)
@@ -687,7 +690,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 cr.rotate(-rotation * pi / 180)
                 cr.translate(-wpix / 2, -hpix / 2)
             cr.scale(wpix / wpoi, hpix / hpoi)
-            cr.translate(-p.crop[0] * p.size.width, -p.crop[2] * p.size.height)
+            cr.translate(-p.crop.left * p.size.width, -p.crop.top * p.size.height)
             self.add_layers(cr, p, layer='UNDERLAY')
             cr.save()
             if rotation > 0:
@@ -722,10 +725,10 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             cr.save()
             cr.translate(p.size.width * lp.offset[0], p.size.height * lp.offset[2])
             cr.scale(lp.scale / p.scale, lp.scale / p.scale)
-            x = lp.size.width * lp.crop[0]
-            y = lp.size.height * lp.crop[2]
-            w = lp.size.width * (1 - lp.crop[0] - lp.crop[1])
-            h = lp.size.height * (1 - lp.crop[2] - lp.crop[3])
+            x = lp.size.width * lp.crop.left
+            y = lp.size.height * lp.crop.top
+            w = lp.size.width * (1 - lp.crop.left - lp.crop.right)
+            h = lp.size.height * (1 - lp.crop.top - lp.crop.bottom)
             cr.translate(-x, -y)
             cr.rectangle(x, y, w, h)
             cr.clip()

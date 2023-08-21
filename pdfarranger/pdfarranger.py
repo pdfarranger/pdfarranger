@@ -117,6 +117,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
+from .core import Sides
 
 
 def _set_language_locale():
@@ -1550,9 +1551,9 @@ class PdfArranger(Gtk.Application):
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
             scaley = (dpage.height_in_points() - lp0.height_in_points()) / dheight
-            lp0.offset[0] = dpage.crop[0] + off_x * scalex
+            lp0.offset[0] = dpage.crop.left + off_x * scalex
             lp0.offset[1] = 1 - lp0.offset[0] - lp0.width_in_points() / dwidth
-            lp0.offset[2] = dpage.crop[2] + off_y * scaley
+            lp0.offset[2] = dpage.crop.top + off_y * scaley
             lp0.offset[3] = 1 - lp0.offset[2] - lp0.height_in_points() / dheight
             dpage.layerpages.append(lp0)
 
@@ -1573,7 +1574,7 @@ class PdfArranger(Gtk.Application):
                     lp.offset[i] += outside
                     # Recalculate the offset relative to the new destination page
                     lp.offset[i] = lp0.offset[i] + (lp.offset[i] - lp0.crop[i]) * sm1[i]
-                if lp.crop[0] + lp.crop[1] > 1 or lp.crop[2] + lp.crop[3] > 1:
+                if lp.crop.left + lp.crop.right > 1 or lp.crop.top + lp.crop.bottom > 1:
                     # The layer is outside of the visible area
                     continue
                 # Mark as OVERLAY or UNDERLAY and add the layer at right place in stack
@@ -2469,8 +2470,8 @@ class PdfArranger(Gtk.Application):
         for id_sel, path in enumerate(selection):
             pos = model.get_iter(path)
             page = model.get_value(pos, 0)
-            if page.crop != list(newcrop[id_sel]):
-                page.crop = list(newcrop[id_sel])
+            if page.crop != Sides(*newcrop[id_sel]):
+                page.crop = Sides(*newcrop[id_sel])
                 page.resample = -1
                 changed = True
             model.set_value(pos, 0, page)
