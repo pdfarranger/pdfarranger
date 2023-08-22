@@ -74,6 +74,10 @@ class Dims(NamedTuple):
         """Scale by factor"""
         return Dims(self.width * factor, self.height * factor)
 
+    def cropped(self, crop) -> "Dims":
+        """Crop using crop array"""
+        return Dims(self.width * (1 - crop[0] - crop[1]), self.height * (1 - crop[2] - crop[3]))
+
 
 class BasePage:
     """Common base class for Page and LayerPage"""
@@ -94,17 +98,17 @@ class BasePage:
         self.size = size_orig if angle in [0, 180] else size_orig.flipped()
         """Width and height"""
 
-    def width_in_points(self):
+    def width_in_points(self) -> Numeric:
         """Return the page width in PDF points."""
-        return self.scale * self.size.width * (1 - self.crop[0] - self.crop[1])
+        return self.size_in_points().width
 
-    def height_in_points(self):
+    def height_in_points(self) -> Numeric:
         """Return the page height in PDF points."""
-        return self.scale * self.size.height * (1 - self.crop[2] - self.crop[3])
+        return self.size_in_points().height
 
-    def size_in_points(self):
+    def size_in_points(self) -> Dims:
         """Return the page size in PDF points."""
-        return (self.width_in_points(), self.height_in_points())
+        return self.size.scaled(self.scale).cropped(self.crop)
 
     @staticmethod
     def rotate_times(angle: int) -> int:
@@ -138,6 +142,9 @@ class Page(BasePage):
 
     def height_in_pixel(self):
         return int(0.5 + self.zoom * self.height_in_points())
+
+    def size_in_pixel(self):
+        return self.width_in_pixel(), self.height_in_pixel()
 
     @staticmethod
     def rotate_crop(croparray, rotate_times):
