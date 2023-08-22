@@ -91,7 +91,7 @@ class BasePage:
         return (self.width_in_points(), self.height_in_points())
 
     @staticmethod
-    def rotate_times(angle):
+    def rotate_times(angle: int) -> int:
         """Convert an angle in degree to a number of 90° rotation (integer)."""
         return int(round(((-angle) % 360) / 90) % 4)
 
