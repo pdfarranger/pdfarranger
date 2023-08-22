@@ -24,6 +24,8 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Combine Coverage
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
@@ -46,6 +48,8 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Combine Coverage
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
@@ -64,6 +68,8 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Combine Coverage
       run: python3 -m coverage combine
     - name: Upload coverage reports to Codecov
