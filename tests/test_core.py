@@ -29,19 +29,19 @@ class PTest(unittest.TestCase):
 
     def _page1(self) -> Page:
         """Sample page 1"""
-        return Page(1, 2, 0.5, 'copy', 0, 2, [0.1, 0.2, 0.3, 0.4], Dims(100, 200), 'base', [self._lpage1()])
+        return Page(1, 2, 0.55, 'copy', 0, 2, [0.1, 0.2, 0.3, 0.4], Dims(100, 200), 'base', [self._lpage1()])
 
     def _page1_90(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.5, 'copy', 90, 2, [0.4, 0.3, 0.1, 0.2], Dims(100, 200), 'base', [self._lpage1_90()])
+        return Page(1, 2, 0.55, 'copy', 90, 2, [0.4, 0.3, 0.1, 0.2], Dims(100, 200), 'base', [self._lpage1_90()])
 
     def _page1_180(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.5, 'copy', 180, 2, [0.2, 0.1, 0.4, 0.3], Dims(100, 200), 'base', [self._lpage1_180()])
+        return Page(1, 2, 0.55, 'copy', 180, 2, [0.2, 0.1, 0.4, 0.3], Dims(100, 200), 'base', [self._lpage1_180()])
 
     def _page1_270(self) -> Page:
         """Sample page 1 rotated 90 degrees"""
-        return Page(1, 2, 0.5, 'copy', 270, 2, [0.3, 0.4, 0.2, 0.1], Dims(100, 200), 'base', [self._lpage1_270()])
+        return Page(1, 2, 0.55, 'copy', 270, 2, [0.3, 0.4, 0.2, 0.1], Dims(100, 200), 'base', [self._lpage1_270()])
 
 
 class BasePageTest(PTest):
@@ -104,6 +104,16 @@ class PageTest(PTest):
                          'copy\n2\nbase\n0\n2\n0.1\n0.2\n0.3\n0.4\nlcopy\n4\n90\n2\nOVERLAY\n0.11\n0.21\n0.31\n0.41\n'
                          '0.12\n0.22\n0.32\n0.42')
 
+    def test04(self):
+        """Test width | height | size_in_pixel"""
+        self.assertAlmostEquals(self._page1().size_in_pixel()[0], 77)
+        self.assertAlmostEquals(self._page1().width_in_pixel(), 77)
+        self.assertAlmostEquals(self._page1().size_in_pixel()[1], 66)
+        self.assertAlmostEquals(self._page1().height_in_pixel(), 66)
+        self.assertAlmostEquals(self._page1_90().size_in_pixel()[0], 66)
+        self.assertAlmostEquals(self._page1_90().width_in_pixel(), 66)
+        self.assertAlmostEquals(self._page1_90().size_in_pixel()[1], 77)
+        self.assertAlmostEquals(self._page1_90().height_in_pixel(), 77)
 
 class LayerPageTest(PTest):
 
