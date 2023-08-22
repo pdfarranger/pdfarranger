@@ -86,6 +86,21 @@ class PageTest(PTest):
         self.assertEqual(self._rotate(180).size, [100, 200])
         self.assertEqual(self._rotate(270).size, [200, 100])
 
+    def test02(self):
+        """Test duplicate"""
+        p = self._page1()
+        d = p.duplicate()
+        self.assertEqual(repr(p), repr(d))
+        p.rotate(90)
+        self.assertEqual(repr(d), repr(self._page1()))
+        self.assertNotEquals(repr(p), repr(self._page1()))
+
+    def test03(self):
+        """Test serialize"""
+        self.assertEqual(self._page1().serialize(),
+                         'copy\n2\nbase\n0\n2\n0.1\n0.2\n0.3\n0.4\nlcopy\n4\n90\n2\nOVERLAY\n0.11\n0.21\n0.31\n0.41\n'
+                         '0.12\n0.22\n0.32\n0.42')
+
 
 class LayerPageTest(PTest):
 
@@ -108,3 +123,17 @@ class LayerPageTest(PTest):
         self.assertEqual(self._rotate(90).size, [10, 20])
         self.assertEqual(self._rotate(180).size, [20, 10])
         self.assertEqual(self._rotate(270).size, [10, 20])
+
+    def test02(self):
+        """Test duplicate"""
+        p = self._lpage1()
+        d = p.duplicate()
+        self.assertEqual(repr(p), repr(d))
+        p.rotate(90)
+        self.assertEqual(repr(d), repr(self._lpage1()))
+        self.assertNotEquals(repr(p), repr(self._lpage1()))
+
+    def test03(self):
+        """Test serialize"""
+        self.assertEqual(self._lpage1().serialize(),
+                         'lcopy\n4\n90\n2\nOVERLAY\n0.11\n0.21\n0.31\n0.41\n0.12\n0.22\n0.32\n0.42')
