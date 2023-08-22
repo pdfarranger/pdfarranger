@@ -52,6 +52,18 @@ class PTest(unittest.TestCase):
                     [self._lpage1_270()])
 
 
+class BasePageTest(PTest):
+
+    def test02(self):
+        """Test rotate_times"""
+        #  Remember - counter-clockwise !
+        self.assertEqual(Page.rotate_times(0), 0)
+        self.assertEqual(Page.rotate_times(90), 3)
+        self.assertEqual(Page.rotate_times(134), 3)
+        self.assertEqual(Page.rotate_times(-270), 3)
+        self.assertEqual(Page.rotate_times(3690), 3)
+
+
 class PageTest(PTest):
 
     def _rotate(self, angle: int) -> Page:
