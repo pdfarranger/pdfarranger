@@ -93,7 +93,7 @@ class BasePage:
     @staticmethod
     def rotate_times(angle: int) -> int:
         """Convert an angle in degree to a number of 90° rotation (integer)."""
-        return int(round(((-angle) % 360) / 90) % 4)
+        return round((-angle  / 90) % 4)
 
 
 class Page(BasePage):
