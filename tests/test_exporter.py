@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-import filecmp
 import packaging.version as version
 from typing import Any, List
 import unittest
@@ -7,7 +6,7 @@ import unittest
 import pikepdf
 
 from pdfarranger.exporter import export
-from pdfarranger.core import LayerPage as LP
+from pdfarranger.core import LayerPage as LPage
 
 
 # The test files used for the tests in this file are in QDF format (see
@@ -48,7 +47,7 @@ class LayerPage:
 
     @staticmethod
     def rotate_array(array, rotate_times) -> List[float]:
-        return LP.rotate_array(array, rotate_times)
+        return LPage.rotate_array(array, rotate_times)
 
 
 class ExporterTest(unittest.TestCase):
@@ -76,7 +75,6 @@ class ExporterTest(unittest.TestCase):
                 del expected[i - 1]
                 del actual[i - 1]
         self.assertEqual(actual, expected)
-
 
     def basic(self, test, *pages, ignore=None, ignore_8=None):
         """Test with basic.pdf as single input file."""
@@ -136,7 +134,7 @@ class ExporterTest(unittest.TestCase):
     def test10(self):
         """Offset overlay horizontal"""
         self.basic(10, Page(1, layerpages=[LayerPage(6, offset=[.5, 0, 0, 0]), LayerPage(6, offset=[0, 0.5, 0, 0])]),
-                   ignore=[38, 39, 59, 64, 75, 116], ignore_8= [38, 39, 60, 65, 74, 121])
+                   ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
 
     def test11(self):
         """Offset overlay vertical"""
