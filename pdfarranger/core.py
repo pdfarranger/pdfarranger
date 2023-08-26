@@ -74,6 +74,10 @@ class Dims(NamedTuple):
         """Scale by factor"""
         return Dims(self.width * factor, self.height * factor)
 
+    def int_scaled(self, factor: float) -> "Dims":
+        """Scale by factor and round to nearest int"""
+        return Dims(int(self.width * factor + 0.5), int(self.height * factor + 0.5))
+
     def cropped(self, crop) -> "Dims":
         """Crop using crop array"""
         return Dims(self.width * (1 - crop[0] - crop[1]), self.height * (1 - crop[2] - crop[3]))
@@ -138,13 +142,13 @@ class Page(BasePage):
         return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
 
     def width_in_pixel(self):
-        return int(0.5 + self.zoom * self.width_in_points())
+        return self.size_in_pixel().width
 
     def height_in_pixel(self):
-        return int(0.5 + self.zoom * self.height_in_points())
+        return self.size_in_pixel().height
 
     def size_in_pixel(self):
-        return self.width_in_pixel(), self.height_in_pixel()
+        return self.size_in_points().int_scaled(self.zoom)
 
     @staticmethod
     def rotate_crop(croparray, rotate_times):
