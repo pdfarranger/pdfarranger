@@ -184,10 +184,17 @@ class PdfArrangerTest(unittest.TestCase):
             self.assertLess(c, 30)
             c += 1
 
-    def _is_saving(self):
-        app = self._app()
+    def _find_by_role(self, role, node=None, show_only=False):
+        if node is None:
+            node = self._app()
         from dogtail import predicate
-        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+
+        return node.findChildren(
+            predicate.GenericPredicate(roleName=role), showingOnly=show_only
+        )
+
+    def _is_saving(self):
+        allstatusbar = self._find_by_role("status bar")
         statusbar = allstatusbar[0]
         return statusbar.name.startswith("Saving")
 
@@ -199,8 +206,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _status_text(self):
         app = self._app()
-        from dogtail import predicate
-        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+        allstatusbar = self._find_by_role("status bar")
         # If we have multiple status bar, consider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
         return statusbar.name
@@ -217,9 +223,8 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _icons(self):
         """Return the list of page icons"""
-        from dogtail import predicate
         viewport = self._app().child(roleName="layered pane")
-        return viewport.findChildren(predicate.GenericPredicate(roleName="icon"), showingOnly=False)
+        return self._find_by_role("icon", viewport)
 
     def _popupmenu(self, page, action):
         """Run an action on a give page using the popup menu"""
@@ -380,8 +385,7 @@ class TestBatch1(PdfArrangerTest):
         self._popupmenu(0, "Page Format…")
         dialog = self._app().child(roleName="dialog")
         croppanel = dialog.child(name="Crop Margins")
-        from dogtail import predicate
-        cropbuttons = croppanel.findChildren(predicate.GenericPredicate(roleName="spin button"))
+        cropbuttons = self._find_by_role("spin button", croppanel)
         for i in range(4):
             cropbuttons[i].click()
             cropbuttons[i].text = str((i+1)*4)
