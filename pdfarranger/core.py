@@ -68,6 +68,11 @@ class Sides(NamedTuple):
     top: Numeric = 0
     bottom: Numeric = 0
 
+    def rotated(self, times: int) -> "Sides":
+        """Rotate 90 degrees counter-clockwise 'times' times"""
+        perm = (0, 2, 1, 3)
+        return Sides(*(self[perm[(x + times) % 4]] for x in perm))
+
 
 class Dims(NamedTuple):
     width: Numeric
@@ -157,24 +162,15 @@ class Page(BasePage):
     def size_in_pixel(self):
         return self.size_in_points().int_scaled(self.zoom)
 
-    @staticmethod
-    def rotate_crop(croparray: Sides, rotate_times: int) -> Sides:
-        """Rotate a given crop array (left, right, top bottom) a number of time"""
-        perm = [0, 2, 1, 3]
-        for __ in range(rotate_times):
-            perm.append(perm.pop(0))
-        perm.insert(1, perm.pop(2))
-        return Sides(*(croparray[x] for x in perm))
-
-    def rotate(self, angle):
+    def rotate(self, angle: int):
         rt = self.rotate_times(angle)
         if rt == 0:
             return False
-        self.crop = self.rotate_crop(self.crop, rt)
+        self.crop = self.crop.rotated(rt)
         self.angle = (self.angle + int(angle)) % 360
         self.size = self.size_orig if self.angle in [0, 180] else self.size_orig.flipped()
         for lp in self.layerpages:
-            lp.rotate(angle)
+            lp.rotate(rt)
         return True
 
     def unmodified(self):
@@ -241,24 +237,12 @@ class LayerPage(BasePage):
         return (f"LayerPage({self.nfile}, {self.npage}, '{self.copyname}', {self.angle}, "
                 f"{self.scale}, {self.crop}, {self.offset}, '{self.laypos}', {self.size_orig})")
 
-    @staticmethod
-    def rotate_array(array: Sides, rotate_times: int) -> Sides:
-        """Rotate a given crop or offset array (left, right, top bottom) a number of times."""
-        perm = [0, 2, 1, 3]
-        for __ in range(rotate_times):
-            perm.append(perm.pop(0))
-        perm.insert(1, perm.pop(2))
-        return Sides(*(array[x] for x in perm))
-
-    def rotate(self, angle):
-        rt = self.rotate_times(angle)
-        if rt == 0:
-            return False
-        self.crop = self.rotate_array(self.crop, rt)
-        self.offset = self.rotate_array(self.offset, rt)
-        self.angle = (self.angle + int(angle)) % 360
-        self.size = self.size_orig if self.angle in [0, 180] else self.size_orig.flipped()
-        return True
+    def rotate(self, times: int):
+        if times != 0:
+            self.crop = self.crop.rotated(times)
+            self.offset = self.offset.rotated(times)
+            self.angle = (self.angle - 90 * times) % 360
+            self.size = self.size if times % 2 == 0 else self.size.flipped()
 
     def serialize(self):
         """Convert to string for copy/past operations."""

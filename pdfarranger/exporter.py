@@ -328,7 +328,7 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
         rotate_times = int(round(((dangle0) % 360) / 90) % 4)
         for lprow in row.layerpages:
             # Rotate the offsets so they are relative to dest page
-            offset = lprow.rotate_array(lprow.offset, rotate_times)
+            offset = lprow.offset.rotated(rotate_times)
             offs_left, offs_right, offs_top, offs_bottom = offset
             x1 = row.scale * (dx1 + dw * offs_left)
             y1 = row.scale * (dy1 + dh * offs_bottom)
@@ -397,7 +397,7 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
         rotate_times = int(round((pdf_output.pages[i].Rotate % 360) / 90) % 4)
         for lpage in page.layerpages:
             # Rotate the offsets so they are relative to dest page
-            offset = lpage.rotate_array(lpage.offset, rotate_times)
+            offset = lpage.offset.rotated(rotate_times)
             offs_left, offs_right, offs_top, offs_bottom = offset
             x1 = page.scale * (mb.llx + mb.width * offs_left)
             y1 = page.scale * (mb.lly + mb.height * offs_bottom)
