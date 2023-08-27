@@ -285,6 +285,15 @@ class BasePage:
         """Return the page size in PDF points."""
         return self.size.scaled(self.scale).cropped(self.crop)
 
+    def width_in_pixel(self):
+        return self.size_in_pixel().width
+
+    def height_in_pixel(self):
+        return self.size_in_pixel().height
+
+    def size_in_pixel(self):
+        return self.size_in_points().int_scaled(self.zoom)
+
     @staticmethod
     def rotate_times(angle: int) -> int:
         """Convert an angle in degree to a number of 90° rotation (integer)."""
@@ -311,15 +320,6 @@ class Page(BasePage):
     def description(self):
         shortname = os.path.splitext(self.basename)[0]
         return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
-
-    def width_in_pixel(self):
-        return self.size_in_pixel().width
-
-    def height_in_pixel(self):
-        return self.size_in_pixel().height
-
-    def size_in_pixel(self):
-        return self.size_in_points().int_scaled(self.zoom)
 
     def rotate(self, angle: int):
         rt = self.rotate_times(angle)
