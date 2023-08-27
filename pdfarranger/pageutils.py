@@ -19,6 +19,8 @@ import gettext
 import cairo
 import locale
 
+from .core import Sides
+
 _ = gettext.gettext
 
 
@@ -276,7 +278,7 @@ def white_borders(model, selection, pdfqueue):
         page = pdfdoc.document.get_page(p.npage - 1)
         # Always render pages at 72 dpi whatever the zoom or scale of the page
         w, h = page.get_size()
-        orig_crop = p.rotate_crop(p.crop, p.rotate_times(360 - p.angle))
+        orig_crop = p.crop.rotated(-p.rotate_times(p.angle))
 
         first_col = int(w * orig_crop.left)
         last_col = min(int(w), int(w * (1 - orig_crop.right) + 1))
@@ -316,7 +318,7 @@ def white_borders(model, selection, pdfqueue):
                 crop_this_page[3] = (h - row) / h
                 break
 
-        crop.append(p.rotate_crop(crop_this_page, p.rotate_times(p.angle)))
+        crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
     return crop
 
 

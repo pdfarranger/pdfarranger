@@ -136,16 +136,16 @@ class LayerPageTest(PTest):
     def test01(self):
         """Test rotate"""
         self.assertEqual(repr(self._rotate(0)), repr(self._lpage1()))
-        self.assertEqual(repr(self._rotate(3600)), repr(self._lpage1()))
-        self.assertEqual(repr(self._rotate(-7200)), repr(self._lpage1()))
-        self.assertEqual(repr(self._rotate(90)), repr(self._lpage1_90()))
-        self.assertEqual(repr(self._rotate(-270)), repr(self._lpage1_90()))
-        self.assertEqual(repr(self._rotate(180)), repr(self._lpage1_180()))
-        self.assertEqual(repr(self._rotate(270)), repr(self._lpage1_270()))
+        self.assertEqual(repr(self._rotate(-40)), repr(self._lpage1()))
+        self.assertEqual(repr(self._rotate(80)), repr(self._lpage1()))
+        self.assertEqual(repr(self._rotate(-1)), repr(self._lpage1_90()))
+        self.assertEqual(repr(self._rotate(3)), repr(self._lpage1_90()))
+        self.assertEqual(repr(self._rotate(-2)), repr(self._lpage1_180()))
+        self.assertEqual(repr(self._rotate(-3)), repr(self._lpage1_270()))
         self.assertEqual(self._rotate(0).size, Dims(20.33, 10.33))
-        self.assertEqual(self._rotate(90).size, Dims(10.33, 20.33))
-        self.assertEqual(self._rotate(180).size, Dims(20.33, 10.33))
-        self.assertEqual(self._rotate(270).size, Dims(10.33, 20.33))
+        self.assertEqual(self._rotate(-1).size, Dims(10.33, 20.33))
+        self.assertEqual(self._rotate(-2).size, Dims(20.33, 10.33))
+        self.assertEqual(self._rotate(-3).size, Dims(10.33, 20.33))
 
     def test02(self):
         """Test duplicate"""
