@@ -5,6 +5,8 @@ import unittest
 import time
 import tempfile
 import shutil
+import packaging.version
+from importlib import metadata
 
 """
 Those tests are using Dogtail https://gitlab.com/dogtail/dogtail
@@ -61,6 +63,12 @@ def check_img2pdf(version):
     except Exception:
         r = False
     return r
+
+
+def have_pikepdf3():
+    return packaging.version.parse(
+        metadata.version("pikepdf")
+    ) >= packaging.version.Version("3")
 
 
 class XvfbManager:
@@ -220,6 +228,17 @@ class PdfArrangerTest(unittest.TestCase):
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
         label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
+
+    def _assert_file_size(self, filename, size, tolerance=0.03):
+        """
+        Check if a file in the current tmp folder have the expected size
+        at a given tolerance.
+        """
+        s = os.stat(os.path.join(self.__class__.tmp, filename))
+        msg = "{} is {}b but is expected to be {} \u00B1 {}".format(
+            filename, s.st_size, size, size * tolerance
+        )
+        self.assertLess(abs(s.st_size - size) / size, tolerance, msg=msg)
 
     def _icons(self):
         """Return the list of page icons"""
@@ -452,23 +471,41 @@ class TestBatch2(PdfArrangerTest):
     def test_03_cropborder(self):
         self._popupmenu(0, "Crop White Borders")
 
-    def test_04_export(self):
+    def test_04_past_overlay(self):
+        if not have_pikepdf3():
+            return
+        app = self._app()
+        app.keyCombo("<ctrl>c")
+        app.keyCombo("Right")
+        app.keyCombo("<shift><ctrl>o")
+        dialog = self._app().child(roleName="dialog")
+        spinbtns = self._find_by_role("spin button", dialog)
+        spinbtns[0].click()
+        spinbtns[0].text = "10"
+        spinbtns[1].click()
+        spinbtns[1].text = "15"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_export(self):
         self._mainmenu(["Export", "Export All Pages to Individual Files…"])
         self._save_as_chooser(
             "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
         )
+        self._assert_file_size("alltosingle.pdf", 1219)
+        self._assert_file_size("alltosingle-002.pdf", 1544 if have_pikepdf3() else 1219)
 
-    def test_05_clear(self):
+    def test_06_clear(self):
         self._popupmenu(1, "Delete")
         self.assertEqual(len(self._icons()), 1)
 
-    def test_06_about(self):
+    def test_07_about(self):
         self._mainmenu("About")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_07_quit(self):
+    def test_08_quit(self):
         self._quit_without_saving()
 
 
