@@ -608,7 +608,9 @@ class TestBatch5(PdfArrangerTest):
         self._assert_page_size(489, 212.2, 1)
 
     def test_04_crop_white_border(self):
-        self._popupmenu(0, ["Select", "Select All"])
+        # Test selection with shift+arrow
+        self._app().keyCombo("<shift>Left")
+        self._assert_selected("1-2")
         self._popupmenu(0, ["Crop White Borders"])
         self._assert_page_size(244.1, 211.8, 0)
         self._assert_page_size(244.1, 211.8, 1)
