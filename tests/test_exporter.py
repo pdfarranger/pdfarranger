@@ -45,10 +45,6 @@ class LayerPage:
     size_orig: Dims = Dims(612, 792)
     layerpages: List[Any] = field(default_factory=list)
 
-    @staticmethod
-    def rotate_array(array: Sides, rotate_times: int) -> Sides:
-        return LPage.rotate_array(array, rotate_times)
-
 
 class ExporterTest(unittest.TestCase):
 
