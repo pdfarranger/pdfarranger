@@ -68,6 +68,81 @@ class Sides(NamedTuple):
     top: Numeric = 0
     bottom: Numeric = 0
 
+    def __neg__(self) -> "Sides":
+        """
+        Pointwise unary minus
+
+        Example:
+
+        >>> -Sides(9, 3, 12, 6)
+        Sides(left=-9, right=-3, top=-12, bottom=-6)
+        """
+        return Sides(*(-self[i] for i in range(4)))
+
+    def __add__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise addition
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) + Sides(1, 2, 3, 4)
+        Sides(left=10, right=5, top=15, bottom=10)
+        >>> Sides(9, 3, 12, 6) + 1
+        Sides(left=10, right=4, top=13, bottom=7)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] + other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] + other for i in range(4)))
+
+    def __sub__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise subtraction
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) - Sides(1, 2, 3, 4)
+        Sides(left=8, right=1, top=9, bottom=2)
+        >>> Sides(9, 3, 12, 6) - 3
+        Sides(left=6, right=0, top=9, bottom=3)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] - other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] -+ other for i in range(4)))
+
+    def __mul__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise multiplication
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) * Sides(1, 2, 3, 4)
+        Sides(left=9, right=6, top=36, bottom=24)
+        >>> Sides(9, 3, 12, 6) * 3
+        Sides(left=27, right=9, top=36, bottom=18)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] * other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] * other for i in range(4)))
+
+    def __truediv__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise division
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) / Sides(1, 2, 3, 4)
+        Sides(left=9.0, right=1.5, top=4.0, bottom=1.5)
+        >>> Sides(9, 3, 12, 6) / 3
+        Sides(left=3.0, right=1.0, top=4.0, bottom=2.0)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] / other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] / other for i in range(4)))
+
     def rotated(self, times: int) -> "Sides":
         """Rotate 90 degrees counter-clockwise 'times' times"""
         perm = (0, 2, 1, 3)
@@ -77,6 +152,81 @@ class Sides(NamedTuple):
 class Dims(NamedTuple):
     width: Numeric
     height: Numeric
+
+    def __neg__(self) -> "Dims":
+        """
+        Pointwise unary minus
+
+        Example:
+
+        >>> -Dims(612, 792)
+        Dims(width=-612, height=-792)
+        """
+        return Dims(*(-self[i] for i in range(2)))
+
+    def __add__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise addition
+
+        Example:
+
+        >>> Dims(612, 792) + Dims(612, 792)
+        Dims(width=1224, height=1584)
+        >>> Dims(612, 792) + 100
+        Dims(width=712, height=892)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] + other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] + other for i in range(2)))
+
+    def __sub__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise subtraction
+
+        Example:
+
+        >>> Dims(612, 792) - Dims(306, 396)
+        Dims(width=306, height=396)
+        >>> Dims(612, 792) - 100
+        Dims(width=512, height=692)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] - other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] -+ other for i in range(2)))
+
+    def __mul__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise multiplication
+
+        Example:
+
+        >>> Dims(612, 792) * Dims(0.5, 0.25)
+        Dims(width=306.0, height=198.0)
+        >>> Dims(612, 792) * 2
+        Dims(width=1224, height=1584)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] * other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] * other for i in range(2)))
+
+    def __truediv__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise division
+
+        Example:
+
+        >>> Dims(612, 792) / Dims(2, 4)
+        Dims(width=306.0, height=198.0)
+        >>> Dims(612, 792) / 2
+        Dims(width=306.0, height=396.0)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] / other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] / other for i in range(2)))
 
     def flipped(self) -> "Dims":
         """Swap height and width"""
