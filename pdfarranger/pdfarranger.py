@@ -1561,19 +1561,19 @@ class PdfArranger(Gtk.Application):
             nfirst = len(dpage.layerpages) - 1
             scalex = (lp0.size[0] * lp0.scale) / (dpage.size[0] * dpage.scale)
             scaley = (lp0.size[1] * lp0.scale) / (dpage.size[1] * dpage.scale)
-            sm1 = [scalex, scalex, scaley, scaley]
+            sm1 = Sides(scalex, scalex, scaley, scaley)
             for lp in layerpage_stack[1:]:
                 lp = lp.duplicate()
                 scalex = (lp0.size[0] * lp0.scale) / (lp.size[0] * lp.scale)
                 scaley = (lp0.size[1] * lp0.scale) / (lp.size[1] * lp.scale)
-                sm2 = [scalex, scalex, scaley, scaley]
-                for i in range(4):  # left, right, top, bottom
-                    # Crop layer area outside of the old parent mediabox
-                    outside = max(0, lp0.crop[i] - lp.offset[i])
-                    lp.crop[i] += outside * sm2[i]
-                    lp.offset[i] += outside
-                    # Recalculate the offset relative to the new destination page
-                    lp.offset[i] = lp0.offset[i] + (lp.offset[i] - lp0.crop[i]) * sm1[i]
+                sm2 = Sides(scalex, scalex, scaley, scaley)
+                # Crop layer area outside of the old parent mediabox
+                outside = Sides(*(max(0, lp0.crop[i] - lp.offset[i]) for i in range(4)))
+                lp.crop += outside * sm2
+                lp.offset += outside
+
+                # Recalculate the offset relative to the new destination page
+                lp.offset = lp0.offset + (lp.offset - lp0.crop) * sm1
                 if lp.crop.left + lp.crop.right > 1 or lp.crop.top + lp.crop.bottom > 1:
                     # The layer is outside of the visible area
                     continue
