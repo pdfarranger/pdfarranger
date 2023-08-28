@@ -69,7 +69,16 @@ class Sides(NamedTuple):
     bottom: Numeric = 0
 
     def rotated(self, times: int) -> "Sides":
-        """Rotate 90 degrees counter-clockwise 'times' times"""
+        """
+        Rotate 90 degrees counter-clockwise 'times' times
+
+        Examples:
+
+        >>> Sides(9,3,12,6).rotated(1)
+        Sides(left=12, right=6, top=3, bottom=9)
+        >>> Sides(9,3,12,6).rotated(-3) == Sides(9,3,12,6).rotated(1)
+        True
+        """
         perm = (0, 2, 1, 3)
         return Sides(*(self[perm[(x + times) % 4]] for x in perm))
 
