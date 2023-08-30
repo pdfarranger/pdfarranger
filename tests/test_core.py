@@ -33,23 +33,23 @@ class PTest(unittest.TestCase):
 
     def _page1(self) -> core.Page:
         """Sample page 1"""
-        return core.Page(1, 2, 0.55, 'copy', 0, 2, core.Sides(0.1, 0.2, 0.3, 0.4), core.Dims(100.33, 200.66), 'base',
-                         [self._lpage1()])
+        return core.Page(1, 2, 0.55, 'copy', 0, 2, core.Sides(0.1, 0.2, 0.3, 0.4),
+                         core.Sides(0.11, 0.21, 0.31, 0.41), core.Dims(100.33, 200.66), 'base', [self._lpage1()])
 
     def _page1_90(self) -> core.Page:
         """Sample page 1 rotated 90 degrees"""
-        return core.Page(1, 2, 0.55, 'copy', 90, 2, core.Sides(0.4, 0.3, 0.1, 0.2), core.Dims(100.33, 200.66), 'base',
-                         [self._lpage1_90()])
+        return core.Page(1, 2, 0.55, 'copy', 90, 2, core.Sides(0.4, 0.3, 0.1, 0.2),
+                         core.Sides(0.41, 0.31, 0.11, 0.21), core.Dims(100.33, 200.66), 'base', [self._lpage1_90()])
 
     def _page1_180(self) -> core.Page:
         """Sample page 1 rotated 90 degrees"""
-        return core.Page(1, 2, 0.55, 'copy', 180, 2, core.Sides(0.2, 0.1, 0.4, 0.3), core.Dims(100.33, 200.66), 'base',
-                         [self._lpage1_180()])
+        return core.Page(1, 2, 0.55, 'copy', 180, 2, core.Sides(0.2, 0.1, 0.4, 0.3),
+                         core.Sides(0.21, 0.11, 0.41, 0.31), core.Dims(100.33, 200.66), 'base', [self._lpage1_180()])
 
     def _page1_270(self) -> core.Page:
         """Sample page 1 rotated 90 degrees"""
-        return core.Page(1, 2, 0.55, 'copy', 270, 2, core.Sides(0.3, 0.4, 0.2, 0.1), core.Dims(100.33, 200.66), 'base',
-                         [self._lpage1_270()])
+        return core.Page(1, 2, 0.55, 'copy', 270, 2, core.Sides(0.3, 0.4, 0.2, 0.1),
+                         core.Sides(0.31, 0.41, 0.21, 0.11), core.Dims(100.33, 200.66), 'base', [self._lpage1_270()])
 
 
 class BasePageTest(PTest):
@@ -109,8 +109,8 @@ class PageTest(PTest):
     def test03(self):
         """Test serialize"""
         self.assertEqual(self._page1().serialize(),
-                         'copy\n2\nbase\n0\n2\n0.1\n0.2\n0.3\n0.4\nlcopy\n4\n90\n2\nOVERLAY\n0.11\n0.21\n0.31\n0.41\n'
-                         '0.12\n0.22\n0.32\n0.42')
+                         'copy\n2\nbase\n0\n2\n0.1\n0.2\n0.3\n0.4\n0.11\n0.21\n0.31\n0.41\n'
+                         'lcopy\n4\n90\n2\nOVERLAY\n0.11\n0.21\n0.31\n0.41\n0.12\n0.22\n0.32\n0.42')
 
     def test04(self):
         """Test width | height | size_in_pixel"""
