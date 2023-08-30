@@ -839,7 +839,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             if rotation > 0:
                 cr.translate(*p.size.scaled(0.5))
                 cr.rotate(rotation * pi / 180)
-                cr.translate(*p.size.scaled(-0.5))
+                cr.translate(*p.size_orig.scaled(-0.5))
             self.render(cr, p)
             cr.restore()
             self.add_layers(cr, p, layer='OVERLAY')
