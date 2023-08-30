@@ -326,7 +326,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _scale_selected(self, scale):
         app = self._app()
-        app.keyCombo("C")
+        app.keyCombo("S")
         dialog = app.child(roleName="dialog")
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
@@ -430,19 +430,18 @@ class TestBatch1(PdfArrangerTest):
         app.keyCombo("Up")
         self._assert_selected("2")
 
-    def test_06_page_format(self):
+    def test_06_crop_margins(self):
         self._popupmenu(0, ["Select", "Select Odd Pages"])
         self._assert_selected("1, 3, 5, 7")
-        self._popupmenu(0, "Page Format…")
+        self._popupmenu(0, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
+        dialog.child(name="Show values").click()
+        time.sleep(0.2)  # Avoid 'GTK_IS_RANGE (range)' failed
         croppanel = dialog.child(name="Crop Margins")
         cropbuttons = self._find_by_role("spin button", croppanel)
         for i in range(4):
             cropbuttons[i].click()
             cropbuttons[i].text = str((i+1)*4)
-        scalebutton = dialog.child(roleName="spin button")
-        scalebutton.click()
-        scalebutton.text = "120"
         dialog.child(name="OK").click()
         # TODO: find the condition which could replace this ugly sleep
         time.sleep(0.5)
@@ -511,6 +510,8 @@ class TestBatch2(PdfArrangerTest):
         app.keyCombo("Right")
         app.keyCombo("<shift><ctrl>o")
         dialog = self._app().child(roleName="dialog")
+        dialog.child(name="Show values").click()
+        time.sleep(0.2)  # Avoid 'GTK_IS_RANGE (range)' failed
         spinbtns = self._find_by_role("spin button", dialog)
         spinbtns[0].click()
         spinbtns[0].text = "10"
@@ -656,12 +657,14 @@ class TestBatch5(PdfArrangerTest):
         self._popupmenu(0, ["Select", "Select All"])
         self._popupmenu(0, ["Generate Booklet"])
         self._wait_cond(lambda: len(self._icons()) == 2)
-        self._assert_page_size(489, 212.2, 0)
-        self._assert_page_size(489, 212.2, 1)
+        self._app().child(roleName="layered pane").keyCombo("Home")
+        self._assert_page_size(489, 212.2)
+        self._app().child(roleName="layered pane").keyCombo("End")
+        self._assert_page_size(489, 212.2)
 
     def test_04_crop_white_border(self):
         # Test selection with shift+arrow
-        self._app().keyCombo("<shift>Left")
+        self._app().child(roleName="layered pane").keyCombo("<shift>Left")
         self._assert_selected("1-2")
         self._popupmenu(0, ["Crop White Borders"])
         self._assert_page_size(244.1, 211.8, 0)
