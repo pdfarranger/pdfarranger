@@ -504,7 +504,7 @@ class TestBatch2(PdfArrangerTest):
         self._save_as_chooser(
             "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
         )
-        self._assert_file_size("alltosingle.pdf", 1814 if have_pikepdf3() else 1219)
+        self._assert_file_size("alltosingle.pdf", 1800 if have_pikepdf3() else 1219)
         self._assert_file_size("alltosingle-002.pdf", 1544 if have_pikepdf3() else 1219)
 
     def test_07_clear(self):

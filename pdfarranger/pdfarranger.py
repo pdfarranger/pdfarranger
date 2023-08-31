@@ -1551,10 +1551,12 @@ class PdfArranger(Gtk.Application):
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
             scaley = (dpage.height_in_points() - lp0.height_in_points()) / dheight
-            lp0.offset = Sides(left=dpage.crop.left + off_x * scalex,
-                               right=1 - lp0.offset.left - lp0.width_in_points() / dwidth,
-                               top=dpage.crop.top + off_y * scaley,
-                               bottom=1 - lp0.offset.top - lp0.height_in_points() / dheight)
+            left = dpage.crop.left + off_x * scalex
+            top = dpage.crop.top + off_y * scaley
+            lp0.offset = Sides(left=left,
+                               right=1 - left - lp0.width_in_points() / dwidth,
+                               top=top,
+                               bottom=1 - top - lp0.height_in_points() / dheight)
             dpage.layerpages.append(lp0)
 
             # Add layers from the pasted page
