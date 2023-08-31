@@ -879,7 +879,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             if rotation > 0:
                 cr.translate(*lp.size.scaled(0.5))
                 cr.rotate(rotation * pi / 180)
-                cr.translate(*lp.size.scaled(-0.5))
+                cr.translate(*lp.size_orig.scaled(-0.5))
             self.render(cr, lp)
             cr.restore()
 
