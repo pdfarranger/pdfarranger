@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
+import os
 import packaging.version as version
-from typing import Any, List
+from typing import Any, List, Tuple
 import unittest
 
 import pikepdf
@@ -8,6 +9,7 @@ import pikepdf
 from pdfarranger.exporter import export
 from pdfarranger.core import LayerPage as LPage
 from pdfarranger.core import Dims, Sides
+
 
 # The test files used for the tests in this file are in QDF format (see
 # https://qpdf.readthedocs.io/en/stable/qdf.html).  They can be inspected with a simple text editor or compared with
@@ -48,7 +50,47 @@ class LayerPage:
 
 class ExporterTest(unittest.TestCase):
 
-    def case(self, test, files, *pages, ignore=None, ignore_8=None):
+    def compare_files(self, actual_file: str, expected_file: str) -> Tuple[bool, str]:
+        """
+        Compare two PDF files
+
+        The following are ignored in the comparison:
+        - blank lines
+        - lines starting or ending with '%'
+        - lines containing the name /Length
+        - anything following the first '/' in line containing a Do operator
+        - anything following the xref entry
+        """
+        with open(actual_file, 'rb') as f:
+            actual = f.readlines()
+        with open(expected_file, 'rb') as f:
+            expected = f.readlines()
+
+        actual_no = 0
+        last_match = -1
+        for line_no, line in enumerate(expected):
+            if len(line) == 0 or line.isspace() or line.startswith(b'%') or line.endswith(b'%\n') or b'/Length' in line:
+                pass
+            elif line.startswith(b'xref'):
+                return True, ''
+            else:
+                if b' Do ' in line or b' Do\n' in line:
+                    line = line[:line.find(b'/')]
+
+                try:
+                    while not actual[actual_no].startswith(line):
+                        actual_no += 1
+                    last_match = actual_no
+                    actual_no += 1
+                except IndexError: # pragma: no cover
+                    # Only get executed for failing test
+                    print(line_no, line, last_match)
+                    return (False, f'Failed to match line {line_no + 1} in expected  file {expected_file} : {line} \n'
+                                   f'Last match in line {last_match + 1} of {actual_file}')
+
+        return True, ''
+
+    def case(self, test, files, *pages):
         """Run a single test case."""
         if version.parse(pikepdf.__version__) < version.Version('6.0.1'):
             # will disappear in v11
@@ -56,30 +98,21 @@ class ExporterTest(unittest.TestCase):
         elif version.parse(pikepdf.__version__) < version.Version('8.0.0'):
             expected_file = file(f'test{test}_out')
         else:
-            ignore = ignore_8
             expected_file = file(f'test{test}_8_out')
+            if not os.path.exists(expected_file):
+                expected_file = file(f'test{test}_out')
 
         export(files, pages, [], [file('out')], None, None, True)
-        with open(file('out'), 'rb') as f:
-            actual = f.readlines()
-        with open(expected_file, 'rb') as f:
-            expected = f.readlines()
-        if ignore is not None:
-            ignore.sort()
-            ignore.reverse()
-            for i in ignore:
-                del expected[i - 1]
-                del actual[i - 1]
-        self.assertEqual(actual, expected)
+        self.assertTrue(*self.compare_files(file('out'), expected_file))
 
-    def basic(self, test, *pages, ignore=None, ignore_8=None):
+    def basic(self, test, *pages):
         """Test with basic.pdf as single input file."""
-        self.case(test, [(file('basic'), '')], *pages, ignore=ignore, ignore_8=ignore_8)
+        self.case(test, [(file('basic'), '')], *pages)
 
     def outlines(self, test, *pages, ignore_8=None):
         """Test with outlines.pdf as single input file."""
         if version.parse(pikepdf.__version__) >= version.Version('8.0.0'):
-            self.case(test, [(file('outlines'), '')], *pages, ignore=None, ignore_8=ignore_8)
+            self.case(test, [(file('outlines'), '')], *pages)
 
     def test01(self):
         """No transformations"""
@@ -103,41 +136,40 @@ class ExporterTest(unittest.TestCase):
 
     def test06(self):
         """Rotate and crop page"""
-        self.basic(6, Page(1, angle=90, crop=Sides(0.1, 0.2, 0.3, 0.4)), Page(1, angle=180, crop=Sides(0.1, 0.2, 0.3, 0.4)),
+        self.basic(6, Page(1, angle=90, crop=Sides(0.1, 0.2, 0.3, 0.4)),
+                   Page(1, angle=180, crop=Sides(0.1, 0.2, 0.3, 0.4)),
                    Page(1, angle=270, crop=Sides(0.1, 0.2, 0.3, 0.4)))
 
     def test07(self):
         """Overlay page"""
-        self.basic(7, Page(1, layerpages=[LayerPage(6)]), ignore=[38, 57], ignore_8=[38, 58])
+        self.basic(7, Page(1, layerpages=[LayerPage(6)]))
 
     def test08(self):
         """Underlay page"""
-        self.basic(8, Page(1, layerpages=[LayerPage(7, laypos='UNDERLAY')]), ignore=[38, 54], ignore_8=[38, 55])
+        self.basic(8, Page(1, layerpages=[LayerPage(7, laypos='UNDERLAY')]))
 
     def test09(self):
         """Rotate overlay"""
         self.basic(9, Page(1, layerpages=[LayerPage(6, angle=90)]),
-                   Page(1, layerpages=[LayerPage(6, angle=180)]), ignore=[39, 60, 79, 151], ignore_8=[39, 61, 81, 149])
+                   Page(1, layerpages=[LayerPage(6, angle=180)]))
 
     def test095(self):
         """Overlay page with itself - MediaBox with non-integer values"""
-        self.case(95, [(file('overlay'), '')], Page(1, layerpages=[LayerPage(1)]), ignore=[45, 72], ignore_8=[45, 73])
+        self.case(95, [(file('overlay'), '')], Page(1, layerpages=[LayerPage(1)]))
 
     def test096(self):
         """Overlay page with itself - MediaBox with non-standard corners"""
-        self.case(96, [(file('overlay'), '')], Page(2, layerpages=[LayerPage(2)]), ignore=[45, 72], ignore_8=[45, 73])
+        self.case(96, [(file('overlay'), '')], Page(2, layerpages=[LayerPage(2)]))
 
     def test10(self):
         """Offset overlay horizontal"""
         self.basic(10, Page(1, layerpages=[LayerPage(6, offset=Sides(.5, 0, 0, 0)),
-                                           LayerPage(6, offset=Sides(0, 0.5, 0, 0))]),
-                   ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
+                                           LayerPage(6, offset=Sides(0, 0.5, 0, 0))]))
 
     def test11(self):
         """Offset overlay vertical"""
         self.basic(11, Page(1, layerpages=[LayerPage(6, offset=Sides(0, 0, 0.5, 0)),
-                                           LayerPage(6, offset=Sides(0, 0, 0, 0.5))]),
-                   ignore=[38, 39, 59, 64, 75, 116], ignore_8=[38, 39, 60, 65, 74, 121])
+                                           LayerPage(6, offset=Sides(0, 0, 0, 0.5))]))
 
     def test12(self):
         """Duplicate page with annotations"""
@@ -157,7 +189,7 @@ class ExporterTest(unittest.TestCase):
 
     def test16(self):
         """Overlay page with annotations"""
-        self.basic(16, Page(1, layerpages=[LayerPage(5)]), ignore=[38, 57], ignore_8=[38, 58])
+        self.basic(16, Page(1, layerpages=[LayerPage(5)]))
 
     def test17(self):
         """File with missing MediaBox"""
