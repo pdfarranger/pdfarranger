@@ -4,9 +4,12 @@ import sys
 import unittest
 import time
 import tempfile
+from typing import Tuple
 import shutil
 import packaging.version
 from importlib import metadata
+
+import pikepdf
 
 """
 Those tests are using Dogtail https://gitlab.com/dogtail/dogtail
@@ -228,6 +231,35 @@ class PdfArrangerTest(unittest.TestCase):
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
         label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
+
+    def _check_file_content(self, filename, expected: Tuple[str]) -> Tuple[bool, str]:
+        """
+        Check expected is contained in file.
+        """
+        with open(filename, 'rb') as f:
+            actual = f.readlines()
+
+        n = 0
+        for line in expected:
+            try:
+                while not actual[n].startswith(line):
+                    n += 1
+                n += 1
+            except IndexError: # pragma: no cover
+                # Only get executed for failing test
+                return False, line
+        return True, ''
+
+    def _assert_page_content(self, filename: str, expected: Tuple[str]):
+        """
+        Check if a file in the current tmp folder contains expected content.
+        """
+        temp = os.path.join(self.__class__.tmp, 'temp.pdf')
+        with pikepdf.Pdf.open(os.path.join(self.__class__.tmp, filename)) as pdf:
+            pdf.save(temp, qdf=True, static_id=True, compress_streams=False,
+                            stream_decode_level=pikepdf.StreamDecodeLevel.all)
+        ok, content = self._check_file_content(temp, expected)
+        self.assertTrue(ok, f'expectent content {content} missing in {filename}')
 
     def _assert_file_size(self, filename, size, tolerance=0.03):
         """
@@ -506,6 +538,14 @@ class TestBatch2(PdfArrangerTest):
         )
         self._assert_file_size("alltosingle.pdf", 1800 if have_pikepdf3() else 1219)
         self._assert_file_size("alltosingle-002.pdf", 1544 if have_pikepdf3() else 1219)
+        if have_pikepdf3():
+            self._assert_page_content("alltosingle.pdf", (
+                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B',
+                b'  /BBox [', b'    69\n', b'    180\n', b'    531\n', b'    581\n',
+                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
+            self._assert_page_content("alltosingle.pdf", (
+                b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
+                b'0 1 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
 
     def test_07_clear(self):
         self._popupmenu(1, "Delete")
