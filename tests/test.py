@@ -334,6 +334,20 @@ class PdfArrangerTest(unittest.TestCase):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
 
+    @staticmethod
+    def _zoom(widget, n_events, zoom_in):
+        """Zoom in/out with ctrl + mouse scroll wheel"""
+        from dogtail import rawinput
+        from pyatspi import Registry as registry
+        from pyatspi import KEY_PRESS, KEY_RELEASE
+        code = rawinput.keyNameToKeyCode("Control_L")
+        registry.generateKeyboardEvent(code, None, KEY_PRESS)
+        button = 4 if zoom_in == True else 5
+        for __ in range(n_events):
+            widget.click(button=button)
+            time.sleep(0.1)
+        registry.generateKeyboardEvent(code, None, KEY_RELEASE)
+
     def _quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
 
@@ -684,6 +698,91 @@ class TestBatch5(PdfArrangerTest):
 
 
 class TestBatch6(PdfArrangerTest):
+    """Test hide margins and merge pages"""
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_merge_pages(self):
+        if not have_pikepdf3():
+            return
+        self._app().keyCombo("<ctrl>a")
+        self._popupmenu(0, "Merge Pages…")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_03_crop_margins(self):
+        self._app().keyCombo("<ctrl>a")
+        self._popupmenu(0, "Crop Margins…")
+        dialog = self._app().child(roleName="dialog")
+        croppanel = dialog.child(name="Crop Margins")
+        cropbuttons = self._find_by_role("spin button", croppanel)
+        dialog.child(name="Show values").click()
+        for i in range(4):
+            cropbuttons[i].typeText("2")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        if have_pikepdf3():
+            self._assert_page_size(414.5, 268.2)
+
+    def test_04_hide_margins(self):
+        if not have_pikepdf3():
+            return
+        self._app().keyCombo("<ctrl>a")
+        self._assert_selected("1")
+        self._app().keyCombo("H")
+        dialog = self._app().child(roleName="dialog")
+        da = dialog.child(roleName="drawing area")
+        page_x = da.position[0] + 25  # 25 = padding in DrawingAreaWidget
+        page_width = da.size[0] - 50
+        x_center = da.position[0] + da.size[0] / 2
+        y_center = da.position[1] + da.size[1] / 2
+        from dogtail import rawinput
+        for button in ["Apply", "Revert", "Apply"]:
+            rawinput.drag((page_x, y_center), (page_x + page_width * 0.8, y_center))
+            rawinput.drag((page_x + page_width * 0.9, y_center), (page_x + page_width * 0.3, y_center))
+            dialog.child(name=button).click()
+        hidepanel = dialog.child(name="Hide Margins")
+        hidebuttons = self._find_by_role("spin button", hidepanel)
+        hidebuttons[2].text = str(round(float(hidebuttons[2].text) / 10) * 10)
+        hidebuttons[3].text = str(round(float(hidebuttons[3].text) / 10) * 10)
+        self.assertEqual(hidebuttons[2].text, "60")
+        self.assertEqual(hidebuttons[3].text, "20")
+        self._zoom(da, 15, zoom_in=True)
+        rawinput.drag((x_center, y_center), (x_center + 10, y_center + 20),  button=2)  # pan view
+        self._zoom(da, 15, zoom_in=False)
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_export(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._mainmenu(["Export", "Export Selection to a Single File…"])
+        self._save_as_chooser("hide.pdf")
+        self._assert_file_size("hide.pdf", 1726 if have_pikepdf3() else 1512)
+
+    def test_06_merge_pages(self):
+        if not have_pikepdf3():
+            return
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, "Merge Pages…")
+        dialog = self._app().child(roleName="dialog")
+        orderpanel = dialog.child(name="Page Order")
+        radiobuttons = self._find_by_role("radio button", orderpanel)
+        radiobuttons[0].click()
+        radiobuttons[2].click()
+        radiobuttons[4].click()
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self._assert_page_size(829.1, 268.2)
+
+    def test_07_quit(self):
+        if have_pikepdf3():
+            self._quit_without_saving()
+        else:
+            self._quit()
+
+
+class TestBatch7(PdfArrangerTest):
     """Test Open action"""
 
     # Kill X11 after that batch
