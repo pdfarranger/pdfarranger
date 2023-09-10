@@ -21,7 +21,7 @@ import locale
 
 from math import pi
 
-from .core import Sides, PDFRenderer
+from .core import Sides, Dims, PDFRenderer
 
 _ = gettext.gettext
 
@@ -36,14 +36,15 @@ def scale(model, selection, factor):
     for path in selection:
         it = model.get_iter(path)
         page = model.get_value(it, 0)
+        page_size = page.size.cropped(page.crop)
         if width is None:
             f = factor
         else:
             # TODO: allow to change aspect ratio
-            f = max(width / page.size[0], height / page.size[1])
+            f = max(*Dims(width, height) / page_size)
         # Page size must be in [72, 14400] (PDF standard requirement)
-        f = max(f, 72 / page.size[0], 72 / page.size[1])
-        f = min(f, 14400 / page.size[0], 14400 / page.size[1])
+        f = max(f, *(Dims(72, 72) / page_size))
+        f = min(f, *(Dims(14400, 14400) / page_size))
         if page.scale != f:
             changed = True
         page.resample = page.resample * f / page.scale
@@ -242,10 +243,9 @@ class ScaleDialog(BaseDialog):
         super().__init__(title=_("Page size"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
-        size = [page.scale * x for x in page.size]
         rel_widget = _RelativeScalingWidget(page.scale)
-        width_widget = _ScalingWidget(_("Width"), size[0])
-        height_widget = _ScalingWidget(_("Height"), size[1])
+        width_widget = _ScalingWidget(_("Width"), page.width_in_points())
+        height_widget = _ScalingWidget(_("Height"), page.height_in_points())
         self.scale_stack = _RadioStackSwitcher()
         self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
         self.scale_stack.add_named(width_widget, "Width", _("Width"))
