@@ -2464,9 +2464,9 @@ class PdfArranger(Gtk.Application):
         newscale = diag.run_get()
         if newscale is None:
             return
+        self.undomanager.commit("Size")
         if not pageutils.scale(self.model, selection, newscale):
             return
-        self.undomanager.commit("Size")
         self.set_unsaved(True)
         self.update_statusbar()
         self.update_iconview_geometry()
