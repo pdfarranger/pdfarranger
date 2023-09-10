@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2023-09-10 23:43+0300\n"
+"PO-Revision-Date: 2023-09-10 23:45+0300\n"
 "Last-Translator: volkov <volkovissocool@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -466,7 +466,7 @@ msgstr "Справа наліво"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
-msgstr "ЗберегПерегорнути вліво"
+msgstr "Перегорнути вліво"
 
 #: data/pdfarranger.ui:227
 msgid "Rotate Right"
