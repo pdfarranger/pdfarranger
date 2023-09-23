@@ -1825,7 +1825,10 @@ class PdfArranger(Gtk.Application):
             ref_to = Gtk.TreeRowReference.new(model, self.drag_path)
         else:
             ref_to = None
-        before = self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT
+        if self.iconview.get_direction() == Gtk.TextDirection.LTR:
+            before = self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT
+        else:
+            before = self.drag_pos == Gtk.IconViewDropPosition.DROP_RIGHT
         target = selection_data.get_target().name()
         if target == 'MODEL_ROW_INTERN':
             move = context.get_selected_action() & Gdk.DragAction.MOVE
@@ -1932,7 +1935,10 @@ class PdfArranger(Gtk.Application):
             return Gdk.EVENT_STOP
         elif not path or (path == model[-1].path and x_s < x):
             self.drag_path = model[-1].path
-            self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
+            if self.iconview.get_direction() == Gtk.TextDirection.LTR:
+                self.drag_pos = Gtk.IconViewDropPosition.DROP_RIGHT
+            else:
+                self.drag_pos = Gtk.IconViewDropPosition.DROP_LEFT
         else:
             iconview.stop_emission('drag_motion')
             return Gdk.EVENT_PROPAGATE
@@ -2165,16 +2171,11 @@ class PdfArranger(Gtk.Application):
         if target_id == self.TEXT_URI_LIST:
             pageadder = PageAdder(self)
             model = self.iconview.get_model()
-            ref_to = None
-            before = True
-            if len(model) > 0:
-                last_row = model[-1]
-                if self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT:
-                    ref_to = Gtk.TreeRowReference.new(model, self.drag_path)
-                elif self.drag_path != last_row.path:
-                    iter_next = model.iter_next(model.get_iter(self.drag_path))
-                    path_next = model.get_path(iter_next)
-                    ref_to = Gtk.TreeRowReference.new(model, path_next)
+            ref_to = Gtk.TreeRowReference.new(model, self.drag_path) if len(model) > 0 else None
+            if self.iconview.get_direction() == Gtk.TextDirection.LTR:
+                before = self.drag_pos == Gtk.IconViewDropPosition.DROP_LEFT
+            else:
+                before = self.drag_pos == Gtk.IconViewDropPosition.DROP_RIGHT
             pageadder.move(ref_to, before)
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_uri(uri)
