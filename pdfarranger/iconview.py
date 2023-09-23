@@ -171,9 +171,15 @@ class IconviewCursor(object):
             step = 0 if self.cursor_page_nr + columns_nr > len(self.model) - 1 else columns_nr
             self.cursor_page_nr_new = self.cursor_page_nr + step
         elif self.event.keyval == Gdk.KEY_Left:
-            self.cursor_page_nr_new = max(self.cursor_page_nr - 1, 0)
+            if self.iconview.get_direction() == Gtk.TextDirection.LTR:
+                self.cursor_page_nr_new = max(self.cursor_page_nr - 1, 0)
+            else:
+                self.cursor_page_nr_new = min(self.cursor_page_nr + 1, len(self.model) - 1)
         elif self.event.keyval == Gdk.KEY_Right:
-            self.cursor_page_nr_new = min(self.cursor_page_nr + 1, len(self.model) - 1)
+            if self.iconview.get_direction() == Gtk.TextDirection.LTR:
+                self.cursor_page_nr_new = min(self.cursor_page_nr + 1, len(self.model) - 1)
+            else:
+                self.cursor_page_nr_new = max(self.cursor_page_nr - 1, 0)
         elif self.event.keyval == Gdk.KEY_Home:
             self.cursor_page_nr_new = 0
         elif self.event.keyval == Gdk.KEY_End:
@@ -374,23 +380,24 @@ class IconviewDragSelect:
             if path:
                 ind = Gtk.TreePath.get_indices(path)[0]
                 break
+        add = 0.5 if self.iconview.get_direction() == Gtk.TextDirection.LTR else -0.5
         if pos == 'XY':
             location = ind
         elif pos == 'Right':
-            location = ind - 0.5
+            location = ind - add
         elif pos == 'Left':
-            location = ind + 0.5
+            location = ind + add
         elif pos == 'Below':
-            location = ind - self.iconview.get_item_column(path) - 0.5
+            location = ind - self.iconview.get_item_column(path) - add
         elif pos == 'Above':
-            location = ind + self.iconview.get_columns() - self.iconview.get_item_column(path) - 0.5
+            location = ind + self.iconview.get_columns() - self.iconview.get_item_column(path) - add
         elif (y > last_y + last.height) or (y > last_y and x > last_x + last.width):
-            location = len(self.model) - 0.5
+            location = len(self.model) - add
         elif y < 0:
-            location = -0.5
+            location = -add
         else:
             return None
-        return min(location, len(self.model) - 0.5)
+        return min(location, len(self.model) - add)
 
     def set_mouse_cursor(self, cursor_name):
         """Set the cursor type specified by cursor_name."""
