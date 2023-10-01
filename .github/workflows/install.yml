@@ -15,7 +15,7 @@ jobs:
     - name: Upgrade pip
       run: pip install --upgrade pip
     - name: Install
-      run: pip3 install --upgrade .[image] coverage
+      run: pip3 install -v --upgrade .[image] coverage
     - name: AppStream
       run: appstreamcli validate $HOME/.local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
@@ -39,7 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
+      run: pip3 install -v .[image]
     - name: AppStream
       run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
@@ -63,7 +63,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
+      run: pip3 install -v .[image]
     - name: Dogtail Tests and Coverage
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
@@ -81,7 +81,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
+      run: pip3 install -v .[image]
     - name: Tests
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-win32:
@@ -91,7 +91,7 @@ jobs:
       options: --user root
     steps:
     - uses: actions/checkout@v3
-    - run: ./setup.py build
+    - run: ./setup.py build -v
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v3
