@@ -22,35 +22,11 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
  mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip mingw-w64-x86_64-libhandy \
- mingw-w64-x86_64-python-setuptools-scm git python-pip
+ mingw-w64-x86_64-python-cx_Freeze git python-pip
 ```
 
-and
-
 ```
-/mingw64/bin/python3 -m pip install --user keyboard darkdetect https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
-```
-
-## Building pikepdf
-
-pikepdf cannot be installed from PyPI for the MSYS2/Ming64 python. It must be built from source. First get the source:
-
-```
-git clone https://github.com/pikepdf/pikepdf.git
-cd pikepdf
-```
-
-Switch to the latest tag and build, for example:
-
-```
-git checkout v6.2.5
-/mingw64/bin/python3.exe -m pip install --user --no-build-isolation .
-```
-
-Now that pikepdf is installed you may also install img2pdf:
-
-```
-/mingw64/bin/python3.exe -m pip install --user img2pdf
+/mingw64/bin/python3 -m pip install --user keyboard darkdetect pikepdf img2pdf
 ```
 
 ## Building PDF Arranger
@@ -58,7 +34,6 @@ Now that pikepdf is installed you may also install img2pdf:
 Get the PDF Arranger sources from a MSYS2 shell:
 
 ```
-cd
 git clone https://github.com/pdfarranger/pdfarranger.git
 ```
 
@@ -66,7 +41,7 @@ Then
 
 ```
 cd pdfarranger
-./setup.py build
+/mingw64/bin/python3 ./setup.py build
 /mingw64/bin/python3 setup_win32.py bdist_msi
 /mingw64/bin/python3 setup_win32.py bdist_zip
 ```
@@ -77,7 +52,7 @@ After running `setup.py build` it's possible to run PDF Arranger without creatin
 
 ```
 cd pdfarranger
-./setup.py build
+/mingw64/bin/python3.exe ./setup.py build
 /mingw64/bin/python3.exe -m pdfarranger
 ```
 
