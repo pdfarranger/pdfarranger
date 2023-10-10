@@ -947,7 +947,7 @@ class PdfArranger(Gtk.Application):
     def iv_size_allocate(self, _iconview, _allocation):
         self.hide_horizontal_scrollbar()
         self.set_adjustment_limits()
-        if self.vadj_percent is not None:
+        if self.vadj_percent is not None and not self.zoom_fit_page:
             self.vadj_percent_handler(restore=True)
         if self.scroll_path:
             GObject.idle_add(self.scroll_to_path2, self.scroll_path)
@@ -2259,7 +2259,7 @@ class PdfArranger(Gtk.Application):
         if len(self.model) > 0:
             self.update_iconview_geometry()
             self.model[0][0] = self.model[0][0]  # Let iconview refresh itself
-            self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection)
+            self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection, False)
             self.silent_render()
 
     def zoom_fit(self, path):
@@ -2306,6 +2306,7 @@ class PdfArranger(Gtk.Application):
         if self.zoom_fit_page:
             self.zoom_set(self.zoom_level_old)
         else:
+            self.vadj_percent_handler(store=True)
             selection = self.iconview.get_selected_items()
             if len(selection) > 0:
                 path = selection[-1]
@@ -2327,13 +2328,13 @@ class PdfArranger(Gtk.Application):
             self.window.unfullscreen()
             header_bar.show()
 
-    def scroll_to_selection(self):
+    def scroll_to_selection(self, center=True):
         """Scroll iconview so that selection is in center of window."""
         self.id_scroll_to_sel = None
         selection = self.iconview.get_selected_items()
         if len(selection) > 0:
             path = selection[len(selection) // 2]
-            self.iconview.scroll_to_path(path, True, 0.5, 0.5)
+            self.iconview.scroll_to_path(path, center, 0.5, 0.5)
 
     def rotate_page_action(self, _action, angle, _unknown):
         """Rotates the selected page in the IconView"""
