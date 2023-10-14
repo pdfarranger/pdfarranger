@@ -153,7 +153,7 @@ include_files.append((from_path, to_path))
 
 
 build_options = dict(
-    packages=['gi', 'packaging', 'pikepdf'],
+    packages=['gi', 'packaging', 'pikepdf', 'python-dateutil'],
     excludes=['tkinter', 'test'],
     include_files=include_files,
 )
