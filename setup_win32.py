@@ -6,7 +6,6 @@ import sys
 import distutils
 import shutil
 import glob
-import pkg_resources
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
@@ -50,7 +49,7 @@ addlocale("gtk30")
 def addicons():
     addfile("share/icons/hicolor/index.theme")
     addfile("share/icons/Adwaita/index.theme")
-    for i in ['places/folder', 'mimetypes/text-x-generic', 'status/image-missing']:
+    for i in ['places/folder', 'mimetypes/text-x-generic', 'status/image-missing-symbolic.symbolic']:
         addfile(os.path.join('share/icons/Adwaita/16x16/', i + '.png'))
     icons = [
         'places/user-desktop',
@@ -89,34 +88,16 @@ def addicons():
     ]
 
     for i in icons:
-        addfile(os.path.join('share/icons/Adwaita/scalable/', i + '-symbolic.svg'))
+        addfile(os.path.join('share/icons/Adwaita/symbolic/', i + '-symbolic.svg'))
 
 required_dlls = [
-    'gtk-3-0',
-    'gdk-3-0',
-    'epoxy-0',
-    'gdk_pixbuf-2.0-0',
-    'pango-1.0-0',
-    'pangocairo-1.0-0',
-    'pangoft2-1.0-0',
-    'pangowin32-1.0-0',
-    'atk-1.0-0',
     'poppler-glib-8',
-    'xml2-2',
-    'rsvg-2-2',
     'handy-1-0',
 ]
 
 for dll in required_dlls:
     fn = 'lib' + dll + '.dll'
     include_files.append((os.path.join(sys.prefix, 'bin', fn), fn))
-
-# Avoid loading wrong dll: Put the dll where it will be searched for first.
-# (That is the folder from where the dll load request originate)
-include_files.append((os.path.join(sys.prefix, 'bin', 'zlib1.dll'),
-                      os.path.join('lib', 'zlib1.dll'),))
-include_files.append((os.path.join(sys.prefix, 'bin', 'libffi-8.dll'),
-                      os.path.join('lib', 'libffi-8.dll'),))
 
 required_gi_namespaces = [
     "Gtk-3.0",
@@ -146,13 +127,6 @@ addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
 
-# Add support for pikepdf.__version__
-distrib = pkg_resources.get_distribution('pikepdf')
-from_path = os.path.join(distrib.egg_info, 'INSTALLER')
-to_path = os.path.join('lib', os.path.basename(distrib.egg_info), 'INSTALLER')
-include_files.append((from_path, to_path))
-
-
 # gspawn-helper is needed for website link in AboutDialog
 from_path = os.path.join(sys.prefix, 'bin', 'gspawn-win64-helper.exe')
 to_path = 'gspawn-win64-helper.exe'
@@ -162,8 +136,6 @@ include_files.append((from_path, to_path))
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
     excludes=['tkinter', 'test'],
-    # manually added to the lib folder
-    bin_excludes=['zlib1.dll', 'libffi-8.dll'],
     include_files=include_files,
 )
 
@@ -173,7 +145,6 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
-    target_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}'
 )
 
@@ -212,8 +183,21 @@ setup(name='pdfarranger',
       packages=['pdfarranger'],
       executables=[Executable('pdfarranger/__main__.py',
                               base='Win32GUI' if sys.platform == 'win32' else None,
-                              targetName='pdfarranger.exe',
+                              target_name='pdfarranger.exe',
                               icon='data/pdfarranger.ico',
-                              shortcutName='PDF Arranger',
-                              shortcutDir='StartMenuFolder'
+                              shortcut_name='PDF Arranger',
+                              shortcut_dir='StartMenuFolder'
                               )])
+
+
+def rename_msi():
+    # cx_freeze 6.15: Workaround for having different filename and "ProductName" for the msi.
+    dist_dir = os.path.join(os.getcwd(), 'dist')
+    msi = [f for f in os.listdir(dist_dir) if f.endswith('.msi')]
+    if len(msi) > 0:
+        old_name = os.path.join(dist_dir, msi[0])
+        new_name = os.path.join(dist_dir, get_target_name('installer.msi'))
+        shutil.move(old_name, new_name)
+
+if 'bdist_msi' in sys.argv:
+    rename_msi()
