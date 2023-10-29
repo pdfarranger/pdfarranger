@@ -576,13 +576,7 @@ class DrawingAreaWidget(Gtk.Box):
         maxfactor = (80000000 / (w * h)) ** .5  # Limit zoom at about 304Mb
 
         if event.direction == Gdk.ScrollDirection.SMOOTH:
-            dy = event.get_scroll_deltas()[2]
-            if dy < 0:
-                factor = round(min(1.3, maxfactor), 2)
-            elif dy > 0:
-                factor = 0.7
-            else:
-                return Gdk.EVENT_PROPAGATE
+            factor = round(min(1 - event.get_scroll_deltas()[2] * 0.3, maxfactor), 2)
         elif event.direction == Gdk.ScrollDirection.UP:
             factor = round(min(1.3, maxfactor), 2)
         elif event.direction == Gdk.ScrollDirection.DOWN:
