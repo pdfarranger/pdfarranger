@@ -1067,7 +1067,7 @@ class PdfArranger(Gtk.Application):
         gc.collect()
         self.config.set_window_size(self.window.get_size())
         self.config.set_maximized(self.window.is_maximized())
-        self.config.set_zoom_level(self.zoom_level)
+        self.config.set_zoom_level(round(self.zoom_level))
         self.config.set_position(self.window.get_position())
         self.config.save()
         if os.path.isdir(self.tmp_dir):
@@ -2197,27 +2197,19 @@ class PdfArranger(Gtk.Application):
             return Gdk.EVENT_PROPAGATE
         if event.direction == Gdk.ScrollDirection.SMOOTH:
             dy = event.get_scroll_deltas()[2]
-            if dy < 0:
-                direction = 'UP'
-            elif dy > 0:
-                direction = 'DOWN'
-            else:
-                return Gdk.EVENT_PROPAGATE
         elif event.direction == Gdk.ScrollDirection.UP:
-            direction = 'UP'
+            dy = -1
         elif event.direction == Gdk.ScrollDirection.DOWN:
-            direction = 'DOWN'
+            dy = 1
         else:
             return Gdk.EVENT_PROPAGATE
         if event.state & Gdk.ModifierType.CONTROL_MASK:
             # Zoom
-            zoom_delta = 1 if direction == 'UP' else -1
-            self.zoom_set(self.zoom_level + zoom_delta)
+            self.zoom_set(self.zoom_level - dy)
         else:
-            #Scroll. Also drag-select if mouse button is pressed
+            # Scroll. Also drag-select if mouse button is pressed
             sw_vadj = self.sw.get_vadjustment()
-            step = sw_vadj.get_step_increment()
-            step = -step if direction == 'UP' else step
+            step = max(20, sw_vadj.get_step_increment()) * dy
             with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
                 sw_vadj.set_value(sw_vadj.get_value() + step)
                 if event.state & Gdk.ModifierType.BUTTON1_MASK:
@@ -2244,13 +2236,14 @@ class PdfArranger(Gtk.Application):
     def zoom_set(self, level):
         """Sets the zoom level"""
         lower, upper = self.zoom_level_limits
-        level = min(max(level, lower), upper)
-        self.enable_zoom_buttons(level != lower, level != upper)
-        if self.zoom_level == level:
+        self.zoom_level = min(max(level, lower), upper)
+        int_zoom_level = round(self.zoom_level)
+        self.enable_zoom_buttons(int_zoom_level != lower, int_zoom_level != upper)
+        zoom_scale = 0.2 * (1.1 ** int_zoom_level)
+        if zoom_scale == self.zoom_scale:
             return
+        self.zoom_scale = zoom_scale
         self.vadj_percent_handler(store=True)
-        self.zoom_level = level
-        self.zoom_scale = 0.2 * (1.1 ** level)
         if self.id_scroll_to_sel:
             GObject.source_remove(self.id_scroll_to_sel)
         self.zoom_fit_page = False
