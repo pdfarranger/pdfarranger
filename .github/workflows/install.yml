@@ -26,10 +26,14 @@ jobs:
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
-    - name: Combine Coverage
-      run: python3 -m coverage combine
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+    # Convert to lcov because it's compatible with codecov AND can be combine
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    # Upload for later use (see upload-to-codecov job)
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ppp-lcov
+        path: coverage.lcov
   build-pikepdf-4:
     runs-on: ubuntu-latest
     # PikePDF 4.4.1
@@ -50,10 +54,12 @@ jobs:
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
-    - name: Combine Coverage
-      run: python3 -m coverage combine
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    - uses: actions/upload-artifact@v3
+      with:
+        name: pp4-lcov
+        path: coverage.lcov
   build-pikepdf-6:
     runs-on: ubuntu-latest
     # PikePDF 6.0.1
@@ -70,10 +76,27 @@ jobs:
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
-    - name: Combine Coverage
-      run: python3 -m coverage combine
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    - uses: actions/upload-artifact@v3
+      with:
+        name: pp6-lcov
+        path: coverage.lcov
+  upload-to-codecov:
+    # Upload to a codecov in a dedicated job to avoid races
+    needs: [build, build-pikepdf-4, build-pikepdf-6]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install lcov
+        run: sudo apt-get -y install lcov
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+      - name: Combine Coverage
+        run: lcov -a ppp-lcov/coverage.lcov -a pp6-lcov/coverage.lcov -a pp4-lcov/coverage.lcov -o lcov.info
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
   build-pikepdf-1:
     runs-on: ubuntu-latest
     # PikePDF 1.19
