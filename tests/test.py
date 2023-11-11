@@ -788,6 +788,44 @@ class TestBatch6(PdfArrangerTest):
 
 
 class TestBatch7(PdfArrangerTest):
+    """Test extracting of images and text"""
+    def test_01_import_pdf(self):
+        self._start(["tests/test_raster_image_text.pdf"])
+
+    def test_02_explode_images(self):
+        self._popupmenu(1, ["Select", "Select All"])
+        all_selected = all([icon.selected for icon in self._icons()])
+        self._wait_cond(lambda: all_selected)
+        self._popupmenu(1, ["Extract", "Explode into Images"])
+        self._wait_cond(lambda: len(self._icons()) == 5)
+
+    def test_03_copy_and_paste_image(self):
+        """Copy image from page which has one image"""
+        self._icons()[0].click(button=1)
+        self._popupmenu(0, ["Extract", "Copy Image"])
+        self._app().keyCombo("<ctrl>v")
+        self._wait_cond(lambda: len(self._icons()) == 6)
+
+    def test_04_copy_and_paste_image(self):
+        """Try to copy image from page which has two images"""
+        self._popupmenu(2, ["Extract", "Copy Image"])
+        filler = self._find_by_role("filler")[-1]
+        filler.child(name="OK").click()
+        self._wait_cond(lambda: filler.dead)
+        self._popupmenu(1, ["Paste After"])
+        self._wait_cond(lambda: len(self._icons()) == 7)
+
+    def test_05_copy_text(self):
+        """Copy text "tests/test_raster_image_text.pdf" from pdf"""
+        self._popupmenu(0, ["Extract", "Copy Text"])
+        self._app().keyCombo("<ctrl>v")
+        self._wait_cond(lambda: len(self._icons()) == 9)
+
+    def test_06_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch8(PdfArrangerTest):
     """Test Open action"""
 
     # Kill X11 after that batch
