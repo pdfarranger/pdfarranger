@@ -137,6 +137,16 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="label" translatable="yes">_Explode into Images</attribute>
             <attribute name="action">win.explode-images</attribute>
           </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Image</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">0</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Text</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">1</attribute>
+          </item>
         </submenu>
         <item>
           <attribute name="label" translatable="yes">Rotate _Left</attribute>
@@ -339,6 +349,16 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <item>
             <attribute name="label" translatable="yes">_Explode into Images</attribute>
             <attribute name="action">win.explode-images</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Image</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">0</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Text</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">1</attribute>
           </item>
         </section>
       </submenu>
