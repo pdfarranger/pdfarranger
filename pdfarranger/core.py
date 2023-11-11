@@ -471,7 +471,7 @@ class PasswordDialog(Gtk.Dialog):
             raise _UnknownPasswordException()
 
 
-def _img_to_pdf(filename, tmp_dir):
+def _img_to_pdf(images, tmp_dir):
     """Wrap img2pdf.convert to handle some corner cases"""
     fd, pdf_file_name = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
     os.close(fd)
@@ -483,20 +483,24 @@ def _img_to_pdf(filename, tmp_dir):
         rot = None
     with open(pdf_file_name, "wb") as f:
         if version.parse(img2pdf.__version__) < version.Version('0.4.2'):
-            img = img2pdf.Image.open(filename)
-            if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
-                # TODO: Find a way to keep image in P or L format and remove transparency.
-                # This will work but converting from 1, L, P to RGB is not optimal.
-                img = img.convert("RGBA")
-            if img.mode == "RGBA":
-                # Remove transparency as old img2pdf doesn't support it
-                bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
-                bg.paste(img, mask=img.split()[-1])
-                imgio = img2pdf.BytesIO()
-                bg.save(imgio, "PNG")
-                imgio.seek(0)
-                filename = imgio
-        f.write(img2pdf.convert(filename, rotation=rot))
+            for num, image in enumerate(images):
+                if isinstance(image, str):
+                    img = img2pdf.Image.open(image)
+                else:
+                    img = img2pdf.Image.open(img2pdf.BytesIO(image))
+                if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
+                    # TODO: Find a way to keep image in P or L format and remove transparency.
+                    # This will work but converting from 1, L, P to RGB is not optimal.
+                    img = img.convert("RGBA")
+                if img.mode == "RGBA":
+                    # Remove transparency as old img2pdf doesn't support it
+                    bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
+                    bg.paste(img, mask=img.split()[-1])
+                    imgio = img2pdf.BytesIO()
+                    bg.save(imgio, "PNG")
+                    imgio.seek(0)
+                    images[num] = imgio
+        f.write(img2pdf.convert(images, rotation=rot))
     return pdf_file_name
 
 
@@ -550,7 +554,7 @@ class PDFDoc:
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
             if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
-                self.copyname = _img_to_pdf(filename, tmp_dir)
+                self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:

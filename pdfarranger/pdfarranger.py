@@ -117,7 +117,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Sides
+from .core import Sides, _img_to_pdf
 
 
 def _set_language_locale():
@@ -409,6 +409,7 @@ class PdfArranger(Gtk.Application):
             ('metadata', self.edit_metadata),
             ('cut', self.on_action_cut),
             ('copy', self.on_action_copy),
+            ('explode-images', self.on_action_explode_into_images),
             ('paste', self.on_action_paste, 'i'),
             ('select', self.on_action_select, 'i'),
             ('select-same-file', self.on_action_select, 'i'),
@@ -1736,6 +1737,53 @@ class PdfArranger(Gtk.Application):
                 ref_to = Gtk.TreeRowReference.new(model, selection[0])
         return ref_to, before
 
+    def get_images_in_page(self, page):
+        """Return list of all images in page, including in overlays/underlays."""
+        images = []
+        page_list = [page] + [lp for lp in page.layerpages]
+        for p in page_list:
+            poppler_page = self.pdfqueue[p.nfile - 1].get_page(p.npage - 1)
+            imaps = poppler_page.get_image_mapping()
+            for imap in imaps:
+                image = poppler_page.get_image(imap.image_id)
+                if image is not None:
+                    w, h = image.get_width(), image.get_height()
+                    # img2pdf.py: dpi = 96, pt = 1/72″, min pt = 3, max pt = 14400
+                    # -> (96 / 72) * 14400 = 19200
+                    # -> (96 / 72) * 3 = 4
+                    if 19200 >= w >= 4 and 19200 >= h >= 4:
+                        images.append(image)
+        return images
+
+    @staticmethod
+    def process_pending_events():
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+
+    def on_action_explode_into_images(self, _action, _param, _unknown):
+        """Add all images in selected pages as new pages."""
+        if len(img2pdf_supported_img) == 0:
+            msg = _("Img2pdf missing.")
+            self.error_message_dialog(msg)
+            return
+        self.set_export_state(True, _("Exploding into images…"))
+        self.process_pending_events()
+        s = self.iconview.get_selected_items()
+        imgbufs = []
+        for row in reversed(s):
+            page = self.model[row][0]
+            images = self.get_images_in_page(page)
+            for im in images:
+                pixbuf = Gdk.pixbuf_get_from_surface(im, 0, 0, im.get_width(), im.get_height())
+                success, imgbuf = pixbuf.save_to_bufferv('png')
+                if success:
+                    imgbufs.append(imgbuf)
+        if len(imgbufs) > 0:
+            pdf_file_name = _img_to_pdf(imgbufs, self.tmp_dir)
+            ref_to, before = self.set_paste_location(pastemode='AFTER', data_is_filepaths=True)
+            self.paste_files([pdf_file_name], before, ref_to)
+        self.set_export_state(False)
+
     def on_action_select(self, _action, option, _unknown):
         """Selects items according to selected option."""
         selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN',
@@ -2144,6 +2192,7 @@ class PdfArranger(Gtk.Application):
             ("export-selection", ne),
             ("cut", ne),
             ("copy", ne),
+            ("explode-images", ne),
             ("split", ne),
             ("merge", ne),
             ("select-same-file", ne),

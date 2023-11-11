@@ -131,6 +131,13 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="target" type="i">5</attribute>
           </item>
         </submenu>
+        <submenu>
+          <attribute name="label" translatable="yes">_Extract</attribute>
+          <item>
+            <attribute name="label" translatable="yes">_Explode into Images</attribute>
+            <attribute name="action">win.explode-images</attribute>
+          </item>
+        </submenu>
         <item>
           <attribute name="label" translatable="yes">Rotate _Left</attribute>
           <attribute name="action">win.rotate</attribute>
@@ -321,6 +328,17 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="label" translatable="yes">Paste As _Underlay…</attribute>
             <attribute name="action">win.paste</attribute>
             <attribute name="target" type="i">5</attribute>
+          </item>
+        </section>
+      </submenu>
+    </section>
+    <section>
+      <submenu>
+        <attribute name="label" translatable="yes">_Extract</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">_Explode into Images</attribute>
+            <attribute name="action">win.explode-images</attribute>
           </item>
         </section>
       </submenu>
