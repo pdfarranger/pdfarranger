@@ -830,8 +830,8 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         else:
             wpoi = p.size.width * (1 - p.crop.left - p.crop.right)
             hpoi = p.size.height * (1 - p.crop.top - p.crop.bottom)
-            wpix = int(0.5 + wpoi * p.scale * zoom)
-            hpix = int(0.5 + hpoi * p.scale * zoom)
+            wpix = max(1, int(0.5 + wpoi * p.scale * zoom))
+            hpix = max(1, int(0.5 + hpoi * p.scale * zoom))
             wpix0, hpix0 = (wpix, hpix) if p.angle in [0, 180] else (hpix, wpix)
             rotation = round((int(p.angle) % 360) / 90) * 90
 
