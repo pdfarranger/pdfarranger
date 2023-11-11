@@ -45,6 +45,10 @@ Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/conf
 Some tips:
 
 * Use to print widget tree (names and roles) self._app().dump()
+
+Example of how to run the test locally:
+python3 -X tracemalloc -u -m unittest -v -f tests.test # run whole test
+python3 -X tracemalloc -u -m unittest -v -f tests.test.TestBatch5 # run only TestBatch5
 """
 
 
