@@ -682,6 +682,7 @@ class TestBatch5(PdfArrangerTest):
 
     def test_04_crop_white_border(self):
         # Test selection with shift+arrow
+        self._app().child(roleName="layered pane").grabFocus()
         self._app().child(roleName="layered pane").keyCombo("<shift>Left")
         self._assert_selected("1-2")
         self._popupmenu(0, ["Crop White Borders"])
