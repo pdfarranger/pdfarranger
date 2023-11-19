@@ -500,7 +500,12 @@ def _img_to_pdf(images, tmp_dir):
                     bg.save(imgio, "PNG")
                     imgio.seek(0)
                     images[num] = imgio
-        f.write(img2pdf.convert(images, rotation=rot))
+        try:
+            pdf = img2pdf.convert(images, rotation=rot)
+        except ValueError as e:
+            # Too small or large image
+            raise PDFDocError(e)
+        f.write(pdf)
     return pdf_file_name
 
 
