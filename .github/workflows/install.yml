@@ -9,6 +9,7 @@ jobs:
     env:
       PDFARRANGER_COVERAGE: 1
     steps:
+    - run: sudo apt-get update
     - name: Install APT packages
       run: sudo apt-get -y install gettext appstream python3-dogtail desktop-file-utils xvfb gir1.2-poppler-0.18
     - uses: actions/checkout@v3
