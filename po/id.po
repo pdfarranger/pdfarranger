@@ -1,31 +1,30 @@
-# pdfarranger translation files.
 # Copyright (C) 2021 pdfarranger contributors
+# Indonesian translation for pdfarranger.
 # This file is distributed under the same license as the PACKAGE package.
 # Translators:
-# Abdul Munif Hanafi <amunifhanafi@gmail.com>, 2019-2021.
+# Abdul Munif Hanafi <amunifhanafi@gmail.com>, 2019., 2021.
+# Ryan Faiz Sanie <ryanfaiz2005@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2021-10-31 23:20+0700\n"
+"POT-Creation-Date: 2023-06-09 18:18+0200\n"
+"PO-Revision-Date: 2023-06-08 10:00+0700\n"
 "Last-Translator: Abdul Munif Hanafi <amunifhanafi@gmail.com>\n"
 "Language-Team: \n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr "#Kol"
+msgstr "#Kolom"
 
 #: pdfarranger/splitter.py:87
 msgid "#Row"
-msgstr "#Bar"
+msgstr "#Baris"
 
 #: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
 #: pdfarranger/pageutils.py:479
@@ -42,43 +41,43 @@ msgstr "% dari tinggi"
 msgid "% of width"
 msgstr "% dari lebar"
 
-#: pdfarranger/pdfarranger.py:2548
+#: pdfarranger/pdfarranger.py:2549
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
+msgstr "%s adalah alat untuk menyusun dan memodifikasi file PDF"
 
-#: pdfarranger/config.py:232
+#: pdfarranger/config.py:233
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy tidak ditemukan)"
 
-#: pdfarranger/config.py:224
+#: pdfarranger/config.py:225
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Mulai ulang diperlukan)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(offset yang sama diterapkan ke semua halaman)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr ""
+msgstr "File dengan nama \"%s\" sudah ada. Apakah Anda ingin menggantinya?"
 
-#: data/menu.ui:189 data/menu.ui:332
+#: data/menu.ui:202 data/menu.ui:345
 msgid "All From _Same File"
 msgstr "Semua dari Berkas yang _Sama"
 
 #: pdfarranger/pdfarranger.py:507
 msgid "All files"
-msgstr "Semua berkas"
+msgstr "Semua File"
 
 #: pdfarranger/pdfarranger.py:462
 msgid "All pages must have the same size."
-msgstr ""
+msgstr "Semua halaman harus memiliki ukuran yang sama"
 
 #: pdfarranger/pdfarranger.py:495
 msgid "All supported files"
-msgstr "Semua berkas yang didukung"
+msgstr "Semua file yang didukung"
 
 #: pdfarranger/pageutils.py:149
 msgid "Bottom"
@@ -86,33 +85,33 @@ msgstr "Bawah"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "Bawah ke Atas"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
-msgstr ""
+msgstr "Gambar papan klip"
 
 #: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Kolom"
 
-#: pdfarranger/metadata.py:48
+#: pdfarranger/metadata.py:49
 msgid "Created"
 msgstr "Dibuat"
 
-#: pdfarranger/metadata.py:46
-msgid "Creator"
-msgstr "Pembuat"
-
 #: pdfarranger/metadata.py:47
+msgid "Creator"
+msgstr "Pencipta"
+
+#: pdfarranger/metadata.py:48
 msgid "Creator tool"
-msgstr "Alat pembuat"
+msgstr "Alat pencipta"
 
 #: pdfarranger/pageutils.py:153
 msgid "Crop Margins"
-msgstr "Pangkas Margin"
+msgstr "Margin Pangkas"
 
-#: data/menu.ui:104 data/menu.ui:365
+#: data/menu.ui:149 data/menu.ui:378
 msgid "Crop White Borders"
 msgstr "Potong Tepian Berwarna Putih"
 
@@ -121,27 +120,29 @@ msgid ""
 "Cropping does not remove any content from the PDF file, it only hides it."
 msgstr ""
 "Pemangkasan tidak menghapus konten apa pun dari berkas PDF, melainkan hanya "
-"menyembunyikannya."
+"menyembunyikannya"
 
-#: data/menu.ui:128 data/menu.ui:264
+#: data/menu.ui:94 data/menu.ui:277
 msgid "Cu_t"
 msgstr "_Potong"
 
 #: pdfarranger/pdfarranger.py:1250
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
+"Meskipun ada peringatan, dokumen seharusnya tidak memiliki masalah yang "
+"terlihat."
 
 #: pdfarranger/pdfarranger.py:979
 msgid "Discard changes and close?"
-msgstr ""
+msgstr "Buang perubahan dan tutup?"
 
 #: pdfarranger/pdfarranger.py:1016
 msgid "Discard changes and quit?"
-msgstr ""
+msgstr "Buang perubahan dan keluar?"
 
 #: pdfarranger/exporter.py:194
 msgid "Do not show this dialog again."
-msgstr "Jangan tampilkan dialog ini lagi."
+msgstr "Jangan munculkan dialog ini lagi."
 
 #: pdfarranger/pdfarranger.py:970
 msgid "Do_n’t Save"
@@ -149,41 +150,41 @@ msgstr "Ja_ngan Simpan"
 
 #: pdfarranger/pdfarranger.py:1257
 msgid "Don't show warnings when saving again."
-msgstr ""
+msgstr "Jangan tampilkan peringatan lagi saat menyimpan. "
 
-#: data/menu.ui:112 data/menu.ui:369
+#: data/menu.ui:153 data/menu.ui:382
 msgid "Dupl_icate"
 msgstr "Gan_dakan"
 
-#: data/menu.ui:52 data/menu.ui:395
+#: data/menu.ui:52 data/menu.ui:408
 msgid "E_xport"
 msgstr "E_kspor"
 
-#: data/menu.ui:55 data/menu.ui:398
+#: data/menu.ui:55 data/menu.ui:411
 msgid "E_xport Selection to a Single File…"
 msgstr "_Ekspor Terpilih ke Sebuah Berkas Tunggal…"
 
-#: data/menu.ui:228
+#: data/menu.ui:241
 msgid "Edit _Properties"
 msgstr "Sunting Prop_erti"
 
-#: pdfarranger/metadata.py:198
+#: pdfarranger/metadata.py:199
 msgid "Edit properties"
-msgstr "Sunting properti"
+msgstr "Ubah properti"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal column width"
-msgstr "Sama dengan lebar kolom"
+msgstr "Lebar kolom yang sama"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal row height"
-msgstr "Sama dengan tinggi baris"
+msgstr "Lebar baris yang sama"
 
-#: data/menu.ui:60 data/menu.ui:403
+#: data/menu.ui:60 data/menu.ui:416
 msgid "Export Selection to _Individual Files…"
 msgstr "Ekspor Terpilih ke _Masing-masing Berkas…"
 
-#: data/menu.ui:65 data/menu.ui:408
+#: data/menu.ui:65 data/menu.ui:421
 msgid "Export _All Pages to Individual Files…"
 msgstr "Ekspor Semu_a Halaman menjadi Masing-masing Berkas…"
 
@@ -193,29 +194,29 @@ msgstr "Ekspor…"
 
 #: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
 msgid "File is neither pdf nor image"
-msgstr "Bukan berkas pdf ataupun gambar"
+msgstr "File bukan dalam format pdf ataupun gambar"
 
 #: pdfarranger/pdfarranger.py:301
 msgid "File(s) to open"
-msgstr ""
+msgstr "File yang akan dibuka"
 
-#: pdfarranger/config.py:237
+#: pdfarranger/config.py:238
 msgid "For more options see:"
-msgstr ""
+msgstr "Untuk opsi lebih lanjut, lihat:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
-msgstr "Formulir dan garis besar hilang saat disimpan."
+msgstr "Formulir dan garis-garis kerangka hilang saat disimpan"
 
-#: data/menu.ui:221
+#: data/menu.ui:234
 msgid "Full_screen"
-msgstr ""
+msgstr "Layar_penuh"
 
-#: pdfarranger/pdfarranger.py:2562
+#: pdfarranger/pdfarranger.py:2563
 msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU General Public License (GPL) Versi 3."
+msgstr "Lisensi Publik Umum GNU (GNU General Public License/GPL) Versi 3."
 
-#: data/menu.ui:160 data/menu.ui:389
+#: data/menu.ui:173 data/menu.ui:402
 msgid "Generate Booklet"
 msgstr "Membuat Buku Saku"
 
@@ -230,33 +231,33 @@ msgstr "Tinggi dalam %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
-msgstr "Pecah Horizontal"
+msgstr "Pemisahan Horizontal."
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Offset horizontal"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
-msgstr "Berkas gambar hanya didukung dengan img2pdf"
+msgstr "File gambar hanya didukung dengan img2pdf."
 
 #: pdfarranger/core.py:383
 msgid "Image format is not supported by img2pdf"
-msgstr "Format gambar tidak didukung oleh img2pdf"
+msgstr "File gambar tidak didukung dengan img2pdf"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
-msgstr ""
+msgstr "Impor"
 
 #: pdfarranger/pdfarranger.py:1327
 msgid "Import…"
 msgstr "Impor…"
 
-#: data/menu.ui:156 data/menu.ui:385
+#: data/menu.ui:169 data/menu.ui:398
 msgid "Insert Blan_k Page…"
 msgstr "Sisipkan Halaman _Kosong…"
 
@@ -264,26 +265,26 @@ msgstr "Sisipkan Halaman _Kosong…"
 msgid "Insert Blank Page"
 msgstr "Sisipkan Halaman Kosong"
 
-#: pdfarranger/metadata.py:169
+#: pdfarranger/metadata.py:170
 msgid "Invalid date format. Input discarded."
-msgstr "Format tanggal tidak valid. Masukan dibatalkan."
+msgstr "Format tanggal tidak valid. Input dibatalkan."
 
-#: pdfarranger/pdfarranger.py:2551
+#: pdfarranger/pdfarranger.py:2552
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr ""
+msgstr "Ini menggunakan libqpdf %s, pikepdf %s, GTK %s, dan Python %s."
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:45
 msgid "Keywords"
 msgstr "Kata kunci"
 
-#: pdfarranger/config.py:222
+#: pdfarranger/config.py:223
 msgid "Language"
-msgstr ""
+msgstr "Bahasa"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Tata letak untuk halaman pertama dalam pilihan"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -291,43 +292,43 @@ msgstr "Kiri"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "Kiri ke Kanan"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: pdfarranger/pdfarranger.py:2557
+#: pdfarranger/pdfarranger.py:2558
 msgid "Maintainers and contributors"
-msgstr "Pengelola dan kontributor"
+msgstr "Maintainers and contributors"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Margin"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Gabungkan Halaman"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Ukuran halaman yang digabungkan: "
 
-#: pdfarranger/metadata.py:49
+#: pdfarranger/metadata.py:50
 msgid "Modified"
 msgstr "Diubah"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Ukuran halaman yang tidak seragam - menggunakan ukuran maksimum."
 
 #: data/pdfarranger.ui:37
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: pdfarranger/pdfarranger.py:1186
 msgid "Open…"
-msgstr ""
+msgstr "Buka…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
@@ -340,6 +341,10 @@ msgid ""
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
+"PDF Arranger adalah aplikasi Python-GTK kecil yang membantu pengguna untuk "
+"menggabungkan atau membagi dokumen PDF serta memutar, memotong, dan menyusun "
+"ulang halaman-halaman PDF menggunakan antarmuka grafis interaktif dan "
+"intuitif. Ini adalah antarmuka pengguna untuk pikepdf."
 
 #: pdfarranger/pdfarranger.py:1498
 msgid "PDF document is damaged"
@@ -347,17 +352,17 @@ msgstr "Dokumen PDF rusak"
 
 #: pdfarranger/pdfarranger.py:499
 msgid "PDF files"
-msgstr "Berkas PDF"
+msgstr "File PDF"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Susunan Halaman"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
 msgstr "Ukuran Halaman"
 
-#: pdfarranger/pdfarranger.py:2585
+#: pdfarranger/pdfarranger.py:2586
 msgid "Page Size:"
 msgstr "Ukuran Halaman:"
 
@@ -367,91 +372,93 @@ msgstr "Format halaman"
 
 #: pdfarranger/core.py:285
 msgid "Password"
-msgstr "Kata sandi"
+msgstr "Kata Sandi"
 
 #: pdfarranger/core.py:263
 msgid "Password required"
-msgstr "Kata sandi dibutuhkan"
+msgstr "Kata Sandi diperlukan"
 
-#: data/menu.ui:277
+#: data/menu.ui:107 data/menu.ui:290
 msgid "Past_e Special"
-msgstr "Tempel Kh_usus"
+msgstr "Temp_el Spesial"
 
-#: data/menu.ui:295
+#: data/menu.ui:124 data/menu.ui:308
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Tempel Sebagai O_verlay…"
 
-#: data/menu.ui:151 data/menu.ui:290
+#: data/menu.ui:119 data/menu.ui:303
 msgid "Paste As _Even Pages"
-msgstr "Tempel Sebagai Halaman Ge_nap"
+msgstr "Tempel Sebagai Halaman _Genap"
 
-#: data/menu.ui:146 data/menu.ui:285
+#: data/menu.ui:114 data/menu.ui:298
 msgid "Paste As _Odd Pages"
-msgstr "Tempel Sebagai Halaman Ganj_il"
+msgstr "Tempel Sebagai Halaman _Ganjil"
 
-#: data/menu.ui:300
+#: data/menu.ui:129 data/menu.ui:313
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Tempel Sebagai _Underlay…"
 
-#: data/menu.ui:136 data/menu.ui:272
+#: data/menu.ui:102 data/menu.ui:285
 msgid "Paste _After"
-msgstr "Tempel Sete_lah"
+msgstr "Tempel _Setelah"
 
-#: data/menu.ui:141 data/menu.ui:280
+#: data/menu.ui:109 data/menu.ui:293
 msgid "Paste _Before"
-msgstr "Tempel Se_belum"
+msgstr "Tempel _Sebelum"
 
 #: pdfarranger/pdfarranger.py:1627
 msgid "Pasted data not valid. Aborting paste."
-msgstr "Data yang ditempelkan tidak valid. Membatalkan penempelan."
+msgstr "Data yang ditempelkan tidak valid. Membatalkan tempel."
 
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
 msgstr ""
+"Pikepdf versi 3 atau yang lebih baru diperlukan untuk mendukung fitur "
+"overlay/underlay/merge."
 
-#: data/menu.ui:234
+#: data/menu.ui:247
 msgid "Pre_ferences"
-msgstr ""
+msgstr "Pre_ferensi"
 
-#: pdfarranger/config.py:212
+#: pdfarranger/config.py:213
 msgid "Preferences"
-msgstr ""
+msgstr "Preferensi"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
-msgstr ""
+msgstr "Cetak versi PDF Arranger dan keluar"
 
-#: pdfarranger/exporter.py:457
+#: pdfarranger/exporter.py:461
 msgid "Printing…"
-msgstr ""
+msgstr "Mencetak"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:46
 msgid "Producer"
-msgstr "Produser"
+msgstr "Produsen"
 
-#: pdfarranger/metadata.py:212
+#: pdfarranger/metadata.py:213
 msgid "Property"
 msgstr "Properti"
 
-#: data/menu.ui:116 data/menu.ui:373
+#: data/menu.ui:157 data/menu.ui:386
 msgid "Re_verse Order"
-msgstr "_Balikkan Urutan"
+msgstr "Ba_likkan Urutan"
 
 #: pdfarranger/pageutils.py:238
 msgid "Relative"
 msgstr "Relatif"
 
-#: pdfarranger/exporter.py:469
+#: pdfarranger/exporter.py:473
 msgid "Rendering Preview…"
-msgstr ""
+msgstr "Pratinjau Rendering…"
 
 #: pdfarranger/pdfarranger.py:732
 msgid "Rendering…"
-msgstr ""
+msgstr "Rendering…"
 
 #: pdfarranger/pdfarranger.py:1132
 msgid "Replace"
-msgstr ""
+msgstr "Ganti"
 
 #: pdfarranger/pageutils.py:149
 msgid "Right"
@@ -459,25 +466,25 @@ msgstr "Kanan"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "Kanan ke Kiri"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
-msgstr "Putar ke Kiri"
+msgstr "Rotasi ke Kiri"
 
 #: data/pdfarranger.ui:227
 msgid "Rotate Right"
-msgstr "Putar ke Kanan"
+msgstr "Rotasi ke Kanan"
 
-#: data/menu.ui:90 data/menu.ui:351
+#: data/menu.ui:135 data/menu.ui:364
 msgid "Rotate _Left"
-msgstr "Putar ke K_iri"
+msgstr "Rotasi ke _Kiri"
 
 #: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Baris"
 
-#: data/menu.ui:194 data/menu.ui:337
+#: data/menu.ui:207 data/menu.ui:350
 msgid "Same Page _Format"
 msgstr "_Format Halaman yang Sama"
 
@@ -491,11 +498,11 @@ msgstr "Simpan Sebagai"
 
 #: pdfarranger/pdfarranger.py:1088
 msgid "Save As…"
-msgstr ""
+msgstr "Simpan Sebagai…"
 
 #: data/menu.ui:47
 msgid "Save _As…"
-msgstr "Simp_an Sebagai…"
+msgstr "Simpan _Sebagai…"
 
 #: pdfarranger/pdfarranger.py:988
 msgid "Save changes before closing?"
@@ -503,7 +510,7 @@ msgstr "Simpan perubahan sebelum menutup?"
 
 #: pdfarranger/pdfarranger.py:1025
 msgid "Save changes before quitting?"
-msgstr ""
+msgstr "Simpan perubahan sebelum keluar?"
 
 #: pdfarranger/pdfarranger.py:985
 msgid "Save changes to “{}” before closing?"
@@ -511,66 +518,66 @@ msgstr "Simpan perubahan ke “{}” sebelum menutup?"
 
 #: pdfarranger/pdfarranger.py:1022
 msgid "Save changes to “{}” before quitting?"
-msgstr ""
+msgstr "Simpan perubahan ke “{}” sebelum keluar?"
 
 #: pdfarranger/pdfarranger.py:1249
 msgid "Saving produced some warnings"
-msgstr ""
+msgstr "Menyimpan dapat menghasilkan beberapa peringatan"
 
 #: pdfarranger/pdfarranger.py:1288
 msgid "Saving…"
-msgstr ""
+msgstr "Menyimpan…"
 
 #: pdfarranger/pageutils.py:116
 msgid "Scale factor"
-msgstr "Faktor skala"
+msgstr "Faktor Skala"
 
-#: data/menu.ui:169 data/menu.ui:312
+#: data/menu.ui:182 data/menu.ui:325
 msgid "Select _All"
-msgstr "Pilih Semu_a"
+msgstr "Pilih _Semua"
 
-#: data/menu.ui:184 data/menu.ui:327
+#: data/menu.ui:197 data/menu.ui:340
 msgid "Select _Even Pages"
-msgstr "Pilih Halaman Ge_nap"
+msgstr "Pilih Halaman _Genap"
 
-#: data/menu.ui:179 data/menu.ui:322
+#: data/menu.ui:192 data/menu.ui:335
 msgid "Select _Odd Pages"
-msgstr "Pilih Halaman Ganj_il"
+msgstr "Pilih Halaman _Ganjil"
 
-#: pdfarranger/pdfarranger.py:2580
+#: pdfarranger/pdfarranger.py:2581
 msgid "Selected pages: "
-msgstr "Halaman terpilih: "
+msgstr "Halaman yang dipilih: "
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
-msgstr "Pecah Halaman"
+msgstr "Pisahkan Halaman"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:44
 msgid "Subject"
 msgstr "Subjek"
 
 #: pdfarranger/pdfarranger.py:512
 msgid "Supported image files"
-msgstr "Berkas gambar yang didukung"
+msgstr "File gambar yang didukung"
 
-#: pdfarranger/config.py:248 pdfarranger/config.py:256
+#: pdfarranger/config.py:249 pdfarranger/config.py:257
 msgid "System setting"
-msgstr ""
+msgstr "Setelan sistem"
 
 #: pdfarranger/core.py:275
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr "Dokumen “{}” terkunci dan memerlukan kata sandi sebelum bisa dibuka."
+msgstr "Dokumen “{}” terkunci dan memerlukan password sebelum bisa dibuka."
 
 #: pdfarranger/core.py:274
 msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Kata sandi akan diingat sampai Anda menutup PDF Arranger."
+msgstr "Password akan diingat sampai Anda menutup PDF Arranger."
 
-#: pdfarranger/config.py:230
+#: pdfarranger/config.py:231
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:43
 msgid "Title"
 msgstr "Judul"
 
@@ -580,7 +587,7 @@ msgstr "Atas"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "Atas ke Bawah"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
@@ -588,23 +595,23 @@ msgstr ""
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
-msgstr "Format berkas tidak dikenali"
+msgstr "Format file tidak dikenali"
 
-#: pdfarranger/metadata.py:212
+#: pdfarranger/metadata.py:213
 msgid "Value"
 msgstr "Nilai"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikal"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
-msgstr "Pecah Vertikal"
+msgstr "Pemisahan Vertikal"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Offset vertikal"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -621,7 +628,7 @@ msgstr "Lebar dalam %"
 
 #: pdfarranger/pdfarranger.py:969
 msgid "Your changes will be lost if you don’t save them."
-msgstr "Perubahan yang Anda buat akan hilang jika Anda tidak menyimpannya."
+msgstr "Perubahan Anda akan hilang jika Anda tidak menyimpannya."
 
 #: data/pdfarranger.ui:144
 msgid "Zoom In"
@@ -631,41 +638,41 @@ msgstr "Zoom Perbesar"
 msgid "Zoom Out"
 msgstr "Zoom Perkecil"
 
-#: data/menu.ui:217
+#: data/menu.ui:230
 msgid "Zoom _Fit"
-msgstr ""
+msgstr "_Sesuaikan Zoom"
 
-#: data/menu.ui:209
+#: data/menu.ui:222
 msgid "Zoom _In"
 msgstr "Zoom _Perbesar"
 
-#: data/menu.ui:213
+#: data/menu.ui:226
 msgid "Zoom _Out"
-msgstr "Z_oom Perkecil"
+msgstr "Zoom _Perkecil"
 
-#: data/menu.ui:240
+#: data/menu.ui:253
 msgid "_About"
 msgstr "Tent_ang"
 
-#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
+#: pdfarranger/config.py:217 pdfarranger/pageutils.py:219
 #: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
 #: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
 msgid "_Cancel"
-msgstr "_Batal"
+msgstr "_Batalkan"
 
-#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+#: pdfarranger/pdfarranger.py:980 data/menu.ui:259
 msgid "_Close"
-msgstr ""
+msgstr "_Tutup"
 
-#: data/menu.ui:132 data/menu.ui:268
+#: data/menu.ui:98 data/menu.ui:281
 msgid "_Copy"
 msgstr "_Salin"
 
-#: data/menu.ui:108 data/menu.ui:260
+#: data/menu.ui:90 data/menu.ui:273
 msgid "_Delete"
 msgstr "_Hapus"
 
-#: data/menu.ui:174 data/menu.ui:317
+#: data/menu.ui:187 data/menu.ui:330
 msgid "_Deselect All"
 msgstr "_Batal Pilih Semua"
 
@@ -677,35 +684,35 @@ msgstr "_Sunting"
 msgid "_Import"
 msgstr "_Impor"
 
-#: data/menu.ui:199 data/menu.ui:342
+#: data/menu.ui:212 data/menu.ui:355
 msgid "_Invert Selection"
 msgstr "Pi_lih Sebaliknya"
 
-#: data/menu.ui:124 data/menu.ui:381
+#: data/menu.ui:165 data/menu.ui:394
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "_Gabungkan Halaman…"
 
 #: data/menu.ui:36
 msgid "_New Window"
 msgstr "Je_ndela Baru"
 
-#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+#: pdfarranger/config.py:218 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_OKE"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"
-msgstr ""
+msgstr "Buk_a"
 
-#: data/menu.ui:100 data/menu.ui:361
+#: data/menu.ui:145 data/menu.ui:374
 msgid "_Page Format…"
 msgstr "_Format Halaman…"
 
 #: data/menu.ui:71
 msgid "_Print…"
-msgstr ""
+msgstr "_Cetak…"
 
-#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+#: pdfarranger/pdfarranger.py:1017 data/menu.ui:265
 msgid "_Quit"
 msgstr "Kelua_r"
 
@@ -713,7 +720,7 @@ msgstr "Kelua_r"
 msgid "_Redo"
 msgstr "_Mengulangi Tindakan Terakhir"
 
-#: data/menu.ui:95 data/menu.ui:356
+#: data/menu.ui:140 data/menu.ui:369
 msgid "_Rotate Right"
 msgstr "Putar ke K_anan"
 
@@ -722,11 +729,11 @@ msgstr "Putar ke K_anan"
 msgid "_Save"
 msgstr "_Simpan"
 
-#: data/menu.ui:166 data/menu.ui:309
+#: data/menu.ui:179 data/menu.ui:322
 msgid "_Select"
 msgstr "Pili_h"
 
-#: data/menu.ui:120 data/menu.ui:377
+#: data/menu.ui:161 data/menu.ui:390
 msgid "_Split Pages…"
 msgstr "Pe_cah Halaman…"
 
@@ -734,9 +741,9 @@ msgstr "Pe_cah Halaman…"
 msgid "_Undo"
 msgstr "_Batalkan Tindakan Terakhir"
 
-#: data/menu.ui:206
+#: data/menu.ui:219
 msgid "_View"
-msgstr ""
+msgstr "_Lihat"
 
 #: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
 #: pdfarranger/pageutils.py:412
@@ -749,4 +756,4 @@ msgstr "halaman"
 
 #: pdfarranger/pdfarranger.py:811
 msgid "untitled"
-msgstr "tidak ada judul"
+msgstr "tanpa judul"

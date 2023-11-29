@@ -131,6 +131,23 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="target" type="i">5</attribute>
           </item>
         </submenu>
+        <submenu>
+          <attribute name="label" translatable="yes">_Extract</attribute>
+          <item>
+            <attribute name="label" translatable="yes">_Explode into Images</attribute>
+            <attribute name="action">win.explode-images</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Image</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">0</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Text</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">1</attribute>
+          </item>
+        </submenu>
         <item>
           <attribute name="label" translatable="yes">Rotate _Left</attribute>
           <attribute name="action">win.rotate</attribute>
@@ -142,8 +159,16 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="target" type="i">90</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">_Page Format…</attribute>
-          <attribute name="action">win.page-format</attribute>
+          <attribute name="label" translatable="yes">_Page Size…</attribute>
+          <attribute name="action">win.page-size</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Crop Margins…</attribute>
+          <attribute name="action">win.crop</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Hide Margins…</attribute>
+          <attribute name="action">win.hide</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Crop White Borders</attribute>
@@ -319,6 +344,27 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
     </section>
     <section>
       <submenu>
+        <attribute name="label" translatable="yes">_Extract</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">_Explode into Images</attribute>
+            <attribute name="action">win.explode-images</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Image</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">0</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Copy _Text</attribute>
+            <attribute name="action">win.extract</attribute>
+            <attribute name="target" type="i">1</attribute>
+          </item>
+        </section>
+      </submenu>
+    </section>
+    <section>
+      <submenu>
         <attribute name="label" translatable="yes">_Select</attribute>
         <section>
           <item>
@@ -371,8 +417,16 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="target" type="i">90</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Page Format…</attribute>
-        <attribute name="action">win.page-format</attribute>
+        <attribute name="label" translatable="yes">_Page Size…</attribute>
+        <attribute name="action">win.page-size</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Crop Margins…</attribute>
+        <attribute name="action">win.crop</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Hide Margins…</attribute>
+        <attribute name="action">win.hide</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Crop White Borders</attribute>

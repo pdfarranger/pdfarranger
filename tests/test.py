@@ -4,7 +4,12 @@ import sys
 import unittest
 import time
 import tempfile
+from typing import Tuple
 import shutil
+import packaging.version
+from importlib import metadata
+
+import pikepdf
 
 """
 Those tests are using Dogtail https://gitlab.com/dogtail/dogtail
@@ -40,6 +45,10 @@ Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/conf
 Some tips:
 
 * Use to print widget tree (names and roles) self._app().dump()
+
+Example of how to run the test locally:
+python3 -X tracemalloc -u -m unittest -v -f tests.test # run whole test
+python3 -X tracemalloc -u -m unittest -v -f tests.test.TestBatch5 # run only TestBatch5
 """
 
 
@@ -63,6 +72,12 @@ def check_img2pdf(version):
     return r
 
 
+def have_pikepdf3():
+    return packaging.version.parse(
+        metadata.version("pikepdf")
+    ) >= packaging.version.Version("3")
+
+
 class XvfbManager:
     """Base class for running offscreen tests"""
 
@@ -83,8 +98,11 @@ class XvfbManager:
         os.environ["DBUS_SESSION_BUS_ADDRESS"] = self.dbus_addr
 
     def kill(self):
-        self.dbus_proc.kill()
-        self.dbus_proc.wait()
+        if "GITHUB_ACTIONS" not in os.environ:
+            # Workaround. On GHA killing dbus also kill this python process.
+            # And we don't care about zombie processes on GHA
+            self.dbus_proc.kill()
+            self.dbus_proc.wait()
         self.xvfb_proc.kill()
         self.xvfb_proc.wait()
 
@@ -147,11 +165,22 @@ class PdfArrangerTest(unittest.TestCase):
         config.searchBackoffDuration = 0.1
 
     def _app(self):
-        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
-        from dogtail.tree import root
-        a = root.application("__main__.py")
+        """Return the first instance of pdfarranger"""
+        self._wait_cond(lambda: len(self._apps()) > 0)
+        a =  self._apps()[0]
         self.assertFalse(a.dead)
         return a
+
+    def _apps(self):
+        """Return all instances of pdfarranger"""
+        # Cannot import at top level because of DBUS_SESSION_BUS_ADDRESS
+        from dogtail.tree import root
+
+        return [
+            a
+            for a in root.applications()
+            if a.name == "__main__.py" or a.name == "pdfarranger"
+        ]
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
@@ -170,10 +199,17 @@ class PdfArrangerTest(unittest.TestCase):
             self.assertLess(c, 30)
             c += 1
 
-    def _is_saving(self):
-        app = self._app()
+    def _find_by_role(self, role, node=None, show_only=False):
+        if node is None:
+            node = self._app()
         from dogtail import predicate
-        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+
+        return node.findChildren(
+            predicate.GenericPredicate(roleName=role), showingOnly=show_only
+        )
+
+    def _is_saving(self):
+        allstatusbar = self._find_by_role("status bar")
         statusbar = allstatusbar[0]
         return statusbar.name.startswith("Saving")
 
@@ -185,8 +221,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _status_text(self):
         app = self._app()
-        from dogtail import predicate
-        allstatusbar = app.findChildren(predicate.GenericPredicate(roleName="status bar"), showingOnly=False)
+        allstatusbar = self._find_by_role("status bar")
         # If we have multiple status bar, consider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
         return statusbar.name
@@ -201,11 +236,50 @@ class PdfArrangerTest(unittest.TestCase):
         label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
 
+    def _check_file_content(self, filename, expected: Tuple[str]) -> Tuple[bool, str]:
+        """
+        Check expected is contained in file.
+        """
+        with open(filename, 'rb') as f:
+            actual = f.readlines()
+
+        n = 0
+        for line in expected:
+            try:
+                while not actual[n].startswith(line):
+                    n += 1
+                n += 1
+            except IndexError: # pragma: no cover
+                # Only get executed for failing test
+                return False, line
+        return True, ''
+
+    def _assert_page_content(self, filename: str, expected: Tuple[str]):
+        """
+        Check if a file in the current tmp folder contains expected content.
+        """
+        temp = os.path.join(self.__class__.tmp, 'temp.pdf')
+        with pikepdf.Pdf.open(os.path.join(self.__class__.tmp, filename)) as pdf:
+            pdf.save(temp, qdf=True, static_id=True, compress_streams=False,
+                            stream_decode_level=pikepdf.StreamDecodeLevel.all)
+        ok, content = self._check_file_content(temp, expected)
+        self.assertTrue(ok, f'expectent content {content} missing in {filename}')
+
+    def _assert_file_size(self, filename, size, tolerance=0.03):
+        """
+        Check if a file in the current tmp folder have the expected size
+        at a given tolerance.
+        """
+        s = os.stat(os.path.join(self.__class__.tmp, filename))
+        msg = "{} is {}b but is expected to be {} \u00B1 {}".format(
+            filename, s.st_size, size, size * tolerance
+        )
+        self.assertLess(abs(s.st_size - size) / size, tolerance, msg=msg)
+
     def _icons(self):
         """Return the list of page icons"""
-        from dogtail import predicate
         viewport = self._app().child(roleName="layered pane")
-        return viewport.findChildren(predicate.GenericPredicate(roleName="icon"), showingOnly=False)
+        return self._find_by_role("icon", viewport)
 
     def _popupmenu(self, page, action):
         """Run an action on a give page using the popup menu"""
@@ -222,9 +296,9 @@ class PdfArrangerTest(unittest.TestCase):
     def _process(self):
         return self.__class__.pdfarranger.process
 
-    def _import_file(self, filename):
+    def _import_file(self, filename, open_action=False):
         """Try to import a file with a file chooser and return that file chooser object"""
-        self._mainmenu("Import")
+        self._mainmenu("Open" if open_action else "Import")
         filechooser = self._app().child(roleName='file chooser')
         treeview = filechooser.child(roleName="table", name="Files")
         treeview.keyCombo("<ctrl>L")
@@ -256,7 +330,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _scale_selected(self, scale):
         app = self._app()
-        app.keyCombo("C")
+        app.keyCombo("S")
         dialog = app.child(roleName="dialog")
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
@@ -264,10 +338,28 @@ class PdfArrangerTest(unittest.TestCase):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def _quit_without_saving(self):
+    @staticmethod
+    def _zoom(widget, n_events, zoom_in):
+        """Zoom in/out with ctrl + mouse scroll wheel"""
+        from dogtail import rawinput
+        from pyatspi import Registry as registry
+        from pyatspi import KEY_PRESS, KEY_RELEASE
+        code = rawinput.keyNameToKeyCode("Control_L")
+        registry.generateKeyboardEvent(code, None, KEY_PRESS)
+        button = 4 if zoom_in == True else 5
+        for __ in range(n_events):
+            widget.click(button=button)
+            time.sleep(0.1)
+        registry.generateKeyboardEvent(code, None, KEY_RELEASE)
+
+    def _quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+
+    def _quit_without_saving(self):
+        self._quit()
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Don’t Save").click()
+        # check that process actually exit
         self._process().wait(timeout=22)
 
     @classmethod
@@ -356,20 +448,18 @@ class TestBatch1(PdfArrangerTest):
         app.keyCombo("Up")
         self._assert_selected("2")
 
-    def test_06_page_format(self):
+    def test_06_crop_margins(self):
         self._popupmenu(0, ["Select", "Select Odd Pages"])
         self._assert_selected("1, 3, 5, 7")
-        self._popupmenu(0, "Page Format…")
+        self._popupmenu(0, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
+        dialog.child(name="Show values").click()
+        time.sleep(0.2)  # Avoid 'GTK_IS_RANGE (range)' failed
         croppanel = dialog.child(name="Crop Margins")
-        from dogtail import predicate
-        cropbuttons = croppanel.findChildren(predicate.GenericPredicate(roleName="spin button"))
+        cropbuttons = self._find_by_role("spin button", croppanel)
         for i in range(4):
             cropbuttons[i].click()
             cropbuttons[i].text = str((i+1)*4)
-        scalebutton = dialog.child(roleName="spin button")
-        scalebutton.click()
-        scalebutton.text = "120"
         dialog.child(name="OK").click()
         # TODO: find the condition which could replace this ugly sleep
         time.sleep(0.5)
@@ -413,7 +503,7 @@ class TestBatch1(PdfArrangerTest):
         dialog.child(name="Cancel").click()
         self._app().keyCombo("<ctrl>s")
         self._wait_saving()
-        self._app().keyCombo("<ctrl>q")
+        self._quit()
         # check that process actually exit
         self._process().wait(timeout=22)
 
@@ -430,28 +520,64 @@ class TestBatch2(PdfArrangerTest):
     def test_03_cropborder(self):
         self._popupmenu(0, "Crop White Borders")
 
-    def test_04_export(self):
+    def test_04_past_overlay(self):
+        if not have_pikepdf3():
+            return
+        app = self._app()
+        app.keyCombo("<ctrl>c")
+        app.keyCombo("Right")
+        app.keyCombo("<shift><ctrl>o")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="Show values").click()
+        time.sleep(0.2)  # Avoid 'GTK_IS_RANGE (range)' failed
+        spinbtns = self._find_by_role("spin button", dialog)
+        spinbtns[0].click()
+        spinbtns[0].text = "10"
+        spinbtns[1].click()
+        spinbtns[1].text = "15"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_past_underlay(self):
+        """Past a page with overlay under an other page"""
+        if not have_pikepdf3():
+            return
+        app = self._app()
+        app.keyCombo("<ctrl>c")
+        app.keyCombo("Left")
+        app.keyCombo("<shift><ctrl>u")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_06_export(self):
         self._mainmenu(["Export", "Export All Pages to Individual Files…"])
         self._save_as_chooser(
             "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
         )
+        self._assert_file_size("alltosingle.pdf", 1800 if have_pikepdf3() else 1219)
+        self._assert_file_size("alltosingle-002.pdf", 1544 if have_pikepdf3() else 1219)
+        if have_pikepdf3():
+            self._assert_page_content("alltosingle.pdf", (
+                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B',
+                b'  /BBox [', b'    69\n', b'    180\n', b'    531\n', b'    581\n',
+                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
+            self._assert_page_content("alltosingle.pdf", (
+                b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
+                b'0 1 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
 
-    def test_05_clear(self):
+    def test_07_clear(self):
         self._popupmenu(1, "Delete")
         self.assertEqual(len(self._icons()), 1)
 
-    def test_06_about(self):
+    def test_08_about(self):
         self._mainmenu("About")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_07_quit(self):
-        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
-        dialog = self._app().child(roleName="alert")
-        dialog.child(name="Don’t Save").click()
-        # check that process actually exit
-        self._process().wait(timeout=22)
+    def test_09_quit(self):
+        self._quit_without_saving()
 
 
 class TestBatch3(PdfArrangerTest):
@@ -482,7 +608,7 @@ class TestBatch3(PdfArrangerTest):
         app = self._app()
         app.keyCombo("<ctrl>z")  # undo
         app.keyCombo("<ctrl>y")  # redo
-        self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
+        self._quit()
         dialog = self._app().child(roleName="alert")
         dialog.child(name="Save").click()
         filechooser = self._app().child(roleName="file chooser")
@@ -533,9 +659,6 @@ class TestBatch4(PdfArrangerTest):
 
 class TestBatch5(PdfArrangerTest):
     """Test booklet and blank pages"""
-    # Kill X11 after that batch
-    LAST = True
-
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -552,11 +675,16 @@ class TestBatch5(PdfArrangerTest):
         self._popupmenu(0, ["Select", "Select All"])
         self._popupmenu(0, ["Generate Booklet"])
         self._wait_cond(lambda: len(self._icons()) == 2)
-        self._assert_page_size(489, 212.2, 0)
-        self._assert_page_size(489, 212.2, 1)
+        self._app().child(roleName="layered pane").keyCombo("Home")
+        self._assert_page_size(489, 212.2)
+        self._app().child(roleName="layered pane").keyCombo("End")
+        self._assert_page_size(489, 212.2)
 
     def test_04_crop_white_border(self):
-        self._popupmenu(0, ["Select", "Select All"])
+        # Test selection with shift+arrow
+        self._app().child(roleName="layered pane").grabFocus()
+        self._app().child(roleName="layered pane").keyCombo("<shift>Left")
+        self._assert_selected("1-2")
         self._popupmenu(0, ["Crop White Borders"])
         self._assert_page_size(244.1, 211.8, 0)
         self._assert_page_size(244.1, 211.8, 1)
@@ -572,3 +700,157 @@ class TestBatch5(PdfArrangerTest):
 
     def test_06_quit(self):
         self._quit_without_saving()
+
+
+class TestBatch6(PdfArrangerTest):
+    """Test hide margins and merge pages"""
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_merge_pages(self):
+        if not have_pikepdf3():
+            return
+        self._app().keyCombo("<ctrl>a")
+        self._popupmenu(0, "Merge Pages…")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_03_crop_margins(self):
+        self._app().keyCombo("<ctrl>a")
+        self._popupmenu(0, "Crop Margins…")
+        dialog = self._app().child(roleName="dialog")
+        croppanel = dialog.child(name="Crop Margins")
+        cropbuttons = self._find_by_role("spin button", croppanel)
+        dialog.child(name="Show values").click()
+        for i in range(4):
+            cropbuttons[i].typeText("2")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        if have_pikepdf3():
+            self._assert_page_size(414.5, 268.2)
+
+    def test_04_hide_margins(self):
+        if not have_pikepdf3():
+            return
+        self._app().keyCombo("<ctrl>a")
+        self._assert_selected("1")
+        self._app().keyCombo("H")
+        dialog = self._app().child(roleName="dialog")
+        da = dialog.child(roleName="drawing area")
+        page_x = da.position[0] + 25  # 25 = padding in DrawingAreaWidget
+        page_width = da.size[0] - 50
+        x_center = da.position[0] + da.size[0] / 2
+        y_center = da.position[1] + da.size[1] / 2
+        from dogtail import rawinput
+        for button in ["Apply", "Revert", "Apply"]:
+            rawinput.drag((page_x, y_center), (page_x + page_width * 0.8, y_center))
+            rawinput.drag((page_x + page_width * 0.9, y_center), (page_x + page_width * 0.3, y_center))
+            dialog.child(name=button).click()
+        hidepanel = dialog.child(name="Hide Margins")
+        hidebuttons = self._find_by_role("spin button", hidepanel)
+        hidebuttons[2].text = str(round(float(hidebuttons[2].text) / 10) * 10)
+        hidebuttons[3].text = str(round(float(hidebuttons[3].text) / 10) * 10)
+        self.assertEqual(hidebuttons[2].text, "60")
+        self.assertEqual(hidebuttons[3].text, "20")
+        self._zoom(da, 15, zoom_in=True)
+        rawinput.drag((x_center, y_center), (x_center + 10, y_center + 20),  button=2)  # pan view
+        self._zoom(da, 15, zoom_in=False)
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_export(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._mainmenu(["Export", "Export Selection to a Single File…"])
+        self._save_as_chooser("hide.pdf")
+        self._assert_file_size("hide.pdf", 1726 if have_pikepdf3() else 1512)
+
+    def test_06_merge_pages(self):
+        if not have_pikepdf3():
+            return
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, "Merge Pages…")
+        dialog = self._app().child(roleName="dialog")
+        orderpanel = dialog.child(name="Page Order")
+        radiobuttons = self._find_by_role("radio button", orderpanel)
+        radiobuttons[0].click()
+        radiobuttons[2].click()
+        radiobuttons[4].click()
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self._assert_page_size(829.1, 268.2)
+
+    def test_07_quit(self):
+        if have_pikepdf3():
+            self._quit_without_saving()
+        else:
+            self._quit()
+
+
+class TestBatch7(PdfArrangerTest):
+    """Test extracting of images and text"""
+    def test_01_import_pdf(self):
+        self._start(["tests/test_raster_image_text.pdf"])
+
+    def test_02_explode_images(self):
+        self._popupmenu(1, ["Select", "Select All"])
+        all_selected = all([icon.selected for icon in self._icons()])
+        self._wait_cond(lambda: all_selected)
+        self._popupmenu(1, ["Extract", "Explode into Images"])
+        self._wait_cond(lambda: len(self._icons()) == 5)
+
+    def test_03_copy_and_paste_image(self):
+        """Copy image from page which has one image"""
+        self._icons()[0].click(button=1)
+        self._popupmenu(0, ["Extract", "Copy Image"])
+        self._app().keyCombo("<ctrl>v")
+        self._wait_cond(lambda: len(self._icons()) == 6)
+
+    def test_04_copy_and_paste_image(self):
+        """Try to copy image from page which has two images"""
+        self._popupmenu(2, ["Extract", "Copy Image"])
+        filler = self._find_by_role("filler")[-1]
+        filler.child(name="OK").click()
+        self._wait_cond(lambda: filler.dead)
+        self._popupmenu(1, ["Paste After"])
+        self._wait_cond(lambda: len(self._icons()) == 7)
+
+    def test_05_copy_text(self):
+        """Copy text "tests/test_raster_image_text.pdf" from pdf"""
+        self._popupmenu(0, ["Extract", "Copy Text"])
+        self._app().keyCombo("<ctrl>v")
+        self._wait_cond(lambda: len(self._icons()) == 9)
+
+    def test_06_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch8(PdfArrangerTest):
+    """Test Open action"""
+
+    # Kill X11 after that batch
+    LAST = True
+
+    def test_01_open_empty(self):
+        self._start()
+
+    def test_02_open(self):
+        filechooser = self._import_file("tests/test.pdf", open_action=True)
+        self._wait_cond(lambda: filechooser.dead)
+
+    def test_03_open_again(self):
+        """Create a new pdfarranger instance"""
+        self.assertEqual(len(self._apps()), 1)
+        filechooser = self._import_file("tests/test.pdf", open_action=True)
+        self._wait_cond(lambda: filechooser.dead)
+        self._wait_cond(lambda: len(self._apps()) == 2)
+
+    def test_04_quit(self):
+        """Quit the second instance"""
+        self._quit()
+        self._wait_cond(lambda: len(self._apps()) == 1)
+
+    def test_05_quit(self):
+        """Quit the first instance"""
+        self._quit()
+        self._process().wait(timeout=22)

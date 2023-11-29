@@ -26,6 +26,7 @@ from dateutil import parser
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from gi.repository import Pango
 _ = gettext.gettext
 
 # The producer property can be overridden by pikepdf
@@ -213,6 +214,8 @@ def edit(metadata, pdffiles, parent):
         title, editable = v
         renderer = Gtk.CellRendererText()
         if editable:
+            renderer.props.ellipsize = Pango.EllipsizeMode.END
+            renderer.props.width_chars = 50
             renderer.set_property("editable", True)
             handler = _EditedEventHandler(liststore)
             renderer.connect("editing-started", handler.started)

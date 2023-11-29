@@ -32,6 +32,8 @@ import pathlib
 import shutil
 import tempfile
 import threading
+import packaging.version as version
+from typing import NamedTuple, Optional, Tuple, Union
 import gettext
 import gi
 from gi.repository import GObject
@@ -58,94 +60,297 @@ except ImportError:
 
 _ = gettext.gettext
 
+Numeric = Union[float, int]
 
-class Page:
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop, size, basename, layerpages):
-        #: The ID (from 1 to n) of the PDF file owning the page
+
+class Sides(NamedTuple):
+    left: Numeric = 0
+    right: Numeric = 0
+    top: Numeric = 0
+    bottom: Numeric = 0
+
+    def __neg__(self) -> "Sides":
+        """
+        Pointwise unary minus
+
+        Example:
+
+        >>> -Sides(9, 3, 12, 6)
+        Sides(left=-9, right=-3, top=-12, bottom=-6)
+        """
+        return Sides(*(-self[i] for i in range(4)))
+
+    def __add__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise addition
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) + Sides(1, 2, 3, 4)
+        Sides(left=10, right=5, top=15, bottom=10)
+        >>> Sides(9, 3, 12, 6) + 1
+        Sides(left=10, right=4, top=13, bottom=7)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] + other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] + other for i in range(4)))
+
+    def __sub__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise subtraction
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) - Sides(1, 2, 3, 4)
+        Sides(left=8, right=1, top=9, bottom=2)
+        >>> Sides(9, 3, 12, 6) - 3
+        Sides(left=6, right=0, top=9, bottom=3)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] - other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] -+ other for i in range(4)))
+
+    def __mul__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise multiplication
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) * Sides(1, 2, 3, 4)
+        Sides(left=9, right=6, top=36, bottom=24)
+        >>> Sides(9, 3, 12, 6) * 3
+        Sides(left=27, right=9, top=36, bottom=18)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] * other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] * other for i in range(4)))
+
+    def __truediv__(self, other: Union["Sides", Numeric]) -> "Sides":
+        """
+        Pointwise division
+
+        Example:
+
+        >>> Sides(9, 3, 12, 6) / Sides(1, 2, 3, 4)
+        Sides(left=9.0, right=1.5, top=4.0, bottom=1.5)
+        >>> Sides(9, 3, 12, 6) / 3
+        Sides(left=3.0, right=1.0, top=4.0, bottom=2.0)
+        """
+        if isinstance(other, Sides):
+            return Sides(*(self[i] / other[i] for i in range(4)))
+        else:
+            return Sides(*(self[i] / other for i in range(4)))
+
+    def rotated(self, times: int) -> "Sides":
+        """
+        Rotate 90 degrees counter-clockwise 'times' times
+
+        Examples:
+
+        >>> Sides(9,3,12,6).rotated(1)
+        Sides(left=12, right=6, top=3, bottom=9)
+        >>> Sides(9,3,12,6).rotated(-3) == Sides(9,3,12,6).rotated(1)
+        True
+        """
+        perm = (0, 2, 1, 3)
+        return Sides(*(self[perm[(x + times) % 4]] for x in perm))
+
+
+class Dims(NamedTuple):
+    width: Numeric
+    height: Numeric
+
+    def __neg__(self) -> "Dims":
+        """
+        Pointwise unary minus
+
+        Example:
+
+        >>> -Dims(612, 792)
+        Dims(width=-612, height=-792)
+        """
+        return Dims(*(-self[i] for i in range(2)))
+
+    def __add__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise addition
+
+        Example:
+
+        >>> Dims(612, 792) + Dims(612, 792)
+        Dims(width=1224, height=1584)
+        >>> Dims(612, 792) + 100
+        Dims(width=712, height=892)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] + other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] + other for i in range(2)))
+
+    def __sub__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise subtraction
+
+        Example:
+
+        >>> Dims(612, 792) - Dims(306, 396)
+        Dims(width=306, height=396)
+        >>> Dims(612, 792) - 100
+        Dims(width=512, height=692)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] - other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] -+ other for i in range(2)))
+
+    def __mul__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise multiplication
+
+        Example:
+
+        >>> Dims(612, 792) * Dims(0.5, 0.25)
+        Dims(width=306.0, height=198.0)
+        >>> Dims(612, 792) * 2
+        Dims(width=1224, height=1584)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] * other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] * other for i in range(2)))
+
+    def __truediv__(self, other: Union["Dims", Numeric]) -> "Dims":
+        """
+        Pointwise division
+
+        Example:
+
+        >>> Dims(612, 792) / Dims(2, 4)
+        Dims(width=306.0, height=198.0)
+        >>> Dims(612, 792) / 2
+        Dims(width=306.0, height=396.0)
+        """
+        if isinstance(other, Dims):
+            return Dims(*(self[i] / other[i] for i in range(2)))
+        else:
+            return Dims(*(self[i] / other for i in range(2)))
+
+    def flipped(self) -> "Dims":
+        """Swap height and width"""
+        return Dims(self.height, self.width)
+
+    def scaled(self, factor: float) -> "Dims":
+        """Scale by factor"""
+        return Dims(self.width * factor, self.height * factor)
+
+    def int_scaled(self, factor: float) -> "Dims":
+        """Scale by factor and round to nearest int"""
+        return Dims(int(self.width * factor + 0.5), int(self.height * factor + 0.5))
+
+    def cropped(self, crop: Sides) -> "Dims":
+        """Crop using crop array"""
+        return Dims(self.width * (1 - crop.left - crop.right), self.height * (1 - crop.top - crop.bottom))
+
+
+class BasePage:
+    """Common base class for Page and LayerPage"""
+
+    def __init__(self, nfile, npage, copyname, angle, scale, crop: Sides, size_orig: Dims):
         self.nfile = nfile
-        #: The ID (from 1 to n) of the page in its owner PDF document
+        """The ID (from 1 to n) of the PDF file owning the page"""
         self.npage = npage
-        self.zoom = zoom
-        #: Filepath to the temporary stored file
+        """The ID (from 1 to n) of the page in its owner PDF document"""
         self.copyname = copyname
-        #: Left, right, top, bottom crop
-        self.crop = list(crop)
-        #: Width and height of the original page
-        self.size_orig = list(size)
-        #: Width and height
-        self.size = list(size) if angle in [0, 180] else list(reversed(size))
+        """Filepath to the temporary stored file"""
         self.angle = angle
+        self.scale = scale
+        self.crop = crop
+        """Left, right, top, bottom crop"""
+        self.size_orig = size_orig
+        """Width and height of the original page"""
+        self.size = size_orig if angle in [0, 180] else size_orig.flipped()
+        """Width and height"""
+
+    def width_in_points(self) -> Numeric:
+        """Return the page width in PDF points."""
+        return self.size_in_points().width
+
+    def height_in_points(self) -> Numeric:
+        """Return the page height in PDF points."""
+        return self.size_in_points().height
+
+    def size_in_points(self) -> Dims:
+        """Return the page size in PDF points."""
+        return self.size.scaled(self.scale).cropped(self.crop)
+
+    def width_in_pixel(self):
+        return self.size_in_pixel().width
+
+    def height_in_pixel(self):
+        return self.size_in_pixel().height
+
+    def size_in_pixel(self):
+        return self.size_in_points().int_scaled(self.zoom)
+
+    @staticmethod
+    def rotate_times(angle: int) -> int:
+        """Convert an angle in degree to a number of 90° rotation (integer)."""
+        return round((-angle  / 90) % 4)
+
+
+class Page(BasePage):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, hide: Sides, size_orig: Dims, basename, layerpages):
+        super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
+        self.zoom = zoom
+        self.hide = Sides(*hide)
+        """Left, right, top, bottom hide"""
         self.thumbnail = None
         self.resample = -1
-        #: A low resolution thumbnail
         self.preview = None
-        self.scale = scale
+        """A low resolution thumbnail"""
         #: The name of the original file
         self.basename = basename
+        """The name of the original file"""
         self.layerpages = list(layerpages)
+
+    def __repr__(self):
+        return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "
+                f"{self.angle}, {self.scale}, {self.crop}, {self.hide}, "
+                f"{self.size_orig}, '{self.basename}', {self.layerpages})")
 
     def description(self):
         shortname = os.path.splitext(self.basename)[0]
         return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
 
-    def width_in_points(self):
-        """Return the page width in PDF points."""
-        return (self.scale * self.size[0]) * (1 - self.crop[0] - self.crop[1])
-
-    def height_in_points(self):
-        """Return the page height in PDF points."""
-        return (self.scale * self.size[1]) * (1 - self.crop[2] - self.crop[3])
-
-    def size_in_points(self):
-        """Return the page size in PDF points."""
-        return (self.width_in_points(), self.height_in_points())
-
-    def width_in_pixel(self):
-        return int(0.5 + self.zoom * self.width_in_points())
-
-    def height_in_pixel(self):
-        return int(0.5 + self.zoom * self.height_in_points())
-
-    @staticmethod
-    def rotate_times(angle):
-        """Convert an angle in degree to a number of 90° rotation (integer)"""
-        return int(round(((-angle) % 360) / 90) % 4)
-
-    @staticmethod
-    def rotate_crop(croparray, rotate_times):
-        """Rotate a given crop array (left, right, top bottom) a number of time"""
-        perm = [0, 2, 1, 3]
-        for __ in range(rotate_times):
-            perm.append(perm.pop(0))
-        perm.insert(1, perm.pop(2))
-        return [croparray[x] for x in perm]
-
-    def rotate(self, angle):
+    def rotate(self, angle: int):
         rt = self.rotate_times(angle)
         if rt == 0:
             return False
-        self.crop = self.rotate_crop(self.crop, rt)
+        self.crop = self.crop.rotated(rt)
+        self.hide = self.hide.rotated(rt)
         self.angle = (self.angle + int(angle)) % 360
-        self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
+        self.size = self.size_orig if self.angle in [0, 180] else self.size_orig.flipped()
         for lp in self.layerpages:
-            lp.rotate(angle)
+            lp.rotate(rt)
         return True
 
     def unmodified(self):
-        u = self.angle == 0 and self.crop == [0]*4 and self.scale == 1 and len(self.layerpages) == 0
+        u = (self.angle == 0 and self.crop == Sides() and self.hide == Sides() and
+             self.scale == 1 and len(self.layerpages) == 0)
         return u
 
     def serialize(self):
         """Convert to string for copy/past operations."""
         lpdata = [lp.serialize() for lp in self.layerpages]
         ts = [self.copyname, self.npage, self.basename, self.angle, self.scale]
-        ts += list(self.crop) + list(lpdata)
+        ts += list(self.crop) + list(self.hide) + list(lpdata)
         return "\n".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
-        r.crop = list(r.crop)
-        r.size = list(r.size)
         r.layerpages = [lp.duplicate() for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
@@ -171,7 +376,7 @@ class Page:
                 leftcrop = left + l
                 col_width = r - l
                 rightcrop = 1 - (leftcrop + col_width)
-                crop = [leftcrop, rightcrop, topcrop, bottomcrop]
+                crop = Sides(leftcrop, rightcrop, topcrop, bottomcrop)
                 if l == 0.0 and t == 0.0:
                     # Update the original page
                     self.crop = crop
@@ -183,57 +388,26 @@ class Page:
         return newpages
 
 
-class LayerPage:
+class LayerPage(BasePage):
     """Page added as overlay or underlay on a Page."""
 
-    def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size):
-        self.nfile = nfile
-        self.npage = npage
-        self.copyname = copyname
-        self.angle = angle
-        self.scale = scale
-        #: Left, right, top, bottom crop
-        self.crop = crop
-        #: Left, right, top, bottom offset from dest page edges
-        self.offset = offset
-        #: OVERLAY or UNDERLAY
+    def __init__(self, nfile, npage, copyname, angle, scale, crop, offset, laypos, size_orig: Dims):
+        super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
+        self.offset = Sides(*offset)
+        """Left, right, top, bottom offset from dest page edges"""
         self.laypos = laypos
-        #: Width and height of the original page
-        self.size_orig = list(size)
-        #: Width and height
-        self.size = list(size) if angle in [0, 180] else list(reversed(size))
+        """OVERLAY or UNDERLAY"""
 
-    def width_in_points(self):
-        """Return the page width in PDF points."""
-        return self.scale * self.size[0] * (1 - self.crop[0] - self.crop[1])
+    def __repr__(self):
+        return (f"LayerPage({self.nfile}, {self.npage}, '{self.copyname}', {self.angle}, "
+                f"{self.scale}, {self.crop}, {self.offset}, '{self.laypos}', {self.size_orig})")
 
-    def height_in_points(self):
-        """Return the page height in PDF points."""
-        return self.scale * self.size[1] * (1 - self.crop[2] - self.crop[3])
-
-    @staticmethod
-    def rotate_times(angle):
-        """Convert an angle in degree to a number of 90° rotation (integer)."""
-        return int(round(((-angle) % 360) / 90) % 4)
-
-    @staticmethod
-    def rotate_array(array, rotate_times):
-        """Rotate a given crop or offset array (left, right, top bottom) a number of times."""
-        perm = [0, 2, 1, 3]
-        for __ in range(rotate_times):
-            perm.append(perm.pop(0))
-        perm.insert(1, perm.pop(2))
-        return [array[x] for x in perm]
-
-    def rotate(self, angle):
-        rt = self.rotate_times(angle)
-        if rt == 0:
-            return False
-        self.crop = self.rotate_array(self.crop, rt)
-        self.offset = self.rotate_array(self.offset, rt)
-        self.angle = (self.angle + int(angle)) % 360
-        self.size = self.size_orig if self.angle in [0, 180] else list(reversed(self.size_orig))
-        return True
+    def rotate(self, times: int):
+        if times != 0:
+            self.crop = self.crop.rotated(times)
+            self.offset = self.offset.rotated(times)
+            self.angle = (self.angle - 90 * times) % 360
+            self.size = self.size if times % 2 == 0 else self.size.flipped()
 
     def serialize(self):
         """Convert to string for copy/past operations."""
@@ -243,8 +417,6 @@ class LayerPage:
 
     def duplicate(self):
         r = copy.copy(self)
-        r.crop = list(r.crop)
-        r.offset = list(r.offset)
         return r
 
 
@@ -299,31 +471,41 @@ class PasswordDialog(Gtk.Dialog):
             raise _UnknownPasswordException()
 
 
-def _img_to_pdf(filename, tmp_dir):
+def _img_to_pdf(images, tmp_dir):
     """Wrap img2pdf.convert to handle some corner cases"""
     fd, pdf_file_name = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
     os.close(fd)
+    try:
+        # Try to handle invalid EXIF rotation
+        rot = img2pdf.Rotation.ifvalid
+    except AttributeError:
+        # img2pdf is too old so we can't support invalid EXIF rotation
+        rot = None
     with open(pdf_file_name, "wb") as f:
-        img = img2pdf.Image.open(filename)
-        if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
-            # TODO: Find a way to keep image in P or L format and remove transparency.
-            # This will work but converting from 1, L, P to RGB is not optimal.
-            img = img.convert("RGBA")
-        if img.mode == "RGBA":
-            bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
-            bg.paste(img, mask=img.split()[-1])
-            imgio = img2pdf.BytesIO()
-            bg.save(imgio, "PNG")
-            imgio.seek(0)
-            f.write(img2pdf.convert(imgio))
-        else:
-            try:
-                # Try to handle invalid EXIF rotation
-                rot = img2pdf.Rotation.ifvalid
-            except AttributeError:
-                # img2pdf is too old so we can't support invalid EXIF rotation
-                rot = None
-            f.write(img2pdf.convert(filename, rotation=rot))
+        if version.parse(img2pdf.__version__) < version.Version('0.4.2'):
+            for num, image in enumerate(images):
+                if isinstance(image, str):
+                    img = img2pdf.Image.open(image)
+                else:
+                    img = img2pdf.Image.open(img2pdf.BytesIO(image))
+                if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
+                    # TODO: Find a way to keep image in P or L format and remove transparency.
+                    # This will work but converting from 1, L, P to RGB is not optimal.
+                    img = img.convert("RGBA")
+                if img.mode == "RGBA":
+                    # Remove transparency as old img2pdf doesn't support it
+                    bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
+                    bg.paste(img, mask=img.split()[-1])
+                    imgio = img2pdf.BytesIO()
+                    bg.save(imgio, "PNG")
+                    imgio.seek(0)
+                    images[num] = imgio
+        try:
+            pdf = img2pdf.convert(images, rotation=rot)
+        except ValueError as e:
+            # Too small or large image
+            raise PDFDocError(e)
+        f.write(pdf)
     return pdf_file_name
 
 
@@ -347,7 +529,7 @@ class PDFDoc:
                 if not askpass:
                     raise e
 
-    def __init__(self, filename, basename, stat, tmp_dir, parent):
+    def __init__(self, filename, basename, blank_size, stat, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
         self.stat = stat
@@ -355,6 +537,7 @@ class PDFDoc:
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
             self.basename = basename
+        self.blank_size = blank_size  # != None if page is blank
         self.password = ""
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
@@ -376,7 +559,7 @@ class PDFDoc:
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
             if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
-                self.copyname = _img_to_pdf(filename, tmp_dir)
+                self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
@@ -426,53 +609,44 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def get_pdfdoc(self, filename,  basename=None):
+    def get_pdfdoc(self, filename: str, basename: Optional[str] = None, blank_size=None) -> Optional[Tuple[PDFDoc, int, bool]]:
         """Get the pdfdoc object for the filename.
 
         pdfqueue is searched for the filename. If it is not found a pdfdoc is created
         and added to pdfqueue.
         Returns: pdfdoc object, it's file number, if a new pdfdoc was created.
         """
-        pdfdoc = None
-        nfile = None
-        doc_added = False
         for i, it_pdfdoc in enumerate(self.app.pdfqueue):
             if filename == it_pdfdoc.copyname:
                 # File of copy-pasted page was found in pdfqueue.
                 # Files in tmp_dir are never modified by the app and are not expected
                 # to be modified by the user either -> files are equal if names match.
-                pdfdoc = it_pdfdoc
-                nfile = i + 1
-                break
-        if pdfdoc is None:
-            if not filename in self.stat_cache:
-                try:
-                    s = os.stat(filename)
-                    self.stat_cache[filename] = s.st_dev, s.st_ino, s.st_mtime
-                except OSError as e:
-                    print(traceback.format_exc())
-                    self.app.error_message_dialog(e)
-                    return None
-            for i, it_pdfdoc in enumerate(self.app.pdfqueue):
-                if self.stat_cache[filename] == it_pdfdoc.stat:
-                    # Imported file was found in pdfqueue
-                    pdfdoc = it_pdfdoc
-                    nfile = i + 1
-                    break
-        if pdfdoc is None:
+                return it_pdfdoc, i + 1, False
+
+        if not filename in self.stat_cache:
             try:
-                pdfdoc = PDFDoc(filename, basename, self.stat_cache[filename],
-                                self.app.tmp_dir, self.app.window)
-            except _UnknownPasswordException:
+                s = os.stat(filename)
+                self.stat_cache[filename] = s.st_dev, s.st_ino, s.st_mtime
+            except OSError as e:
+                print(traceback.format_exc())
+                self.app.error_message_dialog(e)
                 return None
-            except PDFDocError as e:
-                print(e.message, file=sys.stderr)
-                self.app.error_message_dialog(e.message)
-                return None
+        for i, it_pdfdoc in enumerate(self.app.pdfqueue):
+            if self.stat_cache[filename] == it_pdfdoc.stat:
+                # Imported file was found in pdfqueue
+                return it_pdfdoc, i + 1, False
+
+        try:
+            pdfdoc = PDFDoc(filename, basename, blank_size, self.stat_cache[filename],
+                            self.app.tmp_dir, self.app.window)
             self.app.pdfqueue.append(pdfdoc)
-            nfile = len(self.app.pdfqueue)
-            doc_added = True
-        return pdfdoc, nfile, doc_added
+            return pdfdoc, len(self.app.pdfqueue), True
+        except _UnknownPasswordException:
+            return None
+        except PDFDocError as e:
+            print(e.message, file=sys.stderr)
+            self.app.error_message_dialog(e.message)
+            return None
 
     def get_layerpages(self, layerdata):
         """Create LayerPage objects from layerdata."""
@@ -485,13 +659,12 @@ class PageAdder:
                 return None
             pdfdoc, nfile, _ = doc_data
             copyname = pdfdoc.copyname
-            size = pdfdoc.get_page(npage - 1).get_size()
+            size = Dims(*pdfdoc.get_page(npage - 1).get_size())
             ld = nfile, npage, copyname, angle, scale, crop, offset, laypos, size
             layerpages.append(LayerPage(*ld))
         return layerpages
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=None, layerdata=None):
-        crop = [0] * 4 if crop is None else crop
+    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
@@ -526,7 +699,8 @@ class PageAdder:
                     angle,
                     scale,
                     crop,
-                    page.get_size(),
+                    hide,
+                    Dims(*page.get_size()),
                     pdfdoc.basename,
                     layerpages,
                 )
@@ -657,16 +831,16 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         with pdfdoc.render_lock:
             page.render(cr)
 
-    def update(self, p, ref, zoom, is_preview):
+    def update(self, p: Page, ref, zoom, is_preview):
         """Render and emit updated thumbnails."""
         if (is_preview and p.preview) and (p.resample != -1):
             # Reuse the preview if it exist, unless it is marked for re-render
             thumbnail = p.preview
         else:
-            wpoi = p.size[0] * (1 - p.crop[0] - p.crop[1])
-            hpoi = p.size[1] * (1 - p.crop[2] - p.crop[3])
-            wpix = int(0.5 + wpoi * p.scale * zoom)
-            hpix = int(0.5 + hpoi * p.scale * zoom)
+            wpoi = p.size.width * (1 - p.crop.left - p.crop.right)
+            hpoi = p.size.height * (1 - p.crop.top - p.crop.bottom)
+            wpix = max(1, int(0.5 + wpoi * p.scale * zoom))
+            hpix = max(1, int(0.5 + hpoi * p.scale * zoom))
             wpix0, hpix0 = (wpix, hpix) if p.angle in [0, 180] else (hpix, wpix)
             rotation = round((int(p.angle) % 360) / 90) * 90
 
@@ -677,16 +851,28 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 cr.rotate(-rotation * pi / 180)
                 cr.translate(-wpix / 2, -hpix / 2)
             cr.scale(wpix / wpoi, hpix / hpoi)
-            cr.translate(-p.crop[0] * p.size[0], -p.crop[2] * p.size[1])
+            cr.translate(-p.crop.left * p.size.width, -p.crop.top * p.size.height)
             self.add_layers(cr, p, layer='UNDERLAY')
             cr.save()
             if rotation > 0:
-                cr.translate(p.size[0] / 2, p.size[1] / 2)
+                cr.translate(*p.size.scaled(0.5))
                 cr.rotate(rotation * pi / 180)
-                cr.translate(-p.size_orig[0] / 2, -p.size_orig[1] / 2)
+                cr.translate(*p.size_orig.scaled(-0.5))
             self.render(cr, p)
             cr.restore()
             self.add_layers(cr, p, layer='OVERLAY')
+
+            if p.hide != Sides():
+                cr.set_source_rgb(1, 1, 1)
+                cr.rectangle(0, 0, p.size.width, p.size.height)
+                x = p.size.width * p.hide.left
+                y = p.size.height * p.hide.top
+                w = p.size.width * (1 - p.hide.left - p.hide.right)
+                h = p.size.height * (1 - p.hide.top - p.hide.bottom)
+                cr.rectangle(x, y, w, h)
+                cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+                cr.fill()
+
         if self.quit:
             return 0, 0
 
@@ -702,7 +888,7 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         )
         return thumbnail.get_width(), thumbnail.get_height()
 
-    def add_layers(self, cr, p, layer):
+    def add_layers(self, cr, p: Page, layer):
         layerpages = p.layerpages if layer == 'OVERLAY' else reversed(p.layerpages)
         for lp in layerpages:
             if self.quit:
@@ -710,20 +896,20 @@ class PDFRenderer(threading.Thread, GObject.GObject):
             if layer != lp.laypos:
                 continue
             cr.save()
-            cr.translate(p.size[0] * lp.offset[0], p.size[1] * lp.offset[2])
+            cr.translate(p.size.width * lp.offset.left, p.size.height * lp.offset.top)
             cr.scale(lp.scale / p.scale, lp.scale / p.scale)
-            x = lp.size[0] * lp.crop[0]
-            y = lp.size[1] * lp.crop[2]
-            w = lp.size[0] * (1 - lp.crop[0] - lp.crop[1])
-            h = lp.size[1] * (1 - lp.crop[2] - lp.crop[3])
+            x = lp.size.width * lp.crop.left
+            y = lp.size.height * lp.crop.top
+            w = lp.size.width * (1 - lp.crop.left - lp.crop.right)
+            h = lp.size.height * (1 - lp.crop.top - lp.crop.bottom)
             cr.translate(-x, -y)
             cr.rectangle(x, y, w, h)
             cr.clip()
             rotation = round((int(lp.angle) % 360) / 90) * 90
             if rotation > 0:
-                cr.translate(lp.size[0] / 2, lp.size[1] / 2)
+                cr.translate(*lp.size.scaled(0.5))
                 cr.rotate(rotation * pi / 180)
-                cr.translate(-lp.size_orig[0] / 2, -lp.size_orig[1] / 2)
+                cr.translate(*lp.size_orig.scaled(-0.5))
             self.render(cr, lp)
             cr.restore()
 

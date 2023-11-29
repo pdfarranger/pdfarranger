@@ -14,10 +14,14 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GObject
 import gettext
 import cairo
 import locale
+
+from math import pi
+
+from .core import Sides, Dims, PDFRenderer
 
 _ = gettext.gettext
 
@@ -32,14 +36,15 @@ def scale(model, selection, factor):
     for path in selection:
         it = model.get_iter(path)
         page = model.get_value(it, 0)
+        page_size = page.size.cropped(page.crop)
         if width is None:
             f = factor
         else:
             # TODO: allow to change aspect ratio
-            f = max(width / page.size[0], height / page.size[1])
+            f = max(*Dims(width, height) / page_size)
         # Page size must be in [72, 14400] (PDF standard requirement)
-        f = max(f, 72 / page.size[0], 72 / page.size[1])
-        f = min(f, 14400 / page.size[0], 14400 / page.size[1])
+        f = max(f, *(Dims(72, 72) / page_size))
+        f = min(f, *(Dims(14400, 14400) / page_size))
         if page.scale != f:
             changed = True
         page.resample = page.resample * f / page.scale
@@ -64,7 +69,7 @@ class _LinkedSpinButton(Gtk.SpinButton):
 
     def __output(self, _user_data):
         """ output signal handler to remove unneeded 0 """
-        s = locale.format("%.8g", self.get_adjustment().get_value())
+        s = locale.format_string("%.8g", self.get_adjustment().get_value())
         self.get_buffer().set_text(s, len(s))
         return True
 
@@ -144,21 +149,21 @@ class _ScalingWidget(Gtk.Box):
         return self.entry.get_value() / 25.4 * 72
 
 
-class _CropWidget(Gtk.Frame):
+class _CropHideWidget(Gtk.Frame):
     sides = ('L', 'R', 'T', 'B')
     side_names = {'L': _('Left'), 'R': _('Right'), 'T': _('Top'), 'B': _('Bottom')}
     opposite_sides = {'L': 'R', 'R': 'L', 'T': 'B', 'B': 'T'}
 
-    def __init__(self, model, selection, margin=12):
-        super().__init__(label=_('Crop Margins'))
-        grid = Gtk.Grid()
+    def __init__(self, val, margin=12):
+        super().__init__(shadow_type=Gtk.ShadowType.NONE)
+        grid = Gtk.Grid(halign=Gtk.Align.CENTER)
         grid.set_column_spacing(margin)
         grid.set_row_spacing(margin)
         grid.props.margin = margin
         self.add(grid)
         label = Gtk.Label(
             label=_(
-                'Cropping does not remove any content '
+                'Cropping/hiding does not remove any content '
                 'from the PDF file, it only hides it.'
             )
         )
@@ -166,20 +171,17 @@ class _CropWidget(Gtk.Frame):
         label.set_line_wrap(True)
         label.set_max_width_chars(38)
         grid.attach(label, 0, 0, 3, 1)
+        self.spin_changed_callback = None
         self.spin_list = []
         units = 2 * [_('% of width')] + 2 * [_('% of height')]
-        crop = [0.0, 0.0, 0.0, 0.0]
-        if selection:
-            pos = model.get_iter(selection[0])
-            crop = list(model.get_value(pos, 0).crop)
 
-        for row, side in enumerate(_CropWidget.sides):
-            label = Gtk.Label(label=_CropWidget.side_names[side])
+        for row, side in enumerate(_CropHideWidget.sides):
+            label = Gtk.Label(label=_CropHideWidget.side_names[side])
             label.set_alignment(0.0, 0.5)
             grid.attach(label, 0, row + 1, 1, 1)
 
             adj = Gtk.Adjustment(
-                value=100.0 * crop.pop(0),
+                value=100.0 * val.pop(0),
                 lower=0.0,
                 upper=90.0,
                 step_increment=1.0,
@@ -188,7 +190,7 @@ class _CropWidget(Gtk.Frame):
             )
             spin = Gtk.SpinButton(adjustment=adj, climb_rate=0, digits=1)
             spin.set_activates_default(True)
-            spin.connect('value-changed', self.__set_crop_value, self, side)
+            spin.connect('value-changed', self.__set_value, self, side)
             self.spin_list.append(spin)
             grid.attach(spin, 1, row + 1, 1, 1)
 
@@ -197,65 +199,69 @@ class _CropWidget(Gtk.Frame):
             grid.attach(label, 2, row + 1, 1, 1)
 
     @staticmethod
-    def __set_crop_value(spinbutton, self, side):
+    def __set_value(spinbutton, self, side):
         opp_side = self.opposite_sides[side]
         adj = self.spin_list[self.sides.index(opp_side)].get_adjustment()
         limit = 90.0 - spinbutton.get_value()
         adj.set_upper(limit)
         opp_spinner = self.spin_list[self.sides.index(opp_side)]
         opp_spinner.set_value(min(opp_spinner.get_value(), limit))
+        if callable(self.spin_changed_callback):
+            self.spin_changed_callback()
 
-    def get_crop(self):
-        return [spin.get_value() / 100.0 for spin in self.spin_list]
+    def set_spinb_changed_callback(self, callback):
+        self.spin_changed_callback = callback
+
+    def set_val(self, val):
+        for i, spin in enumerate(self.spin_list):
+            spin.set_value(val[i] * 100)
+
+    def get_val(self):
+        return Sides(*(spin.get_value() / 100.0 for spin in self.spin_list))
 
 
 class BaseDialog(Gtk.Dialog):
-    def __init__(self, title, parent):
+    def __init__(self, title, parent, prepend_buttons=None):
+        buttons = () if prepend_buttons is None else prepend_buttons
+        buttons += (
+            _("_Cancel"), Gtk.ResponseType.CANCEL,
+            _("_OK"), Gtk.ResponseType.OK,
+        )
         super().__init__(
             title=title,
             parent=parent,
             flags=Gtk.DialogFlags.MODAL,
-            buttons=(
-                _("_Cancel"), Gtk.ResponseType.CANCEL,
-                _("_OK"), Gtk.ResponseType.OK,
-            ),
+            buttons=buttons,
         )
         self.set_default_response(Gtk.ResponseType.OK)
 
 
-class Dialog(BaseDialog):
-    """ A dialog box to define margins for page cropping and page size or scale factor """
+class ScaleDialog(BaseDialog):
+    """ A dialog box to define page size or scale factor """
 
     def __init__(self, model, selection, window):
-        super().__init__(title=_("Page format"), parent=window)
+        super().__init__(title=_("Page size"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
-        size = [page.scale * x for x in page.size]
         rel_widget = _RelativeScalingWidget(page.scale)
-        width_widget = _ScalingWidget(_("Width"), size[0])
-        height_widget = _ScalingWidget(_("Height"), size[1])
+        width_widget = _ScalingWidget(_("Width"), page.width_in_points())
+        height_widget = _ScalingWidget(_("Height"), page.height_in_points())
         self.scale_stack = _RadioStackSwitcher()
         self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
         self.scale_stack.add_named(width_widget, "Width", _("Width"))
         self.scale_stack.add_named(height_widget, "Height", _("Height"))
-        pagesizeframe = Gtk.Frame(label=_("Page Size"))
+        pagesizeframe = Gtk.Frame(shadow_type=Gtk.ShadowType.NONE)
         pagesizeframe.props.margin = 8
-        pagesizeframe.props.margin_bottom = 0
         pagesizeframe.add(self.scale_stack)
         self.vbox.pack_start(pagesizeframe, True, True, 0)
-        self.crop_widget = _CropWidget(model, selection)
-        self.crop_widget.props.margin = 8
-        self.vbox.pack_start(self.crop_widget, False, False, 0)
         self.show_all()
         self.selection = selection
 
     def run_get(self):
-        """ Open the dialog and return the crop value """
+        """ Open the dialog and return the size value """
         result = self.run()
-        crop = None
         val = None
         if result == Gtk.ResponseType.OK:
-            crop = [self.crop_widget.get_crop()] * len(self.selection)
             val = self.scale_stack.selected_child.get_value()
             if self.scale_stack.selected_name == "Width":
                 val = val, 0
@@ -263,7 +269,7 @@ class Dialog(BaseDialog):
                 val = 0, val
             # else val is a relative scale so we return it as is
         self.destroy()
-        return crop, val
+        return val
 
 
 def white_borders(model, selection, pdfqueue):
@@ -276,12 +282,12 @@ def white_borders(model, selection, pdfqueue):
         page = pdfdoc.document.get_page(p.npage - 1)
         # Always render pages at 72 dpi whatever the zoom or scale of the page
         w, h = page.get_size()
-        orig_crop = p.rotate_crop(p.crop, p.rotate_times(360 - p.angle))
+        orig_crop = p.crop.rotated(-p.rotate_times(p.angle))
 
-        first_col = int(w * orig_crop[0])
-        last_col = min(int(w), int(w * (1 - orig_crop[1]) + 1))
-        first_row = int(h * orig_crop[2])
-        last_row = min(int(h), int(h * (1 - orig_crop[3]) + 1))
+        first_col = int(w * orig_crop.left)
+        last_col = min(int(w), int(w * (1 - orig_crop.right) + 1))
+        first_row = int(h * orig_crop.top)
+        last_row = min(int(h), int(h * (1 - orig_crop.bottom) + 1))
         w = int(w)
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
@@ -316,7 +322,7 @@ def white_borders(model, selection, pdfqueue):
                 crop_this_page[3] = (h - row) / h
                 break
 
-        crop.append(p.rotate_crop(crop_this_page, p.rotate_times(p.angle)))
+        crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
     return crop
 
 
@@ -430,149 +436,513 @@ class MergePagesDialog(BaseDialog):
         return cols, rows, order, self.size_with_margin()
 
 
-class PastePageLayerDialog():
+class _OffsetWidget(Gtk.Frame):
+    def __init__(self, offset, dpage, lpage):
+        super().__init__(shadow_type=Gtk.ShadowType.NONE)
+        self.spinb_x = Gtk.SpinButton.new_with_range(0, 100, 1)
+        self.spinb_x.set_activates_default(True)
+        self.spinb_x.set_digits(1)
+        self.spinb_x.connect('value-changed', self.spinb_val_changed)
+        self.spinb_y = Gtk.SpinButton.new_with_range(0, 100, 1)
+        self.spinb_y.set_activates_default(True)
+        self.spinb_y.set_digits(1)
+        self.spinb_y.connect('value-changed', self.spinb_val_changed)
+        self.spinb_changed_callback = None
 
-    def __init__(self, app, dpage, lpage, laypos):
-        title = _("Overlay") if laypos == "OVERLAY" else _("Underlay")
-        self.d = BaseDialog(title, app.window)
-        self.app = app
-        self.dpage = dpage
-        self.lpage = lpage
-        self.surface = None
-        self.scale = 1
-        self.spin_scale_x = (self.dpage.width_in_points() - self.lpage.width_in_points()) / 100
-        self.spin_scale_y = (self.dpage.height_in_points() - self.lpage.height_in_points()) / 100
-        self.click_pos = 0, 0
-        self.spin_val = 0, 0
-
-        self.area = Gtk.DrawingArea()
-        self.area.set_size_request(400, 400)
-        self.area.set_events(self.area.get_events()
-                              | Gdk.EventMask.BUTTON_PRESS_MASK
-                              | Gdk.EventMask.POINTER_MOTION_MASK)
-        self.area.connect('draw', self.on_draw)
-        self.area.connect('configure-event', self.on_configure)
-        self.area.connect('button-press-event', self.button_press_event)
-        self.area.connect('motion-notify-event', self.motion_notify_event)
-        frame = Gtk.Frame(shadow_type=Gtk.ShadowType.IN)
-        frame.add(self.area)
-        self.d.vbox.pack_start(frame, True, True, 0)
-        t1 = _("Layout for the first page in selection")
-        t2 = _("(same offset is applied to all pages)")
-        label = Gtk.Label(t1 + '\n' + t2, valign=Gtk.Align.START, justify=Gtk.Justification.CENTER)
-        self.d.vbox.pack_start(label, True, True, 0)
-
-        self.spin_x = Gtk.SpinButton.new_with_range(0, 100, 1)
-        self.spin_x.set_activates_default(True)
-        self.spin_x.set_digits(1)
-        self.spin_y = Gtk.SpinButton.new_with_range(0, 100, 1)
-        self.spin_y.set_activates_default(True)
-        self.spin_y.set_digits(1)
-        self.spin_x.set_value(self.app.layer_pos[0])
-        self.spin_y.set_value(self.app.layer_pos[1])
-        self.spin_x.connect('value-changed', self.on_spinbutton_changed)
-        self.spin_y.connect('value-changed', self.on_spinbutton_changed)
-
-        xlabel1 = Gtk.Label(_("Horizontal offset"), halign=Gtk.Align.START)
-        xlabel2 = Gtk.Label(_("%"), halign=Gtk.Align.START)
-        ylabel1 = Gtk.Label(_("Vertical offset"), halign=Gtk.Align.START)
-        ylabel2 = Gtk.Label(_("%"), halign=Gtk.Align.START)
+        lbl1_x = Gtk.Label(_("Horizontal offset"), halign=Gtk.Align.START)
+        lbl2_x = Gtk.Label(_("%"), halign=Gtk.Align.START)
+        lbl1_y = Gtk.Label(_("Vertical offset"), halign=Gtk.Align.START)
+        lbl2_y = Gtk.Label(_("%"), halign=Gtk.Align.START)
         grid = Gtk.Grid(column_spacing=12, row_spacing=12, margin=12, halign=Gtk.Align.CENTER)
-        grid.attach(xlabel1, 0, 1, 1, 1)
-        grid.attach(self.spin_x, 1, 1, 1, 1)
-        grid.attach(xlabel2, 2, 1, 1, 1)
-        grid.attach(ylabel1, 0, 2, 1, 1)
-        grid.attach(self.spin_y, 1, 2, 1, 1)
-        grid.attach(ylabel2, 2, 2, 1, 1)
-        self.d.vbox.pack_start(grid, False, False, 8)
-        self.d.show_all()
+        grid.attach(lbl1_x, 0, 1, 1, 1)
+        grid.attach(self.spinb_x, 1, 1, 1, 1)
+        grid.attach(lbl2_x, 2, 1, 1, 1)
+        grid.attach(lbl1_y, 0, 2, 1, 1)
+        grid.attach(self.spinb_y, 1, 2, 1, 1)
+        grid.attach(lbl2_y, 2, 2, 1, 1)
+        self.add(grid)
 
-    def on_configure(self, area, _event):
+        self.spinb_x.set_value(offset[0] * 100)
+        self.spinb_y.set_value(offset[1] * 100)
+        self.set_scale(dpage, lpage)
+
+    def spinb_val_changed(self, spinbutton):
+        if callable(self.spinb_changed_callback):
+            self.spinb_changed_callback()
+
+    def set_spinb_changed_callback(self, callback):
+        self.spinb_changed_callback = callback
+
+    def set_val(self, values):
+        self.spinb_x.set_value(values.left * self.scale.left)
+        self.spinb_y.set_value(values.top * self.scale.top)
+
+    def get_val(self):
+        """Get left, right, top, bottom offset from dest page edges."""
+        xval = self.spinb_x.get_value()
+        yval = self.spinb_y.get_value()
+        return Sides(xval, 100 - xval, yval, 100 - yval) / self.scale
+
+    def get_diff_offset(self):
+        """Get the fraction of page size differenace at top-left."""
+        return self.spinb_x.get_value() / 100, self.spinb_y.get_value() / 100
+
+    def set_scale(self, dpage, lpage):
+        """Set scale between 'destination page edge offset' and 'page size diff offset'."""
+        dw, dh = dpage.size_in_pixel()
+        lw, lh = lpage.size_in_pixel()
+        scalex = 100 * dw / (dw - lw) if dw - lw != 0 else 1e10
+        scaley = 100 * dh / (dh - lh) if dh - lh != 0 else 1e10
+        self.scale = Sides(scalex, scalex, scaley, scaley)
+
+
+class DrawingAreaWidget(Gtk.Box):
+    """A widget which draws a page. It has tools for editing a rectangle (crop/hide/offset)."""
+
+    def __init__(self, page, pdfqueue, spinbutton_widget=None, draw_on_page_func=None):
+        super().__init__(orientation=Gtk.Orientation.VERTICAL)
+        page = page.duplicate()
+        page.thumbnail = page.thumbnail if page.crop == Sides() else None
+        page.resample = -1
+        self.damodel = Gtk.ListStore(GObject.TYPE_PYOBJECT)
+        self.damodel.append([page])
+        self.pdfqueue = pdfqueue
+        self.spinbutton_widget = spinbutton_widget
+        self.padding = 25  # Around thumbnail
+        self.click_pos = 0, 0
+        self.click_val = [0] * 4
+        self.x_po_rel_thmb = 0
+        self.y_po_rel_thmb = 0
+        self.x_po_rel_sw = 0
+        self.y_po_rel_sw = 0
+        self.cursor_name = 'default'
+        self.rendering_thread = None
+        self.render_id = None
+        self.surface = None
+        self.adjust_rect = [0] * 4
+        self.allow_adjust_rect_resize = True
+        self.handle_move_limits = True
+        self.draw_on_page = draw_on_page_func
+        self.da = Gtk.DrawingArea()
+        self.da.set_events(self.da.get_events()
+                              | Gdk.EventMask.BUTTON_PRESS_MASK
+                              | Gdk.EventMask.BUTTON_RELEASE_MASK
+                              | Gdk.EventMask.POINTER_MOTION_MASK)
+        self.da.connect('draw', self.on_draw)
+        self.da.connect('button-press-event', self.button_press_event)
+        self.da.connect('button-release-event', self.button_release_event)
+        self.da.connect('motion-notify-event', self.motion_notify_event)
+        self.da.connect('size_allocate', self.size_allocate)
+
+        self.sw = Gtk.ScrolledWindow()
+        self.sw.set_size_request(self.padding + 100, self.padding + 100)
+        self.sw.add(self.da)
+        self.sw.connect('size_allocate', self.draw_page)
+        self.sw.connect('scroll_event', self.sw_scroll_event)
+        self.sw.connect('leave_notify_event', self.sw_leave_notify_event)
+        self.pack_start(self.sw, True, True, 0)
+
+        if self.spinbutton_widget is not None:
+            self.spinbutton_widget.set_spinb_changed_callback(self.draw_page)
+            self.pack_start(self.spinbutton_widget, False, False, 0)
+            cb = Gtk.CheckButton(label=_("Show values"), margin=12, halign=Gtk.Align.CENTER)
+            cb.connect('toggled', self.cb_show_val_toggled)
+            cb.connect('realize', self.cb_realize)
+            self.pack_start(cb, False, False, 0)
+
+    def cb_realize(self, _cb):
+        self.spinbutton_widget.hide()
+
+    def cb_show_val_toggled(self, cb):
+        self.spinbutton_widget.set_visible(cb.get_active())
+
+    def store_pointer_location(self, sw, event):
+        """Store pointer location relative to thumbnail and scrolled window."""
+        ha = sw.get_hadjustment()
+        thmb_x = event.x - self.padding + ha.get_value()
+        self.x_po_rel_thmb = thmb_x / (ha.get_upper() - self.padding * 2)
+        self.x_po_rel_sw = event.x / ha.get_page_size()
+
+        va = sw.get_vadjustment()
+        thmb_y = event.y - self.padding + va.get_value()
+        self.y_po_rel_thmb = thmb_y / (va.get_upper() - self.padding * 2)
+        self.y_po_rel_sw = event.y / va.get_page_size()
+
+    def sw_scroll_event(self, sw, event):
+        if not event.state & Gdk.ModifierType.CONTROL_MASK:
+            return Gdk.EVENT_PROPAGATE
+        w = max(p.width_in_pixel() for [p] in self.damodel)
+        h = max(p.height_in_pixel() for [p] in self.damodel)
+        maxfactor = (80000000 / (w * h)) ** .5  # Limit zoom at about 304Mb
+
+        if event.direction == Gdk.ScrollDirection.SMOOTH:
+            factor = round(min(1 - event.get_scroll_deltas()[2] * 0.3, maxfactor), 2)
+        elif event.direction == Gdk.ScrollDirection.UP:
+            factor = round(min(1.3, maxfactor), 2)
+        elif event.direction == Gdk.ScrollDirection.DOWN:
+            factor = 0.7
+        else:
+            return Gdk.EVENT_PROPAGATE
+        self.store_pointer_location(sw, event)
+        dpage = self.damodel[0][0]
+        self.da.set_size_request((dpage.width_in_pixel() + self.padding * 2) * factor,
+                                 (dpage.height_in_pixel() + self.padding * 2) * factor)
+        return Gdk.EVENT_STOP
+
+    def size_allocate(self, _da, da_rect):
+        self.set_adjustment_values()
+        self.set_zoom(da_rect)
         self.init_surface()
-        aw = area.get_allocated_width()
-        ah = area.get_allocated_height()
-        dwidth = self.dpage.width_in_points()
-        dheight = self.dpage.height_in_points()
-        self.scale = min((aw - 100) / dwidth, (ah - 100) / dheight)
-        self.draw_page_boxes()
+        self.silent_render()
 
-    def on_draw(self, _area, cairo_ctx):
-        if self.surface is not None:
-            cairo_ctx.set_source_surface(self.surface, 0, 0)
-            cairo_ctx.paint()
+    def set_adjustment_values(self):
+        """Update adjustment values so it does zoom in at cursor."""
+        ha = self.sw.get_hadjustment()
+        thmb_x = (ha.get_upper() - self.padding * 2) * self.x_po_rel_thmb
+        sw_x = ha.get_page_size() * self.x_po_rel_sw
+        ha.set_value(self.padding + thmb_x - sw_x)
 
-    def on_spinbutton_changed(self, _event):
-        self.init_surface()
-        self.draw_page_boxes()
+        va = self.sw.get_vadjustment()
+        thmb_y = (va.get_upper() - self.padding * 2) * self.y_po_rel_thmb
+        sw_y = va.get_page_size() * self.y_po_rel_sw
+        va.set_value(self.padding + thmb_y - sw_y)
 
-    def button_press_event(self, _area, event):
-        if event.button == 1:
-            self.click_pos = event.x, event.y
-            self.spin_val = self.spin_x.get_value(), self.spin_y.get_value()
+    def set_zoom(self, da_rect):
+        dpage = self.damodel[0][0]
+        thmb_max_w = da_rect.width - self.padding * 2
+        thmb_max_h = da_rect.height - self.padding * 2
+        zoom_x = thmb_max_w / dpage.width_in_points()
+        zoom_y = thmb_max_h / dpage.height_in_points()
+        for [page] in self.damodel:
+            page.zoom = min(zoom_x, zoom_y)
 
-    def motion_notify_event(self, _area, event):
+    def silent_render(self):
+        if self.render_id:
+            GObject.source_remove(self.render_id)
+        self.render_id = GObject.timeout_add(149, self.render)
+
+    def quit_rendering(self):
+        if self.rendering_thread is None:
+            return False
+        self.rendering_thread.quit = True
+        self.rendering_thread.join(timeout=0.01)
+        return self.rendering_thread.is_alive()
+
+    def render(self):
+        self.render_id = None
+        alive = self.quit_rendering()
+        if alive:
+            self.silent_render()
+            return
+        self.rendering_thread = PDFRenderer(self.damodel, self.pdfqueue, [0, 1] , 1)
+        self.rendering_thread.connect('update_thumbnail', self.update_thumbnail)
+        self.rendering_thread.start()
+
+    def update_thumbnail(self, _obj, ref, thumbnail, _zoom, _scale, _is_preview):
+        if thumbnail is None:
+            return
+        path = ref.get_path()
+        page = self.damodel[path][0]
+        page.thumbnail = thumbnail
+        self.draw_page()
+
+    def button_press_event(self, _darea, event):
+        self.click_pos = event.x, event.y
+        if event.button == 2:
+            self.set_cursor('move')
+        elif event.button == 1 and self.spinbutton_widget is not None:
+            self.click_val = self.spinbutton_widget.get_val()
+
+    def button_release_event(self, _darea, event):
+        sc = self.get_suggested_cursor(event)
+        self.set_cursor(sc)
+
+    def get_suggested_cursor(self, event):
+        """Get appropriate cursor when moving mouse over adjust rect (crop/hide/offset)."""
+        margin = 5
+        r = self.adjust_rect
+        if self.allow_adjust_rect_resize:
+            w = r[0] - margin < event.x < r[0] + margin
+            e = r[0] + r[2] - margin < event.x < r[0] + r[2] + margin
+            n = r[1] - margin < event.y < r[1] + margin
+            s = r[1] + r[3] - margin < event.y < r[1] + r[3] + margin
+        else:
+            w = e = n = s = False
+        x_area = r[0] + margin < event.x < r[0] + r[2] - margin
+        y_area = r[1] + margin < event.y < r[1] + r[3] - margin
+
+        if n and w:
+            cursor_name = 'nw-resize'
+        elif s and w:
+            cursor_name = 'sw-resize'
+        elif s and e:
+            cursor_name = 'se-resize'
+        elif n and e:
+            cursor_name = 'ne-resize'
+        elif w and y_area:
+            cursor_name = 'w-resize'
+        elif e and y_area:
+            cursor_name = 'e-resize'
+        elif n and x_area:
+            cursor_name = 'n-resize'
+        elif s and x_area:
+            cursor_name = 's-resize'
+        elif x_area and y_area:
+            cursor_name = 'move'
+        else:
+            cursor_name = 'default'
+        return cursor_name
+
+    def set_cursor(self, cursor_name):
+        if cursor_name != self.cursor_name:
+            self.cursor_name = cursor_name
+            cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), cursor_name)
+            self.get_window().set_cursor(cursor)
+
+    def motion_notify_event(self, _darea, event):
+        if event.state & Gdk.ModifierType.BUTTON2_MASK:
+            self.pan_view(event)
+            self.set_cursor('move')
+        elif event.state & Gdk.ModifierType.BUTTON1_MASK:
+            self.adjust_val(event)
+        else:
+            sc = self.get_suggested_cursor(event)
+            self.set_cursor(sc)
+
+    def pan_view(self, event):
+        ha = self.sw.get_hadjustment()
+        va = self.sw.get_vadjustment()
+        ha.set_value(ha.get_value() + self.click_pos[0] - event.x)
+        va.set_value(va.get_value() + self.click_pos[1] - event.y)
+
+    def adjust_val(self, event):
+        if self.spinbutton_widget is None:
+            return
+        left, right, top, bottom = self.spinbutton_widget.get_val()
+        page = self.damodel[0][0]
+        if self.cursor_name in ['w-resize', 'nw-resize', 'sw-resize', 'move']:
+            left = self.click_val[0] + ((event.x - self.click_pos[0]) / page.width_in_pixel())
+        if self.cursor_name in ['e-resize', 'ne-resize', 'se-resize', 'move']:
+            right = self.click_val[1] - ((event.x - self.click_pos[0]) / page.width_in_pixel())
+        if self.cursor_name in ['n-resize', 'nw-resize', 'ne-resize', 'move']:
+            top = self.click_val[2] + ((event.y - self.click_pos[1]) / page.height_in_pixel())
+        if self.cursor_name in ['s-resize', 'sw-resize', 'se-resize', 'move']:
+            bottom = self.click_val[3] - ((event.y - self.click_pos[1]) / page.height_in_pixel())
+        v = Sides(left, right, top, bottom)
+        if self.cursor_name in ['move'] and self.handle_move_limits:
+            v += Sides(*(min(0, v[i]) for i in [1, 0, 3, 2]))
+        self.spinbutton_widget.set_spinb_changed_callback(None)
+        self.spinbutton_widget.set_val(v)
+        self.spinbutton_widget.set_spinb_changed_callback(self.draw_page)
+        self.draw_page()
+
+    def sw_leave_notify_event(self, _sw, event):
         if event.state & Gdk.ModifierType.BUTTON1_MASK:
-            if self.scale * self.spin_scale_x != 0:
-                add_x = (event.x - self.click_pos[0]) / (self.scale * self.spin_scale_x)
-                self.spin_x.set_value(self.spin_val[0] + add_x)
-            if self.scale * self.spin_scale_y != 0:
-                add_y = (event.y - self.click_pos[1]) / (self.scale * self.spin_scale_y)
-                self.spin_y.set_value(self.spin_val[1] + add_y)
-            self.draw_page_boxes()
+            return
+        self.set_cursor('default')
 
     def init_surface(self):
-        aw = self.area.get_allocated_width()
-        ah = self.area.get_allocated_height()
+        aw = self.da.get_allocated_width()
+        ah = self.da.get_allocated_height()
         self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, aw, ah)
 
-    def draw_page_boxes(self):
-        """Draw the page and the layer page (overlay/underlay)."""
-        cairo_ctx = cairo.Context(self.surface)
-        aw = self.area.get_allocated_width()
-        ah = self.area.get_allocated_height()
+    def on_draw(self, _darea, cr):
+        if self.surface is not None:
+            cr.set_source_surface(self.surface, 0, 0)
+            cr.paint()
+
+    def draw_page(self, _widget=None, _rect=None):
+        """Draw the 'destination' thumbnail page."""
+        if len(self.damodel) == 0 or self.surface is None:
+            return
+        dpage = self.damodel[0][0]
+        if dpage.thumbnail is None:
+            return
+        cr = cairo.Context(self.surface)
+        aw = self.da.get_allocated_width()
+        ah = self.da.get_allocated_height()
 
         # Destination page rectangle
-        dwf = self.dpage.width_in_points() * self.scale
-        dhf = self.dpage.height_in_points() * self.scale
-        dxf = (aw - dwf) / 2
-        dyf = (ah - dhf) / 2
-        dx = int(0.5 + dxf)
-        dy = int(0.5 + dyf)
-        dw = int(0.5 + dwf + dxf - dx)
-        dh = int(0.5 + dhf + dyf - dy)
+        dw = dpage.width_in_pixel()
+        dh = dpage.height_in_pixel()
+        dx = int(.5 + (aw - dw) / 2)
+        dy = int(.5 + (ah - dh) / 2)
 
-        # Layer page rectangle
-        lwf = self.lpage.width_in_points() * self.scale
-        lhf = self.lpage.height_in_points() * self.scale
-        lxf = dxf + self.spin_x.get_value() * self.spin_scale_x * self.scale
-        lyf = dyf + self.spin_y.get_value() * self.spin_scale_y * self.scale
-        lx = int(0.5 + dxf + self.spin_x.get_value() * self.spin_scale_x * self.scale)
-        ly = int(0.5 + dyf + self.spin_y.get_value() * self.spin_scale_y * self.scale)
-        lw = int(0.5 + lwf + lxf - lx)
-        lh = int(0.5 + lhf + lyf - ly)
+        # Page border
+        cr.set_source_rgb(0, 0, 0)
+        cr.rectangle(dx - 2, dy - 2, dw + 4, dh + 4)
+        cr.fill_preserve()
+        cr.clip()
 
         # Fill white paper
-        cairo_ctx.set_source_rgb(1, 1, 1)
-        cairo_ctx.rectangle(dx + 1, dy + 1, dw - 2, dh - 2)
-        cairo_ctx.fill()
+        cr.set_source_rgb(1, 1, 1)
+        cr.rectangle(dx, dy, dw, dh)
+        cr.fill()
 
-        # Draw layer page border
-        cairo_ctx.set_source_rgb(0, 0, 0)
-        cairo_ctx.rectangle(lx, ly, lw, lh)
-        cairo_ctx.stroke()
+        # Add the thumbnail
+        (dw0, dh0) = (dh, dw) if dpage.angle in [90, 270] else (dw, dh)
+        cr.translate(dx, dy)
+        if dpage.angle > 0:
+            cr.translate(dw / 2, dh / 2)
+            cr.rotate(dpage.angle * pi / 180)
+            cr.translate(-dw0 / 2, -dh0 / 2)
+        tw, th = dpage.thumbnail.get_width(), dpage.thumbnail.get_height()
+        tw, th = (th, tw) if dpage.angle in [90, 270] else (tw, th)
+        cr.scale(dw / tw, dh / th)
+        cr.set_source_surface(dpage.thumbnail)
+        cr.get_source().set_filter(cairo.FILTER_FAST)
+        cr.paint()
 
-        # Fill the layer page
-        cairo_ctx.set_source_rgb(0.5, 0.5, 0.5)
-        cairo_ctx.rectangle(lx + 1, ly + 1, lw - 2, lh - 2)
-        cairo_ctx.fill()
+        cr.identity_matrix()
+        cr.set_line_width(1)
 
-        # Draw the page border
-        cairo_ctx.set_source_rgb(0, 0, 0)
-        cairo_ctx.rectangle(dx, dy, dw, dh)
-        cairo_ctx.stroke()
+        if dpage.hide != Sides():
+            # Draw the hide rectangle. For the Hide dialog this will be the crop rectangle
+            dwfull = dpage.scale * dpage.size.width * dpage.zoom
+            dhfull = dpage.scale * dpage.size.height * dpage.zoom
+            rx = round(dx + (dpage.hide.left - dpage.crop.left) * dwfull) - .5
+            ry = round(dy + (dpage.hide.top - dpage.crop.top) * dhfull) - .5
+            rw = round(dwfull * (1 - dpage.hide.left - dpage.hide.right)) + 1
+            rh = round(dhfull * (1 - dpage.hide.top - dpage.hide.bottom)) + 1
+            hide_rect = [rx, ry, rw, rh]
+
+            cr.set_source_rgba(1, 1, 1, .7)
+            cr.rectangle(*hide_rect)
+            cr.stroke()
+            cr.set_source_rgba(0, 0, 0, .3)
+            cr.set_dash([8, 8])
+            cr.rectangle(*hide_rect)
+            cr.stroke()
+
+            # Darken the area outside of rectangle
+            cr.set_source_rgba(0, 0, 0, .3)
+            cr.rectangle(dx, dy, dw, dh)
+            cr.rectangle(*hide_rect)
+            cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+            cr.fill()
+
+        if callable(self.draw_on_page):
+            self.adjust_rect = self.draw_on_page(cr, dx, dy, dw, dh, self.damodel)
+            # Draw the adjust rectangle
+            cr.identity_matrix()
+            cr.set_source_rgb(1, 1, 1)
+            cr.set_dash([])
+            cr.rectangle(*self.adjust_rect)
+            cr.stroke()
+            cr.set_source_rgb(0, 0, 0)
+            cr.set_dash([4.0, 4.0])
+            cr.rectangle(*self.adjust_rect)
+            cr.stroke()
 
         # Invalidiate region
-        self.area.queue_draw_area(0, 0, aw, ah)
+        ha = self.sw.get_hadjustment()
+        va = self.sw.get_vadjustment()
+        r = ha.get_value(), va.get_value(), ha.get_page_size(), va.get_page_size()
+        self.da.queue_draw_area(*r)
+
+
+class CropHideDialog():
+    def __init__(self, window, selection, model, pdfqueue, is_unsaved, mode, update_val_func):
+        title = _("Crop Margins") if mode == 'CROP' else _("Hide Margins")
+        init_values = [getattr(model[row][0], mode.lower()) for row in selection]
+        self.updated_values = init_values
+        self.spinbutton_widget = _CropHideWidget(list(init_values[-1]), margin=8)
+        page = model[selection[-1]][0]
+        dawidget = DrawingAreaWidget(page, pdfqueue, self.spinbutton_widget, self.draw_on_page)
+        page = dawidget.damodel[0][0]
+        page.hide = page.crop if mode == 'HIDE' else page.hide
+        page.crop = Sides()
+
+        prepend_butt = (_("_Revert"), Gtk.ResponseType.REJECT, _("_Apply"), Gtk.ResponseType.APPLY)
+        d = BaseDialog(title, window, prepend_butt)
+        d.connect('response', self.on_response, selection, init_values, is_unsaved, update_val_func)
+        d.vbox.pack_start(dawidget, True, True, 0)
+        d.set_size_request(350, 500)
+        d.show_all()
+
+    def draw_on_page(self, cr, dx, dy, dw, dh, _damodel):
+        """Draw on the thumbnail page."""
+        v = self.spinbutton_widget.get_val()
+        rx = round(dx + v.left * dw) - .5
+        ry = round(dy + v.top * dh) - .5
+        rw = round(dw * (1 - v.left - v.right)) + 1
+        rh = round(dh * (1 - v.top - v.bottom)) + 1
+
+        # Darken area outside of crop or hide rectangle
+        cr.set_source_rgba(0, 0, 0, .3)
+        cr.set_dash([])
+        cr.rectangle(dx, dy, dw, dh)
+        cr.rectangle(rx, ry, rw, rh)
+        cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+        cr.fill()
+
+        return [rx, ry, rw, rh]
+
+    def on_response(self, dialog, response, selection, init_values, is_unsaved, update_val_func):
+        if response == Gtk.ResponseType.REJECT:
+            self.spinbutton_widget.set_val(init_values[-1])
+            self.updated_values = init_values
+            update_val_func(self.updated_values, selection, is_unsaved)
+            return
+        if response in [Gtk.ResponseType.OK, Gtk.ResponseType.APPLY]:
+            new_val = self.spinbutton_widget.get_val()
+            if any([new_val != val for val in self.updated_values]):
+                self.updated_values = [new_val] * len(selection)
+                update_val_func(self.updated_values, selection, True)
+        if response == Gtk.ResponseType.APPLY:
+            return
+        dialog.destroy()
+
+
+class PastePageLayerDialog():
+    def __init__(self, window, dpage, lpage_stack, model, pdfqueue, mode, layer_pos):
+        title = _("Overlay") if mode == 'OVERLAY' else _("Underlay")
+        lpage = lpage_stack[0].duplicate()
+        lpage.layerpages = [lp.duplicate() for lp in lpage_stack[1:]]
+        lpage.zoom = dpage.zoom
+        lpage.resample = -1
+        lpage.thumbnail = None
+        lpage.hide = Sides()
+        self.spinbutton_widget = _OffsetWidget(layer_pos, dpage, lpage)
+        dawidget = DrawingAreaWidget(dpage, pdfqueue, self.spinbutton_widget, self.draw_on_page)
+        dawidget.allow_adjust_rect_resize = False
+        dawidget.handle_move_limits = False
+        dawidget.damodel.append([lpage])
+
+        self.dialog = BaseDialog(title, window)
+        self.dialog.vbox.pack_start(dawidget, True, True, 0)
+        self.dialog.set_size_request(350, 500)
+        self.dialog.show_all()
+
+    def draw_on_page(self, cr, dx, dy, dw, dh, damodel):
+        """Draw on the thumbnail page."""
+        dpage, lpage = [page for [page] in damodel]
+        if lpage.thumbnail is None:
+            return [0] * 4
+        self.spinbutton_widget.set_scale(dpage, lpage)
+
+        # Layer page rectangle
+        offset = self.spinbutton_widget.get_val()
+        lx = round(dx + dw * offset.left)
+        ly = round(dy + dh * offset.top)
+        lw = round(lpage.zoom * lpage.width_in_points())
+        lh = round(lpage.zoom * lpage.height_in_points())
+
+        # Add the overlay/underlay
+        (pw0, ph0) = (lh, lw) if lpage.angle in [90, 270] else (lw, lh)
+        cr.translate(lx, ly)
+        if lpage.angle > 0:
+            cr.translate(lw / 2, lh / 2)
+            cr.rotate(lpage.angle * pi / 180)
+            cr.translate(-pw0 / 2, -ph0 / 2)
+        ltw, lth = lpage.thumbnail.get_width(), lpage.thumbnail.get_height()
+        ltw, lth = (lth, ltw) if lpage.angle in [90, 270] else (ltw, lth)
+        cr.scale(lw / ltw, lh / lth)
+        cr.set_source_surface(lpage.thumbnail)
+        cr.get_source().set_filter(cairo.FILTER_FAST)
+        cr.paint()
+
+        return [lx - .5, ly - .5, lw + 1, lh + 1]
 
     def get_offset(self):
         """Get layer page x and y offset from top-left edge of the destination page.
@@ -580,10 +950,9 @@ class PastePageLayerDialog():
         The offset is the fraction of space positioned at left and top of the pasted layer,
         where space is the differance in width and height between the layer and the page.
         """
-        result = self.d.run()
+        result = self.dialog.run()
         r = None
         if result == Gtk.ResponseType.OK:
-            self.app.layer_pos = self.spin_x.get_value(), self.spin_y.get_value()
-            r = self.spin_x.get_value() / 100, self.spin_y.get_value() / 100
-        self.d.destroy()
+            r = self.spinbutton_widget.get_diff_offset()
+        self.dialog.destroy()
         return r

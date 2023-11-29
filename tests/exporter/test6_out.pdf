@@ -1,0 +1,111 @@
+%PDF-1.3
+%¿÷¢þ
+%QDF-1.0
+
+%% Original object ID: 1 0
+1 0 obj
+<<
+  /Pages 2 0 R
+  /Type /Catalog
+>>
+endobj
+
+%% Original object ID: 2 0
+2 0 obj
+<<
+  /Count 3
+  /Kids [
+    3 0 R
+    4 0 R
+    5 0 R
+  ]
+  /Type /Pages
+>>
+endobj
+
+%% Page 1
+%% Original object ID: 7 0
+3 0 obj
+<<
+  /Contents 6 0 R
+  /MediaBox [
+    183.6
+    79.2
+    367.2
+    633.6
+  ]
+  /Parent 2 0 R
+  /Rotate 90
+  /Type /Page
+>>
+endobj
+
+%% Page 2
+%% Original object ID: 8 0
+4 0 obj
+<<
+  /Contents 6 0 R
+  /MediaBox [
+    122.4
+    237.6
+    550.8
+    475.2
+  ]
+  /Parent 2 0 R
+  /Rotate 180
+  /Type /Page
+>>
+endobj
+
+%% Page 3
+%% Original object ID: 9 0
+5 0 obj
+<<
+  /Contents 6 0 R
+  /MediaBox [
+    244.8
+    158.4
+    428.4
+    712.8
+  ]
+  /Parent 2 0 R
+  /Rotate 270
+  /Type /Page
+>>
+endobj
+
+%% Contents for page 3
+%% Original object ID: 4 0
+6 0 obj
+<<
+  /Length 7 0 R
+>>
+stream
+1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B
+
+endstream
+endobj
+
+%QDF: ignore_newline
+7 0 obj
+52
+endobj
+
+xref
+0 8
+0000000000 65535 f 
+0000000052 00000 n 
+0000000133 00000 n 
+0000000262 00000 n 
+0000000439 00000 n 
+0000000618 00000 n 
+0000000810 00000 n 
+0000000939 00000 n 
+trailer <<
+  /Root 1 0 R
+  /Size 8
+  /ID [<31415926535897932384626433832795><31415926535897932384626433832795>]
+>>
+startxref
+958
+%%EOF

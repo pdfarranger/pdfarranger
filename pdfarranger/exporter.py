@@ -24,12 +24,17 @@ import tempfile
 import io
 import gi
 import locale
+import packaging.version as version
+from typing import Any, Dict, List
+
 from . import metadata
 from gi.repository import Gtk
 gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler
 import gettext
 _ = gettext.gettext
+
+from .core import Page, Sides
 
 # pikepdf.Page.add_overlay()/add_underlay() can't place a page exactly
 # if for example LC_NUMERIC=fi_FI
@@ -62,7 +67,31 @@ def layer_support():
     return layer_support
 
 
-def create_blank_page(tmpdir, size, npages=1):
+def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
+    """Search pdfqueue for a matching pdf with blank pages. Create it if it does not exist.
+
+    Some notes:
+    Blank pdf documents are created prior to export (vs created as needed at export)
+    because it will keep code simpler. For example rendering of thumbnails require no
+    extra for rendering of a blank page.
+
+    A document with several blank pages is needed if the page number under thumbnail
+    need to be something else than 1.
+    """
+    for i, pdfdoc in enumerate(pdfqueue):
+        if size == pdfdoc.blank_size and npages <= pdfdoc.document.get_n_pages():
+            filename = pdfdoc.copyname
+            nfile = i + 1
+            return filename, nfile
+    filename = _create_blank_page(tmpdir, size, npages)
+    doc_data = pageadder.get_pdfdoc(filename, basename=None, blank_size=size)
+    if doc_data is None:
+        return None, None
+    nfile = doc_data[1]
+    return filename, nfile
+
+
+def _create_blank_page(tmpdir, size, npages=1):
     """
     Create a temporary PDF file with npages empty pages.
     The size is in PDF unit (1/72 of inch).
@@ -107,7 +136,7 @@ def _intersect_rectangle(rect1, rect2):
     ]
 
 
-def _mediabox(page, crop=None):
+def _mediabox(page, crop=Sides()):
     """ Return the media box for a given page. """
     # PDF files which do not have mediabox default to Portrait Letter / ANSI A
     cmb = page.MediaBox if "/MediaBox" in page else [0, 0, 612, 792]
@@ -117,7 +146,7 @@ def _mediabox(page, crop=None):
         # reduced to their intersection with the media box"
         cmb = _intersect_rectangle(cmb, _normalize_rectangle(page.CropBox))
 
-    if crop is None or crop == [0., 0., 0., 0.]:
+    if crop == Sides():
         return cmb
     angle = page.Rotate if '/Rotate' in page else 0
     rotate_times = int(round(((angle) % 360) / 90) % 4)
@@ -127,12 +156,12 @@ def _mediabox(page, crop=None):
         for _ in range(rotate_times):
             perm.append(perm.pop(0))
         perm.insert(1, perm.pop(2))
-        crop = [crop_init[perm[side]] for side in range(4)]
+        crop = Sides(*(crop_init[perm[side]] for side in range(4)))
     x1, y1, x2, y2 = [float(x) for x in cmb]
-    x1_new = x1 + (x2 - x1) * crop[0]
-    x2_new = x2 - (x2 - x1) * crop[1]
-    y1_new = y1 + (y2 - y1) * crop[3]
-    y2_new = y2 - (y2 - y1) * crop[2]
+    x1_new = x1 + (x2 - x1) * crop.left
+    x2_new = x2 - (x2 - x1) * crop.right
+    y1_new = y1 + (y2 - y1) * crop.bottom
+    y2_new = y2 - (y2 - y1) * crop.top
     return [x1_new, y1_new, x2_new, y2_new]
 
 
@@ -225,6 +254,21 @@ def _apply_geom_transform(pdf_output, new_page, row):
     return _scale(pdf_output, new_page, row.scale)
 
 
+def _apply_geom_transform_job(pdf_output:pikepdf.Pdf, new_page:pikepdf.Page, page:Page) -> None:
+    new_page.rotate(page.angle, relative=True)
+    new_page.MediaBox = _mediabox(new_page, page.crop)
+    # add_overlay() & add_underlay() will use TrimBox or CropBox if they exist
+    if '/TrimBox' in new_page:
+        del new_page.TrimBox
+    if '/CropBox' in new_page:
+        del new_page.CropBox
+    if page.scale != 1:
+        pdf_output.pages.append(new_page)
+        new_page.obj.emplace(_scale(pdf_output, pdf_output.pages[-1], page.scale))
+        del(pdf_output.pages[-1])
+
+
+
 def _remove_unreferenced_resources(pdfdoc):
     try:
         pdfdoc.remove_unreferenced_resources()
@@ -308,7 +352,7 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
         rotate_times = int(round(((dangle0) % 360) / 90) % 4)
         for lprow in row.layerpages:
             # Rotate the offsets so they are relative to dest page
-            offset = lprow.rotate_array(lprow.offset, rotate_times)
+            offset = lprow.offset.rotated(rotate_times)
             offs_left, offs_right, offs_top, offs_bottom = offset
             x1 = row.scale * (dx1 + dw * offs_left)
             y1 = row.scale * (dy1 + dh * offs_bottom)
@@ -348,7 +392,53 @@ def _append_page(current_page, copied_pages, pdf_output, row):
         new_page.Annots = pdf_output.copy_foreign(indirect_annots)
 
 
-def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
+def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None) -> None:
+    """ Same as _copy_n_transform, except it doesn't copy. Requires pikepdf >= 8.0 """
+    # Fix missing MediaBoxes
+    for page in pdf_output.pages:
+        if page.mediabox is None:
+            page.mediabox = pikepdf.Array((0, 0, 612, 792))
+
+    # We don't need to call _append_page as the Job interface copies pages / annotations as necessary.
+    mediaboxes:List[pikepdf.Rectangle] = []
+    i = 0
+    for page in pages:
+        if quit_flag is not None and quit_flag.is_set():
+            return
+        mediaboxes.append(pikepdf.Rectangle(pdf_output.pages[i].mediabox))
+        _apply_geom_transform_job(pdf_output, pdf_output.pages[i], page)
+        for lpage in page.layerpages:
+            i += 1
+            _apply_geom_transform_job(pdf_output, pdf_output.pages[i], lpage)
+        i += 1
+
+    # # Add overlays and underlays
+    for i, page in enumerate(pages):
+        # The dest page coordinates and size before geometrical transformations
+        mb = mediaboxes[i]
+
+        # Call to rotate in _apply_geom_transform_job ensures /Rotate exists
+        rotate_times = int(round((pdf_output.pages[i].Rotate % 360) / 90) % 4)
+        for lpage in page.layerpages:
+            # Rotate the offsets so they are relative to dest page
+            offset = lpage.offset.rotated(rotate_times)
+            offs_left, offs_right, offs_top, offs_bottom = offset
+            x1 = page.scale * (mb.llx + mb.width * offs_left)
+            y1 = page.scale * (mb.lly + mb.height * offs_bottom)
+            x2 = page.scale * (mb.llx + mb.width * (1 - offs_right))
+            y2 = page.scale * (mb.lly + mb.height * (1 - offs_top))
+            rect = pikepdf.Rectangle(x1, y1, x2, y2)
+
+            if lpage.laypos == 'OVERLAY':
+                pdf_output.pages[i].add_overlay(pdf_output.pages[i + 1], rect)
+            else:
+                pdf_output.pages[i].add_underlay(pdf_output.pages[i + 1], rect)
+            # Remove the temporary added page
+            del pdf_output.pages[i + 1]
+
+
+
+def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
@@ -375,16 +465,87 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag):
             outpdf.save(files_out[n])
     else:
         if isinstance(files_out[0], str):
-            _set_meta(mdata, pdf_input, pdf_output)
+            if not test_mode:
+                _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
-        pdf_output.save(files_out[0])
+        if test_mode:
+            pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
+                            stream_decode_level=pikepdf.StreamDecodeLevel.all)
+        else:
+            pdf_output.save(files_out[0])
 
 
-def export(files, pages, mdata, files_out, quit_flag, _export_msg):
+def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) -> None:
+    """Create an entry for the job json "pages" list."""
+    pages_entry = {"file": files[page.nfile - 1][0],  # copyname
+                   "range": str(page.npage)}
+    if len(files[page.nfile - 1][1]) > 0:
+        pages_entry["password"] = files[page.nfile - 1][1]
+    json["pages"].append(pages_entry)
+
+
+def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str], quit_flag=None,
+                test_mode: bool = False):
+    """ Same as _copy_n_transform, except it use the pikepdf Job interface. Requires pikepdf >= 8.0 """
+    # Generate the output PDF file including temporary overlay/ underlay pages. We don't need to call
+    # _append_page as the Job interface copies pages / annotations as necessary. We can also delay getting
+    # our MediaBoxes until the transformation stage.
+    json = dict(outputFile=files_out[0], pages=[], removeUnreferencedResources="yes")
+    if test_mode:
+        json.update(qdf="", staticId="", compressStreams="n", decodeLevel="all")
+    if len(files) > 0 and len(files[0][0]) > 0:
+        json["inputFile"] = files[0][0]  # We are treating files [0] as the main document
+        if len(files[0][1]) > 0:
+            json["password"] = files[0][1]
+    else:
+        json["inputFile"] = "."
+
+    for page in pages:
+        if quit_flag is not None and quit_flag.is_set():
+            return None
+        _add_json_entries(json, files, page)
+        for lpage in page.layerpages:
+            # Layer pages are temporarily added after the page they belong to
+            _add_json_entries(json, files, lpage)
+    return pikepdf.Job(json)
+
+
+def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: List[Page], mdata, files_out: List[str],
+                   quit_flag, test_mode: bool = False) -> None:
+    """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
+    job = _create_job(files, pages, files_out, quit_flag, test_mode)
+    pdf_output = job.create_pdf()
+
+    _transform_job(pdf_output, pages, quit_flag)
+
+    if quit_flag is not None and quit_flag.is_set():
+        return
+    if isinstance(files_out[0], str):
+        # Only needed when saving to file, not when printing
+        mdata = metadata.merge_doc(mdata, pdf_input)
+    if len(files_out) > 1:
+        for n, page in enumerate(pdf_output.pages):
+            if quit_flag is not None and quit_flag.is_set():
+                return
+            outpdf = pikepdf.Pdf.new()
+            _set_meta(mdata, pdf_input, outpdf)
+            outpdf.pages.append(page)
+            _remove_unreferenced_resources(outpdf)
+            outpdf.save(files_out[n])
+    else:
+        if isinstance(files_out[0], str) and not test_mode:
+            _set_meta(mdata, [pdf_output], pdf_output)
+        job.write_pdf(pdf_output)
+
+
+def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
-    export_doc(pdf_input, pages, mdata, files_out, quit_flag)
+    if version.parse(pikepdf.__version__) < version.Version("8.0"):
+        export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
+    else:
+        export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode)
 
 
 def num_pages(filepath):
@@ -399,9 +560,14 @@ def num_pages(filepath):
 
 
 def generate_booklet(pdfqueue, tmp_dir, pages):
+    pre_pike_2_7 = version.parse(pikepdf.__version__) < version.Version('2.7.0')
     file, filename = make_tmp_file(tmp_dir)
     content_dict = pikepdf.Dictionary({})
-    file_indexes = {p.nfile for p in pages}
+    file_indexes = set()
+    for p in pages:
+        file_indexes.add(p.nfile)
+        for lp in p.layerpages:
+            file_indexes.add(lp.nfile)
     source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
     _copy_n_transform(source_files, file, pages)
     to_remove = len(file.pages)
@@ -443,7 +609,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
             )
 
         # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-        if pikepdf.__version__ < '2.7.0':
+        if pre_pike_2_7:
             newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
     for __ in range(to_remove):
@@ -464,6 +630,8 @@ class PrintOperation(Gtk.PrintOperation):
         self.connect("preview", self.preview, None)
         self.pdf_input = None
         self.message = self.MESSAGE
+        self.pages = [row[0].duplicate(incl_thumbnail=False) for row in app.model]
+        app.apply_hide_margins_on_pages(self.pages)
 
     def preview(self, operation, preview_op, print_ctx, parent, user_data):
         self.message = _("Rendering Preview…")
@@ -473,11 +641,11 @@ class PrintOperation(Gtk.PrintOperation):
         self.app.set_export_state(True, self.message)
         # Open pikepdf objects for all pages that has been modified
         nfiles = set()
-        for row in self.app.model:
-            if row[0].unmodified():
+        for p in self.pages:
+            if p.unmodified():
                 continue
-            nfiles.add(row[0].nfile)
-            for lp in row[0].layerpages:
+            nfiles.add(p.nfile)
+            for lp in p.layerpages:
                 nfiles.add(lp.nfile)
         self.pdf_input = [None] * len(self.app.pdfqueue)
         for nfile in nfiles:
@@ -494,7 +662,7 @@ class PrintOperation(Gtk.PrintOperation):
         cairo_ctx.scale(print_ctx.get_dpi_x() / 72, print_ctx.get_dpi_y() / 72)
         if page_num >= len(self.app.model):
             return
-        p = self.app.model[page_num][0]
+        p = self.pages[page_num]
         if p.unmodified():
             pdfdoc = self.app.pdfqueue[p.nfile - 1]
             page = pdfdoc.document.get_page(p.npage - 1)

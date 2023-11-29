@@ -6,6 +6,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PDFARRANGER_COVERAGE: 1
+    steps:
+    - run: sudo apt-get update
+    - name: Install APT packages
+      run: sudo apt-get -y install gettext appstream python3-dogtail desktop-file-utils xvfb gir1.2-poppler-0.18
+    - uses: actions/checkout@v3
+    - name: Upgrade pip
+      run: pip install --upgrade pip
+    - name: Install
+      run: pip3 install -v --upgrade .[image] coverage
+    - name: AppStream
+      run: appstreamcli validate $HOME/.local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
+    - name: Validate Desktop File
+      run: desktop-file-validate $HOME/.local/share/applications/com.github.jeromerobert.pdfarranger.desktop
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
+    # Convert to lcov because it's compatible with codecov AND can be combine
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    # Upload for later use (see upload-to-codecov job)
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ppp-lcov
+        path: coverage.lcov
+  build-pikepdf-4:
+    runs-on: ubuntu-latest
     # PikePDF 4.4.1
     container: jeromerobert/pdfarranger-docker-ci:1.4.1
     env:
@@ -13,45 +44,78 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
+      run: pip3 install -v .[image]
     - name: AppStream
       run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
       run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
-    - name: Tests and Coverage
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
-    - name: Combine Coverage
-      run: python3 -m coverage combine
-    - name: Codecov
-      run: curl -s https://codecov.io/bash | bash
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    - uses: actions/upload-artifact@v3
+      with:
+        name: pp4-lcov
+        path: coverage.lcov
   build-pikepdf-6:
     runs-on: ubuntu-latest
     # PikePDF 6.0.1
     container: jeromerobert/pdfarranger-docker-ci:1.5.0
+    env:
+      PDFARRANGER_COVERAGE: 1
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
-    - name: Tests
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
-  build-old-pikepdf:
+      run: pip3 install -v .[image]
+    - name: Dogtail Tests and Coverage
+      run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+    - name: Exporter Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Core Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
+    - name: Convert to lcov
+      run: python3 -m coverage combine && python3 -m coverage lcov
+    - uses: actions/upload-artifact@v3
+      with:
+        name: pp6-lcov
+        path: coverage.lcov
+  upload-to-codecov:
+    # Upload to a codecov in a dedicated job to avoid races
+    needs: [build, build-pikepdf-4, build-pikepdf-6]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install lcov
+        run: sudo apt-get -y install lcov
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+      - name: Combine Coverage
+        run: lcov -a ppp-lcov/coverage.lcov -a pp6-lcov/coverage.lcov -a pp4-lcov/coverage.lcov -o lcov.info
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+  build-pikepdf-1:
     runs-on: ubuntu-latest
     # PikePDF 1.19
     container: jeromerobert/pdfarranger-docker-ci:1.3.1
     steps:
     - uses: actions/checkout@v3
     - name: Install
-      run: pip3 install .[image]
+      run: pip3 install -v .[image]
     - name: Tests
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-win32:
     runs-on: ubuntu-latest
     container:
-      image: jeromerobert/wine-mingw64:1.8.1
+      image: jeromerobert/wine-mingw64:1.9.0
       options: --user root
     steps:
     - uses: actions/checkout@v3
-    - run: ./setup.py build
+    - run: ./setup.py build -v
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v3

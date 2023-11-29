@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the pdfarranger package.
 # Translators:
 # Konstantinos Poulios, 2008-2017
-# David Auer, 2020
+# David Auer, 2023
 # Milo Ivir <mail@milotype.de>, 2020, 2021
 # Dr. Tobias Quathamer <toddy@debian.org>, 2021
 # David Kyburz, 2022, 2023.
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
 "PO-Revision-Date: 2023-04-04 01:43+0200\n"
-"Last-Translator: David Kyburz\n"
+"Last-Translator: David Auer\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "(Erfordert Neustart)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(die gleiche Verschiebung wird auf alle Seiten angewendet)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
@@ -90,7 +90,7 @@ msgstr "Unten"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "Unten nach Oben"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
@@ -206,7 +206,7 @@ msgstr "Zu öffnende Datei(en)"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "Weitere Optionen in der Konfigurationsdatei:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -235,7 +235,7 @@ msgstr "Höhe in %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -243,7 +243,7 @@ msgstr "Waagerechte Teilungen"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Horizontale Verschiebung"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -288,7 +288,7 @@ msgstr "Sprache"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Layout der ersten ausgewählten Seite"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -296,7 +296,7 @@ msgstr "Links"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "Links nach Rechts"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -308,15 +308,15 @@ msgstr "Hauptentwickler und Mitwirkende"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Seitenrand"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Seiten zusammenfügen"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Größe der zusammengefügten Seiten:"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -324,7 +324,7 @@ msgstr "Geändert"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Uneinheitliche Seitengröße - die größte Seite ist maßgeblich"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -336,7 +336,7 @@ msgstr "Öffnen …"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "Overlay"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -360,7 +360,7 @@ msgstr "PDF-Dateien"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Sortierung"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -388,7 +388,7 @@ msgstr "Spezielles Ein_fügen"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Als _Overlay einfügen …"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -400,7 +400,7 @@ msgstr "Als _ungerade Seiten einfügen"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Als _Hintergrund einfügen …"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -416,7 +416,7 @@ msgstr "Eingefügte Daten sind ungültig. Einfügen wird abgebrochen."
 
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
-msgstr ""
+msgstr "Für die Funktionen Overlay, Hintergrund und Zusammenfügen wird Pikepdf ab Version 3 benötigt."
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
@@ -468,7 +468,7 @@ msgstr "Rechts"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "Rechts nach Links"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -591,11 +591,11 @@ msgstr "Oben"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "Oben nach Unten"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "Hintergrund"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -607,7 +607,7 @@ msgstr "Wert"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikal"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -615,7 +615,7 @@ msgstr "Senkrechte Teilungen"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Vertikale Verschiebung"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -694,7 +694,7 @@ msgstr "Auswahl _umkehren"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "Seiten _zusammenfügen…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -702,7 +702,7 @@ msgstr "_Neues Fenster"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_Ok"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"

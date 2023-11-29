@@ -22,11 +22,14 @@
 
 from setuptools import Command
 from setuptools import setup
-# for the time being do not use setuptools.command because:
-# * setuptools is to old in many distro (ex: Ubuntu 22.04)
-# * The Fedora package relies on wheel so it would not contains translation and
-#   icons
-from distutils.command.build import build
+from setuptools import __version__ as setuptools_version
+
+# support distros that ship old setuptools
+setuptools_version = tuple(int(n) for n in setuptools_version.split('.')[:2])
+if setuptools_version < (65, 2):
+    from distutils.command.build import build
+else:
+    from setuptools.command.build import build
 
 from os.path import join
 import glob
@@ -111,13 +114,14 @@ setup(
     data_files=data_files,
     zip_safe=False,
     cmdclass={
+        "build": build,
         "build_i18n": build_i18n,
         "build_icons": build_icons,
     },
     entry_points={
         'console_scripts': ['pdfarranger=pdfarranger.pdfarranger:main']
     },
-    install_requires=['pikepdf>=1.17.0','python-dateutil>=2.4.0'],
+    install_requires=['pikepdf>=1.17.0','python-dateutil>=2.4.0', 'packaging'],
     extras_require={
         'image': ['img2pdf>=0.3.4'],
     },

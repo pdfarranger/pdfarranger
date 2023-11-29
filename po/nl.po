@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2022-08-01 18:02+0200\n"
+"PO-Revision-Date: 2023-06-11 14:36+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr "#Kol"
+msgstr "#Kol."
 
 #: pdfarranger/splitter.py:87
 msgid "#Row"
@@ -35,12 +35,10 @@ msgid "%"
 msgstr "%"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of height"
 msgstr "% van de hoogte"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of width"
 msgstr "% van de breedte"
 
@@ -52,20 +50,20 @@ msgstr ""
 
 #: pdfarranger/config.py:232
 msgid "(Libhandy missing)"
-msgstr ""
+msgstr "(Libhandy ontbreekt)"
 
 #: pdfarranger/config.py:224
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(herstart vereist)"
 
 #: pdfarranger/pageutils.py:461
 msgid "(same offset is applied to all pages)"
-msgstr ""
+msgstr "(deze verschuiving geldt voor alle pagina's)"
 
 #: pdfarranger/pdfarranger.py:1130
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr ""
+msgstr "Er is al een bestand genaamd “%s”. Wilt u dit vervangen?"
 
 #: data/menu.ui:189 data/menu.ui:332
 msgid "All From _Same File"
@@ -89,7 +87,7 @@ msgstr "Onder"
 
 #: pdfarranger/pageutils.py:380
 msgid "Bottom to Top"
-msgstr ""
+msgstr "Van onder naar boven"
 
 #: pdfarranger/core.py:386
 msgid "Clipboard image"
@@ -206,7 +204,7 @@ msgstr "Te openen bestand(en)"
 
 #: pdfarranger/config.py:237
 msgid "For more options see:"
-msgstr ""
+msgstr "Ga voor meer opties naar:"
 
 #: pdfarranger/exporter.py:192
 msgid "Forms and outlines are lost on saving."
@@ -235,7 +233,7 @@ msgstr "Hoogte, in %"
 
 #: pdfarranger/pageutils.py:375
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontaal"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
@@ -243,7 +241,7 @@ msgstr "Horizontale splitsingen"
 
 #: pdfarranger/pageutils.py:476
 msgid "Horizontal offset"
-msgstr ""
+msgstr "Horizontale verschuiving"
 
 #: pdfarranger/core.py:377
 msgid "Image files are only supported with img2pdf"
@@ -285,11 +283,11 @@ msgstr "Trefwoorden"
 
 #: pdfarranger/config.py:222
 msgid "Language"
-msgstr ""
+msgstr "Taal"
 
 #: pdfarranger/pageutils.py:460
 msgid "Layout for the first page in selection"
-msgstr ""
+msgstr "Indeling van de eerste pagina van de selectie"
 
 #: pdfarranger/pageutils.py:149
 msgid "Left"
@@ -297,7 +295,7 @@ msgstr "Links"
 
 #: pdfarranger/pageutils.py:377
 msgid "Left to Right"
-msgstr ""
+msgstr "Van links naar rechts"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
@@ -309,15 +307,15 @@ msgstr "Onderhouders en bijdragers"
 
 #: pdfarranger/pageutils.py:361
 msgid "Margin"
-msgstr ""
+msgstr "Marge"
 
 #: pdfarranger/pageutils.py:347
 msgid "Merge Pages"
-msgstr ""
+msgstr "Pagina's samenvoegen"
 
 #: pdfarranger/pageutils.py:412
 msgid "Merged page size:"
-msgstr ""
+msgstr "Samengevoegde paginagrootte:"
 
 #: pdfarranger/metadata.py:49
 msgid "Modified"
@@ -325,7 +323,7 @@ msgstr "Aangepast op"
 
 #: pdfarranger/pageutils.py:392
 msgid "Non-uniform page size - using max size"
-msgstr ""
+msgstr "Inconsistente paginagrootte - de max. grootte wordt gebruikt"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -337,7 +335,7 @@ msgstr "Openen…"
 
 #: pdfarranger/pageutils.py:436
 msgid "Overlay"
-msgstr ""
+msgstr "Bovenste laag"
 
 #: pdfarranger/pdfarranger.py:282
 msgid ""
@@ -361,7 +359,7 @@ msgstr "PDF-bestanden"
 
 #: pdfarranger/pageutils.py:388
 msgid "Page Order"
-msgstr ""
+msgstr "Paginavolgorde"
 
 #: pdfarranger/pageutils.py:241
 msgid "Page Size"
@@ -389,7 +387,7 @@ msgstr "Sp_eciaal plakken"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr ""
+msgstr "Plakken als b_ovenste laag…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -401,7 +399,7 @@ msgstr "Plakken als _oneven pagina's"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr ""
+msgstr "Plakken als on_derste laag…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -418,14 +416,15 @@ msgstr "De geplakte gegevens zijn ongeldig - het plakken wordt afgebroken."
 #: pdfarranger/pdfarranger.py:1589
 msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
 msgstr ""
+"Pikepdf >= 3 is vereist om pagina's samen te voegen en op te delen in lagen."
 
 #: data/menu.ui:234
 msgid "Pre_ferences"
-msgstr ""
+msgstr "_Voorkeuren"
 
 #: pdfarranger/config.py:212
 msgid "Preferences"
-msgstr ""
+msgstr "Voorkeuren"
 
 #: pdfarranger/pdfarranger.py:293
 msgid "Print the version of PDF Arranger and exit"
@@ -461,7 +460,7 @@ msgstr "Bezig met samenstellen…"
 
 #: pdfarranger/pdfarranger.py:1132
 msgid "Replace"
-msgstr ""
+msgstr "Vervangen"
 
 #: pdfarranger/pageutils.py:149
 msgid "Right"
@@ -469,7 +468,7 @@ msgstr "Rechts"
 
 #: pdfarranger/pageutils.py:378
 msgid "Right to Left"
-msgstr ""
+msgstr "Van rechts naar links"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
@@ -565,7 +564,7 @@ msgstr "Ondersteunde afbeeldingsbestanden"
 
 #: pdfarranger/config.py:248 pdfarranger/config.py:256
 msgid "System setting"
-msgstr ""
+msgstr "Systeemvoorkeur"
 
 #: pdfarranger/core.py:275
 msgid ""
@@ -578,7 +577,7 @@ msgstr "PDF Arranger bewaart het wachtwoord totdat u afsluit."
 
 #: pdfarranger/config.py:230
 msgid "Theme"
-msgstr ""
+msgstr "Thema"
 
 #: pdfarranger/metadata.py:42
 msgid "Title"
@@ -590,11 +589,11 @@ msgstr "Boven"
 
 #: pdfarranger/pageutils.py:379
 msgid "Top to Bottom"
-msgstr ""
+msgstr "Van boven naar onder"
 
 #: pdfarranger/pageutils.py:436
 msgid "Underlay"
-msgstr ""
+msgstr "Onderste laag"
 
 #: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
 msgid "Unknown file format"
@@ -606,7 +605,7 @@ msgstr "Waarde"
 
 #: pdfarranger/pageutils.py:376
 msgid "Vertical"
-msgstr ""
+msgstr "Verticaal"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
@@ -614,7 +613,7 @@ msgstr "Verticale splitsingen"
 
 #: pdfarranger/pageutils.py:478
 msgid "Vertical offset"
-msgstr ""
+msgstr "Verticale verschuiving"
 
 #: pdfarranger/exporter.py:187
 msgid "Warning"
@@ -693,7 +692,7 @@ msgstr "Selectie _omkeren"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr ""
+msgstr "Pagina's sa_menvoegen…"
 
 #: data/menu.ui:36
 msgid "_New Window"
@@ -701,7 +700,7 @@ msgstr "_Nieuw venster"
 
 #: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
 msgid "_OK"
-msgstr ""
+msgstr "_Oké"
 
 #: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
 msgid "_Open"

@@ -1,0 +1,99 @@
+name: pdfarranger
+base: core22
+adopt-info: pdfarranger
+grade: stable
+confinement: strict
+compression: lzo
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+slots:
+  pdfarranger:
+    interface: dbus
+    bus: session
+    name: com.github.jeromerobert.pdfarranger
+plugs:
+  shared-memory:
+    private: true
+
+apps:
+  pdfarranger:
+    command: usr/bin/pdfarranger
+    desktop: usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
+    extensions:
+      - gnome
+    plugs:
+      - home
+    common-id: com.github.jeromerobert.pdfarranger
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
+parts:
+  pdfarranger:
+    plugin: python
+    source: https://github.com/pdfarranger/pdfarranger.git
+    parse-info:
+      - usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
+    source-depth: 1
+    python-packages:
+      - distutils-extra-python==2.39.2
+      - lxml==4.9.2
+      - packaging==23.1
+      - pillow==9.5.0
+      - pybind11==2.10.4
+      - setuptools-scm==7.1.0
+      - tomli==2.0.1
+      - typing_extensions==4.6.3
+      - deprecation==2.1.0
+      - pikepdf==7.2.0
+      - python_dateutil==2.8.2
+      - img2pdf==0.4.4
+    build-environment:
+      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
+      - PYTHONPATH: ''
+    build-packages:
+      - intltool
+    prime:
+      - -usr/bin/activate
+      - -usr/bin/activate.csh
+      - -usr/bin/activate.fish
+      - -usr/bin/Activate.ps1
+      - -usr/bin/python
+      - -usr/bin/python3
+      - -usr/bin/python3.10
+      - -usr/bin/pip
+      - -usr/bin/pip3
+      - -usr/bin/pip3.10
+      - -pyvenv.cfg
+      - -include
+      - -etc
+      - -lib
+      - -usr/lib/python3.10/site-packages/distutils_extra_python-2.39.2.dist-info
+      - -usr/lib/python3.10/site-packages/_distutils_hack
+      - -usr/lib/python3.10/site-packages/pikepdf.libs
+      - -usr/lib/python3.10/site-packages/Pillow.libs
+      - -usr/lib/python3.10/site-packages/pip*
+      - -usr/lib/python3.10/site-packages/pkg_re*
+      - -usr/lib/python3.10/site-packages/setuptools
+      - -usr/lib/python3.10/site-packages/setuptools-59*
+      - -usr/lib/python3.10/site-packages/six*
+      - -lib64
+    organize:
+      bin: usr/bin
+      share: usr/share
+      lib/python3.10/site-packages: usr/lib/python3.10/dist-packages
+  deps:
+    plugin: nil
+    stage-packages:
+      - gir1.2-poppler-0.18
+      - libpoppler118
+      - libpoppler-glib8
+      - libqpdf28
+    prime:
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Poppler-0.18.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libpoppler.so.118
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libpoppler.so.118.0.0
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libpoppler-glib.so.8
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libpoppler-glib.so.8.23.0
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libqpdf.so.28
+      - usr/lib/$CRAFT_ARCH_TRIPLET/libqpdf.so.28.6.3
