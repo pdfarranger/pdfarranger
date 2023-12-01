@@ -1419,8 +1419,6 @@ class PdfArranger(Gtk.Application):
         pageadder = PageAdder(self)
         if ref_to:
             pageadder.move(ref_to, before)
-        if not before and ref_to:
-            data.reverse()
 
         for d in data:
             pageadder.addpages(*d)
@@ -1496,7 +1494,7 @@ class PdfArranger(Gtk.Application):
         pastemodes = {0: 'AFTER', 1: 'BEFORE', 2: 'ODD', 3: 'EVEN', 4: 'OVERLAY', 5: 'UNDERLAY'}
         pastemode = pastemodes[mode.get_int32()]
 
-        ref_to, before = self.set_paste_location(pastemode, data_is_filepaths)
+        ref_to, before = self.set_paste_location(pastemode)
 
         if pastemode in ['AFTER', 'BEFORE']:
             if data_is_filepaths:
@@ -1704,7 +1702,7 @@ class PdfArranger(Gtk.Application):
                 d.append((filename, npage, basename, angle, scale, crop, hide, layerdata))
         return d
 
-    def set_paste_location(self, pastemode, data_is_filepaths):
+    def set_paste_location(self, pastemode):
         """Sets reference where pages should be pasted and if before or after that."""
         model = self.iconview.get_model()
 
@@ -1715,17 +1713,10 @@ class PdfArranger(Gtk.Application):
             ref_to = None
         elif pastemode == 'AFTER':
             last_row = model[-1]
+            before = False
             if len(selection) == 0 or selection[-1] == last_row.path:
-                before = False
                 ref_to = None
-            elif data_is_filepaths:
-                before = True
-                path = selection[-1]
-                iter_next = model.iter_next(model.get_iter(path))
-                path_next = model.get_path(iter_next)
-                ref_to = Gtk.TreeRowReference.new(model, path_next)
             else:
-                before = False
                 ref_to = Gtk.TreeRowReference.new(model, selection[-1])
         else:
             if pastemode == 'EVEN':
@@ -1827,7 +1818,7 @@ class PdfArranger(Gtk.Application):
                     imgbufs.append(imgbuf)
         if len(imgbufs) > 0:
             pdf_file_name = _img_to_pdf(imgbufs, self.tmp_dir)
-            ref_to, before = self.set_paste_location(pastemode='AFTER', data_is_filepaths=True)
+            ref_to, before = self.set_paste_location(pastemode='AFTER')
             self.paste_files([pdf_file_name], before, ref_to)
         self.set_export_state(False)
 
