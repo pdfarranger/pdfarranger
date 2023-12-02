@@ -79,7 +79,7 @@ def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
     need to be something else than 1.
     """
     for i, pdfdoc in enumerate(pdfqueue):
-        if size == pdfdoc.blank_size and npages <= pdfdoc.document.get_n_pages():
+        if size == pdfdoc.blank_size and npages == pdfdoc.document.get_n_pages():
             filename = pdfdoc.copyname
             nfile = i + 1
             return filename, nfile
