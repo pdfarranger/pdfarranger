@@ -41,7 +41,7 @@ Language can be selected in the `Preferences` dialog. (PDF Arranger > 1.9.2)
 
 ## Install from source
 
-*PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 1.17.0.
+*PDF Arranger* requires [pikepdf](https://github.com/pikepdf/pikepdf) >= 6.
 Pip will automatically install the latest pikepdf if there is no pikepdf installed on the system.
 
 **On Debian-based distributions**

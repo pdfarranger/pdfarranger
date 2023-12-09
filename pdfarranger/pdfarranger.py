@@ -148,7 +148,6 @@ from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, Ico
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
-layer_support = exporter.layer_support()
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
@@ -1607,12 +1606,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def is_paste_layer_available(self, selection):
-        if len(selection) == 0:
-            return False
-        if not layer_support:
-            msg = _("Pikepdf >= 3 is needed for overlay/underlay/merge/hide margins support.")
-            self.error_message_dialog(msg)
-        return layer_support
+        return len(selection) > 0
 
     def read_from_clipboard(self):
         """Read and pre-process data from clipboard.
