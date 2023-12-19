@@ -2225,6 +2225,7 @@ class PdfArranger(Gtk.Application):
             return Gdk.EVENT_STOP
         if self.config.is_popup_key_event(event):
             self.popup.popup(None, None, None, None, 0, event.time)
+            return Gdk.EVENT_STOP
         return Gdk.EVENT_PROPAGATE
 
     def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
