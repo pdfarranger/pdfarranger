@@ -58,7 +58,7 @@ _DEFAULT_ACCELS = [
     ('select(1)', '<Primary><Shift>a'),
     ('main-menu', 'F10'),
     ('metadata', '<Alt>Return'),
-    ('context-menu', '<Shift>F10 Multi_key'),
+    ('context-menu', '<Shift>F10 Menu'),
 ]
 
 
@@ -128,7 +128,8 @@ class Config(object):
 
     def is_popup_key_event(self, keyevent):
         for key, mods in self.popup_menu_accels:
-            if keyevent.state == mods and keyevent.keyval == key:
+            # `& mods` lets us ignore all other modifiers (e.g. numlock)
+            if keyevent.state & mods == mods and keyevent.keyval == key:
                 return True
         return False
 
