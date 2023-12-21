@@ -283,7 +283,10 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _popupmenu(self, page, action):
         """Run an action on a give page using the popup menu"""
-        self._icons()[page].click(button=3)
+        if page is None:
+            self._app().keyCombo("<shift>F10")
+        else:
+            self._icons()[page].click(button=3)
         popupmenu = self._app().child(roleName="window")
         if not isinstance(action, str):
             for submenu in action[:-1]:
@@ -449,7 +452,7 @@ class TestBatch1(PdfArrangerTest):
         self._assert_selected("2")
 
     def test_06_crop_margins(self):
-        self._popupmenu(0, ["Select", "Select Odd Pages"])
+        self._popupmenu(None, ["Select", "Select Odd Pages"])
         self._assert_selected("1, 3, 5, 7")
         self._popupmenu(0, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
@@ -663,7 +666,7 @@ class TestBatch5(PdfArrangerTest):
         self._start(["tests/test.pdf"])
 
     def test_02_blank_page(self):
-        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(None, ["Select", "Select All"])
         self._popupmenu(0, ["Crop White Borders"])
         self._scale_selected(150)
         self._popupmenu(0, ["Insert Blank Page…"])
