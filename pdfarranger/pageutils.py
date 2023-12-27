@@ -834,7 +834,7 @@ class DrawingAreaWidget(Gtk.Box):
             cr.rectangle(*self.adjust_rect)
             cr.stroke()
 
-        # Invalidiate region
+        # Invalidate region
         ha = self.sw.get_hadjustment()
         va = self.sw.get_vadjustment()
         r = ha.get_value(), va.get_value(), ha.get_page_size(), va.get_page_size()
@@ -948,7 +948,7 @@ class PastePageLayerDialog():
         """Get layer page x and y offset from top-left edge of the destination page.
 
         The offset is the fraction of space positioned at left and top of the pasted layer,
-        where space is the differance in width and height between the layer and the page.
+        where space is the difference in width and height between the layer and the page.
         """
         result = self.dialog.run()
         r = None
