@@ -87,6 +87,9 @@ def _safeiter(elements):
             break
         except ValueError:
             traceback.print_exc()
+        except KeyError:
+            # Workaround for https://github.com/pdfarranger/pdfarranger/issues/1019
+            pass
 
 
 def merge_doc(metadata, input_docs):
