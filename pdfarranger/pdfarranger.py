@@ -1558,7 +1558,7 @@ class PdfArranger(Gtk.Application):
             self.undomanager.commit("Add Layer")
             self.set_unsaved(True)
 
-        off_x, off_y = offset_xy  # Fraction of the page size differance at left & top
+        off_x, off_y = offset_xy  # Fraction of the page size difference at left & top
         for num, row in enumerate(reversed(destination)):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
