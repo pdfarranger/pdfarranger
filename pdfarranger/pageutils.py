@@ -295,30 +295,30 @@ def white_borders(model, selection, pdfqueue):
         with pdfdoc.render_lock:
             page.render(cr)
         data = thumbnail.get_data().cast("i")
-        whitecol = memoryview(b"\0" * h * 4).cast("i")
-        whiterow = memoryview(b"\0" * w * 4).cast("i")
+        whitecol = memoryview(b"\0" * (last_row - first_row) * 4).cast("i")
+        whiterow = memoryview(b"\0" * (last_col - first_col) * 4).cast("i")
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
         # Left
         for col in range(first_col, last_col):
-            if data[col::w] != whitecol:
+            if data[col::w][first_row:last_row] != whitecol:
                 crop_this_page[0] = col / w
                 break
 
         # Right
         for col in range(last_col - 1, first_col - 1, -1):
-            if data[col::w] != whitecol:
+            if data[col::w][first_row:last_row] != whitecol:
                 crop_this_page[1] = (w - col) / w
                 break
 
         # Top
         for row in range(first_row, last_row):
-            if data[row * w : (row + 1) * w] != whiterow:
+            if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
                 crop_this_page[2] = (row) / h
                 break
 
         # Bottom
         for row in range(last_row - 1, first_row - 1, -1):
-            if data[row * w : (row + 1) * w] != whiterow:
+            if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
                 crop_this_page[3] = (h - row) / h
                 break
 
