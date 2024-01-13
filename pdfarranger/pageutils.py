@@ -301,25 +301,25 @@ def white_borders(model, selection, pdfqueue):
         # Left
         for col in range(first_col, last_col):
             if data[col::w][first_row:last_row] != whitecol:
-                crop_this_page[0] = col / w
+                crop_this_page[0] = (col - 1) / w
                 break
 
         # Right
         for col in range(last_col - 1, first_col - 1, -1):
             if data[col::w][first_row:last_row] != whitecol:
-                crop_this_page[1] = (w - col) / w
+                crop_this_page[1] = (w - col - 1) / w
                 break
 
         # Top
         for row in range(first_row, last_row):
             if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
-                crop_this_page[2] = (row) / h
+                crop_this_page[2] = (row - 1) / h
                 break
 
         # Bottom
         for row in range(last_row - 1, first_row - 1, -1):
             if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
-                crop_this_page[3] = (h - row) / h
+                crop_this_page[3] = (h - row - 1) / h
                 break
 
         crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
