@@ -22,6 +22,8 @@ import gettext
 from gi.repository import Gdk
 from gi.repository import Gtk
 
+from .exporter import PrintSettingsWidget
+
 _ = gettext.gettext
 
 # See https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.23/gdk/keynames.txt for list of keys
@@ -113,6 +115,8 @@ class Config(object):
         self.data.read(Config._config_file(domain))
         if 'preferences' not in self.data:
             self.data.add_section('preferences')
+        if 'print-settings' not in self.data:
+            self.data.add_section('print-settings')
         if 'accelerators' not in self.data:
             self.data.add_section('accelerators')
         a = self.data['accelerators']
@@ -185,6 +189,18 @@ class Config(object):
     def set_theme(self, theme):
         self.data.set('preferences', 'theme', theme)
 
+    def scale_mode(self):
+        return self.data.get('print-settings', 'scale-mode', fallback="PRINTABLE")
+
+    def set_scale_mode(self, mode):
+        self.data.set('print-settings', 'scale-mode', mode)
+
+    def auto_rotate(self):
+        return self.data.getboolean('print-settings', 'auto-rotate', fallback=False)
+
+    def set_auto_rotate(self, enabled):
+        self.data.set('print-settings', 'auto-rotate', str(enabled))
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
@@ -222,7 +238,7 @@ class Config(object):
         ]
 
     def preferences_dialog(self, parent, localedir, handy_available):
-        """A dialog where language and theme can be selected."""
+        """A dialog for some application preferences."""
         d = Gtk.Dialog(title=_("Preferences"),
                        parent=parent,
                        flags=Gtk.DialogFlags.MODAL,
@@ -248,11 +264,15 @@ class Config(object):
         hbox2.pack_start(label2, False, False, 8)
         frame2.add(hbox2)
         d.vbox.pack_start(frame2, False, False, 8)
-        t = _("For more options see:")
-        frame3 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
-        label3 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
-        frame3.add(label3)
+        frame3 = Gtk.Frame(label=_("Printing"), margin=8)
+        psettings = PrintSettingsWidget(self.scale_mode(), self.auto_rotate())
+        frame3.add(psettings)
         d.vbox.pack_start(frame3, False, False, 8)
+        t = _("For more options see:")
+        frame4 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
+        label4 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
+        frame4.add(label4)
+        d.vbox.pack_start(frame4, False, False, 8)
 
         langs = []
         if os.path.isdir(localedir):
@@ -286,4 +306,6 @@ class Config(object):
             num2 = combo2.get_active()
             theme = themes[num2] if num2 != 0 else ""
             self.set_theme(theme)
+            self.set_scale_mode(psettings.get_scale_mode())
+            self.set_auto_rotate(psettings.get_auto_rotate())
         d.destroy()
