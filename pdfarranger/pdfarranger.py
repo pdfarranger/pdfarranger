@@ -148,7 +148,6 @@ from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, Ico
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 GObject.type_register(CellRendererImage)
 
-layer_support = exporter.layer_support()
 
 def _install_workaround_bug29():
     """ Install a workaround for https://gitlab.gnome.org/GNOME/pygobject/issues/29 """
@@ -1419,8 +1418,6 @@ class PdfArranger(Gtk.Application):
         pageadder = PageAdder(self)
         if ref_to:
             pageadder.move(ref_to, before)
-        if not before and ref_to:
-            data.reverse()
 
         for d in data:
             pageadder.addpages(*d)
@@ -1496,7 +1493,7 @@ class PdfArranger(Gtk.Application):
         pastemodes = {0: 'AFTER', 1: 'BEFORE', 2: 'ODD', 3: 'EVEN', 4: 'OVERLAY', 5: 'UNDERLAY'}
         pastemode = pastemodes[mode.get_int32()]
 
-        ref_to, before = self.set_paste_location(pastemode, data_is_filepaths)
+        ref_to, before = self.set_paste_location(pastemode)
 
         if pastemode in ['AFTER', 'BEFORE']:
             if data_is_filepaths:
@@ -1560,7 +1557,7 @@ class PdfArranger(Gtk.Application):
             self.undomanager.commit("Add Layer")
             self.set_unsaved(True)
 
-        off_x, off_y = offset_xy  # Fraction of the page size differance at left & top
+        off_x, off_y = offset_xy  # Fraction of the page size difference at left & top
         for num, row in enumerate(reversed(destination)):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
@@ -1609,12 +1606,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def is_paste_layer_available(self, selection):
-        if len(selection) == 0:
-            return False
-        if not layer_support:
-            msg = _("Pikepdf >= 3 is needed for overlay/underlay/merge/hide margins support.")
-            self.error_message_dialog(msg)
-        return layer_support
+        return len(selection) > 0
 
     def read_from_clipboard(self):
         """Read and pre-process data from clipboard.
@@ -1704,7 +1696,7 @@ class PdfArranger(Gtk.Application):
                 d.append((filename, npage, basename, angle, scale, crop, hide, layerdata))
         return d
 
-    def set_paste_location(self, pastemode, data_is_filepaths):
+    def set_paste_location(self, pastemode):
         """Sets reference where pages should be pasted and if before or after that."""
         model = self.iconview.get_model()
 
@@ -1715,17 +1707,10 @@ class PdfArranger(Gtk.Application):
             ref_to = None
         elif pastemode == 'AFTER':
             last_row = model[-1]
+            before = False
             if len(selection) == 0 or selection[-1] == last_row.path:
-                before = False
                 ref_to = None
-            elif data_is_filepaths:
-                before = True
-                path = selection[-1]
-                iter_next = model.iter_next(model.get_iter(path))
-                path_next = model.get_path(iter_next)
-                ref_to = Gtk.TreeRowReference.new(model, path_next)
             else:
-                before = False
                 ref_to = Gtk.TreeRowReference.new(model, selection[-1])
         else:
             if pastemode == 'EVEN':
@@ -1827,7 +1812,7 @@ class PdfArranger(Gtk.Application):
                     imgbufs.append(imgbuf)
         if len(imgbufs) > 0:
             pdf_file_name = _img_to_pdf(imgbufs, self.tmp_dir)
-            ref_to, before = self.set_paste_location(pastemode='AFTER', data_is_filepaths=True)
+            ref_to, before = self.set_paste_location(pastemode='AFTER')
             self.paste_files([pdf_file_name], before, ref_to)
         self.set_export_state(False)
 
@@ -2222,6 +2207,9 @@ class PdfArranger(Gtk.Application):
             with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
                 self.iv_cursor.handler(iconview, event)
             self.iv_selection_changed_event(None, move_cursor_event=True)
+            return Gdk.EVENT_STOP
+        if self.config.is_popup_key_event(event):
+            self.popup.popup(None, None, None, None, 0, event.time)
             return Gdk.EVENT_STOP
         return Gdk.EVENT_PROPAGATE
 

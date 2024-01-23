@@ -44,29 +44,6 @@ except locale.Error:
     pass  # Gtk already prints a warning
 
 
-def layer_support():
-    """Pikepdf >= 3 has overlay/underlay support in pdfarranger."""
-    layer_support = True
-    pdf1 = pikepdf.Pdf.new()
-    pdf1.add_blank_page()
-    pdf2 = pikepdf.Pdf.new()
-    pdf2.add_blank_page()
-    try:
-        fpage = pdf1.copy_foreign(pdf2.pages[0])
-    except NotImplementedError:
-        # This is pikepdf >= 6
-        pass
-    else:
-        try:
-            pdf1.pages[0].add_overlay(fpage)
-        except AttributeError:
-            # This is pikepdf < 3
-            layer_support = False
-    pdf1.close()
-    pdf2.close()
-    return layer_support
-
-
 def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
     """Search pdfqueue for a matching pdf with blank pages. Create it if it does not exist.
 
@@ -79,7 +56,7 @@ def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
     need to be something else than 1.
     """
     for i, pdfdoc in enumerate(pdfqueue):
-        if size == pdfdoc.blank_size and npages <= pdfdoc.document.get_n_pages():
+        if size == pdfdoc.blank_size and npages == pdfdoc.document.get_n_pages():
             filename = pdfdoc.copyname
             nfile = i + 1
             return filename, nfile
@@ -199,6 +176,7 @@ def _scale(doc, page, factor):
     # It's also needed with pikepdf 4.2 else we get:
     # RuntimeError: QPDFPageObjectHelper::getFormXObjectForPage called with a direct object
     # when calling as_form_xobject in generate_booklet
+    # It's also needed for pikepdf 8.8 but not for pikepdf 6.0.1
     new_page = doc.make_indirect(new_page)
     return new_page
 
@@ -373,12 +351,7 @@ def _append_page(current_page, copied_pages, pdf_output, row):
     """Add a page to the output pdf. A page that already exist is duplicated."""
     new_page = copied_pages.get((row.nfile, row.npage))
     if new_page is None:
-        try:
-            # for backward compatibility with pikepdf <= 3
-            new_page = pdf_output.copy_foreign(current_page)
-        except NotImplementedError:
-            # This is pikepdf >= 6
-            new_page = current_page
+        new_page = current_page
     # let pdf_output adopt new_page
     pdf_output.pages.append(new_page)
     new_page = pdf_output.pages[-1]
@@ -453,12 +426,6 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
                 return
             outpdf = pikepdf.Pdf.new()
             _set_meta(mdata, pdf_input, outpdf)
-            try:
-                # needed to add this, probably related to pikepdf < 2.7.0 workaround
-                page = outpdf.copy_foreign(page)
-            except NotImplementedError:
-                # This is pikepdf >= 6
-                pass
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
@@ -560,7 +527,6 @@ def num_pages(filepath):
 
 
 def generate_booklet(pdfqueue, tmp_dir, pages):
-    pre_pike_2_7 = version.parse(pikepdf.__version__) < version.Version('2.7.0')
     file, filename = make_tmp_file(tmp_dir)
     content_dict = pikepdf.Dictionary({})
     file_indexes = set()
@@ -608,9 +574,6 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
                 Contents=pikepdf.Stream(file, content_txt.encode())
             )
 
-        # workaround for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-        if pre_pike_2_7:
-            newpage = file.make_indirect(newpage)
         file.pages.append(newpage)
     for __ in range(to_remove):
         del file.pages[0]

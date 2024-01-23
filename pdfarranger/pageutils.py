@@ -295,31 +295,31 @@ def white_borders(model, selection, pdfqueue):
         with pdfdoc.render_lock:
             page.render(cr)
         data = thumbnail.get_data().cast("i")
-        whitecol = memoryview(b"\0" * h * 4).cast("i")
-        whiterow = memoryview(b"\0" * w * 4).cast("i")
+        whitecol = memoryview(b"\0" * (last_row - first_row) * 4).cast("i")
+        whiterow = memoryview(b"\0" * (last_col - first_col) * 4).cast("i")
         crop_this_page = [0.0, 0.0, 0.0, 0.0]
         # Left
         for col in range(first_col, last_col):
-            if data[col::w] != whitecol:
-                crop_this_page[0] = col / w
+            if data[col::w][first_row:last_row] != whitecol:
+                crop_this_page[0] = (col - 1) / w
                 break
 
         # Right
         for col in range(last_col - 1, first_col - 1, -1):
-            if data[col::w] != whitecol:
-                crop_this_page[1] = (w - col) / w
+            if data[col::w][first_row:last_row] != whitecol:
+                crop_this_page[1] = (w - col - 1) / w
                 break
 
         # Top
         for row in range(first_row, last_row):
-            if data[row * w : (row + 1) * w] != whiterow:
-                crop_this_page[2] = (row) / h
+            if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
+                crop_this_page[2] = (row - 1) / h
                 break
 
         # Bottom
         for row in range(last_row - 1, first_row - 1, -1):
-            if data[row * w : (row + 1) * w] != whiterow:
-                crop_this_page[3] = (h - row) / h
+            if data[row * w : (row + 1) * w][first_col:last_col] != whiterow:
+                crop_this_page[3] = (h - row - 1) / h
                 break
 
         crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
@@ -834,7 +834,7 @@ class DrawingAreaWidget(Gtk.Box):
             cr.rectangle(*self.adjust_rect)
             cr.stroke()
 
-        # Invalidiate region
+        # Invalidate region
         ha = self.sw.get_hadjustment()
         va = self.sw.get_vadjustment()
         r = ha.get_value(), va.get_value(), ha.get_page_size(), va.get_page_size()
@@ -948,7 +948,7 @@ class PastePageLayerDialog():
         """Get layer page x and y offset from top-left edge of the destination page.
 
         The offset is the fraction of space positioned at left and top of the pasted layer,
-        where space is the differance in width and height between the layer and the page.
+        where space is the difference in width and height between the layer and the page.
         """
         result = self.dialog.run()
         r = None

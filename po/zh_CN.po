@@ -184,7 +184,7 @@ msgstr "导出所选到个体文件(_I)..."
 
 #: data/menu.ui:65 data/menu.ui:408
 msgid "Export _All Pages to Individual Files…"
-msgstr "所有页面导出到单个文件(_A)..."
+msgstr "所有页面导出到个体文件(_A)..."
 
 #: pdfarranger/pdfarranger.py:1088
 msgid "Export…"

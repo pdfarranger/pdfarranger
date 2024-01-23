@@ -17,13 +17,13 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build Snap
         uses: snapcore/action-build@v1
         id: snapcraft-build
         with:
           snapcraft-args: "-v"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.snapcraft-build.outputs.snap }}
           path: ${{ steps.snapcraft-build.outputs.snap }}

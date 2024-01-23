@@ -283,7 +283,10 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _popupmenu(self, page, action):
         """Run an action on a give page using the popup menu"""
-        self._icons()[page].click(button=3)
+        if page is None:
+            self._app().keyCombo("<shift>F10")
+        else:
+            self._icons()[page].click(button=3)
         popupmenu = self._app().child(roleName="window")
         if not isinstance(action, str):
             for submenu in action[:-1]:
@@ -449,7 +452,7 @@ class TestBatch1(PdfArrangerTest):
         self._assert_selected("2")
 
     def test_06_crop_margins(self):
-        self._popupmenu(0, ["Select", "Select Odd Pages"])
+        self._popupmenu(None, ["Select", "Select Odd Pages"])
         self._assert_selected("1, 3, 5, 7")
         self._popupmenu(0, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
@@ -560,7 +563,7 @@ class TestBatch2(PdfArrangerTest):
         if have_pikepdf3():
             self._assert_page_content("alltosingle.pdf", (
                 b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B',
-                b'  /BBox [', b'    69\n', b'    180\n', b'    531\n', b'    581\n',
+                b'  /BBox [', b'    68\n', b'    179\n', b'    532\n', b'    582\n',
                 b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
             self._assert_page_content("alltosingle.pdf", (
                 b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
@@ -663,7 +666,7 @@ class TestBatch5(PdfArrangerTest):
         self._start(["tests/test.pdf"])
 
     def test_02_blank_page(self):
-        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(None, ["Select", "Select All"])
         self._popupmenu(0, ["Crop White Borders"])
         self._scale_selected(150)
         self._popupmenu(0, ["Insert Blank Page…"])
@@ -676,9 +679,9 @@ class TestBatch5(PdfArrangerTest):
         self._popupmenu(0, ["Generate Booklet"])
         self._wait_cond(lambda: len(self._icons()) == 2)
         self._app().child(roleName="layered pane").keyCombo("Home")
-        self._assert_page_size(489, 212.2)
+        self._assert_page_size(491.1, 213.3)
         self._app().child(roleName="layered pane").keyCombo("End")
-        self._assert_page_size(489, 212.2)
+        self._assert_page_size(491.1, 213.3)
 
     def test_04_crop_white_border(self):
         # Test selection with shift+arrow
@@ -686,8 +689,8 @@ class TestBatch5(PdfArrangerTest):
         self._app().child(roleName="layered pane").keyCombo("<shift>Left")
         self._assert_selected("1-2")
         self._popupmenu(0, ["Crop White Borders"])
-        self._assert_page_size(244.1, 211.8, 0)
-        self._assert_page_size(244.1, 211.8, 1)
+        self._assert_page_size(245.2, 213.3, 0)
+        self._assert_page_size(245.2, 213.3, 1)
 
     def test_05_buggy_exif(self):
         """Test img2pdf import with buggy EXIF rotation"""

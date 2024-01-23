@@ -92,10 +92,7 @@ class ExporterTest(unittest.TestCase):
 
     def case(self, test, files, *pages):
         """Run a single test case."""
-        if version.parse(pikepdf.__version__) < version.Version('6.0.1'):
-            # will disappear in v11
-            return
-        elif version.parse(pikepdf.__version__) < version.Version('8.0.0'):
+        if version.parse(pikepdf.__version__) < version.Version('8.0.0'):
             expected_file = file(f'test{test}_out')
         else:
             expected_file = file(f'test{test}_8_out')

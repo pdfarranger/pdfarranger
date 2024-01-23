@@ -714,6 +714,8 @@ class PageAdder:
             if self.pdfqueue_used or len(self.content) > 1 or self.content[0] != 'pdf':
                 self.app.set_unsaved(True)
             self.content = []
+        if not self.before and self.treerowref:
+            self.pages.reverse()
         with self.app.render_lock():
             for p in self.pages:
                 m = [p, p.description()]

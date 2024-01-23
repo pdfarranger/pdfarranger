@@ -58,6 +58,7 @@ _DEFAULT_ACCELS = [
     ('select(1)', '<Primary><Shift>a'),
     ('main-menu', 'F10'),
     ('metadata', '<Alt>Return'),
+    ('context-menu', '<Shift>F10 Menu'),
 ]
 
 
@@ -121,6 +122,16 @@ class Config(object):
         for k, v in _DEFAULT_ACCELS:
             if not enable_custom or k not in a:
                 a[k] = v
+        self.popup_menu_accels = [
+            Gtk.accelerator_parse(x) for x in a["context-menu"].split()
+        ]
+
+    def is_popup_key_event(self, keyevent):
+        for key, mods in self.popup_menu_accels:
+            # `& mods` lets us ignore all other modifiers (e.g. numlock)
+            if keyevent.state & mods == mods and keyevent.keyval == key:
+                return True
+        return False
 
     def window_size(self):
         ds = Gdk.Screen.get_default()
