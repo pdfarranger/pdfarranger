@@ -58,7 +58,7 @@ msgstr "(Potreben pozagon)"
 #: pdfarranger/pdfarranger.py:1142
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr "Datoteka z imenom „%s” že obstaja. Ali jo želite nadomestiti?"
+msgstr "Datoteka z imenom \"%s\" že obstaja. Ali jo želite nadomestiti?"
 
 #: data/menu.ui:227 data/menu.ui:391
 msgid "All From _Same File"
@@ -94,11 +94,11 @@ msgstr "Stolpci"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Kop_iraj sliko"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Kopiraj _besedilo"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -124,7 +124,7 @@ msgstr "Obreži bele robove"
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
-msgstr ""
+msgstr "Z obrezovanjem/zakrivanjem ne izgubite vsebine PDF datoteke, temveč jo le skrijete"
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -184,7 +184,7 @@ msgstr "Enotna višina vrstic"
 
 #: pdfarranger/pdfarranger.py:1801
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Razstrelitev na slike …"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -237,7 +237,7 @@ msgstr "Višina v %"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Skrij robove"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -261,7 +261,7 @@ msgstr "img2pdf ne podpira zapisa slike"
 
 #: pdfarranger/pdfarranger.py:1798
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf manjka"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -306,7 +306,7 @@ msgstr "Z leve proti desni"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
-msgstr "Glavni meni"
+msgstr "Glavni izbirnik"
 
 #: pdfarranger/pdfarranger.py:2758
 msgid "Maintainers and contributors"
@@ -374,7 +374,7 @@ msgstr "Velikost strani:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Velikost strani"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -550,7 +550,7 @@ msgstr "Izbrane strani: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Prikaži vrednosti"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -575,7 +575,7 @@ msgstr "Dokument „{}” je zaklenjen. Za odprtje morate vpisati geslo."
 
 #: pdfarranger/pdfarranger.py:1774
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "Na strani je več slik. Uporabite najprej \"Raztreli na slike\". "
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -664,7 +664,7 @@ msgstr "_O programu"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Uporabi"
 
 #: pdfarranger/config.py:230 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:973 pdfarranger/pdfarranger.py:982
@@ -698,15 +698,15 @@ msgstr "Ur_edi"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "Raztreli na slike"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "Izvleci"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "S_krij robove"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -734,7 +734,7 @@ msgstr "_Odpri"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Velikost strani"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -750,7 +750,7 @@ msgstr "_Ponovi"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "P_ovrni"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
