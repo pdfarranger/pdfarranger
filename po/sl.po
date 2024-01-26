@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-29 22:45+0200\n"
+"POT-Creation-Date: 2024-01-26 14:58+0100\n"
 "PO-Revision-Date: 2023-06-06 13:27+0200\n"
 "Last-Translator: Janez G <janezgac@gmail.com>\n"
 "Language-Team: \n"
@@ -27,145 +27,150 @@ msgstr "Št. stolpcev"
 msgid "#Row"
 msgstr "Št. vrstic"
 
-#: pdfarranger/pageutils.py:122 pdfarranger/pageutils.py:477
-#: pdfarranger/pageutils.py:479
+#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:453
+#: pdfarranger/pageutils.py:455
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/pageutils.py:170
+#: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of height"
 msgstr "% višine"
 
-#: pdfarranger/pageutils.py:170
+#: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of width"
 msgstr "% širine"
 
-#: pdfarranger/pdfarranger.py:2548
+#: pdfarranger/pdfarranger.py:2749
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr "%s je orodje za prerazporejanje in spreminjanje datotek PDF."
 
-#: pdfarranger/config.py:232
+#: pdfarranger/config.py:246
 msgid "(Libhandy missing)"
 msgstr "(manjka Libhandy)"
 
-#: pdfarranger/config.py:224
+#: pdfarranger/config.py:238
 msgid "(Requires restart)"
 msgstr "(Potreben pozagon)"
 
-#: pdfarranger/pageutils.py:461
-msgid "(same offset is applied to all pages)"
-msgstr "(isti odmik se uporabi za vse strani)"
-
-#: pdfarranger/pdfarranger.py:1130
+#: pdfarranger/pdfarranger.py:1142
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr "Datoteka z imenom „%s” že obstaja. Ali jo želite nadomestiti?"
 
-#: data/menu.ui:189 data/menu.ui:332
+#: data/menu.ui:227 data/menu.ui:391
 msgid "All From _Same File"
 msgstr "V_se iz iste datoteke"
 
-#: pdfarranger/pdfarranger.py:507
+#: pdfarranger/pdfarranger.py:519
 msgid "All files"
 msgstr "Vse datoteke"
 
-#: pdfarranger/pdfarranger.py:462
+#: pdfarranger/pdfarranger.py:471
 msgid "All pages must have the same size."
 msgstr "Vse strani morajo biti enako velike."
 
-#: pdfarranger/pdfarranger.py:495
+#: pdfarranger/pdfarranger.py:507
 msgid "All supported files"
 msgstr "Vse podprte datoteke"
 
-#: pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:154
 msgid "Bottom"
 msgstr "Spodaj"
 
-#: pdfarranger/pageutils.py:380
+#: pdfarranger/pageutils.py:386
 msgid "Bottom to Top"
 msgstr "Od spodaj do vrha"
 
-#: pdfarranger/core.py:386
+#: pdfarranger/core.py:569
 msgid "Clipboard image"
 msgstr "Slika iz medpomnilnika"
 
-#: pdfarranger/pageutils.py:363 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:369 pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Stolpci"
 
-#: pdfarranger/metadata.py:48
+#: data/menu.ui:141 data/menu.ui:354
+msgid "Copy _Image"
+msgstr ""
+
+#: data/menu.ui:146 data/menu.ui:359
+msgid "Copy _Text"
+msgstr ""
+
+#: pdfarranger/metadata.py:49
 msgid "Created"
 msgstr "Ustvarjeno"
 
-#: pdfarranger/metadata.py:46
+#: pdfarranger/metadata.py:47
 msgid "Creator"
 msgstr "Ustvarjalec"
 
-#: pdfarranger/metadata.py:47
+#: pdfarranger/metadata.py:48
 msgid "Creator tool"
 msgstr "Orodje ustvarjalca"
 
-#: pdfarranger/pageutils.py:153
+#: pdfarranger/pageutils.py:846
 msgid "Crop Margins"
 msgstr "Obreži robove"
 
-#: data/menu.ui:104 data/menu.ui:365
+#: data/menu.ui:174 data/menu.ui:432
 msgid "Crop White Borders"
 msgstr "Obreži bele robove"
 
-#: pdfarranger/pageutils.py:161
+#: pdfarranger/pageutils.py:166
 msgid ""
-"Cropping does not remove any content from the PDF file, it only hides it."
-msgstr "Z obrezovanjem ne izgubite vsebine PDF datoteke, temveč jo le skrijete."
+"Cropping/hiding does not remove any content from the PDF file, it only hides "
+"it."
+msgstr ""
 
-#: data/menu.ui:128 data/menu.ui:264
+#: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
 msgstr "Iz_reži"
 
-#: pdfarranger/pdfarranger.py:1250
+#: pdfarranger/pdfarranger.py:1267
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr "Kljub opozorilom naj dokumenti ne bi imeli vidnih težav."
 
-#: pdfarranger/pdfarranger.py:979
+#: pdfarranger/pdfarranger.py:991
 msgid "Discard changes and close?"
 msgstr "Želite zavreči spremembe in zapreti?"
 
-#: pdfarranger/pdfarranger.py:1016
+#: pdfarranger/pdfarranger.py:1028
 msgid "Discard changes and quit?"
 msgstr "Želite zavreči spremembe in zaustaviti program?"
 
-#: pdfarranger/exporter.py:194
+#: pdfarranger/exporter.py:201
 msgid "Do not show this dialog again."
 msgstr "Ne prikazuj več tega pogovornega okna."
 
-#: pdfarranger/pdfarranger.py:970
+#: pdfarranger/pdfarranger.py:982
 msgid "Do_n’t Save"
 msgstr "_Ne shrani"
 
-#: pdfarranger/pdfarranger.py:1257
+#: pdfarranger/pdfarranger.py:1274
 msgid "Don't show warnings when saving again."
 msgstr "Med shranjevanjem ne prikazuj več opozoril."
 
-#: data/menu.ui:112 data/menu.ui:369
+#: data/menu.ui:178 data/menu.ui:436
 msgid "Dupl_icate"
 msgstr "Po_dvoji"
 
-#: data/menu.ui:52 data/menu.ui:395
+#: data/menu.ui:52 data/menu.ui:462
 msgid "E_xport"
 msgstr "Iz_vozi"
 
-#: data/menu.ui:55 data/menu.ui:398
+#: data/menu.ui:55 data/menu.ui:465
 msgid "E_xport Selection to a Single File…"
 msgstr "Iz_vozi izbrano v eno datoteko …"
 
-#: data/menu.ui:228
+#: data/menu.ui:266
 msgid "Edit _Properties"
 msgstr "Uredi _lastnosti"
 
-#: pdfarranger/metadata.py:198
+#: pdfarranger/metadata.py:202
 msgid "Edit properties"
 msgstr "Uredi lastnosti"
 
@@ -177,19 +182,23 @@ msgstr "Enotna širina stolpcev"
 msgid "Equal row height"
 msgstr "Enotna višina vrstic"
 
-#: data/menu.ui:60 data/menu.ui:403
+#: pdfarranger/pdfarranger.py:1801
+msgid "Exploding into images…"
+msgstr ""
+
+#: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
 msgstr "Izvozi izbrano v _ločene datoteke …"
 
-#: data/menu.ui:65 data/menu.ui:408
+#: data/menu.ui:65 data/menu.ui:475
 msgid "Export _All Pages to Individual Files…"
 msgstr "Izvozi v_se strani v ločene datoteke …"
 
-#: pdfarranger/pdfarranger.py:1088
+#: pdfarranger/pdfarranger.py:1100
 msgid "Export…"
 msgstr "Izvozi …"
 
-#: pdfarranger/core.py:388 pdfarranger/pdfarranger.py:1504
+#: pdfarranger/core.py:571 pdfarranger/pdfarranger.py:1521
 msgid "File is neither pdf nor image"
 msgstr "Datoteka ni niti PDF, niti slika"
 
@@ -197,28 +206,28 @@ msgstr "Datoteka ni niti PDF, niti slika"
 msgid "File(s) to open"
 msgstr "Datoteke za odpiranje"
 
-#: pdfarranger/config.py:237
+#: pdfarranger/config.py:251
 msgid "For more options see:"
 msgstr "Poglejte več možnosti:"
 
-#: pdfarranger/exporter.py:192
+#: pdfarranger/exporter.py:199
 msgid "Forms and outlines are lost on saving."
 msgstr "Obrazci in zaznamki se s shranjevanjem izgubijo."
 
-#: data/menu.ui:221
+#: data/menu.ui:259
 msgid "Full_screen"
 msgstr "Celoza_slonski način"
 
-#: pdfarranger/pdfarranger.py:2562
+#: pdfarranger/pdfarranger.py:2763
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "Splošno GNU dovoljenje, različica 3."
 
-#: data/menu.ui:160 data/menu.ui:389
+#: data/menu.ui:198 data/menu.ui:456
 msgid "Generate Booklet"
 msgstr "Ustvari knjižico"
 
-#: pdfarranger/pageutils.py:236 pdfarranger/pageutils.py:240
-#: pdfarranger/pageutils.py:328
+#: pdfarranger/pageutils.py:248 pdfarranger/pageutils.py:252
+#: pdfarranger/pageutils.py:334
 msgid "Height"
 msgstr "Višina"
 
@@ -226,7 +235,11 @@ msgstr "Višina"
 msgid "Height in %"
 msgstr "Višina v %"
 
-#: pdfarranger/pageutils.py:375
+#: pdfarranger/pageutils.py:846
+msgid "Hide Margins"
+msgstr ""
+
+#: pdfarranger/pageutils.py:381
 msgid "Horizontal"
 msgstr "Vodoravno"
 
@@ -234,60 +247,60 @@ msgstr "Vodoravno"
 msgid "Horizontal Splits"
 msgstr "Vodoravne delitve"
 
-#: pdfarranger/pageutils.py:476
+#: pdfarranger/pageutils.py:452
 msgid "Horizontal offset"
 msgstr "Vodoravni odmik"
 
-#: pdfarranger/core.py:377
+#: pdfarranger/core.py:560
 msgid "Image files are only supported with img2pdf"
 msgstr "Slikovne datoteke so podprte le za img2pdf"
 
-#: pdfarranger/core.py:383
+#: pdfarranger/core.py:566
 msgid "Image format is not supported by img2pdf"
 msgstr "img2pdf ne podpira zapisa slike"
+
+#: pdfarranger/pdfarranger.py:1798
+msgid "Img2pdf missing."
+msgstr ""
 
 #: data/pdfarranger.ui:58
 msgid "Import"
 msgstr "Uvozi"
 
-#: pdfarranger/pdfarranger.py:1327
+#: pdfarranger/pdfarranger.py:1344
 msgid "Import…"
 msgstr "Uvozi …"
 
-#: data/menu.ui:156 data/menu.ui:385
+#: data/menu.ui:194 data/menu.ui:452
 msgid "Insert Blan_k Page…"
 msgstr "Vstavi pra_zno stran …"
 
-#: pdfarranger/pageutils.py:325
+#: pdfarranger/pageutils.py:331
 msgid "Insert Blank Page"
 msgstr "Vstavi prazno stran"
 
-#: pdfarranger/metadata.py:169
+#: pdfarranger/metadata.py:173
 msgid "Invalid date format. Input discarded."
 msgstr "Neveljavna oblika datuma. Vnos prezrt."
 
-#: pdfarranger/pdfarranger.py:2551
+#: pdfarranger/pdfarranger.py:2752
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr "Program uporablja libqpdf %s, pikepdf %s, GTK %s in Python %s."
 
-#: pdfarranger/metadata.py:44
+#: pdfarranger/metadata.py:45
 msgid "Keywords"
 msgstr "Ključniki"
 
-#: pdfarranger/config.py:222
+#: pdfarranger/config.py:236
 msgid "Language"
 msgstr "Jezik"
 
-#: pdfarranger/pageutils.py:460
-msgid "Layout for the first page in selection"
-msgstr "Postavitev prve strani v izboru"
-
-#: pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:154
 msgid "Left"
 msgstr "Levo"
 
-#: pdfarranger/pageutils.py:377
+#: pdfarranger/pageutils.py:383
 msgid "Left to Right"
 msgstr "Z leve proti desni"
 
@@ -295,27 +308,27 @@ msgstr "Z leve proti desni"
 msgid "Main Menu"
 msgstr "Glavni meni"
 
-#: pdfarranger/pdfarranger.py:2557
+#: pdfarranger/pdfarranger.py:2758
 msgid "Maintainers and contributors"
 msgstr "Vzdrževalci in prispevkarji"
 
-#: pdfarranger/pageutils.py:361
+#: pdfarranger/pageutils.py:367
 msgid "Margin"
 msgstr "Robovi"
 
-#: pdfarranger/pageutils.py:347
+#: pdfarranger/pageutils.py:353
 msgid "Merge Pages"
 msgstr "Združi strani"
 
-#: pdfarranger/pageutils.py:412
+#: pdfarranger/pageutils.py:418
 msgid "Merged page size:"
 msgstr "Velikost združenih strani:"
 
-#: pdfarranger/metadata.py:49
+#: pdfarranger/metadata.py:50
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: pdfarranger/pageutils.py:392
+#: pdfarranger/pageutils.py:398
 msgid "Non-uniform page size - using max size"
 msgstr "Različne velikosti strani - uporabljena bo največja"
 
@@ -323,11 +336,11 @@ msgstr "Različne velikosti strani - uporabljena bo največja"
 msgid "Open"
 msgstr "Odpri"
 
-#: pdfarranger/pdfarranger.py:1186
+#: pdfarranger/pdfarranger.py:1198
 msgid "Open…"
 msgstr "Odpri …"
 
-#: pdfarranger/pageutils.py:436
+#: pdfarranger/pageutils.py:899
 msgid "Overlay"
 msgstr "Naplastitev"
 
@@ -343,80 +356,71 @@ msgstr ""
 "strani s pomočjo sodejnega uporabniškega vmesnika. Gre za obličje programa "
 "pikepdf."
 
-#: pdfarranger/pdfarranger.py:1498
+#: pdfarranger/pdfarranger.py:1515
 msgid "PDF document is damaged"
 msgstr "PDF dokument je okvarjen"
 
-#: pdfarranger/pdfarranger.py:499
+#: pdfarranger/pdfarranger.py:511
 msgid "PDF files"
 msgstr "PDF datoteke"
 
-#: pdfarranger/pageutils.py:388
+#: pdfarranger/pageutils.py:394
 msgid "Page Order"
 msgstr "Zaporedje strani"
 
-#: pdfarranger/pageutils.py:241
-msgid "Page Size"
-msgstr "Velikost strani"
-
-#: pdfarranger/pdfarranger.py:2585
+#: pdfarranger/pdfarranger.py:2786
 msgid "Page Size:"
 msgstr "Velikost strani:"
 
-#: pdfarranger/pageutils.py:230
-msgid "Page format"
-msgstr "Oblika strani"
+#: pdfarranger/pageutils.py:243
+msgid "Page size"
+msgstr ""
 
-#: pdfarranger/core.py:285
+#: pdfarranger/core.py:457
 msgid "Password"
 msgstr "Geslo"
 
-#: pdfarranger/core.py:263
+#: pdfarranger/core.py:435
 msgid "Password required"
 msgstr "Potrebno je geslo"
 
-#: data/menu.ui:277
+#: data/menu.ui:107 data/menu.ui:315
 msgid "Past_e Special"
 msgstr "Pos_ebno lepljenje"
 
-#: data/menu.ui:295
+#: data/menu.ui:124 data/menu.ui:333
 msgid "Paste As O_verlay…"
 msgstr "Prilepi _v ospredje …"
 
-#: data/menu.ui:151 data/menu.ui:290
+#: data/menu.ui:119 data/menu.ui:328
 msgid "Paste As _Even Pages"
 msgstr "Prilepi kot _sode strani"
 
-#: data/menu.ui:146 data/menu.ui:285
+#: data/menu.ui:114 data/menu.ui:323
 msgid "Paste As _Odd Pages"
 msgstr "Prilepi kot _lihe strani"
 
-#: data/menu.ui:300
+#: data/menu.ui:129 data/menu.ui:338
 msgid "Paste As _Underlay…"
 msgstr "Prilepi v oza_dje …"
 
-#: data/menu.ui:136 data/menu.ui:272
+#: data/menu.ui:102 data/menu.ui:310
 msgid "Paste _After"
 msgstr "Prilepi _za"
 
-#: data/menu.ui:141 data/menu.ui:280
+#: data/menu.ui:109 data/menu.ui:318
 msgid "Paste _Before"
 msgstr "Prilepi _pred"
 
-#: pdfarranger/pdfarranger.py:1627
+#: pdfarranger/pdfarranger.py:1645
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Prilepljeni podatki niso veljavni. Lepljenje opuščeno."
 
-#: pdfarranger/pdfarranger.py:1589
-msgid "Pikepdf >= 3 is needed for overlay/underlay/merge support."
-msgstr ""
-"Za uporabo naplastitve/podlaganja/združevanja potrebuje Pikepdf 3 ali novejši "
-
-#: data/menu.ui:234
+#: data/menu.ui:272
 msgid "Pre_ferences"
 msgstr "P_rednastavitve"
 
-#: pdfarranger/config.py:212
+#: pdfarranger/config.py:226
 msgid "Preferences"
 msgstr "Prednastavitve"
 
@@ -424,43 +428,43 @@ msgstr "Prednastavitve"
 msgid "Print the version of PDF Arranger and exit"
 msgstr "Natisni različico PDF Arrangerja in ga zaustavi"
 
-#: pdfarranger/exporter.py:457
+#: pdfarranger/exporter.py:586
 msgid "Printing…"
 msgstr "Tiskanje …"
 
-#: pdfarranger/metadata.py:45
+#: pdfarranger/metadata.py:46
 msgid "Producer"
 msgstr "Narejen v programu"
 
-#: pdfarranger/metadata.py:212
+#: pdfarranger/metadata.py:216
 msgid "Property"
 msgstr "Lastnost"
 
-#: data/menu.ui:116 data/menu.ui:373
+#: data/menu.ui:182 data/menu.ui:440
 msgid "Re_verse Order"
 msgstr "O_brni zaporedje"
 
-#: pdfarranger/pageutils.py:238
+#: pdfarranger/pageutils.py:250
 msgid "Relative"
 msgstr "Odnosno"
 
-#: pdfarranger/exporter.py:469
+#: pdfarranger/exporter.py:600
 msgid "Rendering Preview…"
 msgstr "Izrisovanje predogleda …"
 
-#: pdfarranger/pdfarranger.py:732
+#: pdfarranger/pdfarranger.py:744
 msgid "Rendering…"
 msgstr "Izrisovanje …"
 
-#: pdfarranger/pdfarranger.py:1132
+#: pdfarranger/pdfarranger.py:1144
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:154
 msgid "Right"
 msgstr "Desno"
 
-#: pdfarranger/pageutils.py:378
+#: pdfarranger/pageutils.py:384
 msgid "Right to Left"
 msgstr "Z desne proti levi"
 
@@ -472,15 +476,15 @@ msgstr "Zasukaj levo"
 msgid "Rotate Right"
 msgstr "Zasukaj desno"
 
-#: data/menu.ui:90 data/menu.ui:351
+#: data/menu.ui:152 data/menu.ui:410
 msgid "Rotate _Left"
 msgstr "Zasukaj _levo"
 
-#: pdfarranger/pageutils.py:364 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:370 pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Vrstice"
 
-#: data/menu.ui:194 data/menu.ui:337
+#: data/menu.ui:232 data/menu.ui:396
 msgid "Same Page _Format"
 msgstr "Enaka _oblika strani"
 
@@ -492,7 +496,7 @@ msgstr "Shrani"
 msgid "Save As"
 msgstr "Shrani kot"
 
-#: pdfarranger/pdfarranger.py:1088
+#: pdfarranger/pdfarranger.py:1100
 msgid "Save As…"
 msgstr "Shrani kot …"
 
@@ -500,105 +504,112 @@ msgstr "Shrani kot …"
 msgid "Save _As…"
 msgstr "Shr_ani kot …"
 
-#: pdfarranger/pdfarranger.py:988
+#: pdfarranger/pdfarranger.py:1000
 msgid "Save changes before closing?"
 msgstr "Ali želite pred zaprtjem shraniti spremembe?"
 
-#: pdfarranger/pdfarranger.py:1025
+#: pdfarranger/pdfarranger.py:1037
 msgid "Save changes before quitting?"
 msgstr "Ali želite pred izhodom iz programa shraniti spremembe?"
 
-#: pdfarranger/pdfarranger.py:985
+#: pdfarranger/pdfarranger.py:997
 msgid "Save changes to “{}” before closing?"
 msgstr "Ali želite pred zaprtjem shraniti spremembe v „{}”?"
 
-#: pdfarranger/pdfarranger.py:1022
+#: pdfarranger/pdfarranger.py:1034
 msgid "Save changes to “{}” before quitting?"
 msgstr "Ali želite pred izhodom iz programa shraniti spremembe v „{}”?"
 
-#: pdfarranger/pdfarranger.py:1249
+#: pdfarranger/pdfarranger.py:1266
 msgid "Saving produced some warnings"
 msgstr "Med shranjevanjem se je pojavilo nekaj opozoril"
 
-#: pdfarranger/pdfarranger.py:1288
+#: pdfarranger/pdfarranger.py:1305
 msgid "Saving…"
 msgstr "Shranjevanje …"
 
-#: pdfarranger/pageutils.py:116
+#: pdfarranger/pageutils.py:121
 msgid "Scale factor"
 msgstr "Povečava"
 
-#: data/menu.ui:169 data/menu.ui:312
+#: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
 msgstr "Izberi _vse"
 
-#: data/menu.ui:184 data/menu.ui:327
+#: data/menu.ui:222 data/menu.ui:386
 msgid "Select _Even Pages"
 msgstr "Izberi _sode strani"
 
-#: data/menu.ui:179 data/menu.ui:322
+#: data/menu.ui:217 data/menu.ui:381
 msgid "Select _Odd Pages"
 msgstr "Izberi _lihe strani"
 
-#: pdfarranger/pdfarranger.py:2580
+#: pdfarranger/pdfarranger.py:2781
 msgid "Selected pages: "
 msgstr "Izbrane strani: "
+
+#: pdfarranger/pageutils.py:548
+msgid "Show values"
+msgstr ""
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
 msgstr "Razdeli strani"
 
-#: pdfarranger/metadata.py:43
+#: pdfarranger/metadata.py:44
 msgid "Subject"
 msgstr "Predmet"
 
-#: pdfarranger/pdfarranger.py:512
+#: pdfarranger/pdfarranger.py:524
 msgid "Supported image files"
 msgstr "Podprte slikovne datoteke"
 
-#: pdfarranger/config.py:248 pdfarranger/config.py:256
+#: pdfarranger/config.py:262 pdfarranger/config.py:270
 msgid "System setting"
 msgstr "Sistemske nastavitve"
 
-#: pdfarranger/core.py:275
+#: pdfarranger/core.py:447
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr ""
-"Dokument „{}” je zaklenjen. Za odprtje morate vpisati geslo."
+msgstr "Dokument „{}” je zaklenjen. Za odprtje morate vpisati geslo."
 
-#: pdfarranger/core.py:274
+#: pdfarranger/pdfarranger.py:1774
+msgid "The page has several images. Use \"Explode into Images\" first.\""
+msgstr ""
+
+#: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Geslo bo pomnjeno do zaprtja PDF urejevalnika Arranger."
 
-#: pdfarranger/config.py:230
+#: pdfarranger/config.py:244
 msgid "Theme"
 msgstr "Tema"
 
-#: pdfarranger/metadata.py:42
+#: pdfarranger/metadata.py:43
 msgid "Title"
 msgstr "Naslov"
 
-#: pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:154
 msgid "Top"
 msgstr "Zgoraj"
 
-#: pdfarranger/pageutils.py:379
+#: pdfarranger/pageutils.py:385
 msgid "Top to Bottom"
 msgstr "Od zgoraj navzdol"
 
-#: pdfarranger/pageutils.py:436
+#: pdfarranger/pageutils.py:899
 msgid "Underlay"
 msgstr "Podloži"
 
-#: pdfarranger/core.py:361 pdfarranger/pdfarranger.py:1494
+#: pdfarranger/core.py:544 pdfarranger/pdfarranger.py:1511
 msgid "Unknown file format"
 msgstr "Neznan datotečni zapis"
 
-#: pdfarranger/metadata.py:212
+#: pdfarranger/metadata.py:216
 msgid "Value"
 msgstr "Vrednost"
 
-#: pdfarranger/pageutils.py:376
+#: pdfarranger/pageutils.py:382
 msgid "Vertical"
 msgstr "Pokončno"
 
@@ -606,16 +617,16 @@ msgstr "Pokončno"
 msgid "Vertical Splits"
 msgstr "Navpična delitev"
 
-#: pdfarranger/pageutils.py:478
+#: pdfarranger/pageutils.py:454
 msgid "Vertical offset"
 msgstr "Navpični odmik"
 
-#: pdfarranger/exporter.py:187
+#: pdfarranger/exporter.py:194
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: pdfarranger/pageutils.py:235 pdfarranger/pageutils.py:239
-#: pdfarranger/pageutils.py:327
+#: pdfarranger/pageutils.py:247 pdfarranger/pageutils.py:251
+#: pdfarranger/pageutils.py:333
 msgid "Width"
 msgstr "Širina"
 
@@ -623,7 +634,7 @@ msgstr "Širina"
 msgid "Width in %"
 msgstr "Širina v %"
 
-#: pdfarranger/pdfarranger.py:969
+#: pdfarranger/pdfarranger.py:981
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Če ne shranite vaših sprememb, bodo izgubljene."
 
@@ -635,41 +646,49 @@ msgstr "Približaj"
 msgid "Zoom Out"
 msgstr "Oddalji"
 
-#: data/menu.ui:217
+#: data/menu.ui:255
 msgid "Zoom _Fit"
 msgstr "_Prilegajoča povečava"
 
-#: data/menu.ui:209
+#: data/menu.ui:247
 msgid "Zoom _In"
 msgstr "Pr_ibližaj"
 
-#: data/menu.ui:213
+#: data/menu.ui:251
 msgid "Zoom _Out"
 msgstr "_Oddalji"
 
-#: data/menu.ui:240
+#: data/menu.ui:278
 msgid "_About"
 msgstr "_O programu"
 
-#: pdfarranger/config.py:216 pdfarranger/pageutils.py:219
-#: pdfarranger/pdfarranger.py:961 pdfarranger/pdfarranger.py:970
-#: pdfarranger/pdfarranger.py:1094 pdfarranger/pdfarranger.py:1144
+#: pdfarranger/pageutils.py:856
+msgid "_Apply"
+msgstr ""
+
+#: pdfarranger/config.py:230 pdfarranger/pageutils.py:227
+#: pdfarranger/pdfarranger.py:973 pdfarranger/pdfarranger.py:982
+#: pdfarranger/pdfarranger.py:1106 pdfarranger/pdfarranger.py:1156
 msgid "_Cancel"
 msgstr "_Prekliči"
 
-#: pdfarranger/pdfarranger.py:980 data/menu.ui:246
+#: pdfarranger/pdfarranger.py:992 data/menu.ui:284
 msgid "_Close"
 msgstr "_Zapri"
 
-#: data/menu.ui:132 data/menu.ui:268
+#: data/menu.ui:98 data/menu.ui:306
 msgid "_Copy"
 msgstr "_Kopiraj"
 
-#: data/menu.ui:108 data/menu.ui:260
+#: data/menu.ui:166 data/menu.ui:424
+msgid "_Crop Margins…"
+msgstr ""
+
+#: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
 msgstr "Iz_briši"
 
-#: data/menu.ui:174 data/menu.ui:317
+#: data/menu.ui:212 data/menu.ui:376
 msgid "_Deselect All"
 msgstr "O_dizberi vse"
 
@@ -677,15 +696,27 @@ msgstr "O_dizberi vse"
 msgid "_Edit"
 msgstr "Ur_edi"
 
+#: data/menu.ui:137 data/menu.ui:350
+msgid "_Explode into Images"
+msgstr ""
+
+#: data/menu.ui:135 data/menu.ui:347
+msgid "_Extract"
+msgstr ""
+
+#: data/menu.ui:170 data/menu.ui:428
+msgid "_Hide Margins…"
+msgstr ""
+
 #: data/menu.ui:30
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: data/menu.ui:199 data/menu.ui:342
+#: data/menu.ui:237 data/menu.ui:401
 msgid "_Invert Selection"
 msgstr "_Obrni izbor"
 
-#: data/menu.ui:124 data/menu.ui:381
+#: data/menu.ui:190 data/menu.ui:448
 msgid "_Merge Pages…"
 msgstr "_Združi strani …"
 
@@ -693,23 +724,23 @@ msgstr "_Združi strani …"
 msgid "_New Window"
 msgstr "_Novo okno"
 
-#: pdfarranger/config.py:217 pdfarranger/pageutils.py:220
+#: pdfarranger/config.py:231 pdfarranger/pageutils.py:228
 msgid "_OK"
 msgstr "V _redu"
 
-#: pdfarranger/pdfarranger.py:1143 data/menu.ui:24
+#: pdfarranger/pdfarranger.py:1155 data/menu.ui:24
 msgid "_Open"
 msgstr "_Odpri"
 
-#: data/menu.ui:100 data/menu.ui:361
-msgid "_Page Format…"
-msgstr "Ob_lika strani …"
+#: data/menu.ui:162 data/menu.ui:420
+msgid "_Page Size…"
+msgstr ""
 
 #: data/menu.ui:71
 msgid "_Print…"
 msgstr "Na_tisni …"
 
-#: pdfarranger/pdfarranger.py:1017 data/menu.ui:252
+#: pdfarranger/pdfarranger.py:1029 data/menu.ui:290
 msgid "_Quit"
 msgstr "_Izhod"
 
@@ -717,20 +748,24 @@ msgstr "_Izhod"
 msgid "_Redo"
 msgstr "_Ponovi"
 
-#: data/menu.ui:95 data/menu.ui:356
+#: pdfarranger/pageutils.py:856
+msgid "_Revert"
+msgstr ""
+
+#: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
 msgstr "Zasukaj _desno"
 
-#: pdfarranger/pdfarranger.py:970 pdfarranger/pdfarranger.py:1093
+#: pdfarranger/pdfarranger.py:982 pdfarranger/pdfarranger.py:1105
 #: data/menu.ui:42
 msgid "_Save"
 msgstr "_Shrani"
 
-#: data/menu.ui:166 data/menu.ui:309
+#: data/menu.ui:204 data/menu.ui:368
 msgid "_Select"
 msgstr "_Izberi"
 
-#: data/menu.ui:120 data/menu.ui:377
+#: data/menu.ui:186 data/menu.ui:444
 msgid "_Split Pages…"
 msgstr "_Razcepi strani …"
 
@@ -738,19 +773,19 @@ msgstr "_Razcepi strani …"
 msgid "_Undo"
 msgstr "Razvel_javi"
 
-#: data/menu.ui:206
+#: data/menu.ui:244
 msgid "_View"
 msgstr "_Pogled"
 
-#: pdfarranger/pageutils.py:139 pdfarranger/pageutils.py:362
-#: pdfarranger/pageutils.py:412
+#: pdfarranger/pageutils.py:144 pdfarranger/pageutils.py:368
+#: pdfarranger/pageutils.py:418
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/core.py:89
+#: pdfarranger/core.py:326
 msgid "page"
 msgstr "stran"
 
-#: pdfarranger/pdfarranger.py:811
+#: pdfarranger/pdfarranger.py:823
 msgid "untitled"
 msgstr "nenaslovljen"
