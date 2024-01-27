@@ -41,7 +41,7 @@ def scale(model, selection, factor):
             f = factor
         else:
             # TODO: allow to change aspect ratio
-            f = max(*Dims(width, height) / page_size)
+            f = min(*Dims(width, height) / page_size)
         # Page size must be in [72, 14400] (PDF standard requirement)
         f = max(f, *(Dims(72, 72) / page_size))
         f = min(f, *(Dims(14400, 14400) / page_size))
@@ -116,7 +116,7 @@ class _RelativeScalingWidget(Gtk.Box):
     """ A form to specify the relative scaling factor """
 
     def __init__(self, current_scale, margin=10):
-        super().__init__()
+        super().__init__(valign=Gtk.Align.CENTER, halign=Gtk.Align.CENTER)
         self.props.spacing = margin
         self.add(Gtk.Label(label=_("Scale factor")))
         # Largest page size is 200 inch and smallest is 1 inch
@@ -129,24 +129,6 @@ class _RelativeScalingWidget(Gtk.Box):
 
     def get_value(self):
         return self.entry.get_value() / 100
-
-
-class _ScalingWidget(Gtk.Box):
-    """ A form to specify the page width or height """
-
-    def __init__(self, label, default, margin=10):
-        super().__init__()
-        self.props.spacing = margin
-        self.add(Gtk.Label(label=label))
-        self.entry = _LinkedSpinButton(25.4, 5080, 1, 10)
-        self.entry.set_activates_default(True)
-        self.add(self.entry)
-        self.add(Gtk.Label(label=_("mm")))
-        # A PDF unit is 1/72 inch
-        self.entry.set_value(default * 25.4 / 72)
-
-    def get_value(self):
-        return self.entry.get_value() / 25.4 * 72
 
 
 class PaperSizeWidget(Gtk.Grid):
@@ -347,15 +329,12 @@ class ScaleDialog(BaseDialog):
         super().__init__(title=_("Page size"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
+        paper_widget = PaperSizeWidget(page.size_in_mm(), margin=1)
         rel_widget = _RelativeScalingWidget(page.scale)
-        width_widget = _ScalingWidget(_("Width"), page.width_in_points())
-        height_widget = _ScalingWidget(_("Height"), page.height_in_points())
-        self.scale_stack = _RadioStackSwitcher()
+        self.scale_stack = _RadioStackSwitcher(margin=15)
+        self.scale_stack.add_named(paper_widget, "Fit", _("Fit to paper"))
         self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
-        self.scale_stack.add_named(width_widget, "Width", _("Width"))
-        self.scale_stack.add_named(height_widget, "Height", _("Height"))
         pagesizeframe = Gtk.Frame(shadow_type=Gtk.ShadowType.NONE)
-        pagesizeframe.props.margin = 8
         pagesizeframe.add(self.scale_stack)
         self.vbox.pack_start(pagesizeframe, True, True, 0)
         self.show_all()
@@ -367,11 +346,6 @@ class ScaleDialog(BaseDialog):
         val = None
         if result == Gtk.ResponseType.OK:
             val = self.scale_stack.selected_child.get_value()
-            if self.scale_stack.selected_name == "Width":
-                val = val, 0
-            elif self.scale_stack.selected_name == "Height":
-                val = 0, val
-            # else val is a relative scale so we return it as is
         self.destroy()
         return val
 

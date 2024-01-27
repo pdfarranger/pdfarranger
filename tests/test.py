@@ -341,6 +341,8 @@ class PdfArrangerTest(unittest.TestCase):
         app = self._app()
         app.keyCombo("S")
         dialog = app.child(roleName="dialog")
+        relative = self._find_by_role("radio button", dialog)[1]
+        relative.click()
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
         rawinput.typeText(str(scale))
