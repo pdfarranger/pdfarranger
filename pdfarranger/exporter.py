@@ -578,7 +578,7 @@ class PrintSettingsWidget(Gtk.Grid):
 class PrintOperation(Gtk.PrintOperation):
     MESSAGE=_("Printing…")
     def __init__(self, app):
-        super().__init__(embed_page_setup=True)
+        super().__init__(embed_page_setup=True, support_selection=True)
         self.app = app
         self.connect("create-custom-widget", self.create_custom_widget)
         self.connect("custom-widget-apply", self.custom_widget_apply)
@@ -589,11 +589,11 @@ class PrintOperation(Gtk.PrintOperation):
         self.connect("preview", self.preview, None)
         self.pdf_input = None
         self.message = self.MESSAGE
-        self.pages = [row[0].duplicate(incl_thumbnail=False) for row in app.model]
-        app.apply_hide_margins_on_pages(self.pages)
         self.scale_mode = self.app.config.scale_mode()
         self.auto_rotate = self.app.config.auto_rotate()
         self.set_use_full_page(self.scale_mode != 'PRINTABLE')
+        self.snums = [p.get_indices() for p in reversed(app.iconview.get_selected_items())]
+        self.set_has_selection(len(self.snums) > 0)
 
     def create_custom_widget(self, operation):
         self.set_custom_tab_label(_("Page Handling"))
@@ -617,8 +617,13 @@ class PrintOperation(Gtk.PrintOperation):
         self.message = _("Rendering Preview…")
 
     def begin_print(self, operation, print_ctx, print_data):
-        self.set_n_pages(len(self.app.model))
         self.app.set_export_state(True, self.message)
+        psel = self.get_print_settings().get_print_pages() == Gtk.PrintPages.SELECTION
+        nums = self.snums if psel else range(len(self.app.model))
+        self.pages = [self.app.model[n][0].duplicate(incl_thumbnail=False) for n in nums]
+        self.app.apply_hide_margins_on_pages(self.pages)
+        self.set_n_pages(len(self.pages))
+
         # Open pikepdf objects for all pages that has been modified
         nfiles = set()
         for p in self.pages:
