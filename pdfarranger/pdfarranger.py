@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import os
+import platform
 import ctypes
 
 if os.name == 'nt':
@@ -66,14 +67,21 @@ except locale.Error:
 
 DOMAIN = 'pdfarranger'
 ICON_ID = 'com.github.jeromerobert.' + DOMAIN
+
+def get_libintl_path():
+    f = 'libintl.so.8'
+    if os.name == 'nt':
+        f = 'libintl-8'
+    if platform.system() == 'Darwin':
+        f = 'libintl.8.dylib'
+    return f
 if hasattr(locale, 'bindtextdomain'):
     # glibc
     locale.bindtextdomain(DOMAIN, localedir)
     # https://docs.gtk.org/glib/i18n.html
     locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
 else:
-    # Windows or musl
-    libintl = ctypes.cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
+    libintl = ctypes.cdll[get_libintl_path()]
     libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
     del libintl
@@ -119,6 +127,14 @@ from gi.repository import Pango
 from .config import Config
 from .core import Sides, _img_to_pdf
 
+def check_gtk_schema_exists():
+    schemas = subprocess.run(["gsettings", "list-recursively"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        check=True,
+        text=True)
+    return 'org.gtk.Settings.ColorChooser' in schemas.stdout
+if not check_gtk_schema_exists():
+    raise Exception('Found no schema files. You may need to set GSETTINGS_SCHEMA_DIR.')
 
 def _set_language_locale():
     lang = Config(DOMAIN).language()
