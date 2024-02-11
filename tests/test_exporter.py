@@ -7,7 +7,6 @@ import unittest
 import pikepdf
 
 from pdfarranger.exporter import export
-from pdfarranger.core import LayerPage as LPage
 from pdfarranger.core import Dims, Sides
 
 

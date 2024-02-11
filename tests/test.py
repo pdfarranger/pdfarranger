@@ -226,7 +226,7 @@ class PdfArrangerTest(unittest.TestCase):
         self._wait_cond(lambda: not self._is_saving())
 
     def _status_text(self):
-        app = self._app()
+        self._app()
         allstatusbar = self._find_by_role("status bar")
         # If we have multiple status bar, consider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
