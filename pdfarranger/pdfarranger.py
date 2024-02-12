@@ -1808,7 +1808,7 @@ class PdfArranger(Gtk.Application):
     def on_action_select(self, _action, option, _unknown):
         """Selects items according to selected option."""
         selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN',
-                         4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT'}
+                         4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT', 7:'RANGE'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
         with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
@@ -1850,6 +1850,8 @@ class PdfArranger(Gtk.Application):
                         self.iconview.unselect_path(row.path)
                     else:
                         self.iconview.select_path(row.path)
+            elif selectoption == 'RANGE':
+                self.range_select_dialog()
         self.iv_selection_changed_event()
 
     @staticmethod
@@ -2541,6 +2543,58 @@ class PdfArranger(Gtk.Application):
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
+
+    def range_select_dialog(self):
+        """Opens a dialog box to range select"""
+        model = self.iconview.get_model()
+        diag = pageutils.RangeSelectDialog(self.window)
+        range_selected = diag.run_get()
+        # clean up the selection and split the ranges
+        if range_selected is not None:
+            result_list = []
+            # split the string using commas
+            comma_split = range_selected.split(',')
+            for element in comma_split:
+                element = element.strip()
+                # check if the element has a dash
+                # Consider multiple dashes? Might create problems?
+                if '-' in element and element.count('-') == 1:
+                    # split the range by the dash
+                    range_split = element.split('-')
+                    # convert the range to integers
+                    # If the dash range is given without the first element (-3)
+                    # then the range starts from the first page
+                    if len(range_split) == 2 and range_split[0]:
+                        range_start = int(range_split[0])
+                        if range_start < 1:
+                            range_start = 1
+                    else:
+                        # Set to 1 because the model is zero indexed
+                        range_start = 1
+                    # If the dash range is given without the last element (3-)
+                    # then the range ends at the last page
+                    if len(range_split) == 2 and range_split[1]:
+                        range_end = int(range_split[1])
+                        if range_end > len(model):
+                            range_end = len(model)
+                    else:
+                        range_end = len(model)
+                    # add the range to the result list
+                    result_list += list(range(range_start, range_end+1))
+                elif element.isdigit():
+                    # add the number to the result list
+                    # If it includes multiple dashes elif will not be executed
+                    # Check if the element is in the range of all pages
+                    if int(element) >=1 and int(element) <= len(model):
+                        result_list.append(int(element))
+            # Clean selection
+            # TO-DO: Maybe an additive selection to the previous selection
+            self.iconview.unselect_all()
+            for page in result_list:
+                # Because the model is zero indexed remove 1 from the page number
+                row = model[page-1]
+                self.iconview.select_path(row.path)
+            self.update_statusbar()
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
