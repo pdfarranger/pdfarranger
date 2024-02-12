@@ -956,3 +956,58 @@ class PastePageLayerDialog():
             r = self.spinbutton_widget.get_diff_offset()
         self.dialog.destroy()
         return r
+
+class RangeSelectDialog(BaseDialog):
+    """ A dialog box to select a range of pages. """
+
+    def __init__(self, model, selection, window):
+        super().__init__(title=_("Range Select"), parent=window)
+        margin = 12
+        range_frame = Gtk.Frame()
+        self.set_resizable(False)
+        # self.set_activates_default(True)
+        grid = Gtk.Grid()
+        grid.set_column_spacing(margin)
+        grid.set_row_spacing(margin)
+        grid.props.margin = margin
+        range_frame.add(grid)
+        label = Gtk.Label(
+            label=_(
+                'Page range to select.'
+                'Use a comma to separate page numbers,'
+                'a dash to select a range of pages. \n '
+                'e.g. : "1,3,5-7,9"'
+            )
+        )
+        label.props.margin = margin
+        label.set_line_wrap(True)
+        label.set_max_width_chars(38)
+        grid.attach(label, 0, 0, 2, 1)
+
+        label = Gtk.Label(label=_("Select range of pages"))
+        label.set_alignment(0.0, 0.5)
+        grid.attach(label, 0, 1, 1, 1)
+
+        self.range_entry_widget = Gtk.Entry()
+        grid.attach(self.range_entry_widget, 1, 1, 1, 1)
+
+        self.vbox.pack_start(range_frame, False, False, 0)
+
+        self.show_all()
+        self.selection = selection
+        # Connect "changed" signal to function for checking user input
+        self.range_entry_widget.connect('changed', self.on_changed)
+
+    def run_get(self):
+        """ Open the dialog and return the selected range"""
+        result = self.run()
+        selected_range = None
+        if result == Gtk.ResponseType.OK:
+            selected_range = self.range_entry_widget.get_text()
+        self.destroy()
+        return selected_range
+
+    def on_changed(self, *args):
+        # Check each user entry to be one of the valid ones '0123456789,- '
+        text = self.range_entry_widget.get_text()
+        self.range_entry_widget.set_text(''.join([char for char in text if char in '0123456789,- ']))
