@@ -2556,10 +2556,8 @@ class PdfArranger(Gtk.Application):
             result_list = []
             # split the string using commas
             comma_split = range_selected.split(',')
-
             for element in comma_split:
                 element = element.strip()
-                
                 # check if the element has a dash
                 # Consider multiple dashes? Might create problems?
                 if '-' in element:
@@ -2590,7 +2588,6 @@ class PdfArranger(Gtk.Application):
                     # Check if the element is in the range of all pages
                     if int(element) >=1 and int(element) <= len(model):
                         result_list.append(int(element))
-
             # Clean selection
             # TO-DO: Maybe this should be done in the dialog box
             # Or maybe an additive selection to the previous selection
@@ -2599,7 +2596,6 @@ class PdfArranger(Gtk.Application):
                 # Because the model is zero indexed remove 1 from the page number
                 row = model[page-1]
                 self.iconview.select_path(row.path)
-
             self.update_statusbar()
 
     def crop_dialog(self, _action, _parameter, _unknown):
