@@ -992,7 +992,7 @@ class RangeSelectDialog(BaseDialog):
         # Connect "changed" signal to function for checking user input
         self.range_entry_widget.connect('changed', self.on_changed)
         self.range_entry_widget.set_activates_default(True)
-        
+
     def run_get(self):
         """ Open the dialog and return the selected range"""
         result = self.run()
