@@ -2547,9 +2547,7 @@ class PdfArranger(Gtk.Application):
     def range_select_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to range select"""
         model = self.iconview.get_model()
-        selection = self.iconview.get_selected_items()
-        diag = pageutils.RangeSelectDialog(
-            self.iconview.get_model(), selection, self.window)
+        diag = pageutils.RangeSelectDialog(self.window)
         range_selected = diag.run_get()
         # clean up the selection and split the ranges
         if range_selected is not None:
@@ -2560,7 +2558,7 @@ class PdfArranger(Gtk.Application):
                 element = element.strip()
                 # check if the element has a dash
                 # Consider multiple dashes? Might create problems?
-                if '-' in element:
+                if '-' in element and element.count('-') == 1:
                     # split the range by the dash
                     range_split = element.split('-')
                     # convert the range to integers
@@ -2583,14 +2581,14 @@ class PdfArranger(Gtk.Application):
                         range_end = len(model)
                     # add the range to the result list
                     result_list += list(range(range_start, range_end+1))
-                else:
+                elif element.isdigit():
                     # add the number to the result list
+                    # If it includes multiple dashes elif will not be executed
                     # Check if the element is in the range of all pages
                     if int(element) >=1 and int(element) <= len(model):
                         result_list.append(int(element))
             # Clean selection
-            # TO-DO: Maybe this should be done in the dialog box
-            # Or maybe an additive selection to the previous selection
+            # TO-DO: Maybe an additive selection to the previous selection
             self.iconview.unselect_all()
             for page in result_list:
                 # Because the model is zero indexed remove 1 from the page number
