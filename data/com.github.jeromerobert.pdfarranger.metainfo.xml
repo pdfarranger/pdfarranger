@@ -169,6 +169,9 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       Це графічна оболонка для pikepdf.
     </p>
   </description>
+  <developer id="pdfarranger.org">
+    <name>The PDF Arranger team</name>
+  </developer>
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
