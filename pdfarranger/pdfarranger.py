@@ -68,12 +68,12 @@ DOMAIN = 'pdfarranger'
 ICON_ID = 'com.github.jeromerobert.' + DOMAIN
 
 def get_libintl_path():
-    f = 'libintl.so.8'
     if os.name == 'nt':
-        f = 'libintl-8'
+        return 'libintl-8'
     if platform.system() == 'Darwin':
-        f = 'libintl.8.dylib'
-    return f
+        return 'libintl.8.dylib'
+    return 'libintl.so.8'
+
 if hasattr(locale, 'bindtextdomain'):
     # glibc
     locale.bindtextdomain(DOMAIN, localedir)
@@ -127,13 +127,17 @@ from .config import Config
 from .core import Sides, _img_to_pdf
 
 def check_gtk_schema_exists():
+    # On Windows the GTK library has a different logic, so we're skipping the test
+    # See https://github.com/pdfarranger/pdfarranger/pull/1045/files#r1485570912 
+    if os.name == 'nt':
+        return True
     schemas = subprocess.run(["gsettings", "list-recursively"],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         check=True,
         text=True)
     return 'org.gtk.Settings.ColorChooser' in schemas.stdout
 if not check_gtk_schema_exists():
-    raise Exception('Found no schema files. You may need to set GSETTINGS_SCHEMA_DIR.')
+    print('ERROR: Found no schema files. You may need to set GSETTINGS_SCHEMA_DIR.', file=sys.stderr)
 
 def _set_language_locale():
     lang = Config(DOMAIN).language()
