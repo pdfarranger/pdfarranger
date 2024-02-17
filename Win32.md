@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-Install [MSYS2](http://www.msys2.org) then upgrade it:
+Install [MSYS2](http://www.msys2.org). Once installed start `MSYS2 MSYS` shell.
+Update all packages: 
 
 ```
 pacman -Syu
@@ -33,7 +34,7 @@ SETUPTOOLS_USE_DISTUTILS=stdlib \
 
 ## Building PDF Arranger
 
-Get the PDF Arranger sources from a MSYS2 shell:
+Get the PDF Arranger sources:
 
 ```
 git clone https://github.com/pdfarranger/pdfarranger.git
