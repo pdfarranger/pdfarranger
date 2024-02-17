@@ -131,11 +131,16 @@ def check_gtk_schema_exists():
     # See https://github.com/pdfarranger/pdfarranger/pull/1045/files#r1485570912 
     if os.name == 'nt':
         return True
-    schemas = subprocess.run(["gsettings", "list-recursively"],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        check=True,
-        text=True)
-    return 'org.gtk.Settings.ColorChooser' in schemas.stdout
+    try:
+        schemas = subprocess.run(["gsettings", "list-recursively"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            check=True,
+            text=True)
+        return 'org.gtk.Settings.ColorChooser' in schemas.stdout
+    except:
+        print('ERROR: gsettings failed. Please check GTK depencencies.')
+        return False
+
 if not check_gtk_schema_exists():
     print('ERROR: Found no schema files. You may need to set GSETTINGS_SCHEMA_DIR.', file=sys.stderr)
 
