@@ -93,8 +93,8 @@ For Windows see [Win32.md](Win32.md).
 
 ### For MacOS  
 On MacOS, you need to configure the dependency of GTK3 and gettext. Following Environment Variables need to be set:  
-1. `GSETTINGS_SCHEMA_DIR`:  `$GSETTINGS_SCHEMA_DIR/org.gtk.Settings.FileChooser.gschema.xml` should exist.  
-2. `DYLD_FALLBACK_LIBRARY_PATH`: `DYLD_FALLBACK_LIBRARY_PATH/libintl.8.dylib` should exist.  
+1. `GSETTINGS_SCHEMA_DIR`:  The file `$GSETTINGS_SCHEMA_DIR/org.gtk.Settings.FileChooser.gschema.xml` should exist.  
+2. `DYLD_FALLBACK_LIBRARY_PATH`: The file `$DYLD_FALLBACK_LIBRARY_PATH/libintl.8.dylib` should exist.  
 
 When the dependencies are configured successfully, you can run
 ```
