@@ -14,7 +14,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name xml:lang="id">Penyusun PDF</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
   <name xml:lang="ca">Arranjador de PDF</name>
-  <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
+  <summary>Merge, shuffle, and crop PDFs</summary>
   <summary xml:lang="ca">Fusionador, arranjador, divisor, rotador i retallador de PDF</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
   <summary xml:lang="de">PDFs zusammenfügen, umsortieren, trennen, rotieren und zuschneiden</summary>
