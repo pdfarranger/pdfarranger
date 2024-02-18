@@ -15,6 +15,8 @@ interactive and intuitive graphical interface. It is a front end for
 [Sourceforge](http://sourceforge.net/projects/pdfshuffler)).
 It’s a humble attempt to make the project a bit more active.
 
+For more info see [User Manual](https://github.com/pdfarranger/pdfarranger/wiki/User-Manual).
+
 ![screenshot of PDF Arranger](https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png)
 
 ## Downloads
@@ -26,18 +28,6 @@ It’s a humble attempt to make the project a bit more active.
 ### Linux and BSD packages
 
 [![Linux packages](https://repology.org/badge/vertical-allrepos/pdfarranger.svg?columns=4&exclude_unsupported=1)](https://repology.org/project/pdfarranger/versions)
-
-## Customization of keyboard shortcuts
-
-You can change the default keyboard shortcuts. To do so, set `enable_custom` to `true` and edit the shortcuts in `config.ini` in the `[accelerators]` section.
-
-*   For Linux: `~/.config/pdfarranger/config.ini`
-*   For Windows installer version: `C:\Users\username\AppData\Roaming\pdfarranger\config.ini`
-*   For Windows portable version, the file is located in the same folder as pdfarranger.exe. Optionally, this file can be removed. The application will then use the same config file location as in the installer version.
-
-## Set custom language
-
-Language can be selected in the `Preferences` dialog. (PDF Arranger > 1.9.2)
 
 ## Install from source
 
@@ -113,7 +103,7 @@ For Windows see [Win32.md](Win32.md).
     *   pick a strong letter (e.g. in "Search and replace" rather pick `s`, `r` or `p` than `a`)
 
 *   If possible, test your translation to see it in context
-    (see [For developers](#for-developers) and [Set custom language](#Set-custom-language))
+    (see [For developers](#for-developers))
 
 *   Do not include `pdfarranger.pot` (or any `*.po` file which was just
     automatically regenerated) in your pull request. Submit only the translations
