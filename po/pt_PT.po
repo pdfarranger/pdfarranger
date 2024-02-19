@@ -4,25 +4,25 @@
 # Public License version 3 or later.
 # See file COPYING or go to <http://www.gnu.org/licenses/> for full license details.
 # Translators:
-# Sérgio Marques <smarquespt@gmail.com>, 2021, 2022,2023.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022,2023.
+# Sérgio Marques <smarquespt@gmail.com>, 2021, 2022, 2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-29 22:45+0200\n"
-"PO-Revision-Date: 2023-06-07 21:17+0000\n"
+"PO-Revision-Date: 2024-02-12 22:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
-"Language: pt-PT\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Loco-Source-Locale: en_PT\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Parser: loco_parse_po"
+"X-Generator: Poedit 3.4.2\n"
+"X-Loco-Parser: loco_parse_po\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -38,14 +38,12 @@ msgid "%"
 msgstr "%"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of height"
-msgstr "% da altura"
+msgstr "% de altura"
 
 #: pdfarranger/pageutils.py:170
-#, python-format
 msgid "% of width"
-msgstr "% da largura"
+msgstr "% de largura"
 
 #: pdfarranger/pdfarranger.py:2548
 #, python-format
@@ -389,7 +387,7 @@ msgstr "Colar _especial"
 
 #: data/menu.ui:295
 msgid "Paste As O_verlay…"
-msgstr "Colar por _cima"
+msgstr "Colar por _cima…"
 
 #: data/menu.ui:151 data/menu.ui:290
 msgid "Paste As _Even Pages"
@@ -401,7 +399,7 @@ msgstr "C_olar como páginas ímpares"
 
 #: data/menu.ui:300
 msgid "Paste As _Underlay…"
-msgstr "Colar por _baixo"
+msgstr "Colar por _baixo…"
 
 #: data/menu.ui:136 data/menu.ui:272
 msgid "Paste _After"
@@ -695,7 +693,7 @@ msgstr "_Inverter seleção"
 
 #: data/menu.ui:124 data/menu.ui:381
 msgid "_Merge Pages…"
-msgstr "Unir pági_nas..."
+msgstr "Unir pági_nas…"
 
 #: data/menu.ui:36
 msgid "_New Window"

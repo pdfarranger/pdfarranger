@@ -40,7 +40,7 @@ You may need to run the following commands to run those tests in your current se
 * setxkbmap -v fr
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
-Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/config.ini)
+Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini.
 
 Some tips:
 
@@ -226,7 +226,7 @@ class PdfArrangerTest(unittest.TestCase):
         self._wait_cond(lambda: not self._is_saving())
 
     def _status_text(self):
-        app = self._app()
+        self._app()
         allstatusbar = self._find_by_role("status bar")
         # If we have multiple status bar, consider the last one as the one who display the selection
         statusbar = allstatusbar[-1]
@@ -458,6 +458,7 @@ class TestBatch1(PdfArrangerTest):
         self._popupmenu(0, "Duplicate")
         app = self._app()
         self.assertEqual(len(self._icons()), 2)
+        self._app().child(roleName="layered pane").grabFocus()
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>c")
         for __ in range(3):
@@ -466,7 +467,7 @@ class TestBatch1(PdfArrangerTest):
         app.keyCombo("Right")
         app.keyCombo("Left")
         app.keyCombo("Down")
-        self._assert_selected("5")
+        self._assert_selected("4")
         app.keyCombo("Up")
         self._assert_selected("2")
 
@@ -663,7 +664,7 @@ class TestBatch4(PdfArrangerTest):
         app.keyCombo("<ctrl>a")  # select all
         self._mainmenu(["Export", "Export Selection to a Single File…"])
         self._save_as_chooser("scaled.pdf")
-        self._popupmenu(1, "Delete")
+        self._popupmenu(0, "Delete")
 
     def test_05_import(self):
         filename = os.path.join(self.__class__.tmp, "scaled.pdf")

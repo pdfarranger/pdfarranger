@@ -30,7 +30,6 @@ import tempfile
 import signal
 import mimetypes
 import multiprocessing
-import traceback
 import locale  # for multilanguage support
 import gettext
 import gc

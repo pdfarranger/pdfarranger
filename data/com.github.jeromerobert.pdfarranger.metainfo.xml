@@ -14,10 +14,10 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name xml:lang="id">Penyusun PDF</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
   <name xml:lang="ca">Arranjador de PDF</name>
-  <summary>PDF Merging, Rearranging, Splitting, Rotating and Cropping</summary>
+  <summary>Merge, shuffle, and crop PDFs</summary>
   <summary xml:lang="ca">Fusionador, arranjador, divisor, rotador i retallador de PDF</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
-  <summary xml:lang="de">PDFs zusammenfügen, umsortieren, trennen, rotieren und zuschneiden</summary>
+  <summary xml:lang="de">PDFs umsortieren und zuschneiden</summary>
   <summary xml:lang="el">Συγχώνευση, αναδιάταξη, διαχωρισμός, περιστροφή και περικοπή αρχείων PDF</summary>
   <summary xml:lang="es">Mezcle, reordene, divida, rote y recorte documentos PDF</summary>
   <summary xml:lang="fi">Yhdistä, järjestele, jaa, käännä ja rajaa PDF-tiedostoja</summary>
@@ -169,6 +169,9 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       Це графічна оболонка для pikepdf.
     </p>
   </description>
+  <developer id="pdfarranger.org">
+    <name>The PDF Arranger team</name>
+  </developer>
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
