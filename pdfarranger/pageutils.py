@@ -965,7 +965,6 @@ class RangeSelectDialog(BaseDialog):
         margin = 12
         range_frame = Gtk.Frame()
         self.set_resizable(False)
-        # self.set_activates_default(True)
         grid = Gtk.Grid()
         grid.set_column_spacing(margin)
         grid.set_row_spacing(margin)

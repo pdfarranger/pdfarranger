@@ -1850,7 +1850,7 @@ class PdfArranger(Gtk.Application):
                     else:
                         self.iconview.select_path(row.path)
             elif selectoption == 'RANGE':
-                self.range_select_dialog(_action, option, _unknown)
+                self.range_select_dialog()
         self.iv_selection_changed_event()
 
     @staticmethod
@@ -2543,7 +2543,7 @@ class PdfArranger(Gtk.Application):
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
-    def range_select_dialog(self, _action, _parameter, _unknown):
+    def range_select_dialog(self):
         """Opens a dialog box to range select"""
         model = self.iconview.get_model()
         diag = pageutils.RangeSelectDialog(self.window)
