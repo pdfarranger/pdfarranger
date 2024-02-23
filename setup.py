@@ -104,7 +104,7 @@ build.sub_commands += [(x, lambda _: True) for x in ["build_i18n", "build_icons"
 
 setup(
     name='pdfarranger',
-    version='1.10.0',
+    version='1.10.1',
     author='Jerome Robert',
     author_email='jeromerobert@gmx.com',
     description='A simple application for PDF Merging, Rearranging, and Splitting',
