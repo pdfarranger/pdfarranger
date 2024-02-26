@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-11-29 21:46+1000\n"
+"PO-Revision-Date: 2024-02-26 21:56+1000\n"
 "Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -78,7 +78,7 @@ msgstr "Все поддерживаемые файлы"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Поворачивать автоматически"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -214,15 +214,15 @@ msgstr "Файл(ы) для открытия"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "По размеру страницы"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "По размеру области печати"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Для получения дополнительной информации смотрите"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -348,15 +348,15 @@ msgstr "Неравномерный размер страниц — исполь�
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Ничего"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Примечание"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Обратите внимание на ограничения:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -368,7 +368,7 @@ msgstr "Открыть…"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
-msgstr ""
+msgstr "Контуры и ссылки могут быть сохранены лишь в некоторых ситуациях."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -396,7 +396,7 @@ msgstr "Файлы PDF"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Управление страницами"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -464,7 +464,7 @@ msgstr "Распечатать версию программы PDF Arranger и �
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Печать"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -572,7 +572,7 @@ msgstr "Масштаб"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Режим масштабирования:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -651,7 +651,7 @@ msgstr "Неизвестный формат файла"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Руководство пользователя"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
