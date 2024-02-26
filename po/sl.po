@@ -1,30 +1,31 @@
-# Finnish translation for pdfarranger.
+# Slovenian translation for pdfarranger.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
-# Translators:
-# kbengs, 2020
+# Janez G <janezgac@gmail.com>, 2024.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-06-16 05:49+0300\n"
-"Last-Translator: \n"
-"Language-Team: Finnish\n"
-"Language: fi\n"
+"PO-Revision-Date: 2023-06-06 13:27+0200\n"
+"Last-Translator: Janez G <janezgac@gmail.com>\n"
+"Language-Team: \n"
+"Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
-msgstr "#Sarake"
+msgstr "Št. stolpcev"
 
 #: pdfarranger/splitter.py:87
 msgid "#Row"
-msgstr "#Rivi"
+msgstr "Št. vrstic"
 
 #: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:453
 #: pdfarranger/pageutils.py:455
@@ -34,46 +35,46 @@ msgstr "%"
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of height"
-msgstr "% korkeudesta"
+msgstr "% višine"
 
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of width"
-msgstr "% leveydestä"
+msgstr "% širine"
 
 #: pdfarranger/pdfarranger.py:2764
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "%s on työkalu PDF-tiedostojen järjestämiseen ja muokkaamiseen."
+msgstr "%s je orodje za prerazporejanje in spreminjanje datotek PDF."
 
 #: pdfarranger/config.py:262
 msgid "(Libhandy missing)"
-msgstr "(Libhandy puuttuu)"
+msgstr "(manjka Libhandy)"
 
 #: pdfarranger/config.py:254
 msgid "(Requires restart)"
-msgstr "(Vaatii uudelleenkäynnistyksen)"
+msgstr "(Potreben pozagon)"
 
 #: pdfarranger/pdfarranger.py:1144
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr "Tiedosto nimellä \"%s\" on jo olemassa. Haluatko korvata sen?"
+msgstr "Datoteka z imenom \"%s\" že obstaja. Ali jo želite nadomestiti?"
 
 #: data/menu.ui:227 data/menu.ui:391
 msgid "All From _Same File"
-msgstr "Kaikki samasta _tiedostosta"
+msgstr "V_se iz iste datoteke"
 
 #: pdfarranger/pdfarranger.py:518
 msgid "All files"
-msgstr "Kaikki tiedostot"
+msgstr "Vse datoteke"
 
 #: pdfarranger/pdfarranger.py:470
 msgid "All pages must have the same size."
-msgstr "Kaikki sivut on oltava samankokoiset."
+msgstr "Vse strani morajo biti enako velike."
 
 #: pdfarranger/pdfarranger.py:506
 msgid "All supported files"
-msgstr "Kaikki tuetut tiedostot"
+msgstr "Vse podprte datoteke"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
@@ -81,134 +82,135 @@ msgstr ""
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
-msgstr "Alla"
+msgstr "Spodaj"
 
 #: pdfarranger/pageutils.py:386
 msgid "Bottom to Top"
-msgstr "Alhaalta ylöspäin"
+msgstr "Od spodaj do vrha"
 
 #: pdfarranger/core.py:569
 msgid "Clipboard image"
-msgstr "Leikepöytä kuva"
+msgstr "Slika iz medpomnilnika"
 
 #: pdfarranger/pageutils.py:369 pdfarranger/splitter.py:60
 msgid "Columns"
-msgstr "Sarakkeita"
+msgstr "Stolpci"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Kop_iraj sliko"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Kopiraj _besedilo"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
-msgstr "Luotu"
+msgstr "Ustvarjeno"
 
 #: pdfarranger/metadata.py:47
 msgid "Creator"
-msgstr "Tekijä"
+msgstr "Ustvarjalec"
 
 #: pdfarranger/metadata.py:48
 msgid "Creator tool"
-msgstr "Sovellus"
+msgstr "Orodje ustvarjalca"
 
 #: pdfarranger/pageutils.py:846
 msgid "Crop Margins"
-msgstr "Rajaa marginaalit"
+msgstr "Obreži robove"
 
 #: data/menu.ui:174 data/menu.ui:432
 msgid "Crop White Borders"
-msgstr "Rajaa valkoiset reunat"
+msgstr "Obreži bele robove"
 
 #: pdfarranger/pageutils.py:166 pdfarranger/pdfarranger.py:2730
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
+"Z obrezovanjem/zakrivanjem ne izgubite vsebine PDF datoteke, temveč jo le "
+"skrijete"
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
-msgstr "_Leikkaa"
+msgstr "Iz_reži"
 
 #: pdfarranger/pdfarranger.py:1258
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr ""
-"Varoituksista huolimatta tiedostoissa ei pitäisi olla näkyviä ongelmia."
+msgstr "Kljub opozorilom naj dokumenti ne bi imeli vidnih težav."
 
 #: pdfarranger/pdfarranger.py:993
 msgid "Discard changes and close?"
-msgstr "Hylkää muutokset ja sulje tiedosto?"
+msgstr "Želite zavreči spremembe in zapreti?"
 
 #: pdfarranger/pdfarranger.py:1030
 msgid "Discard changes and quit?"
-msgstr "Hylkää muutokset ja sulje ohjelma?"
+msgstr "Želite zavreči spremembe in zaustaviti program?"
 
 #: pdfarranger/pdfarranger.py:2737
 msgid "Do not show this dialog again."
-msgstr "Älä näytä tätä viestiä enää."
+msgstr "Ne prikazuj več tega pogovornega okna."
 
 #: pdfarranger/pdfarranger.py:984
 msgid "Do_n’t Save"
-msgstr "_Älä tallenna"
+msgstr "_Ne shrani"
 
 #: pdfarranger/pdfarranger.py:1265
 msgid "Don't show warnings when saving again."
-msgstr "Älä näytä varoituksia tallennettaessa."
+msgstr "Med shranjevanjem ne prikazuj več opozoril."
 
 #: data/menu.ui:178 data/menu.ui:436
 msgid "Dupl_icate"
-msgstr "Monis_ta"
+msgstr "Po_dvoji"
 
 #: data/menu.ui:52 data/menu.ui:462
 msgid "E_xport"
-msgstr "Vi_e"
+msgstr "Iz_vozi"
 
 #: data/menu.ui:55 data/menu.ui:465
 msgid "E_xport Selection to a Single File…"
-msgstr "Vi_e valitut sivut yhteen tiedostoon…"
+msgstr "Iz_vozi izbrano v eno datoteko …"
 
 #: data/menu.ui:266
 msgid "Edit _Properties"
-msgstr "Muokkaa ominaisuuks_ia"
+msgstr "Uredi _lastnosti"
 
 #: pdfarranger/metadata.py:202
 msgid "Edit properties"
-msgstr "Muokkaa ominaisuuksia"
+msgstr "Uredi lastnosti"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal column width"
-msgstr "Sama sarakeleveys"
+msgstr "Enotna širina stolpcev"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal row height"
-msgstr "Sama rivikorkeus"
+msgstr "Enotna višina vrstic"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Razstrelitev na slike …"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
-msgstr "Vie valitut sivut _omiin tiedostoihin…"
+msgstr "Izvozi izbrano v _ločene datoteke …"
 
 #: data/menu.ui:65 data/menu.ui:475
 msgid "Export _All Pages to Individual Files…"
-msgstr "Vie kaikki sivut omiin _tiedostoihin…"
+msgstr "Izvozi v_se strani v ločene datoteke …"
 
 #: pdfarranger/pdfarranger.py:1102
 msgid "Export…"
-msgstr "Vie…"
+msgstr "Izvozi …"
 
 #: pdfarranger/core.py:571 pdfarranger/pdfarranger.py:1512
 msgid "File is neither pdf nor image"
-msgstr "Tiedosto ei ole pdf eikä kuva"
+msgstr "Datoteka ni niti PDF, niti slika"
 
 #: pdfarranger/pdfarranger.py:300
 msgid "File(s) to open"
-msgstr "Tiedostoja avattavaksi"
+msgstr "Datoteke za odpiranje"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
@@ -224,125 +226,125 @@ msgstr ""
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
-msgstr "Käytetty asetustiedosto:"
+msgstr "Poglejte več možnosti:"
 
 #: data/menu.ui:259
 msgid "Full_screen"
-msgstr "Koko _näyttö"
+msgstr "Celoza_slonski način"
 
 #: pdfarranger/pdfarranger.py:2778
 msgid "GNU General Public License (GPL) Version 3."
-msgstr "GNU General Public License (GPL) Version 3."
+msgstr "Splošno GNU dovoljenje, različica 3."
 
 #: data/menu.ui:198 data/menu.ui:456
 msgid "Generate Booklet"
-msgstr "Luo kirjanen"
+msgstr "Ustvari knjižico"
 
 #: pdfarranger/pageutils.py:248 pdfarranger/pageutils.py:252
 #: pdfarranger/pageutils.py:334
 msgid "Height"
-msgstr "Korkeus"
+msgstr "Višina"
 
 #: pdfarranger/splitter.py:88
 msgid "Height in %"
-msgstr "Korkeus %"
+msgstr "Višina v %"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Skrij robove"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
-msgstr "Vaakasuora"
+msgstr "Vodoravno"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
-msgstr "Vaakasuora jako"
+msgstr "Vodoravne delitve"
 
 #: pdfarranger/pageutils.py:452
 msgid "Horizontal offset"
-msgstr "Vaakasuuntainen siirtymä"
+msgstr "Vodoravni odmik"
 
 #: pdfarranger/core.py:560
 msgid "Image files are only supported with img2pdf"
-msgstr "Kuvatiedostoja tuetaan voin jos img2pdf on asennettu"
+msgstr "Slikovne datoteke so podprte le za img2pdf"
 
 #: pdfarranger/core.py:566
 msgid "Image format is not supported by img2pdf"
-msgstr "Img2pdf ei tue kuvamuotoa"
+msgstr "img2pdf ne podpira zapisa slike"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf manjka"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
-msgstr "Tuo"
+msgstr "Uvozi"
 
 #: pdfarranger/pdfarranger.py:1335
 msgid "Import…"
-msgstr "Tuo…"
+msgstr "Uvozi …"
 
 #: data/menu.ui:194 data/menu.ui:452
 msgid "Insert Blan_k Page…"
-msgstr "L_isää tyhjä sivu…"
+msgstr "Vstavi pra_zno stran …"
 
 #: pdfarranger/pageutils.py:331
 msgid "Insert Blank Page"
-msgstr "Lisää tyhjä sivu"
+msgstr "Vstavi prazno stran"
 
 #: pdfarranger/metadata.py:173
 msgid "Invalid date format. Input discarded."
-msgstr "Päivämäärämuoto on virheellinen."
+msgstr "Neveljavna oblika datuma. Vnos prezrt."
 
 #: pdfarranger/pdfarranger.py:2767
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "libqpdf %s, pikepdf %s, GTK %s ja Python %s."
+msgstr "Program uporablja libqpdf %s, pikepdf %s, GTK %s in Python %s."
 
 #: pdfarranger/metadata.py:45
 msgid "Keywords"
-msgstr "Avainsanat"
+msgstr "Ključniki"
 
 #: pdfarranger/config.py:252
 msgid "Language"
-msgstr "Kieli"
+msgstr "Jezik"
 
 #: pdfarranger/pageutils.py:154
 msgid "Left"
-msgstr "Vasen"
+msgstr "Levo"
 
 #: pdfarranger/pageutils.py:383
 msgid "Left to Right"
-msgstr "Vasemmalta oikealle"
+msgstr "Z leve proti desni"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
-msgstr "Päävalikko"
+msgstr "Glavni izbirnik"
 
 #: pdfarranger/pdfarranger.py:2773
 msgid "Maintainers and contributors"
-msgstr "Ylläpitäjät ja avustajat"
+msgstr "Vzdrževalci in prispevkarji"
 
 #: pdfarranger/pageutils.py:367
 msgid "Margin"
-msgstr "Marginaali"
+msgstr "Robovi"
 
 #: pdfarranger/pageutils.py:353
 msgid "Merge Pages"
-msgstr "Yhdistä sivuja"
+msgstr "Združi strani"
 
 #: pdfarranger/pageutils.py:418
 msgid "Merged page size:"
-msgstr "Yhdistetyn sivun koko:"
+msgstr "Velikost združenih strani:"
 
 #: pdfarranger/metadata.py:50
 msgid "Modified"
-msgstr "Muokattu"
+msgstr "Spremenjeno"
 
 #: pdfarranger/pageutils.py:398
 msgid "Non-uniform page size - using max size"
-msgstr "Vaihteleva sivukoko - enimmäiskoko käytetään"
+msgstr "Različne velikosti strani - uporabljena bo največja"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
@@ -358,11 +360,11 @@ msgstr ""
 
 #: data/pdfarranger.ui:37
 msgid "Open"
-msgstr "Avaa"
+msgstr "Odpri"
 
 #: pdfarranger/pdfarranger.py:1200
 msgid "Open…"
-msgstr "Avaa…"
+msgstr "Odpri …"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
@@ -370,7 +372,7 @@ msgstr ""
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
-msgstr "Liitä ylle"
+msgstr "Naplastitev"
 
 #: pdfarranger/pdfarranger.py:281
 msgid ""
@@ -379,16 +381,18 @@ msgid ""
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
-"PDF Arranger on pieni python-gtk ohjelma mikä auttaa käyttäjää yhdistämään "
-"ja järjestämään PDF-tiedostoja. Ohjelma käyttää pikepdf taustalla."
+"PDF Arranger je majhen python-gtk program, ki pomaga uporabniku združiti ali "
+"razcepiti pdf dokumente ter zasukati, obrezati in prerazporediti njihove "
+"strani s pomočjo sodejnega uporabniškega vmesnika. Gre za obličje programa "
+"pikepdf."
 
 #: pdfarranger/pdfarranger.py:1506
 msgid "PDF document is damaged"
-msgstr "PDF tiedosto on vioittunut"
+msgstr "PDF dokument je okvarjen"
 
 #: pdfarranger/pdfarranger.py:510
 msgid "PDF files"
-msgstr "PDF tiedostot"
+msgstr "PDF datoteke"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
@@ -396,67 +400,67 @@ msgstr ""
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
-msgstr "Sivujärjestys"
+msgstr "Zaporedje strani"
 
 #: pdfarranger/pdfarranger.py:2801
 msgid "Page Size:"
-msgstr "Sivun koko:"
+msgstr "Velikost strani:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Velikost strani"
 
 #: pdfarranger/core.py:457
 msgid "Password"
-msgstr "Salasana"
+msgstr "Geslo"
 
 #: pdfarranger/core.py:435
 msgid "Password required"
-msgstr "Salasana tarvitaan"
+msgstr "Potrebno je geslo"
 
 #: data/menu.ui:107 data/menu.ui:315
 msgid "Past_e Special"
-msgstr "Liitä määräte_n"
+msgstr "Pos_ebno lepljenje"
 
 #: data/menu.ui:124 data/menu.ui:333
 msgid "Paste As O_verlay…"
-msgstr "Liitä _ylle…"
+msgstr "Prilepi _v ospredje …"
 
 #: data/menu.ui:119 data/menu.ui:328
 msgid "Paste As _Even Pages"
-msgstr "Liitä pa_rillisina sivuina"
+msgstr "Prilepi kot _sode strani"
 
 #: data/menu.ui:114 data/menu.ui:323
 msgid "Paste As _Odd Pages"
-msgstr "Liitä paritto_mina sivuina"
+msgstr "Prilepi kot _lihe strani"
 
 #: data/menu.ui:129 data/menu.ui:338
 msgid "Paste As _Underlay…"
-msgstr "Liitä _alle…"
+msgstr "Prilepi v oza_dje …"
 
 #: data/menu.ui:102 data/menu.ui:310
 msgid "Paste _After"
-msgstr "Liitä j_älkeen"
+msgstr "Prilepi _za"
 
 #: data/menu.ui:109 data/menu.ui:318
 msgid "Paste _Before"
-msgstr "Liitä _ennen"
+msgstr "Prilepi _pred"
 
 #: pdfarranger/pdfarranger.py:1636
 msgid "Pasted data not valid. Aborting paste."
-msgstr "Liitetty data ei hyväksytty."
+msgstr "Prilepljeni podatki niso veljavni. Lepljenje opuščeno."
 
 #: data/menu.ui:272
 msgid "Pre_ferences"
-msgstr "Asetukse_t"
+msgstr "P_rednastavitve"
 
 #: pdfarranger/config.py:242
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "Prednastavitve"
 
 #: pdfarranger/pdfarranger.py:292
 msgid "Print the version of PDF Arranger and exit"
-msgstr "Tulosta PDF Arranger versio ja sulje"
+msgstr "Natisni različico PDF Arrangerja in ga zaustavi"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
@@ -464,107 +468,107 @@ msgstr ""
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
-msgstr "Tulostaa…"
+msgstr "Tiskanje …"
 
 #: pdfarranger/metadata.py:46
 msgid "Producer"
-msgstr "PDF-tuottaja"
+msgstr "Narejen v programu"
 
 #: pdfarranger/metadata.py:216
 msgid "Property"
-msgstr "Ominaisuus"
+msgstr "Lastnost"
 
 #: data/menu.ui:182 data/menu.ui:440
 msgid "Re_verse Order"
-msgstr "_Käännä järjestys"
+msgstr "O_brni zaporedje"
 
 #: pdfarranger/pageutils.py:250
 msgid "Relative"
-msgstr "Suhteellinen"
+msgstr "Odnosno"
 
 #: pdfarranger/exporter.py:617
 msgid "Rendering Preview…"
-msgstr "Renderöi esikatselua…"
+msgstr "Izrisovanje predogleda …"
 
 #: pdfarranger/pdfarranger.py:746
 msgid "Rendering…"
-msgstr "Renderöi…"
+msgstr "Izrisovanje …"
 
 #: pdfarranger/pdfarranger.py:1146
 msgid "Replace"
-msgstr "Korvaa"
+msgstr "Zamenjaj"
 
 #: pdfarranger/pageutils.py:154
 msgid "Right"
-msgstr "Oikea"
+msgstr "Desno"
 
 #: pdfarranger/pageutils.py:384
 msgid "Right to Left"
-msgstr "Oikealta vasemmalle"
+msgstr "Z desne proti levi"
 
 #: data/pdfarranger.ui:203
 msgid "Rotate Left"
-msgstr "Käännä vasemmalle"
+msgstr "Zasukaj levo"
 
 #: data/pdfarranger.ui:227
 msgid "Rotate Right"
-msgstr "Käännä oikealle"
+msgstr "Zasukaj desno"
 
 #: data/menu.ui:152 data/menu.ui:410
 msgid "Rotate _Left"
-msgstr "Käännä v_asemmalle"
+msgstr "Zasukaj _levo"
 
 #: pdfarranger/pageutils.py:370 pdfarranger/splitter.py:60
 msgid "Rows"
-msgstr "Rivejä"
+msgstr "Vrstice"
 
 #: data/menu.ui:232 data/menu.ui:396
 msgid "Same Page _Format"
-msgstr "Sama s_ivunmuoto"
+msgstr "Enaka _oblika strani"
 
 #: data/pdfarranger.ui:78
 msgid "Save"
-msgstr "Tallenna"
+msgstr "Shrani"
 
 #: data/pdfarranger.ui:97
 msgid "Save As"
-msgstr "Tallenna nimellä"
+msgstr "Shrani kot"
 
 #: pdfarranger/pdfarranger.py:1102
 msgid "Save As…"
-msgstr "Tallenna nimellä…"
+msgstr "Shrani kot …"
 
 #: data/menu.ui:47
 msgid "Save _As…"
-msgstr "Tallenna _nimellä…"
+msgstr "Shr_ani kot …"
 
 #: pdfarranger/pdfarranger.py:1002
 msgid "Save changes before closing?"
-msgstr "Tallenna muutokset ennen tiedoston sulkemista?"
+msgstr "Ali želite pred zaprtjem shraniti spremembe?"
 
 #: pdfarranger/pdfarranger.py:1039
 msgid "Save changes before quitting?"
-msgstr "Tallenna muutokset ennen ohjelman sulkemista?"
+msgstr "Ali želite pred izhodom iz programa shraniti spremembe?"
 
 #: pdfarranger/pdfarranger.py:999
 msgid "Save changes to “{}” before closing?"
-msgstr "Tallenna muutokset “{}” ennen sulkemista?"
+msgstr "Ali želite pred zaprtjem shraniti spremembe v „{}”?"
 
 #: pdfarranger/pdfarranger.py:1036
 msgid "Save changes to “{}” before quitting?"
-msgstr "Tallenna muutokset “{}” ennen sulkemista?"
+msgstr "Ali želite pred izhodom iz programa shraniti spremembe v „{}”?"
 
 #: pdfarranger/pdfarranger.py:1257
 msgid "Saving produced some warnings"
-msgstr "Tallentamisprosessi tuotti varoituksia"
+msgstr "Med shranjevanjem se je pojavilo nekaj opozoril"
 
 #: pdfarranger/pdfarranger.py:1296
 msgid "Saving…"
-msgstr "Tallentaa…"
+msgstr "Shranjevanje …"
 
 #: pdfarranger/pageutils.py:121
 msgid "Scale factor"
-msgstr "Skaalauskerroin"
+msgstr "Povečava"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
@@ -572,77 +576,76 @@ msgstr ""
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
-msgstr "_Valitse kaikki"
+msgstr "Izberi _vse"
 
 #: data/menu.ui:222 data/menu.ui:386
 msgid "Select _Even Pages"
-msgstr "Valitse parilli_set sivut"
+msgstr "Izberi _sode strani"
 
 #: data/menu.ui:217 data/menu.ui:381
 msgid "Select _Odd Pages"
-msgstr "Valitse paritto_mat sivut"
+msgstr "Izberi _lihe strani"
 
 #: pdfarranger/pdfarranger.py:2796
 msgid "Selected pages: "
-msgstr "Valitut sivut: "
+msgstr "Izbrane strani: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Prikaži vrednosti"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
-msgstr "Jaa sivu"
+msgstr "Razdeli strani"
 
 #: pdfarranger/metadata.py:44
 msgid "Subject"
-msgstr "Aihe"
+msgstr "Predmet"
 
 #: pdfarranger/pdfarranger.py:523
 msgid "Supported image files"
-msgstr "Tuetut kuvatiedostot"
+msgstr "Podprte slikovne datoteke"
 
 #: pdfarranger/config.py:282 pdfarranger/config.py:290
 msgid "System setting"
-msgstr "Järjestelmäasetus"
+msgstr "Sistemske nastavitve"
 
 #: pdfarranger/core.py:447
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
-msgstr ""
-"Tiedosto “{}” on  lukittu ja vaatii salasanan ennen kuin se voidaan avata."
+msgstr "Dokument „{}” je zaklenjen. Za odprtje morate vpisati geslo."
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "Na strani je več slik. Uporabite najprej \"Raztreli na slike\". "
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Salasana pysyy muistissa kunnes ohjelma suljetaan."
+msgstr "Geslo bo pomnjeno do zaprtja PDF urejevalnika Arranger."
 
 #: pdfarranger/config.py:260
 msgid "Theme"
-msgstr "Teema"
+msgstr "Tema"
 
 #: pdfarranger/metadata.py:43
 msgid "Title"
-msgstr "Otsikko"
+msgstr "Naslov"
 
 #: pdfarranger/pageutils.py:154
 msgid "Top"
-msgstr "Yllä"
+msgstr "Zgoraj"
 
 #: pdfarranger/pageutils.py:385
 msgid "Top to Bottom"
-msgstr "Ylhäältä alaspäin"
+msgstr "Od zgoraj navzdol"
 
 #: pdfarranger/pageutils.py:899
 msgid "Underlay"
-msgstr "Liitä alle"
+msgstr "Podloži"
 
 #: pdfarranger/core.py:544 pdfarranger/pdfarranger.py:1502
 msgid "Unknown file format"
-msgstr "Tuntematon tiedostomuoto"
+msgstr "Neznan datotečni zapis"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
@@ -650,74 +653,74 @@ msgstr ""
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
-msgstr "Arvo"
+msgstr "Vrednost"
 
 #: pdfarranger/pageutils.py:382
 msgid "Vertical"
-msgstr "Pystysuora"
+msgstr "Pokončno"
 
 #: pdfarranger/splitter.py:61
 msgid "Vertical Splits"
-msgstr "Pystysuora jako"
+msgstr "Navpična delitev"
 
 #: pdfarranger/pageutils.py:454
 msgid "Vertical offset"
-msgstr "Pystysuuntainen siirtymä"
+msgstr "Navpični odmik"
 
 #: pdfarranger/pageutils.py:247 pdfarranger/pageutils.py:251
 #: pdfarranger/pageutils.py:333
 msgid "Width"
-msgstr "Leveys"
+msgstr "Širina"
 
 #: pdfarranger/splitter.py:88
 msgid "Width in %"
-msgstr "Leveys %"
+msgstr "Širina v %"
 
 #: pdfarranger/pdfarranger.py:983
 msgid "Your changes will be lost if you don’t save them."
-msgstr "Muutokset menetetään jos et tallenna niitä."
+msgstr "Če ne shranite vaših sprememb, bodo izgubljene."
 
 #: data/pdfarranger.ui:144
 msgid "Zoom In"
-msgstr "Lähennä"
+msgstr "Približaj"
 
 #: data/pdfarranger.ui:167
 msgid "Zoom Out"
-msgstr "Loitonna"
+msgstr "Oddalji"
 
 #: data/menu.ui:255
 msgid "Zoom _Fit"
-msgstr "Koko _ikkuna"
+msgstr "_Prilegajoča povečava"
 
 #: data/menu.ui:247
 msgid "Zoom _In"
-msgstr "L_ähennä"
+msgstr "Pr_ibližaj"
 
 #: data/menu.ui:251
 msgid "Zoom _Out"
-msgstr "L_oitonna"
+msgstr "_Oddalji"
 
 #: data/menu.ui:278
 msgid "_About"
-msgstr "Tietoja - PD_F Arranger"
+msgstr "_O programu"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Uporabi"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
 #: pdfarranger/pdfarranger.py:1108 pdfarranger/pdfarranger.py:1158
 msgid "_Cancel"
-msgstr "_Peru"
+msgstr "_Prekliči"
 
 #: pdfarranger/pdfarranger.py:994 data/menu.ui:284
 msgid "_Close"
-msgstr "_Sulje tiedosto"
+msgstr "_Zapri"
 
 #: data/menu.ui:98 data/menu.ui:306
 msgid "_Copy"
-msgstr "Ko_pioi"
+msgstr "_Kopiraj"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
@@ -725,96 +728,96 @@ msgstr ""
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
-msgstr "Poi_sta"
+msgstr "Iz_briši"
 
 #: data/menu.ui:212 data/menu.ui:376
 msgid "_Deselect All"
-msgstr "_Poista valinta"
+msgstr "O_dizberi vse"
 
 #: data/menu.ui:87
 msgid "_Edit"
-msgstr "_Muokkaa"
+msgstr "Ur_edi"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "Raztreli na slike"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "Izvleci"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "S_krij robove"
 
 #: data/menu.ui:30
 msgid "_Import"
-msgstr "_Tuo"
+msgstr "_Uvozi"
 
 #: data/menu.ui:237 data/menu.ui:401
 msgid "_Invert Selection"
-msgstr "K_äänteinen valinta"
+msgstr "_Obrni izbor"
 
 #: data/menu.ui:190 data/menu.ui:448
 msgid "_Merge Pages…"
-msgstr "_Yhdistä sivuja…"
+msgstr "_Združi strani …"
 
 #: data/menu.ui:36
 msgid "_New Window"
-msgstr "_Uusi ikkuna"
+msgstr "_Novo okno"
 
 #: pdfarranger/config.py:247 pdfarranger/pageutils.py:228
 msgid "_OK"
-msgstr "_OK"
+msgstr "V _redu"
 
 #: pdfarranger/pdfarranger.py:1157 data/menu.ui:24
 msgid "_Open"
-msgstr "_Avaa"
+msgstr "_Odpri"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Velikost strani"
 
 #: data/menu.ui:71
 msgid "_Print…"
-msgstr "_Tulosta…"
+msgstr "Na_tisni …"
 
 #: pdfarranger/pdfarranger.py:1031 data/menu.ui:290
 msgid "_Quit"
-msgstr "_Sulje ohjelma"
+msgstr "_Izhod"
 
 #: data/menu.ui:82
 msgid "_Redo"
-msgstr "Tee uu_delleen"
+msgstr "_Ponovi"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "P_ovrni"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
-msgstr "Käännä _oikealle"
+msgstr "Zasukaj _desno"
 
 #: pdfarranger/pdfarranger.py:984 pdfarranger/pdfarranger.py:1107
 #: data/menu.ui:42
 msgid "_Save"
-msgstr "T_allenna"
+msgstr "_Shrani"
 
 #: data/menu.ui:204 data/menu.ui:368
 msgid "_Select"
-msgstr "_Valitse"
+msgstr "_Izberi"
 
 #: data/menu.ui:186 data/menu.ui:444
 msgid "_Split Pages…"
-msgstr "_Jaa sivu…"
+msgstr "_Razcepi strani …"
 
 #: data/menu.ui:78
 msgid "_Undo"
-msgstr "_Kumoa"
+msgstr "Razvel_javi"
 
 #: data/menu.ui:244
 msgid "_View"
-msgstr "_Näytä"
+msgstr "_Pogled"
 
 #: pdfarranger/pageutils.py:144 pdfarranger/pageutils.py:368
 #: pdfarranger/pageutils.py:418
@@ -823,8 +826,8 @@ msgstr "mm"
 
 #: pdfarranger/core.py:326
 msgid "page"
-msgstr "sivu"
+msgstr "stran"
 
 #: pdfarranger/pdfarranger.py:825
 msgid "untitled"
-msgstr "Nimetön"
+msgstr "nenaslovljen"

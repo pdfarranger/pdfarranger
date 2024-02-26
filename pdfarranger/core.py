@@ -639,14 +639,15 @@ class PageAdder:
         try:
             pdfdoc = PDFDoc(filename, basename, blank_size, self.stat_cache[filename],
                             self.app.tmp_dir, self.app.window)
-            self.app.pdfqueue.append(pdfdoc)
-            return pdfdoc, len(self.app.pdfqueue), True
         except _UnknownPasswordException:
             return None
         except PDFDocError as e:
             print(e.message, file=sys.stderr)
             self.app.error_message_dialog(e.message)
             return None
+
+        self.app.pdfqueue.append(pdfdoc)
+        return pdfdoc, len(self.app.pdfqueue), True
 
     def get_layerpages(self, layerdata):
         """Create LayerPage objects from layerdata."""

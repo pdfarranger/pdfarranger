@@ -180,36 +180,6 @@ def _scale(doc, page, factor):
     new_page = doc.make_indirect(new_page)
     return new_page
 
-def check_content(parent, pdf_list):
-    """ Warn about fillable forms or outlines that are lost on export."""
-    warn = False
-    for pdf in [pikepdf.open(p.copyname, password=p.password) for p in pdf_list]:
-        if "/AcroForm" in pdf.Root.keys(): # fillable form
-            warn = True
-            break
-        if pdf.open_outline().root: # table of contents
-            warn = True
-            break
-    if warn:
-        d = Gtk.Dialog(_('Warning'),
-                       parent=parent,
-                       flags=Gtk.DialogFlags.MODAL,
-                       buttons=("_Cancel", Gtk.ResponseType.CANCEL,
-                                "_OK", Gtk.ResponseType.OK))
-        label = Gtk.Label(_('Forms and outlines are lost on saving.'))
-        d.vbox.pack_start(label, False, False, 6)
-        checkbutton = Gtk.CheckButton(_('Do not show this dialog again.'))
-        d.vbox.pack_start(checkbutton, False, False, 6)
-        buttonbox = d.get_action_area()
-        buttons = buttonbox.get_children()
-        d.set_focus(buttons[1])
-        d.show_all()
-        response = d.run()
-        enable_warnings = not checkbutton.get_active()
-        d.destroy()
-        return response, enable_warnings
-    return Gtk.ResponseType.OK, True
-
 
 def _update_angle(model_page, source_page, output_page):
     angle = model_page.angle
@@ -581,27 +551,79 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
     return filename
 
 
+class PrintSettingsWidget(Gtk.Grid):
+    def __init__(self, scale_mode, auto_rotate):
+        super().__init__(margin=0, row_spacing=6, column_spacing=12, border_width=12)
+        lbl = Gtk.Label(_("Scale mode:"), margin=0)
+        self.combo = Gtk.ComboBoxText(margin=0)
+        self.combo.append("NONE", _("None"))
+        self.combo.append("PRINTABLE", _("Fit to Printable Area"))
+        self.combo.append("FULL", _("Fit to Full Page"))
+        self.combo.set_active_id(scale_mode)
+        self.cb = Gtk.CheckButton(label=_("Auto Rotate"), margin=0)
+        self.cb.set_active(auto_rotate)
+        self.attach(lbl, 0, 1, 1, 1)
+        self.attach(self.combo, 1, 1, 2, 1)
+        self.attach(self.cb, 0, 2, 2, 1)
+        self.show_all()
+
+    def get_scale_mode(self):
+        return self.combo.get_active_id()
+
+    def get_auto_rotate(self):
+        return self.cb.get_active()
+
+
 # Adapted from https://stackoverflow.com/questions/28325525/python-gtk-printoperation-print-a-pdf
 class PrintOperation(Gtk.PrintOperation):
     MESSAGE=_("Printing…")
     def __init__(self, app):
-        super().__init__()
+        super().__init__(embed_page_setup=True, support_selection=True)
         self.app = app
+        self.connect("create-custom-widget", self.create_custom_widget)
+        self.connect("custom-widget-apply", self.custom_widget_apply)
+        self.connect("request-page-setup", self.request_page_setup)
         self.connect("begin-print", self.begin_print, None)
         self.connect("end-print", self.end_print, None)
         self.connect("draw-page", self.draw_page, None)
         self.connect("preview", self.preview, None)
         self.pdf_input = None
         self.message = self.MESSAGE
-        self.pages = [row[0].duplicate(incl_thumbnail=False) for row in app.model]
-        app.apply_hide_margins_on_pages(self.pages)
+        self.scale_mode = self.app.config.scale_mode()
+        self.auto_rotate = self.app.config.auto_rotate()
+        self.set_use_full_page(self.scale_mode != 'PRINTABLE')
+        self.snums = [p.get_indices() for p in reversed(app.iconview.get_selected_items())]
+        self.set_has_selection(len(self.snums) > 0)
+
+    def create_custom_widget(self, operation):
+        self.set_custom_tab_label(_("Page Handling"))
+        return PrintSettingsWidget(self.scale_mode, self.auto_rotate)
+
+    def custom_widget_apply(self, operation, widget):
+        self.scale_mode = widget.get_scale_mode()
+        self.auto_rotate = widget.get_auto_rotate()
+        self.set_use_full_page(self.scale_mode != 'PRINTABLE')
+
+    def request_page_setup(self, operation, print_ctx, page_num, setup):
+        if self.auto_rotate:
+            w_page = self.pages[page_num].width_in_points()
+            h_page = self.pages[page_num].height_in_points()
+            if w_page >= h_page:
+                setup.set_orientation(Gtk.PageOrientation.LANDSCAPE)
+            else:
+                setup.set_orientation(Gtk.PageOrientation.PORTRAIT)
 
     def preview(self, operation, preview_op, print_ctx, parent, user_data):
         self.message = _("Rendering Preview…")
 
     def begin_print(self, operation, print_ctx, print_data):
-        self.set_n_pages(len(self.app.model))
         self.app.set_export_state(True, self.message)
+        psel = self.get_print_settings().get_print_pages() == Gtk.PrintPages.SELECTION
+        nums = self.snums if psel else range(len(self.app.model))
+        self.pages = [self.app.model[n][0].duplicate(incl_thumbnail=False) for n in nums]
+        self.app.apply_hide_margins_on_pages(self.pages)
+        self.set_n_pages(len(self.pages))
+
         # Open pikepdf objects for all pages that has been modified
         nfiles = set()
         for p in self.pages:
@@ -618,6 +640,8 @@ class PrintOperation(Gtk.PrintOperation):
     def end_print(self, operation, print_ctx, print_data):
         self.app.set_export_state(False)
         self.message = self.MESSAGE
+        self.app.config.set_scale_mode(self.scale_mode)
+        self.app.config.set_auto_rotate(self.auto_rotate)
 
     def draw_page(self, operation, print_ctx, page_num, print_data):
         cairo_ctx = print_ctx.get_cairo_context()
@@ -625,6 +649,28 @@ class PrintOperation(Gtk.PrintOperation):
         cairo_ctx.scale(print_ctx.get_dpi_x() / 72, print_ctx.get_dpi_y() / 72)
         if page_num >= len(self.app.model):
             return
+        setup = print_ctx.get_page_setup()
+        if self.scale_mode == 'PRINTABLE':
+            w_paper = setup.get_page_width(Gtk.Unit.POINTS)
+            h_paper = setup.get_page_height(Gtk.Unit.POINTS)
+        else:
+            w_paper = setup.get_paper_width(Gtk.Unit.POINTS)
+            h_paper = setup.get_paper_height(Gtk.Unit.POINTS)
+        w_page = self.pages[page_num].width_in_points()
+        h_page = self.pages[page_num].height_in_points()
+        print_scale = self.get_print_settings().get_scale() / 100
+        scale = 1
+        if self.scale_mode != 'NONE':
+            w_scale = w_paper / (w_page * print_scale)
+            h_scale = h_paper / (h_page * print_scale)
+            scale = min(w_scale, h_scale)
+            cairo_ctx.scale(scale, scale)
+
+        # Center page on paper
+        dx = w_paper / (scale * print_scale) - w_page
+        dy = h_paper / (scale * print_scale) - h_page
+        cairo_ctx.translate(dx / 2, dy / 2)
+
         p = self.pages[page_num]
         if p.unmodified():
             pdfdoc = self.app.pdfqueue[p.nfile - 1]
