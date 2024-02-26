@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 #
-# SPDX-FileCopyrightText: 2022, 2023 Massimo Pissarello <mapi68@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Massimo Pissarello <mapi68@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-11-06 12:40+0100\n"
+"PO-Revision-Date: 2024-02-26 12:02+0100\n"
 "Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pdfarranger/splitter.py:87
@@ -77,7 +77,7 @@ msgstr "Tutti i file supportati"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Rotazione automatica"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -97,11 +97,11 @@ msgstr "Colonne"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Copia _immagine"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Copia _testo"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -191,7 +191,7 @@ msgstr "Uguale altezza della riga"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Conversione in immagini..."
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -215,15 +215,15 @@ msgstr "File da aprire"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Adatta a pagina intera"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Adatta all'area stampabile"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Per maggiori informazioni vedi"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -276,7 +276,7 @@ msgstr "Il formato dell'immagine non è supportato da img2pdf"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf mancante."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -350,15 +350,15 @@ msgstr ""
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Nessuno"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Tieni presente le limitazioni:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -370,7 +370,7 @@ msgstr "Apri…"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
-msgstr ""
+msgstr "Contorni e collegamenti possono essere conservati solo in alcuni casi."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -398,7 +398,7 @@ msgstr "File PDF"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Gestione pagine"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -466,7 +466,7 @@ msgstr "Stampa la versione di PDF Arranger ed esci"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Stampa"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -574,7 +574,7 @@ msgstr "Ridimensionamento"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Modalità scala:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -621,7 +621,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "La pagina ha diverse immagini. Usa prima \"Converti in immagini\"."
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -653,7 +653,7 @@ msgstr "Formato file sconosciuto"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Manuale d'uso"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -744,11 +744,11 @@ msgstr "_Modifica"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "_Converti in immagini"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "_Estrai"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
@@ -835,3 +835,4 @@ msgstr "pagina"
 #: pdfarranger/pdfarranger.py:825
 msgid "untitled"
 msgstr "senza titolo"
+
