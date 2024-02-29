@@ -286,6 +286,10 @@ class BasePage:
         """Return the page size in PDF points."""
         return self.size.scaled(self.scale).cropped(self.crop)
 
+    def size_in_mm(self) -> Dims:
+        """Return the page size in mm."""
+        return self.size_in_points() * 25.4 / 72
+
     def width_in_pixel(self):
         return self.size_in_pixel().width
 
