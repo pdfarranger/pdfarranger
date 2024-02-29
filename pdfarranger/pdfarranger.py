@@ -461,12 +461,12 @@ class PdfArranger(Gtk.Application):
                                      self.window.lookup_action('redo'))
 
     def insert_blank_page(self, _action, _option, _unknown):
-        size = (21 / 2.54 * 72, 29.7 / 2.54 * 72) # A4 by default
+        size = None
         selection = self.iconview.get_selected_items()
         selection.sort()
         model = self.iconview.get_model()
         if len(selection) > 0:
-            size = model[selection[-1]][0].size_in_points()
+            size = model[selection[-1]][0].size_in_mm()
         page_size = pageutils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)

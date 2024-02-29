@@ -149,6 +149,110 @@ class _ScalingWidget(Gtk.Box):
         return self.entry.get_value() / 25.4 * 72
 
 
+class PaperSizeWidget(Gtk.Grid):
+    def __init__(self, size, margin=16):
+        super().__init__(margin=margin, row_spacing=8, column_spacing=8, row_homogeneous=True)
+
+        self.attach(Gtk.Label(label=_("Width"), halign=Gtk.Align.START), 1, 1, 1, 1)
+        self.width_entry = _LinkedSpinButton(25.4, 5080, 1, 0)
+        self.w_entry_id = self.width_entry.connect('value-changed', self.width_changed)
+        self.attach(self.width_entry, 2, 1, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 1, 1, 1)
+
+        self.attach(Gtk.Label(label=_("Height"), halign=Gtk.Align.START), 1, 2, 1, 1)
+        self.height_entry = _LinkedSpinButton(25.4, 5080, 1, 10)
+        self.h_entry_id = self.height_entry.connect('value-changed', self.height_changed)
+        self.attach(self.height_entry, 2, 2, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 2, 1, 1)
+
+        self.attach(Gtk.Label(_("Paper size"), halign=Gtk.Align.START), 1, 3, 1, 1)
+        self.combo = Gtk.ComboBoxText(margin=0)
+        self.combo_changed_id = self.combo.connect('changed', self.paper_size_changed)
+        self.papers = [Gtk.PaperSize.new_custom('Custom', _("Custom"), 0, 0, Gtk.Unit.MM)]
+        paper_list = ['iso_a3', 'iso_a4', 'iso_a5', 'na_letter', 'na_legal', 'na_ledger']
+        self.papers += [Gtk.PaperSize.new(p) for p in paper_list]
+        for p in self.papers:
+            p.size = [round(p.get_width(Gtk.Unit.MM), 5), round(p.get_height(Gtk.Unit.MM), 5)]
+            self.combo.append(None, p.get_display_name())
+        self.attach(self.combo, 2, 3, 1, 1)
+
+        self.attach(Gtk.Label(_("Orientation"), halign=Gtk.Align.START), 1, 4, 1, 1)
+        self.port = Gtk.RadioButton(label=_("Portrait"), group=None)
+        self.land = Gtk.RadioButton(label=_("Landscape"), group=self.port)
+        self.port.connect('clicked', self.orientation_clicked)
+        box1 = Gtk.Box()
+        box1.pack_start(self.port, True, True, 0)
+        box1.pack_start(self.land, True, True, 0)
+        self.attach(box1, 2, 4, 1, 1)
+
+        box2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        box2.pack_start(Gtk.Label("┐"), True, True, 0)
+        self.ratio_cb = Gtk.CheckButton(margin_top=1)
+        box2.pack_start(self.ratio_cb, True, True, 0)
+        box2.pack_start(Gtk.Label("┘"), True, True, 0)
+        self.attach(box2, 3, 1, 1, 2)
+
+        if size is None:
+            size = [210, 297]  # A4 by default
+            self.ratio_cb.set_sensitive(False)
+        else:
+            self.ratio_cb.set_active(True)
+            self.ratio_cb.connect('clicked', self.width_changed)
+
+        self.ratios = [size[0] / size[1], size[1] / size[0]]
+        self.set_entry_size(size)
+        self.select_paper_and_orientation()
+
+    def width_changed(self, _widget):
+        if self.ratio_cb.get_active():
+            width = self.width_entry.get_value()
+            self.set_entry_size((width, width / self.ratios[0]))
+        self.select_paper_and_orientation()
+
+    def height_changed(self, _widget):
+        if self.ratio_cb.get_active():
+            height = self.height_entry.get_value()
+            self.set_entry_size((height / self.ratios[1], height))
+        self.select_paper_and_orientation()
+
+    def orientation_clicked(self, _widget):
+        size = self.get_value(Gtk.Unit.MM)
+        self.set_entry_size(sorted(size, reverse=self.land.get_active()))
+        self.ratios.sort(reverse=self.land.get_active())
+
+    def paper_size_changed(self, combo):
+        paper = self.papers[combo.get_active()]
+        size = paper.get_width(Gtk.Unit.MM), paper.get_height(Gtk.Unit.MM)
+        self.set_entry_size(sorted(size, reverse=self.land.get_active()))
+        if round(size[0] / size[1], 5) not in [round(r, 5) for r in self.ratios]:
+            self.ratio_cb.set_active(False)
+
+    def select_paper_and_orientation(self):
+        size = self.get_value(Gtk.Unit.MM)
+        self.papers[0].set_size(*size, Gtk.Unit.MM)
+        size = [round(s, 5) for s in size]
+        for num, paper in reversed(list(enumerate(self.papers))):
+            if paper.size in [size, size[::-1]]:
+                break
+        self.combo.set_active(num)
+        self.port.set_active(size[0] < size[1])
+        self.land.set_active(size[0] > size[1])
+
+    def set_entry_size(self, size):
+        """Set entry size in mm"""
+        with GObject.signal_handler_block(self.width_entry, self.w_entry_id):
+            self.width_entry.set_value(size[0])
+        with GObject.signal_handler_block(self.height_entry, self.h_entry_id):
+            self.height_entry.set_value(size[1])
+
+    def get_value(self, unit=Gtk.Unit.POINTS):
+        """Get entry size in points or mm"""
+        size = [self.width_entry.get_value(), self.height_entry.get_value()]
+        if unit == Gtk.Unit.POINTS:
+            size = [s * 72 / 25.4 for s in size]
+        return size
+
+
 class _CropHideWidget(Gtk.Frame):
     sides = ('L', 'R', 'T', 'B')
     side_names = {'L': _('Left'), 'R': _('Right'), 'T': _('Top'), 'B': _('Bottom')}
@@ -330,19 +434,15 @@ class BlankPageDialog(BaseDialog):
     def __init__(self, size, window):
         super().__init__(title=_("Insert Blank Page"), parent=window)
         self.set_resizable(False)
-        self.width_widget = _ScalingWidget(_("Width"), size[0])
-        self.height_widget = _ScalingWidget(_("Height"), size[1])
-        self.vbox.pack_start(self.width_widget, True, True, 6)
-        self.vbox.pack_start(self.height_widget, True, True, 6)
-        self.width_widget.props.spacing = 6
-        self.height_widget.props.spacing = 6
+        self.paper_widget = PaperSizeWidget(size)
+        self.vbox.pack_start(self.paper_widget, True, True, 0)
         self.show_all()
 
     def run_get(self):
         result = self.run()
         r = None
         if result == Gtk.ResponseType.OK:
-            r = self.width_widget.get_value(), self.height_widget.get_value()
+            r = self.paper_widget.get_value()
         self.destroy()
         return r
 
