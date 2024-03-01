@@ -698,6 +698,9 @@ class PdfArranger(Gtk.Application):
         self.iv_drag_select = IconviewDragSelect(self)
         self.iv_pan_view = IconviewPanView(self)
 
+        if self.config.content_loss_warning():
+            self.content_loss_warning()
+
     def do_command_line(self, command_line):
         options = command_line.get_options_dict()
 
@@ -2741,19 +2744,23 @@ class PdfArranger(Gtk.Application):
             model.reorder(new_order)
         GObject.idle_add(self.render)
 
-    def content_loss_warning(self, old):
-        """Warn about that outlines might be lost on export."""
-        if old:
-            msg = _("Installed pikepdf is too old for preserving of outlines.")
-        else:
-            msg = _("Outlines can be preserved only for the first opened document.")
-        d = Gtk.MessageDialog(
-            type=Gtk.MessageType.INFO,
+    def content_loss_warning(self):
+        d = Gtk.Dialog(_("Note"),
             parent=self.window,
-            text=msg,
-            buttons=Gtk.ButtonsType.OK
+            flags=Gtk.DialogFlags.MODAL,
+            buttons=("_OK", Gtk.ResponseType.OK),
+            resizable=False
             )
-        cb = Gtk.CheckButton(_("Do not show this dialog again."), can_focus=False)
+        m1 = _("Note the limitations:")
+        m2 = _("Cropping/hiding does not remove any content from the PDF file, it only hides it.")
+        m3 = _("Outlines and links can be preserved only in certain cases.")
+        link = "https://github.com/pdfarranger/pdfarranger/wiki/User-Manual"
+        section = "#preserving-of-outlines-and-links"
+        markup = (m1 + "\n\n" + m2 + "\n\n" + m3 + " " + _("For more info see") +
+                  " " + '<a href="' + link + section + '">' + _("User Manual") + "</a>")
+        label = Gtk.Label(label=markup, use_markup=True, max_width_chars=50, wrap=True, margin=12)
+        cb = Gtk.CheckButton(_("Do not show this dialog again."), can_focus=False, margin=12)
+        d.vbox.pack_start(label, False, False, 6)
         d.vbox.pack_start(cb, False, False, 6)
         d.show_all()
         cb.set_can_focus(True)

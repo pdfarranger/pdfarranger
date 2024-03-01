@@ -40,7 +40,7 @@ You may need to run the following commands to run those tests in your current se
 * setxkbmap -v fr
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
-Tests need to be run with default window size (i.e rm ~/.config/pdfarranger/config.ini)
+Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini.
 
 Some tips:
 
@@ -361,17 +361,6 @@ class PdfArrangerTest(unittest.TestCase):
             time.sleep(0.1)
         registry.generateKeyboardEvent(code, None, KEY_RELEASE)
 
-    def _content_loss_warning(self):
-        """Handle the "content loss warning" dialog"""
-        self._wait_cond(lambda: len(self._find_by_role("alert")) > 0)
-        alert = self._find_by_role("alert")[-1]
-        self._wait_cond(lambda: len(self._find_by_role("check box", alert)) > 0)
-        check_box = self._find_by_role("check box", alert)[-1]
-        check_box.click()  # Don't show this dialog again
-        button = self._find_by_role("push button", alert)[-1]
-        button.click()
-        self._wait_cond(lambda: alert.dead)
-
     def _quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
 
@@ -406,8 +395,15 @@ class PdfArrangerTest(unittest.TestCase):
 class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
-        if not have_pikepdf8():
-            self._content_loss_warning()
+        # Handle the "content loss warning" dialog
+        self._wait_cond(lambda: len(self._find_by_role("dialog")) > 0)
+        dialog = self._find_by_role("dialog")[-1]
+        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
+        check_box = self._find_by_role("check box", dialog)[-1]
+        check_box.click()  # Don't show this dialog again
+        button = self._find_by_role("push button", dialog)[-1]
+        button.click()
+        self._wait_cond(lambda: dialog.dead)
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
@@ -458,6 +454,7 @@ class TestBatch1(PdfArrangerTest):
         self._popupmenu(0, "Duplicate")
         app = self._app()
         self.assertEqual(len(self._icons()), 2)
+        self._app().child(roleName="layered pane").grabFocus()
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>c")
         for __ in range(3):
@@ -466,7 +463,7 @@ class TestBatch1(PdfArrangerTest):
         app.keyCombo("Right")
         app.keyCombo("Left")
         app.keyCombo("Down")
-        self._assert_selected("5")
+        self._assert_selected("4")
         app.keyCombo("Up")
         self._assert_selected("2")
 
@@ -663,13 +660,11 @@ class TestBatch4(PdfArrangerTest):
         app.keyCombo("<ctrl>a")  # select all
         self._mainmenu(["Export", "Export Selection to a Single File…"])
         self._save_as_chooser("scaled.pdf")
-        self._popupmenu(1, "Delete")
+        self._popupmenu(0, "Delete")
 
     def test_05_import(self):
         filename = os.path.join(self.__class__.tmp, "scaled.pdf")
         filechooser = self._import_file(filename)
-        if have_pikepdf8():
-            self._content_loss_warning()
         self._wait_cond(lambda: filechooser.dead)
         self.assertEqual(len(self._icons()), 3)
         app = self._app()

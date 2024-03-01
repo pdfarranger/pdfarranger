@@ -32,7 +32,6 @@ import pathlib
 import shutil
 import tempfile
 import threading
-import pikepdf
 import packaging.version as version
 from typing import NamedTuple, Optional, Tuple, Union
 import gettext
@@ -646,12 +645,6 @@ class PageAdder:
             print(e.message, file=sys.stderr)
             self.app.error_message_dialog(e.message)
             return None
-
-        if self.app.config.content_loss_warning():
-            old = version.parse(pikepdf.__version__) < version.Version("8.0")
-            lpdf = len(self.app.pdfqueue)
-            if (old and lpdf == 0) or (not old and lpdf == 1):
-                self.app.content_loss_warning(old)
 
         self.app.pdfqueue.append(pdfdoc)
         return pdfdoc, len(self.app.pdfqueue), True
