@@ -184,6 +184,15 @@ class PaperSizeWidget(Gtk.Grid):
         self.ratios = [size[0] / size[1], size[1] / size[0]]
         self.set_entry_size(size)
         self.select_paper_and_orientation()
+        self.update_entry_limits()
+        self.ratio_cb.connect('clicked', self.update_entry_limits)
+
+    def update_entry_limits(self, _widget=None):
+        r = self.ratios if self.ratio_cb.get_active() else [1, 1]
+        wrange = max(25.4, 25.4 * r[0]), min(5080, 5080 * r[0])
+        hrange = max(25.4, 25.4 * r[1]), min(5080, 5080 * r[1])
+        self.width_entry.set_range(*wrange)
+        self.height_entry.set_range(*hrange)
 
     def width_changed(self, _widget):
         if self.ratio_cb.get_active():
@@ -199,8 +208,11 @@ class PaperSizeWidget(Gtk.Grid):
 
     def orientation_clicked(self, _widget):
         size = self.get_value(Gtk.Unit.MM)
+        self.width_entry.set_range(25.4, 5080)
+        self.height_entry.set_range(25.4, 5080)
         self.set_entry_size(sorted(size, reverse=self.land.get_active()))
         self.ratios.sort(reverse=self.land.get_active())
+        self.update_entry_limits()
 
     def paper_size_changed(self, combo):
         paper = self.papers[combo.get_active()]
@@ -208,6 +220,7 @@ class PaperSizeWidget(Gtk.Grid):
         self.set_entry_size(sorted(size, reverse=self.land.get_active()))
         if round(size[0] / size[1], 5) not in [round(r, 5) for r in self.ratios]:
             self.ratio_cb.set_active(False)
+            self.update_entry_limits()
 
     def select_paper_and_orientation(self):
         size = self.get_value(Gtk.Unit.MM)
