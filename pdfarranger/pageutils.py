@@ -343,6 +343,13 @@ class ScaleDialog(BaseDialog):
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
         paper_widget = PaperSizeWidget(page.size_in_mm(), margin=1)
+        paper_widget.attach(Gtk.Label(_("Fit mode"), halign=Gtk.Align.START), 1, 5, 1, 1)
+        self.combo = Gtk.ComboBoxText()
+        self.combo.append('SCALE', _("Scale"))
+        self.combo.append('SCALE-ADD-MARG', _("Scale & Add margins"))
+        self.combo.append('CROP-ADD-MARG', _("Crop & Add margins"))
+        self.combo.set_active(0)
+        paper_widget.attach(self.combo, 2, 5, 1, 1)
         rel_widget = _RelativeScalingWidget(page.scale)
         self.scale_stack = _RadioStackSwitcher(margin=15)
         self.scale_stack.add_named(paper_widget, "Fit", _("Fit to paper"))
@@ -358,7 +365,9 @@ class ScaleDialog(BaseDialog):
         result = self.run()
         val = None
         if result == Gtk.ResponseType.OK:
-            val = self.scale_stack.selected_child.get_value()
+            s = self.scale_stack
+            mode = 'SCALE' if s.selected_name == 'Relative' else self.combo.get_active_id()
+            val = s.selected_child.get_value(), mode
         self.destroy()
         return val
 
