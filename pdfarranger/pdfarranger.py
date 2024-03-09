@@ -116,7 +116,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Sides, _img_to_pdf
+from .core import Dims, Sides, _img_to_pdf
 
 
 def _set_language_locale():
@@ -2534,17 +2534,47 @@ class PdfArranger(Gtk.Application):
         """Opens a dialog box to define page size."""
         selection = self.iconview.get_selected_items()
         diag = pageutils.ScaleDialog(self.iconview.get_model(), selection, self.window)
-        newscale = diag.run_get()
-        if newscale is None:
+        result = diag.run_get()
+        if result is None:
             return
-        self.undomanager.commit("Size")
-        if not pageutils.scale(self.model, selection, newscale):
-            return
+        newscale, mode = result
+        if mode == 'SCALE':
+            self.undomanager.commit("Scale")
+            if not pageutils.scale(self.model, selection, newscale):
+                return
+        elif mode == 'SCALE-ADD-MARG':
+            self.undomanager.commit("Scale & add margins")
+            pageutils.scale(self.model, selection, newscale)
+            self.center_on_blank_page(selection, newscale)
+        else:
+            self.undomanager.commit("Crop & add margins")
+            self.center_on_blank_page(selection, newscale)
         self.set_unsaved(True)
         self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
+
+    def center_on_blank_page(self, paths, size):
+        """Add paths as overlay, centered on blank pages with 'size'"""
+        adder = PageAdder(self)
+        file, _ = exporter.get_blank_doc(adder, self.pdfqueue, self.tmp_dir, size)
+        if file is None:
+            return
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            for path in reversed(paths):
+                if self.model[path][0].size_in_points() == Dims(*size):
+                    continue
+                ref = Gtk.TreeRowReference.new(self.model, path)
+                adder.move(ref, before=False)
+                adder.addpages(file)
+                adder.commit(select_added=True, add_to_undomanager=False)
+                data = self.deserialize([self.model[path][0].serialize()])
+                with self.render_lock():
+                    self.model.remove(self.model.get_iter(path))
+                self.paste_as_layer(data, path, 'OVERLAY', (0.5, 0.5))
+                self.model[path][0].description = data[0][2]
+                self.model[path][1] = data[0][2]
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
