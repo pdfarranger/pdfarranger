@@ -1579,7 +1579,7 @@ class PdfArranger(Gtk.Application):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
 
-            # Add the "main" pasted page
+            # The "main" pasted page
             lp0 = layerpage_stack[0].duplicate()
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
@@ -1590,7 +1590,9 @@ class PdfArranger(Gtk.Application):
                                right=1 - left - lp0.width_in_points() / dwidth,
                                top=top,
                                bottom=1 - top - lp0.height_in_points() / dheight)
-            dpage.layerpages.append(lp0)
+            if self.pdfqueue[lp0.nfile - 1].blank_size is None:
+                # Add "main" pasted page if it is not blank
+                dpage.layerpages.append(lp0)
 
             # Add layers from the pasted page
             nfirst = len(dpage.layerpages) - 1
