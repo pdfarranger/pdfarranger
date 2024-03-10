@@ -897,7 +897,7 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
                 self.iconview.unselect_path(path)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
-        ac.set_description(page.description())
+        ac.set_description(page.description)
 
     def get_visible_range2(self):
         """Get range of items visible in window.
@@ -1554,7 +1554,7 @@ class PdfArranger(Gtk.Application):
     def paste_as_layer(self, data, destination, laypos, offset_xy=None):
         page_stack = []
         pageadder = PageAdder(self)
-        for filename, npage, _basename, angle, scale, crop, hide, layerdata in data:
+        for filename, npage, _description, angle, scale, crop, hide, layerdata in data:
             d = [[filename, npage, angle, scale, laypos, crop, Sides()]] + layerdata
             lps = pageadder.get_layerpages(d)
             self.apply_hide_margins_on_layerpages(lps, hide)
@@ -1687,13 +1687,13 @@ class PdfArranger(Gtk.Application):
         """Deserialize data from copy & paste or drag & drop operation."""
         d = []
         while data:
-            tmp = data.pop(0).split('\n')
+            tmp = data.pop(0).split('///')
             filename = tmp[0]
             npage = int(tmp[1])
             if len(tmp) < 3:  # Only when paste files interleaved
                 d.append((filename, npage))
             else:
-                basename = tmp[2]
+                description = tmp[2]
                 angle = int(tmp[3])
                 scale = float(tmp[4])
                 crop = [float(side) for side in tmp[5:9]]
@@ -1710,7 +1710,7 @@ class PdfArranger(Gtk.Application):
                     loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
                     layerdata.append([lfilename, lnpage, langle, lscale, laypos, lcrop, loffset])
                     i += 13
-                d.append((filename, npage, basename, angle, scale, crop, hide, layerdata))
+                d.append((filename, npage, description, angle, scale, crop, hide, layerdata))
         return d
 
     def set_paste_location(self, pastemode):
@@ -1942,9 +1942,9 @@ class PdfArranger(Gtk.Application):
                     iterator = model.get_iter(ref_from.get_path())
                     page = model.get_value(iterator, 0).duplicate()
                     if before:
-                        it = model.insert_before(iter_to, [page, page.description()])
+                        it = model.insert_before(iter_to, [page, page.description])
                     else:
-                        it = model.insert_after(iter_to, [page, page.description()])
+                        it = model.insert_after(iter_to, [page, page.description])
                     path = model.get_path(it)
                     iconview.select_path(path)
                 if move:
@@ -2483,7 +2483,7 @@ class PdfArranger(Gtk.Application):
                 newpages = page.split(leftcrops, topcrops)
                 for p in newpages:
                     p.resample = -1
-                    model.insert_after(iterator, [p, p.description()])
+                    model.insert_after(iterator, [p, p.description])
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
@@ -2758,7 +2758,7 @@ class PdfArranger(Gtk.Application):
             for ref in ref_list:
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0).duplicate()
-                model.insert_after(iterator, [page, page.description()])
+                model.insert_after(iterator, [page, page.description])
         self.iv_selection_changed_event()
         GObject.idle_add(self.render)
 
