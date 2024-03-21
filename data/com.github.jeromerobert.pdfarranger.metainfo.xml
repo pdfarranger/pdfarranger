@@ -14,6 +14,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name xml:lang="id">Penyusun PDF</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
   <name xml:lang="ca">Arranjador de PDF</name>
+  <name xml:lang="zh-tw">PDF Arranger</name>
   <summary>Merge, shuffle, and crop PDFs</summary>
   <summary xml:lang="ca">Fusionador, arranjador, divisor, rotador i retallador de PDF</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
@@ -34,6 +35,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <summary xml:lang="uk">Додаток для об'єднання, зміни порядку сторінок, розділу, обертання та обрізання PDF документів</summary>
+  <summary xml:lang="zh-tw">合併、重新排列及裁切 PDF</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1"/>
@@ -167,6 +169,14 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="uk">
       Це графічна оболонка для pikepdf.
+    </p>
+
+    <p xml:lang="zh-tw">
+      PDF Arranger 是一個用 python-gtk 寫的小程式，讓使用者能透過直覺的互動式圖形介面，
+      合併、分割 PDF 文件並裁切及重新排列頁面。
+    </p>
+    <p xml:lang="zh-tw">
+      它是 pikepdf 的前端之一。
     </p>
   </description>
   <developer id="pdfarranger.org">
