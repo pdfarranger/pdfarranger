@@ -608,7 +608,7 @@ msgstr "支援的影像檔"
 
 #: pdfarranger/config.py:282 pdfarranger/config.py:290
 msgid "System setting"
-msgstr "依系統主題"
+msgstr "依系統設定"
 
 #: pdfarranger/core.py:447
 msgid ""
