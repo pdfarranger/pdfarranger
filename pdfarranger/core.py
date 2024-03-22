@@ -286,6 +286,10 @@ class BasePage:
         """Return the page size in PDF points."""
         return self.size.scaled(self.scale).cropped(self.crop)
 
+    def size_in_mm(self) -> Dims:
+        """Return the page size in mm."""
+        return self.size_in_points() * 25.4 / 72
+
     def width_in_pixel(self):
         return self.size_in_pixel().width
 
@@ -302,7 +306,7 @@ class BasePage:
 
 
 class Page(BasePage):
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, hide: Sides, size_orig: Dims, basename, layerpages):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, hide: Sides, size_orig: Dims, description, layerpages):
         super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
         self.zoom = zoom
         self.hide = Sides(*hide)
@@ -311,19 +315,14 @@ class Page(BasePage):
         self.resample = -1
         self.preview = None
         """A low resolution thumbnail"""
-        #: The name of the original file
-        self.basename = basename
-        """The name of the original file"""
+        self.description = description
+        """The text under the thumbnail"""
         self.layerpages = list(layerpages)
 
     def __repr__(self):
         return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "
                 f"{self.angle}, {self.scale}, {self.crop}, {self.hide}, "
-                f"{self.size_orig}, '{self.basename}', {self.layerpages})")
-
-    def description(self):
-        shortname = os.path.splitext(self.basename)[0]
-        return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
+                f"{self.size_orig}, '{self.description}', {self.layerpages})")
 
     def rotate(self, angle: int):
         rt = self.rotate_times(angle)
@@ -345,9 +344,9 @@ class Page(BasePage):
     def serialize(self):
         """Convert to string for copy/past operations."""
         lpdata = [lp.serialize() for lp in self.layerpages]
-        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale]
+        ts = [self.copyname, self.npage, self.description, self.angle, self.scale]
         ts += list(self.crop) + list(self.hide) + list(lpdata)
-        return "\n".join([str(v) for v in ts])
+        return "///".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
@@ -413,7 +412,7 @@ class LayerPage(BasePage):
         """Convert to string for copy/past operations."""
         ts = [self.copyname, self.npage, self.angle, self.scale, self.laypos]
         ts += list(self.crop) + list(self.offset)
-        return "\n".join([str(v) for v in ts])
+        return "///".join([str(v) for v in ts])
 
     def duplicate(self):
         r = copy.copy(self)
@@ -665,11 +664,12 @@ class PageAdder:
             layerpages.append(LayerPage(*ld))
         return layerpages
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
+    def addpages(self, filename, page=-1, description=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
 
+        basename = None if description is None else description.split('\n')[0]
         doc_data = self.get_pdfdoc(filename, basename)
         if doc_data is None:
             return
@@ -691,6 +691,11 @@ class PageAdder:
 
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
+            if description is None:
+                shortname = os.path.splitext(pdfdoc.basename)[0]
+                desc = "".join([shortname, "\n", _("page"), " ", str(npage)])
+            else:
+                desc = description
             self.pages.append(
                 Page(
                     nfile,
@@ -702,7 +707,7 @@ class PageAdder:
                     crop,
                     hide,
                     Dims(*page.get_size()),
-                    pdfdoc.basename,
+                    desc,
                     layerpages,
                 )
             )
@@ -719,7 +724,7 @@ class PageAdder:
             self.pages.reverse()
         with self.app.render_lock():
             for p in self.pages:
-                m = [p, p.description()]
+                m = [p, p.description]
                 if self.treerowref:
                     iter_to = self.app.model.get_iter(self.treerowref.get_path())
                     if self.before:
