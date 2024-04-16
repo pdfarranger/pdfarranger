@@ -219,6 +219,8 @@ class PdfArranger(Gtk.Application):
                             Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
                          **kwargs)
 
+        GLib.set_prgname('com.github.jeromerobert.pdfarranger')
+
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
         os.chmod(self.tmp_dir, 0o700)
