@@ -185,7 +185,7 @@ class PdfArrangerTest(unittest.TestCase):
         return [
             a
             for a in root.applications()
-            if a.name == "__main__.py" or a.name == "pdfarranger"
+            if a.name in ["__main__.py", "pdfarranger", "com.github.jeromerobert.pdfarranger"]
         ]
 
     def _mainmenu(self, action):
