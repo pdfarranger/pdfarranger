@@ -219,6 +219,7 @@ class PdfArranger(Gtk.Application):
                             Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
                          **kwargs)
 
+        GLib.set_application_name(APPNAME)
         GLib.set_prgname('com.github.jeromerobert.pdfarranger')
 
         # Create the temporary directory
