@@ -533,9 +533,11 @@ class PdfArranger(Gtk.Application):
             filter_list.append(f_img)
         return filter_list
 
-    def set_title(self, title):
+    def set_title(self, title, subtitle = None):
         if Handy:
             self.uiXML.get_object('header_bar').set_title(title)
+            if subtitle is not None:
+                self.uiXML.get_object('header_bar').set_subtitle(subtitle)
         else:
             self.window.set_title(title)
 
@@ -822,8 +824,9 @@ class PdfArranger(Gtk.Application):
         GObject.idle_add(self.retitle)
 
     def retitle(self):
+        subtitle = None
         if self.save_file:
-            title = self.save_file
+            subtitle, title = os.path.split(self.save_file)
         else:
             title = _('untitled')
         if self.is_unsaved:
@@ -835,7 +838,7 @@ class PdfArranger(Gtk.Application):
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
-        self.set_title(title)
+        self.set_title(title, subtitle)
         return False
 
     def update_thumbnail(self, _obj, ref, thumbnail, zoom, scale, is_preview):
