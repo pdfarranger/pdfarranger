@@ -536,8 +536,7 @@ class PdfArranger(Gtk.Application):
     def set_title(self, title, subtitle = None):
         if Handy:
             self.uiXML.get_object('header_bar').set_title(title)
-            if subtitle is not None:
-                self.uiXML.get_object('header_bar').set_subtitle(subtitle)
+            self.uiXML.get_object('header_bar').set_subtitle(subtitle)
         else:
             self.window.set_title(title)
 
