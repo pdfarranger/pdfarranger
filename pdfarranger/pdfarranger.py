@@ -534,11 +534,8 @@ class PdfArranger(Gtk.Application):
         return filter_list
 
     def set_title(self, title, subtitle = None):
-        if Handy:
-            self.uiXML.get_object('header_bar').set_title(title)
-            self.uiXML.get_object('header_bar').set_subtitle(subtitle)
-        else:
-            self.window.set_title(title)
+        self.uiXML.get_object('header_bar').set_title(title)
+        self.uiXML.get_object('header_bar').set_subtitle(subtitle)
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
