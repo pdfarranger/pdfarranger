@@ -38,12 +38,12 @@ msgstr "%"
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of height"
-msgstr "altueraren %a"
+msgstr "altueraren %"
 
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of width"
-msgstr "zabaleraren %a"
+msgstr "zabaleraren %"
 
 #: pdfarranger/pdfarranger.py:2764
 #, python-format
@@ -56,7 +56,7 @@ msgstr "(Libhandy falta da)"
 
 #: pdfarranger/config.py:254
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Berrabiarazi behar da)"
 
 #: pdfarranger/pdfarranger.py:1144
 #, python-format
@@ -81,7 +81,7 @@ msgstr "Onartutako irudi formatuak"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Biraketa automatikoa"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -101,11 +101,11 @@ msgstr "Zutabeak"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Kopiatu _Irudia"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Kopiatu _Testua"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -131,7 +131,8 @@ msgstr "Moztu ertz zuriak"
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
-msgstr ""
+msgstr "Mozketak/ezkutatzeak ez du PDF fitxategitik edukirik kentzen, "
+"ezkutatzen du soilik"
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -191,7 +192,7 @@ msgstr "Errenkaden altuera berdina"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Arakatzen irudietan…"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -215,15 +216,15 @@ msgstr "Ireki beharreko fitxategia(k)"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Doitu orrialde osora"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Doitu area inprimagarrira"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Informazio gehaigo hemen"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -252,7 +253,7 @@ msgstr "Altuera %-tan"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Ezkutatu marginak"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -276,7 +277,7 @@ msgstr "Irudi formatua ez du onartzen img2pdf-ek"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf falta da"
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -349,15 +350,15 @@ msgstr "Orrialdearen tamaina ez-uniformea ​​- gehienezko tamaina erabiliz"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Bat ere ez"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Oharra"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Kontuan izan mugak:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -369,7 +370,7 @@ msgstr "Ireki…"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
-msgstr ""
+msgstr "Eskemak eta estekak kasu jakin batzuetan soilik gorde daitezke."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -397,7 +398,7 @@ msgstr "PDF fitxategiak"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Orriaren maneiua"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -409,7 +410,7 @@ msgstr "Orriaren tamaina:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Orriaren tamaina"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -465,7 +466,7 @@ msgstr "Inprimatu PDF Arranger-en bertsioa eta irten"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Inprimatzen"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -573,7 +574,7 @@ msgstr "Eskala-faktorea"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Eskala modua"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -593,7 +594,7 @@ msgstr "Hautatutako orrialdeak: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Erakutsi balioak"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -619,7 +620,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "Orriak hainbat irudi ditu. Erabili \"Arakatu irudietan\" lehenik.\""
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -651,7 +652,7 @@ msgstr "Fitxategi formatu ezezaguna"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Erabiltzailearen eskuliburua"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -708,7 +709,7 @@ msgstr "_Honi buruz"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplikatu"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
@@ -726,7 +727,7 @@ msgstr "_Kopiatu"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "_Moztu marjinak…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
@@ -742,15 +743,15 @@ msgstr "_Editatu"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "_Arakatu irudietan"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "_Atera"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "_Ezkutatu marjinak"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -778,7 +779,7 @@ msgstr "_Ireki"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Orriaren tamaina"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -794,7 +795,7 @@ msgstr "_Berregin"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "_Atzera"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
