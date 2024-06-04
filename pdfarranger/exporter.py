@@ -544,7 +544,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
                 Contents=pikepdf.Stream(file, content_txt.encode())
             )
 
-        file.pages.append(newpage)
+        file.pages.append(pikepdf.Page(newpage))
     for __ in range(to_remove):
         del file.pages[0]
     file.save(filename)
