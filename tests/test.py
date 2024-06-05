@@ -408,6 +408,7 @@ class TestBatch1(PdfArrangerTest):
         button = self._find_by_role("push button", dialog)[-1]
         button.click()
         self._wait_cond(lambda: dialog.dead)
+        self.assertEqual(len(self._icons()), 1, "Failed to load image")
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
