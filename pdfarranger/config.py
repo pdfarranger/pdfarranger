@@ -320,8 +320,8 @@ class DogtailConfig(Config):
         super().__init__("dont-read-me-dont-write-me")
 
     @staticmethod
-    def _config_file(_):
+    def _config_file(domain):
         return "Dummy config file for dogtail"
 
-    def save(_):
+    def save(self):
         pass
