@@ -149,6 +149,7 @@ class PdfArrangerManager:
     def __init__(self, args=None):
         self.process = None
         args = [] if args is None else args
+        args += ["--dogtail"]  # run pdfarranger in dogtail mode, e.g. ignore local config files
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if "PDFARRANGER_COVERAGE" in os.environ:
             cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]

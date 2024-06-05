@@ -115,7 +115,7 @@ from gi.repository import Gio  # for inquiring mime types information
 from gi.repository import GLib
 from gi.repository import Pango
 
-from .config import Config
+from .config import Config, DogtailConfig
 from .core import Sides, _img_to_pdf
 
 
@@ -293,6 +293,14 @@ class PdfArranger(Gtk.Application):
             GLib.OptionFlags.NONE,
             GLib.OptionArg.NONE,
             _("Print the version of PDF Arranger and exit"),
+            None,
+        )
+        self.add_main_option(
+            "dogtail",
+            0,
+            GLib.OptionFlags.HIDDEN,  # hide from --help
+            GLib.OptionArg.NONE,
+            "",
             None,
         )
         self.add_main_option(
@@ -686,6 +694,10 @@ class PdfArranger(Gtk.Application):
             print("pikepdf-" + pikepdf.__version__)
             print("libqpdf-" + pikepdf.__libqpdf_version__)
             return 0
+
+        if options.contains("dogtail"):
+            # Local config files often interfere with automated tests
+            self.config = DogtailConfig()
 
         self.activate()
 
