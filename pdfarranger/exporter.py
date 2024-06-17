@@ -199,7 +199,7 @@ def _apply_geom_transform(pdf_output, new_page, row):
         del new_page.TrimBox
     if '/CropBox' in new_page:
         del new_page.CropBox
-    return _scale(pdf_output, new_page, row.scale)
+    return pikepdf.Page(_scale(pdf_output, new_page, row.scale))
 
 
 def _apply_geom_transform_job(pdf_output:pikepdf.Pdf, new_page:pikepdf.Page, page:Page) -> None:
