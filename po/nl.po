@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PDF-Shuffler 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-06-11 14:36+0200\n"
+"PO-Revision-Date: 2024-06-24 21:44+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -37,12 +37,12 @@ msgstr "%"
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of height"
-msgstr ""
+msgstr "% van de hoogte"
 
 #: pdfarranger/pageutils.py:176
 #, python-format
 msgid "% of width"
-msgstr ""
+msgstr "% van de breedte"
 
 #: pdfarranger/pdfarranger.py:2764
 #, python-format
@@ -81,7 +81,7 @@ msgstr "Alle ondersteunde bestanden"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Automatisch draaien"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -101,11 +101,11 @@ msgstr "Kolommen"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Afbeeld_ing kopiëren"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "_Tekst kopiëren"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -132,6 +132,7 @@ msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
+"Let op: bijsnijden en/of verbergen verwijdert de inhoud niet permanent."
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -193,7 +194,7 @@ msgstr "Gelijke rijhoogten"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Bezig met opdelen in afbeeldingen…"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -217,15 +218,15 @@ msgstr "Te openen bestand(en)"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Pagina's volledig inpassen"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Pagina's inpassen in printgebied"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Ga voor meer informatie naar"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -254,7 +255,7 @@ msgstr "Hoogte, in %"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Marges verbergen"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -278,7 +279,7 @@ msgstr "Dit afbeeldingsbestand wordt niet ondersteund door img2pdf"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf ontbreekt."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -352,15 +353,15 @@ msgstr "Inconsistente paginagrootte - de max. grootte wordt gebruikt"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Geen"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Opmerking"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Houd de volgende beperkingen in acht:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -373,6 +374,8 @@ msgstr "Openen…"
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr ""
+"Contouren en links kunnen slechts onder bepaalde omstandigheden bewaard "
+"worden."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -396,11 +399,11 @@ msgstr "Het pdf-bestand is beschadigd"
 
 #: pdfarranger/pdfarranger.py:510
 msgid "PDF files"
-msgstr "PDF-bestanden"
+msgstr "Pdf-bestanden"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Pagina-afhandeling"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -412,7 +415,7 @@ msgstr "Paginagrootte:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Paginagrootte"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -468,7 +471,7 @@ msgstr "Toon het versienummer en sluit af"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Afdrukken"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -576,7 +579,7 @@ msgstr "Vergrotingsfactor"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Vergrotingsmodus:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -596,7 +599,7 @@ msgstr "Geselecteerde pagina': "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Waarden tonen"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -622,6 +625,8 @@ msgstr "“{}” is beveiligd en kan alleen worden geopend met een wachtwoord."
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
 msgstr ""
+"Deze pagina bevat meerdere afbeeldingen. Gebruik de optie ‘Opdelen in "
+"afbeeldingen’."
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -653,7 +658,7 @@ msgstr "Onbekend bestandstype"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Gebruikershandleiding"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -710,7 +715,7 @@ msgstr "_Over"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "Toep_assen"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
@@ -728,7 +733,7 @@ msgstr "_Kopiëren"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "Mar_ges bijsnijden…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
@@ -744,15 +749,15 @@ msgstr "_Bewerken"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "Opd_elen in afbeeldingen"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "_Extraheren"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "Marges ver_bergen…"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -780,7 +785,7 @@ msgstr "_Openen"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Paginagrootte…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -796,7 +801,7 @@ msgstr "Opnieu_w uitvoeren"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "Te_rugdraaien…"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
