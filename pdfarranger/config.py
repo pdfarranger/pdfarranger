@@ -309,3 +309,19 @@ class Config(object):
             self.set_scale_mode(psettings.get_scale_mode())
             self.set_auto_rotate(psettings.get_auto_rotate())
         d.destroy()
+
+class DogtailConfig(Config):
+    """
+    Config for Dogtail tests.
+    Ignores local config files and does nothing on save.
+    """
+
+    def __init__(self):
+        super().__init__("dont-read-me-dont-write-me")
+
+    @staticmethod
+    def _config_file(domain):
+        return "Dummy config file for dogtail"
+
+    def save(self):
+        pass

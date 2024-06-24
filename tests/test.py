@@ -149,6 +149,7 @@ class PdfArrangerManager:
     def __init__(self, args=None):
         self.process = None
         args = [] if args is None else args
+        args += ["--dogtail"]  # run pdfarranger in dogtail mode, e.g. ignore local config files
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if "PDFARRANGER_COVERAGE" in os.environ:
             cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]
@@ -202,7 +203,7 @@ class PdfArrangerTest(unittest.TestCase):
         c = 0
         while not cond():
             time.sleep(0.1)
-            self.assertLess(c, 30)
+            self.assertLess(c, 30, f"Timeout waiting for {cond.__name__}")
             c += 1
 
     def _find_by_role(self, role, node=None, show_only=False):
@@ -393,10 +394,13 @@ class PdfArrangerTest(unittest.TestCase):
 
 
 class TestBatch1(PdfArrangerTest):
+    def check_startup_dialog_present(self):
+        return len(self._find_by_role("dialog")) > 0
+
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
         # Handle the "content loss warning" dialog
-        self._wait_cond(lambda: len(self._find_by_role("dialog")) > 0)
+        self._wait_cond(self.check_startup_dialog_present)
         dialog = self._find_by_role("dialog")[-1]
         self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
         check_box = self._find_by_role("check box", dialog)[-1]
@@ -404,6 +408,7 @@ class TestBatch1(PdfArrangerTest):
         button = self._find_by_role("push button", dialog)[-1]
         button.click()
         self._wait_cond(lambda: dialog.dead)
+        self.assertEqual(len(self._icons()), 1, "Failed to load image")
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
