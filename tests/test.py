@@ -40,7 +40,8 @@ You may need to run the following commands to run those tests in your current se
 * setxkbmap -v fr
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
-Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini.
+Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini
+or by running as pdfarranger --dogtail.
 
 Some tips:
 

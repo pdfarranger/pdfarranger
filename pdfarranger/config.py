@@ -325,3 +325,6 @@ class DogtailConfig(Config):
 
     def save(self):
         pass
+
+    def window_size(self):
+        return 540, 600
