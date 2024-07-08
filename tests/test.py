@@ -234,7 +234,10 @@ class PdfArrangerTest(unittest.TestCase):
         return statusbar.name
 
     def _assert_selected(self, selection):
-        self.assertTrue(self._status_text().startswith("Selected pages: " + selection))
+        actual_selection = self._status_text().replace("Selected pages: ", "")
+        # TODO should we tighten this up, i.e. equality instead of "startswith"?
+        self.assertTrue(actual_selection.startswith(selection),
+                        msg=f"Selected pages mismatch: '{actual_selection}' doesn't start with '{selection}'")
 
     def _assert_page_size(self, width, height, pageid=None):
         if pageid is not None:
