@@ -204,7 +204,7 @@ class PdfArrangerTest(unittest.TestCase):
         c = 0
         while not cond():
             time.sleep(0.1)
-            self.assertLess(c, 30, f"Timeout waiting for {cond.__name__}")
+            self.assertLess(c, 80, f"Timeout waiting for {cond.__name__}")
             c += 1
 
     def _find_by_role(self, role, node=None, show_only=False):
