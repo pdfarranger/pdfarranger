@@ -162,6 +162,7 @@ class PdfArrangerManager:
 
 class PdfArrangerTest(unittest.TestCase):
     LAST=False
+
     def _start(self, args=None):
         from dogtail.config import config
         config.searchBackoffDuration = 1
@@ -171,6 +172,16 @@ class PdfArrangerTest(unittest.TestCase):
         self._app()
         # Now let's go faster
         config.searchBackoffDuration = 0.1
+
+        # Handle the "content loss warning" dialog
+        self._wait_cond(self._check_startup_dialog_present)
+        dialog = self._find_by_role("dialog")[-1]
+        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
+        check_box = self._find_by_role("check box", dialog)[-1]
+        check_box.click()  # Don't show this dialog again
+        button = self._find_by_role("push button", dialog)[-1]
+        button.click()
+        self._wait_cond(lambda: dialog.dead)
 
     def _app(self):
         """Return the first instance of pdfarranger"""
@@ -189,6 +200,9 @@ class PdfArrangerTest(unittest.TestCase):
             for a in root.applications()
             if a.name in ["__main__.py", "pdfarranger", "com.github.jeromerobert.pdfarranger"]
         ]
+
+    def _check_startup_dialog_present(self):
+        return len(self._find_by_role("dialog")) > 0
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
@@ -398,21 +412,10 @@ class PdfArrangerTest(unittest.TestCase):
 
 
 class TestBatch1(PdfArrangerTest):
-    def check_startup_dialog_present(self):
-        return len(self._find_by_role("dialog")) > 0
 
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
-        # Handle the "content loss warning" dialog
-        self._wait_cond(self.check_startup_dialog_present)
-        dialog = self._find_by_role("dialog")[-1]
-        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
-        check_box = self._find_by_role("check box", dialog)[-1]
-        check_box.click()  # Don't show this dialog again
-        button = self._find_by_role("push button", dialog)[-1]
-        button.click()
-        self._wait_cond(lambda: dialog.dead)
-        self.assertEqual(len(self._icons()), 1, "Failed to load image")
+        self.assertEqual(len(self._icons()), 1, msg="Failed to load image")
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
