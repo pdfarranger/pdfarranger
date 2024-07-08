@@ -749,7 +749,7 @@ class TestBatch6(PdfArrangerTest):
 
     def test_03_crop_margins(self):
         self._app().keyCombo("<ctrl>a")
-        self._popupmenu(0, "Crop Margins…")
+        self._popupmenu(None, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
         croppanel = dialog.child(name="Crop Margins")
         cropbuttons = self._find_by_role("spin button", croppanel)
@@ -800,7 +800,7 @@ class TestBatch6(PdfArrangerTest):
         if not have_pikepdf3():
             return
         self._popupmenu(0, ["Select", "Select All"])
-        self._popupmenu(0, "Merge Pages…")
+        self._popupmenu(None, "Merge Pages…")
         dialog = self._app().child(roleName="dialog")
         orderpanel = dialog.child(name="Page Order")
         radiobuttons = self._find_by_role("radio button", orderpanel)
