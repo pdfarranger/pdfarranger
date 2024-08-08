@@ -127,11 +127,9 @@ from .config import Config
 from .core import Sides, _img_to_pdf
 
 def check_gtk_schema_exists():
-    # On Windows the GTK library has a different logic, so we're skipping the test
-    #   See https://github.com/pdfarranger/pdfarranger/pull/1045/files#r1485570912
     # subprocess.run() would slow down the start of the application, so we only check it on Darwin
     #   See https://github.com/pdfarranger/pdfarranger/pull/1045#issuecomment-1970287378
-    if os.name == 'nt':
+    if platform.system() != 'Darwin':
         return True
     try:
         schemas = subprocess.run(["gsettings", "list-recursively"],
@@ -139,7 +137,7 @@ def check_gtk_schema_exists():
             check=True,
             text=True)
         return 'org.gtk.Settings.ColorChooser' in schemas.stdout
-    except Exception as e:
+    except FileNotFoundError as e:
         print(e)
         print('ERROR: gsettings failed. Please check GTK depencencies.')
         return False
