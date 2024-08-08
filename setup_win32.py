@@ -1,4 +1,4 @@
-VERSION='1.10.0'
+VERSION='1.11.0'
 
 from cx_Freeze import setup, Executable
 import os
@@ -49,7 +49,7 @@ addlocale("gtk30")
 def addicons():
     addfile("share/icons/hicolor/index.theme")
     addfile("share/icons/Adwaita/index.theme")
-    for i in ['places/folder', 'mimetypes/text-x-generic', 'status/image-missing-symbolic.symbolic']:
+    for i in ['places/folder', 'mimetypes/text-x-generic']:
         addfile(os.path.join('share/icons/Adwaita/16x16/', i + '.png'))
     icons = [
         'places/user-desktop',

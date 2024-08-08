@@ -199,7 +199,7 @@ def _apply_geom_transform(pdf_output, new_page, row):
         del new_page.TrimBox
     if '/CropBox' in new_page:
         del new_page.CropBox
-    return _scale(pdf_output, new_page, row.scale)
+    return pikepdf.Page(_scale(pdf_output, new_page, row.scale))
 
 
 def _apply_geom_transform_job(pdf_output:pikepdf.Pdf, new_page:pikepdf.Page, page:Page) -> None:
@@ -544,7 +544,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
                 Contents=pikepdf.Stream(file, content_txt.encode())
             )
 
-        file.pages.append(newpage)
+        file.pages.append(pikepdf.Page(newpage))
     for __ in range(to_remove):
         del file.pages[0]
     file.save(filename)

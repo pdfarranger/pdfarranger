@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-05-20 22:20-0300\n"
+"PO-Revision-Date: 2024-03-30 12:18-0300\n"
 "Last-Translator: Túlio Peroni <tulioperoni@outlook.com>\n"
 "Language-Team: BR (Brazil)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -77,7 +77,7 @@ msgstr "Todos os arquivos suportados"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Rotação automática"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -97,11 +97,11 @@ msgstr "Colunas"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Copiar _Imagem"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Copiar _Texto"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -128,6 +128,7 @@ msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
+"Cortar/ocultar não remove qualquer conteúdo do arquivo PDF, apenas o oculta."
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -148,7 +149,7 @@ msgstr "Descartar alterações e sair?"
 
 #: pdfarranger/pdfarranger.py:2737
 msgid "Do not show this dialog again."
-msgstr "Não mostre este diálogo novamente."
+msgstr "Não mostrar este diálogo novamente."
 
 #: pdfarranger/pdfarranger.py:984
 msgid "Do_n’t Save"
@@ -156,7 +157,7 @@ msgstr "_Não salvar"
 
 #: pdfarranger/pdfarranger.py:1265
 msgid "Don't show warnings when saving again."
-msgstr "Não mostre avisos ao salvar novamente."
+msgstr "Não mostrar avisos ao salvar novamente."
 
 #: data/menu.ui:178 data/menu.ui:436
 msgid "Dupl_icate"
@@ -188,7 +189,7 @@ msgstr "Igualar altura das linhas"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Explodindo em imagens…"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -212,15 +213,15 @@ msgstr "Arquivo(s) a abrir"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Ajustar à página inteira"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Ajustar à área de impressão"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Para mais informações, consulte"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -249,7 +250,7 @@ msgstr "Altura em %"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Ocultar Margens"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -273,7 +274,7 @@ msgstr "A imagem não é suportada pelo img2pdf"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf ausente."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -346,15 +347,15 @@ msgstr "Tamanho de página não uniforme - usando o tamanho máximo"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Observação"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Observe as limitações:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -367,6 +368,7 @@ msgstr "Abrir…"
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr ""
+"Os contornos e links podem ser preservados somente em determinados casos."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -394,7 +396,7 @@ msgstr "Arquivos PDF"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Manipulação de Página"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -406,7 +408,7 @@ msgstr "Tamanho da página:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Tamanho da página"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -462,7 +464,7 @@ msgstr "Mostrar a versão do PDF Arranger e sair"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Imprimir"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -570,7 +572,7 @@ msgstr "Fator de escala"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Modo de escala:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -590,7 +592,7 @@ msgstr "Páginas selecionadas: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Mostrar valores"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -616,7 +618,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "A página tem várias imagens. Use \"Explodir em imagens\" primeiro."
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -648,7 +650,7 @@ msgstr "Formato de arquivo desconhecido"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Manual do Usuário"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -705,7 +707,7 @@ msgstr "S_obre"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplicar"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
@@ -723,7 +725,7 @@ msgstr "_Copiar"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "_Recortar margens…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
@@ -739,15 +741,15 @@ msgstr "_Editar"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "_Explodir em imagens"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "_Extrair"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "_Ocultar margens…"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -775,7 +777,7 @@ msgstr "_Abrir"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "Tamanho da _página…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -791,7 +793,7 @@ msgstr "_Refazer"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "_Reverter"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"

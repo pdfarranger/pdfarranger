@@ -86,7 +86,7 @@ else:
     del libintl
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.10.0'
+VERSION = '1.11.0'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
@@ -246,6 +246,9 @@ class PdfArranger(Gtk.Application):
                          flags=Gio.ApplicationFlags.NON_UNIQUE |
                             Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
                          **kwargs)
+
+        GLib.set_application_name(APPNAME)
+        GLib.set_prgname('com.github.jeromerobert.pdfarranger')
 
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
@@ -558,11 +561,9 @@ class PdfArranger(Gtk.Application):
             filter_list.append(f_img)
         return filter_list
 
-    def set_title(self, title):
-        if Handy:
-            self.uiXML.get_object('header_bar').set_title(title)
-        else:
-            self.window.set_title(title)
+    def set_title(self, title, subtitle = None):
+        self.uiXML.get_object('header_bar').set_title(title)
+        self.uiXML.get_object('header_bar').set_subtitle(subtitle)
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
@@ -847,8 +848,9 @@ class PdfArranger(Gtk.Application):
         GObject.idle_add(self.retitle)
 
     def retitle(self):
+        subtitle = None
         if self.save_file:
-            title = self.save_file
+            subtitle, title = os.path.split(self.save_file)
         else:
             title = _('untitled')
         if self.is_unsaved:
@@ -860,7 +862,7 @@ class PdfArranger(Gtk.Application):
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
-        self.set_title(title)
+        self.set_title(title, subtitle)
         return False
 
     def update_thumbnail(self, _obj, ref, thumbnail, zoom, scale, is_preview):
