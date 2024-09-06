@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2024-08-08 06:55+0300\n"
+"PO-Revision-Date: 2024-09-05 17:05+0300\n"
 "Last-Translator: Abdullah Albaroty <albaroty@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -61,7 +61,7 @@ msgstr "يوجد بالفعل ملف باسم \"%s\". هل تريد استبدا
 
 #: data/menu.ui:227 data/menu.ui:391
 msgid "All From _Same File"
-msgstr "الجميع بنفس الملف"
+msgstr "ال_جميع بنفس الملف"
 
 #: pdfarranger/pdfarranger.py:518
 msgid "All files"
@@ -97,11 +97,11 @@ msgstr "أعمدة"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr "انسخ الصورة"
+msgstr "ا_نسخ الصورة"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr "انسخ النص"
+msgstr "انسخ الن_ص"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -127,11 +127,11 @@ msgstr "اقتص الحدود البيضاء"
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
-msgstr ""
+msgstr "لا يؤدي الاقتصاص/الإخفاء إلى إزالة أي محتوى من ملف PDF، بل يخفيه فقط."
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
-msgstr "قص"
+msgstr "_قص"
 
 #: pdfarranger/pdfarranger.py:1258
 msgid "Despite the warnings the document(s) should have no visible issues."
@@ -151,7 +151,7 @@ msgstr "لا تعرض مربع الحوار هذا مرة أخرى."
 
 #: pdfarranger/pdfarranger.py:984
 msgid "Do_n’t Save"
-msgstr "لم تحفظ"
+msgstr "_لا تحفظ"
 
 #: pdfarranger/pdfarranger.py:1265
 msgid "Don't show warnings when saving again."
@@ -159,19 +159,19 @@ msgstr "لا تظهر تحذيرات عند الحفظ مرة أخرى."
 
 #: data/menu.ui:178 data/menu.ui:436
 msgid "Dupl_icate"
-msgstr "كرر"
+msgstr "ك_رر"
 
 #: data/menu.ui:52 data/menu.ui:462
 msgid "E_xport"
-msgstr "تصدير"
+msgstr "_صدر"
 
 #: data/menu.ui:55 data/menu.ui:465
 msgid "E_xport Selection to a Single File…"
-msgstr "تصدير المختار إلى ملف منفرد…"
+msgstr "_صدر المختار إلى ملف منفرد…"
 
 #: data/menu.ui:266
 msgid "Edit _Properties"
-msgstr "تحرير الخصائص"
+msgstr "تحرير ال_خصائص"
 
 #: pdfarranger/metadata.py:202
 msgid "Edit properties"
@@ -191,15 +191,15 @@ msgstr ""
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
-msgstr "تصدير التحديد إلى ملفات فردية…"
+msgstr "صدر التحديد إلى ملفات _فردية…"
 
 #: data/menu.ui:65 data/menu.ui:475
 msgid "Export _All Pages to Individual Files…"
-msgstr "تصدير جميع الصفحات إلى ملفات فردية…"
+msgstr "صدر _جميع الصفحات إلى ملفات فردية…"
 
 #: pdfarranger/pdfarranger.py:1102
 msgid "Export…"
-msgstr "تصدير…"
+msgstr "صدر…"
 
 #: pdfarranger/core.py:571 pdfarranger/pdfarranger.py:1512
 msgid "File is neither pdf nor image"
@@ -337,7 +337,7 @@ msgstr "حجم الصفحة المدمجة:"
 
 #: pdfarranger/metadata.py:50
 msgid "Modified"
-msgstr "معدل"
+msgstr "تعديل"
 
 #: pdfarranger/pageutils.py:398
 msgid "Non-uniform page size - using max size"
@@ -353,7 +353,7 @@ msgstr "ملاحظة"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "يرجى ملاحظة القيود التالية:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -365,7 +365,7 @@ msgstr "فتح…"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
-msgstr ""
+msgstr "يمكن الحفاظ على المخططات والروابط في حالات محددة فقط."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -416,31 +416,31 @@ msgstr "كلمة السر مطلوبة"
 
 #: data/menu.ui:107 data/menu.ui:315
 msgid "Past_e Special"
-msgstr "لصق مخصص"
+msgstr "_لصق مخصص"
 
 #: data/menu.ui:124 data/menu.ui:333
 msgid "Paste As O_verlay…"
-msgstr "لصق كطبقة علوية…"
+msgstr "لصق ك_طبقة علوية…"
 
 #: data/menu.ui:119 data/menu.ui:328
 msgid "Paste As _Even Pages"
-msgstr "الصق كصفحات زوجية"
+msgstr "الصق كصفحات _زوجية"
 
 #: data/menu.ui:114 data/menu.ui:323
 msgid "Paste As _Odd Pages"
-msgstr "الصق كصفحات فردية"
+msgstr "الصق كصفحات _فردية"
 
 #: data/menu.ui:129 data/menu.ui:338
 msgid "Paste As _Underlay…"
-msgstr "لصق كطبقة سفلية…"
+msgstr "لصق كطبقة _سفلية…"
 
 #: data/menu.ui:102 data/menu.ui:310
 msgid "Paste _After"
-msgstr "الصق بعد"
+msgstr "الصق _بعد"
 
 #: data/menu.ui:109 data/menu.ui:318
 msgid "Paste _Before"
-msgstr "الصق قبل"
+msgstr "الصق _قبل"
 
 #: pdfarranger/pdfarranger.py:1636
 msgid "Pasted data not valid. Aborting paste."
@@ -448,7 +448,7 @@ msgstr "البيانات الملصقة غير صالحة. إلغاء اللصق
 
 #: data/menu.ui:272
 msgid "Pre_ferences"
-msgstr "التفضيلات"
+msgstr "التف_ضيلات"
 
 #: pdfarranger/config.py:242
 msgid "Preferences"
@@ -476,7 +476,7 @@ msgstr "الخاصية"
 
 #: data/menu.ui:182 data/menu.ui:440
 msgid "Re_verse Order"
-msgstr "ترتيب عكسي"
+msgstr "ترتيب _عكسي"
 
 #: pdfarranger/pageutils.py:250
 msgid "Relative"
@@ -512,7 +512,7 @@ msgstr "دور لليمين"
 
 #: data/menu.ui:152 data/menu.ui:410
 msgid "Rotate _Left"
-msgstr "دور لليسار"
+msgstr "دور للي_سار"
 
 #: pdfarranger/pageutils.py:370 pdfarranger/splitter.py:60
 msgid "Rows"
@@ -520,7 +520,7 @@ msgstr "صفوف"
 
 #: data/menu.ui:232 data/menu.ui:396
 msgid "Same Page _Format"
-msgstr "نفس تنسيق الصفحة"
+msgstr "نفس _تنسيق الصفحة"
 
 #: data/pdfarranger.ui:78
 msgid "Save"
@@ -536,7 +536,7 @@ msgstr "حفظ باسم…"
 
 #: data/menu.ui:47
 msgid "Save _As…"
-msgstr "حفظ باسم…"
+msgstr "_حفظ باسم…"
 
 #: pdfarranger/pdfarranger.py:1002
 msgid "Save changes before closing?"
@@ -572,15 +572,15 @@ msgstr "وضع التحجيم:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
-msgstr "تحديد_الكل"
+msgstr "تحديد ال_كل"
 
 #: data/menu.ui:222 data/menu.ui:386
 msgid "Select _Even Pages"
-msgstr "اختر الصفحات الزوجية"
+msgstr "اختر الصفحات ال_زوجية"
 
 #: data/menu.ui:217 data/menu.ui:381
 msgid "Select _Odd Pages"
-msgstr "اختر الصفحات الفردية"
+msgstr "اختر الصفحات ال_فردية"
 
 #: pdfarranger/pdfarranger.py:2796
 msgid "Selected pages: "
@@ -686,134 +686,134 @@ msgstr "تصغير"
 
 #: data/menu.ui:255
 msgid "Zoom _Fit"
-msgstr "تقريب مناسب"
+msgstr "ت_قريب مناسب"
 
 #: data/menu.ui:247
 msgid "Zoom _In"
-msgstr "تكبير"
+msgstr "ت_كبير"
 
 #: data/menu.ui:251
 msgid "Zoom _Out"
-msgstr "تصغير"
+msgstr "تص_غير"
 
 #: data/menu.ui:278
 msgid "_About"
-msgstr "عن"
+msgstr "_عن"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr "طبق"
+msgstr "_طبق"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
 #: pdfarranger/pdfarranger.py:1108 pdfarranger/pdfarranger.py:1158
 msgid "_Cancel"
-msgstr "إلغ"
+msgstr "إل_غ"
 
 #: pdfarranger/pdfarranger.py:994 data/menu.ui:284
 msgid "_Close"
-msgstr "أغلق"
+msgstr "أغل_ق"
 
 #: data/menu.ui:98 data/menu.ui:306
 msgid "_Copy"
-msgstr "انسخ"
+msgstr "ا_نسخ"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "إقتصاص ال_هوامش…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
-msgstr "احذف"
+msgstr "ا_حذف"
 
 #: data/menu.ui:212 data/menu.ui:376
 msgid "_Deselect All"
-msgstr "إلغاء تحديد الكل"
+msgstr "إل_غاء تحديد الكل"
 
 #: data/menu.ui:87
 msgid "_Edit"
-msgstr "حرر"
+msgstr "_حرر"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "_ولد من الصور"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "ا_ستخرج"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr "اخف الهوامش…"
+msgstr "ا_خف الهوامش…"
 
 #: data/menu.ui:30
 msgid "_Import"
-msgstr "استورد"
+msgstr "ا_ستورد"
 
 #: data/menu.ui:237 data/menu.ui:401
 msgid "_Invert Selection"
-msgstr "عكس التحديد"
+msgstr "_عكس التحديد"
 
 #: data/menu.ui:190 data/menu.ui:448
 msgid "_Merge Pages…"
-msgstr "دمج الصفحات…"
+msgstr "دم_ج الصفحات…"
 
 #: data/menu.ui:36
 msgid "_New Window"
-msgstr "نافذة جديدة"
+msgstr "نافذة _جديدة"
 
 #: pdfarranger/config.py:247 pdfarranger/pageutils.py:228
 msgid "_OK"
-msgstr "حسنًا"
+msgstr "_حسنًا"
 
 #: pdfarranger/pdfarranger.py:1157 data/menu.ui:24
 msgid "_Open"
-msgstr "فتح"
+msgstr "_فتح"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr "مقاس الصفحة…"
+msgstr "م_قاس الصفحة…"
 
 #: data/menu.ui:71
 msgid "_Print…"
-msgstr "اطبع…"
+msgstr "ا_طبع…"
 
 #: pdfarranger/pdfarranger.py:1031 data/menu.ui:290
 msgid "_Quit"
-msgstr "اخرج"
+msgstr "ا_خرج"
 
 #: data/menu.ui:82
 msgid "_Redo"
-msgstr "أعد"
+msgstr "أ_عد"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "إعادة"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"
-msgstr "دور لليمين"
+msgstr "دور للي_مين"
 
 #: pdfarranger/pdfarranger.py:984 pdfarranger/pdfarranger.py:1107
 #: data/menu.ui:42
 msgid "_Save"
-msgstr "احفظ"
+msgstr "ا_حفظ"
 
 #: data/menu.ui:204 data/menu.ui:368
 msgid "_Select"
-msgstr "حدد"
+msgstr "_حدد"
 
 #: data/menu.ui:186 data/menu.ui:444
 msgid "_Split Pages…"
-msgstr "قسم الصفحات…"
+msgstr "_قسم الصفحات…"
 
 #: data/menu.ui:78
 msgid "_Undo"
-msgstr "تراجع"
+msgstr "_تراجع"
 
 #: data/menu.ui:244
 msgid "_View"
-msgstr "عرض"
+msgstr "عر_ض"
 
 #: pdfarranger/pageutils.py:144 pdfarranger/pageutils.py:368
 #: pdfarranger/pageutils.py:418
