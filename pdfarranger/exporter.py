@@ -43,6 +43,10 @@ try:
 except locale.Error:
     pass  # Gtk already prints a warning
 
+if os.name == 'nt':
+    # Work around https://github.com/pdfarranger/pdfarranger/issues/1110
+    locale.setlocale(locale.LC_COLLATE, 'C')
+
 
 def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
     """Search pdfqueue for a matching pdf with blank pages. Create it if it does not exist.
