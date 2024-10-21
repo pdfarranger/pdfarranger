@@ -450,7 +450,7 @@ class PasswordDialog(Gtk.Dialog):
         label.set_line_wrap(True)
         label.set_size_request(0, -1)
         self.vbox.pack_start(label, False, False, 12)
-        box = Gtk.HBox()
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.entry = Gtk.Entry()
         self.entry.set_visibility(False)
         self.entry.set_activates_default(True)
