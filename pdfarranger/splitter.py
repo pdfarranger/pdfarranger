@@ -49,7 +49,7 @@ class Dialog(Gtk.Dialog):
         self.hcheck = Gtk.CheckButton()
         self.checkbuttons = {'vertical' : self.vcheck, 'horizontal' : self.hcheck}
 
-        hbox = Gtk.HBox()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.vbox.pack_start(hbox, True, True, 0)
         for direction in ['vertical', 'horizontal']:
             frame = self._build_frame(direction)
