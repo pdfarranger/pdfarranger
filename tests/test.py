@@ -216,7 +216,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _is_saving(self):
         allstatusbar = self._find_by_role("status bar")
-        statusbar = allstatusbar[0]
+        statusbar = allstatusbar[-1]
         return statusbar.name.startswith("Saving")
 
     def _wait_saving(self):
@@ -228,8 +228,8 @@ class PdfArrangerTest(unittest.TestCase):
     def _status_text(self):
         self._app()
         allstatusbar = self._find_by_role("status bar")
-        # If we have multiple status bar, consider the last one as the one who display the selection
-        statusbar = allstatusbar[-1]
+        # If we have multiple status bar, consider the first one as the one who display the selection
+        statusbar = allstatusbar[0]
         return statusbar.name
 
     def _assert_selected(self, selection):
