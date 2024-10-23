@@ -65,7 +65,7 @@ def get_blank_doc(pageadder, pdfqueue, tmpdir, size, npages=1):
             nfile = i + 1
             return filename, nfile
     filename = _create_blank_page(tmpdir, size, npages)
-    doc_data = pageadder.get_pdfdoc(filename, basename=None, blank_size=size)
+    doc_data = pageadder.get_pdfdoc(filename, description=None, blank_size=size)
     if doc_data is None:
         return None, None
     nfile = doc_data[1]

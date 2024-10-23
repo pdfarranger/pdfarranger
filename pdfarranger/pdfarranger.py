@@ -124,7 +124,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Sides, _img_to_pdf
+from .core import Dims, Sides, _img_to_pdf
 
 def check_gtk_schema_exists():
     # subprocess.run() would slow down the start of the application, so we only check it on Darwin
@@ -461,12 +461,12 @@ class PdfArranger(Gtk.Application):
                                      self.window.lookup_action('redo'))
 
     def insert_blank_page(self, _action, _option, _unknown):
-        size = (21 / 2.54 * 72, 29.7 / 2.54 * 72) # A4 by default
+        size = None
         selection = self.iconview.get_selected_items()
         selection.sort()
         model = self.iconview.get_model()
         if len(selection) > 0:
-            size = model[selection[-1]][0].size_in_points()
+            size = model[selection[-1]][0].size_in_mm()
         page_size = pageutils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)
@@ -898,7 +898,7 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
                 self.iconview.unselect_path(path)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
-        ac.set_description(page.description())
+        ac.set_description(page.description)
 
     def get_visible_range2(self):
         """Get range of items visible in window.
@@ -1556,7 +1556,7 @@ class PdfArranger(Gtk.Application):
     def paste_as_layer(self, data, destination, laypos, offset_xy=None):
         page_stack = []
         pageadder = PageAdder(self)
-        for filename, npage, _basename, angle, scale, crop, hide, layerdata in data:
+        for filename, npage, _description, angle, scale, crop, hide, layerdata in data:
             d = [[filename, npage, angle, scale, laypos, crop, Sides()]] + layerdata
             lps = pageadder.get_layerpages(d)
             self.apply_hide_margins_on_layerpages(lps, hide)
@@ -1581,7 +1581,7 @@ class PdfArranger(Gtk.Application):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
 
-            # Add the "main" pasted page
+            # The "main" pasted page
             lp0 = layerpage_stack[0].duplicate()
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
@@ -1592,7 +1592,9 @@ class PdfArranger(Gtk.Application):
                                right=1 - left - lp0.width_in_points() / dwidth,
                                top=top,
                                bottom=1 - top - lp0.height_in_points() / dheight)
-            dpage.layerpages.append(lp0)
+            if self.pdfqueue[lp0.nfile - 1].blank_size is None:
+                # Add "main" pasted page if it is not blank
+                dpage.layerpages.append(lp0)
 
             # Add layers from the pasted page
             nfirst = len(dpage.layerpages) - 1
@@ -1689,13 +1691,13 @@ class PdfArranger(Gtk.Application):
         """Deserialize data from copy & paste or drag & drop operation."""
         d = []
         while data:
-            tmp = data.pop(0).split('\n')
+            tmp = data.pop(0).split('///')
             filename = tmp[0]
             npage = int(tmp[1])
             if len(tmp) < 3:  # Only when paste files interleaved
                 d.append((filename, npage))
             else:
-                basename = tmp[2]
+                description = tmp[2]
                 angle = int(tmp[3])
                 scale = float(tmp[4])
                 crop = [float(side) for side in tmp[5:9]]
@@ -1712,7 +1714,7 @@ class PdfArranger(Gtk.Application):
                     loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
                     layerdata.append([lfilename, lnpage, langle, lscale, laypos, lcrop, loffset])
                     i += 13
-                d.append((filename, npage, basename, angle, scale, crop, hide, layerdata))
+                d.append((filename, npage, description, angle, scale, crop, hide, layerdata))
         return d
 
     def set_paste_location(self, pastemode):
@@ -1942,9 +1944,9 @@ class PdfArranger(Gtk.Application):
                     iterator = model.get_iter(ref_from.get_path())
                     page = model.get_value(iterator, 0).duplicate()
                     if before:
-                        it = model.insert_before(iter_to, [page, page.description()])
+                        it = model.insert_before(iter_to, [page, page.description])
                     else:
-                        it = model.insert_after(iter_to, [page, page.description()])
+                        it = model.insert_after(iter_to, [page, page.description])
                     path = model.get_path(it)
                     iconview.select_path(path)
                 if move:
@@ -2483,7 +2485,7 @@ class PdfArranger(Gtk.Application):
                 newpages = page.split(leftcrops, topcrops)
                 for p in newpages:
                     p.resample = -1
-                    model.insert_after(iterator, [p, p.description()])
+                    model.insert_after(iterator, [p, p.description])
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
@@ -2560,17 +2562,47 @@ class PdfArranger(Gtk.Application):
         """Opens a dialog box to define page size."""
         selection = self.iconview.get_selected_items()
         diag = pageutils.ScaleDialog(self.iconview.get_model(), selection, self.window)
-        newscale = diag.run_get()
-        if newscale is None:
+        result = diag.run_get()
+        if result is None:
             return
-        self.undomanager.commit("Size")
-        if not pageutils.scale(self.model, selection, newscale):
-            return
+        newscale, mode = result
+        if mode == 'SCALE':
+            self.undomanager.commit("Scale")
+            if not pageutils.scale(self.model, selection, newscale):
+                return
+        elif mode == 'SCALE-ADD-MARG':
+            self.undomanager.commit("Scale & add margins")
+            pageutils.scale(self.model, selection, newscale)
+            self.center_on_blank_page(selection, newscale)
+        else:
+            self.undomanager.commit("Crop & add margins")
+            self.center_on_blank_page(selection, newscale)
         self.set_unsaved(True)
         self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
+
+    def center_on_blank_page(self, paths, size):
+        """Add paths as overlay, centered on blank pages with 'size'"""
+        adder = PageAdder(self)
+        file, _ = exporter.get_blank_doc(adder, self.pdfqueue, self.tmp_dir, size)
+        if file is None:
+            return
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            for path in reversed(paths):
+                if self.model[path][0].size_in_points() == Dims(*size):
+                    continue
+                ref = Gtk.TreeRowReference.new(self.model, path)
+                adder.move(ref, before=False)
+                adder.addpages(file)
+                adder.commit(select_added=True, add_to_undomanager=False)
+                data = self.deserialize([self.model[path][0].serialize()])
+                with self.render_lock():
+                    self.model.remove(self.model.get_iter(path))
+                self.paste_as_layer(data, path, 'OVERLAY', (0.5, 0.5))
+                self.model[path][0].description = data[0][2]
+                self.model[path][1] = data[0][2]
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
@@ -2706,7 +2738,7 @@ class PdfArranger(Gtk.Application):
             for ref in ref_list:
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0).duplicate()
-                model.insert_after(iterator, [page, page.description()])
+                model.insert_after(iterator, [page, page.description])
         self.iv_selection_changed_event()
         GObject.idle_add(self.render)
 
