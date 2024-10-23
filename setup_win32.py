@@ -175,7 +175,8 @@ class bdist_zip(distutils.cmd.Command):
         shutil.rmtree(build_exe.build_exe)
 
 
-setup(name='pdfarranger',
+setup(name='PDF Arranger',
+      author='The PDF Arranger team',
       version=VERSION,
       description='A simple application for PDF Merging, Rearranging, and Splitting',
       options=dict(build_exe=build_options, bdist_msi=msi_options),
