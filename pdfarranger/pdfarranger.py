@@ -578,7 +578,6 @@ class PdfArranger(Gtk.Application):
         if self.config.maximized():
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
-        self.window.move(*self.config.position())
         self.window.connect('delete_event', self.on_quit)
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
@@ -814,7 +813,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def window_configure_event(self, _window, event):
-        """Handle window size and position changes."""
+        """Handle window size changes."""
         if self.window_width_old not in [0, event.width] and len(self.model) > 0:
             if self.set_iv_visible_id:
                 GObject.source_remove(self.set_iv_visible_id)
@@ -1099,7 +1098,6 @@ class PdfArranger(Gtk.Application):
         self.config.set_window_size(self.window.get_size())
         self.config.set_maximized(self.window.is_maximized())
         self.config.set_zoom_level(round(self.zoom_level))
-        self.config.set_position(self.window.get_position())
         self.config.save()
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
