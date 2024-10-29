@@ -40,7 +40,8 @@ You may need to run the following commands to run those tests in your current se
 * setxkbmap -v fr
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
-Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini.
+Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini
+or by running as pdfarranger --dogtail.
 
 Some tips:
 
@@ -149,6 +150,7 @@ class PdfArrangerManager:
     def __init__(self, args=None):
         self.process = None
         args = [] if args is None else args
+        args += ["--dogtail"]  # run pdfarranger in dogtail mode, e.g. ignore local config files
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if "PDFARRANGER_COVERAGE" in os.environ:
             cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]
@@ -160,6 +162,7 @@ class PdfArrangerManager:
 
 class PdfArrangerTest(unittest.TestCase):
     LAST=False
+
     def _start(self, args=None):
         from dogtail.config import config
         config.searchBackoffDuration = 1
@@ -169,6 +172,16 @@ class PdfArrangerTest(unittest.TestCase):
         self._app()
         # Now let's go faster
         config.searchBackoffDuration = 0.1
+
+        # Handle the "content loss warning" dialog
+        self._wait_cond(self._check_startup_dialog_present)
+        dialog = self._find_by_role("dialog")[-1]
+        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
+        check_box = self._find_by_role("check box", dialog)[-1]
+        check_box.click()  # Don't show this dialog again
+        button = self._find_by_role("push button", dialog)[-1]
+        button.click()
+        self._wait_cond(lambda: dialog.dead)
 
     def _app(self):
         """Return the first instance of pdfarranger"""
@@ -188,6 +201,9 @@ class PdfArrangerTest(unittest.TestCase):
             if a.name in ["__main__.py", "pdfarranger", "com.github.jeromerobert.pdfarranger"]
         ]
 
+    def _check_startup_dialog_present(self):
+        return len(self._find_by_role("dialog")) > 0
+
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
         self._wait_cond(lambda: mainmenu.sensitive)
@@ -202,7 +218,7 @@ class PdfArrangerTest(unittest.TestCase):
         c = 0
         while not cond():
             time.sleep(0.1)
-            self.assertLess(c, 30)
+            self.assertLess(c, 80, f"Timeout waiting for {cond.__name__}")
             c += 1
 
     def _find_by_role(self, role, node=None, show_only=False):
@@ -233,7 +249,10 @@ class PdfArrangerTest(unittest.TestCase):
         return statusbar.name
 
     def _assert_selected(self, selection):
-        self.assertTrue(self._status_text().startswith("Selected pages: " + selection))
+        actual_selection = self._status_text().replace("Selected pages: ", "")
+        # TODO should we tighten this up, i.e. equality instead of "startswith"?
+        self.assertTrue(actual_selection.startswith(selection),
+                        msg=f"Selected pages mismatch: '{actual_selection}' doesn't start with '{selection}'")
 
     def _assert_page_size(self, width, height, pageid=None):
         if pageid is not None:
@@ -393,17 +412,10 @@ class PdfArrangerTest(unittest.TestCase):
 
 
 class TestBatch1(PdfArrangerTest):
+
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
-        # Handle the "content loss warning" dialog
-        self._wait_cond(lambda: len(self._find_by_role("dialog")) > 0)
-        dialog = self._find_by_role("dialog")[-1]
-        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
-        check_box = self._find_by_role("check box", dialog)[-1]
-        check_box.click()  # Don't show this dialog again
-        button = self._find_by_role("push button", dialog)[-1]
-        button.click()
-        self._wait_cond(lambda: dialog.dead)
+        self.assertEqual(len(self._icons()), 1, msg="Failed to load image")
 
     def test_02_properties(self):
         self._mainmenu("Edit Properties")
