@@ -388,6 +388,10 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
 def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
+    max_version = max(
+        pdf_output.pdf_version,
+        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
+    )
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():
         return
@@ -403,7 +407,7 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            outpdf.save(files_out[n])
+            outpdf.save(files_out[n], min_version=max_version)
     else:
         if isinstance(files_out[0], str):
             if not test_mode:
@@ -411,9 +415,11 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
             _remove_unreferenced_resources(pdf_output)
         if test_mode:
             pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
-                            stream_decode_level=pikepdf.StreamDecodeLevel.all)
+                stream_decode_level=pikepdf.StreamDecodeLevel.all,
+                min_version=max_version,
+            )
         else:
-            pdf_output.save(files_out[0])
+            pdf_output.save(files_out[0], min_version=max_version)
 
 
 def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) -> None:
@@ -456,6 +462,10 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
     job = _create_job(files, pages, files_out, quit_flag, test_mode)
     pdf_output = job.create_pdf()
+    max_version = max(
+        pdf_output.pdf_version,
+        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
+    )
 
     _transform_job(pdf_output, pages, quit_flag)
 
@@ -472,7 +482,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
             _set_meta(mdata, pdf_input, outpdf)
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            outpdf.save(files_out[n])
+            outpdf.save(files_out[n], min_version=max_version)
     else:
         if isinstance(files_out[0], str) and not test_mode:
             _set_meta(mdata, [pdf_output], pdf_output)
@@ -509,6 +519,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         for lp in p.layerpages:
             file_indexes.add(lp.nfile)
     source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
+    max_version = max(pdf.pdf_version for pdf in source_files.values())
     _copy_n_transform(source_files, file, pages)
     to_remove = len(file.pages)
     npages = len(pages)
@@ -551,7 +562,7 @@ def generate_booklet(pdfqueue, tmp_dir, pages):
         file.pages.append(pikepdf.Page(newpage))
     for __ in range(to_remove):
         del file.pages[0]
-    file.save(filename)
+    file.save(filename, min_version=max_version)
     return filename
 
 

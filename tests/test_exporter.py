@@ -98,7 +98,7 @@ class ExporterTest(unittest.TestCase):
             if not os.path.exists(expected_file):
                 expected_file = file(f'test{test}_out')
 
-        export(files, pages, [], [file('out')], None, None, True)
+        export(files, pages, {}, [file('out')], None, None, True)
         self.assertTrue(*self.compare_files(file('out'), expected_file))
 
     def basic(self, test, *pages):
@@ -222,3 +222,16 @@ class ExporterTest(unittest.TestCase):
     def test25(self):
         """Duplicate page with interactive form elements"""
         self.case(25, [(file('forms'), '')], Page(1), Page(1))
+
+    def test26(self):
+        """Export with highest PDF versions of input files"""
+        # gs -o exporter/test26_pdf1-4.pdf -sDEVICE=pdfwrite -g6120x7920 -dCompatibilityLevel=1.4 -c "showpage"
+        # gs -o exporter/test26_pdf1-5.pdf -sDEVICE=pdfwrite -g6120x7920 -dCompatibilityLevel=1.5 -c "showpage"
+        # to check versions
+        # pdfinfo <pdf> | grep 'PDF version'
+        self.case(
+            26,
+            [(file('test26_pdf1-4'), ''), (file('test26_pdf1-5'), '')],
+            Page(1),
+            Page(1, nfile=2),
+        )
