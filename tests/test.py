@@ -185,7 +185,7 @@ class PdfArrangerTest(unittest.TestCase):
         return [
             a
             for a in root.applications()
-            if a.name == "__main__.py" or a.name == "pdfarranger"
+            if a.name in ["__main__.py", "pdfarranger", "com.github.jeromerobert.pdfarranger"]
         ]
 
     def _mainmenu(self, action):
@@ -341,6 +341,8 @@ class PdfArrangerTest(unittest.TestCase):
         app = self._app()
         app.keyCombo("S")
         dialog = app.child(roleName="dialog")
+        relative = self._find_by_role("radio button", dialog)[1]
+        relative.click()
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
         rawinput.typeText(str(scale))

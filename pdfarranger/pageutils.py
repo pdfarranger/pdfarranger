@@ -41,7 +41,7 @@ def scale(model, selection, factor):
             f = factor
         else:
             # TODO: allow to change aspect ratio
-            f = max(*Dims(width, height) / page_size)
+            f = min(*Dims(width, height) / page_size)
         # Page size must be in [72, 14400] (PDF standard requirement)
         f = max(f, *(Dims(72, 72) / page_size))
         f = min(f, *(Dims(14400, 14400) / page_size))
@@ -116,7 +116,7 @@ class _RelativeScalingWidget(Gtk.Box):
     """ A form to specify the relative scaling factor """
 
     def __init__(self, current_scale, margin=10):
-        super().__init__()
+        super().__init__(valign=Gtk.Align.CENTER, halign=Gtk.Align.CENTER)
         self.props.spacing = margin
         self.add(Gtk.Label(label=_("Scale factor")))
         # Largest page size is 200 inch and smallest is 1 inch
@@ -131,22 +131,121 @@ class _RelativeScalingWidget(Gtk.Box):
         return self.entry.get_value() / 100
 
 
-class _ScalingWidget(Gtk.Box):
-    """ A form to specify the page width or height """
+class PaperSizeWidget(Gtk.Grid):
+    def __init__(self, size, margin=16):
+        super().__init__(margin=margin, row_spacing=8, column_spacing=8, row_homogeneous=True)
 
-    def __init__(self, label, default, margin=10):
-        super().__init__()
-        self.props.spacing = margin
-        self.add(Gtk.Label(label=label))
-        self.entry = _LinkedSpinButton(25.4, 5080, 1, 10)
-        self.entry.set_activates_default(True)
-        self.add(self.entry)
-        self.add(Gtk.Label(label=_("mm")))
-        # A PDF unit is 1/72 inch
-        self.entry.set_value(default * 25.4 / 72)
+        self.attach(Gtk.Label(label=_("Width"), halign=Gtk.Align.START), 1, 1, 1, 1)
+        self.width_entry = _LinkedSpinButton(25.4, 5080, 1, 0)
+        self.w_entry_id = self.width_entry.connect('value-changed', self.width_changed)
+        self.attach(self.width_entry, 2, 1, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 1, 1, 1)
 
-    def get_value(self):
-        return self.entry.get_value() / 25.4 * 72
+        self.attach(Gtk.Label(label=_("Height"), halign=Gtk.Align.START), 1, 2, 1, 1)
+        self.height_entry = _LinkedSpinButton(25.4, 5080, 1, 10)
+        self.h_entry_id = self.height_entry.connect('value-changed', self.height_changed)
+        self.attach(self.height_entry, 2, 2, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 2, 1, 1)
+
+        self.attach(Gtk.Label(_("Paper size"), halign=Gtk.Align.START), 1, 3, 1, 1)
+        self.combo = Gtk.ComboBoxText(margin=0)
+        self.combo_changed_id = self.combo.connect('changed', self.paper_size_changed)
+        self.papers = [Gtk.PaperSize.new_custom('Custom', _("Custom"), 0, 0, Gtk.Unit.MM)]
+        paper_list = ['iso_a3', 'iso_a4', 'iso_a5', 'na_letter', 'na_legal', 'na_ledger']
+        self.papers += [Gtk.PaperSize.new(p) for p in paper_list]
+        for p in self.papers:
+            p.size = [round(p.get_width(Gtk.Unit.MM), 5), round(p.get_height(Gtk.Unit.MM), 5)]
+            self.combo.append(None, p.get_display_name())
+        self.attach(self.combo, 2, 3, 1, 1)
+
+        self.attach(Gtk.Label(_("Orientation"), halign=Gtk.Align.START), 1, 4, 1, 1)
+        self.port = Gtk.RadioButton(label=_("Portrait"), group=None)
+        self.land = Gtk.RadioButton(label=_("Landscape"), group=self.port)
+        self.port.connect('clicked', self.orientation_clicked)
+        box1 = Gtk.Box()
+        box1.pack_start(self.port, True, True, 0)
+        box1.pack_start(self.land, True, True, 0)
+        self.attach(box1, 2, 4, 1, 1)
+
+        box2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        box2.pack_start(Gtk.Label("┐"), True, True, 0)
+        self.ratio_cb = Gtk.CheckButton(margin_top=1)
+        box2.pack_start(self.ratio_cb, True, True, 0)
+        box2.pack_start(Gtk.Label("┘"), True, True, 0)
+        self.attach(box2, 3, 1, 1, 2)
+
+        if size is None:
+            size = [210, 297]  # A4 by default
+            self.ratio_cb.set_sensitive(False)
+        else:
+            self.ratio_cb.set_active(True)
+            self.ratio_cb.connect('clicked', self.width_changed)
+
+        self.ratios = [size[0] / size[1], size[1] / size[0]]
+        self.set_entry_size(size)
+        self.select_paper_and_orientation()
+        self.update_entry_limits()
+        self.ratio_cb.connect('clicked', self.update_entry_limits)
+
+    def update_entry_limits(self, _widget=None):
+        r = self.ratios if self.ratio_cb.get_active() else [1, 1]
+        wrange = max(25.4, 25.4 * r[0]), min(5080, 5080 * r[0])
+        hrange = max(25.4, 25.4 * r[1]), min(5080, 5080 * r[1])
+        self.width_entry.set_range(*wrange)
+        self.height_entry.set_range(*hrange)
+
+    def width_changed(self, _widget):
+        if self.ratio_cb.get_active():
+            width = self.width_entry.get_value()
+            self.set_entry_size((width, width / self.ratios[0]))
+        self.select_paper_and_orientation()
+
+    def height_changed(self, _widget):
+        if self.ratio_cb.get_active():
+            height = self.height_entry.get_value()
+            self.set_entry_size((height / self.ratios[1], height))
+        self.select_paper_and_orientation()
+
+    def orientation_clicked(self, _widget):
+        size = self.get_value(Gtk.Unit.MM)
+        self.width_entry.set_range(25.4, 5080)
+        self.height_entry.set_range(25.4, 5080)
+        self.set_entry_size(sorted(size, reverse=self.land.get_active()))
+        self.ratios.sort(reverse=self.land.get_active())
+        self.update_entry_limits()
+
+    def paper_size_changed(self, combo):
+        paper = self.papers[combo.get_active()]
+        size = paper.get_width(Gtk.Unit.MM), paper.get_height(Gtk.Unit.MM)
+        self.set_entry_size(sorted(size, reverse=self.land.get_active()))
+        if round(size[0] / size[1], 5) not in [round(r, 5) for r in self.ratios]:
+            self.ratio_cb.set_active(False)
+            self.update_entry_limits()
+
+    def select_paper_and_orientation(self):
+        size = self.get_value(Gtk.Unit.MM)
+        self.papers[0].set_size(*size, Gtk.Unit.MM)
+        size = [round(s, 5) for s in size]
+        for num, paper in reversed(list(enumerate(self.papers))):
+            if paper.size in [size, size[::-1]]:
+                break
+        self.combo.set_active(num)
+        self.port.set_active(size[0] < size[1])
+        self.land.set_active(size[0] > size[1])
+
+    def set_entry_size(self, size):
+        """Set entry size in mm"""
+        with GObject.signal_handler_block(self.width_entry, self.w_entry_id):
+            self.width_entry.set_value(size[0])
+        with GObject.signal_handler_block(self.height_entry, self.h_entry_id):
+            self.height_entry.set_value(size[1])
+
+    def get_value(self, unit=Gtk.Unit.POINTS):
+        """Get entry size in points or mm"""
+        size = [self.width_entry.get_value(), self.height_entry.get_value()]
+        if unit == Gtk.Unit.POINTS:
+            size = [s * 72 / 25.4 for s in size]
+        return size
 
 
 class _CropHideWidget(Gtk.Frame):
@@ -243,15 +342,19 @@ class ScaleDialog(BaseDialog):
         super().__init__(title=_("Page size"), parent=window)
         self.set_resizable(False)
         page = model.get_value(model.get_iter(selection[-1]), 0)
+        paper_widget = PaperSizeWidget(page.size_in_mm(), margin=1)
+        paper_widget.attach(Gtk.Label(_("Fit mode"), halign=Gtk.Align.START), 1, 5, 1, 1)
+        self.combo = Gtk.ComboBoxText()
+        self.combo.append('SCALE', _("Scale"))
+        self.combo.append('SCALE-ADD-MARG', _("Scale & Add margins"))
+        self.combo.append('CROP-ADD-MARG', _("Crop & Add margins"))
+        self.combo.set_active(0)
+        paper_widget.attach(self.combo, 2, 5, 1, 1)
         rel_widget = _RelativeScalingWidget(page.scale)
-        width_widget = _ScalingWidget(_("Width"), page.width_in_points())
-        height_widget = _ScalingWidget(_("Height"), page.height_in_points())
-        self.scale_stack = _RadioStackSwitcher()
+        self.scale_stack = _RadioStackSwitcher(margin=15)
+        self.scale_stack.add_named(paper_widget, "Fit", _("Fit to paper"))
         self.scale_stack.add_named(rel_widget, "Relative", _("Relative"))
-        self.scale_stack.add_named(width_widget, "Width", _("Width"))
-        self.scale_stack.add_named(height_widget, "Height", _("Height"))
         pagesizeframe = Gtk.Frame(shadow_type=Gtk.ShadowType.NONE)
-        pagesizeframe.props.margin = 8
         pagesizeframe.add(self.scale_stack)
         self.vbox.pack_start(pagesizeframe, True, True, 0)
         self.show_all()
@@ -262,12 +365,9 @@ class ScaleDialog(BaseDialog):
         result = self.run()
         val = None
         if result == Gtk.ResponseType.OK:
-            val = self.scale_stack.selected_child.get_value()
-            if self.scale_stack.selected_name == "Width":
-                val = val, 0
-            elif self.scale_stack.selected_name == "Height":
-                val = 0, val
-            # else val is a relative scale so we return it as is
+            s = self.scale_stack
+            mode = 'SCALE' if s.selected_name == 'Relative' else self.combo.get_active_id()
+            val = s.selected_child.get_value(), mode
         self.destroy()
         return val
 
@@ -330,19 +430,15 @@ class BlankPageDialog(BaseDialog):
     def __init__(self, size, window):
         super().__init__(title=_("Insert Blank Page"), parent=window)
         self.set_resizable(False)
-        self.width_widget = _ScalingWidget(_("Width"), size[0])
-        self.height_widget = _ScalingWidget(_("Height"), size[1])
-        self.vbox.pack_start(self.width_widget, True, True, 6)
-        self.vbox.pack_start(self.height_widget, True, True, 6)
-        self.width_widget.props.spacing = 6
-        self.height_widget.props.spacing = 6
+        self.paper_widget = PaperSizeWidget(size)
+        self.vbox.pack_start(self.paper_widget, True, True, 0)
         self.show_all()
 
     def run_get(self):
         result = self.run()
         r = None
         if result == Gtk.ResponseType.OK:
-            r = self.width_widget.get_value(), self.height_widget.get_value()
+            r = self.paper_widget.get_value()
         self.destroy()
         return r
 
@@ -956,3 +1052,53 @@ class PastePageLayerDialog():
             r = self.spinbutton_widget.get_diff_offset()
         self.dialog.destroy()
         return r
+
+class RangeSelectDialog(BaseDialog):
+    """ A dialog box to select a range of pages. """
+
+    def __init__(self, window):
+        super().__init__(title=_("Range Select"), parent=window)
+        margin = 12
+        range_frame = Gtk.Frame()
+        self.set_resizable(False)
+        grid = Gtk.Grid()
+        grid.set_column_spacing(margin)
+        grid.set_row_spacing(margin)
+        grid.props.margin = margin
+        range_frame.add(grid)
+        label = Gtk.Label(label=_("Select range of pages: "))
+        label.set_alignment(0.0, 0.5)
+        grid.attach(label, 0, 0, 1, 1)
+        self.range_entry_widget = Gtk.Entry()
+        grid.attach(self.range_entry_widget, 1, 0, 1, 1)
+        label = Gtk.Label(
+            label=_(
+                    'Use a comma to separate page numbers, '
+                    'a dash to select a range of pages. \n'
+                    'e.g. : "1,3,5-7,9"'
+                )
+        )
+        label.props.margin = margin
+        label.set_line_wrap(True)
+        label.set_max_width_chars(38)
+        grid.attach(label, 0, 1, 2, 1)
+        self.vbox.pack_start(range_frame, False, False, 0)
+        self.show_all()
+        # Connect "changed" signal to function for checking user input
+        self.range_entry_widget.connect('changed', self.on_changed)
+        self.range_entry_widget.set_activates_default(True)
+
+    def run_get(self):
+        """ Open the dialog and return the selected range"""
+        result = self.run()
+        selected_range = None
+        if result == Gtk.ResponseType.OK:
+            selected_range = self.range_entry_widget.get_text()
+        self.destroy()
+        return selected_range
+
+    def on_changed(self, *args):
+        # Check each user entry to be one of the valid ones '0123456789,- '
+        text = self.range_entry_widget.get_text()
+        text = text.replace('--', '-').replace(',,', ',').replace('  ', ' ')
+        self.range_entry_widget.set_text(''.join([char for char in text if char in '0123456789,- ']))

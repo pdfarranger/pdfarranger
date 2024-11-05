@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pdfarranger package.
 # Translators:
-# kbengs, 2020
+# kbengs, 2020-2024
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2023-06-16 05:49+0300\n"
+"PO-Revision-Date: 2024-03-24 19:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
@@ -77,7 +77,7 @@ msgstr "Kaikki tuetut tiedostot"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Automaattinen kääntö"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -97,11 +97,11 @@ msgstr "Sarakkeita"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "Kopioi _kuva"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "Kopioi _teksti"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -117,7 +117,7 @@ msgstr "Sovellus"
 
 #: pdfarranger/pageutils.py:846
 msgid "Crop Margins"
-msgstr "Rajaa marginaalit"
+msgstr "Rajaa reunoja"
 
 #: data/menu.ui:174 data/menu.ui:432
 msgid "Crop White Borders"
@@ -128,6 +128,7 @@ msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
+"Rajaa/piilota ei poista sisältöä PDF-tiedostosta, vaan vain piilottaa sen."
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -188,7 +189,7 @@ msgstr "Sama rivikorkeus"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Räjähtää kuviksi…"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -212,15 +213,15 @@ msgstr "Tiedostoja avattavaksi"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Sovita koko sivulle"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Sovita tulostettavalle alueelle"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "Katso lisätietoja"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -249,7 +250,7 @@ msgstr "Korkeus %"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Piilota reunoja"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -273,7 +274,7 @@ msgstr "Img2pdf ei tue kuvamuotoa"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Img2pdf puuttuu."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -326,7 +327,7 @@ msgstr "Ylläpitäjät ja avustajat"
 
 #: pdfarranger/pageutils.py:367
 msgid "Margin"
-msgstr "Marginaali"
+msgstr "Reuna"
 
 #: pdfarranger/pageutils.py:353
 msgid "Merge Pages"
@@ -346,15 +347,15 @@ msgstr "Vaihteleva sivukoko - enimmäiskoko käytetään"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Ei mikään"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Huomio"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Huomaa rajoitukset:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -367,6 +368,7 @@ msgstr "Avaa…"
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr ""
+"Kirjanmerkkejä ja linkkejä voidaan säilyttää vain tietyissä tapauksissa."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -392,7 +394,7 @@ msgstr "PDF tiedostot"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Sivun käsittely"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -404,7 +406,7 @@ msgstr "Sivun koko:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Sivun koko"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -460,7 +462,7 @@ msgstr "Tulosta PDF Arranger versio ja sulje"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Tulostus"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -568,7 +570,7 @@ msgstr "Skaalauskerroin"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Skaalaus:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -588,7 +590,7 @@ msgstr "Valitut sivut: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Näytä arvot"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -614,7 +616,7 @@ msgstr ""
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "Sivulla on useita kuvia. Käytä \"Räjähdä kuviksi\" ensin"
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -646,7 +648,7 @@ msgstr "Tuntematon tiedostomuoto"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Ohjekirja"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -703,7 +705,7 @@ msgstr "Tietoja - PD_F Arranger"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Käytä"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
@@ -721,7 +723,7 @@ msgstr "Ko_pioi"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "_Rajaa reunoja…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
@@ -737,15 +739,15 @@ msgstr "_Muokkaa"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "_Räjähdä kuviksi"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "Kopioi _muu"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "_Piilota reunoja…"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -773,7 +775,7 @@ msgstr "_Avaa"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Sivun koko…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -789,7 +791,7 @@ msgstr "Tee uu_delleen"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "_Palauta"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"

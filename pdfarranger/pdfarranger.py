@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import os
+import platform
 import ctypes
 
 if os.name == 'nt':
@@ -65,20 +66,27 @@ except locale.Error:
 
 DOMAIN = 'pdfarranger'
 ICON_ID = 'com.github.jeromerobert.' + DOMAIN
+
+def get_libintl_path():
+    if os.name == 'nt':
+        return 'libintl-8'
+    if platform.system() == 'Darwin':
+        return 'libintl.8.dylib'
+    return 'libintl.so.8'
+
 if hasattr(locale, 'bindtextdomain'):
     # glibc
     locale.bindtextdomain(DOMAIN, localedir)
     # https://docs.gtk.org/glib/i18n.html
     locale.bind_textdomain_codeset(DOMAIN, 'UTF-8')
 else:
-    # Windows or musl
-    libintl = ctypes.cdll['libintl-8' if os.name == 'nt' else 'libintl.so.8']
+    libintl = ctypes.cdll[get_libintl_path()]
     libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
     del libintl
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.10.0'
+VERSION = '1.11.1'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
@@ -116,8 +124,26 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Sides, _img_to_pdf
+from .core import Dims, Sides, _img_to_pdf
 
+def check_gtk_schema_exists():
+    # subprocess.run() would slow down the start of the application, so we only check it on Darwin
+    #   See https://github.com/pdfarranger/pdfarranger/pull/1045#issuecomment-1970287378
+    if platform.system() != 'Darwin':
+        return True
+    try:
+        schemas = subprocess.run(["gsettings", "list-recursively"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            check=True,
+            text=True)
+        return 'org.gtk.Settings.ColorChooser' in schemas.stdout
+    except FileNotFoundError as e:
+        print(e)
+        print('ERROR: gsettings failed. Please check GTK depencencies.')
+        return False
+
+if not check_gtk_schema_exists():
+    print('ERROR: Found no schema files. You may need to set GSETTINGS_SCHEMA_DIR.', file=sys.stderr)
 
 def _set_language_locale():
     lang = Config(DOMAIN).language()
@@ -218,6 +244,9 @@ class PdfArranger(Gtk.Application):
                          flags=Gio.ApplicationFlags.NON_UNIQUE |
                             Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
                          **kwargs)
+
+        GLib.set_application_name(APPNAME)
+        GLib.set_prgname('com.github.jeromerobert.pdfarranger')
 
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
@@ -432,12 +461,12 @@ class PdfArranger(Gtk.Application):
                                      self.window.lookup_action('redo'))
 
     def insert_blank_page(self, _action, _option, _unknown):
-        size = (21 / 2.54 * 72, 29.7 / 2.54 * 72) # A4 by default
+        size = None
         selection = self.iconview.get_selected_items()
         selection.sort()
         model = self.iconview.get_model()
         if len(selection) > 0:
-            size = model[selection[-1]][0].size_in_points()
+            size = model[selection[-1]][0].size_in_mm()
         page_size = pageutils.BlankPageDialog(size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)
@@ -530,11 +559,9 @@ class PdfArranger(Gtk.Application):
             filter_list.append(f_img)
         return filter_list
 
-    def set_title(self, title):
-        if Handy:
-            self.uiXML.get_object('header_bar').set_title(title)
-        else:
-            self.window.set_title(title)
+    def set_title(self, title, subtitle = None):
+        self.uiXML.get_object('header_bar').set_title(title)
+        self.uiXML.get_object('header_bar').set_subtitle(subtitle)
 
     def do_activate(self):
         """ https://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application.do_activate """
@@ -551,7 +578,6 @@ class PdfArranger(Gtk.Application):
         if self.config.maximized():
             self.window.maximize()
         self.window.set_default_size(*self.config.window_size())
-        self.window.move(*self.config.position())
         self.window.connect('delete_event', self.on_quit)
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
@@ -787,7 +813,7 @@ class PdfArranger(Gtk.Application):
         self.silent_render()
 
     def window_configure_event(self, _window, event):
-        """Handle window size and position changes."""
+        """Handle window size changes."""
         if self.window_width_old not in [0, event.width] and len(self.model) > 0:
             if self.set_iv_visible_id:
                 GObject.source_remove(self.set_iv_visible_id)
@@ -819,8 +845,9 @@ class PdfArranger(Gtk.Application):
         GObject.idle_add(self.retitle)
 
     def retitle(self):
+        subtitle = None
         if self.save_file:
-            title = self.save_file
+            subtitle, title = os.path.split(self.save_file)
         else:
             title = _('untitled')
         if self.is_unsaved:
@@ -832,7 +859,7 @@ class PdfArranger(Gtk.Application):
             title += ' [' + ', '.join(sorted(all_files)) + ']'
 
         title += ' – ' + APPNAME
-        self.set_title(title)
+        self.set_title(title, subtitle)
         return False
 
     def update_thumbnail(self, _obj, ref, thumbnail, zoom, scale, is_preview):
@@ -870,7 +897,7 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
                 self.iconview.unselect_path(path)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
-        ac.set_description(page.description())
+        ac.set_description(page.description)
 
     def get_visible_range2(self):
         """Get range of items visible in window.
@@ -1071,7 +1098,6 @@ class PdfArranger(Gtk.Application):
         self.config.set_window_size(self.window.get_size())
         self.config.set_maximized(self.window.is_maximized())
         self.config.set_zoom_level(round(self.zoom_level))
-        self.config.set_position(self.window.get_position())
         self.config.save()
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
@@ -1528,7 +1554,7 @@ class PdfArranger(Gtk.Application):
     def paste_as_layer(self, data, destination, laypos, offset_xy=None):
         page_stack = []
         pageadder = PageAdder(self)
-        for filename, npage, _basename, angle, scale, crop, hide, layerdata in data:
+        for filename, npage, _description, angle, scale, crop, hide, layerdata in data:
             d = [[filename, npage, angle, scale, laypos, crop, Sides()]] + layerdata
             lps = pageadder.get_layerpages(d)
             self.apply_hide_margins_on_layerpages(lps, hide)
@@ -1553,7 +1579,7 @@ class PdfArranger(Gtk.Application):
             dpage = self.model[row][0]
             layerpage_stack = page_stack[num % len(page_stack)]
 
-            # Add the "main" pasted page
+            # The "main" pasted page
             lp0 = layerpage_stack[0].duplicate()
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
@@ -1564,7 +1590,9 @@ class PdfArranger(Gtk.Application):
                                right=1 - left - lp0.width_in_points() / dwidth,
                                top=top,
                                bottom=1 - top - lp0.height_in_points() / dheight)
-            dpage.layerpages.append(lp0)
+            if self.pdfqueue[lp0.nfile - 1].blank_size is None:
+                # Add "main" pasted page if it is not blank
+                dpage.layerpages.append(lp0)
 
             # Add layers from the pasted page
             nfirst = len(dpage.layerpages) - 1
@@ -1661,13 +1689,13 @@ class PdfArranger(Gtk.Application):
         """Deserialize data from copy & paste or drag & drop operation."""
         d = []
         while data:
-            tmp = data.pop(0).split('\n')
+            tmp = data.pop(0).split('///')
             filename = tmp[0]
             npage = int(tmp[1])
             if len(tmp) < 3:  # Only when paste files interleaved
                 d.append((filename, npage))
             else:
-                basename = tmp[2]
+                description = tmp[2]
                 angle = int(tmp[3])
                 scale = float(tmp[4])
                 crop = [float(side) for side in tmp[5:9]]
@@ -1684,7 +1712,7 @@ class PdfArranger(Gtk.Application):
                     loffset = [float(offs) for offs in tmp[i + 9:i + 13]]
                     layerdata.append([lfilename, lnpage, langle, lscale, laypos, lcrop, loffset])
                     i += 13
-                d.append((filename, npage, basename, angle, scale, crop, hide, layerdata))
+                d.append((filename, npage, description, angle, scale, crop, hide, layerdata))
         return d
 
     def set_paste_location(self, pastemode):
@@ -1810,7 +1838,7 @@ class PdfArranger(Gtk.Application):
     def on_action_select(self, _action, option, _unknown):
         """Selects items according to selected option."""
         selectoptions = {0: 'ALL', 1: 'DESELECT', 2: 'ODD', 3: 'EVEN',
-                         4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT'}
+                         4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT', 7:'RANGE'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
         with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
@@ -1852,6 +1880,8 @@ class PdfArranger(Gtk.Application):
                         self.iconview.unselect_path(row.path)
                     else:
                         self.iconview.select_path(row.path)
+            elif selectoption == 'RANGE':
+                self.range_select_dialog()
         self.iv_selection_changed_event()
 
     @staticmethod
@@ -1914,9 +1944,9 @@ class PdfArranger(Gtk.Application):
                     iterator = model.get_iter(ref_from.get_path())
                     page = model.get_value(iterator, 0).duplicate()
                     if before:
-                        it = model.insert_before(iter_to, [page, page.description()])
+                        it = model.insert_before(iter_to, [page, page.description])
                     else:
-                        it = model.insert_after(iter_to, [page, page.description()])
+                        it = model.insert_after(iter_to, [page, page.description])
                     path = model.get_path(it)
                     iconview.select_path(path)
                 if move:
@@ -2455,7 +2485,7 @@ class PdfArranger(Gtk.Application):
                 newpages = page.split(leftcrops, topcrops)
                 for p in newpages:
                     p.resample = -1
-                    model.insert_after(iterator, [p, p.description()])
+                    model.insert_after(iterator, [p, p.description])
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
@@ -2532,17 +2562,99 @@ class PdfArranger(Gtk.Application):
         """Opens a dialog box to define page size."""
         selection = self.iconview.get_selected_items()
         diag = pageutils.ScaleDialog(self.iconview.get_model(), selection, self.window)
-        newscale = diag.run_get()
-        if newscale is None:
+        result = diag.run_get()
+        if result is None:
             return
-        self.undomanager.commit("Size")
-        if not pageutils.scale(self.model, selection, newscale):
-            return
+        newscale, mode = result
+        if mode == 'SCALE':
+            self.undomanager.commit("Scale")
+            if not pageutils.scale(self.model, selection, newscale):
+                return
+        elif mode == 'SCALE-ADD-MARG':
+            self.undomanager.commit("Scale & add margins")
+            pageutils.scale(self.model, selection, newscale)
+            self.center_on_blank_page(selection, newscale)
+        else:
+            self.undomanager.commit("Crop & add margins")
+            self.center_on_blank_page(selection, newscale)
         self.set_unsaved(True)
         self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
+
+    def range_select_dialog(self):
+        """Opens a dialog box to range select"""
+        model = self.iconview.get_model()
+        diag = pageutils.RangeSelectDialog(self.window)
+        range_selected = diag.run_get()
+        # clean up the selection and split the ranges
+        if range_selected is not None:
+            result_list = []
+            # split the string using commas
+            comma_split = range_selected.split(',')
+            for element in comma_split:
+                element = element.strip()
+                # check if the element has a dash
+                # Consider multiple dashes? Might create problems?
+                if '-' in element and element.count('-') == 1:
+                    # split the range by the dash
+                    range_split = element.split('-')
+                    # convert the range to integers
+                    # If the dash range is given without the first element (-3)
+                    # then the range starts from the first page
+                    if len(range_split) == 2 and range_split[0]:
+                        range_start = int(range_split[0])
+                        if range_start < 1:
+                            range_start = 1
+                    else:
+                        # Set to 1 because the model is zero indexed
+                        range_start = 1
+                    # If the dash range is given without the last element (3-)
+                    # then the range ends at the last page
+                    if len(range_split) == 2 and range_split[1]:
+                        range_end = int(range_split[1])
+                        if range_end > len(model):
+                            range_end = len(model)
+                    else:
+                        range_end = len(model)
+                    # add the range to the result list
+                    result_list += list(range(range_start, range_end+1))
+                elif element.isdigit():
+                    # add the number to the result list
+                    # If it includes multiple dashes elif will not be executed
+                    # Check if the element is in the range of all pages
+                    if int(element) >=1 and int(element) <= len(model):
+                        result_list.append(int(element))
+            # Clean selection
+            # TO-DO: Maybe an additive selection to the previous selection
+            self.iconview.unselect_all()
+            for page in result_list:
+                # Because the model is zero indexed remove 1 from the page number
+                row = model[page-1]
+                self.iconview.select_path(row.path)
+            self.update_statusbar()
+
+    def center_on_blank_page(self, paths, size):
+        """Add paths as overlay, centered on blank pages with 'size'"""
+        adder = PageAdder(self)
+        file, _ = exporter.get_blank_doc(adder, self.pdfqueue, self.tmp_dir, size)
+        if file is None:
+            return
+        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
+            for path in reversed(paths):
+                if self.model[path][0].size_in_points() == Dims(*size):
+                    continue
+                ref = Gtk.TreeRowReference.new(self.model, path)
+                adder.move(ref, before=False)
+                adder.addpages(file)
+                adder.commit(select_added=True, add_to_undomanager=False)
+                data = self.deserialize([self.model[path][0].serialize()])
+                with self.render_lock():
+                    self.model.remove(self.model.get_iter(path))
+                self.paste_as_layer(data, path, 'OVERLAY', (0.5, 0.5))
+                self.model[path][0].description = data[0][2]
+                self.model[path][1] = data[0][2]
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
@@ -2678,7 +2790,7 @@ class PdfArranger(Gtk.Application):
             for ref in ref_list:
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0).duplicate()
-                model.insert_after(iterator, [page, page.description()])
+                model.insert_after(iterator, [page, page.description])
         self.iv_selection_changed_event()
         GObject.idle_add(self.render)
 

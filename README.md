@@ -1,7 +1,7 @@
 ## About
 
 [![CodeQL](https://github.com/pdfarranger/pdfarranger/workflows/CodeQL/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3ACodeQL "Code quality workflow status")
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1be9c9a69f3a44b79612cc5b2887c0f7)](https://www.codacy.com/gh/pdfarranger/pdfarranger/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pdfarranger/pdfarranger&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1be9c9a69f3a44b79612cc5b2887c0f7)](https://app.codacy.com/gh/pdfarranger/pdfarranger/dashboard)
 [![pdfarranger](https://github.com/pdfarranger/pdfarranger/workflows/pdfarranger/badge.svg)](https://github.com/pdfarranger/pdfarranger/actions?query=workflow%3Apdfarranger+branch%3Amain)
 [![codecov](https://codecov.io/gh/pdfarranger/pdfarranger/branch/main/graph/badge.svg)](https://codecov.io/gh/pdfarranger/pdfarranger)
 
@@ -80,6 +80,17 @@ python3 -m pdfarranger
 ```
 
 For Windows see [Win32.md](Win32.md).
+
+### For MacOS  
+On MacOS, you need to configure the dependency of GTK3 and gettext. Following Environment Variables need to be set:  
+1. `GSETTINGS_SCHEMA_DIR`:  The file `$GSETTINGS_SCHEMA_DIR/org.gtk.Settings.FileChooser.gschema.xml` should exist.  
+2. `DYLD_LIBRARY_PATH`: The file `$DYLD_LIBRARY_PATH/libintl.8.dylib` should exist.  
+
+When the dependencies are configured successfully, you can run
+```
+./setup.py build
+python3 -m pdfarranger
+```
 
 ## For translators
 

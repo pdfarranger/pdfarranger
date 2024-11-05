@@ -286,6 +286,10 @@ class BasePage:
         """Return the page size in PDF points."""
         return self.size.scaled(self.scale).cropped(self.crop)
 
+    def size_in_mm(self) -> Dims:
+        """Return the page size in mm."""
+        return self.size_in_points() * 25.4 / 72
+
     def width_in_pixel(self):
         return self.size_in_pixel().width
 
@@ -302,7 +306,7 @@ class BasePage:
 
 
 class Page(BasePage):
-    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, hide: Sides, size_orig: Dims, basename, layerpages):
+    def __init__(self, nfile, npage, zoom, copyname, angle, scale, crop: Sides, hide: Sides, size_orig: Dims, description, layerpages):
         super().__init__(nfile, npage, copyname, angle, scale, Sides(*crop), size_orig)
         self.zoom = zoom
         self.hide = Sides(*hide)
@@ -311,19 +315,14 @@ class Page(BasePage):
         self.resample = -1
         self.preview = None
         """A low resolution thumbnail"""
-        #: The name of the original file
-        self.basename = basename
-        """The name of the original file"""
+        self.description = description
+        """The text under the thumbnail"""
         self.layerpages = list(layerpages)
 
     def __repr__(self):
         return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "
                 f"{self.angle}, {self.scale}, {self.crop}, {self.hide}, "
-                f"{self.size_orig}, '{self.basename}', {self.layerpages})")
-
-    def description(self):
-        shortname = os.path.splitext(self.basename)[0]
-        return "".join([shortname, "\n", _("page"), " ", str(self.npage)])
+                f"{self.size_orig}, '{self.description}', {self.layerpages})")
 
     def rotate(self, angle: int):
         rt = self.rotate_times(angle)
@@ -345,9 +344,9 @@ class Page(BasePage):
     def serialize(self):
         """Convert to string for copy/past operations."""
         lpdata = [lp.serialize() for lp in self.layerpages]
-        ts = [self.copyname, self.npage, self.basename, self.angle, self.scale]
+        ts = [self.copyname, self.npage, self.description, self.angle, self.scale]
         ts += list(self.crop) + list(self.hide) + list(lpdata)
-        return "\n".join([str(v) for v in ts])
+        return "///".join([str(v) for v in ts])
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
@@ -413,7 +412,7 @@ class LayerPage(BasePage):
         """Convert to string for copy/past operations."""
         ts = [self.copyname, self.npage, self.angle, self.scale, self.laypos]
         ts += list(self.crop) + list(self.offset)
-        return "\n".join([str(v) for v in ts])
+        return "///".join([str(v) for v in ts])
 
     def duplicate(self):
         r = copy.copy(self)
@@ -450,7 +449,7 @@ class PasswordDialog(Gtk.Dialog):
         label.set_line_wrap(True)
         label.set_size_request(0, -1)
         self.vbox.pack_start(label, False, False, 12)
-        box = Gtk.HBox()
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.entry = Gtk.Entry()
         self.entry.set_visibility(False)
         self.entry.set_activates_default(True)
@@ -529,21 +528,21 @@ class PDFDoc:
                 if not askpass:
                     raise e
 
-    def __init__(self, filename, basename, blank_size, stat, tmp_dir, parent):
+    def __init__(self, filename, description, blank_size, stat, tmp_dir, parent):
         self.render_lock = threading.Lock()
         self.filename = os.path.abspath(filename)
         self.stat = stat
-        if basename is None:  # When importing files
+        if description is None:  # When importing files
             self.basename = os.path.basename(filename)
         else:  # When copy-pasting
-            self.basename = basename
+            self.basename = description.split('\n')[0]
         self.blank_size = blank_size  # != None if page is blank
         self.password = ""
         filemime = mimetypes.guess_type(self.filename)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
         if filemime == "application/pdf":
-            if self.filename.startswith(tmp_dir) and basename is None:
+            if self.filename.startswith(tmp_dir) and description is None:
                 # In the "Insert Blank Page" we don't need to copy self.filename
                 self.copyname = self.filename
                 self.basename = ""
@@ -609,7 +608,7 @@ class PageAdder:
         self.before = before
         self.treerowref = treerowref
 
-    def get_pdfdoc(self, filename: str, basename: Optional[str] = None, blank_size=None) -> Optional[Tuple[PDFDoc, int, bool]]:
+    def get_pdfdoc(self, filename: str, description: Optional[str] = None, blank_size=None) -> Optional[Tuple[PDFDoc, int, bool]]:
         """Get the pdfdoc object for the filename.
 
         pdfqueue is searched for the filename. If it is not found a pdfdoc is created
@@ -637,7 +636,7 @@ class PageAdder:
                 return it_pdfdoc, i + 1, False
 
         try:
-            pdfdoc = PDFDoc(filename, basename, blank_size, self.stat_cache[filename],
+            pdfdoc = PDFDoc(filename, description, blank_size, self.stat_cache[filename],
                             self.app.tmp_dir, self.app.window)
         except _UnknownPasswordException:
             return None
@@ -665,17 +664,17 @@ class PageAdder:
             layerpages.append(LayerPage(*ld))
         return layerpages
 
-    def addpages(self, filename, page=-1, basename=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
+    def addpages(self, filename, page=-1, description=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
 
-        doc_data = self.get_pdfdoc(filename, basename)
+        doc_data = self.get_pdfdoc(filename, description)
         if doc_data is None:
             return
         pdfdoc, nfile, doc_added = doc_data
 
-        if (doc_added and pdfdoc.copyname != pdfdoc.filename and basename is None and not
+        if (doc_added and pdfdoc.copyname != pdfdoc.filename and description is None and not
                 (filename.startswith(self.app.tmp_dir) and filename.endswith(".png"))):
             self.app.import_directory = os.path.split(filename)[0]
             self.app.export_directory = self.app.import_directory
@@ -691,6 +690,11 @@ class PageAdder:
 
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
+            if description is None:
+                shortname = os.path.splitext(pdfdoc.basename)[0]
+                desc = "".join([shortname, "\n", _("page"), " ", str(npage)])
+            else:
+                desc = description
             self.pages.append(
                 Page(
                     nfile,
@@ -702,7 +706,7 @@ class PageAdder:
                     crop,
                     hide,
                     Dims(*page.get_size()),
-                    pdfdoc.basename,
+                    desc,
                     layerpages,
                 )
             )
@@ -719,7 +723,7 @@ class PageAdder:
             self.pages.reverse()
         with self.app.render_lock():
             for p in self.pages:
-                m = [p, p.description()]
+                m = [p, p.description]
                 if self.treerowref:
                     iter_to = self.app.model.get_iter(self.treerowref.get_path())
                     if self.before:
