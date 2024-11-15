@@ -2835,7 +2835,7 @@ class PdfArranger(Gtk.Application):
         d = Gtk.Dialog(_("Note"),
             parent=self.window,
             flags=Gtk.DialogFlags.MODAL,
-            buttons=("_OK", Gtk.ResponseType.OK),
+            buttons=(_("_OK"), Gtk.ResponseType.OK),
             resizable=False
             )
         m1 = _("Note the limitations:")
@@ -2909,8 +2909,8 @@ class PdfArranger(Gtk.Application):
         if len(selection) == 1:
             model = self.iconview.get_model()
             pagesize = model[selection[0]][0].size_in_points()
-            pagesize = [x * 25.4 / 72 for x in pagesize]
-            msg += " | "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
+            w, h = [x * 25.4 / 72 for x in pagesize]
+            msg += f' | {_("Page Size:")} {w:.1f} {_("mm")} \u00D7 {h:.1f} {_("mm")}'
         self.status_bar.push(ctxt_id, msg)
 
         for a in ["save", "save-as", "select", "export-all", "zoom-fit", "print"]:
