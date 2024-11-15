@@ -152,7 +152,11 @@ class PdfArrangerManager:
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if "PDFARRANGER_COVERAGE" in os.environ:
             cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]
-        self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args)
+        self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args, stdout=subprocess.PIPE)
+
+    def _get_stdout(self):
+        """get the stdout of the pdfarranger process"""
+        return self.process.stdout.read().decode("utf-8")
 
     def kill(self):
         self.process.kill()
@@ -160,15 +164,21 @@ class PdfArrangerManager:
 
 class PdfArrangerTest(unittest.TestCase):
     LAST=False
-    def _start(self, args=None):
+    def _start(self, args=None, gtk_check=True):
         from dogtail.config import config
         config.searchBackoffDuration = 1
         self.__class__.pdfarranger = PdfArrangerManager(args)
+        if not gtk_check:
+            return
         # check that process is actually running
         self.assertIsNone(self._process().poll())
         self._app()
         # Now let's go faster
         config.searchBackoffDuration = 0.1
+
+    def _get_stdout(self):
+        """get the stdout of the pdfarranger process"""
+        return self.__class__.pdfarranger._get_stdout()
 
     def _app(self):
         """Return the first instance of pdfarranger"""
@@ -849,9 +859,6 @@ class TestBatch7(PdfArrangerTest):
 class TestBatch8(PdfArrangerTest):
     """Test Open action"""
 
-    # Kill X11 after that batch
-    LAST = True
-
     def test_01_open_empty(self):
         self._start()
 
@@ -875,3 +882,19 @@ class TestBatch8(PdfArrangerTest):
         """Quit the first instance"""
         self._quit()
         self._process().wait(timeout=22)
+
+class TestBatch9(PdfArrangerTest):
+    """test batch for cli flags """
+
+    # Kill X11 after that batch
+    LAST = True
+
+    def test_01_cli_version(self):
+        """test version flag"""
+        self._start(["--version"], gtk_check=False)
+        time.sleep(0.5)
+        stdout = self._get_stdout()
+        self.assertIn("pikepdf", stdout)
+        self.assertIn("libqpdf", stdout)
+        self.assertIn("OS-", stdout)
+        self.assertIn("OS_Version-", stdout)
