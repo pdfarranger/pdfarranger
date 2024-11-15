@@ -239,7 +239,7 @@ class PdfArrangerTest(unittest.TestCase):
         if pageid is not None:
             self._icons()[pageid].click()
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
-        label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
+        label = " {:.1f} mm \u00D7 {:.1f} mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
 
     def _check_file_content(self, filename, expected: Tuple[str]) -> Tuple[bool, str]:
