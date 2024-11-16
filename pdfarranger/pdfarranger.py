@@ -728,7 +728,7 @@ class PdfArranger(Gtk.Application):
                 return platform.platform()
         except Exception:
             # Ignore possible exception(s)
-            pass
+            return 'Unknown (error)'
         return 'Unknown'
 
     def do_command_line(self, command_line):
