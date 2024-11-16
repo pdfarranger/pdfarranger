@@ -726,6 +726,7 @@ class PdfArranger(Gtk.Application):
                 return platform.platform()
             elif os_type == 'Darwin':
                 return platform.platform()
+        #ignore possible exception(s)
         except Exception:
             pass
         return 'Unknown'
