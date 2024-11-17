@@ -702,6 +702,35 @@ class PdfArranger(Gtk.Application):
         if self.config.content_loss_warning():
             self.content_loss_warning()
 
+    @staticmethod
+    def get_os_version():
+        """get the OS version"""
+        os_type = platform.system()
+        if os_type == 'Linux':
+            return platform.freedesktop_os_release()["PRETTY_NAME"]
+        elif os_type == 'Windows':
+            realease, version = platform.win32_ver()[0:2]
+            return realease + ' ' + version
+        elif os_type == 'Darwin':  # macOS
+            return str(platform.mac_ver())
+        return str(platform.version())
+
+    @staticmethod
+    def get_platform():
+        """get the platform"""
+        os_type = platform.system()
+        try:
+            if os_type == 'Linux':
+                return platform.freedesktop_os_release()["PRETTY_NAME"]
+            elif os_type == 'Windows':
+                return platform.platform()
+            elif os_type == 'Darwin':
+                return platform.platform()
+        except Exception:
+            # Ignore possible exception(s)
+            return 'Unknown (error)'
+        return 'Unknown'
+
     def do_command_line(self, command_line):
         options = command_line.get_options_dict()
 
@@ -710,6 +739,8 @@ class PdfArranger(Gtk.Application):
             print(APPNAME + "-" + VERSION)
             print("pikepdf-" + pikepdf.__version__)
             print("libqpdf-" + pikepdf.__libqpdf_version__)
+            print("OS-" + platform.platform())
+            print("OS_Version-" + self.get_os_version())
             return 0
 
         self.activate()
@@ -2878,6 +2909,8 @@ class PdfArranger(Gtk.Application):
                     "\n \n",
                     _("It uses libqpdf %s, pikepdf %s, GTK %s and Python %s.")
                     % (qpdf, pike, gtkv, pyv),
+                    "\n \n",
+                    _("Running on %s") % self.get_platform(),
                 )
             )
         )
