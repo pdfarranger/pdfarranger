@@ -1151,6 +1151,12 @@ class PdfArranger(Gtk.Application):
         filter_list = self.__create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
             chooser.add_filter(f)
+        primary_input_cb = Gtk.CheckButton(label=_("Keep document-level information from first page's file"))
+        if exportmode == 'ALL_TO_SINGLE':
+            primary_input_cb.set_active(True)
+        else:
+            primary_input_cb.set_sensitive(False)
+        chooser.set_extra_widget(primary_input_cb)
 
         response = chooser.run()
         file_out = chooser.get_filename()
@@ -1172,7 +1178,8 @@ class PdfArranger(Gtk.Application):
                         replace = self.confirm_dialog(msg, _("Replace"))
                         if not replace:
                             return
-            self.save(exportmode, files_out)
+            start_with_empty = not chooser.get_extra_widget().get_active()
+            self.save(exportmode, files_out, start_with_empty)
         else:
             self.post_action = None
 
@@ -1245,14 +1252,14 @@ class PdfArranger(Gtk.Application):
         there was none."""
         savemode = 'ALL_TO_SINGLE'
         if self.save_file:
-            self.save(savemode, [self.save_file])
+            self.save(savemode, [self.save_file], False)
         else:
             self.choose_export_pdf_name(savemode)
 
     def on_action_save_as(self, _action, _param, _unknown):
         self.choose_export_pdf_name('ALL_TO_SINGLE')
 
-    def save(self, exportmode, files_out):
+    def save(self, exportmode, files_out, start_with_empty):
         """Saves to the specified file."""
         if exportmode in ['SELECTED_TO_SINGLE', 'SELECTED_TO_MULTIPLE']:
             selection = reversed(self.iconview.get_selected_items())
@@ -1270,7 +1277,7 @@ class PdfArranger(Gtk.Application):
 
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
         export_msg = multiprocessing.Queue()
-        a = files, pages, self.metadata, files_out, self.quit_flag, export_msg
+        a = files, pages, self.metadata, files_out, self.quit_flag, export_msg, False, start_with_empty
         self.export_process = multiprocessing.Process(target=exporter.export_process, args=a)
         self.export_process.start()
         GObject.timeout_add(300, self.export_finished, exportmode, export_msg)

@@ -432,7 +432,7 @@ def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) 
 
 
 def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str], quit_flag=None,
-                test_mode: bool = False):
+                test_mode: bool = False, start_with_empty: bool = False):
     """ Same as _copy_n_transform, except it use the pikepdf Job interface. Requires pikepdf >= 8.0 """
     # Generate the output PDF file including temporary overlay/ underlay pages. We don't need to call
     # _append_page as the Job interface copies pages / annotations as necessary. We can also delay getting
@@ -440,12 +440,16 @@ def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str],
     json = dict(outputFile=files_out[0], pages=[], removeUnreferencedResources="yes")
     if test_mode:
         json.update(qdf="", staticId="", compressStreams="n", decodeLevel="all")
-    if len(files) > 0 and len(files[0][0]) > 0:
-        json["inputFile"] = files[0][0]  # We are treating files [0] as the main document
-        if len(files[0][1]) > 0:
-            json["password"] = files[0][1]
+    if start_with_empty:
+        json["empty"] = ""
     else:
-        json["inputFile"] = "."
+        primary_file = files[pages[0].nfile - 1]  # treat file of first page as primary input file
+        if len(primary_file[0]) > 0:
+            json["inputFile"] = primary_file[0]
+            if len(primary_file[1]) > 0:
+                json["password"] = primary_file[1]
+        else:
+            json["inputFile"] = "."
 
     for page in pages:
         if quit_flag is not None and quit_flag.is_set():
@@ -458,9 +462,9 @@ def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str],
 
 
 def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: List[Page], mdata, files_out: List[str],
-                   quit_flag, test_mode: bool = False) -> None:
+                   quit_flag, test_mode: bool = False, start_with_empty: bool = False) -> None:
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
-    job = _create_job(files, pages, files_out, quit_flag, test_mode)
+    job = _create_job(files, pages, files_out, quit_flag, test_mode, start_with_empty)
     pdf_output = job.create_pdf()
     max_version = max(
         pdf_output.pdf_version,
@@ -489,14 +493,14 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         job.write_pdf(pdf_output)
 
 
-def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False):
+def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False, start_with_empty=False):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
     if version.parse(pikepdf.__version__) < version.Version("8.0"):
         export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
     else:
-        export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode)
+        export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode, start_with_empty)
 
 
 def num_pages(filepath):
