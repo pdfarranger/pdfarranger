@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import os
+import packaging.version as version
 import platform
 import ctypes
 
@@ -1152,10 +1153,10 @@ class PdfArranger(Gtk.Application):
         for f in filter_list[1:]:
             chooser.add_filter(f)
         primary_input_cb = Gtk.CheckButton(label=_("Keep document-level information from first page's file"))
-        if exportmode == 'ALL_TO_SINGLE':
-            primary_input_cb.set_active(True)
-        else:
+        if version.parse(pikepdf.__version__) < version.Version("8.0"):
             primary_input_cb.set_sensitive(False)
+        else:
+            primary_input_cb.set_active(exportmode == 'ALL_TO_SINGLE')
         chooser.set_extra_widget(primary_input_cb)
 
         response = chooser.run()
