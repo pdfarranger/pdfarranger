@@ -26,6 +26,15 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-cx_Freeze git python-pip
 ```
 
+For Python 3.12 or newer:
+
+```
+export PATH=$PATH:/mingw64/bin
+/mingw64/bin/python3.exe -m pip install --user keyboard darkdetect pikepdf img2pdf
+```
+
+For Python 3.11 or older:
+
 ```
 export PATH=$PATH:/mingw64/bin
 SETUPTOOLS_USE_DISTUTILS=stdlib \
