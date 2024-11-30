@@ -72,12 +72,28 @@ In addition, *PDF Arranger* supports image file import if [img2pdf](https://gitl
 
 ## For developers
 
+### Using setuptools
+
 ```
 git clone https://github.com/pdfarranger/pdfarranger.git
 cd pdfarranger
 ./setup.py build
 python3 -m pdfarranger
 ```
+
+### Using uv
+
+[uv](https://docs.astral.sh/uv/) is a modern alternative to setuptools. You can setup a development environment like this:
+
+```
+git clone https://github.com/pdfarranger/pdfarranger.git
+cd pdfarranger
+uv venv
+uv pip sync setup.py
+uv run python3 -m pdfarranger
+```
+
+### On Windows
 
 For Windows see [Win32.md](Win32.md).
 
