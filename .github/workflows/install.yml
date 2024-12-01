@@ -71,7 +71,7 @@ jobs:
       - name: Combine Coverage
         run: lcov -a ppp-lcov/coverage.lcov -a pp6-lcov/coverage.lcov -o lcov.info
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
   build-win32:
