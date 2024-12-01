@@ -1301,7 +1301,7 @@ class PdfArranger(Gtk.Application):
 
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
         export_msg = multiprocessing.Queue()
-        a = files, pages, self.metadata, files_out, self.quit_flag, export_msg
+        a = files, pages, self.metadata, files_out, self.quit_flag, export_msg, self.config
         self.export_process = multiprocessing.Process(target=exporter.export_process, args=a)
         self.export_process.start()
         GObject.timeout_add(300, self.export_finished, exportmode, export_msg)
