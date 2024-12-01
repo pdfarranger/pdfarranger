@@ -24,7 +24,6 @@ import tempfile
 import io
 import gi
 import locale
-import packaging.version as version
 from typing import Any, Dict, List
 
 from . import metadata
@@ -244,7 +243,7 @@ def warn_dialog(func):
             self.buffer += str(message) + '\n'
 
     def wrapper(*args, **kwargs):
-        export_msg = args[-1]
+        export_msg = kwargs["export_msg"]
         backup_showwarning = warnings.showwarning
         warnings.showwarning = ShowWarning()
         try:
@@ -489,11 +488,11 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         job.write_pdf(pdf_output)
 
 
-def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False):
+def export(files, pages, mdata, files_out, quit_flag, config, test_mode=False, **kwargs):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
-    if version.parse(pikepdf.__version__) < version.Version("8.0"):
+    if config.start_with_empty():
         export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
     else:
         export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode)

@@ -9,6 +9,7 @@ from typing import Tuple
 import shutil
 import packaging.version
 from importlib import metadata
+import warnings
 
 import pikepdf
 
@@ -924,3 +925,63 @@ class TestBatch9(PdfArrangerTest):
         self.assertIn("libqpdf", stdout)
         self.assertIn("OS-", stdout)
         self.assertIn("OS_Version-", stdout)
+
+
+class TestBatch10(PdfArrangerTest):
+    """Test start-with-empty config setting"""
+
+    def test_01_default(self):
+        """Test default setting"""
+        self._start(["tests/test_encrypted.pdf"])
+        dialog = self._app().child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        passfield.text = "foobar"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Preferences")
+        dialog = self._app().child(roleName="dialog")
+        savepanel_name = "Saving/exporting to single file"
+        if have_pikepdf8():
+            savepanel = dialog.child(name=savepanel_name)
+            checkboxes = self._find_by_role("check box", savepanel)
+            self.assertTrue(checkboxes[0].checked)
+        else:
+            panels = self._find_by_role("panel", dialog)
+            self.assertNotIn(savepanel_name, [p.name for p in panels])
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Save As…")
+        self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"] )
+        if have_pikepdf8():
+            with warnings.catch_warnings(record=True) as w:
+                with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
+                    pass
+            # there should be no warning that no password was needed to open this PDF
+            self.assertEqual(len(w), 0)
+        else:
+            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf")):
+                # there should be no pikepdf._core.PasswordError for pikepdf < 8
+                pass
+
+    def test_02_legacy(self):
+        """Test legacy setting"""
+        if have_pikepdf8():
+            self._mainmenu("Preferences")
+            dialog = self._app().child(roleName="dialog")
+            savepanel = dialog.child(name="Saving/exporting to single file")
+            checkboxes = self._find_by_role("check box", savepanel)
+            checkboxes[0].click()
+            dialog.child(name="OK").click()
+            self.assertFalse(checkboxes[0].checked)
+            self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Save As…")
+        self._save_as_chooser("unencrypted.pdf", ["unencrypted.pdf"])
+        with pikepdf.open(os.path.join(self.__class__.tmp, "unencrypted.pdf")):
+            # there should be no pikepdf._core.PasswordError
+            pass
+
+    def test_03_quit(self):
+        self._quit()
