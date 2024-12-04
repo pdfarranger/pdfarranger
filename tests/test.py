@@ -8,6 +8,7 @@ from typing import Tuple
 import shutil
 import packaging.version
 from importlib import metadata
+import warnings
 
 import pikepdf
 
@@ -404,7 +405,7 @@ class PdfArrangerTest(unittest.TestCase):
             dogtail_manager.kill()
 
 
-class TestBatch1(PdfArrangerTest):
+class TestBatch01(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
         # Handle the "content loss warning" dialog
@@ -539,7 +540,7 @@ class TestBatch1(PdfArrangerTest):
         self._process().wait(timeout=22)
 
 
-class TestBatch2(PdfArrangerTest):
+class TestBatch02(PdfArrangerTest):
     def test_01_open_empty(self):
         self._start()
 
@@ -611,7 +612,7 @@ class TestBatch2(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch3(PdfArrangerTest):
+class TestBatch03(PdfArrangerTest):
     """Test encryption"""
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
@@ -650,7 +651,7 @@ class TestBatch3(PdfArrangerTest):
         self._process().wait(timeout=22)
 
 
-class TestBatch4(PdfArrangerTest):
+class TestBatch04(PdfArrangerTest):
     """Check the size of duplicated and scaled pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -688,7 +689,7 @@ class TestBatch4(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch5(PdfArrangerTest):
+class TestBatch05(PdfArrangerTest):
     """Test booklet and blank pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -733,7 +734,7 @@ class TestBatch5(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch6(PdfArrangerTest):
+class TestBatch06(PdfArrangerTest):
     """Test hide margins and merge pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -818,7 +819,7 @@ class TestBatch6(PdfArrangerTest):
             self._quit()
 
 
-class TestBatch7(PdfArrangerTest):
+class TestBatch07(PdfArrangerTest):
     """Test extracting of images and text"""
     def test_01_import_pdf(self):
         self._start(["tests/test_raster_image_text.pdf"])
@@ -856,7 +857,7 @@ class TestBatch7(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch8(PdfArrangerTest):
+class TestBatch08(PdfArrangerTest):
     """Test Open action"""
 
     def test_01_open_empty(self):
@@ -883,11 +884,8 @@ class TestBatch8(PdfArrangerTest):
         self._quit()
         self._process().wait(timeout=22)
 
-class TestBatch9(PdfArrangerTest):
+class TestBatch09(PdfArrangerTest):
     """test batch for cli flags """
-
-    # Kill X11 after that batch
-    LAST = True
 
     def test_01_cli_version(self):
         """test version flag"""
@@ -898,3 +896,69 @@ class TestBatch9(PdfArrangerTest):
         self.assertIn("libqpdf", stdout)
         self.assertIn("OS-", stdout)
         self.assertIn("OS_Version-", stdout)
+
+
+class TestBatch10(PdfArrangerTest):
+    """Test saving config settings"""
+
+    # Kill X11 after that batch
+    LAST = True
+
+    def test_01_default(self):
+        """Test default setting"""
+        self._start(["tests/test_encrypted.pdf"])
+        dialog = self._app().child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        passfield.text = "foobar"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Preferences")
+        dialog = self._app().child(roleName="dialog")
+        savepanel_name = "Saving/exporting to single file"
+        if have_pikepdf8():
+            savepanel = dialog.child(name=savepanel_name)
+            checkboxes = self._find_by_role("check box", savepanel)
+            self.assertTrue(checkboxes[0].checked)
+        else:
+            panels = self._find_by_role("panel", dialog)
+            self.assertNotIn(savepanel_name, [p.name for p in panels])
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Save As…")
+        self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"] )
+        with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
+            pass
+        if have_pikepdf8():
+            with warnings.catch_warnings(record=True) as w:
+                with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
+                    pass
+            # there should be no warning that no password was needed to open this PDF
+            self.assertEqual(len(w), 0)
+        else:
+            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf")):
+                # there should be no pikepdf._core.PasswordError for pikepdf < 8
+                pass
+
+    def test_02_legacy(self):
+        """Test legacy setting"""
+        if have_pikepdf8():
+            self._mainmenu("Preferences")
+            dialog = self._app().child(roleName="dialog")
+            savepanel = dialog.child(name="Saving/exporting to single file")
+            checkboxes = self._find_by_role("check box", savepanel)
+            checkboxes[0].click()
+            dialog.child(name="OK").click()
+            self.assertFalse(checkboxes[0].checked)
+            self._wait_cond(lambda: dialog.dead)
+
+        self._mainmenu("Save As…")
+        self._save_as_chooser("unencrypted.pdf", ["unencrypted.pdf"])
+        with pikepdf.open(os.path.join(self.__class__.tmp, "unencrypted.pdf")):
+            # there should be no pikepdf._core.PasswordError
+            pass
+
+    def test_03_quit(self):
+        self._quit()
+
