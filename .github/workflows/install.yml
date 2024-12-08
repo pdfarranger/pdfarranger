@@ -77,7 +77,7 @@ jobs:
   build-win32:
     runs-on: ubuntu-latest
     container:
-      image: jeromerobert/wine-mingw64:1.9.0
+      image: ghcr.io/pdfarranger/wine-mingw64:1.10.0
       options: --user root
     steps:
     - uses: actions/checkout@v4
