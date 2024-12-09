@@ -445,6 +445,7 @@ class PdfArranger(Gtk.Application):
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
             ("generate-booklet", self.generate_booklet),
+            ("split-booklet", self.split_booklet),
             ("preferences", self.on_action_preferences),
             ("print", self.on_action_print),
         ]
@@ -519,6 +520,144 @@ class PdfArranger(Gtk.Application):
         adder.commit(select_added=False, add_to_undomanager=False)
         self.clear_selected(add_to_undomanager=False)
         self.silent_render()
+
+    def split_booklet(self, _action, _option, _unknown):
+        """ Split selected pages as a booklet (unimposition) """
+
+        # The user requested that we unimpose some pages.
+        # The imposition process took linear pages and reordered 4 of them per sheet for printing, so that the sheet may be folded into a book/booklet.
+        # Here we're doing the opposite process, turning a booklet into a linear document... like so:
+        #
+        # .---.                                        .---.
+        # | 1 |                                        | 1 |
+        # '---'                                        '---'
+        # .---.                                        .---.
+        # | 2 |               .-------.                | 2 |
+        # '---'  IMPOSITION   | 4 | 1 |  UNIMPOSITION  '---'
+        # .---.  --------->   '-------'  ----------->  .---.
+        # | 3 |               .-------.                | 3 |
+        # '---'               | 2 | 3 |                '---'
+        # .---.               '-------'                .---.
+        # | 4 |                                        | 4 |
+        # '---'                                        '---'
+        #
+        # Usually, the entire document will be unimposed. But maybe the user has reasons to unimpose only parts of the document, and anyway this function intends
+        # to operate on selection, so any selection of pages will be supported.
+
+        # selection is a list of 1-tuples, not in order
+        selection = self.iconview.get_selected_items()
+        selection.sort(key=lambda x: x.get_indices()[0])
+
+        # Before summoning the splitter dialog, check whether we have contiguous pages
+        # If the pages are contiguous, the user may choose to "unimpose" from the splitter dialog
+        selected_page_numbers = [ x.get_indices()[0] for x in selection ]
+        if len(selected_page_numbers) > 1:
+            previous_page = selected_page_numbers[0]
+            for page in selected_page_numbers[1:]:
+                if page != previous_page + 1:
+                    msg = _('The page selection is not contiguous, so unimposing is made unavailable.')
+                    self.error_message_dialog(msg)
+                    return
+                previous_page = page
+
+        # Simulate split window
+        horizontal = [[1, 100]]
+        vertical = [[1, 50], [2, 50]]
+
+        leftcrops, topcrops = splitter._crops(vertical), splitter._crops(horizontal)
+        if leftcrops is None or topcrops is None:
+            # TODO: why would this ever happen?
+            return
+
+        model = self.iconview.get_model()
+        self.set_unsaved(True)
+        self.undomanager.commit("Split")
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        with self.render_lock():
+            # Determine the pages for unimposition... so for example if we have have pages 1 2 3 containing 1 3-2 4 content
+            # we only want to unimpose those selected middle pages with offset=1 and halves=2 for the number of halves
+            # produced from the selection, so we end up with 1 2 3 4 at the end of the process
+            offset = selected_page_numbers[0]
+            halves = len(selected_page_numbers) * 2
+
+            # Keep track of how many larger pages have been split and unimposed (for later reordering)
+            count = 0
+            # Keep track of the split and unimposed pages in their final order
+            half_pages = [ None for x in range(0, halves) ]
+
+            # Iterate over each selected page
+            for ref in ref_list:
+                iterator = model.get_iter(ref.get_path())
+                page = model.get_value(iterator, 0)
+                page.resample = -1
+
+                # page.split crops page to the left part, and returns a list containing only an entry: the right page
+                # That's assuming the "unimpose" checkbox in the Splitter dialog does not allow anything else than 2 columns / 1 row
+                splits = page.split(leftcrops, topcrops)
+                assert len(splits) == 1
+                rpage = splits[0]
+                rpage.resample = -1
+
+                # GtkListView expects entries of [Page, Description] type
+                lpageentry = [ page, page.description ]
+                rpageentry = [ rpage, rpage.description ]
+
+                # That's the core algorithm for unimposing. We could account for the offset now,
+                # but who's got brain cells left for that?
+                if count % 2 == 0:
+                    half_pages[halves - count - 1] = lpageentry
+                    half_pages[count] = rpageentry
+                else:
+                    half_pages[count] = lpageentry
+                    half_pages[halves - count - 1] = rpageentry
+                count += 1
+
+                # A careful eye will notice that because of Python's implicit clones, we now hold 3 Page objects instead of 2.
+                # One is still in the GtkListView model, and 2 are in split_pages list. Let's remove the left split page left in the model.
+                model.remove(iterator)
+
+            # Sanity check
+            assert None not in half_pages
+
+            # Append the new half pages at the end of the document
+            for p in half_pages:
+                model.append(p)
+
+            # Now our `halves` half pages have been appended in the correct (unimposed order) at the end of the document, so we need
+            # to move them right after `offset - 1`.
+
+            # Note that the final_page_number is not the initial number of pages + halves, but the initial number of pages + halves/2!
+            final_page_number = len(self.model)
+
+            # Let's create a mapping to reorder the pages... Gtk.ListStore.reorder expects a new->old index mapping
+            reorder_pages = [ None for x in range(0, final_page_number) ]
+
+            # When we encounter one of the new halves, we need to know it's position relative to the offset.
+            half_count = 0
+
+            for x in range(0, final_page_number):
+                if x < offset:
+                    # The first pages, before the split selection, are left in place
+                    reorder_pages[x] = x
+                elif x < (final_page_number - halves):
+                    # The last pages, after the split selection, must be moved forward by `halves` pages to make space
+                    reorder_pages[x + halves] = x
+                else:
+                    # Now the page we just splitted are placed in order, starting at `offset` index
+                    reorder_pages[half_count + offset] = x
+                    half_count += 1
+
+            # Sanity check
+            assert None not in reorder_pages
+
+            # Perform the final reorder
+            self.model.reorder(reorder_pages)
+
+        self.update_iconview_geometry()
+        self.iv_selection_changed_event()
+        self.update_max_zoom_level()
+        GObject.idle_add(self.render)
 
     def on_action_preferences(self, _action, _option, _unknown):
         handy_available = True if Handy else False
@@ -2501,20 +2640,8 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         selection.sort(key=lambda x: x.get_indices()[0])
 
-        # Before summoning the splitter dialog, check whether we have contiguous pages
-        # If the pages are contiguous, the user may choose to "unimpose" from the splitter dialog
-        selected_page_numbers = [ x.get_indices()[0] for x in selection ]
-        unimposable = True
-        if len(selected_page_numbers) > 1:
-            previous_page = selected_page_numbers[0]
-            for page in selected_page_numbers[1:]:
-                if page != previous_page + 1:
-                    print("The page selection is not contiguous, so unimposing is made unavailable: " + str(selected_page_numbers))
-                    unimposable = False
-                previous_page = page
-
-        diag = splitter.Dialog(self.window, unimposable)
-        leftcrops, topcrops, unimpose = diag.run_get()
+        diag = splitter.Dialog(self.window)
+        leftcrops, topcrops = diag.run_get()
         if leftcrops is None or topcrops is None:
             return
         model = self.iconview.get_model()
@@ -2523,118 +2650,18 @@ class PdfArranger(Gtk.Application):
         ref_list = [Gtk.TreeRowReference.new(model, path)
                     for path in selection]
         with self.render_lock():
-            if unimpose:
-                # The user requested that we unimpose some pages.
-                # The imposition process took linear pages and reordered 4 of them per sheet for printing, so that the sheet may be folded into a book/booklet.
-                # Here we're doing the opposite process, turning a booklet into a linear document... like so:
-                #
-                # .---.                                        .---.
-                # | 1 |                                        | 1 |
-                # '---'                                        '---'
-                # .---.                                        .---.
-                # | 2 |               .-------.                | 2 |
-                # '---'  IMPOSITION   | 4 | 1 |  UNIMPOSITION  '---'
-                # .---.  --------->   '-------'  ----------->  .---.
-                # | 3 |               .-------.                | 3 |
-                # '---'               | 2 | 3 |                '---'
-                # .---.               '-------'                .---.
-                # | 4 |                                        | 4 |
-                # '---'                                        '---'
-                #
-                # Usually, the entire document will be unimposed. But maybe the user has reasons to unimpose only parts of the document, and anyway this function intends
-                # to operate on selection, so any selection of pages will be supported.
-
-                # Determine the pages for unimposition... so for example if we have have pages 1 2 3 containing 1 3-2 4 content
-                # we only want to unimpose those selected middle pages with offset=1 and halves=2 for the number of halves
-                # produced from the selection, so we end up with 1 2 3 4 at the end of the process
-                offset = selected_page_numbers[0]
-                halves = len(selected_page_numbers) * 2
-
-                # Keep track of how many larger pages have been split and unimposed (for later reordering)
-                count = 0
-                # Keep track of the split and unimposed pages in their final order
-                half_pages = [ None for x in range(0, halves) ]
-
-                # Iterate over each selected page
-                for ref in ref_list:
-                    iterator = model.get_iter(ref.get_path())
-                    page = model.get_value(iterator, 0)
-                    page.resample = -1
-
-                    # page.split crops page to the left part, and returns a list containing only an entry: the right page
-                    # That's assuming the "unimpose" checkbox in the Splitter dialog does not allow anything else than 2 columns / 1 row
-                    splits = page.split(leftcrops, topcrops)
-                    assert len(splits) == 1
-                    rpage = splits[0]
-                    rpage.resample = -1
-
-                    # GtkListView expects entries of [Page, Description] type
-                    lpageentry = [ page, page.description ]
-                    rpageentry = [ rpage, rpage.description ]
-
-                    # That's the core algorithm for unimposing. We could account for the offset now,
-                    # but who's got brain cells left for that?
-                    if count % 2 == 0:
-                        half_pages[halves - count - 1] = lpageentry
-                        half_pages[count] = rpageentry
-                    else:
-                        half_pages[count] = lpageentry
-                        half_pages[halves - count - 1] = rpageentry
-                    count += 1
-
-                    # A careful eye will notice that because of Python's implicit clones, we now hold 3 Page objects instead of 2.
-                    # One is still in the GtkListView model, and 2 are in split_pages list. Let's remove the left split page left in the model.
-                    model.remove(iterator)
-
-                # Sanity check
-                assert None not in half_pages
-
-                # Append the new half pages at the end of the document
-                for p in half_pages:
-                    model.append(p)
-
-                # Now our `halves` half pages have been appended in the correct (unimposed order) at the end of the document, so we need
-                # to move them right after `offset - 1`.
-
-                # Note that the final_page_number is not the initial number of pages + halves, but the initial number of pages + halves/2!
-                final_page_number = len(self.model)
-
-                # Let's create a mapping to reorder the pages... Gtk.ListStore.reorder expects a new->old index mapping
-                reorder_pages = [ None for x in range(0, final_page_number) ]
-
-                # When we encounter one of the new halves, we need to know it's position relative to the offset.
-                half_count = 0
-
-                for x in range(0, final_page_number):
-                    if x < offset:
-                        # The first pages, before the split selection, are left in place
-                        reorder_pages[x] = x
-                    elif x < (final_page_number - halves):
-                        # The last pages, after the split selection, must be moved forward by `halves` pages to make space
-                        reorder_pages[x + halves] = x
-                    else:
-                        # Now the page we just splitted are placed in order, starting at `offset` index
-                        reorder_pages[half_count + offset] = x
-                        half_count += 1
-
-                # Sanity check
-                assert None not in reorder_pages
-
-                # Perform the final reorder
-                self.model.reorder(reorder_pages)
-            else:
-                # This is not an unimposition process, simply splitting pages in the order they appear
-                for ref in ref_list:
-                    iterator = model.get_iter(ref.get_path())
-                    page = model.get_value(iterator, 0)
-                    page.resample = -1
-                    newpages = page.split(leftcrops, topcrops)
-                    # Here newpages only contains n-1 new pages when splitting into n pages,
-                    # because the upper-lefter-most page is still our good old `page` instance
-                    for p in newpages:
-                        p.resample = -1
-                        model.insert_after(iterator, [p, p.description])
-                    model.set_value(iterator, 0, page)
+            # This is not an unimposition process, simply splitting pages in the order they appear
+            for ref in ref_list:
+                iterator = model.get_iter(ref.get_path())
+                page = model.get_value(iterator, 0)
+                page.resample = -1
+                newpages = page.split(leftcrops, topcrops)
+                # Here newpages only contains n-1 new pages when splitting into n pages,
+                # because the upper-lefter-most page is still our good old `page` instance
+                for p in newpages:
+                    p.resample = -1
+                    model.insert_after(iterator, [p, p.description])
+                model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
         self.iv_selection_changed_event()
         self.update_max_zoom_level()
