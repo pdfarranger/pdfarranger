@@ -21,7 +21,7 @@ _ = gettext.gettext
 
 class Dialog(Gtk.Dialog):
     """ A dialog box to split pages into a grid of pages"""
-    def __init__(self, window, unimposable):
+    def __init__(self, window):
         super().__init__(
             title=_("Split Pages"),
             parent=window,
@@ -49,23 +49,11 @@ class Dialog(Gtk.Dialog):
         self.hcheck = Gtk.CheckButton()
         self.checkbuttons = {'vertical' : self.vcheck, 'horizontal' : self.hcheck}
 
-        # Additional checkbox for de-imposing
-        self.unimpose = Gtk.CheckButton()
-        self.unimpose.props.margin_top = 10
-        self.unimpose.props.margin_bottom = 10
-        self.unimpose.set_label(_("Deimpose from A4 to A5 pages"))
-        self.unimpose.set_active(False)
-        if not unimposable:
-            print("Unimpose disabled for this selection")
-            self.unimpose.set_sensitive(False)
-
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.vbox.pack_start(hbox, True, True, 0)
         for direction in ['vertical', 'horizontal']:
             frame = self._build_frame(direction)
             hbox.pack_start(frame, True, True, 0)
-        # Additional space for unimposing checkbox
-        self.vbox.pack_start(self.unimpose, True, True, 0)
         self.show_all()
 
     def _build_frame(self, direction):
@@ -180,13 +168,11 @@ class Dialog(Gtk.Dialog):
         result = self.run()
         vcrops = None
         hcrops = None
-        unimpose = False
         if result == Gtk.ResponseType.OK:
             vcrops = _crops(self.model['vertical'])
             hcrops = _crops(self.model['horizontal'])
-            unimpose = self.unimpose.get_active()
         self.destroy()
-        return vcrops, hcrops, unimpose
+        return vcrops, hcrops
 
 # Operates over a 1D-array of [PAGE_N, FRAC] arrays
 def _crops(linear_tiles):
