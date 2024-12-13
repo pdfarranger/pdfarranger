@@ -560,6 +560,21 @@ class PdfArranger(Gtk.Application):
                     return
                 previous_page = page
 
+        # Another sanity check, make sure all pages are the same size.
+        # The splitting would otherwise work, but would return a weird document.
+        model = self.iconview.get_model()
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        pages = [model.get_value(model.get_iter(ref.get_path()), 0)
+                 for ref in ref_list]
+        p1w, p1h = pages[0].size_in_points()
+        for page in pages[1:]:
+            pw, ph = page.size_in_points()
+            if abs(p1w-pw) > 1e-2 or abs(p1h-ph) > 1e-2:
+                msg = _('All pages must have the same size.')
+                self.error_message_dialog(msg)
+                return
+
         # Simulate split window
         horizontal = [[1, 100]]
         vertical = [[1, 50], [2, 50]]
@@ -569,11 +584,8 @@ class PdfArranger(Gtk.Application):
             # TODO: why would this ever happen?
             return
 
-        model = self.iconview.get_model()
         self.set_unsaved(True)
-        self.undomanager.commit("Split")
-        ref_list = [Gtk.TreeRowReference.new(model, path)
-                    for path in selection]
+        self.undomanager.commit("split booklet")
         with self.render_lock():
             # Determine the pages for unimposition... so for example if we have have pages 1 2 3 containing 1 3-2 4 content
             # we only want to unimpose those selected middle pages with offset=1 and halves=2 for the number of halves
