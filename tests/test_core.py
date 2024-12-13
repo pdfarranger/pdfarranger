@@ -56,14 +56,14 @@ class BasePageTest(PTest):
 
     def test01(self):
         """Test width | height | size_in_points"""
-        self.assertAlmostEquals(self._page1().size_in_points()[0], 140.462)
-        self.assertAlmostEquals(self._page1().width_in_points(), 140.462)
-        self.assertAlmostEquals(self._page1().size_in_points()[1], 120.396)
-        self.assertAlmostEquals(self._page1().height_in_points(), 120.396)
-        self.assertAlmostEquals(self._page1_90().size_in_points()[0], 120.396)
-        self.assertAlmostEquals(self._page1_90().width_in_points(), 120.396)
-        self.assertAlmostEquals(self._page1_90().size_in_points()[1], 140.462)
-        self.assertAlmostEquals(self._page1_90().height_in_points(), 140.462)
+        self.assertAlmostEqual(self._page1().size_in_points()[0], 140.462)
+        self.assertAlmostEqual(self._page1().width_in_points(), 140.462)
+        self.assertAlmostEqual(self._page1().size_in_points()[1], 120.396)
+        self.assertAlmostEqual(self._page1().height_in_points(), 120.396)
+        self.assertAlmostEqual(self._page1_90().size_in_points()[0], 120.396)
+        self.assertAlmostEqual(self._page1_90().width_in_points(), 120.396)
+        self.assertAlmostEqual(self._page1_90().size_in_points()[1], 140.462)
+        self.assertAlmostEqual(self._page1_90().height_in_points(), 140.462)
 
     def test02(self):
         """Test rotate_times"""
@@ -104,7 +104,7 @@ class PageTest(PTest):
         self.assertEqual(repr(p), repr(d))
         p.rotate(90)
         self.assertEqual(repr(d), repr(self._page1()))
-        self.assertNotEquals(repr(p), repr(self._page1()))
+        self.assertNotEqual(repr(p), repr(self._page1()))
 
     def test03(self):
         """Test serialize"""
@@ -155,7 +155,7 @@ class LayerPageTest(PTest):
         self.assertEqual(repr(p), repr(d))
         p.rotate(90)
         self.assertEqual(repr(d), repr(self._lpage1()))
-        self.assertNotEquals(repr(p), repr(self._lpage1()))
+        self.assertNotEqual(repr(p), repr(self._lpage1()))
 
     def test03(self):
         """Test serialize"""
