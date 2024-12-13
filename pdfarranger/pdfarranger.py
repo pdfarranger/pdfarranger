@@ -555,7 +555,7 @@ class PdfArranger(Gtk.Application):
             previous_page = selected_page_numbers[0]
             for page in selected_page_numbers[1:]:
                 if page != previous_page + 1:
-                    msg = _('The page selection is not contiguous, so unimposing is made unavailable.')
+                    msg = _('The page selection is not contiguous. Cannot unimpose.')
                     self.error_message_dialog(msg)
                     return
                 previous_page = page
