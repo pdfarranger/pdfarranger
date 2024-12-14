@@ -605,7 +605,6 @@ class PrintOperation(Gtk.PrintOperation):
         self.connect("end-print", self.end_print, None)
         self.connect("draw-page", self.draw_page, None)
         self.connect("preview", self.preview, None)
-        self.pdf_input = None
         self.message = self.MESSAGE
         self.scale_mode = self.app.config.scale_mode()
         self.auto_rotate = self.app.config.auto_rotate()
@@ -642,18 +641,19 @@ class PrintOperation(Gtk.PrintOperation):
         self.app.apply_hide_margins_on_pages(self.pages)
         self.set_n_pages(len(self.pages))
 
-        # Open pikepdf objects for all pages that has been modified
+        # Create a temporary pdf of the pages to print
         nfiles = set()
         for p in self.pages:
-            if p.unmodified():
-                continue
             nfiles.add(p.nfile)
             for lp in p.layerpages:
                 nfiles.add(lp.nfile)
-        self.pdf_input = [None] * len(self.app.pdfqueue)
+        pdf_input = [None] * len(self.app.pdfqueue)
         for nfile in nfiles:
             pdf = self.app.pdfqueue[nfile - 1]
-            self.pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+            pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+        self.buf = io.BytesIO()
+        export_doc(pdf_input, self.pages, {}, [self.buf], None)
+        self.temp_doc = Poppler.Document.new_from_data(self.buf.getvalue())
 
     def end_print(self, operation, print_ctx, print_data):
         self.app.set_export_state(False)
@@ -689,17 +689,8 @@ class PrintOperation(Gtk.PrintOperation):
         dy = h_paper / (scale * print_scale) - h_page
         cairo_ctx.translate(dx / 2, dy / 2)
 
-        p = self.pages[page_num]
-        if p.unmodified():
-            pdfdoc = self.app.pdfqueue[p.nfile - 1]
-            page = pdfdoc.document.get_page(p.npage - 1)
-            with pdfdoc.render_lock:
-                page.render_for_printing(cairo_ctx)
-        else:
-            buf = io.BytesIO()
-            export_doc(self.pdf_input, [p], {}, [buf], None)
-            page = Poppler.Document.new_from_data(buf.getvalue()).get_page(0)
-            page.render_for_printing(cairo_ctx)
+        page = self.temp_doc.get_page(page_num)
+        page.render_for_printing(cairo_ctx)
 
     def run(self):
         result = super().run(Gtk.PrintOperationAction.PRINT_DIALOG, self.app.window)
