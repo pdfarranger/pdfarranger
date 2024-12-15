@@ -383,14 +383,21 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
             del pdf_output.pages[i + 1]
 
 
+def get_max_pdf_version(pdf_list: List[pikepdf.Pdf]) -> str:
+    """Return the highest pdf version used in pdf list"""
+    versions = []
+    for pdf in pdf_list:
+        if pdf is None:
+            # Can be None when printing
+            continue
+        versions.append(pdf.pdf_version)
+    return max(*versions)
+
 
 def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
-    max_version = max(
-        pdf_output.pdf_version,
-        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
-    )
+    max_version = get_max_pdf_version([pdf_output, *pdf_input])
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():
         return
@@ -461,10 +468,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
     job = _create_job(files, pages, files_out, quit_flag, test_mode)
     pdf_output = job.create_pdf()
-    max_version = max(
-        pdf_output.pdf_version,
-        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
-    )
+    max_version = get_max_pdf_version([pdf_output, *pdf_input])
 
     _transform_job(pdf_output, pages, quit_flag)
 
