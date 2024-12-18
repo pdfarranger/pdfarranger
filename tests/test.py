@@ -375,6 +375,7 @@ class PdfArrangerTest(unittest.TestCase):
         return config
 
     def _quit(self):
+        self._app().child(roleName="layered pane").grabFocus()
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
 
     def _quit_without_saving(self):
@@ -979,10 +980,11 @@ class TestBatch10(PdfArrangerTest):
 
     def test_03_quit(self):
         self._quit()
+        self._process().wait(timeout=22)
 
 
 class TestBatch11(PdfArrangerTest):
-    """Test show-save-warnings config setting"""
+    """Test show-save-warnings config setting and metadata"""
 
     def test_01_save_and_disable_warning(self):
         """Show warning discarded metadata (default)"""
@@ -1001,7 +1003,43 @@ class TestBatch11(PdfArrangerTest):
         """Don't show warning discarded metadata"""
         self._mainmenu("Save")
         self._wait_saving()
-        self._quit()  # save config
+
+    def test_03_retain_metadata(self):
+        """Merge metadata into first file and don't overwrite from info dict"""
+        filechooser = self._import_file("tests/test_metadata2.pdf")
+        self._wait_cond(lambda: filechooser.dead)
+        self._mainmenu("Save As…")
+        self._save_as_chooser("output2.pdf", ["output2.pdf"])
+        with pikepdf.Pdf.open(os.path.join(self.__class__.tmp, "output2.pdf")) as pdf:
+            del pdf.docinfo["/Producer"]  # pikepdf version will vary
+            expected = {
+                "/Title": "Title1",
+                "/Author": "First; Second",
+                "/Subject": "Subject2",
+                "/Custom": "info dict entry",
+            }
+            if not have_pikepdf8():
+                del expected["/Custom"]
+            self.assertDictEqual(dict(pdf.docinfo), expected)
+            with pdf.open_metadata(False, False) as meta:
+                del meta["pdf:Producer"]      # pikepdf version will vary
+                del meta["xmp:MetadataDate"]  # will vary
+                exptected = {
+                    # xmp metadata with info dict equivalents
+                    "{http://purl.org/dc/elements/1.1/}title": "Title1",
+                    "{http://purl.org/dc/elements/1.1/}creator": ["First", "Second"],
+                    "{http://purl.org/dc/elements/1.1/}description": "Subject2",
+                    # xmp metadata without info dict equivalents
+                    "{http://purl.org/dc/elements/1.1/}identifier": "ID1",
+                    "{http://purl.org/dc/elements/1.1/}source": "Source2",
+                    "{http://ns.adobe.com/xap/1.0/}label": "Label1",
+                }
+                self.assertDictEqual(dict(meta), exptected)
+
+    def test_04_quit(self):
+        """Test config settings persistence"""
+        self._quit()
+        self._process().wait(timeout=22)
         self.assertEqual(self._config()["preferences"]["show-save-warnings"], "False")
 
 

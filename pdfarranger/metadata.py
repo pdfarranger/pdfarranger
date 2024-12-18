@@ -93,16 +93,27 @@ def _safeiter(elements):
 
 
 def merge_doc(metadata, input_docs):
-    """Same as merge but with pikepdf.PDF object instead of files"""
+    """Same as merge but with pikepdf.PDF object instead of files
+
+    XMP metadata take precedence over equivalent docinfo metadata,
+    metadata of later opened files are merged into these of earlier opened ones
+    """
     r = metadata.copy()
     for doc in input_docs:
         with doc.open_metadata() as meta:
+            for k, v in _safeiter(meta.items()):
+                if not _pikepdf_meta_is_valid(v):
+                    # workaround for https://github.com/pikepdf/pikepdf/issues/84
+                    del meta[k]
+                elif k not in r:
+                    r[k] = v
+            # workaround for https://github.com/pdfarranger/pdfarranger/issues/1168
             load_from_docinfo(meta, doc)
             for k, v in _safeiter(meta.items()):
                 if not _pikepdf_meta_is_valid(v):
                     # workaround for https://github.com/pikepdf/pikepdf/issues/84
                     del meta[k]
-                elif k not in metadata:
+                elif k not in r:
                     r[k] = v
     return r
 
