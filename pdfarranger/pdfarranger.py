@@ -2438,6 +2438,7 @@ class PdfArranger(Gtk.Application):
             ("select-same-format", ne),
             ("crop-white-borders", ne),
             ("generate-booklet", ne),
+            ("split-booklet", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
         self.update_statusbar()
