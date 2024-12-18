@@ -197,11 +197,11 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <submenu>
           <attribute name="label" translatable="yes">_Booklet</attribute>
           <item>
-            <attribute name="label" translatable="yes">Generate (imposition)</attribute>
+            <attribute name="label" translatable="yes">_Generate (imposition)</attribute>
             <attribute name="action">win.generate-booklet</attribute>
           </item>
           <item>
-            <attribute name="label" translatable="yes">Split (unimposition)</attribute>
+            <attribute name="label" translatable="yes">_Split (unimposition)</attribute>
             <attribute name="action">win.split-booklet</attribute>
           </item>
         </submenu>
@@ -472,11 +472,11 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
       <submenu>
         <attribute name="label" translatable="yes">_Booklet</attribute>
         <item>
-          <attribute name="label" translatable="yes">Generate (imposition)</attribute>
+          <attribute name="label" translatable="yes">_Generate (imposition)</attribute>
           <attribute name="action">win.generate-booklet</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Split (unimposition)</attribute>
+          <attribute name="label" translatable="yes">_Split (unimposition)</attribute>
           <attribute name="action">win.split-booklet</attribute>
         </item>
       </submenu>
