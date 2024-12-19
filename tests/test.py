@@ -704,7 +704,7 @@ class TestBatch5(PdfArrangerTest):
 
     def test_03_booklet(self):
         self._popupmenu(0, ["Select", "Select All"])
-        self._popupmenu(0, ["Generate Booklet"])
+        self._popupmenu(0, ["Booklet", "Generate (imposition)"])
         self._wait_cond(lambda: len(self._icons()) == 2)
         self._app().child(roleName="layered pane").keyCombo("Home")
         self._assert_page_size(491.1, 213.3)
@@ -729,7 +729,19 @@ class TestBatch5(PdfArrangerTest):
         self._wait_cond(lambda: filechooser.dead)
         self.assertEqual(len(self._icons()), 3)
 
-    def test_06_quit(self):
+    def test_06_split_booklet(self):
+        self.test_O3_booklet()
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Booklet", "Split (unimposition)"])
+        # OK OK hear me out generating the booklet took 2 pages and made it 2 after the process
+        # by adding two blank pages at the end. So we should have 4 now.
+        self._wait_cond(lambda: len(self._icons()) == 4)
+        self._app().child(roleName="layered pane").keyCombo("Home")
+        self._assert_page_size(215.9, 279.4)
+        self._app().child(roleName="layered pane").keyCombo("End")
+        self._assert_page_size(215.9, 279.4)
+
+    def test_07_quit(self):
         self._quit_without_saving()
 
 
