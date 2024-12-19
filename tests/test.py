@@ -1,3 +1,4 @@
+import configparser
 import os
 import subprocess
 import sys
@@ -144,6 +145,9 @@ class DogtailManager:
 # dogtail does not support change of X11 server so it must be a singleton
 dogtail_manager = DogtailManager()
 
+def tearDownModule():
+    dogtail_manager.kill()
+
 
 class PdfArrangerManager:
     def __init__(self, args=None):
@@ -163,7 +167,6 @@ class PdfArrangerManager:
         self.process.wait()
 
 class PdfArrangerTest(unittest.TestCase):
-    LAST=False
     def _start(self, args=None, gtk_check=True):
         from dogtail.config import config
         config.searchBackoffDuration = 1
@@ -383,10 +386,24 @@ class PdfArrangerTest(unittest.TestCase):
         # check that process actually exit
         self._process().wait(timeout=22)
 
+    default_config = """
+                     [preferences]
+                     content-loss-warning = False
+                     """
+
     @classmethod
     def setUpClass(cls):
         cls.pdfarranger = None
         cls.tmp = tempfile.mkdtemp()
+        os.environ["APPDATA"] = cls.tmp
+        os.makedirs(os.path.join(cls.tmp, "pdfarranger"))
+        cls.config_file = os.path.join(os.environ["APPDATA"], "pdfarranger", "config.ini")
+        config = configparser.ConfigParser()
+        config.read_string(cls.default_config)
+        if hasattr(cls, "test_config"):
+            config.read_string(cls.test_config)
+        with open(cls.config_file, "w") as f:
+            config.write(f)
 
     def setUp(self):
         group("Running " + self.id())
@@ -400,10 +417,22 @@ class PdfArrangerTest(unittest.TestCase):
             cls.pdfarranger.kill()
         if cls.tmp:
             shutil.rmtree(cls.tmp)
-        if cls.LAST:
-            dogtail_manager.kill()
 
 
+def with_config(test_config):
+    """Decorator for test batch specific configuration settings
+
+    test_config is the config.ini content to be applied on top of the default
+    config defined in PdfArrangerTest.default_config
+    """
+    def f(cls):
+        cls.test_config = test_config
+        return cls
+    return f
+
+
+@with_config("""[preferences]
+                content-loss-warning=True""")
 class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
@@ -885,9 +914,6 @@ class TestBatch8(PdfArrangerTest):
 
 class TestBatch9(PdfArrangerTest):
     """test batch for cli flags """
-
-    # Kill X11 after that batch
-    LAST = True
 
     def test_01_cli_version(self):
         """test version flag"""
