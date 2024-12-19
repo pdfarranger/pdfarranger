@@ -164,6 +164,7 @@ class PdfArrangerManager:
         return self.process.stdout.read().decode("utf-8")
 
     def kill(self):
+        self.process.stdout.close()
         self.process.kill()
         self.process.wait()
 
@@ -367,15 +368,11 @@ class PdfArrangerTest(unittest.TestCase):
     def _zoom(widget, n_events, zoom_in):
         """Zoom in/out with ctrl + mouse scroll wheel"""
         from dogtail import rawinput
-        from pyatspi import Registry as registry
-        from pyatspi import KEY_PRESS, KEY_RELEASE
-        code = rawinput.keyNameToKeyCode("Control_L")
-        registry.generateKeyboardEvent(code, None, KEY_PRESS)
-        button = 4 if zoom_in == True else 5
+        button = 4 if zoom_in else 5
+        rawinput.holdKey("Control_L")
         for __ in range(n_events):
             widget.click(button=button)
-            time.sleep(0.1)
-        registry.generateKeyboardEvent(code, None, KEY_RELEASE)
+        rawinput.releaseKey("Control_L")
 
     def _config(self):
         """Get config from config file used in test"""
@@ -444,13 +441,10 @@ class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
         # Handle the "content loss warning" dialog
-        self._wait_cond(lambda: len(self._find_by_role("dialog")) > 0)
         dialog = self._find_by_role("dialog")[-1]
-        self._wait_cond(lambda: len(self._find_by_role("check box", dialog)) > 0)
         check_box = self._find_by_role("check box", dialog)[-1]
         check_box.click()  # Don't show this dialog again
-        button = self._find_by_role("push button", dialog)[-1]
-        button.click()
+        dialog.button("OK").click()
         self._wait_cond(lambda: dialog.dead)
 
     def test_02_properties(self):
@@ -478,8 +472,8 @@ class TestBatch1(PdfArrangerTest):
 
     def test_03_zoom(self):
         app = self._app()
-        zoomoutb = app.child(roleName="push button", description="Zoom Out")
-        zoominb = app.child(roleName="push button", description="Zoom In")
+        zoomoutb = app.child(description="Zoom Out")
+        zoominb = app.child(description="Zoom In")
         # maximum dezoom whatever the initial zoom level
         for _ in range(10):
             zoomoutb.click()
