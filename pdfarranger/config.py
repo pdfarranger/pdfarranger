@@ -19,6 +19,8 @@ import configparser
 import os
 import sys
 import gettext
+import packaging.version as version
+import pikepdf
 from gi.repository import Gdk
 from gi.repository import Gtk
 
@@ -129,6 +131,7 @@ class Config(object):
         self.popup_menu_accels = [
             Gtk.accelerator_parse(x) for x in a["context-menu"].split()
         ]
+        self.has_pikepdf8 = version.parse(pikepdf.__version__) >= version.Version("8.0")
 
     def is_popup_key_event(self, keyevent):
         for key, mods in self.popup_menu_accels:
@@ -181,6 +184,15 @@ class Config(object):
 
     def set_theme(self, theme):
         self.data.set('preferences', 'theme', theme)
+
+    def start_with_empty(self):
+        return (self.data.getboolean('preferences', 'start-with-empty', fallback=False)
+                if self.has_pikepdf8 else True)
+
+    def set_start_with_empty(self, start_with_empty):
+        if not self.has_pikepdf8:
+            start_with_empty = True
+        self.data.set('preferences', 'start-with-empty', str(start_with_empty))
 
     def scale_mode(self):
         return self.data.get('print-settings', 'scale-mode', fallback="PRINTABLE")
@@ -261,11 +273,22 @@ class Config(object):
         psettings = PrintSettingsWidget(self.scale_mode(), self.auto_rotate())
         frame3.add(psettings)
         d.vbox.pack_start(frame3, False, False, 8)
+        if self.has_pikepdf8:
+            frame4 = Gtk.Frame(label=_("Saving/exporting to single file"), margin=8)
+            cb_retain = Gtk.CheckButton(
+                label=_("Retain document-level information of the first opened file"),
+                margin=8)
+            cb_retain.set_active(not self.start_with_empty())
+            frame4.add(cb_retain)
+            d.vbox.pack_start(frame4, False, False, 8)
+        else:
+            # prevent CodeQL false positive "uninitialized local variable"
+            cb_retain = None
         t = _("For more options see:")
-        frame4 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
-        label4 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
-        frame4.add(label4)
-        d.vbox.pack_start(frame4, False, False, 8)
+        frame5 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
+        label5 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
+        frame5.add(label5)
+        d.vbox.pack_start(frame5, False, False, 8)
 
         langs = []
         if os.path.isdir(localedir):
@@ -299,6 +322,8 @@ class Config(object):
             num2 = combo2.get_active()
             theme = themes[num2] if num2 != 0 else ""
             self.set_theme(theme)
+            if self.has_pikepdf8:
+                self.set_start_with_empty(not cb_retain.get_active())
             self.set_scale_mode(psettings.get_scale_mode())
             self.set_auto_rotate(psettings.get_auto_rotate())
         d.destroy()
