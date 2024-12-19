@@ -95,10 +95,11 @@ def _safeiter(elements):
 def merge_doc(metadata, input_docs):
     """Same as merge but with pikepdf.PDF object instead of files
 
-    XMP metadata take precedence over equivalent docinfo metadata
+    XMP metadata take precedence over equivalent docinfo metadata,
+    metadata of later opened files are merged into these of earlier opened ones
     """
     r = metadata.copy()
-    for doc in input_docs:
+    for doc in reversed(input_docs):
         with doc.open_metadata() as meta:
             for k, v in _safeiter(meta.items()):
                 if not _pikepdf_meta_is_valid(v):
