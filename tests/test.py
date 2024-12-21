@@ -720,26 +720,25 @@ class TestBatch5(PdfArrangerTest):
         self._assert_page_size(245.2, 213.3, 0)
         self._assert_page_size(245.2, 213.3, 1)
 
-    def test_05_buggy_exif(self):
-        """Test img2pdf import with buggy EXIF rotation"""
-        if not check_img2pdf([0,4,2]):
-            print("Ignoring test_05_buggy_exif, img2pdf too old")
-            return
-        filechooser = self._import_file("tests/1x1.jpg")
-        self._wait_cond(lambda: filechooser.dead)
-        self.assertEqual(len(self._icons()), 3)
-
-    def test_06_split_booklet(self):
-        self.test_O3_booklet()
+    def test_05_split_booklet(self):
         self._popupmenu(0, ["Select", "Select All"])
         self._popupmenu(0, ["Booklet", "Split (unimposition)"])
         # OK OK hear me out generating the booklet took 2 pages and made it 2 after the process
         # by adding two blank pages at the end. So we should have 4 now.
         self._wait_cond(lambda: len(self._icons()) == 4)
         self._app().child(roleName="layered pane").keyCombo("Home")
-        self._assert_page_size(215.9, 279.4)
+        self._assert_page_size(122.6, 213.3)
         self._app().child(roleName="layered pane").keyCombo("End")
-        self._assert_page_size(215.9, 279.4)
+        self._assert_page_size(122.6, 213.3)
+
+    def test_06_buggy_exif(self):
+        """Test img2pdf import with buggy EXIF rotation"""
+        if not check_img2pdf([0,4,2]):
+            print("Ignoring test_05_buggy_exif, img2pdf too old")
+            return
+        filechooser = self._import_file("tests/1x1.jpg")
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 5)
 
     def test_07_quit(self):
         self._quit_without_saving()
