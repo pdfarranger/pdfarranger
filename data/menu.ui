@@ -194,10 +194,17 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="label" translatable="yes">Insert Blan_k Page…</attribute>
           <attribute name="action">win.insert-blank-page</attribute>
         </item>
-        <item>
-          <attribute name="label" translatable="yes">Generate Booklet</attribute>
-          <attribute name="action">win.generate-booklet</attribute>
-        </item>
+        <submenu>
+          <attribute name="label" translatable="yes">_Booklet</attribute>
+          <item>
+            <attribute name="label" translatable="yes">_Generate (imposition)</attribute>
+            <attribute name="action">win.generate-booklet</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">_Split (unimposition)</attribute>
+            <attribute name="action">win.split-booklet</attribute>
+          </item>
+        </submenu>
       </section>
     </submenu>
     <submenu>
@@ -462,10 +469,17 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="label" translatable="yes">Insert Blan_k Page…</attribute>
         <attribute name="action">win.insert-blank-page</attribute>
       </item>
-      <item>
-        <attribute name="label" translatable="yes">Generate Booklet</attribute>
-        <attribute name="action">win.generate-booklet</attribute>
-      </item>
+      <submenu>
+        <attribute name="label" translatable="yes">_Booklet</attribute>
+        <item>
+          <attribute name="label" translatable="yes">_Generate (imposition)</attribute>
+          <attribute name="action">win.generate-booklet</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Split (unimposition)</attribute>
+          <attribute name="action">win.split-booklet</attribute>
+        </item>
+      </submenu>
     </section>
     <section>
       <submenu>
