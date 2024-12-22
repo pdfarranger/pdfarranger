@@ -377,6 +377,12 @@ class PdfArrangerTest(unittest.TestCase):
             time.sleep(0.1)
         registry.generateKeyboardEvent(code, None, KEY_RELEASE)
 
+    def _config(self):
+        """Get config from config file used in test"""
+        config = configparser.ConfigParser()
+        config.read(self.__class__.config_file)
+        return config
+
     def _quit(self):
         self._app().child(roleName="layered pane").keyCombo("<ctrl>q")
 
@@ -985,3 +991,27 @@ class TestBatch10(PdfArrangerTest):
 
     def test_03_quit(self):
         self._quit()
+
+
+class TestBatch11(PdfArrangerTest):
+    """Test show-save-warnings config setting"""
+
+    def test_01_save_and_disable_warning(self):
+        """Show warning discarded metadata (default)"""
+        self._start(["tests/test_metadata1.pdf"])
+        self._mainmenu("Save")
+        self._save_as_chooser("output1.pdf")
+        alert = self._find_by_role("alert")[0]
+        from dogtail import predicate
+        alert.findChild(predicate.IsNamed("Saving produced some warnings"), requireResult=True)
+        check_box = self._find_by_role("check box", alert)[0]
+        check_box.click()  # Don't show warnings when saving again
+        alert.button("OK").click()
+        self._wait_cond(lambda: alert.dead)
+
+    def test_02_save_without_warning(self):
+        """Don't show warning discarded metadata"""
+        self._mainmenu("Save")
+        self._wait_saving()
+        self._quit()  # save config
+        self.assertEqual(self._config()["preferences"]["show-save-warnings"], "False")
