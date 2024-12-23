@@ -1,3 +1,4 @@
+import configparser
 import os
 import subprocess
 import sys
@@ -144,6 +145,9 @@ class DogtailManager:
 # dogtail does not support change of X11 server so it must be a singleton
 dogtail_manager = DogtailManager()
 
+def tearDownModule():
+    dogtail_manager.kill()
+
 
 class PdfArrangerManager:
     def __init__(self, args=None):
@@ -152,23 +156,32 @@ class PdfArrangerManager:
         cmd = [sys.executable, "-u", "-X", "tracemalloc"]
         if "PDFARRANGER_COVERAGE" in os.environ:
             cmd = cmd + ["-m", "coverage", "run", "--concurrency=thread,multiprocessing", "-a"]
-        self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args)
+        self.process = subprocess.Popen(cmd + ["-m", "pdfarranger"] + args, stdout=subprocess.PIPE)
+
+    def _get_stdout(self):
+        """get the stdout of the pdfarranger process"""
+        return self.process.stdout.read().decode("utf-8")
 
     def kill(self):
         self.process.kill()
         self.process.wait()
 
 class PdfArrangerTest(unittest.TestCase):
-    LAST=False
-    def _start(self, args=None):
+    def _start(self, args=None, gtk_check=True):
         from dogtail.config import config
         config.searchBackoffDuration = 1
         self.__class__.pdfarranger = PdfArrangerManager(args)
+        if not gtk_check:
+            return
         # check that process is actually running
         self.assertIsNone(self._process().poll())
         self._app()
         # Now let's go faster
         config.searchBackoffDuration = 0.1
+
+    def _get_stdout(self):
+        """get the stdout of the pdfarranger process"""
+        return self.__class__.pdfarranger._get_stdout()
 
     def _app(self):
         """Return the first instance of pdfarranger"""
@@ -216,7 +229,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _is_saving(self):
         allstatusbar = self._find_by_role("status bar")
-        statusbar = allstatusbar[0]
+        statusbar = allstatusbar[-1]
         return statusbar.name.startswith("Saving")
 
     def _wait_saving(self):
@@ -228,8 +241,8 @@ class PdfArrangerTest(unittest.TestCase):
     def _status_text(self):
         self._app()
         allstatusbar = self._find_by_role("status bar")
-        # If we have multiple status bar, consider the last one as the one who display the selection
-        statusbar = allstatusbar[-1]
+        # If we have multiple status bar, consider the first one as the one who display the selection
+        statusbar = allstatusbar[0]
         return statusbar.name
 
     def _assert_selected(self, selection):
@@ -239,7 +252,7 @@ class PdfArrangerTest(unittest.TestCase):
         if pageid is not None:
             self._icons()[pageid].click()
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
-        label = " {:.1f}mm \u00D7 {:.1f}mm".format(width, height)
+        label = " {:.1f} mm \u00D7 {:.1f} mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
 
     def _check_file_content(self, filename, expected: Tuple[str]) -> Tuple[bool, str]:
@@ -373,10 +386,24 @@ class PdfArrangerTest(unittest.TestCase):
         # check that process actually exit
         self._process().wait(timeout=22)
 
+    default_config = """
+                     [preferences]
+                     content-loss-warning = False
+                     """
+
     @classmethod
     def setUpClass(cls):
         cls.pdfarranger = None
         cls.tmp = tempfile.mkdtemp()
+        os.environ["APPDATA"] = cls.tmp
+        os.makedirs(os.path.join(cls.tmp, "pdfarranger"))
+        cls.config_file = os.path.join(os.environ["APPDATA"], "pdfarranger", "config.ini")
+        config = configparser.ConfigParser()
+        config.read_string(cls.default_config)
+        if hasattr(cls, "test_config"):
+            config.read_string(cls.test_config)
+        with open(cls.config_file, "w") as f:
+            config.write(f)
 
     def setUp(self):
         group("Running " + self.id())
@@ -390,10 +417,22 @@ class PdfArrangerTest(unittest.TestCase):
             cls.pdfarranger.kill()
         if cls.tmp:
             shutil.rmtree(cls.tmp)
-        if cls.LAST:
-            dogtail_manager.kill()
 
 
+def with_config(test_config):
+    """Decorator for test batch specific configuration settings
+
+    test_config is the config.ini content to be applied on top of the default
+    config defined in PdfArrangerTest.default_config
+    """
+    def f(cls):
+        cls.test_config = test_config
+        return cls
+    return f
+
+
+@with_config("""[preferences]
+                content-loss-warning=True""")
 class TestBatch1(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
@@ -694,7 +733,7 @@ class TestBatch5(PdfArrangerTest):
 
     def test_03_booklet(self):
         self._popupmenu(0, ["Select", "Select All"])
-        self._popupmenu(0, ["Generate Booklet"])
+        self._popupmenu(0, ["Booklet", "Generate (imposition)"])
         self._wait_cond(lambda: len(self._icons()) == 2)
         self._app().child(roleName="layered pane").keyCombo("Home")
         self._assert_page_size(491.1, 213.3)
@@ -710,16 +749,31 @@ class TestBatch5(PdfArrangerTest):
         self._assert_page_size(245.2, 213.3, 0)
         self._assert_page_size(245.2, 213.3, 1)
 
-    def test_05_buggy_exif(self):
+    def test_05_split_booklet(self):
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Booklet", "Generate (imposition)"])
+        self._popupmenu(0, ["Select", "Select All"])
+        self._popupmenu(0, ["Booklet", "Split (unimposition)"])
+        # OK OK hear me out generating the booklet took 2 pages and made it 2 after the process
+        # by adding two blank pages at the end. So we should have 4 now.
+        # They should have 245.2x213.3mm size like in test_04 because
+        # test.pdf is only loaded once for all operations.
+        self._wait_cond(lambda: len(self._icons()) == 4)
+        self._app().child(roleName="layered pane").keyCombo("Home")
+        self._assert_page_size(245.2, 213.3)
+        self._app().child(roleName="layered pane").keyCombo("End")
+        self._assert_page_size(245.2, 213.3)
+
+    def test_06_buggy_exif(self):
         """Test img2pdf import with buggy EXIF rotation"""
         if not check_img2pdf([0,4,2]):
             print("Ignoring test_05_buggy_exif, img2pdf too old")
             return
         filechooser = self._import_file("tests/1x1.jpg")
         self._wait_cond(lambda: filechooser.dead)
-        self.assertEqual(len(self._icons()), 3)
+        self.assertEqual(len(self._icons()), 5)
 
-    def test_06_quit(self):
+    def test_07_quit(self):
         self._quit_without_saving()
 
 
@@ -849,9 +903,6 @@ class TestBatch7(PdfArrangerTest):
 class TestBatch8(PdfArrangerTest):
     """Test Open action"""
 
-    # Kill X11 after that batch
-    LAST = True
-
     def test_01_open_empty(self):
         self._start()
 
@@ -875,3 +926,16 @@ class TestBatch8(PdfArrangerTest):
         """Quit the first instance"""
         self._quit()
         self._process().wait(timeout=22)
+
+class TestBatch9(PdfArrangerTest):
+    """test batch for cli flags """
+
+    def test_01_cli_version(self):
+        """test version flag"""
+        self._start(["--version"], gtk_check=False)
+        time.sleep(0.5)
+        stdout = self._get_stdout()
+        self.assertIn("pikepdf", stdout)
+        self.assertIn("libqpdf", stdout)
+        self.assertIn("OS-", stdout)
+        self.assertIn("OS_Version-", stdout)

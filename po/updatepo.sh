@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+
+# Update translation files, after updating pdfarranger.pot
+#   - all translation files if no argument is passed
+#   - $1.po if an argument is passed (for example `updatepo.sh fr` for french locale)
 
 #
 # pdfarranger - GTK+ based utility for splitting, rearrangement and
@@ -20,10 +24,35 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-# Update translation files
 cd "$(dirname "$0")/.."
-for po in po/*.po
-do
-  msgmerge --backup none -U "$po" po/pdfarranger.pot
-  msgattrib --no-obsolete --clear-fuzzy --empty -o "$po" "$po"
-done
+
+updatepo() {
+  msgmerge --backup none -U "$1" po/pdfarranger.pot
+  msgattrib --no-obsolete --clear-fuzzy --empty -o "$1" "$1"
+}
+
+# Make sure pdfarranger.pot is up-to-date
+po/genpot.sh
+
+if [[ "$1" = "" ]]; then
+  for po in po/*.po
+  do
+    updatepo "$po"
+  done
+else
+  if [ -f "po/$1.po" ]; then
+    updatepo "po/$1.po"
+  else
+    echo "No such translation locale: $1."
+    read -r -p "Would you like to create new translation locale $1? [y/N] " response
+    case "$response" in
+      [yY][eE][sS]|[yY]) 
+        cp po/pdfarranger.pot "po/$1.po"
+        ;;
+      *)
+        echo "Unknown translation: $1"
+        exit 1
+        ;;
+    esac
+  fi
+fi

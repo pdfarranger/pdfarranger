@@ -445,6 +445,7 @@ class PdfArranger(Gtk.Application):
             ('about', self.about_dialog),
             ("insert-blank-page", self.insert_blank_page),
             ("generate-booklet", self.generate_booklet),
+            ("split-booklet", self.split_booklet),
             ("preferences", self.on_action_preferences),
             ("print", self.on_action_print),
         ]
@@ -492,13 +493,10 @@ class PdfArranger(Gtk.Application):
         self.apply_hide_margins_on_pages(pages)
 
         # Need uniform page size.
-        p1w, p1h = pages[0].size_in_points()
-        for page in pages[1:]:
-            pw, ph = page.size_in_points()
-            if abs(p1w-pw) > 1e-2 or abs(p1h-ph) > 1e-2:
-                msg = _('All pages must have the same size.')
-                self.error_message_dialog(msg)
-                return
+        if not is_same_page_size(pages):
+            msg = _('All pages must have the same size.')
+            self.error_message_dialog(msg)
+            return
 
         # We need a multiple of 4
         blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
@@ -519,6 +517,137 @@ class PdfArranger(Gtk.Application):
         adder.commit(select_added=False, add_to_undomanager=False)
         self.clear_selected(add_to_undomanager=False)
         self.silent_render()
+
+    def split_booklet(self, _action, _option, _unknown):
+        """ Split selected pages as a booklet (unimposition) """
+
+        # The user requested that we unimpose some pages.
+        # The imposition process took linear pages and reordered 4 of them per sheet for printing, so that the sheet may be folded into a book/booklet.
+        # Here we're doing the opposite process, turning a booklet into a linear document... like so:
+        #
+        # .---.                                        .---.
+        # | 1 |                                        | 1 |
+        # '---'                                        '---'
+        # .---.                                        .---.
+        # | 2 |               .-------.                | 2 |
+        # '---'  IMPOSITION   | 4 | 1 |  UNIMPOSITION  '---'
+        # .---.  --------->   '-------'  ----------->  .---.
+        # | 3 |               .-------.                | 3 |
+        # '---'               | 2 | 3 |                '---'
+        # .---.               '-------'                .---.
+        # | 4 |                                        | 4 |
+        # '---'                                        '---'
+        #
+        # Usually, the entire document will be unimposed. But maybe the user has reasons to unimpose only parts of the document, and anyway this function intends
+        # to operate on selection, so any contiguous selection of pages will be supported.
+
+        # selection is a list of 1-tuples, not in order
+        selection = self.iconview.get_selected_items()
+        selected_page_numbers = sorted_selection_indices(selection)
+
+        if not is_selection_contiguous(selected_page_numbers):
+            msg = _('The page selection is not contiguous. Cannot unimpose.')
+            self.error_message_dialog(msg)
+            return
+
+        model = self.iconview.get_model()
+        ref_list = [Gtk.TreeRowReference.new(model, path)
+                    for path in selection]
+        pages = [model.get_value(model.get_iter(ref.get_path()), 0)
+                 for ref in ref_list]
+
+        # Need uniform page size.
+        if not is_same_page_size(pages):
+            msg = _('All pages must have the same size.')
+            self.error_message_dialog(msg)
+            return
+
+        # Simulate split window
+        horizontal = [[1, 100]]
+        vertical = [[1, 50], [2, 50]]
+
+        leftcrops, topcrops = splitter._crops(vertical), splitter._crops(horizontal)
+
+        self.set_unsaved(True)
+        self.undomanager.commit("split booklet")
+        with self.render_lock():
+            # Determine the pages for unimposition... so for example if we have have pages 1 2 3 containing 1 3-2 4 content
+            # we only want to unimpose those selected middle pages with offset=1 and halves=2 for the number of halves
+            # produced from the selection, so we end up with 1 2 3 4 at the end of the process
+            offset = selected_page_numbers[0]
+            halves = len(selected_page_numbers) * 2
+
+            # Keep track of how many larger pages have been split and unimposed (for later reordering)
+            count = 0
+            # Keep track of the split and unimposed pages in their final order
+            half_pages = [ None for x in range(0, halves) ]
+
+            # Iterate over each selected page
+            for ref in ref_list:
+                iterator = model.get_iter(ref.get_path())
+                page = model.get_value(iterator, 0)
+                page.resample = -1
+
+                # page.split crops page to the left part, and returns a list containing only an entry: the right page
+                # That's assuming the "unimpose" checkbox in the Splitter dialog does not allow anything else than 2 columns / 1 row
+                splits = page.split(leftcrops, topcrops)
+                assert len(splits) == 1
+                rpage = splits[0]
+                rpage.resample = -1
+
+                # GtkListView expects entries of [Page, Description] type
+                lpageentry = [ page, page.description ]
+                rpageentry = [ rpage, rpage.description ]
+
+                # That's the core algorithm for unimposing. We could account for the offset now,
+                # but who's got brain cells left for that?
+                if count % 2 == 0:
+                    half_pages[halves - count - 1] = lpageentry
+                    half_pages[count] = rpageentry
+                else:
+                    half_pages[count] = lpageentry
+                    half_pages[halves - count - 1] = rpageentry
+                count += 1
+
+                # A careful eye will notice that because of Python's implicit clones, we now hold 3 Page objects instead of 2.
+                # One is still in the GtkListView model, and 2 are in split_pages list. Let's remove the left split page left in the model.
+                model.remove(iterator)
+
+            # Append the new half pages at the end of the document
+            for p in half_pages:
+                model.append(p)
+
+            # Now our `halves` half pages have been appended in the correct (unimposed order) at the end of the document, so we need
+            # to move them right after `offset - 1`.
+
+            # Note that the final_page_number is not the initial number of pages + halves, but the initial number of pages + halves/2!
+            final_page_number = len(self.model)
+
+            # Let's create a mapping to reorder the pages... Gtk.ListStore.reorder expects a new->old index mapping
+            reorder_pages = [ None for x in range(0, final_page_number) ]
+
+            # When we encounter one of the new halves, we need to know it's position relative to the offset.
+            half_count = 0
+
+            for x in range(0, final_page_number):
+                if x < offset:
+                    # The first pages, before the split selection, are left in place
+                    reorder_pages[x] = x
+                elif x < (final_page_number - halves):
+                    # The last pages, after the split selection, must be moved forward by `halves` pages to make space
+                    reorder_pages[x + halves] = x
+                else:
+                    # Now the page we just splitted are placed in order, starting at `offset` index
+                    reorder_pages[half_count + offset] = x
+                    half_count += 1
+
+            # Perform the final reorder
+            self.model.reorder(reorder_pages)
+
+        self.update_iconview_geometry()
+        self.iv_selection_changed_event()
+        self.update_max_zoom_level()
+        GObject.idle_add(self.render)
 
     def on_action_preferences(self, _action, _option, _unknown):
         handy_available = True if Handy else False
@@ -702,6 +831,35 @@ class PdfArranger(Gtk.Application):
         if self.config.content_loss_warning():
             self.content_loss_warning()
 
+    @staticmethod
+    def get_os_version():
+        """get the OS version"""
+        os_type = platform.system()
+        if os_type == 'Linux':
+            return platform.freedesktop_os_release()["PRETTY_NAME"]
+        elif os_type == 'Windows':
+            realease, version = platform.win32_ver()[0:2]
+            return realease + ' ' + version
+        elif os_type == 'Darwin':  # macOS
+            return str(platform.mac_ver())
+        return str(platform.version())
+
+    @staticmethod
+    def get_platform():
+        """get the platform"""
+        os_type = platform.system()
+        try:
+            if os_type == 'Linux':
+                return platform.freedesktop_os_release()["PRETTY_NAME"]
+            elif os_type == 'Windows':
+                return platform.platform()
+            elif os_type == 'Darwin':
+                return platform.platform()
+        except Exception:
+            # Ignore possible exception(s)
+            return 'Unknown (error)'
+        return 'Unknown'
+
     def do_command_line(self, command_line):
         options = command_line.get_options_dict()
 
@@ -710,6 +868,8 @@ class PdfArranger(Gtk.Application):
             print(APPNAME + "-" + VERSION)
             print("pikepdf-" + pikepdf.__version__)
             print("libqpdf-" + pikepdf.__libqpdf_version__)
+            print("OS-" + platform.platform())
+            print("OS_Version-" + self.get_os_version())
             return 0
 
         self.activate()
@@ -2256,6 +2416,7 @@ class PdfArranger(Gtk.Application):
             ("select-same-format", ne),
             ("crop-white-borders", ne),
             ("generate-booklet", ne),
+            ("split-booklet", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
         self.update_statusbar()
@@ -2478,11 +2639,14 @@ class PdfArranger(Gtk.Application):
         ref_list = [Gtk.TreeRowReference.new(model, path)
                     for path in selection]
         with self.render_lock():
+            # This is not an unimposition process, simply splitting pages in the order they appear
             for ref in ref_list:
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0)
                 page.resample = -1
                 newpages = page.split(leftcrops, topcrops)
+                # Here newpages only contains n-1 new pages when splitting into n pages,
+                # because the upper-lefter-most page is still our good old `page` instance
                 for p in newpages:
                     p.resample = -1
                     model.insert_after(iterator, [p, p.description])
@@ -2835,7 +2999,7 @@ class PdfArranger(Gtk.Application):
         d = Gtk.Dialog(_("Note"),
             parent=self.window,
             flags=Gtk.DialogFlags.MODAL,
-            buttons=("_OK", Gtk.ResponseType.OK),
+            buttons=(_("_OK"), Gtk.ResponseType.OK),
             resizable=False
             )
         m1 = _("Note the limitations:")
@@ -2878,6 +3042,8 @@ class PdfArranger(Gtk.Application):
                     "\n \n",
                     _("It uses libqpdf %s, pikepdf %s, GTK %s and Python %s.")
                     % (qpdf, pike, gtkv, pyv),
+                    "\n \n",
+                    _("Running on %s") % self.get_platform(),
                 )
             )
         )
@@ -2909,8 +3075,8 @@ class PdfArranger(Gtk.Application):
         if len(selection) == 1:
             model = self.iconview.get_model()
             pagesize = model[selection[0]][0].size_in_points()
-            pagesize = [x * 25.4 / 72 for x in pagesize]
-            msg += " | "+_("Page Size:")+ " {:.1f}mm \u00D7 {:.1f}mm".format(*pagesize)
+            w, h = [x * 25.4 / 72 for x in pagesize]
+            msg += f' | {_("Page Size:")} {w:.1f} {_("mm")} \u00D7 {h:.1f} {_("mm")}'
         self.status_bar.push(ctxt_id, msg)
 
         for a in ["save", "save-as", "select", "export-all", "zoom-fit", "print"]:
@@ -2925,6 +3091,22 @@ class PdfArranger(Gtk.Application):
         if response == Gtk.ResponseType.OK:
             error_msg_dlg.destroy()
 
+def is_same_page_size(pages):
+    p1w, p1h = pages[0].size_in_points()
+    for page in pages[1:]:
+        pw, ph = page.size_in_points()
+        if abs(p1w-pw) > 1e-2 or abs(p1h-ph) > 1e-2:
+            return False
+    return True
+
+# Sort selection in-place and return page numbers
+def sorted_selection_indices(selected_items):
+    selected_items.sort(key=lambda x: x.get_indices()[0])
+    return [ x.get_indices()[0] for x in selected_items ]
+
+# Checks whether selected pages are contiguous
+def is_selection_contiguous(selected_page_numbers):
+    return len(selected_page_numbers) == selected_page_numbers[-1] - selected_page_numbers[0] + 1
 
 def main():
     PdfArranger().run(sys.argv)

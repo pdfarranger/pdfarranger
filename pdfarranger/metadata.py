@@ -202,8 +202,8 @@ def edit(metadata, pdffiles, parent):
     dialog = Gtk.Dialog(title=_('Edit properties'),
                         parent=parent,
                         flags=Gtk.DialogFlags.MODAL,
-                        buttons=("_Cancel", Gtk.ResponseType.CANCEL,
-                                 "_OK", Gtk.ResponseType.OK))
+                        buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
+                                 _("_OK"), Gtk.ResponseType.OK))
     ok_button = dialog.get_widget_for_response(response_id = Gtk.ResponseType.OK)
     ok_button.grab_focus()
     # Property, Value, XMP name (hidden)

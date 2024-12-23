@@ -18,7 +18,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary>Merge, shuffle, and crop PDFs</summary>
   <summary xml:lang="ca">Fusionador, arranjador, divisor, rotador i retallador de PDF</summary>
   <summary xml:lang="cs">Program pro sloučení, přeuspořádání, rozdělení, otočení a oříznutí PDF</summary>
-  <summary xml:lang="de">PDFs umsortieren und zuschneiden</summary>
+  <summary xml:lang="de">PDFs zusammenführen, umsortieren und zuschneiden</summary>
   <summary xml:lang="el">Συγχώνευση, αναδιάταξη, διαχωρισμός, περιστροφή και περικοπή αρχείων PDF</summary>
   <summary xml:lang="es">Fusionar, mezclar y recortar archivos PDF</summary>
   <summary xml:lang="fi">Yhdistä, järjestele, jaa, käännä ja rajaa PDF-tiedostoja</summary>
@@ -59,6 +59,16 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="ca">
         És una interfície per pikepdf.
+    </p>
+
+    <p xml:lang="de">
+      PDF Arranger ist eine kleines Programm, das dem Nutzer hilft, PDF-Dokumente
+      in einer interaktiven und intuitiven graphischen Schnittstelle zusammenzuführen
+      oder aufzuteilen und ihre Seiten zu drehen, zuzuschneiden und
+      anders anzuordnen.
+    </p>
+    <p xml:lang="de">
+        Es ist ein Frontend für pikepdf.
     </p>
 
     <p xml:lang="el">
