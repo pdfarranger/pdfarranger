@@ -74,12 +74,6 @@ def check_img2pdf(version):
     return r
 
 
-def have_pikepdf3():
-    return packaging.version.parse(
-        metadata.version("pikepdf")
-    ) >= packaging.version.Version("3")
-
-
 def have_pikepdf8():
     return packaging.version.parse(
         metadata.version("pikepdf")
@@ -588,8 +582,6 @@ class TestBatch2(PdfArrangerTest):
         self._popupmenu(0, "Crop White Borders")
 
     def test_04_past_overlay(self):
-        if not have_pikepdf3():
-            return
         app = self._app()
         app.keyCombo("<ctrl>c")
         app.keyCombo("Right")
@@ -607,8 +599,6 @@ class TestBatch2(PdfArrangerTest):
 
     def test_05_past_underlay(self):
         """Past a page with overlay under an other page"""
-        if not have_pikepdf3():
-            return
         app = self._app()
         app.keyCombo("<ctrl>c")
         app.keyCombo("Left")
@@ -622,16 +612,15 @@ class TestBatch2(PdfArrangerTest):
         self._save_as_chooser(
             "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
         )
-        self._assert_file_size("alltosingle.pdf", 1800 if have_pikepdf3() else 1219)
-        self._assert_file_size("alltosingle-002.pdf", 1544 if have_pikepdf3() else 1219)
-        if have_pikepdf3():
-            self._assert_page_content("alltosingle.pdf", (
-                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B',
-                b'  /BBox [', b'    68\n', b'    179\n', b'    532\n', b'    582\n',
-                b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
-            self._assert_page_content("alltosingle.pdf", (
-                b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
-                b'0 1 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
+        self._assert_file_size("alltosingle.pdf", 1800)
+        self._assert_file_size("alltosingle-002.pdf", 1544)
+        self._assert_page_content("alltosingle.pdf", (
+            b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B',
+            b'  /BBox [', b'    68\n', b'    179\n', b'    532\n', b'    582\n',
+            b'1 0 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
+        self._assert_page_content("alltosingle.pdf", (
+            b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
+            b'0 1 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
 
     def test_07_clear(self):
         self._popupmenu(1, "Delete")
@@ -790,8 +779,6 @@ class TestBatch6(PdfArrangerTest):
         self._start(["tests/test.pdf"])
 
     def test_02_merge_pages(self):
-        if not have_pikepdf3():
-            return
         self._app().keyCombo("<ctrl>a")
         self._popupmenu(0, "Merge Pages…")
         dialog = self._app().child(roleName="dialog")
@@ -809,12 +796,9 @@ class TestBatch6(PdfArrangerTest):
             cropbuttons[i].typeText("2")
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
-        if have_pikepdf3():
-            self._assert_page_size(414.5, 268.2)
+        self._assert_page_size(414.5, 268.2)
 
     def test_04_hide_margins(self):
-        if not have_pikepdf3():
-            return
         self._app().keyCombo("<ctrl>a")
         self._assert_selected("1")
         self._app().keyCombo("H")
@@ -845,11 +829,9 @@ class TestBatch6(PdfArrangerTest):
         self._popupmenu(0, ["Select", "Select All"])
         self._mainmenu(["Export", "Export Selection to a Single File…"])
         self._save_as_chooser("hide.pdf")
-        self._assert_file_size("hide.pdf", 1726 if have_pikepdf3() else 1512)
+        self._assert_file_size("hide.pdf", 1726)
 
     def test_06_merge_pages(self):
-        if not have_pikepdf3():
-            return
         self._popupmenu(0, ["Select", "Select All"])
         self._popupmenu(0, "Merge Pages…")
         dialog = self._app().child(roleName="dialog")
@@ -863,10 +845,7 @@ class TestBatch6(PdfArrangerTest):
         self._assert_page_size(829.1, 268.2)
 
     def test_07_quit(self):
-        if have_pikepdf3():
-            self._quit_without_saving()
-        else:
-            self._quit()
+        self._quit_without_saving()
 
 
 class TestBatch7(PdfArrangerTest):
