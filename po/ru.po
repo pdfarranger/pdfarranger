@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-13 13:50+0100\n"
-"PO-Revision-Date: 2024-12-23 21:34+1000\n"
+"PO-Revision-Date: 2024-12-24 19:40+1000\n"
 "Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -556,7 +556,7 @@ msgstr "Ряды"
 #: pdfarranger/pdfarranger.py:3070
 #, python-format
 msgid "Running on %s"
-msgstr ""
+msgstr "Работает на %s"
 
 #: data/menu.ui:239 data/menu.ui:408
 msgid "Same Page _Format"
