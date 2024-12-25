@@ -1003,3 +1003,36 @@ class TestBatch11(PdfArrangerTest):
         self._wait_saving()
         self._quit()  # save config
         self.assertEqual(self._config()["preferences"]["show-save-warnings"], "False")
+
+
+class TestBatch12(PdfArrangerTest):
+    """Test printing"""
+
+    def test_01_open_documents(self):
+        self._start(["data/screenshot.png", "tests/test.pdf", "tests/test_metadata1.pdf"])
+        # Remove last page
+        self._popupmenu(3, ["Cut"])
+
+    def test_02_print_all_to_pdf(self):
+        """Print with Gtk.PrintUnixDialog"""
+        self._mainmenu(["Print…"])
+        print_dialog = self._app().child(roleName="dialog")
+        print_dialog.child(name="Print to File").click()
+        from dogtail import rawinput
+        rawinput.keyCombo("Tab")
+        # Open "file chooser" to set the output name
+        rawinput.keyCombo("enter")
+        filechooser = self._app().child(roleName="file chooser")
+        output = os.path.join(self.__class__.tmp, 'output.pdf')
+        filechooser.child(roleName="text").text = output
+        filechooser.button("Select").click()
+        self._wait_cond(lambda: filechooser.dead)
+        print_dialog.button("Print").click()
+        self._wait_cond(lambda: print_dialog.dead)
+        # Import the printed pdf
+        filechooser = self._import_file(output)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 6)
+
+    def test_03_quit(self):
+        self._quit_without_saving()
