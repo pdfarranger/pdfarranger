@@ -569,6 +569,7 @@ class TestBatch1(PdfArrangerTest):
         self._quit()
         # check that process actually exit
         self._process().wait(timeout=22)
+        self.assertEqual(self._config()["preferences"]["content-loss-warning"], "False")
 
 
 class TestBatch2(PdfArrangerTest):
@@ -986,8 +987,10 @@ class TestBatch10(PdfArrangerTest):
             pass
 
     def test_03_quit(self):
-        self._quit()
+        self._quit()  # save config
         self._process().wait(timeout=22)
+        if have_pikepdf8():
+            self.assertEqual(self._config()["preferences"]["start-with-empty"], "True")
 
 
 class TestBatch11(PdfArrangerTest):
