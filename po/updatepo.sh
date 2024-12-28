@@ -42,6 +42,14 @@ if [[ "$1" = "" ]]; then
 else
   if [ -f "po/$1.po" ]; then
     updatepo "po/$1.po"
+  n=$(awk '$NF == "msgstr \"\"" { n++ } END { print n }' FS="\n" RS= "po/$1.po")
+  if [ -z "$n" ]; then
+    echo "All messages of locale $1 are translated, nothing to do."
+  elif [ "$n" = "1" ]; then
+    echo "There is 1 untranslated message for locale $1."
+  else
+    echo "There are $n untranslated messages for locale $1."
+  fi
   else
     echo "No such translation locale: $1."
     read -r -p "Would you like to create new translation locale $1? [y/N] " response
@@ -55,4 +63,6 @@ else
         ;;
     esac
   fi
+  # changes to pdfarranger.pot shall only be commited if regenerating for all locales
+  git restore po/pdfarranger.pot
 fi
