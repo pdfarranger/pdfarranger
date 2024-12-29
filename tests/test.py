@@ -140,6 +140,13 @@ class DogtailManager:
 # dogtail does not support change of X11 server so it must be a singleton
 dogtail_manager = DogtailManager()
 
+def setUpModule():
+    # if we can't kill the dbus process on GHA, let's at least suppress the warning
+    if dogtail_manager.xvfb and "GITHUB_ACTIONS" in os.environ:
+        warnings.filterwarnings("ignore",
+                                f"subprocess {dogtail_manager.xvfb.dbus_proc.pid} is still running",
+                                ResourceWarning)
+
 def tearDownModule():
     dogtail_manager.kill()
 
