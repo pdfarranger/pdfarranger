@@ -79,6 +79,8 @@ cd pdfarranger
 python3 -m pdfarranger
 ```
 
+For testing see [TESTING.md](TESTING.md).
+
 For Windows see [Win32.md](Win32.md).
 
 For macOS see [macOS.md](macOS.md).
