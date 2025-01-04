@@ -195,7 +195,27 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
-      <caption/>
+      <caption>The PDF Arranger main window</caption>
+      <caption xml:lang="ca">Finestra principal de l'arranjador de PDF</caption>
+      <caption xml:lang="cs">Hlavní okno aranžéru PDF</caption>
+      <caption xml:lang="de">Hauptfenster des PDF-Arrangers</caption>
+      <caption xml:lang="el">Κύριο παράθυρο του διατάκτη PDF</caption>
+      <caption xml:lang="es">Ventana principal del organizador de PDF</caption>
+      <caption xml:lang="fi">PDF-järjestäjän pääikkuna</caption>
+      <caption xml:lang="fr">Fenêtre principale de l'organisateur PDF</caption>
+      <caption xml:lang="hr">Glavni prozor PDF uređivača</caption>
+      <caption xml:lang="hu">A PDF-rendező főablak</caption>
+      <caption xml:lang="id">Jendela utama pengatur PDF</caption>
+      <caption xml:lang="nl">Hoofdvenster van PDF-arrangeur</caption>
+      <caption xml:lang="is">Aðalgluggi PDF raðar</caption>
+      <caption xml:lang="pt">Janela principal do organizador de PDF</caption>
+      <caption xml:lang="ru">Главное окно PDF-аранжировщика</caption>
+      <caption xml:lang="sk">Hlavné okno aranžéra PDF</caption>
+      <caption xml:lang="sv">Huvudfönster för PDF-arrangör</caption>
+      <caption xml:lang="ko">PDF 편집기 메인 창</caption>
+      <caption xml:lang="tr">PDF Düzenleyici ana penceresi</caption>
+      <caption xml:lang="uk">Головне вікно упорядника PDF</caption>
+      <caption xml:lang="zh-tw">PDF 排列器主窗口</caption>
     </screenshot>
   </screenshots>
   <releases>
