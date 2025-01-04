@@ -275,7 +275,7 @@ class PdfArranger(Gtk.Application):
         self.id_scroll_to_sel = None
         self.target_is_intern = True
 
-        self.export_directory = os.path.expanduser('~')
+        self.export_directory = None
         self.import_directory = None
         self.nfile = 0
         self.iv_auto_scroll_timer = None
@@ -316,9 +316,17 @@ class PdfArranger(Gtk.Application):
         self.add_main_option(
             "version",
             ord("v"),
-            GLib.OptionFlags.NONE,
+            GLib.OptionFlags.IN_MAIN,
             GLib.OptionArg.NONE,
             _("Print the version of PDF Arranger and exit"),
+            None,
+        )
+        self.add_main_option(
+            "out_dir",
+            ord("o"),
+            GLib.OptionFlags.IN_MAIN,
+            GLib.OptionArg.STRING,
+            _("Specify the output directory"),
             None,
         )
         self.add_main_option(
@@ -872,6 +880,13 @@ class PdfArranger(Gtk.Application):
             print("OS_Version-" + self.get_os_version())
             return 0
 
+        if options.contains("out_dir"):
+            export_directory = (options.lookup_value("out_dir").get_string())
+            if os.path.isdir(export_directory):
+                self.export_directory = os.path.abspath(export_directory)
+            else:
+                print(_("Option out_dir must be a directory."))
+
         self.activate()
 
         if options.lookup_value(GLib.OPTION_REMAINING):
@@ -1300,6 +1315,7 @@ class PdfArranger(Gtk.Application):
             if exportmode == 'ALL_TO_SINGLE':
                 if f.endswith(".pdf") and not tempdir:
                     chooser.set_filename(f)  # Set name to existing file
+                chooser.set_current_folder(self.export_directory)
             else:
                 shortname, ext = os.path.splitext(basename)
                 if self.export_file is None and tempdir:
@@ -1426,7 +1442,10 @@ class PdfArranger(Gtk.Application):
             self.set_save_file(files_out[0])
         else:
             self.export_file = os.path.split(files_out[-1])[1]
-        self.export_directory = os.path.split(files_out[0])[0]
+
+        if self.export_directory is None:
+            # export_directory is the default so we change it
+            self.export_directory = os.path.split(files_out[0])[0]
 
         files = [(pdf.copyname, pdf.password) for pdf in self.pdfqueue]
         export_msg = multiprocessing.Queue()
