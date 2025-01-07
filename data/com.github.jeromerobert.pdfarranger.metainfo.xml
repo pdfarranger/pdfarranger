@@ -195,8 +195,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
-      <caption>The PDF Arranger main window</caption>
-      <caption xml:lang="hu">A PDF-rendező főablak</caption>
+      <caption/>
     </screenshot>
   </screenshots>
   <releases>
