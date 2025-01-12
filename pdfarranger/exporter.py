@@ -492,7 +492,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         job.write_pdf(pdf_output)
 
 
-def export(files, pages, mdata, files_out, quit_flag, config, test_mode=False, **kwargs):
+def export(files, pages, mdata, files_out, config, quit_flag, test_mode=False, **kwargs):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
