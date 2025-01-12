@@ -102,7 +102,7 @@ class ExporterTest(unittest.TestCase):
 
         mock_config = Mock()
         mock_config.start_with_empty.return_value = start_with_empty
-        export(files, pages, {}, [file('out')], None, mock_config, True)
+        export(files, pages, {}, [file('out')], mock_config, None, True)
         self.assertTrue(*self.compare_files(file('out'), expected_file))
 
     def basic(self, test, *pages):
