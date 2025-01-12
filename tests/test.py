@@ -1084,3 +1084,106 @@ class TestBatch12(PdfArrangerTest):
 
     def test_03_quit(self):
         self._quit_without_saving()
+
+
+class TestBatch13(PdfArrangerTest):
+    """Test export as jpg images"""
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_export_as_png(self):
+        """Export image at default 150 pixels/inch"""
+        self._popupmenu(None, ["Select", "Select All"])
+        self._mainmenu(["Export", "Export Selection to JPG Images…"])
+        self._save_as_chooser("image-001.jpg")
+
+    def test_03_import_png(self):
+        """Import the two images that were created"""
+        tmp = self.__class__.tmp
+        filename = os.path.join(tmp, "image-001.jpg")
+        filechooser = self._import_file(filename)
+        self._wait_cond(lambda: filechooser.dead)
+        filename = os.path.join(tmp, "image-002.jpg")
+        filechooser = self._import_file(filename)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 4)
+        self._app().child(roleName="layered pane").grabFocus()
+        self._app().keyCombo("End")
+        self._assert_page_size(215.9, 279.4)
+
+    def test_04_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch14(PdfArrangerTest):
+    """Test export as png images"""
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_export_as_png(self):
+        """Export image at default 150 pixels/inch"""
+        self._popupmenu(None, ["Select", "Select All"])
+        self._mainmenu(["Export", "Export Selection to PNG Images…"])
+        self._save_as_chooser("image-001.png")
+
+    def test_03_close(self):
+        """Test close application"""
+        self._app().child(roleName="layered pane").grabFocus()
+        self._app().keyCombo("<ctrl>W")
+        self.assertEqual(len(self._icons()), 0)
+
+    def test_04_import_png(self):
+        """Import the two images that were created"""
+        tmp = self.__class__.tmp
+        filename1 = os.path.join(tmp, "image-001.png")
+        filename2 = os.path.join(tmp, "image-002.png")
+        filechooser = self._import_file(filename1)
+        self._wait_cond(lambda: filechooser.dead)
+        filechooser = self._import_file(filename2)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 2)
+        self._app().child(roleName="layered pane").grabFocus()
+        self._app().keyCombo("End")
+        self._assert_page_size(215.9, 279.4)
+
+    def test_05_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch15(PdfArrangerTest):
+    """Test export as Rasterized PDF"""
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test.pdf"])
+
+    def test_02_export_as_pdf(self):
+        """Export image at 150 pixels/inch as optimized greyscale"""
+        self._mainmenu("Preferences")
+        dialog = self._app().child(roleName="dialog")
+        imagepanel = dialog.child(name="Image Export")
+        checkboxes = self._find_by_role("check box", imagepanel)
+        checkboxes[0].click()  # Greyscale
+        checkboxes[1].click()  # Optimize
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self._popupmenu(1, ["Rotate Left"])
+        self._app().child(roleName="layered pane").grabFocus()
+        self._popupmenu(None, ["Select", "Select All"])
+        self._mainmenu(["Export", "Export Selection to Rasterized PDF (png)…"])
+        self._save_as_chooser("pdf-image-001.pdf")
+
+    def test_03_import_png(self):
+        """Import the pdf that was created"""
+        tmp = self.__class__.tmp
+        filename = os.path.join(tmp, "pdf-image-001.pdf")
+        filechooser = self._import_file(filename)
+        self._wait_cond(lambda: filechooser.dead)
+        self.assertEqual(len(self._icons()), 4)
+        self._app().child(roleName="layered pane").grabFocus()
+        self._app().keyCombo("End")
+        self._assert_page_size(279.4, 215.9)
+
+    def test_04_quit(self):
+        self._quit_without_saving()
