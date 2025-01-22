@@ -677,7 +677,8 @@ class PageAdder:
         if (doc_added and pdfdoc.copyname != pdfdoc.filename and description is None and not
                 (filename.startswith(self.app.tmp_dir) and filename.endswith(".png"))):
             self.app.import_directory = os.path.split(filename)[0]
-            self.app.export_directory = self.app.import_directory
+            if self.app.export_directory is None:
+                self.app.export_directory = self.app.import_directory
 
         n_end = pdfdoc.document.get_n_pages()
         n_start = min(n_end, max(1, page))
