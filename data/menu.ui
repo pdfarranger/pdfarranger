@@ -65,6 +65,26 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="label" translatable="yes">Export _All Pages to Individual Files…</attribute>
             <attribute name="action">win.export-all</attribute>
           </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _PNG Images…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">4</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _JPG Images…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">5</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _Rasterized PDF (png)…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">6</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _Rasterized PDF (jpg)…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">7</attribute>
+          </item>
         </section>
       </submenu>
       <item>
@@ -499,7 +519,26 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="label" translatable="yes">Export _All Pages to Individual Files…</attribute>
             <attribute name="action">win.export-all</attribute>
           </item>
-
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _PNG Images…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">4</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _JPG Images…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">5</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Export Selection to _Rasterized PDF (png)…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">6</attribute>
+          </item>
+            <item>
+            <attribute name="label" translatable="yes">Export Selection to _Rasterized PDF (jpg)…</attribute>
+            <attribute name="action">win.export-selection</attribute>
+            <attribute name="target" type="i">7</attribute>
+          </item>
         </section>
       </submenu>
     </section>

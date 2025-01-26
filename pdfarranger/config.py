@@ -119,6 +119,8 @@ class Config(object):
             self.data.add_section('preferences')
         if 'print-settings' not in self.data:
             self.data.add_section('print-settings')
+        if 'image-export' not in self.data:
+            self.data.add_section('image-export')
         if 'accelerators' not in self.data:
             self.data.add_section('accelerators')
         a = self.data['accelerators']
@@ -206,6 +208,24 @@ class Config(object):
     def set_auto_rotate(self, enabled):
         self.data.set('print-settings', 'auto-rotate', str(enabled))
 
+    def image_ppi(self):
+        return self.data.getint('image-export', 'image-ppi', fallback=150)
+
+    def set_image_ppi(self, ppi):
+        self.data.set('image-export', 'image-ppi', str(ppi))
+
+    def optimize(self):
+        return self.data.getboolean('image-export', 'optimize', fallback=False)
+
+    def set_optimize(self, optimize):
+        self.data.set('image-export', 'optimize', str(optimize))
+
+    def greyscale(self):
+        return self.data.getboolean('image-export', 'greyscale', fallback=False)
+
+    def set_greyscale(self, greyscale):
+        self.data.set('image-export', 'greyscale', str(greyscale))
+
     def save(self):
         conffile = Config._config_file(self.domain)
         os.makedirs(os.path.dirname(conffile), exist_ok=True)
@@ -284,11 +304,27 @@ class Config(object):
         else:
             # prevent CodeQL false positive "uninitialized local variable"
             cb_retain = None
-        t = _("For more options see:")
-        frame5 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
-        label5 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
-        frame5.add(label5)
+        frame5 = Gtk.Frame(label=_("Image Export"), margin=8)
+        grid5 = Gtk.Grid(row_spacing=6, column_spacing=12, border_width=12)
+        label5 = Gtk.Label(_("Pixels/inch:"))
+        grid5.attach(label5, 0, 1, 1, 1)
+        sb_image_ppi = Gtk.SpinButton.new_with_range(1, 1200, 1)
+        sb_image_ppi.props.width_chars = 8
+        sb_image_ppi.set_value(self.image_ppi())
+        grid5.attach(sb_image_ppi, 1, 1, 1, 1)
+        cb_optimize = Gtk.CheckButton(label=_("Optimize"), margin=8)
+        cb_optimize.set_active(self.optimize())
+        grid5.attach(cb_optimize, 0, 2, 1, 1)
+        cb_greyscale = Gtk.CheckButton(label=_("Convert to greyscale"), margin=8)
+        cb_greyscale.set_active(self.greyscale())
+        grid5.attach(cb_greyscale, 1, 2, 1, 1)
+        frame5.add(grid5)
         d.vbox.pack_start(frame5, False, False, 8)
+        t = _("For more options see:")
+        frame6 = Gtk.Frame(label=t, shadow_type=Gtk.ShadowType.NONE, margin=8)
+        label6 = Gtk.Label(self._config_file(self.domain), selectable=True, margin=8)
+        frame6.add(label6)
+        d.vbox.pack_start(frame6, False, False, 8)
 
         langs = []
         if os.path.isdir(localedir):
@@ -326,4 +362,7 @@ class Config(object):
                 self.set_start_with_empty(not cb_retain.get_active())
             self.set_scale_mode(psettings.get_scale_mode())
             self.set_auto_rotate(psettings.get_auto_rotate())
+            self.set_image_ppi(sb_image_ppi.get_value_as_int())
+            self.set_optimize(cb_optimize.get_active())
+            self.set_greyscale(cb_greyscale.get_active())
         d.destroy()
