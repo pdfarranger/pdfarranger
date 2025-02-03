@@ -145,7 +145,13 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
-    upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}'
+    upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}',
+    extensions=[{
+        "extension": "pdf",
+        "verb": "open",
+        "executable": "pdfarranger.exe",
+        "argument": '"%1"',
+    }]
 )
 
 
