@@ -315,7 +315,7 @@ class Config(object):
         cb_optimize = Gtk.CheckButton(label=_("Optimize"), margin=8)
         cb_optimize.set_active(self.optimize())
         grid5.attach(cb_optimize, 0, 2, 1, 1)
-        cb_greyscale = Gtk.CheckButton(label=_("Convert to greyscale"), margin=8)
+        cb_greyscale = Gtk.CheckButton(label=_("Greyscale"), margin=8)
         cb_greyscale.set_active(self.greyscale())
         grid5.attach(cb_greyscale, 1, 2, 1, 1)
         frame5.add(grid5)
