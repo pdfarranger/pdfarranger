@@ -2798,6 +2798,7 @@ class PdfArranger(Gtk.Application):
         self.update_statusbar()
         self.update_iconview_geometry()
         self.update_max_zoom_level()
+        self.scroll_to_selection(center=False)
         GObject.idle_add(self.render)
 
     def range_select_dialog(self):
