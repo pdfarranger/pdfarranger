@@ -2,3 +2,4 @@ __pycache__
 venv/
 tests/exporter/out.pdf
 build/
+pdfarranger.egg-info/
