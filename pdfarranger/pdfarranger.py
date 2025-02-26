@@ -1440,8 +1440,12 @@ class PdfArranger(Gtk.Application):
         """Saves to the previously exported file or shows the export dialog if
         there was none."""
         savemode = 'ALL_TO_SINGLE'
+        """Saves to the previously exported file, the original file, or shows the export dialog if
+        there was neither."""
         if self.save_file:
             self.save(savemode, [self.save_file])
+        elif len(self.pdfqueue) == 1:
+            self.save(savemode, [self.pdfqueue[0].filename])
         else:
             self.choose_export_pdf_name(savemode)
 
