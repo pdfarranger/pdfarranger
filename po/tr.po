@@ -1,21 +1,21 @@
 # Turkish translation of pdfarranger
 # This file is distributed under the same license as the pdfarranger package.
 # Murathan BOSTANCI <murathan.bostanci@profelis.com.tr>, 2018
-# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022, 2024.
 # Oğuz Ersen <oguz@ersen.moe>, 2021-2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-24 20:19+0100\n"
-"PO-Revision-Date: 2024-03-16 18:11+0300\n"
-"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
+"POT-Creation-Date: 2024-12-13 13:50+0100\n"
+"PO-Revision-Date: 2025-03-12 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
-"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 45.3\n"
 
@@ -27,81 +27,86 @@ msgstr "#Süt"
 msgid "#Row"
 msgstr "#Sat"
 
-#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:453
-#: pdfarranger/pageutils.py:455
+#: pdfarranger/pageutils.py:127
+#: pdfarranger/pageutils.py:549
+#: pdfarranger/pageutils.py:551
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/pageutils.py:176
+#: pdfarranger/pageutils.py:275
 #, python-format
 msgid "% of height"
 msgstr "% olarak yükseklik"
 
-#: pdfarranger/pageutils.py:176
+#: pdfarranger/pageutils.py:275
 #, python-format
 msgid "% of width"
 msgstr "% olarak genişlik"
 
-#: pdfarranger/pdfarranger.py:2764
+#: pdfarranger/pdfarranger.py:3064
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr ""
-"%s, PDF dosyalarını yeniden düzenlemek ve değiştirmek için bir araçtır."
+msgstr "%s, PDF dosyalarını yeniden düzenleme ve değiştirme aracıdır."
 
-#: pdfarranger/config.py:262
+#: pdfarranger/config.py:255
 msgid "(Libhandy missing)"
 msgstr "(Libhandy eksik)"
 
-#: pdfarranger/config.py:254
+#: pdfarranger/config.py:247
 msgid "(Requires restart)"
 msgstr "(Yeniden başlatma gerektirir)"
 
-#: pdfarranger/pdfarranger.py:1144
+#: pdfarranger/pdfarranger.py:1353
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr "\"%s\" adında bir dosya zaten var. Değiştirmek istiyor musunuz?"
 
-#: data/menu.ui:227 data/menu.ui:391
+#: data/menu.ui:234
+#: data/menu.ui:403
 msgid "All From _Same File"
 msgstr "_Aynı Dosyadan Tümü"
 
-#: pdfarranger/pdfarranger.py:518
+#: pdfarranger/pdfarranger.py:699
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: pdfarranger/pdfarranger.py:470
+#: pdfarranger/pdfarranger.py:500
+#: pdfarranger/pdfarranger.py:571
 msgid "All pages must have the same size."
 msgstr "Tüm sayfalar aynı boyutta olmalıdır."
 
-#: pdfarranger/pdfarranger.py:506
+#: pdfarranger/pdfarranger.py:687
 msgid "All supported files"
 msgstr "Desteklenen tüm dosyalar"
 
-#: pdfarranger/exporter.py:563
+#: pdfarranger/exporter.py:578
 msgid "Auto Rotate"
 msgstr "Kendiliğinden Döndür"
 
-#: pdfarranger/pageutils.py:154
+#: pdfarranger/pageutils.py:253
 msgid "Bottom"
 msgstr "Alt"
 
-#: pdfarranger/pageutils.py:386
+#: pdfarranger/pageutils.py:482
 msgid "Bottom to Top"
 msgstr "Alttan Üste"
 
-#: pdfarranger/core.py:569
+#: pdfarranger/core.py:568
 msgid "Clipboard image"
 msgstr "Pano resmi"
 
-#: pdfarranger/pageutils.py:369 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:465
+#: pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: data/menu.ui:141 data/menu.ui:354
+#: data/menu.ui:141
+#: data/menu.ui:366
 msgid "Copy _Image"
 msgstr "_Resmi Kopyala"
 
-#: data/menu.ui:146 data/menu.ui:359
+#: data/menu.ui:146
+#: data/menu.ui:371
 msgid "Copy _Text"
 msgstr "_Metni Kopyala"
 
@@ -117,63 +122,73 @@ msgstr "Oluşturucu"
 msgid "Creator tool"
 msgstr "Oluşturucu araç"
 
-#: pdfarranger/pageutils.py:846
+#: pdfarranger/pageutils.py:350
+msgid "Crop & Add margins"
+msgstr "Kırp ve Kenarlık ekle"
+
+#: pdfarranger/pageutils.py:942
 msgid "Crop Margins"
 msgstr "Kenarları Kırp"
 
-#: data/menu.ui:174 data/menu.ui:432
+#: data/menu.ui:174
+#: data/menu.ui:449
 msgid "Crop White Borders"
 msgstr "Beyaz Kenarları Kırp"
 
-#: pdfarranger/pageutils.py:166 pdfarranger/pdfarranger.py:2730
-msgid ""
-"Cropping/hiding does not remove any content from the PDF file, it only hides "
-"it."
-msgstr ""
-"Kırpma/gizleme PDF dosyasından herhangi bir içeriği kaldırmaz, yalnızca "
-"gizler."
+#: pdfarranger/pageutils.py:265
+#: pdfarranger/pdfarranger.py:3030
+msgid "Cropping/hiding does not remove any content from the PDF file, it only hides it."
+msgstr "Kırpma/gizleme PDF dosyasından herhangi bir içeriği kaldırmaz, yalnızca gizler."
 
-#: data/menu.ui:94 data/menu.ui:302
+#: data/menu.ui:94
+#: data/menu.ui:314
 msgid "Cu_t"
 msgstr "_Kes"
 
-#: pdfarranger/pdfarranger.py:1258
+#: pdfarranger/pageutils.py:153
+msgid "Custom"
+msgstr "Özel"
+
+#: pdfarranger/pdfarranger.py:1467
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr "Uyarılara rağmen belge(ler)de görünür sorun yoktur."
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:1203
 msgid "Discard changes and close?"
 msgstr "Değişiklikler atılsın ve kapatılsın mı?"
 
-#: pdfarranger/pdfarranger.py:1030
+#: pdfarranger/pdfarranger.py:1240
 msgid "Discard changes and quit?"
 msgstr "Değişiklikler atılsın ve çıkılsın mı?"
 
-#: pdfarranger/pdfarranger.py:2737
+#: pdfarranger/pdfarranger.py:3037
 msgid "Do not show this dialog again."
 msgstr "Bu pencereyi yeniden gösterme."
 
-#: pdfarranger/pdfarranger.py:984
+#: pdfarranger/pdfarranger.py:1194
 msgid "Do_n’t Save"
 msgstr "Kaydet_me"
 
-#: pdfarranger/pdfarranger.py:1265
+#: pdfarranger/pdfarranger.py:1474
 msgid "Don't show warnings when saving again."
 msgstr "Kaydederken uyarıları yeniden gösterme."
 
-#: data/menu.ui:178 data/menu.ui:436
+#: data/menu.ui:178
+#: data/menu.ui:453
 msgid "Dupl_icate"
 msgstr "_Çoğalt"
 
-#: data/menu.ui:52 data/menu.ui:462
+#: data/menu.ui:52
+#: data/menu.ui:486
 msgid "E_xport"
 msgstr "_Dışa Aktar"
 
-#: data/menu.ui:55 data/menu.ui:465
+#: data/menu.ui:55
+#: data/menu.ui:489
 msgid "E_xport Selection to a Single File…"
 msgstr "Seçimi Tek Dosyaya D_ışa Aktar…"
 
-#: data/menu.ui:266
+#: data/menu.ui:278
 msgid "Edit _Properties"
 msgstr "_Özellikleri Düzenle"
 
@@ -189,60 +204,71 @@ msgstr "Eşit sütun genişliği"
 msgid "Equal row height"
 msgstr "Eşit satır yüksekliği"
 
-#: pdfarranger/pdfarranger.py:1792
+#: pdfarranger/pdfarranger.py:2003
 msgid "Exploding into images…"
 msgstr "Resimlere dönüştürülüyor…"
 
-#: data/menu.ui:60 data/menu.ui:470
+#: data/menu.ui:60
+#: data/menu.ui:494
 msgid "Export Selection to _Individual Files…"
 msgstr "Seçimi _Ayrı Dosyalara Dışa Aktar…"
 
-#: data/menu.ui:65 data/menu.ui:475
+#: data/menu.ui:65
+#: data/menu.ui:499
 msgid "Export _All Pages to Individual Files…"
 msgstr "_Tüm Sayfaları Ayrı Dosyalara Dışa Aktar…"
 
-#: pdfarranger/pdfarranger.py:1102
+#: pdfarranger/pdfarranger.py:1311
 msgid "Export…"
 msgstr "Dışa Aktar…"
 
-#: pdfarranger/core.py:571 pdfarranger/pdfarranger.py:1512
+#: pdfarranger/core.py:570
+#: pdfarranger/pdfarranger.py:1721
 msgid "File is neither pdf nor image"
 msgstr "Dosya ne pdf ne de resimdir"
 
-#: pdfarranger/pdfarranger.py:300
+#: pdfarranger/pdfarranger.py:329
 msgid "File(s) to open"
 msgstr "Açılacak dosya(lar)"
 
-#: pdfarranger/exporter.py:561
+#: pdfarranger/pageutils.py:346
+msgid "Fit mode"
+msgstr "Sığdırma kipi"
+
+#: pdfarranger/exporter.py:576
 msgid "Fit to Full Page"
 msgstr "Tam Sayfaya Sığdır"
 
-#: pdfarranger/exporter.py:560
+#: pdfarranger/exporter.py:575
 msgid "Fit to Printable Area"
 msgstr "Yazdırılabilir Alana Sığdır"
 
-#: pdfarranger/pdfarranger.py:2734
+#: pdfarranger/pageutils.py:355
+msgid "Fit to paper"
+msgstr "Sayfaya sığdır"
+
+#: pdfarranger/pdfarranger.py:3034
 msgid "For more info see"
 msgstr "Daha fazla bilgi için bakınız:"
 
-#: pdfarranger/config.py:271
+#: pdfarranger/config.py:264
 msgid "For more options see:"
 msgstr "Daha çok seçenek için bakınız:"
 
-#: data/menu.ui:259
+#: data/menu.ui:271
 msgid "Full_screen"
 msgstr "Tam _Ekran"
 
-#: pdfarranger/pdfarranger.py:2778
+#: pdfarranger/pdfarranger.py:3080
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU Genel Kamu Lisansı (GPL) Sürüm 3."
 
-#: data/menu.ui:198 data/menu.ui:456
-msgid "Generate Booklet"
-msgstr "Kitapçık Oluştur"
+#: data/menu.ui:200
+#: data/menu.ui:475
+msgid "Generate (imposition)"
+msgstr "Oluştur (dizgile)"
 
-#: pdfarranger/pageutils.py:248 pdfarranger/pageutils.py:252
-#: pdfarranger/pageutils.py:334
+#: pdfarranger/pageutils.py:144
 msgid "Height"
 msgstr "Yükseklik"
 
@@ -250,11 +276,11 @@ msgstr "Yükseklik"
 msgid "Height in %"
 msgstr "% olarak yükseklik"
 
-#: pdfarranger/pageutils.py:846
+#: pdfarranger/pageutils.py:942
 msgid "Hide Margins"
 msgstr "Kenarları Gizle"
 
-#: pdfarranger/pageutils.py:381
+#: pdfarranger/pageutils.py:477
 msgid "Horizontal"
 msgstr "Yatay"
 
@@ -262,19 +288,19 @@ msgstr "Yatay"
 msgid "Horizontal Splits"
 msgstr "Yatay Bölmeler"
 
-#: pdfarranger/pageutils.py:452
+#: pdfarranger/pageutils.py:548
 msgid "Horizontal offset"
 msgstr "Yatay ofset"
 
-#: pdfarranger/core.py:560
+#: pdfarranger/core.py:559
 msgid "Image files are only supported with img2pdf"
 msgstr "Yalnızca img2pdf ile desteklenen resim dosyaları"
 
-#: pdfarranger/core.py:566
+#: pdfarranger/core.py:565
 msgid "Image format is not supported by img2pdf"
 msgstr "Resim dosyası, img2pdf tarafından desteklenmiyor"
 
-#: pdfarranger/pdfarranger.py:1789
+#: pdfarranger/pdfarranger.py:2000
 msgid "Img2pdf missing."
 msgstr "Img2pdf eksik."
 
@@ -282,15 +308,16 @@ msgstr "Img2pdf eksik."
 msgid "Import"
 msgstr "İçe Aktar"
 
-#: pdfarranger/pdfarranger.py:1335
+#: pdfarranger/pdfarranger.py:1544
 msgid "Import…"
 msgstr "İçe Aktar…"
 
-#: data/menu.ui:194 data/menu.ui:452
+#: data/menu.ui:194
+#: data/menu.ui:469
 msgid "Insert Blan_k Page…"
 msgstr "B_oş Sayfa Ekle…"
 
-#: pdfarranger/pageutils.py:331
+#: pdfarranger/pageutils.py:431
 msgid "Insert Blank Page"
 msgstr "Boş Sayfa Ekle"
 
@@ -298,7 +325,7 @@ msgstr "Boş Sayfa Ekle"
 msgid "Invalid date format. Input discarded."
 msgstr "Geçersiz tarih biçimi. Girdi görmezden gelindi."
 
-#: pdfarranger/pdfarranger.py:2767
+#: pdfarranger/pdfarranger.py:3067
 #, python-format
 msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
 msgstr "libqpdf %s, pikepdf %s, GTK %s ve Python %s kullanmaktadır."
@@ -307,15 +334,19 @@ msgstr "libqpdf %s, pikepdf %s, GTK %s ve Python %s kullanmaktadır."
 msgid "Keywords"
 msgstr "Anahtar sözcükler"
 
-#: pdfarranger/config.py:252
+#: pdfarranger/pageutils.py:163
+msgid "Landscape"
+msgstr "Yatay"
+
+#: pdfarranger/config.py:245
 msgid "Language"
 msgstr "Dil"
 
-#: pdfarranger/pageutils.py:154
+#: pdfarranger/pageutils.py:253
 msgid "Left"
 msgstr "Sol"
 
-#: pdfarranger/pageutils.py:383
+#: pdfarranger/pageutils.py:479
 msgid "Left to Right"
 msgstr "Soldan Sağa"
 
@@ -323,19 +354,19 @@ msgstr "Soldan Sağa"
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: pdfarranger/pdfarranger.py:2773
+#: pdfarranger/pdfarranger.py:3075
 msgid "Maintainers and contributors"
 msgstr "Bakımcılar ve katkıcılar"
 
-#: pdfarranger/pageutils.py:367
+#: pdfarranger/pageutils.py:463
 msgid "Margin"
 msgstr "Kenar"
 
-#: pdfarranger/pageutils.py:353
+#: pdfarranger/pageutils.py:449
 msgid "Merge Pages"
 msgstr "Sayfaları Birleştir"
 
-#: pdfarranger/pageutils.py:418
+#: pdfarranger/pageutils.py:514
 msgid "Merged page size:"
 msgstr "Birleştirilmiş sayfa boyutu:"
 
@@ -343,19 +374,19 @@ msgstr "Birleştirilmiş sayfa boyutu:"
 msgid "Modified"
 msgstr "Değiştirilme"
 
-#: pdfarranger/pageutils.py:398
+#: pdfarranger/pageutils.py:494
 msgid "Non-uniform page size - using max size"
 msgstr "Bir örnek olmayan sayfa boyutu - azami boyut kullanılıyor"
 
-#: pdfarranger/exporter.py:559
+#: pdfarranger/exporter.py:574
 msgid "None"
 msgstr "Hiçbiri"
 
-#: pdfarranger/pdfarranger.py:2723
+#: pdfarranger/pdfarranger.py:3023
 msgid "Note"
 msgstr "Dikkat"
 
-#: pdfarranger/pdfarranger.py:2729
+#: pdfarranger/pdfarranger.py:3029
 msgid "Note the limitations:"
 msgstr "Sınırlamalara dikkat edin:"
 
@@ -363,111 +394,118 @@ msgstr "Sınırlamalara dikkat edin:"
 msgid "Open"
 msgstr "Aç"
 
-#: pdfarranger/pdfarranger.py:1200
+#: pdfarranger/pdfarranger.py:1409
 msgid "Open…"
 msgstr "Aç…"
 
-#: pdfarranger/pdfarranger.py:2731
+#: pdfarranger/pageutils.py:161
+msgid "Orientation"
+msgstr "Yönelim"
+
+#: pdfarranger/pdfarranger.py:3031
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr "Yer imleri ve bağlantılar yalnızca belirli durumlarda korunabilir."
 
-#: pdfarranger/pageutils.py:899
+#: pdfarranger/pageutils.py:995
 msgid "Overlay"
 msgstr "Örtü"
 
-#: pdfarranger/pdfarranger.py:281
-msgid ""
-"PDF Arranger is a small python-gtk application, which helps the user to "
-"merge or split pdf documents and rotate, crop and rearrange their pages "
-"using an interactive and intuitive graphical interface. It is a frontend for "
-"pikepdf."
-msgstr ""
-"PDF Arranger, kullanıcının etkileşimli ve sezgisel bir grafiksel arayüz "
-"kullanarak pdf belgelerini birleştirmesine veya bölmesine ve sayfalarını "
-"döndürmesine, kırpmasına ve yeniden düzenlemesine yardımcı olan küçük bir "
-"python-gtk uygulamasıdır. Pikepdf için bir ön yüzdür."
+#: pdfarranger/pdfarranger.py:310
+msgid "PDF Arranger is a small python-gtk application, which helps the user to merge or split pdf documents and rotate, crop and rearrange their pages using an interactive and intuitive graphical interface. It is a frontend for pikepdf."
+msgstr "PDF Arranger, kullanıcının etkileşimli ve sezgisel bir grafiksel arayüz kullanarak pdf belgelerini birleştirmesine veya bölmesine ve sayfalarını döndürmesine, kırpmasına ve yeniden düzenlemesine yardımcı olan küçük bir python-gtk uygulamasıdır. Pikepdf için bir ön yüzdür."
 
-#: pdfarranger/pdfarranger.py:1506
+#: pdfarranger/pdfarranger.py:1715
 msgid "PDF document is damaged"
 msgstr "PDF belgesi hasarlı"
 
-#: pdfarranger/pdfarranger.py:510
+#: pdfarranger/pdfarranger.py:691
 msgid "PDF files"
 msgstr "PDF dosyaları"
 
-#: pdfarranger/exporter.py:599
+#: pdfarranger/exporter.py:614
 msgid "Page Handling"
 msgstr "Sayfa Yönetimi"
 
-#: pdfarranger/pageutils.py:394
+#: pdfarranger/pageutils.py:490
 msgid "Page Order"
 msgstr "Sayfa Sırası"
 
-#: pdfarranger/pdfarranger.py:2801
-msgid "Page Size:"
-msgstr "Sayfa Boyutu:"
-
-#: pdfarranger/pageutils.py:243
+#: pdfarranger/pageutils.py:342
 msgid "Page size"
 msgstr "Sayfa boyutu"
 
-#: pdfarranger/core.py:457
+#: pdfarranger/pageutils.py:150
+msgid "Paper size"
+msgstr "Sayfa boyutu"
+
+#: pdfarranger/core.py:456
 msgid "Password"
 msgstr "Parola"
 
-#: pdfarranger/core.py:435
+#: pdfarranger/core.py:434
 msgid "Password required"
 msgstr "Parola gerekli"
 
-#: data/menu.ui:107 data/menu.ui:315
+#: data/menu.ui:107
+#: data/menu.ui:327
 msgid "Past_e Special"
 msgstr "Öz_el Yapıştır"
 
-#: data/menu.ui:124 data/menu.ui:333
+#: data/menu.ui:124
+#: data/menu.ui:345
 msgid "Paste As O_verlay…"
 msgstr "_Örtü Olarak Yapıştır…"
 
-#: data/menu.ui:119 data/menu.ui:328
+#: data/menu.ui:119
+#: data/menu.ui:340
 msgid "Paste As _Even Pages"
 msgstr "_Çift Sayfalar Olarak Yapıştır"
 
-#: data/menu.ui:114 data/menu.ui:323
+#: data/menu.ui:114
+#: data/menu.ui:335
 msgid "Paste As _Odd Pages"
 msgstr "_Tek Sayfalar Olarak Yapıştır"
 
-#: data/menu.ui:129 data/menu.ui:338
+#: data/menu.ui:129
+#: data/menu.ui:350
 msgid "Paste As _Underlay…"
 msgstr "_Altlık Olarak Yapıştır…"
 
-#: data/menu.ui:102 data/menu.ui:310
+#: data/menu.ui:102
+#: data/menu.ui:322
 msgid "Paste _After"
 msgstr "_Sonrasına Yapıştır"
 
-#: data/menu.ui:109 data/menu.ui:318
+#: data/menu.ui:109
+#: data/menu.ui:330
 msgid "Paste _Before"
 msgstr "_Öncesine Yapıştır"
 
-#: pdfarranger/pdfarranger.py:1636
+#: pdfarranger/pdfarranger.py:1847
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Yapıştırılan veri geçersiz. Yapıştırılmıyor."
 
-#: data/menu.ui:272
+#: pdfarranger/pageutils.py:162
+msgid "Portrait"
+msgstr "Dikey"
+
+#: data/menu.ui:284
 msgid "Pre_ferences"
 msgstr "_Tercihler"
 
-#: pdfarranger/config.py:242
+#: pdfarranger/config.py:235
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: pdfarranger/pdfarranger.py:292
+#: pdfarranger/pdfarranger.py:321
 msgid "Print the version of PDF Arranger and exit"
 msgstr "PDF Arranger sürümünü yazdır ve çık"
 
-#: pdfarranger/config.py:267
+#: pdfarranger/config.py:260
 msgid "Printing"
 msgstr "Yazdırma"
 
-#: pdfarranger/exporter.py:579
+#: pdfarranger/exporter.py:594
 msgid "Printing…"
 msgstr "Yazdırılıyor…"
 
@@ -479,31 +517,36 @@ msgstr "Üretici"
 msgid "Property"
 msgstr "Özellik"
 
-#: data/menu.ui:182 data/menu.ui:440
+#: pdfarranger/pageutils.py:1060
+msgid "Range Select"
+msgstr "Aralık Seçimi"
+
+#: data/menu.ui:182
+#: data/menu.ui:457
 msgid "Re_verse Order"
 msgstr "Sırayı _Evir"
 
-#: pdfarranger/pageutils.py:250
+#: pdfarranger/pageutils.py:356
 msgid "Relative"
 msgstr "Göreceli"
 
-#: pdfarranger/exporter.py:617
+#: pdfarranger/exporter.py:632
 msgid "Rendering Preview…"
 msgstr "Ön İzleme Oluşturuluyor…"
 
-#: pdfarranger/pdfarranger.py:746
+#: pdfarranger/pdfarranger.py:955
 msgid "Rendering…"
 msgstr "Oluşturuluyor…"
 
-#: pdfarranger/pdfarranger.py:1146
+#: pdfarranger/pdfarranger.py:1355
 msgid "Replace"
 msgstr "Değiştir"
 
-#: pdfarranger/pageutils.py:154
+#: pdfarranger/pageutils.py:253
 msgid "Right"
 msgstr "Sağ"
 
-#: pdfarranger/pageutils.py:384
+#: pdfarranger/pageutils.py:480
 msgid "Right to Left"
 msgstr "Sağdan Sola"
 
@@ -515,15 +558,23 @@ msgstr "Sola Döndür"
 msgid "Rotate Right"
 msgstr "Sağa Döndür"
 
-#: data/menu.ui:152 data/menu.ui:410
+#: data/menu.ui:152
+#: data/menu.ui:427
 msgid "Rotate _Left"
 msgstr "So_la Döndür"
 
-#: pdfarranger/pageutils.py:370 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:466
+#: pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Satırlar"
 
-#: data/menu.ui:232 data/menu.ui:396
+#: pdfarranger/pdfarranger.py:3070
+#, python-format
+msgid "Running on %s"
+msgstr "%s üstünde çalışıyor"
+
+#: data/menu.ui:239
+#: data/menu.ui:408
 msgid "Same Page _Format"
 msgstr "Aynı Sayfa _Biçimi"
 
@@ -535,7 +586,7 @@ msgstr "Kaydet"
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
-#: pdfarranger/pdfarranger.py:1102
+#: pdfarranger/pdfarranger.py:1311
 msgid "Save As…"
 msgstr "Farklı Kaydet…"
 
@@ -543,57 +594,82 @@ msgstr "Farklı Kaydet…"
 msgid "Save _As…"
 msgstr "_Farklı Kaydet…"
 
-#: pdfarranger/pdfarranger.py:1002
+#: pdfarranger/pdfarranger.py:1212
 msgid "Save changes before closing?"
 msgstr "Kapatmadan önce değişiklikler kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:1039
+#: pdfarranger/pdfarranger.py:1249
 msgid "Save changes before quitting?"
 msgstr "Çıkmadan önce değişiklikler kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:999
+#: pdfarranger/pdfarranger.py:1209
 msgid "Save changes to “{}” before closing?"
 msgstr "Kapatmadan önce değişiklikler “{}” dosyasına kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:1036
+#: pdfarranger/pdfarranger.py:1246
 msgid "Save changes to “{}” before quitting?"
 msgstr "Çıkmadan önce değişiklikler “{}” dosyasına kaydedilsin mi?"
 
-#: pdfarranger/pdfarranger.py:1257
+#: pdfarranger/pdfarranger.py:1466
 msgid "Saving produced some warnings"
 msgstr "Kaydetme bazı uyarılar üretti"
 
-#: pdfarranger/pdfarranger.py:1296
+#: pdfarranger/pdfarranger.py:1505
 msgid "Saving…"
 msgstr "Kaydediliyor…"
+
+#: pdfarranger/pageutils.py:348
+msgid "Scale"
+msgstr "Ölçek"
+
+#: pdfarranger/pageutils.py:349
+msgid "Scale & Add margins"
+msgstr "Ölçekle ve Kenarlık ekle"
 
 #: pdfarranger/pageutils.py:121
 msgid "Scale factor"
 msgstr "Ölçek çarpanı"
 
-#: pdfarranger/exporter.py:557
+#: pdfarranger/exporter.py:572
 msgid "Scale mode:"
 msgstr "Ölçek kipi:"
 
-#: data/menu.ui:207 data/menu.ui:371
+#: data/menu.ui:214
+#: data/menu.ui:383
 msgid "Select _All"
 msgstr "_Tümünü Seç"
 
-#: data/menu.ui:222 data/menu.ui:386
+#: data/menu.ui:229
+#: data/menu.ui:398
 msgid "Select _Even Pages"
 msgstr "_Çift Sayfaları Seç"
 
-#: data/menu.ui:217 data/menu.ui:381
+#: data/menu.ui:224
+#: data/menu.ui:393
 msgid "Select _Odd Pages"
 msgstr "_Tek Sayfaları Seç"
 
-#: pdfarranger/pdfarranger.py:2796
+#: data/menu.ui:249
+#: data/menu.ui:418
+msgid "Select _Range"
+msgstr "_Aralık Seç"
+
+#: pdfarranger/pageutils.py:1069
+msgid "Select range of pages: "
+msgstr "Sayfa aralığı seç:"
+
+#: pdfarranger/pdfarranger.py:3098
 msgid "Selected pages: "
 msgstr "Seçili sayfalar: "
 
-#: pdfarranger/pageutils.py:548
+#: pdfarranger/pageutils.py:644
 msgid "Show values"
 msgstr "Değerleri göster"
+
+#: data/menu.ui:204
+#: data/menu.ui:479
+msgid "Split (unimposition)"
+msgstr "Böl (dizgiyi boz)"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -603,29 +679,32 @@ msgstr "Sayfaları Böl"
 msgid "Subject"
 msgstr "Konu"
 
-#: pdfarranger/pdfarranger.py:523
+#: pdfarranger/pdfarranger.py:704
 msgid "Supported image files"
 msgstr "Desteklenen resim dosyaları"
 
-#: pdfarranger/config.py:282 pdfarranger/config.py:290
+#: pdfarranger/config.py:275
+#: pdfarranger/config.py:283
 msgid "System setting"
 msgstr "Sistem ayarı"
 
-#: pdfarranger/core.py:447
-msgid ""
-"The document “{}” is locked and requires a password before it can be opened."
+#: pdfarranger/core.py:446
+msgid "The document “{}” is locked and requires a password before it can be opened."
 msgstr "“{}” belgesi kilitli ve açılmadan önce parola gerekiyor."
 
-#: pdfarranger/pdfarranger.py:1765
+#: pdfarranger/pdfarranger.py:1976
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
-"Sayfada birkaç resim var. Önce \"Resimlere Dönüştür\" seçeneğini kullanın."
+msgstr "Sayfada birkaç resim var. Önce \"Resimlere Dönüştür\" seçeneğini kullanın."
 
-#: pdfarranger/core.py:446
+#: pdfarranger/pdfarranger.py:558
+msgid "The page selection is not contiguous. Cannot unimpose."
+msgstr "Sayfa seçimi bitişik değil. Dizgi bozulamıyor."
+
+#: pdfarranger/core.py:445
 msgid "The password will be remembered until you close PDF Arranger."
-msgstr "Parola, siz PDF Arrangerʼi kapatana dek anımsanacak."
+msgstr "PDF Arranger kapatılana dek parola anımsanacak."
 
-#: pdfarranger/config.py:260
+#: pdfarranger/config.py:253
 msgid "Theme"
 msgstr "Tema"
 
@@ -633,23 +712,32 @@ msgstr "Tema"
 msgid "Title"
 msgstr "Başlık"
 
-#: pdfarranger/pageutils.py:154
+#: pdfarranger/pageutils.py:253
 msgid "Top"
 msgstr "Üst"
 
-#: pdfarranger/pageutils.py:385
+#: pdfarranger/pageutils.py:481
 msgid "Top to Bottom"
 msgstr "Üstten Alta"
 
-#: pdfarranger/pageutils.py:899
+#: pdfarranger/pageutils.py:995
 msgid "Underlay"
 msgstr "Altlık"
 
-#: pdfarranger/core.py:544 pdfarranger/pdfarranger.py:1502
+#: pdfarranger/core.py:543
+#: pdfarranger/pdfarranger.py:1711
 msgid "Unknown file format"
 msgstr "Bilinmeyen dosya biçimi"
 
-#: pdfarranger/pdfarranger.py:2735
+#: pdfarranger/pageutils.py:1076
+msgid ""
+"Use a comma to separate page numbers, a dash to select a range of pages. \n"
+"e.g. : \"1,3,5-7,9\""
+msgstr ""
+"Sayfa numaralarını ayırmak için virgül kullan, sayfa aralığı seçmek için kısa çizgi kullan. \n"
+"örneğin: \"1,3,5-7,9\""
+
+#: pdfarranger/pdfarranger.py:3035
 msgid "User Manual"
 msgstr "Kullanım Kılavuzu"
 
@@ -657,7 +745,7 @@ msgstr "Kullanım Kılavuzu"
 msgid "Value"
 msgstr "Değer"
 
-#: pdfarranger/pageutils.py:382
+#: pdfarranger/pageutils.py:478
 msgid "Vertical"
 msgstr "Dikey"
 
@@ -665,12 +753,11 @@ msgstr "Dikey"
 msgid "Vertical Splits"
 msgstr "Dikey Bölmeler"
 
-#: pdfarranger/pageutils.py:454
+#: pdfarranger/pageutils.py:550
 msgid "Vertical offset"
 msgstr "Dikey ofset"
 
-#: pdfarranger/pageutils.py:247 pdfarranger/pageutils.py:251
-#: pdfarranger/pageutils.py:333
+#: pdfarranger/pageutils.py:138
 msgid "Width"
 msgstr "Genişlik"
 
@@ -678,7 +765,7 @@ msgstr "Genişlik"
 msgid "Width in %"
 msgstr "% olarak genişlik"
 
-#: pdfarranger/pdfarranger.py:983
+#: pdfarranger/pdfarranger.py:1193
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Kaydetmezseniz değişiklikleriniz yitecektir."
 
@@ -690,49 +777,63 @@ msgstr "Yakınlaştır"
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: data/menu.ui:255
+#: data/menu.ui:267
 msgid "Zoom _Fit"
 msgstr "Yakınlaştırmayı _Sığdır"
 
-#: data/menu.ui:247
+#: data/menu.ui:259
 msgid "Zoom _In"
 msgstr "_Yakınlaştır"
 
-#: data/menu.ui:251
+#: data/menu.ui:263
 msgid "Zoom _Out"
 msgstr "_Uzaklaştır"
 
-#: data/menu.ui:278
+#: data/menu.ui:290
 msgid "_About"
 msgstr "_Hakkında"
 
-#: pdfarranger/pageutils.py:856
+#: pdfarranger/pageutils.py:952
 msgid "_Apply"
 msgstr "_Uygula"
 
-#: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
-#: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
-#: pdfarranger/pdfarranger.py:1108 pdfarranger/pdfarranger.py:1158
+#: data/menu.ui:198
+#: data/menu.ui:473
+msgid "_Booklet"
+msgstr "_Kitapçık"
+
+#: pdfarranger/config.py:239
+#: pdfarranger/metadata.py:205
+#: pdfarranger/pageutils.py:326
+#: pdfarranger/pdfarranger.py:1185
+#: pdfarranger/pdfarranger.py:1194
+#: pdfarranger/pdfarranger.py:1317
+#: pdfarranger/pdfarranger.py:1367
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: pdfarranger/pdfarranger.py:994 data/menu.ui:284
+#: pdfarranger/pdfarranger.py:1204
+#: data/menu.ui:296
 msgid "_Close"
 msgstr "_Kapat"
 
-#: data/menu.ui:98 data/menu.ui:306
+#: data/menu.ui:98
+#: data/menu.ui:318
 msgid "_Copy"
 msgstr "K_opyala"
 
-#: data/menu.ui:166 data/menu.ui:424
+#: data/menu.ui:166
+#: data/menu.ui:441
 msgid "_Crop Margins…"
 msgstr "Kenarları Kır_p…"
 
-#: data/menu.ui:90 data/menu.ui:298
+#: data/menu.ui:90
+#: data/menu.ui:310
 msgid "_Delete"
 msgstr "_Sil"
 
-#: data/menu.ui:212 data/menu.ui:376
+#: data/menu.ui:219
+#: data/menu.ui:388
 msgid "_Deselect All"
 msgstr "_Hiçbirini Seçme"
 
@@ -740,15 +841,18 @@ msgstr "_Hiçbirini Seçme"
 msgid "_Edit"
 msgstr "_Düzenle"
 
-#: data/menu.ui:137 data/menu.ui:350
+#: data/menu.ui:137
+#: data/menu.ui:362
 msgid "_Explode into Images"
 msgstr "Resimlere _Dönüştür"
 
-#: data/menu.ui:135 data/menu.ui:347
+#: data/menu.ui:135
+#: data/menu.ui:359
 msgid "_Extract"
 msgstr "_Ayıkla"
 
-#: data/menu.ui:170 data/menu.ui:428
+#: data/menu.ui:170
+#: data/menu.ui:445
 msgid "_Hide Margins…"
 msgstr "Kenarları _Gizle…"
 
@@ -756,11 +860,13 @@ msgstr "Kenarları _Gizle…"
 msgid "_Import"
 msgstr "İç_e Aktar"
 
-#: data/menu.ui:237 data/menu.ui:401
+#: data/menu.ui:244
+#: data/menu.ui:413
 msgid "_Invert Selection"
 msgstr "Seçimi _Evir"
 
-#: data/menu.ui:190 data/menu.ui:448
+#: data/menu.ui:190
+#: data/menu.ui:465
 msgid "_Merge Pages…"
 msgstr "Sayfaları _Birleştir…"
 
@@ -768,15 +874,20 @@ msgstr "Sayfaları _Birleştir…"
 msgid "_New Window"
 msgstr "_Yeni Pencere"
 
-#: pdfarranger/config.py:247 pdfarranger/pageutils.py:228
+#: pdfarranger/config.py:240
+#: pdfarranger/metadata.py:206
+#: pdfarranger/pageutils.py:327
+#: pdfarranger/pdfarranger.py:3026
 msgid "_OK"
 msgstr "_Tamam"
 
-#: pdfarranger/pdfarranger.py:1157 data/menu.ui:24
+#: pdfarranger/pdfarranger.py:1366
+#: data/menu.ui:24
 msgid "_Open"
 msgstr "_Aç"
 
-#: data/menu.ui:162 data/menu.ui:420
+#: data/menu.ui:162
+#: data/menu.ui:437
 msgid "_Page Size…"
 msgstr "_Sayfa Boyutu…"
 
@@ -784,7 +895,8 @@ msgstr "_Sayfa Boyutu…"
 msgid "_Print…"
 msgstr "_Yazdır…"
 
-#: pdfarranger/pdfarranger.py:1031 data/menu.ui:290
+#: pdfarranger/pdfarranger.py:1241
+#: data/menu.ui:302
 msgid "_Quit"
 msgstr "_Çık"
 
@@ -792,24 +904,28 @@ msgstr "_Çık"
 msgid "_Redo"
 msgstr "_Yinele"
 
-#: pdfarranger/pageutils.py:856
+#: pdfarranger/pageutils.py:952
 msgid "_Revert"
 msgstr "İptal _Et"
 
-#: data/menu.ui:157 data/menu.ui:415
+#: data/menu.ui:157
+#: data/menu.ui:432
 msgid "_Rotate Right"
 msgstr "Sağa Döndü_r"
 
-#: pdfarranger/pdfarranger.py:984 pdfarranger/pdfarranger.py:1107
+#: pdfarranger/pdfarranger.py:1194
+#: pdfarranger/pdfarranger.py:1316
 #: data/menu.ui:42
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: data/menu.ui:204 data/menu.ui:368
+#: data/menu.ui:211
+#: data/menu.ui:380
 msgid "_Select"
 msgstr "_Seç"
 
-#: data/menu.ui:186 data/menu.ui:444
+#: data/menu.ui:186
+#: data/menu.ui:461
 msgid "_Split Pages…"
 msgstr "Sayfaları _Böl…"
 
@@ -817,19 +933,21 @@ msgstr "Sayfaları _Böl…"
 msgid "_Undo"
 msgstr "_Geri Al"
 
-#: data/menu.ui:244
+#: data/menu.ui:256
 msgid "_View"
 msgstr "_Görünüm"
 
-#: pdfarranger/pageutils.py:144 pdfarranger/pageutils.py:368
-#: pdfarranger/pageutils.py:418
+#: pdfarranger/pageutils.py:142
+#: pdfarranger/pageutils.py:148
+#: pdfarranger/pageutils.py:464
+#: pdfarranger/pageutils.py:514
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/core.py:326
+#: pdfarranger/core.py:695
 msgid "page"
 msgstr "sayfa"
 
-#: pdfarranger/pdfarranger.py:825
+#: pdfarranger/pdfarranger.py:1035
 msgid "untitled"
 msgstr "başlıksız"
