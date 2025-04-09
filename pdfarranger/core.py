@@ -32,6 +32,7 @@ import pathlib
 import shutil
 import tempfile
 import threading
+import time
 import packaging.version as version
 from typing import NamedTuple, Optional, Tuple, Union
 import gettext
@@ -470,42 +471,52 @@ class PasswordDialog(Gtk.Dialog):
             raise _UnknownPasswordException()
 
 
-def _img_to_pdf(images, tmp_dir):
+def _img_to_pdf(images, tmp_dir, page_size=None):
     """Wrap img2pdf.convert to handle some corner cases"""
-    fd, pdf_file_name = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
-    os.close(fd)
+    if version.parse(img2pdf.__version__) < version.Version('0.4.2'):
+        for num, image in enumerate(images):
+            if isinstance(image, img2pdf.BytesIO):
+                # Images from ImageExporter does not have transparency
+                continue
+            if isinstance(image, str):
+                img = img2pdf.Image.open(image)
+            else:
+                img = img2pdf.Image.open(img2pdf.BytesIO(image))
+            if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
+                # TODO: Find a way to keep image in P or L format and remove transparency.
+                # This will work but converting from 1, L, P to RGB is not optimal.
+                img = img.convert("RGBA")
+            if img.mode == "RGBA":
+                # Remove transparency as old img2pdf doesn't support it
+                bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
+                bg.paste(img, mask=img.split()[-1])
+                imgio = img2pdf.BytesIO()
+                bg.save(imgio, "PNG")
+                imgio.seek(0)
+                images[num] = imgio
     try:
         # Try to handle invalid EXIF rotation
         rot = img2pdf.Rotation.ifvalid
     except AttributeError:
         # img2pdf is too old so we can't support invalid EXIF rotation
         rot = None
-    with open(pdf_file_name, "wb") as f:
-        if version.parse(img2pdf.__version__) < version.Version('0.4.2'):
-            for num, image in enumerate(images):
-                if isinstance(image, str):
-                    img = img2pdf.Image.open(image)
-                else:
-                    img = img2pdf.Image.open(img2pdf.BytesIO(image))
-                if (img.mode == "LA") or (img.mode != "RGBA" and "transparency" in img.info):
-                    # TODO: Find a way to keep image in P or L format and remove transparency.
-                    # This will work but converting from 1, L, P to RGB is not optimal.
-                    img = img.convert("RGBA")
-                if img.mode == "RGBA":
-                    # Remove transparency as old img2pdf doesn't support it
-                    bg = img2pdf.Image.new("RGB", img.size, (255, 255, 255))
-                    bg.paste(img, mask=img.split()[-1])
-                    imgio = img2pdf.BytesIO()
-                    bg.save(imgio, "PNG")
-                    imgio.seek(0)
-                    images[num] = imgio
-        try:
-            pdf = img2pdf.convert(images, rotation=rot)
-        except ValueError as e:
-            # Too small or large image
-            raise PDFDocError(e)
-        f.write(pdf)
-    return pdf_file_name
+    kwargs = dict(rotation=rot)
+    if page_size is not None:
+        kwargs['layout_fun'] = img2pdf.get_layout_fun(page_size)
+    try:
+        pdf = img2pdf.convert(images, **kwargs)
+    except ValueError as e:
+        # Too small or large image
+        raise PDFDocError(e)
+    if tmp_dir is None:
+        pdf_file = img2pdf.BytesIO()
+        pdf_file.write(pdf)
+    else:
+        fd, pdf_file = tempfile.mkstemp(suffix=".pdf", dir=tmp_dir)
+        os.close(fd)
+        with open(pdf_file, "wb") as f:
+            f.write(pdf)
+    return pdf_file
 
 
 class PDFDoc:
@@ -762,7 +773,7 @@ class PageAdder:
 
 
 class PDFRenderer(threading.Thread, GObject.GObject):
-    def __init__(self, model, pdfqueue, visible_range, columns_nr):
+    def __init__(self, model, pdfqueue, visible_range, columns_nr, max_nqueue=-1):
         threading.Thread.__init__(self)
         GObject.GObject.__init__(self)
         self.model = model
@@ -770,6 +781,8 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         self.visible_start = visible_range[0]
         self.visible_end = visible_range[1]
         self.columns_nr = columns_nr
+        self.max_nqueue = max_nqueue
+        self.nqueue = 0
         self.mem_usage = 0
         self.model_lock = threading.Lock()
         self.quit = False
@@ -882,6 +895,11 @@ class PDFRenderer(threading.Thread, GObject.GObject):
 
         if self.quit:
             return 0, 0
+        if self.max_nqueue > 0:
+            # Limit queue length for lower memory usage
+            self.nqueue += 1
+            while self.nqueue > self.max_nqueue:
+                time.sleep(0.1)
 
         GObject.idle_add(
             self.emit,

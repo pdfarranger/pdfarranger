@@ -75,7 +75,7 @@ msgstr "Minden támogatott fájl"
 
 #: pdfarranger/exporter.py:563
 msgid "Auto Rotate"
-msgstr ""
+msgstr "Automatikus forgatás"
 
 #: pdfarranger/pageutils.py:154
 msgid "Bottom"
@@ -95,11 +95,11 @@ msgstr "Oszlopok"
 
 #: data/menu.ui:141 data/menu.ui:354
 msgid "Copy _Image"
-msgstr ""
+msgstr "_Kép másolása"
 
 #: data/menu.ui:146 data/menu.ui:359
 msgid "Copy _Text"
-msgstr ""
+msgstr "_Szöveg másolása"
 
 #: pdfarranger/metadata.py:49
 msgid "Created"
@@ -126,6 +126,8 @@ msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
+"A körbevágás/elrejtés nem távolít el semmilyen tartalmat a PDF fájlból, csak "
+"elrejti azt."
 
 #: data/menu.ui:94 data/menu.ui:302
 msgid "Cu_t"
@@ -186,7 +188,7 @@ msgstr "Azonos sormagasság"
 
 #: pdfarranger/pdfarranger.py:1792
 msgid "Exploding into images…"
-msgstr ""
+msgstr "Képekké felbontása…"
 
 #: data/menu.ui:60 data/menu.ui:470
 msgid "Export Selection to _Individual Files…"
@@ -210,15 +212,15 @@ msgstr "Megnyitandó fájl(ok)"
 
 #: pdfarranger/exporter.py:561
 msgid "Fit to Full Page"
-msgstr ""
+msgstr "Teljes oldalhoz igazítás"
 
 #: pdfarranger/exporter.py:560
 msgid "Fit to Printable Area"
-msgstr ""
+msgstr "Nyomtatási területhez igazítás"
 
 #: pdfarranger/pdfarranger.py:2734
 msgid "For more info see"
-msgstr ""
+msgstr "További információért lásd"
 
 #: pdfarranger/config.py:271
 msgid "For more options see:"
@@ -248,7 +250,7 @@ msgstr "Magasság százalékként"
 
 #: pdfarranger/pageutils.py:846
 msgid "Hide Margins"
-msgstr ""
+msgstr "Margók elrejtése"
 
 #: pdfarranger/pageutils.py:381
 msgid "Horizontal"
@@ -272,7 +274,7 @@ msgstr "Az img2pdf nem támogatja a képformátumot"
 
 #: pdfarranger/pdfarranger.py:1789
 msgid "Img2pdf missing."
-msgstr ""
+msgstr "Az img2pdf hiányzik."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
@@ -345,15 +347,15 @@ msgstr "Nem egységes oldalméret – a legfeljebb méret használata"
 
 #: pdfarranger/exporter.py:559
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: pdfarranger/pdfarranger.py:2723
 msgid "Note"
-msgstr ""
+msgstr "Megjegyzés"
 
 #: pdfarranger/pdfarranger.py:2729
 msgid "Note the limitations:"
-msgstr ""
+msgstr "Vegye figyelembe a korlátozásokat:"
 
 #: data/pdfarranger.ui:37
 msgid "Open"
@@ -365,7 +367,7 @@ msgstr "Megnyitás…"
 
 #: pdfarranger/pdfarranger.py:2731
 msgid "Outlines and links can be preserved only in certain cases."
-msgstr ""
+msgstr "A körvonalak és a hivatkozások csak bizonyos esetekben őrizhetők meg."
 
 #: pdfarranger/pageutils.py:899
 msgid "Overlay"
@@ -394,7 +396,7 @@ msgstr "PDF-fájlok"
 
 #: pdfarranger/exporter.py:599
 msgid "Page Handling"
-msgstr ""
+msgstr "Oldalkezelés"
 
 #: pdfarranger/pageutils.py:394
 msgid "Page Order"
@@ -406,7 +408,7 @@ msgstr "Oldalméret:"
 
 #: pdfarranger/pageutils.py:243
 msgid "Page size"
-msgstr ""
+msgstr "Oldalméret"
 
 #: pdfarranger/core.py:457
 msgid "Password"
@@ -462,7 +464,7 @@ msgstr "PDF-rendező verzió nyomtatása és kilépés"
 
 #: pdfarranger/config.py:267
 msgid "Printing"
-msgstr ""
+msgstr "Nyomtatás"
 
 #: pdfarranger/exporter.py:579
 msgid "Printing…"
@@ -570,7 +572,7 @@ msgstr "Nagyságrendi tényező"
 
 #: pdfarranger/exporter.py:557
 msgid "Scale mode:"
-msgstr ""
+msgstr "Méretezési mód:"
 
 #: data/menu.ui:207 data/menu.ui:371
 msgid "Select _All"
@@ -590,7 +592,7 @@ msgstr "Kiválasztott oldalak: "
 
 #: pdfarranger/pageutils.py:548
 msgid "Show values"
-msgstr ""
+msgstr "Értékek megjelenítése"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -615,7 +617,7 @@ msgstr "A(z) „{}” dokumentum zárolva van és megnyitásához jelszó szüks
 
 #: pdfarranger/pdfarranger.py:1765
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr ""
+msgstr "Az oldalon több kép található. A „Képekké felbontása” első használat."
 
 #: pdfarranger/core.py:446
 msgid "The password will be remembered until you close PDF Arranger."
@@ -647,7 +649,7 @@ msgstr "Ismeretlen fájlformátum"
 
 #: pdfarranger/pdfarranger.py:2735
 msgid "User Manual"
-msgstr ""
+msgstr "Felhasználói kézikönyv"
 
 #: pdfarranger/metadata.py:216
 msgid "Value"
@@ -704,7 +706,7 @@ msgstr "_Névjegy"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Apply"
-msgstr ""
+msgstr "_Alkalmazás"
 
 #: pdfarranger/config.py:246 pdfarranger/pageutils.py:227
 #: pdfarranger/pdfarranger.py:975 pdfarranger/pdfarranger.py:984
@@ -722,7 +724,7 @@ msgstr "_Másolás"
 
 #: data/menu.ui:166 data/menu.ui:424
 msgid "_Crop Margins…"
-msgstr ""
+msgstr "Margók ki_vágása…"
 
 #: data/menu.ui:90 data/menu.ui:298
 msgid "_Delete"
@@ -738,15 +740,15 @@ msgstr "S_zerkesztés"
 
 #: data/menu.ui:137 data/menu.ui:350
 msgid "_Explode into Images"
-msgstr ""
+msgstr "Képekké fel_bontása"
 
 #: data/menu.ui:135 data/menu.ui:347
 msgid "_Extract"
-msgstr ""
+msgstr "Ki_bontás"
 
 #: data/menu.ui:170 data/menu.ui:428
 msgid "_Hide Margins…"
-msgstr ""
+msgstr "Margók el_rejtése…"
 
 #: data/menu.ui:30
 msgid "_Import"
@@ -774,7 +776,7 @@ msgstr "_Megnyitás…"
 
 #: data/menu.ui:162 data/menu.ui:420
 msgid "_Page Size…"
-msgstr ""
+msgstr "_Oldalméret…"
 
 #: data/menu.ui:71
 msgid "_Print…"
@@ -790,7 +792,7 @@ msgstr "Új_ra"
 
 #: pdfarranger/pageutils.py:856
 msgid "_Revert"
-msgstr ""
+msgstr "_Visszaállítás"
 
 #: data/menu.ui:157 data/menu.ui:415
 msgid "_Rotate Right"

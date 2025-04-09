@@ -24,7 +24,6 @@ import tempfile
 import io
 import gi
 import locale
-import packaging.version as version
 from typing import Any, Dict, List
 
 from . import metadata
@@ -244,7 +243,7 @@ def warn_dialog(func):
             self.buffer += str(message) + '\n'
 
     def wrapper(*args, **kwargs):
-        export_msg = args[-1]
+        export_msg = kwargs["export_msg"]
         backup_showwarning = warnings.showwarning
         warnings.showwarning = ShowWarning()
         try:
@@ -384,14 +383,21 @@ def _transform_job(pdf_output: pikepdf.Pdf, pages: List[Page], quit_flag = None)
             del pdf_output.pages[i + 1]
 
 
+def get_max_pdf_version(pdf_list: List[pikepdf.Pdf]) -> str:
+    """Return the highest pdf version used in pdf list"""
+    versions = []
+    for pdf in pdf_list:
+        if pdf is None:
+            # Can be None when printing
+            continue
+        versions.append(pdf.pdf_version)
+    return max(*versions)
+
 
 def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
-    max_version = max(
-        pdf_output.pdf_version,
-        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
-    )
+    max_version = get_max_pdf_version([pdf_output, *pdf_input])
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():
         return
@@ -462,10 +468,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
     job = _create_job(files, pages, files_out, quit_flag, test_mode)
     pdf_output = job.create_pdf()
-    max_version = max(
-        pdf_output.pdf_version,
-        *[one_pdf_input.pdf_version for one_pdf_input in pdf_input],
-    )
+    max_version = get_max_pdf_version([pdf_output, *pdf_input])
 
     _transform_job(pdf_output, pages, quit_flag)
 
@@ -489,11 +492,11 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         job.write_pdf(pdf_output)
 
 
-def export(files, pages, mdata, files_out, quit_flag, _export_msg, test_mode=False):
+def export(files, pages, mdata, files_out, config, quit_flag, test_mode=False, **kwargs):
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
-    if version.parse(pikepdf.__version__) < version.Version("8.0"):
+    if config.start_with_empty():
         export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
     else:
         export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode)
@@ -602,7 +605,6 @@ class PrintOperation(Gtk.PrintOperation):
         self.connect("end-print", self.end_print, None)
         self.connect("draw-page", self.draw_page, None)
         self.connect("preview", self.preview, None)
-        self.pdf_input = None
         self.message = self.MESSAGE
         self.scale_mode = self.app.config.scale_mode()
         self.auto_rotate = self.app.config.auto_rotate()
@@ -639,18 +641,19 @@ class PrintOperation(Gtk.PrintOperation):
         self.app.apply_hide_margins_on_pages(self.pages)
         self.set_n_pages(len(self.pages))
 
-        # Open pikepdf objects for all pages that has been modified
+        # Create a temporary pdf of the pages to print
         nfiles = set()
         for p in self.pages:
-            if p.unmodified():
-                continue
             nfiles.add(p.nfile)
             for lp in p.layerpages:
                 nfiles.add(lp.nfile)
-        self.pdf_input = [None] * len(self.app.pdfqueue)
+        pdf_input = [None] * len(self.app.pdfqueue)
         for nfile in nfiles:
             pdf = self.app.pdfqueue[nfile - 1]
-            self.pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+            pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+        self.buf = io.BytesIO()
+        export_doc(pdf_input, self.pages, {}, [self.buf], None)
+        self.temp_doc = Poppler.Document.new_from_data(self.buf.getvalue())
 
     def end_print(self, operation, print_ctx, print_data):
         self.app.set_export_state(False)
@@ -686,17 +689,8 @@ class PrintOperation(Gtk.PrintOperation):
         dy = h_paper / (scale * print_scale) - h_page
         cairo_ctx.translate(dx / 2, dy / 2)
 
-        p = self.pages[page_num]
-        if p.unmodified():
-            pdfdoc = self.app.pdfqueue[p.nfile - 1]
-            page = pdfdoc.document.get_page(p.npage - 1)
-            with pdfdoc.render_lock:
-                page.render_for_printing(cairo_ctx)
-        else:
-            buf = io.BytesIO()
-            export_doc(self.pdf_input, [p], {}, [buf], None)
-            page = Poppler.Document.new_from_data(buf.getvalue()).get_page(0)
-            page.render_for_printing(cairo_ctx)
+        page = self.temp_doc.get_page(page_num)
+        page.render_for_printing(cairo_ctx)
 
     def run(self):
         result = super().run(Gtk.PrintOperationAction.PRINT_DIALOG, self.app.window)

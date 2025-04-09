@@ -3,6 +3,7 @@ import os
 import packaging.version as version
 from typing import Any, List, Tuple
 import unittest
+from unittest.mock import Mock
 
 import pikepdf
 
@@ -89,26 +90,29 @@ class ExporterTest(unittest.TestCase):
 
         return True, ''
 
-    def case(self, test, files, *pages):
+    def case(self, test, files, *pages, start_with_empty=False):
         """Run a single test case."""
-        if version.parse(pikepdf.__version__) < version.Version('8.0.0'):
+        if version.parse(pikepdf.__version__) < version.Version('8.0.0') or start_with_empty:
             expected_file = file(f'test{test}_out')
+            start_with_empty = True
         else:
             expected_file = file(f'test{test}_8_out')
             if not os.path.exists(expected_file):
                 expected_file = file(f'test{test}_out')
 
-        export(files, pages, {}, [file('out')], None, None, True)
+        mock_config = Mock()
+        mock_config.start_with_empty.return_value = start_with_empty
+        export(files, pages, {}, [file('out')], mock_config, None, True)
         self.assertTrue(*self.compare_files(file('out'), expected_file))
 
     def basic(self, test, *pages):
         """Test with basic.pdf as single input file."""
         self.case(test, [(file('basic'), '')], *pages)
 
-    def outlines(self, test, *pages, ignore_8=None):
+    def outlines(self, test, *pages, ignore_8=None, start_with_empty=False):
         """Test with outlines.pdf as single input file."""
         if version.parse(pikepdf.__version__) >= version.Version('8.0.0'):
-            self.case(test, [(file('outlines'), '')], *pages)
+            self.case(test, [(file('outlines'), '')], *pages, start_with_empty=start_with_empty)
 
     def test01(self):
         """No transformations"""
@@ -198,6 +202,10 @@ class ExporterTest(unittest.TestCase):
     def test19(self):
         """Copy file with outlines"""
         self.outlines(19, Page(1), Page(2), Page(3), Page(4))
+
+    def test19a(self):
+        """Copy file and discard outlines for pikepdf 8 """
+        self.outlines(19, Page(1), Page(2), Page(3), Page(4), start_with_empty=True)
 
     def test20(self):
         """Reorder pages in file with outlines"""
