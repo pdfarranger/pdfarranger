@@ -549,7 +549,7 @@ class PDFDoc:
             self.basename = description.split('\n')[0]
         self.blank_size = blank_size  # != None if page is blank
         self.password = ""
-        filemime = mimetypes.guess_type(self.filename)[0]
+        filemime = mimetypes.guess_type(self.filename, strict=False)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
         if filemime == "application/pdf":
@@ -568,7 +568,7 @@ class PDFDoc:
         elif filemime.split("/")[0] == "image":
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
-            if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
+            if mimetypes.guess_type(filename, strict=False)[0] in img2pdf_supported_img:
                 self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
