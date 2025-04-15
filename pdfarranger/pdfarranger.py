@@ -704,7 +704,7 @@ class PdfArranger(Gtk.Application):
                 for mime in img2pdf_supported_img:
                     if os.name != 'nt':
                         f.add_mime_type(mime)
-                    for extension in mimetypes.guess_all_extensions(mime):
+                    for extension in mimetypes.guess_all_extensions(mime, strict=False):
                         f.add_pattern('*' + extension)
             filter_list.append(f_img)
         return filter_list
@@ -1736,7 +1736,7 @@ class PdfArranger(Gtk.Application):
                 filepaths = []
                 try:
                     for filepath in data:
-                        filemime = mimetypes.guess_type(filepath)[0]
+                        filemime = mimetypes.guess_type(filepath, strict=False)[0]
                         if not filemime:
                             raise PDFDocError(filepath + ':\n' + _('Unknown file format'))
                         if filemime == 'application/pdf':
