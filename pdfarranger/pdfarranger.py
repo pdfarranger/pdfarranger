@@ -1276,9 +1276,10 @@ class PdfArranger(Gtk.Application):
         # Release Poppler.Document instances to unlock all temporary files
         self.pdfqueue = []
         gc.collect()
-        self.config.set_window_size(self.window.get_size())
-        self.config.set_maximized(self.window.is_maximized())
-        self.config.set_zoom_level(round(self.zoom_level))
+        if self.config.save_window_geometry():
+            self.config.set_window_size(self.window.get_size())
+            self.config.set_maximized(self.window.is_maximized())
+            self.config.set_zoom_level(round(self.zoom_level))
         self.config.save()
         if os.path.isdir(self.tmp_dir):
             shutil.rmtree(self.tmp_dir)
