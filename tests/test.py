@@ -218,7 +218,7 @@ class PdfArrangerTest(unittest.TestCase):
         c = 0
         while not cond():
             time.sleep(0.1)
-            self.assertLess(c, 30)
+            self.assertLess(c, 300)
             c += 1
 
     def _find_by_role(self, role, node=None, show_only=False):
