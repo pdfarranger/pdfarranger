@@ -33,6 +33,7 @@ class State:
     label: str
     pages: list[Page]
     selection: list[int]
+    vadj_percent: float
 
 
 class Manager(object):
@@ -74,11 +75,13 @@ class Manager(object):
         1. The label of the action
         2. The pages
         3. Which page numbers are selected
+        4. The vertical adjustment percent value
         """
         pages = [row[0].duplicate(False) for row in self.model]
         s = self.app.iconview.get_selected_items()
         selection = [path.get_indices()[0] for path in s]
-        return State(self.label, pages, selection)
+        vadj_percent = self.app.vadj_percent_handler()
+        return State(self.label, pages, selection, vadj_percent)
 
     def undo(self, _action, _param, _unused):
         if self.current == len(self.states):
@@ -112,6 +115,7 @@ class Manager(object):
         with GObject.signal_handler_block(self.app.iconview, self.app.id_selection_changed_event):
             for num in state.selection:
                 self.app.iconview.select_path(self.model[num].path)
+        self.app.vadj_percent = state.vadj_percent
         self.app.update_iconview_geometry()
         self.app.update_max_zoom_level()
         self.app.retitle()
