@@ -1802,11 +1802,13 @@ class PdfArranger(Gtk.Application):
             return
         dpage = self.model[destination[-1]][0]
         lpage_stack = page_stack[0]
+        rescale = 1
         if offset_xy is None:
             a = self.window, dpage, lpage_stack, self.model, self.pdfqueue, laypos, self.layer_pos
-            offset_xy = pageutils.PastePageLayerDialog(*a).get_offset()
-            if offset_xy is None:
+            result = pageutils.PastePageLayerDialog(*a).get_offset_and_rescale()
+            if result is None:
                 return
+            offset_xy, rescale = result
             self.layer_pos = offset_xy
             self.undomanager.commit("Add Layer")
             self.set_unsaved(True)
@@ -1818,6 +1820,7 @@ class PdfArranger(Gtk.Application):
 
             # The "main" pasted page
             lp0 = layerpage_stack[0].duplicate()
+            lp0.scale *= rescale
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
             scaley = (dpage.height_in_points() - lp0.height_in_points()) / dheight
@@ -1838,6 +1841,7 @@ class PdfArranger(Gtk.Application):
             sm1 = Sides(scalex, scalex, scaley, scaley)
             for lp in layerpage_stack[1:]:
                 lp = lp.duplicate()
+                lp.scale *= rescale
                 scalex = (lp0.size[0] * lp0.scale) / (lp.size[0] * lp.scale)
                 scaley = (lp0.size[1] * lp0.scale) / (lp.size[1] * lp.scale)
                 sm2 = Sides(scalex, scalex, scaley, scaley)
