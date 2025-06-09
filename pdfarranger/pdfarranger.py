@@ -41,11 +41,11 @@ from urllib.request import url2pathname
 from functools import lru_cache
 from math import log
 
-multiprocessing.freeze_support()  # Does nothing in Linux
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
 if getattr(sys, 'frozen', False):
+    multiprocessing.freeze_support()
     basedir = os.path.dirname(sys.executable)
     sharedir = os.path.join(basedir, 'share')
 elif sys.argv[0]:
