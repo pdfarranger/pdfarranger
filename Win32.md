@@ -28,7 +28,7 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
 ```
 
 ```
-/mingw64/bin/python3.exe -m pip install --user keyboard darkdetect
+/mingw64/bin/python3.exe -m pip install --user keyboard
 ```
 
 ## Building PDF Arranger
