@@ -90,7 +90,7 @@ VERSION = '1.12.1'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
-    import darkdetect
+    from winreg import HKEY_CURRENT_USER, QueryValueEx, OpenKey
     import keyboard  # to get control key state when drag to other instance
     # Add support for dnd to other instance and insert file at drop location in Windows
     os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
@@ -351,9 +351,21 @@ class PdfArranger(Gtk.Application):
 
     def set_color_scheme(self):
         if Handy:
+            win_dark = False
+            if os.name == 'nt':
+                # Read from Registry whether Windows use dark theme
+                try:
+                    key = OpenKey(
+                        HKEY_CURRENT_USER,
+                        "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+                        )
+                    win_dark = QueryValueEx(key, "AppsUseLightTheme")[0] == 0
+                except FileNotFoundError:
+                    # Use light
+                    pass
             try:
                 scheme = Handy.ColorScheme.PREFER_LIGHT
-                if os.name == 'nt' and darkdetect.isDark():
+                if os.name == 'nt' and win_dark:
                     scheme = Handy.ColorScheme.PREFER_DARK
                 theme = self.config.theme()
                 if theme == 'dark':
