@@ -9,20 +9,22 @@
 # David Kyburz, 2022, 2023
 # Steffen Rehberg 2024
 # Malgardian 2025
+# Sebastian Scherch, 2025.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-22 16:57+0100\n"
-"PO-Revision-Date: 2025-03-22 16:55+0100\n"
-"Last-Translator: Malgardian\n"
+"PO-Revision-Date: 2025-07-09 08:35+0200\n"
+"Last-Translator: Sebastian Scherch\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Gtranslator 48.0\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -186,7 +188,7 @@ msgstr "E_xportieren"
 
 #: data/menu.ui:55 data/menu.ui:509
 msgid "E_xport Selection to a Single File…"
-msgstr "Auswahl in eine Datei e_xportieren …"
+msgstr "Auswahl in eine Datei e_xportieren…"
 
 #: data/menu.ui:298
 msgid "Edit _Properties"
@@ -206,11 +208,11 @@ msgstr "Gleiche Zeilenhöhe"
 
 #: pdfarranger/pdfarranger.py:2033
 msgid "Exploding into images…"
-msgstr "In Einzelbilder umwandeln …"
+msgstr "In Einzelbilder umwandeln…"
 
 #: data/menu.ui:60 data/menu.ui:514
 msgid "Export Selection to _Individual Files…"
-msgstr "Auswahl in E_inzeldateien exportieren …"
+msgstr "Auswahl in E_inzeldateien exportieren…"
 
 #: data/menu.ui:74 data/menu.ui:528
 msgid "Export Selection to _JPG Images…"
@@ -230,11 +232,11 @@ msgstr "Auswahl als ge_rastertes PDF (PNG) exportieren…"
 
 #: data/menu.ui:65 data/menu.ui:519
 msgid "Export _All Pages to Individual Files…"
-msgstr "_Alle Seiten in Einzeldateien exportieren …"
+msgstr "_Alle Seiten in Einzeldateien exportieren…"
 
 #: pdfarranger/pdfarranger.py:1307
 msgid "Export…"
-msgstr "Exportieren …"
+msgstr "Exportieren…"
 
 #: pdfarranger/core.py:581 pdfarranger/pdfarranger.py:1751
 msgid "File is neither pdf nor image"
@@ -351,7 +353,7 @@ msgstr "Es verwendet libqpdf %s, pikepdf %s, GTK %s and Python %s."
 
 #: pdfarranger/pdfarranger.py:688
 msgid "JPEG images"
-msgstr "JPEG Dateien"
+msgstr "JPEG-Dateien"
 
 #: pdfarranger/metadata.py:45
 msgid "Keywords"
@@ -419,7 +421,7 @@ msgstr "Öffnen"
 
 #: pdfarranger/pdfarranger.py:1422
 msgid "Open…"
-msgstr "Öffnen …"
+msgstr "Öffnen…"
 
 #: pdfarranger/config.py:315
 msgid "Optimize"
@@ -461,7 +463,7 @@ msgstr "PDF-Dateien"
 
 #: pdfarranger/pdfarranger.py:680
 msgid "PNG images"
-msgstr "PNG Dateien"
+msgstr "PNG-Dateien"
 
 #: pdfarranger/exporter.py:616
 msgid "Page Handling"
@@ -549,7 +551,7 @@ msgstr "Drucken"
 
 #: pdfarranger/exporter.py:597
 msgid "Printing…"
-msgstr "Drucken …"
+msgstr "Drucken…"
 
 #: pdfarranger/metadata.py:46
 msgid "Producer"
@@ -573,11 +575,11 @@ msgstr "Relativ"
 
 #: pdfarranger/exporter.py:634
 msgid "Rendering Preview…"
-msgstr "Vorschau erstellen …"
+msgstr "Vorschau erstellen…"
 
 #: pdfarranger/pdfarranger.py:953
 msgid "Rendering…"
-msgstr "Vorschau erstellen …"
+msgstr "Vorschau erstellen…"
 
 #: pdfarranger/pdfarranger.py:1368
 msgid "Replace"
@@ -658,11 +660,11 @@ msgstr "Speichern führte zu einigen Warnungen"
 
 #: pdfarranger/config.py:297
 msgid "Saving/exporting to single file"
-msgstr "Speichern/exportieren als eine Datei"
+msgstr "Speichern/exportieren als einzelne Datei"
 
 #: pdfarranger/pdfarranger.py:1527
 msgid "Saving…"
-msgstr "Speichern …"
+msgstr "Speichern…"
 
 #: pdfarranger/pageutils.py:348
 msgid "Scale"
@@ -952,7 +954,7 @@ msgstr "_Aufteilen"
 
 #: data/menu.ui:206 data/menu.ui:481
 msgid "_Split Pages…"
-msgstr "_Seiten teilen …"
+msgstr "_Seiten teilen…"
 
 #: data/menu.ui:98
 msgid "_Undo"
