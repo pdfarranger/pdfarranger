@@ -916,9 +916,3 @@ msgstr "página"
 #: pdfarranger/pdfarranger.py:1035
 msgid "untitled"
 msgstr "sem título"
-
-#~ msgid "Generate Booklet"
-#~ msgstr "Gerar folheto"
-
-#~ msgid "Page Size:"
-#~ msgstr "Tamanho da página:"
