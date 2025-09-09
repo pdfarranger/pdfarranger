@@ -176,9 +176,6 @@ def _scale(doc, page, factor):
         Rotate=rotate,
     )
     # This was needed for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
-    # It's also needed with pikepdf 4.2 else we get:
-    # RuntimeError: QPDFPageObjectHelper::getFormXObjectForPage called with a direct object
-    # when calling as_form_xobject in generate_booklet
     # It's also needed for pikepdf 8.8 but not for pikepdf 6.0.1
     new_page = doc.make_indirect(new_page)
     return new_page
@@ -511,62 +508,6 @@ def num_pages(filepath):
     npages = len(pdf.pages)
     pdf.close()
     return npages
-
-
-def generate_booklet(pdfqueue, tmp_dir, pages):
-    file, filename = make_tmp_file(tmp_dir)
-    content_dict = pikepdf.Dictionary({})
-    file_indexes = set()
-    for p in pages:
-        file_indexes.add(p.nfile)
-        for lp in p.layerpages:
-            file_indexes.add(lp.nfile)
-    source_files = {n-1: pikepdf.open(pdfqueue[n - 1].copyname) for n in file_indexes}
-    max_version = max(pdf.pdf_version for pdf in source_files.values())
-    _copy_n_transform(source_files, file, pages)
-    to_remove = len(file.pages)
-    npages = len(pages)
-    for i in range(npages//2):
-        even = i % 2 == 0
-        first_id = -i - 1 if even else i
-        second_id = i if even else -i - 1
-        if first_id < 0:
-            first_id += npages
-        if second_id < 0:
-            second_id += npages
-        first = pages[first_id]
-        second = pages[second_id]
-        first_foreign = file.pages[first_id]
-        second_foreign = file.pages[second_id]
-        second_page_size = second.size_in_points()
-        first_page_size = first.size_in_points()
-        page_size = [max(second_page_size[0], first_page_size[0]) * 2,
-                     max(second_page_size[1], first_page_size[1])]
-
-        content_dict[f'/Page{i*2}'] = pikepdf.Page(first_foreign).as_form_xobject()
-        content_dict[f'/Page{i*2 + 1}'] = pikepdf.Page(second_foreign).as_form_xobject()
-        # See PDF reference section 4.2.3 Transformation Matrices
-        tx1 = -first_foreign.MediaBox[0]
-        ty1 = -first_foreign.MediaBox[1]
-        tx2 = first_page_size[0] - float(second_foreign.MediaBox[0])
-        ty2 = -second_foreign.MediaBox[1]
-        content_txt = (
-            f"q 1 0 0 1 {tx1} {ty1} cm /Page{i*2} Do Q "
-            f"q 1 0 0 1 {tx2} {ty2} cm /Page{i*2 + 1} Do Q "
-        )
-
-        newpage = pikepdf.Dictionary(
-                Type=pikepdf.Name.Page,
-                MediaBox=[0, 0, *page_size],
-                Resources=pikepdf.Dictionary(XObject=content_dict),
-                Contents=pikepdf.Stream(file, content_txt.encode())
-            )
-
-        file.pages.append(pikepdf.Page(newpage))
-    for __ in range(to_remove):
-        del file.pages[0]
-    file.save(filename, min_version=max_version)
-    return filename
 
 
 class PrintSettingsWidget(Gtk.Grid):
