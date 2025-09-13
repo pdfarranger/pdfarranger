@@ -1639,7 +1639,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.scroll_to_path(path, False, 0, 0)
         sw_hadj.set_value(sw_hpos)
 
-    def copy_pages(self, add_hash=True):
+    def copy_pages(self, add_hash=True, deserialize=False):
         """Collect data from selected pages"""
 
         model = self.iconview.get_model()
@@ -1652,6 +1652,8 @@ class PdfArranger(Gtk.Application):
             data.append(model.get_value(it, 0).serialize())
 
         if data:
+            if deserialize:
+                return self.deserialize(data)
             data = '\n;\n'.join(data)
             if add_hash:
                 h = hashlib.sha256(data.encode('utf-8')).hexdigest()
@@ -2739,8 +2741,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         if not self.is_paste_layer_available(selection):
             return
-        data = self.copy_pages(add_hash=False)
-        data = self.deserialize(data.split('\n;\n'))
+        data = self.copy_pages(add_hash=False, deserialize=True)
         sizes, max_size, equal = self.get_size_info(selection)
         r = pageutils.MergePagesDialog(self.window, max_size, equal).run_get()
         if r is None:
