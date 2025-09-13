@@ -2731,7 +2731,7 @@ class PdfArranger(Gtk.Application):
         min_width = min(s[0] for s in sizes)
         max_height = max(s[1] for s in sizes)
         min_height = min(s[1] for s in sizes)
-        equal = max_width == min_width and max_height == min_height
+        equal = max_width - min_width < 1e-2 and max_height - min_height < 1e-2
         return sizes, (max_width, max_height), equal
 
     def merge_pages(self, _action, _parameter, _unknown):
