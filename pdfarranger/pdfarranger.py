@@ -2761,8 +2761,7 @@ class PdfArranger(Gtk.Application):
             return
         adder.move(ref, before)
         adder.addpages(file)
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            adder.commit(select_added=True, add_to_undomanager=False)
+        adder.commit(select_added=True, add_to_undomanager=False)
 
         nlpage = 0
         while ndpage < len(self.model) and nlpage < len(data):
@@ -2781,7 +2780,6 @@ class PdfArranger(Gtk.Application):
                     break
             ndpage += 1
         self.update_iconview_geometry()
-        self.iv_selection_changed_event()
         self.update_max_zoom_level()
 
     def edit_metadata(self, _action, _parameter, _unknown):
