@@ -756,7 +756,11 @@ class PageAdder:
                     it = self.app.model.append(m)
                 if select_added:
                     path = self.app.model.get_path(it)
-                    self.app.iconview.select_path(path)
+                    args = self.app.iconview, self.app.id_selection_changed_event
+                    with GObject.signal_handler_block(*args):
+                        self.app.iconview.select_path(path)
+        if select_added:
+            self.app.iv_selection_changed_event()
         if add_to_undomanager:
             self.app.update_iconview_geometry()
             GObject.idle_add(self.app.retitle)
