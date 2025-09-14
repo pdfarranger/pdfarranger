@@ -226,6 +226,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   </releases>
   <project_license>GPL-3.0-or-later</project_license>
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
+  <url type="vcs-browser">https://github.com/pdfarranger/pdfarranger</url>
   <url type="bugtracker">https://github.com/pdfarranger/pdfarranger/issues</url>
   <url type="help">https://github.com/pdfarranger/pdfarranger/discussions</url>
   <url type="translate">https://github.com/pdfarranger/pdfarranger#for-translators</url>
