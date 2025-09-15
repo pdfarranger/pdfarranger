@@ -496,43 +496,49 @@ class PdfArranger(Gtk.Application):
             adder.commit(select_added=False, add_to_undomanager=True)
 
     def generate_booklet(self, _action, _option, _unknown):
-        self.undomanager.commit("generate booklet")
-        model = self.iconview.get_model()
-
         selection = self.iconview.get_selected_items()
-        selection.sort(key=lambda x: x.get_indices()[0])
-        ref_list = [Gtk.TreeRowReference.new(model, path)
-                    for path in selection]
-        pages = [model.get_value(model.get_iter(ref.get_path()), 0)
-                 for ref in ref_list]
-
-        self.apply_hide_margins_on_pages(pages)
+        _sizes, max_size, equal_size = self.get_size_info(selection)
 
         # Need uniform page size.
-        if not is_same_page_size(pages):
+        if not equal_size:
             msg = _('All pages must have the same size.')
             self.error_message_dialog(msg)
             return
+        self.undomanager.commit("generate booklet")
 
-        # We need a multiple of 4
-        blank_page_count = 0 if len(pages) % 4 == 0 else 4 - len(pages) % 4
-        if blank_page_count > 0:
-            adder = PageAdder(self)
-            a = adder, self.pdfqueue, self.tmp_dir, pages[0].size_in_points()
-            file, _npage = exporter.get_blank_doc(*a)
-            if file is None:
-                return
-            for __ in range(blank_page_count):
-                adder.addpages(file)
-            pages += adder.pages
+        data = self.copy_pages(add_hash=False, deserialize=True)
+        self.clear_selected(add_to_undomanager=False)
+        self.iconview.unselect_all()
 
         adder = PageAdder(self)
-        booklet = exporter.generate_booklet(self.pdfqueue, self.tmp_dir, pages)
-        adder.move(Gtk.TreeRowReference.new(self.model, selection[0]), True)
-        adder.addpages(booklet)
-        adder.commit(select_added=False, add_to_undomanager=False)
-        self.clear_selected(add_to_undomanager=False)
-        self.silent_render()
+        blank_page_count = 0 if len(data) % 4 == 0 else 4 - len(data) % 4
+        npages = len(data) + blank_page_count
+        nbooklet = npages // 2
+        ndpage = selection[-1].get_indices()[0]
+        before = ndpage < len(self.model)
+        ref = Gtk.TreeRowReference.new(self.model, selection[-1]) if before else None
+        w, h = max_size
+        a = adder, self.pdfqueue, self.tmp_dir, (w * 2, h), nbooklet
+        file = exporter.get_blank_doc(*a)[0]
+        adder.move(ref, before)
+        adder.addpages(file)
+        adder.commit(select_added=True, add_to_undomanager=False)
+        self.update_iconview_geometry()
+        self.update_max_zoom_level()
+
+        for i in range(nbooklet):
+            even = i % 2 == 0
+            first_id = -i - 1 if even else i
+            second_id = i if even else -i - 1
+            if first_id < 0:
+                first_id += npages
+            if second_id < 0:
+                second_id += npages
+            destination = self.model[ndpage + i].path
+            if first_id < len(data):
+                self.paste_as_layer([data[first_id]], destination, 'OVERLAY', (0, 0.5))
+            if second_id < len(data):
+                self.paste_as_layer([data[second_id]], destination, 'OVERLAY', (1, 0.5))
 
     def split_booklet(self, _action, _option, _unknown):
         """ Split selected pages as a booklet (unimposition) """
@@ -1636,7 +1642,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.scroll_to_path(path, False, 0, 0)
         sw_hadj.set_value(sw_hpos)
 
-    def copy_pages(self, add_hash=True):
+    def copy_pages(self, add_hash=True, deserialize=False):
         """Collect data from selected pages"""
 
         model = self.iconview.get_model()
@@ -1649,6 +1655,8 @@ class PdfArranger(Gtk.Application):
             data.append(model.get_value(it, 0).serialize())
 
         if data:
+            if deserialize:
+                return self.deserialize(data)
             data = '\n;\n'.join(data)
             if add_hash:
                 h = hashlib.sha256(data.encode('utf-8')).hexdigest()
@@ -2728,7 +2736,7 @@ class PdfArranger(Gtk.Application):
         min_width = min(s[0] for s in sizes)
         max_height = max(s[1] for s in sizes)
         min_height = min(s[1] for s in sizes)
-        equal = max_width == min_width and max_height == min_height
+        equal = max_width - min_width < 1e-2 and max_height - min_height < 1e-2
         return sizes, (max_width, max_height), equal
 
     def merge_pages(self, _action, _parameter, _unknown):
@@ -2736,8 +2744,7 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         if not self.is_paste_layer_available(selection):
             return
-        data = self.copy_pages(add_hash=False)
-        data = self.deserialize(data.split('\n;\n'))
+        data = self.copy_pages(add_hash=False, deserialize=True)
         sizes, max_size, equal = self.get_size_info(selection)
         r = pageutils.MergePagesDialog(self.window, max_size, equal).run_get()
         if r is None:
@@ -2760,8 +2767,7 @@ class PdfArranger(Gtk.Application):
             return
         adder.move(ref, before)
         adder.addpages(file)
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            adder.commit(select_added=True, add_to_undomanager=False)
+        adder.commit(select_added=True, add_to_undomanager=False)
 
         nlpage = 0
         while ndpage < len(self.model) and nlpage < len(data):
@@ -2780,7 +2786,6 @@ class PdfArranger(Gtk.Application):
                     break
             ndpage += 1
         self.update_iconview_geometry()
-        self.iv_selection_changed_event()
         self.update_max_zoom_level()
 
     def edit_metadata(self, _action, _parameter, _unknown):
@@ -2914,7 +2919,7 @@ class PdfArranger(Gtk.Application):
         """Step 1 in update hide. This make hiding work in iconview.
 
         Step 2 does the 'real' hiding. This is done with:
-        apply_hide_margins_on_pages() (at export and generate_booklet).
+        apply_hide_margins_on_pages() (at export).
         apply_hide_margins_on_layerpages() (at paste_as_layer).
         """
         self.undomanager.commit("Hide")
