@@ -1154,15 +1154,18 @@ class PdfArranger(Gtk.Application):
             self.iconview.set_margin(margin)
 
     def vadj_percent_handler(self, store=False, restore=False):
-        """Store and restore adjustment percentual value."""
+        """Store, restore or return vertical adjustment percent value."""
         sw_vadj = self.sw.get_vadjustment()
         lower_limit = sw_vadj.get_lower()
         upper_limit = sw_vadj.get_upper()
         page_size = sw_vadj.get_page_size()
         sw_vpos = sw_vadj.get_value()
-        vadj_range = upper_limit - lower_limit - page_size
-        if store and self.vadj_percent is None and vadj_range > 0:
-            self.vadj_percent = (sw_vpos - lower_limit) / vadj_range
+        vadj_range = max(1, upper_limit - lower_limit - page_size)
+        vadj_percent = (sw_vpos - lower_limit) / vadj_range
+        if not store and not restore:
+            return vadj_percent
+        if store and self.vadj_percent is None:
+            self.vadj_percent = vadj_percent
         if restore and self.vadj_percent is not None:
             sw_vadj.set_value(self.vadj_percent * vadj_range + lower_limit)
             self.vadj_percent = None
