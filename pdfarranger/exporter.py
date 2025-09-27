@@ -592,6 +592,22 @@ class PrintSettingsWidget(Gtk.Grid):
         return self.cb.get_active()
 
 
+def get_in_memory_poppler_doc(pages, pdfqueue):
+    """Export the pages with pikepdf then create a in memory poppler doc"""
+    nfiles = set()
+    for p in pages:
+        nfiles.add(p.nfile)
+        for lp in p.layerpages:
+            nfiles.add(lp.nfile)
+    pdf_input = [None] * len(pdfqueue)
+    for nfile in nfiles:
+        pdf = pdfqueue[nfile - 1]
+        pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+    buf = io.BytesIO()
+    export_doc(pdf_input, pages, {}, [buf], None)
+    return Poppler.Document.new_from_data(buf.getvalue()), buf
+
+
 # Adapted from https://stackoverflow.com/questions/28325525/python-gtk-printoperation-print-a-pdf
 class PrintOperation(Gtk.PrintOperation):
     MESSAGE=_("Printing…")
@@ -641,19 +657,7 @@ class PrintOperation(Gtk.PrintOperation):
         self.app.apply_hide_margins_on_pages(self.pages)
         self.set_n_pages(len(self.pages))
 
-        # Create a temporary pdf of the pages to print
-        nfiles = set()
-        for p in self.pages:
-            nfiles.add(p.nfile)
-            for lp in p.layerpages:
-                nfiles.add(lp.nfile)
-        pdf_input = [None] * len(self.app.pdfqueue)
-        for nfile in nfiles:
-            pdf = self.app.pdfqueue[nfile - 1]
-            pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
-        self.buf = io.BytesIO()
-        export_doc(pdf_input, self.pages, {}, [self.buf], None)
-        self.temp_doc = Poppler.Document.new_from_data(self.buf.getvalue())
+        self.temp_doc, self.buf = get_in_memory_poppler_doc(self.pages, self.app.pdfqueue)
 
     def end_print(self, operation, print_ctx, print_data):
         self.app.set_export_state(False)
