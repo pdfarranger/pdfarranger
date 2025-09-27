@@ -22,6 +22,7 @@ import locale
 from math import pi
 
 from .core import Sides, Dims, PDFRenderer
+from .exporter import get_in_memory_poppler_doc
 
 _ = gettext.gettext
 
@@ -373,16 +374,20 @@ class ScaleDialog(BaseDialog):
 
 
 def white_borders(model, selection, pdfqueue):
-    crop = []
-    for path in selection:
-        it = model.get_iter(path)
-        p = model.get_value(it, 0)
-        pdfdoc = pdfqueue[p.nfile - 1]
+    pages = [model[row][0].duplicate(incl_thumbnail=False) for row in selection]
+    # Hidden parts are white and will be cropped also
+    orig_crops = [p.crop.max(p.hide) for p in pages]
+    # Create the temporary document without crops. They will be applied later
+    for p in pages:
+        p.crop = Sides()
+    poppler_doc, _buf = get_in_memory_poppler_doc(pages, pdfqueue)
 
-        page = pdfdoc.document.get_page(p.npage - 1)
+    crop = []
+    for i, orig_crop in enumerate(orig_crops):
+        poppler_page = poppler_doc.get_page(i)
+
         # Always render pages at 72 dpi whatever the zoom or scale of the page
-        w, h = page.get_size()
-        orig_crop = p.crop.rotated(-p.rotate_times(p.angle))
+        w, h = poppler_page.get_size()
 
         first_col = int(w * orig_crop.left)
         last_col = min(int(w), int(w * (1 - orig_crop.right) + 1))
@@ -392,8 +397,7 @@ def white_borders(model, selection, pdfqueue):
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
         cr = cairo.Context(thumbnail)
-        with pdfdoc.render_lock:
-            page.render(cr)
+        poppler_page.render(cr)
         data = thumbnail.get_data().cast("i")
         whitecol = memoryview(b"\0" * (last_row - first_row) * 4).cast("i")
         whiterow = memoryview(b"\0" * (last_col - first_col) * 4).cast("i")
@@ -422,7 +426,7 @@ def white_borders(model, selection, pdfqueue):
                 crop_this_page[3] = (h - row - 1) / h
                 break
 
-        crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
+        crop.append(Sides(*crop_this_page))
     return crop
 
 

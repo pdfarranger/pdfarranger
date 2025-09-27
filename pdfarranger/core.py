@@ -159,6 +159,17 @@ class Sides(NamedTuple):
         perm = (0, 2, 1, 3)
         return Sides(*(self[perm[(x + times) % 4]] for x in perm))
 
+    def max(self, other: "Sides") -> "Sides":
+        """
+        Pointwise max
+
+        Example:
+
+        >>> Sides(1, 2, 3, 4).max(Sides(4, 3, 2, 1))
+        Sides(left=4, right=3, top=3, bottom=4)
+        """
+        return Sides(*(max(self[i], other[i]) for i in range(4)))
+
 
 class Dims(NamedTuple):
     width: Numeric
