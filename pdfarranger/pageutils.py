@@ -861,6 +861,8 @@ class DrawingAreaWidget(Gtk.Box):
         cr = cairo.Context(self.surface)
         aw = self.da.get_allocated_width()
         ah = self.da.get_allocated_height()
+        if aw < 2 or ah < 2:
+            return
 
         # Destination page rectangle
         dw = dpage.width_in_pixel()
