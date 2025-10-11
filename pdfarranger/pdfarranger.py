@@ -1783,40 +1783,60 @@ class PdfArranger(Gtk.Application):
             self.silent_render()
         elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
             selection = self.iconview.get_selected_items()
-            self.paste_as_layer(data, selection, laypos=pastemode)
+            self.paste_as_layer_dialog(data, selection, laypos=pastemode)
 
-    def paste_as_layer(self, data, destination, laypos, offset_xy=None):
-        page_stack = []
+    def convert_page_data_to_layerpage_lists(self, data, laypos):
+        """Convert page data to lists of LayerPage objects
+
+        data is copy-pasted pages in deserialized form.
+        returns an array of LayerPage objects:
+        [
+          [page + layers from first page as LayerPages]
+          ...
+          [page + layers from last page as LayerPages]
+        ]
+        """
+        lpage_lists = []
         pageadder = PageAdder(self)
         for filename, npage, _description, angle, scale, crop, hide, layerdata in data:
             d = [[filename, npage, angle, scale, laypos, crop, Sides()]] + layerdata
-            lps = pageadder.get_layerpages(d)
-            self.apply_hide_margins_on_layerpages(lps, hide)
-            page_stack.append(lps)
-            if page_stack[-1] is None:
-                return
-        if not self.is_paste_layer_available(destination):
+            lpage_list = pageadder.get_layerpages(d)
+            if lpage_list is None:
+                # OSError in PageAdder.get_pdfdoc()
+                return None
+            self.apply_hide_margins_on_layerpages(lpage_list, hide)
+            lpage_lists.append(lpage_list)
+        return lpage_lists
+
+    def paste_as_layer_dialog(self, data, destination, laypos):
+        lpage_lists = self.convert_page_data_to_layerpage_lists(data, laypos)
+        if lpage_lists is None or len(destination) == 0:
             return
         dpage = self.model[destination[-1]][0]
-        lpage_stack = page_stack[0]
-        rescale = 1
-        if offset_xy is None:
-            a = self.window, dpage, lpage_stack, self.model, self.pdfqueue, laypos, self.layer_pos
-            result = pageutils.PastePageLayerDialog(*a).get_offset_and_rescale()
-            if result is None:
-                return
-            offset_xy, rescale = result
-            self.layer_pos = offset_xy
-            self.undomanager.commit("Add Layer")
-            self.set_unsaved(True)
+        lpage_list = lpage_lists[0]
+        a = self.window, dpage, lpage_list, self.model, self.pdfqueue, laypos, self.layer_pos
+        result = pageutils.PastePageLayerDialog(*a).get_offset_and_rescale()
+        if result is None:
+            # Dialog canceled
+            return
+        offset_xy, rescale = result
+        self.layer_pos = offset_xy
+        self.undomanager.commit("Add Layer")
+        self.set_unsaved(True)
+        self.paste_as_layer(data, destination, laypos, offset_xy, rescale)
+
+    def paste_as_layer(self, data, destination, laypos, offset_xy, rescale=1):
+        lpage_lists = self.convert_page_data_to_layerpage_lists(data, laypos)
+        if lpage_lists is None:
+            return
 
         off_x, off_y = offset_xy  # Fraction of the page size difference at left & top
         for num, row in enumerate(reversed(destination)):
             dpage = self.model[row][0]
-            layerpage_stack = page_stack[num % len(page_stack)]
+            layerpage_list = lpage_lists[num % len(lpage_lists)]
 
             # The "main" pasted page
-            lp0 = layerpage_stack[0].duplicate()
+            lp0 = layerpage_list[0].duplicate()
             lp0.scale *= rescale
             dwidth, dheight = dpage.size[0] * dpage.scale, dpage.size[1] * dpage.scale
             scalex = (dpage.width_in_points() - lp0.width_in_points()) / dwidth
@@ -1836,7 +1856,7 @@ class PdfArranger(Gtk.Application):
             scalex = (lp0.size[0] * lp0.scale) / (dpage.size[0] * dpage.scale)
             scaley = (lp0.size[1] * lp0.scale) / (dpage.size[1] * dpage.scale)
             sm1 = Sides(scalex, scalex, scaley, scaley)
-            for lp in layerpage_stack[1:]:
+            for lp in layerpage_list[1:]:
                 lp = lp.duplicate()
                 lp.scale *= rescale
                 scalex = (lp0.size[0] * lp0.scale) / (lp.size[0] * lp.scale)
@@ -2923,7 +2943,7 @@ class PdfArranger(Gtk.Application):
 
         Step 2 does the 'real' hiding. This is done with:
         apply_hide_margins_on_pages() (at export).
-        apply_hide_margins_on_layerpages() (at paste_as_layer).
+        apply_hide_margins_on_layerpages() (at at convert_page_data_to_layerpage_lists).
         """
         self.undomanager.commit("Hide")
         for num, row in enumerate(selection):
@@ -2960,7 +2980,7 @@ class PdfArranger(Gtk.Application):
             p.angle = 0
 
     def apply_hide_margins_on_layerpages(self, layerpages, hide):
-        """Step 2, hide margins on a layer stack. (called from paste_as_layer())"""
+        """Step 2, hide margins on a layer stack. (at convert_page_data_to_layerpage_lists())"""
         p = layerpages[0]
         if all([hide[i] <= p.crop[i] for i in range(4)]):
             return
