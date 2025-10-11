@@ -1048,10 +1048,10 @@ class CropHideDialog():
 
 
 class PastePageLayerDialog():
-    def __init__(self, window, dpage, lpage_stack, model, pdfqueue, mode, layer_pos):
+    def __init__(self, window, dpage, lpage_list, model, pdfqueue, mode, layer_pos):
         title = _("Overlay") if mode == 'OVERLAY' else _("Underlay")
-        lpage = lpage_stack[0].duplicate()
-        lpage.layerpages = [lp.duplicate() for lp in lpage_stack[1:]]
+        lpage = lpage_list[0].duplicate()
+        lpage.layerpages = [lp.duplicate() for lp in lpage_list[1:]]
         lpage.zoom = dpage.zoom
         lpage.resample = -1
         lpage.thumbnail = None
