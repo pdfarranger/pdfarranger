@@ -119,7 +119,7 @@ class Manager(object):
         self.app.update_iconview_geometry()
         self.app.update_max_zoom_level()
         self.app.retitle()
-        self.app.update_statusbar()
+        self.app.iv_selection_changed_event()
         self.app.silent_render()
 
     def __refresh(self):
