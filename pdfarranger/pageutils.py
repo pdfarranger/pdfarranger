@@ -674,6 +674,7 @@ class DrawingAreaWidget(Gtk.Box):
         self.handle_move_limits = True
         self.draw_on_page = draw_on_page_func
         self.da = Gtk.DrawingArea()
+        self.da.set_sensitive(False)
         self.da.set_events(self.da.get_events()
                               | Gdk.EventMask.BUTTON_PRESS_MASK
                               | Gdk.EventMask.BUTTON_RELEASE_MASK
@@ -897,10 +898,12 @@ class DrawingAreaWidget(Gtk.Box):
         ah = self.da.get_allocated_height()
         self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, aw, ah)
 
-    def on_draw(self, _darea, cr):
+    def on_draw(self, da, cr):
         if self.surface is not None:
             cr.set_source_surface(self.surface, 0, 0)
             cr.paint()
+        if self.adjust_rect != [0] * 4:
+            da.set_sensitive(True)  # Let CI GUI test know rectangle is drawn
 
     def draw_page(self, _widget=None, _rect=None):
         """Draw the 'destination' thumbnail page."""
