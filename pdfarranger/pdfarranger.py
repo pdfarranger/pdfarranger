@@ -472,7 +472,7 @@ class PdfArranger(Gtk.Application):
         for a, k in self.config.get_accels():
             self.set_accels_for_action("win." + a, [k] if isinstance(k, str) else k)
         # Disable actions
-        self.iv_selection_changed_event()
+        self.iv_selection_changed()
         self.window_focus_in_out_event()
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
@@ -667,7 +667,7 @@ class PdfArranger(Gtk.Application):
             self.model.reorder(reorder_pages)
 
         self.update_iconview_geometry()
-        self.iv_selection_changed_event()
+        self.iv_selection_changed()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
@@ -801,8 +801,6 @@ class PdfArranger(Gtk.Application):
         self.iconview.connect('motion_notify_event', self.iv_motion)
         self.iconview.connect('button_release_event', self.iv_button_release_event)
         self.iconview.connect('style_updated', self.set_text_renderer_cell_height)
-        self.id_selection_changed_event = self.iconview.connect('selection_changed',
-                                                          self.iv_selection_changed_event)
         self.iconview.connect('key_press_event', self.iv_key_press_event)
         self.iconview.connect('size_allocate', self.iv_size_allocate)
 
@@ -1088,13 +1086,12 @@ class PdfArranger(Gtk.Application):
         if is_preview:
             page.preview = thumbnail
         # Let iconview refresh the thumbnail (only) by selecting it
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            if self.iconview.path_is_selected(path):
-                self.iconview.unselect_path(path)
-                self.iconview.select_path(path)
-            else:
-                self.iconview.select_path(path)
-                self.iconview.unselect_path(path)
+        if self.iconview.path_is_selected(path):
+            self.iconview.unselect_path(path)
+            self.iconview.select_path(path)
+        else:
+            self.iconview.select_path(path)
+            self.iconview.unselect_path(path)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
         ac.set_description(page.description)
 
@@ -1567,7 +1564,7 @@ class PdfArranger(Gtk.Application):
             self.status_bar2.remove_all(ctxt_id)
             cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), 'default')
             self.window_focus_in_out_event()
-            self.iv_selection_changed_event()
+            self.iv_selection_changed()
             self.silent_render()
             self.iconview.grab_focus()
         self.iconview.get_window().set_cursor(cursor)
@@ -1612,20 +1609,19 @@ class PdfArranger(Gtk.Application):
         selection = self.iconview.get_selected_items()
         selection.sort(reverse=True)
         self.set_unsaved(True)
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            with self.render_lock():
-                for path in selection:
-                    model.remove(model.get_iter(path))
-            path = selection[-1]
-            self.iconview.select_path(path)
-            if not self.iconview.path_is_selected(path):
-                if len(model) > 0:  # select the last row
-                    row = model[-1]
-                    path = row.path
-                    self.iconview.select_path(path)
+        with self.render_lock():
+            for path in selection:
+                model.remove(model.get_iter(path))
+        path = selection[-1]
+        self.iconview.select_path(path)
+        if not self.iconview.path_is_selected(path):
+            if len(model) > 0:  # select the last row
+                row = model[-1]
+                path = row.path
+                self.iconview.select_path(path)
         self.scroll_path = path
         self.update_iconview_geometry()
-        self.iv_selection_changed_event()
+        self.iv_selection_changed()
         self.iconview.grab_focus()
         self.silent_render()
         self.update_max_zoom_level()
@@ -1781,7 +1777,7 @@ class PdfArranger(Gtk.Application):
             self.paste_pages_interleave(data, before, ref_to)
             self.update_iconview_geometry()
             GObject.idle_add(self.retitle)
-            self.iv_selection_changed_event()
+            self.iv_selection_changed()
             self.update_max_zoom_level()
             self.silent_render()
         elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
@@ -2078,48 +2074,47 @@ class PdfArranger(Gtk.Application):
                          4: 'SAME_FILE', 5: 'SAME_FORMAT', 6:'INVERT', 7:'RANGE'}
         selectoption = selectoptions[option.get_int32()]
         model = self.iconview.get_model()
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            if selectoption == 'ALL':
-                self.iconview.select_all()
-            elif selectoption == 'DESELECT':
-                self.iconview.unselect_all()
-            elif selectoption == 'ODD':
-                for page_number, row in enumerate(model, start=1):
-                    if page_number % 2:
-                        self.iconview.select_path(row.path)
-                    else:
-                        self.iconview.unselect_path(row.path)
-            elif selectoption == 'EVEN':
-                for page_number, row in enumerate(model, start=1):
-                    if page_number % 2:
-                        self.iconview.unselect_path(row.path)
-                    else:
-                        self.iconview.select_path(row.path)
-            elif selectoption == 'SAME_FILE':
-                selection = self.iconview.get_selected_items()
-                copynames = set(model[row][0].copyname for row in selection)
-                for page_number, row in enumerate(model):
-                    if model[page_number][0].copyname in copynames:
-                        self.iconview.select_path(row.path)
-            elif selectoption == 'SAME_FORMAT':
-                selection = self.iconview.get_selected_items()
-                formats = set(model[row][0].size_in_points() for row in selection)
-                # Chop digits to detect same page format on rotated cropped pages
-                formats = [(round(w, 8), round(h, 8)) for (w, h) in formats]
-                for row in model:
-                    page = model[row.path][0]
-                    w, h = page.size_in_points()
-                    if (round(w, 8), round(h, 8)) in formats:
-                        self.iconview.select_path(row.path)
-            elif selectoption == 'INVERT':
-                for row in model:
-                    if self.iconview.path_is_selected(row.path):
-                        self.iconview.unselect_path(row.path)
-                    else:
-                        self.iconview.select_path(row.path)
-            elif selectoption == 'RANGE':
-                self.range_select_dialog()
-        self.iv_selection_changed_event()
+        if selectoption == 'ALL':
+            self.iconview.select_all()
+        elif selectoption == 'DESELECT':
+            self.iconview.unselect_all()
+        elif selectoption == 'ODD':
+            for page_number, row in enumerate(model, start=1):
+                if page_number % 2:
+                    self.iconview.select_path(row.path)
+                else:
+                    self.iconview.unselect_path(row.path)
+        elif selectoption == 'EVEN':
+            for page_number, row in enumerate(model, start=1):
+                if page_number % 2:
+                    self.iconview.unselect_path(row.path)
+                else:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'SAME_FILE':
+            selection = self.iconview.get_selected_items()
+            copynames = set(model[row][0].copyname for row in selection)
+            for page_number, row in enumerate(model):
+                if model[page_number][0].copyname in copynames:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'SAME_FORMAT':
+            selection = self.iconview.get_selected_items()
+            formats = set(model[row][0].size_in_points() for row in selection)
+            # Chop digits to detect same page format on rotated cropped pages
+            formats = [(round(w, 8), round(h, 8)) for (w, h) in formats]
+            for row in model:
+                page = model[row.path][0]
+                w, h = page.size_in_points()
+                if (round(w, 8), round(h, 8)) in formats:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'INVERT':
+            for row in model:
+                if self.iconview.path_is_selected(row.path):
+                    self.iconview.unselect_path(row.path)
+                else:
+                    self.iconview.select_path(row.path)
+        elif selectoption == 'RANGE':
+            self.range_select_dialog()
+        self.iv_selection_changed()
 
     @staticmethod
     def iv_drag_begin(iconview, context):
@@ -2189,6 +2184,7 @@ class PdfArranger(Gtk.Application):
                 if move:
                     for ref_from in ref_from_list:
                         model.remove(model.get_iter(ref_from.get_path()))
+            self.iv_selection_changed()
             GObject.idle_add(self.render)
 
         elif target == 'MODEL_ROW_EXTERN':
@@ -2214,6 +2210,7 @@ class PdfArranger(Gtk.Application):
             for ref_del in ref_del_list:
                 path = ref_del.get_path()
                 model.remove(model.get_iter(path))
+        self.iv_selection_changed()
         self.update_iconview_geometry()
         GObject.idle_add(self.render)
         malloc_trim()
@@ -2308,12 +2305,11 @@ class PdfArranger(Gtk.Application):
         sw_vadj = self.sw.get_vadjustment()
         step = sw_vadj.get_step_increment()
         step = -step if direction == "UP" else step
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            sw_vadj.set_value(sw_vadj.get_value() + step)
-            if not self.click_path:
-                changed = self.iv_drag_select.motion(step=step)
-                if changed:
-                    self.iv_selection_changed_event()
+        sw_vadj.set_value(sw_vadj.get_value() + step)
+        if not self.click_path:
+            changed = self.iv_drag_select.motion(step=step)
+            if changed:
+                self.iv_selection_changed()
         return True  # call me again
 
     def iv_motion(self, iconview, event):
@@ -2336,10 +2332,9 @@ class PdfArranger(Gtk.Application):
         if event.state & Gdk.ModifierType.BUTTON1_MASK and self.iv_drag_select.click_location:
             self.iv_autoscroll(event.x, event.y, autoscroll_area=4)
             if not self.click_path:
-                with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
-                    changed = self.iv_drag_select.motion(event)
+                changed = self.iv_drag_select.motion(event)
                 if changed:
-                    self.iv_selection_changed_event()
+                    self.iv_selection_changed()
 
     def iv_button_release_event(self, iconview, event):
         """Manages mouse releases on the iconview"""
@@ -2362,6 +2357,7 @@ class PdfArranger(Gtk.Application):
                 # Deselect everything except the clicked item.
                 iconview.unselect_all()
                 iconview.select_path(path)
+            self.iv_selection_changed()
         self.pressed_button = None
 
         # Stop drag-select autoscrolling when button is released
@@ -2371,6 +2367,7 @@ class PdfArranger(Gtk.Application):
 
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
+        GObject.timeout_add(0, self.iv_selection_changed)
         # Switch between zoom_fit and zoom_set on double-click
         if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS and self.click_path:
             self.pressed_button = None
@@ -2402,14 +2399,12 @@ class PdfArranger(Gtk.Application):
                 i_click_old = click_path_old[0] if click_path_old else i_click
                 range_start = min(i_cursor, i_click, i_click_old)
                 range_end = max(i_cursor, i_click, i_click_old)
-                with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
-                    for i in range(range_start, range_end + 1):
-                        path = Gtk.TreePath.new_from_indices([i])
-                        if min(i_cursor, i_click) <= i <= max(i_cursor, i_click):
-                            iconview.select_path(path)
-                        else:
-                            iconview.unselect_path(path)
-                self.iv_selection_changed_event()
+                for i in range(range_start, range_end + 1):
+                    path = Gtk.TreePath.new_from_indices([i])
+                    if min(i_cursor, i_click) <= i <= max(i_cursor, i_click):
+                        iconview.select_path(path)
+                    else:
+                        iconview.unselect_path(path)
             return Gdk.EVENT_STOP
 
         # Forget where cursor was when shift was pressed
@@ -2462,16 +2457,15 @@ class PdfArranger(Gtk.Application):
                               Gdk.KEY_Home, Gdk.KEY_End, Gdk.KEY_Page_Up, Gdk.KEY_Page_Down,
                               Gdk.KEY_KP_Page_Up, Gdk.KEY_KP_Page_Down]:
             # Move cursor, select pages and scroll with navigation keys
-            with GObject.signal_handler_block(iconview, self.id_selection_changed_event):
-                self.iv_cursor.handler(iconview, event)
-            self.iv_selection_changed_event(None, move_cursor_event=True)
+            self.iv_cursor.handler(iconview, event)
+            self.iv_selection_changed(move_cursor_event=True)
             return Gdk.EVENT_STOP
         if self.config.is_popup_key_event(event):
             self.popup.popup(None, None, None, None, 0, event.time)
             return Gdk.EVENT_STOP
         return Gdk.EVENT_PROPAGATE
 
-    def iv_selection_changed_event(self, _iconview=None, move_cursor_event=False):
+    def iv_selection_changed(self, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
         for a, e in [
@@ -2525,7 +2519,7 @@ class PdfArranger(Gtk.Application):
                 filename = get_file_path_from_uri(uri)
                 pageadder.addpages(filename)
             pageadder.commit(select_added=False, add_to_undomanager=True)
-            self.iv_selection_changed_event()
+            self.iv_selection_changed()
 
     def sw_button_press_event(self, _scrolledwindow, event):
         """Unselects all items in iconview on mouse click in scrolledwindow"""
@@ -2554,12 +2548,11 @@ class PdfArranger(Gtk.Application):
             # Scroll. Also drag-select if mouse button is pressed
             sw_vadj = self.sw.get_vadjustment()
             step = max(20, sw_vadj.get_step_increment()) * dy
-            with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-                sw_vadj.set_value(sw_vadj.get_value() + step)
-                if event.state & Gdk.ModifierType.BUTTON1_MASK:
-                    changed = self.iv_drag_select.motion(event, step=step)
-                    if changed:
-                        self.iv_selection_changed_event()
+            sw_vadj.set_value(sw_vadj.get_value() + step)
+            if event.state & Gdk.ModifierType.BUTTON1_MASK:
+                changed = self.iv_drag_select.motion(event, step=step)
+                if changed:
+                    self.iv_selection_changed()
         return Gdk.EVENT_STOP
 
     def enable_zoom_buttons(self, out_enable, in_enable):
@@ -2729,7 +2722,7 @@ class PdfArranger(Gtk.Application):
                     model.insert_after(iterator, [p, p.description])
                 model.set_value(iterator, 0, page)
         self.update_iconview_geometry()
-        self.iv_selection_changed_event()
+        self.iv_selection_changed()
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
@@ -2880,20 +2873,22 @@ class PdfArranger(Gtk.Application):
         file, _ = exporter.get_blank_doc(adder, self.pdfqueue, self.tmp_dir, size)
         if file is None:
             return
-        with GObject.signal_handler_block(self.iconview, self.id_selection_changed_event):
-            for path in reversed(paths):
-                if self.model[path][0].size_in_points() == Dims(*size):
-                    continue
-                ref = Gtk.TreeRowReference.new(self.model, path)
-                adder.move(ref, before=False)
-                adder.addpages(file)
-                adder.commit(select_added=True, add_to_undomanager=False)
-                data = self.deserialize([self.model[path][0].serialize()])
-                with self.render_lock():
-                    self.model.remove(self.model.get_iter(path))
-                self.paste_as_layer(data, path, 'OVERLAY', (0.5, 0.5))
-                self.model[path][0].description = data[0][2]
-                self.model[path][1] = data[0][2]
+        for path in reversed(paths):
+            if self.model[path][0].size_in_points() == Dims(*size):
+                continue
+            ref = Gtk.TreeRowReference.new(self.model, path)
+            adder.move(ref, before=False)
+            adder.addpages(file)
+            adder.commit(select_added=False, add_to_undomanager=False)
+            data = self.deserialize([self.model[path][0].serialize()])
+            with self.render_lock():
+                self.model.remove(self.model.get_iter(path))
+            self.paste_as_layer(data, path, 'OVERLAY', (0.5, 0.5))
+            self.model[path][0].description = data[0][2]
+            self.model[path][1] = data[0][2]
+        for path in paths:
+            self.iconview.select_path(path)
+        self.iv_selection_changed()
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
@@ -3030,7 +3025,7 @@ class PdfArranger(Gtk.Application):
                 iterator = model.get_iter(ref.get_path())
                 page = model.get_value(iterator, 0).duplicate()
                 model.insert_after(iterator, [page, page.description])
-        self.iv_selection_changed_event()
+        self.iv_selection_changed()
         GObject.idle_add(self.render)
 
 
