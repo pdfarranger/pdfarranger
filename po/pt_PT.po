@@ -6,6 +6,7 @@
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2021, 2022, 2023.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022, 2023, 2024, 2025.
+# horus68, 2026.
 #
 msgid ""
 msgstr ""
@@ -129,7 +130,7 @@ msgstr "Recortar e adicionar margens"
 
 #: pdfarranger/pageutils.py:942
 msgid "Crop Margins"
-msgstr "Margens de recorte"
+msgstr ""Recortar margens"
 
 #: data/menu.ui:174 data/menu.ui:449
 msgid "Crop White Borders"
@@ -174,7 +175,7 @@ msgstr "_Não guardar"
 
 #: pdfarranger/pdfarranger.py:1474
 msgid "Don't show warnings when saving again."
-msgstr "Não mostrar avisos ao guardar novamente."
+msgstr "Não mostrar avisos novamente ao guardar."
 
 #: data/menu.ui:178 data/menu.ui:453
 msgid "Dupl_icate"
@@ -290,7 +291,7 @@ msgstr "Desvio horizontal"
 
 #: pdfarranger/core.py:559
 msgid "Image files are only supported with img2pdf"
-msgstr "Ficheiros de imagem apenas suportados com img2pdf"
+msgstr "Ficheiros de imagem apenas são suportados com img2pdf"
 
 #: pdfarranger/core.py:565
 msgid "Image format is not supported by img2pdf"
@@ -343,7 +344,7 @@ msgstr "Esquerda"
 
 #: pdfarranger/pageutils.py:479
 msgid "Left to Right"
-msgstr "Direita para esquerda"
+msgstr "Esquerda para direita"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
