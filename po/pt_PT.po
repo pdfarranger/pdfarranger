@@ -130,7 +130,7 @@ msgstr "Recortar e adicionar margens"
 
 #: pdfarranger/pageutils.py:942
 msgid "Crop Margins"
-msgstr ""Recortar margens"
+msgstr "Recortar margens"
 
 #: data/menu.ui:174 data/menu.ui:449
 msgid "Crop White Borders"
