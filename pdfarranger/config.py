@@ -63,6 +63,9 @@ _DEFAULT_ACCELS = [
     ('main-menu', 'F10'),
     ('metadata', '<Alt>Return'),
     ('context-menu', '<Shift>F10 Menu'),
+    ('find', '<Primary>f'),
+    ('find_prev', '<Shift>F3'),
+    ('find_next', 'F3'),
 ]
 
 

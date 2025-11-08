@@ -169,6 +169,7 @@ from . import exporter
 from . import metadata
 from . import pageutils
 from . import splitter
+from .search import SearchBarWidget
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
 if 'image/png' in img2pdf_supported_img and 'image/jpeg' in img2pdf_supported_img:
@@ -464,6 +465,10 @@ class PdfArranger(Gtk.Application):
             ("split-booklet", self.split_booklet),
             ("preferences", self.on_action_preferences),
             ("print", self.on_action_print),
+            ("find", self.searchbar_widget.find),
+            ("find_prev", self.searchbar_widget.find_prev),
+            ("find_next", self.searchbar_widget.find_next),
+            ("find_all", self.searchbar_widget.find_all),
         ]
         self.window.add_action_entries(self.actions)
 
@@ -476,6 +481,7 @@ class PdfArranger(Gtk.Application):
         self.window_focus_in_out_event()
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
+        self.searchbar_widget.enable_actions()
 
     def insert_blank_page(self, _action, _option, _unknown):
         size = None
@@ -750,6 +756,7 @@ class PdfArranger(Gtk.Application):
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
         self.window.connect('configure_event', self.window_configure_event)
+        self.window.connect('key_press_event', self.window_key_press_event)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -816,6 +823,12 @@ class PdfArranger(Gtk.Application):
         vscrollbar = self.sw.get_vscrollbar()
         vscrollbar.connect('value_changed', self.vscrollbar_value_changed)
         vscrollbar.props.adjustment.step_increment = 75
+
+        searchbar = self.uiXML.get_object('searchbar')
+        args = (self.window, self.iconview, self.pdfqueue,
+                self.show_find_results, self.clear_find_results)
+        self.searchbar_widget = SearchBarWidget(*args)
+        searchbar.pack_start(self.searchbar_widget, True, True, 0)
 
         self.window.show_all()
 
@@ -1085,15 +1098,18 @@ class PdfArranger(Gtk.Application):
         page.resample = 1 / zoom
         if is_preview:
             page.preview = thumbnail
-        # Let iconview refresh the thumbnail (only) by selecting it
+        self.redraw_cell(path)
+        ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
+        ac.set_description(page.description)
+
+    def redraw_cell(self, path):
+        """Trigger a cell redraw by toggling selection."""
         if self.iconview.path_is_selected(path):
             self.iconview.unselect_path(path)
             self.iconview.select_path(path)
         else:
             self.iconview.select_path(path)
             self.iconview.unselect_path(path)
-        ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
-        ac.set_description(page.description)
 
     def get_visible_range2(self):
         """Get range of items visible in window.
@@ -1240,7 +1256,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.unselect_all()
         with self.render_lock():
             self.model.clear()
-        self.pdfqueue = []
+        self.pdfqueue.clear()
         self.metadata = {}
         self.undomanager.clear()
         self.set_save_file(None)
@@ -1293,7 +1309,7 @@ class PdfArranger(Gtk.Application):
         self.iconview.get_model().clear()
 
         # Release Poppler.Document instances to unlock all temporary files
-        self.pdfqueue = []
+        self.pdfqueue.clear()
         gc.collect()
         if self.config.save_window_geometry():
             self.config.set_window_size(self.window.get_size())
@@ -2393,6 +2409,7 @@ class PdfArranger(Gtk.Application):
     def iv_button_press_event(self, iconview, event):
         """Manages mouse clicks on the iconview"""
         GObject.timeout_add(0, self.iv_selection_changed)
+        iconview.grab_focus()
         # Switch between zoom_fit and zoom_set on double-click
         if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS and self.click_path:
             self.pressed_button = None
@@ -2456,7 +2473,6 @@ class PdfArranger(Gtk.Application):
                     iconview.select_path(self.click_path)
             else:
                 iconview.unselect_all()
-            iconview.grab_focus()
             self.popup.popup(None, None, None, None, event.button, event.time)
             return Gdk.EVENT_STOP
 
@@ -3027,6 +3043,7 @@ class PdfArranger(Gtk.Application):
             page = model.get_value(pos, 0)
             if page.crop != Sides(*newcrop[id_sel]):
                 page.crop = Sides(*newcrop[id_sel])
+                page.find_rectangles = None
                 page.resample = -1
                 changed = True
             model.set_value(pos, 0, page)
@@ -3174,7 +3191,7 @@ class PdfArranger(Gtk.Application):
             msg += f' | {_("Page Size:")} {w:.1f} {_("mm")} \u00D7 {h:.1f} {_("mm")}'
         self.status_bar.push(ctxt_id, msg)
 
-        for a in ["save", "save-as", "select", "export-all", "zoom-fit", "print"]:
+        for a in ["save", "save-as", "select", "export-all", "zoom-fit", "print", "find"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
     def error_message_dialog(self, msg):
@@ -3185,6 +3202,30 @@ class PdfArranger(Gtk.Application):
         response = error_msg_dlg.run()
         if response == Gtk.ResponseType.OK:
             error_msg_dlg.destroy()
+
+    def window_key_press_event(self, _window, event):
+        handled = self.searchbar_widget.handle_event(event)
+        return Gdk.EVENT_STOP if handled else Gdk.EVENT_PROPAGATE
+
+    def show_find_results(self, npage, rectangles):
+        """Draw rectangles around found text."""
+        page = self.model[npage][0]
+        page.find_rectangles = rectangles
+        path = self.model[npage].path
+        self.redraw_cell(path)
+        self.iconview.select_path(path)
+        self.scroll_to_path2(path)
+        self.iv_selection_changed()
+
+    def clear_find_results(self, unselect_all):
+        """Clear all rectangles around found text."""
+        for row in self.model:
+            page = row[0]
+            page.find_rectangles = None
+            self.redraw_cell(row.path)
+        if unselect_all:
+            self.iconview.unselect_all()
+        self.iv_selection_changed()
 
 def is_same_page_size(pages):
     p1w, p1h = pages[0].size_in_points()
