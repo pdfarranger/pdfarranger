@@ -293,6 +293,27 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         </item>
       </section>
     </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Find</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Find…</attribute>
+          <attribute name="action">win.find</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Find _Previous</attribute>
+          <attribute name="action">win.find_prev</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Find _Next</attribute>
+          <attribute name="action">win.find_next</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Find _All</attribute>
+          <attribute name="action">win.find_all</attribute>
+        </item>
+      </section>
+    </submenu>
     <section>
       <item>
         <attribute name="label" translatable="yes">Edit _Properties</attribute>

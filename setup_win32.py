@@ -69,6 +69,8 @@ def addicons():
         'actions/open-menu',
         'actions/zoom-in',
         'actions/zoom-out',
+        'actions/go-up',
+        'actions/go-down',
         'ui/pan-down',
         'ui/pan-end',
         'ui/pan-start',
