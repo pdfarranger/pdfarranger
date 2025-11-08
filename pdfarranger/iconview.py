@@ -86,6 +86,20 @@ class CellRendererImage(Gtk.CellRenderer):
         window.set_source_surface(self.page.thumbnail)
         window.paint()
 
+        # rectangles around found text
+        rectangles = self.page.find_rectangles
+        if rectangles is None:
+            return
+        window.set_line_width(2)
+        window.set_source_rgb(1, 0, 0)
+        for r in rectangles:
+            rx = r.x1 * self.page.zoom * self.page.scale / scale
+            ry = h0 - r.y2 * self.page.zoom * self.page.scale / scale
+            rw = (r.x2 - r.x1) * self.page.zoom * self.page.scale / scale
+            rh = (r.y2 - r.y1) * self.page.zoom * self.page.scale / scale
+            window.rectangle(rx, ry, rw, rh)
+        window.stroke()
+
     def do_get_size(self, _widget, cell_area=None):
         x = y = 0
         th = int(2 * self.th1 + self.th2)
