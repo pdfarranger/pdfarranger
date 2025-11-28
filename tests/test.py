@@ -206,6 +206,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
+        mainmenu.grabFocus()
         self._wait_cond(lambda: mainmenu.sensitive)
         mainmenu.click()
         if not isinstance(action, str):
@@ -1098,7 +1099,10 @@ class TestBatch12(PdfArrangerTest):
         """Print with Gtk.PrintUnixDialog"""
         self._mainmenu(["Print…"])
         print_dialog = self._app().child(roleName="dialog")
-        print_dialog.child(name="Print to File").click()
+        print_dialog.grabFocus()
+        print_to_file = print_dialog.child(name="Print to File")
+        print_to_file.grabFocus()
+        print_to_file.click()
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
         # Open "file chooser" to set the output name
@@ -1219,4 +1223,58 @@ class TestBatch15(PdfArrangerTest):
         self._assert_page_size(279.4, 215.9)
 
     def test_04_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch16(PdfArrangerTest):
+    """Test find text"""
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test_raster_image_text.pdf"])
+
+    def test_02_split_page(self):
+        self._popupmenu(0, ["Split Pages…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self.assertEqual(len(self._icons()), 3)
+
+    def test_03_paste_as_overlay(self):
+        self._popupmenu(0, ["Copy"])
+        self._popupmenu(2, ["Paste Special", "Paste As Overlay…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_04_find_prev(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>F")
+        rawinput.typeText("tests")
+        rawinput.keyCombo("<shift>F3")
+        time.sleep(0.3)
+        self._assert_selected("3")
+
+    def test_05_find_next(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>A")
+        rawinput.typeText("tes")
+        rawinput.keyCombo("enter")
+        time.sleep(0.3)
+        rawinput.keyCombo("F3")
+        time.sleep(0.3)
+        self._mainmenu(["Find", "Find Next"])
+        time.sleep(0.3)
+        self._assert_selected("1")
+
+    def test_06_find_all(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>A")
+        rawinput.typeText("te")
+        self._mainmenu(["Find", "Find All"])
+        time.sleep(0.3)
+        self._assert_selected("1-3")
+
+    def test_07_quit(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("esc")
         self._quit_without_saving()
