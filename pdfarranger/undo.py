@@ -23,7 +23,6 @@ only store snapshots of the GtkListStore object, not of
 the whole PDF files.
 """
 
-from gi.repository import GObject
 from dataclasses import dataclass
 from .core import Page
 

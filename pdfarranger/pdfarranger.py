@@ -1172,6 +1172,7 @@ class PdfArranger(Gtk.Application):
         if restore and self.vadj_percent is not None:
             sw_vadj.set_value(self.vadj_percent * vadj_range + lower_limit)
             self.vadj_percent = None
+        return None
 
     def iv_size_allocate(self, _iconview, _allocation):
         self.hide_horizontal_scrollbar()
