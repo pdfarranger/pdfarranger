@@ -330,6 +330,7 @@ class Page(BasePage):
         self.description = description
         """The text under the thumbnail"""
         self.layerpages = list(layerpages)
+        self.find_rectangles = None
 
     def __repr__(self):
         return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "
@@ -362,6 +363,7 @@ class Page(BasePage):
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
+        r.find_rectangles = None
         r.layerpages = [lp.duplicate() for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram

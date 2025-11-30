@@ -259,6 +259,11 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
+          <object class="GtkBox" id="searchbar">
+            <property name="visible">False</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <child>
