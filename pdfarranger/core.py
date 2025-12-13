@@ -564,7 +564,7 @@ class PDFDoc:
         self.password = ""
         filemime = mimetypes.guess_type(self.filename, strict=False)[0]
         if not filemime:
-            raise PDFDocError(_("Unknown file format"))
+            raise PDFDocError(_("Unknown file format") + ": " + filename)
         if filemime == "application/pdf":
             if self.filename.startswith(tmp_dir) and description is None:
                 # In the "Insert Blank Page" we don't need to copy self.filename
@@ -580,18 +580,19 @@ class PDFDoc:
                 raise PDFDocError(e.message + ": " + filename)
         elif filemime.split("/")[0] == "image":
             if not img2pdf:
-                raise PDFDocError(_("Image files are only supported with img2pdf"))
+                raise PDFDocError(_("Image files are only supported with img2pdf") +
+                                  ": " + filename)
             if mimetypes.guess_type(filename, strict=False)[0] in img2pdf_supported_img:
                 self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
-                raise PDFDocError(_("Image format is not supported by img2pdf"))
+                raise PDFDocError(_("Image format is not supported by img2pdf") + ": " + filename)
             if filename.startswith(tmp_dir) and filename.endswith(".png"):
                 os.remove(filename)
                 self.basename = _("Clipboard image")
         else:
-            raise PDFDocError(_("File is neither pdf nor image"))
+            raise PDFDocError(_("File is neither pdf nor image") + ": " + filename)
 
         self.transparent_link_annots_removed = [False] * self.document.get_n_pages()
 
