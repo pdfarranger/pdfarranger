@@ -936,11 +936,9 @@ class PdfArranger(Gtk.Application):
         """Add files passed as command line arguments."""
         a = PageAdder(self)
         for f in files:
-            try:
-                a.addpages(f.get_path())
-            except FileNotFoundError as e:
-                print(e, file=sys.stderr)
-                self.error_message_dialog(e)
+            added = a.addpages(f.get_path())
+            if not added:
+                break
 
         a.commit(select_added=False, add_to_undomanager=True)
 
@@ -1465,7 +1463,9 @@ class PdfArranger(Gtk.Application):
                 filenames = chooser.get_filenames()
                 filenames = reversed(filenames) if os.name == 'nt' else filenames
                 for filename in filenames:
-                    adder.addpages(filename)
+                    added = adder.addpages(filename)
+                    if not added:
+                        break
                 adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
@@ -1614,7 +1614,9 @@ class PdfArranger(Gtk.Application):
             filenames = chooser.get_filenames()
             filenames = reversed(filenames) if os.name == 'nt' else filenames
             for filename in filenames:
-                adder.addpages(filename)
+                added = adder.addpages(filename)
+                if not added:
+                    break
             adder.commit(select_added=False, add_to_undomanager=True)
         chooser.destroy()
 
@@ -1687,7 +1689,9 @@ class PdfArranger(Gtk.Application):
             pageadder.move(ref_to, before)
 
         for d in data:
-            pageadder.addpages(*d)
+            added = pageadder.addpages(*d)
+            if not added:
+                break
         return pageadder.commit(select_added, add_to_undomanager=True)
 
     def paste_files(self, filepaths, before, ref_to):
@@ -1696,7 +1700,9 @@ class PdfArranger(Gtk.Application):
 
         for filepath in filepaths:
             pageadder.move(ref_to, before)
-            pageadder.addpages(filepath)
+            added = pageadder.addpages(filepath)
+            if not added:
+                break
         pageadder.commit(select_added=False, add_to_undomanager=True)
 
     def paste_pages_interleave(self, data, before, ref_to):
@@ -1711,7 +1717,9 @@ class PdfArranger(Gtk.Application):
         self.set_unsaved(True)
 
         for d in data:
-            pageadder.addpages(*d)
+            added = pageadder.addpages(*d)
+            if not added:
+                break
 
             pageadder.move(ref_to, before)
             pageadder.commit(select_added=False, add_to_undomanager=False)
@@ -1934,10 +1942,13 @@ class PdfArranger(Gtk.Application):
                     paste_hash = hashlib.sha256(data.encode('utf-8')).hexdigest()
                 if copy_hash is not None and copy_hash == paste_hash:
                     data = self.deserialize(data.split('\n;\n'))
+                    if not all(os.path.isfile(d[0]) for d in data):
+                        data = []
                 else:
+                    data = []
+                if len(data) == 0:
                     message = _("Pasted data not valid. Aborting paste.")
                     self.error_message_dialog(message)
-                    data = []
             else:
                 data_is_filepaths = True
                 if os.name == 'posix' and data.startswith('x-special/nautilus-clipboard\ncopy'):
@@ -2558,7 +2569,9 @@ class PdfArranger(Gtk.Application):
             pageadder.move(ref_to, before)
             for uri in selection_data.get_uris():
                 filename = get_file_path_from_uri(uri)
-                pageadder.addpages(filename)
+                added = pageadder.addpages(filename)
+                if not added:
+                    break
             pageadder.commit(select_added=False, add_to_undomanager=True)
             self.iv_selection_changed()
 
