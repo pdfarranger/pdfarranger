@@ -564,7 +564,7 @@ class PDFDoc:
         self.password = ""
         filemime = mimetypes.guess_type(self.filename, strict=False)[0]
         if not filemime:
-            raise PDFDocError(_("Unknown file format"))
+            raise PDFDocError(_("Unknown file format") + ": " + filename)
         if filemime == "application/pdf":
             if self.filename.startswith(tmp_dir) and description is None:
                 # In the "Insert Blank Page" we don't need to copy self.filename
@@ -580,18 +580,19 @@ class PDFDoc:
                 raise PDFDocError(e.message + ": " + filename)
         elif filemime.split("/")[0] == "image":
             if not img2pdf:
-                raise PDFDocError(_("Image files are only supported with img2pdf"))
+                raise PDFDocError(_("Image files are only supported with img2pdf") +
+                                  ": " + filename)
             if mimetypes.guess_type(filename, strict=False)[0] in img2pdf_supported_img:
                 self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
             else:
-                raise PDFDocError(_("Image format is not supported by img2pdf"))
+                raise PDFDocError(_("Image format is not supported by img2pdf") + ": " + filename)
             if filename.startswith(tmp_dir) and filename.endswith(".png"):
                 os.remove(filename)
                 self.basename = _("Clipboard image")
         else:
-            raise PDFDocError(_("File is neither pdf nor image"))
+            raise PDFDocError(_("File is neither pdf nor image") + ": " + filename)
 
         self.transparent_link_annots_removed = [False] * self.document.get_n_pages()
 
@@ -689,13 +690,17 @@ class PageAdder:
         return layerpages
 
     def addpages(self, filename, page=-1, description=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
+        """Add PDF files, images or copied pages as Page objects to self.pages list
+
+        Returns: True if pages actually were added (no exception)
+        """
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
 
         doc_data = self.get_pdfdoc(filename, description)
         if doc_data is None:
-            return
+            return False
         pdfdoc, nfile, doc_added = doc_data
 
         if (doc_added and pdfdoc.copyname != pdfdoc.filename and description is None and not
@@ -710,7 +715,7 @@ class PageAdder:
 
         layerpages = self.get_layerpages(layerdata)
         if layerpages is None:
-            return
+            return False
 
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
@@ -734,6 +739,7 @@ class PageAdder:
                     layerpages,
                 )
             )
+        return True
 
     def commit(self, select_added, add_to_undomanager):
         if len(self.pages) == 0:
