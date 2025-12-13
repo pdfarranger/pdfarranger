@@ -1,15 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Loc Huynh <huynhloc.contact@gmail.com>, 2025.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-13 13:50+0100\n"
-"PO-Revision-Date: 2025-12-13 16:48+0700\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Loc Huynh <huynhloc.contact@gmail.com>\n"
 "Language-Team: \n"
 "Language: vi\n"
@@ -18,6 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Loc Huynh <huynhloc.contact@gmail.com>, 2025.
+#
 #: pdfarranger/splitter.py:87
 msgid "#Col"
 msgstr "#Cột"
@@ -26,8 +24,7 @@ msgstr "#Cột"
 msgid "#Row"
 msgstr "#Hàng"
 
-#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:549
-#: pdfarranger/pageutils.py:551
+#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:549 pdfarranger/pageutils.py:551
 msgid "%"
 msgstr "%"
 
@@ -128,9 +125,7 @@ msgid "Crop White Borders"
 msgstr "Cắt biên trắng"
 
 #: pdfarranger/pageutils.py:265 pdfarranger/pdfarranger.py:3030
-msgid ""
-"Cropping/hiding does not remove any content from the PDF file, it only hides "
-"it."
+msgid "Cropping/hiding does not remove any content from the PDF file, it only hides it."
 msgstr "Cắt/ẩn không xoá nội dung khỏi tệp PDF, chỉ ẩn đi."
 
 #: data/menu.ui:94 data/menu.ui:314
@@ -396,10 +391,8 @@ msgstr "Lớp phủ"
 
 #: pdfarranger/pdfarranger.py:310
 msgid ""
-"PDF Arranger is a small python-gtk application, which helps the user to "
-"merge or split pdf documents and rotate, crop and rearrange their pages "
-"using an interactive and intuitive graphical interface. It is a frontend for "
-"pikepdf."
+"PDF Arranger is a small python-gtk application, which helps the user to merge or split pdf documents and rotate, crop and rearrange their pages using an interactive and "
+"intuitive graphical interface. It is a frontend for pikepdf."
 msgstr "PDF Arranger là ứng dụng python-gtk nhỏ giúp gộp hoặc tách tài liệu pdf, xoay, cắt và sắp xếp lại trang bằng giao diện đồ hoạ trực quan. Đây là frontend cho pikepdf."
 
 #: pdfarranger/pdfarranger.py:1715
@@ -660,8 +653,7 @@ msgid "System setting"
 msgstr "Thiết lập hệ thống"
 
 #: pdfarranger/core.py:446
-msgid ""
-"The document “{}” is locked and requires a password before it can be opened."
+msgid "The document “{}” is locked and requires a password before it can be opened."
 msgstr "Tài liệu “{}” bị khoá và cần mật khẩu trước khi mở."
 
 #: pdfarranger/pdfarranger.py:1976
@@ -704,7 +696,9 @@ msgstr "Định dạng tệp không rõ"
 msgid ""
 "Use a comma to separate page numbers, a dash to select a range of pages. \n"
 "e.g. : \"1,3,5-7,9\""
-msgstr "Dùng dấu phẩy để tách số trang, dấu gạch nối để chọn dải trang. \nví dụ: \"1,3,5-7,9\""
+msgstr ""
+"Dùng dấu phẩy để tách số trang, dấu gạch nối để chọn dải trang. \n"
+"ví dụ: \"1,3,5-7,9\""
 
 #: pdfarranger/pdfarranger.py:3035
 msgid "User Manual"
@@ -770,10 +764,8 @@ msgstr "Á_p dụng"
 msgid "_Booklet"
 msgstr "Sách _nhỏ"
 
-#: pdfarranger/config.py:239 pdfarranger/metadata.py:205
-#: pdfarranger/pageutils.py:326 pdfarranger/pdfarranger.py:1185
-#: pdfarranger/pdfarranger.py:1194 pdfarranger/pdfarranger.py:1317
-#: pdfarranger/pdfarranger.py:1367
+#: pdfarranger/config.py:239 pdfarranger/metadata.py:205 pdfarranger/pageutils.py:326 pdfarranger/pdfarranger.py:1185 pdfarranger/pdfarranger.py:1194
+#: pdfarranger/pdfarranger.py:1317 pdfarranger/pdfarranger.py:1367
 msgid "_Cancel"
 msgstr "_Huỷ"
 
@@ -829,8 +821,7 @@ msgstr "Gộ_p trang…"
 msgid "_New Window"
 msgstr "Cử_a sổ mới"
 
-#: pdfarranger/config.py:240 pdfarranger/metadata.py:206
-#: pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:3026
+#: pdfarranger/config.py:240 pdfarranger/metadata.py:206 pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:3026
 msgid "_OK"
 msgstr "Đồn_g ý"
 
@@ -862,8 +853,7 @@ msgstr "_Hoàn tác"
 msgid "_Rotate Right"
 msgstr "Xoay p_hải"
 
-#: pdfarranger/pdfarranger.py:1194 pdfarranger/pdfarranger.py:1316
-#: data/menu.ui:42
+#: pdfarranger/pdfarranger.py:1194 pdfarranger/pdfarranger.py:1316 data/menu.ui:42
 msgid "_Save"
 msgstr "_Lưu"
 
@@ -883,8 +873,7 @@ msgstr "_Hoàn lại"
 msgid "_View"
 msgstr "_Xem"
 
-#: pdfarranger/pageutils.py:142 pdfarranger/pageutils.py:148
-#: pdfarranger/pageutils.py:464 pdfarranger/pageutils.py:514
+#: pdfarranger/pageutils.py:142 pdfarranger/pageutils.py:148 pdfarranger/pageutils.py:464 pdfarranger/pageutils.py:514
 msgid "mm"
 msgstr "mm"
 
