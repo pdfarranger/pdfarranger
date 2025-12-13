@@ -690,13 +690,17 @@ class PageAdder:
         return layerpages
 
     def addpages(self, filename, page=-1, description=None, angle=0, scale=1.0, crop=Sides(0, 0, 0, 0), hide=Sides(0, 0, 0, 0), layerdata=None):
+        """Add PDF files, images or copied pages as Page objects to self.pages list
+
+        Returns: True if pages actually were added (no exception)
+        """
         c = 'pdf' if page == -1 and os.path.splitext(filename)[1].lower() == '.pdf' else 'other'
         self.content.append(c)
         self.pdfqueue_used = len(self.app.pdfqueue) > 0
 
         doc_data = self.get_pdfdoc(filename, description)
         if doc_data is None:
-            return
+            return False
         pdfdoc, nfile, doc_added = doc_data
 
         if (doc_added and pdfdoc.copyname != pdfdoc.filename and description is None and not
@@ -711,7 +715,7 @@ class PageAdder:
 
         layerpages = self.get_layerpages(layerdata)
         if layerpages is None:
-            return
+            return False
 
         for npage in range(n_start, n_end + 1):
             page = pdfdoc.document.get_page(npage - 1)
@@ -735,6 +739,7 @@ class PageAdder:
                     layerpages,
                 )
             )
+        return True
 
     def commit(self, select_added, add_to_undomanager):
         if len(self.pages) == 0:
