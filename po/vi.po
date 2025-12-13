@@ -1,0 +1,897 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Loc Huynh <huynhloc.contact@gmail.com>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-13 13:50+0100\n"
+"PO-Revision-Date: 2025-12-13 16:48+0700\n"
+"Last-Translator: Loc Huynh <huynhloc.contact@gmail.com>\n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#Cột"
+
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#Hàng"
+
+#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:549
+#: pdfarranger/pageutils.py:551
+msgid "%"
+msgstr "%"
+
+#: pdfarranger/pageutils.py:275
+#, python-format
+msgid "% of height"
+msgstr "% của chiều cao"
+
+#: pdfarranger/pageutils.py:275
+#, python-format
+msgid "% of width"
+msgstr "% của chiều rộng"
+
+#: pdfarranger/pdfarranger.py:3064
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s là công cụ sắp xếp và chỉnh sửa tệp PDF."
+
+#: pdfarranger/config.py:255
+msgid "(Libhandy missing)"
+msgstr "(Thiếu Libhandy)"
+
+#: pdfarranger/config.py:247
+msgid "(Requires restart)"
+msgstr "(Cần khởi động lại)"
+
+#: pdfarranger/pdfarranger.py:1353
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr "Tệp có tên \"%s\" đã tồn tại. Bạn có muốn thay thế không?"
+
+#: data/menu.ui:234 data/menu.ui:403
+msgid "All From _Same File"
+msgstr "Tất cả từ cùng _một tệp"
+
+#: pdfarranger/pdfarranger.py:699
+msgid "All files"
+msgstr "Tất cả tệp"
+
+#: pdfarranger/pdfarranger.py:500 pdfarranger/pdfarranger.py:571
+msgid "All pages must have the same size."
+msgstr "Mọi trang phải cùng kích cỡ."
+
+#: pdfarranger/pdfarranger.py:687
+msgid "All supported files"
+msgstr "Mọi tệp được hỗ trợ."
+
+#: pdfarranger/exporter.py:578
+msgid "Auto Rotate"
+msgstr "Tự xoay"
+
+#: pdfarranger/pageutils.py:253
+msgid "Bottom"
+msgstr "Dưới"
+
+#: pdfarranger/pageutils.py:482
+msgid "Bottom to Top"
+msgstr "Dưới lên trên"
+
+#: pdfarranger/core.py:568
+msgid "Clipboard image"
+msgstr "Ảnh bộ nhớ tạm"
+
+#: pdfarranger/pageutils.py:465 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "Cột"
+
+#: data/menu.ui:141 data/menu.ui:366
+msgid "Copy _Image"
+msgstr "Sao chép ả_nh"
+
+#: data/menu.ui:146 data/menu.ui:371
+msgid "Copy _Text"
+msgstr "Sao chép vă_n bản"
+
+#: pdfarranger/metadata.py:49
+msgid "Created"
+msgstr "Tạo"
+
+#: pdfarranger/metadata.py:47
+msgid "Creator"
+msgstr "Người tạo"
+
+#: pdfarranger/metadata.py:48
+msgid "Creator tool"
+msgstr "Công cụ tạo"
+
+#: pdfarranger/pageutils.py:350
+msgid "Crop & Add margins"
+msgstr "Cắt xén & thêm lề"
+
+#: pdfarranger/pageutils.py:942
+msgid "Crop Margins"
+msgstr "Cắt lề"
+
+#: data/menu.ui:174 data/menu.ui:449
+msgid "Crop White Borders"
+msgstr "Cắt biên trắng"
+
+#: pdfarranger/pageutils.py:265 pdfarranger/pdfarranger.py:3030
+msgid ""
+"Cropping/hiding does not remove any content from the PDF file, it only hides "
+"it."
+msgstr "Cắt/ẩn không xoá nội dung khỏi tệp PDF, chỉ ẩn đi."
+
+#: data/menu.ui:94 data/menu.ui:314
+msgid "Cu_t"
+msgstr "Cắ_t"
+
+#: pdfarranger/pageutils.py:153
+msgid "Custom"
+msgstr "Tuỳ chỉnh"
+
+#: pdfarranger/pdfarranger.py:1467
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr "Bất chấp cảnh báo, tài liệu vẫn không nên có lỗi hiển thị."
+
+#: pdfarranger/pdfarranger.py:1203
+msgid "Discard changes and close?"
+msgstr "Huỷ thay đổi và đóng?"
+
+#: pdfarranger/pdfarranger.py:1240
+msgid "Discard changes and quit?"
+msgstr "Huỷ thay đổi và thoát?"
+
+#: pdfarranger/pdfarranger.py:3037
+msgid "Do not show this dialog again."
+msgstr "Không hiển thị hộp thoại này nữa."
+
+#: pdfarranger/pdfarranger.py:1194
+msgid "Do_n’t Save"
+msgstr "Đừ_ng lưu"
+
+#: pdfarranger/pdfarranger.py:1474
+msgid "Don't show warnings when saving again."
+msgstr "Đừng hiển thị cảnh báo khi lưu lần nữa."
+
+#: data/menu.ui:178 data/menu.ui:453
+msgid "Dupl_icate"
+msgstr "Nhân _bản"
+
+#: data/menu.ui:52 data/menu.ui:486
+msgid "E_xport"
+msgstr "X_uất"
+
+#: data/menu.ui:55 data/menu.ui:489
+msgid "E_xport Selection to a Single File…"
+msgstr "X_uất vùng chọn thành một tệp…"
+
+#: data/menu.ui:278
+msgid "Edit _Properties"
+msgstr "Sửa th_uộc tính"
+
+#: pdfarranger/metadata.py:202
+msgid "Edit properties"
+msgstr "Sửa thuộc tính"
+
+#: pdfarranger/splitter.py:62
+msgid "Equal column width"
+msgstr "Chiều rộng cột bằng nhau"
+
+#: pdfarranger/splitter.py:62
+msgid "Equal row height"
+msgstr "Chiều cao hàng bằng nhau"
+
+#: pdfarranger/pdfarranger.py:2003
+msgid "Exploding into images…"
+msgstr "Tách thành ảnh…"
+
+#: data/menu.ui:60 data/menu.ui:494
+msgid "Export Selection to _Individual Files…"
+msgstr "Xuất vùng chọn thành tệp r_iêng…"
+
+#: data/menu.ui:65 data/menu.ui:499
+msgid "Export _All Pages to Individual Files…"
+msgstr "Xuất _mọi trang thành tệp riêng…"
+
+#: pdfarranger/pdfarranger.py:1311
+msgid "Export…"
+msgstr "Xuất…"
+
+#: pdfarranger/core.py:570 pdfarranger/pdfarranger.py:1721
+msgid "File is neither pdf nor image"
+msgstr "Tệp không phải pdf cũng không phải ảnh"
+
+#: pdfarranger/pdfarranger.py:329
+msgid "File(s) to open"
+msgstr "Tệp cần mở"
+
+#: pdfarranger/pageutils.py:346
+msgid "Fit mode"
+msgstr "Chế độ vừa"
+
+#: pdfarranger/exporter.py:576
+msgid "Fit to Full Page"
+msgstr "Vừa trang đầy đủ"
+
+#: pdfarranger/exporter.py:575
+msgid "Fit to Printable Area"
+msgstr "Vừa vùng in được"
+
+#: pdfarranger/pageutils.py:355
+msgid "Fit to paper"
+msgstr "Vừa khổ giấy"
+
+#: pdfarranger/pdfarranger.py:3034
+msgid "For more info see"
+msgstr "Xem thêm thông tin tại"
+
+#: pdfarranger/config.py:264
+msgid "For more options see:"
+msgstr "Tuỳ chọn khác xem:"
+
+#: data/menu.ui:271
+msgid "Full_screen"
+msgstr "Toàn _màn hình"
+
+#: pdfarranger/pdfarranger.py:3080
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "Giấy phép Công cộng GNU (GPL) phiên bản 3."
+
+#: data/menu.ui:200 data/menu.ui:475
+msgid "Generate (imposition)"
+msgstr "Tạo (dàn trang)"
+
+#: pdfarranger/pageutils.py:144
+msgid "Height"
+msgstr "Chiều cao"
+
+#: pdfarranger/splitter.py:88
+msgid "Height in %"
+msgstr "Chiều cao theo %"
+
+#: pdfarranger/pageutils.py:942
+msgid "Hide Margins"
+msgstr "Ẩn lề"
+
+#: pdfarranger/pageutils.py:477
+msgid "Horizontal"
+msgstr "Ngang"
+
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "Cắt ngang"
+
+#: pdfarranger/pageutils.py:548
+msgid "Horizontal offset"
+msgstr "Độ dời ngang"
+
+#: pdfarranger/core.py:559
+msgid "Image files are only supported with img2pdf"
+msgstr "Chỉ hỗ trợ tệp ảnh với img2pdf"
+
+#: pdfarranger/core.py:565
+msgid "Image format is not supported by img2pdf"
+msgstr "Định dạng ảnh không được img2pdf hỗ trợ"
+
+#: pdfarranger/pdfarranger.py:2000
+msgid "Img2pdf missing."
+msgstr "Thiếu img2pdf."
+
+#: data/pdfarranger.ui:58
+msgid "Import"
+msgstr "Nhập"
+
+#: pdfarranger/pdfarranger.py:1544
+msgid "Import…"
+msgstr "Nhập…"
+
+#: data/menu.ui:194 data/menu.ui:469
+msgid "Insert Blan_k Page…"
+msgstr "Chèn trang t_rống…"
+
+#: pdfarranger/pageutils.py:431
+msgid "Insert Blank Page"
+msgstr "Chèn trang trống"
+
+#: pdfarranger/metadata.py:173
+msgid "Invalid date format. Input discarded."
+msgstr "Định dạng ngày không hợp lệ. Bỏ qua đầu vào."
+
+#: pdfarranger/pdfarranger.py:3067
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "Ứng dụng dùng libqpdf %s, pikepdf %s, GTK %s và Python %s."
+
+#: pdfarranger/metadata.py:45
+msgid "Keywords"
+msgstr "Từ khoá"
+
+#: pdfarranger/pageutils.py:163
+msgid "Landscape"
+msgstr "Ngang"
+
+#: pdfarranger/config.py:245
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: pdfarranger/pageutils.py:253
+msgid "Left"
+msgstr "Trái"
+
+#: pdfarranger/pageutils.py:479
+msgid "Left to Right"
+msgstr "Trái sang phải"
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "Menu chính"
+
+#: pdfarranger/pdfarranger.py:3075
+msgid "Maintainers and contributors"
+msgstr "Người bảo trì và đóng góp"
+
+#: pdfarranger/pageutils.py:463
+msgid "Margin"
+msgstr "Lề"
+
+#: pdfarranger/pageutils.py:449
+msgid "Merge Pages"
+msgstr "Gộp trang"
+
+#: pdfarranger/pageutils.py:514
+msgid "Merged page size:"
+msgstr "Kích cỡ trang gộp:"
+
+#: pdfarranger/metadata.py:50
+msgid "Modified"
+msgstr "Sửa đổi"
+
+#: pdfarranger/pageutils.py:494
+msgid "Non-uniform page size - using max size"
+msgstr "Kích cỡ trang không đồng nhất - dùng kích cỡ lớn nhất"
+
+#: pdfarranger/exporter.py:574
+msgid "None"
+msgstr "Không"
+
+#: pdfarranger/pdfarranger.py:3023
+msgid "Note"
+msgstr "Ghi chú"
+
+#: pdfarranger/pdfarranger.py:3029
+msgid "Note the limitations:"
+msgstr "Lưu ý giới hạn:"
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "Mở"
+
+#: pdfarranger/pdfarranger.py:1409
+msgid "Open…"
+msgstr "Mở…"
+
+#: pdfarranger/pageutils.py:161
+msgid "Orientation"
+msgstr "Hướng"
+
+#: pdfarranger/pdfarranger.py:3031
+msgid "Outlines and links can be preserved only in certain cases."
+msgstr "Chỉ giữ được mục lục và liên kết trong một số trường hợp."
+
+#: pdfarranger/pageutils.py:995
+msgid "Overlay"
+msgstr "Lớp phủ"
+
+#: pdfarranger/pdfarranger.py:310
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr "PDF Arranger là ứng dụng python-gtk nhỏ giúp gộp hoặc tách tài liệu pdf, xoay, cắt và sắp xếp lại trang bằng giao diện đồ hoạ trực quan. Đây là frontend cho pikepdf."
+
+#: pdfarranger/pdfarranger.py:1715
+msgid "PDF document is damaged"
+msgstr "Tài liệu PDF bị hỏng"
+
+#: pdfarranger/pdfarranger.py:691
+msgid "PDF files"
+msgstr "Tệp PDF"
+
+#: pdfarranger/exporter.py:614
+msgid "Page Handling"
+msgstr "Xử lý trang"
+
+#: pdfarranger/pageutils.py:490
+msgid "Page Order"
+msgstr "Thứ tự trang"
+
+#: pdfarranger/pageutils.py:342
+msgid "Page size"
+msgstr "Kích cỡ trang"
+
+#: pdfarranger/pageutils.py:150
+msgid "Paper size"
+msgstr "Khổ giấy"
+
+#: pdfarranger/core.py:456
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: pdfarranger/core.py:434
+msgid "Password required"
+msgstr "Cần mật khẩu"
+
+#: data/menu.ui:107 data/menu.ui:327
+msgid "Past_e Special"
+msgstr "Dán _đặc biệt"
+
+#: data/menu.ui:124 data/menu.ui:345
+msgid "Paste As O_verlay…"
+msgstr "Dán dạng lớp _phủ…"
+
+#: data/menu.ui:119 data/menu.ui:340
+msgid "Paste As _Even Pages"
+msgstr "Dán thành trang _chẵn"
+
+#: data/menu.ui:114 data/menu.ui:335
+msgid "Paste As _Odd Pages"
+msgstr "Dán thành trang _lẻ"
+
+#: data/menu.ui:129 data/menu.ui:350
+msgid "Paste As _Underlay…"
+msgstr "Dán thành lớp _nền…"
+
+#: data/menu.ui:102 data/menu.ui:322
+msgid "Paste _After"
+msgstr "Dán _sau"
+
+#: data/menu.ui:109 data/menu.ui:330
+msgid "Paste _Before"
+msgstr "Dán t_rước"
+
+#: pdfarranger/pdfarranger.py:1847
+msgid "Pasted data not valid. Aborting paste."
+msgstr "Dữ liệu dán không hợp lệ. Huỷ thao tác."
+
+#: pdfarranger/pageutils.py:162
+msgid "Portrait"
+msgstr "Dọc"
+
+#: data/menu.ui:284
+msgid "Pre_ferences"
+msgstr "Tù_y chọn"
+
+#: pdfarranger/config.py:235
+msgid "Preferences"
+msgstr "Tùy chọn"
+
+#: pdfarranger/pdfarranger.py:321
+msgid "Print the version of PDF Arranger and exit"
+msgstr "In phiên bản PDF Arranger rồi thoát"
+
+#: pdfarranger/config.py:260
+msgid "Printing"
+msgstr "In"
+
+#: pdfarranger/exporter.py:594
+msgid "Printing…"
+msgstr "Đang in…"
+
+#: pdfarranger/metadata.py:46
+msgid "Producer"
+msgstr "Nhà sản xuất"
+
+#: pdfarranger/metadata.py:216
+msgid "Property"
+msgstr "Thuộc tính"
+
+#: pdfarranger/pageutils.py:1060
+msgid "Range Select"
+msgstr "Chọn phạm vi"
+
+#: data/menu.ui:182 data/menu.ui:457
+msgid "Re_verse Order"
+msgstr "Đảo _ngược thứ tự"
+
+#: pdfarranger/pageutils.py:356
+msgid "Relative"
+msgstr "Tương đối"
+
+#: pdfarranger/exporter.py:632
+msgid "Rendering Preview…"
+msgstr "Kết xuất xem trước…"
+
+#: pdfarranger/pdfarranger.py:955
+msgid "Rendering…"
+msgstr "Đang kết xuất…"
+
+#: pdfarranger/pdfarranger.py:1355
+msgid "Replace"
+msgstr "Thay thế"
+
+#: pdfarranger/pageutils.py:253
+msgid "Right"
+msgstr "Phải"
+
+#: pdfarranger/pageutils.py:480
+msgid "Right to Left"
+msgstr "Phải sang trái"
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "Xoay trái"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "Xoay phải"
+
+#: data/menu.ui:152 data/menu.ui:427
+msgid "Rotate _Left"
+msgstr "Xoay t_rái"
+
+#: pdfarranger/pageutils.py:466 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "Hàng"
+
+#: pdfarranger/pdfarranger.py:3070
+#, python-format
+msgid "Running on %s"
+msgstr "Đang chạy trên %s"
+
+#: data/menu.ui:239 data/menu.ui:408
+msgid "Same Page _Format"
+msgstr "Cùng định _dạng trang"
+
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "Lưu"
+
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "Lưu thành"
+
+#: pdfarranger/pdfarranger.py:1311
+msgid "Save As…"
+msgstr "Lưu thành…"
+
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "Lưu thà_nh…"
+
+#: pdfarranger/pdfarranger.py:1212
+msgid "Save changes before closing?"
+msgstr "Lưu thay đổi trước khi đóng?"
+
+#: pdfarranger/pdfarranger.py:1249
+msgid "Save changes before quitting?"
+msgstr "Lưu thay đổi trước khi thoát?"
+
+#: pdfarranger/pdfarranger.py:1209
+msgid "Save changes to “{}” before closing?"
+msgstr "Lưu thay đổi vào “{}” trước khi đóng?"
+
+#: pdfarranger/pdfarranger.py:1246
+msgid "Save changes to “{}” before quitting?"
+msgstr "Lưu thay đổi vào “{}” trước khi thoát?"
+
+#: pdfarranger/pdfarranger.py:1466
+msgid "Saving produced some warnings"
+msgstr "Việc lưu tạo ra một số cảnh báo"
+
+#: pdfarranger/pdfarranger.py:1505
+msgid "Saving…"
+msgstr "Đang lưu…"
+
+#: pdfarranger/pageutils.py:348
+msgid "Scale"
+msgstr "Tỷ lệ"
+
+#: pdfarranger/pageutils.py:349
+msgid "Scale & Add margins"
+msgstr "Tỷ lệ & thêm lề"
+
+#: pdfarranger/pageutils.py:121
+msgid "Scale factor"
+msgstr "Hệ số tỷ lệ"
+
+#: pdfarranger/exporter.py:572
+msgid "Scale mode:"
+msgstr "Chế độ tỷ lệ:"
+
+#: data/menu.ui:214 data/menu.ui:383
+msgid "Select _All"
+msgstr "Chọn _tất cả"
+
+#: data/menu.ui:229 data/menu.ui:398
+msgid "Select _Even Pages"
+msgstr "Chọn trang c_hẵn"
+
+#: data/menu.ui:224 data/menu.ui:393
+msgid "Select _Odd Pages"
+msgstr "Chọn trang _lẻ"
+
+#: data/menu.ui:249 data/menu.ui:418
+msgid "Select _Range"
+msgstr "Chọn p_hạm vi"
+
+#: pdfarranger/pageutils.py:1069
+msgid "Select range of pages: "
+msgstr "Chọn phạm vi trang: "
+
+#: pdfarranger/pdfarranger.py:3098
+msgid "Selected pages: "
+msgstr "Trang đã chọn: "
+
+#: pdfarranger/pageutils.py:644
+msgid "Show values"
+msgstr "Hiển thị giá trị"
+
+#: data/menu.ui:204 data/menu.ui:479
+msgid "Split (unimposition)"
+msgstr "Tách (bỏ dàn trang)"
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "Tách trang"
+
+#: pdfarranger/metadata.py:44
+msgid "Subject"
+msgstr "Chủ đề"
+
+#: pdfarranger/pdfarranger.py:704
+msgid "Supported image files"
+msgstr "Tệp ảnh được hỗ trợ"
+
+#: pdfarranger/config.py:275 pdfarranger/config.py:283
+msgid "System setting"
+msgstr "Thiết lập hệ thống"
+
+#: pdfarranger/core.py:446
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "Tài liệu “{}” bị khoá và cần mật khẩu trước khi mở."
+
+#: pdfarranger/pdfarranger.py:1976
+msgid "The page has several images. Use \"Explode into Images\" first.\""
+msgstr "Trang có nhiều ảnh. Hãy dùng \"Tách thành ảnh\" trước.\""
+
+#: pdfarranger/pdfarranger.py:558
+msgid "The page selection is not contiguous. Cannot unimpose."
+msgstr "Vùng chọn trang không liền nhau. Không thể bỏ dàn trang."
+
+#: pdfarranger/core.py:445
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "Mật khẩu sẽ được nhớ đến khi bạn đóng PDF Arranger."
+
+#: pdfarranger/config.py:253
+msgid "Theme"
+msgstr "Chủ đề"
+
+#: pdfarranger/metadata.py:43
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: pdfarranger/pageutils.py:253
+msgid "Top"
+msgstr "Trên"
+
+#: pdfarranger/pageutils.py:481
+msgid "Top to Bottom"
+msgstr "Trên xuống dưới"
+
+#: pdfarranger/pageutils.py:995
+msgid "Underlay"
+msgstr "Lớp nền"
+
+#: pdfarranger/core.py:543 pdfarranger/pdfarranger.py:1711
+msgid "Unknown file format"
+msgstr "Định dạng tệp không rõ"
+
+#: pdfarranger/pageutils.py:1076
+msgid ""
+"Use a comma to separate page numbers, a dash to select a range of pages. \n"
+"e.g. : \"1,3,5-7,9\""
+msgstr "Dùng dấu phẩy để tách số trang, dấu gạch nối để chọn dải trang. \nví dụ: \"1,3,5-7,9\""
+
+#: pdfarranger/pdfarranger.py:3035
+msgid "User Manual"
+msgstr "Hướng dẫn sử dụng"
+
+#: pdfarranger/metadata.py:216
+msgid "Value"
+msgstr "Giá trị"
+
+#: pdfarranger/pageutils.py:478
+msgid "Vertical"
+msgstr "Dọc"
+
+#: pdfarranger/splitter.py:61
+msgid "Vertical Splits"
+msgstr "Cắt dọc"
+
+#: pdfarranger/pageutils.py:550
+msgid "Vertical offset"
+msgstr "Độ dời dọc"
+
+#: pdfarranger/pageutils.py:138
+msgid "Width"
+msgstr "Chiều rộng"
+
+#: pdfarranger/splitter.py:88
+msgid "Width in %"
+msgstr "Chiều rộng theo %"
+
+#: pdfarranger/pdfarranger.py:1193
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Mọi thay đổi sẽ mất nếu bạn không lưu."
+
+#: data/pdfarranger.ui:144
+msgid "Zoom In"
+msgstr "Phóng to"
+
+#: data/pdfarranger.ui:167
+msgid "Zoom Out"
+msgstr "Thu nhỏ"
+
+#: data/menu.ui:267
+msgid "Zoom _Fit"
+msgstr "Phóng vừa _khít"
+
+#: data/menu.ui:259
+msgid "Zoom _In"
+msgstr "Phóng _to"
+
+#: data/menu.ui:263
+msgid "Zoom _Out"
+msgstr "Thu _nhỏ"
+
+#: data/menu.ui:290
+msgid "_About"
+msgstr "G_iới thiệu"
+
+#: pdfarranger/pageutils.py:952
+msgid "_Apply"
+msgstr "Á_p dụng"
+
+#: data/menu.ui:198 data/menu.ui:473
+msgid "_Booklet"
+msgstr "Sách _nhỏ"
+
+#: pdfarranger/config.py:239 pdfarranger/metadata.py:205
+#: pdfarranger/pageutils.py:326 pdfarranger/pdfarranger.py:1185
+#: pdfarranger/pdfarranger.py:1194 pdfarranger/pdfarranger.py:1317
+#: pdfarranger/pdfarranger.py:1367
+msgid "_Cancel"
+msgstr "_Huỷ"
+
+#: pdfarranger/pdfarranger.py:1204 data/menu.ui:296
+msgid "_Close"
+msgstr "Đó_ng"
+
+#: data/menu.ui:98 data/menu.ui:318
+msgid "_Copy"
+msgstr "_Sao chép"
+
+#: data/menu.ui:166 data/menu.ui:441
+msgid "_Crop Margins…"
+msgstr "Cắ_t lề…"
+
+#: data/menu.ui:90 data/menu.ui:310
+msgid "_Delete"
+msgstr "_Xoá"
+
+#: data/menu.ui:219 data/menu.ui:388
+msgid "_Deselect All"
+msgstr "Bỏ chọn _tất cả"
+
+#: data/menu.ui:87
+msgid "_Edit"
+msgstr "_Sửa"
+
+#: data/menu.ui:137 data/menu.ui:362
+msgid "_Explode into Images"
+msgstr "Tách thà_nh ảnh"
+
+#: data/menu.ui:135 data/menu.ui:359
+msgid "_Extract"
+msgstr "_Trích xuất"
+
+#: data/menu.ui:170 data/menu.ui:445
+msgid "_Hide Margins…"
+msgstr "Ẩ_n lề…"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "_Nhập"
+
+#: data/menu.ui:244 data/menu.ui:413
+msgid "_Invert Selection"
+msgstr "Đảo _vùng chọn"
+
+#: data/menu.ui:190 data/menu.ui:465
+msgid "_Merge Pages…"
+msgstr "Gộ_p trang…"
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "Cử_a sổ mới"
+
+#: pdfarranger/config.py:240 pdfarranger/metadata.py:206
+#: pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:3026
+msgid "_OK"
+msgstr "Đồn_g ý"
+
+#: pdfarranger/pdfarranger.py:1366 data/menu.ui:24
+msgid "_Open"
+msgstr "_Mở"
+
+#: data/menu.ui:162 data/menu.ui:437
+msgid "_Page Size…"
+msgstr "Kích cỡ t_rang…"
+
+#: data/menu.ui:71
+msgid "_Print…"
+msgstr "_In…"
+
+#: pdfarranger/pdfarranger.py:1241 data/menu.ui:302
+msgid "_Quit"
+msgstr "T_hoát"
+
+#: data/menu.ui:82
+msgid "_Redo"
+msgstr "Là_m lại"
+
+#: pdfarranger/pageutils.py:952
+msgid "_Revert"
+msgstr "_Hoàn tác"
+
+#: data/menu.ui:157 data/menu.ui:432
+msgid "_Rotate Right"
+msgstr "Xoay p_hải"
+
+#: pdfarranger/pdfarranger.py:1194 pdfarranger/pdfarranger.py:1316
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "_Lưu"
+
+#: data/menu.ui:211 data/menu.ui:380
+msgid "_Select"
+msgstr "_Chọn"
+
+#: data/menu.ui:186 data/menu.ui:461
+msgid "_Split Pages…"
+msgstr "Tách t_rang…"
+
+#: data/menu.ui:78
+msgid "_Undo"
+msgstr "_Hoàn lại"
+
+#: data/menu.ui:256
+msgid "_View"
+msgstr "_Xem"
+
+#: pdfarranger/pageutils.py:142 pdfarranger/pageutils.py:148
+#: pdfarranger/pageutils.py:464 pdfarranger/pageutils.py:514
+msgid "mm"
+msgstr "mm"
+
+#: pdfarranger/core.py:695
+msgid "page"
+msgstr "trang"
+
+#: pdfarranger/pdfarranger.py:1035
+msgid "untitled"
+msgstr "chưa đặt tên"
