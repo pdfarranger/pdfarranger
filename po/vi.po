@@ -53,7 +53,7 @@ msgstr "(Yêu cầu khởi động lại)"
 #: pdfarranger/pdfarranger.py:1353
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr "Tệp có tên \"%s\" đã tồn tại. Bạn có muốn thay thế thế thế nó?"
+msgstr "Tệp có tên \"%s\" đã tồn tại. Bạn có muốn thay thế nó?"
 
 #: data/menu.ui:234 data/menu.ui:403
 msgid "All From _Same File"
@@ -85,7 +85,7 @@ msgstr "Từ dưới lên trên"
 
 #: pdfarranger/core.py:568
 msgid "Clipboard image"
-msgstr "Hình ảnh bảng nhớ tạm"
+msgstr "Hình ảnh bộ nhớ tạm"
 
 #: pdfarranger/pageutils.py:465 pdfarranger/splitter.py:60
 msgid "Columns"
@@ -105,7 +105,7 @@ msgstr "Tạo"
 
 #: pdfarranger/metadata.py:47
 msgid "Creator"
-msgstr "Người sáng tạo"
+msgstr "Trình tạo"
 
 #: pdfarranger/metadata.py:48
 msgid "Creator tool"
@@ -330,7 +330,7 @@ msgstr "Trái sang Phải"
 
 #: data/pdfarranger.ui:122
 msgid "Main Menu"
-msgstr "Thực đơn chính"
+msgstr "Menu chính"
 
 #: pdfarranger/pdfarranger.py:3075
 msgid "Maintainers and contributors"
@@ -358,7 +358,7 @@ msgstr "Kích thước trang không đồng nhất - sử dụng kích thước 
 
 #: pdfarranger/exporter.py:574
 msgid "None"
-msgstr "Không có có"
+msgstr "Không có"
 
 #: pdfarranger/pdfarranger.py:3023
 msgid "Note"
@@ -601,7 +601,7 @@ msgstr "Hệ số tỷ lệ"
 
 #: pdfarranger/exporter.py:572
 msgid "Scale mode:"
-msgstr "Chế độ quy mô:"
+msgstr "Chế độ tỉ lệ:"
 
 #: data/menu.ui:214 data/menu.ui:383
 msgid "Select _All"
@@ -753,7 +753,7 @@ msgstr "_Thu nhỏ"
 
 #: data/menu.ui:290
 msgid "_About"
-msgstr "_Về"
+msgstr "_Giới thiệu về"
 
 #: pdfarranger/pageutils.py:952
 msgid "_Apply"
