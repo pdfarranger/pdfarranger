@@ -1109,23 +1109,25 @@ class PdfArranger(Gtk.Application):
             self.iconview.select_path(path)
             self.iconview.unselect_path(path)
 
-    def get_visible_range2(self):
+    def get_visible_range2(self, fraction=0.5):
         """Get range of items visible in window.
 
-        A item is considered visible if more than 50% of item is visible.
+        A item is considered visible if more than fraction of item is visible.
         """
         vr = self.iconview.get_visible_range()
         if vr is None:
             return -1, -1
         first_ind = vr[0].get_indices()[0]
         last_ind = vr[1].get_indices()[0]
+        if first_ind == last_ind:
+            return first_ind, last_ind
         first_cell = self.iconview.get_cell_rect(vr[0])[1]
         last_cell = self.iconview.get_cell_rect(vr[1])[1]
         sw_height = self.sw.get_allocated_height()
-        if first_cell.y + first_cell.height * 0.5 < 0:
+        if first_cell.y + first_cell.height * (1 - fraction) < 0:
             columns_nr = self.iconview.get_columns()
             first_ind = min(first_ind + columns_nr, len(self.model) - 1)
-        if last_cell.y + last_cell.height * 0.5 > sw_height:
+        if last_cell.y + last_cell.height * fraction > sw_height:
             last_item_col = self.iconview.get_item_column(vr[1])
             last_ind = max(last_ind - last_item_col - 1, 0)
         return min(first_ind, last_ind), max(first_ind, last_ind)
