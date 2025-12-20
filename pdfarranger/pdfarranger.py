@@ -2600,6 +2600,8 @@ class PdfArranger(Gtk.Application):
         if event.state & Gdk.ModifierType.CONTROL_MASK:
             # Zoom
             self.zoom_set(self.zoom_level - dy)
+        elif event.state & Gdk.ModifierType.MOD1_MASK:
+            self.scroll_iconview_one_row(up=dy<0)
         else:
             # Scroll. Also drag-select if mouse button is pressed
             sw_vadj = self.sw.get_vadjustment()
@@ -2610,6 +2612,25 @@ class PdfArranger(Gtk.Application):
                 if changed:
                     self.iv_selection_changed()
         return Gdk.EVENT_STOP
+
+    def scroll_iconview_one_row(self, up):
+        """Scroll iconview one row up or down"""
+        if len(self.model) == 0:
+            return
+        first, last = self.get_visible_range2(fraction=1)
+        num = max(0, first - 1) if up else min(len(self.model) - 1, last + 1)
+        path = self.model[num].path
+        sw_vadj = self.sw.get_vadjustment()
+        sw_vpos = sw_vadj.get_value()
+        cell_rect = self.iconview.get_cell_rect(path)[1]
+        cell_height = cell_rect.height
+        cell_y = self.iconview.convert_widget_to_bin_window_coords(cell_rect.x, cell_rect.y)[1]
+        sw_height = self.sw.get_allocated_height()
+        if up:
+            sw_vpos = min(max(sw_vpos, cell_y + cell_height - sw_height), cell_y)
+        else:
+            sw_vpos = max(min(sw_vpos, cell_y), cell_y + cell_height - sw_height)
+        sw_vadj.set_value(sw_vpos)
 
     def enable_zoom_buttons(self, out_enable, in_enable):
         if self.window.lookup_action("zoom-out"):
