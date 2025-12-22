@@ -22,6 +22,7 @@ import locale
 from math import pi
 
 from .core import Sides, Dims, PDFRenderer
+from .exporter import get_in_memory_poppler_doc
 
 _ = gettext.gettext
 
@@ -311,7 +312,7 @@ class _CropHideWidget(Gtk.Frame):
     def set_spinb_changed_callback(self, callback):
         self.spin_changed_callback = callback
 
-    def set_val(self, val):
+    def set_val(self, val, _cursor_name=None):
         for i, spin in enumerate(self.spin_list):
             spin.set_value(val[i] * 100)
 
@@ -373,16 +374,20 @@ class ScaleDialog(BaseDialog):
 
 
 def white_borders(model, selection, pdfqueue):
-    crop = []
-    for path in selection:
-        it = model.get_iter(path)
-        p = model.get_value(it, 0)
-        pdfdoc = pdfqueue[p.nfile - 1]
+    pages = [model[row][0].duplicate(incl_thumbnail=False) for row in selection]
+    # Hidden parts are white and will be cropped also
+    orig_crops = [p.crop.max(p.hide) for p in pages]
+    # Create the temporary document without crops. They will be applied later
+    for p in pages:
+        p.crop = Sides()
+    poppler_doc, _buf = get_in_memory_poppler_doc(pages, pdfqueue)
 
-        page = pdfdoc.document.get_page(p.npage - 1)
+    crop = []
+    for i, orig_crop in enumerate(orig_crops):
+        poppler_page = poppler_doc.get_page(i)
+
         # Always render pages at 72 dpi whatever the zoom or scale of the page
-        w, h = page.get_size()
-        orig_crop = p.crop.rotated(-p.rotate_times(p.angle))
+        w, h = poppler_page.get_size()
 
         first_col = int(w * orig_crop.left)
         last_col = min(int(w), int(w * (1 - orig_crop.right) + 1))
@@ -392,8 +397,7 @@ def white_borders(model, selection, pdfqueue):
         h = int(h)
         thumbnail = cairo.ImageSurface(cairo.FORMAT_ARGB32, w, h)
         cr = cairo.Context(thumbnail)
-        with pdfdoc.render_lock:
-            page.render(cr)
+        poppler_page.render(cr)
         data = thumbnail.get_data().cast("i")
         whitecol = memoryview(b"\0" * (last_row - first_row) * 4).cast("i")
         whiterow = memoryview(b"\0" * (last_col - first_col) * 4).cast("i")
@@ -422,7 +426,7 @@ def white_borders(model, selection, pdfqueue):
                 crop_this_page[3] = (h - row - 1) / h
                 break
 
-        crop.append(Sides(*crop_this_page).rotated(p.rotate_times(p.angle)))
+        crop.append(Sides(*crop_this_page))
     return crop
 
 
@@ -533,7 +537,7 @@ class MergePagesDialog(BaseDialog):
 
 
 class _OffsetWidget(Gtk.Frame):
-    def __init__(self, offset, dpage, lpage):
+    def __init__(self, offset):
         super().__init__(shadow_type=Gtk.ShadowType.NONE)
         self.spinb_x = Gtk.SpinButton.new_with_range(0, 100, 1)
         self.spinb_x.set_activates_default(True)
@@ -560,7 +564,13 @@ class _OffsetWidget(Gtk.Frame):
 
         self.spinb_x.set_value(offset[0] * 100)
         self.spinb_y.set_value(offset[1] * 100)
-        self.set_scale(dpage, lpage)
+        self.rescale = 1
+
+    def set_model(self, damodel):
+        """Allow the widget access to the model to read page sizes and resize the pasted page"""
+        self.damodel = damodel
+        lpage = damodel[1][0]
+        self.scale_old = [lpage.scale] + [lp.scale for lp in lpage.layerpages]
 
     def spinb_val_changed(self, spinbutton):
         if callable(self.spinb_changed_callback):
@@ -569,27 +579,71 @@ class _OffsetWidget(Gtk.Frame):
     def set_spinb_changed_callback(self, callback):
         self.spinb_changed_callback = callback
 
-    def set_val(self, values):
-        self.spinb_x.set_value(values.left * self.scale.left)
-        self.spinb_y.set_value(values.top * self.scale.top)
+    def set_val(self, values, cursor_name):
+        """Place the page inside the rectangle by adjusting offset and scale.'"""
+
+        # Calculate the needed rescale
+        if cursor_name != 'move':
+            dpage, lpage = [page for [page] in self.damodel]
+            dw, dh = dpage.size_in_pixel()
+            lw, lh = lpage.size_in_pixel()
+            rw = max(10, dw * (1 - values.left - values.right))
+            rh = max(10, dh * (1 - values.top - values.bottom))
+            lpage.scale *= min(rw / lw, rh / lh)
+            self.rescale = lpage.scale / self.scale_old[0]
+            for num, lp in enumerate(lpage.layerpages, 1):
+                lp.scale = self.rescale * self.scale_old[num]
+
+        # Store the values as 'page size diff offset'
+        tscale = self.transform_scale()
+        if cursor_name == 'nw-resize':
+            self.spinb_x.set_value(100 - values.right * tscale.right)
+            self.spinb_y.set_value(100 - values.bottom * tscale.bottom)
+        elif cursor_name == 'sw-resize':
+            self.spinb_x.set_value(100 - values.right * tscale.right)
+            self.spinb_y.set_value(values.top * tscale.top)
+        elif cursor_name == 'ne-resize':
+            self.spinb_x.set_value(values.left * tscale.left)
+            self.spinb_y.set_value(100 - values.bottom * tscale.bottom)
+        else:
+            self.spinb_x.set_value(values.left * tscale.left)
+            self.spinb_y.set_value(values.top * tscale.top)
 
     def get_val(self):
         """Get left, right, top, bottom offset from dest page edges."""
         xval = self.spinb_x.get_value()
         yval = self.spinb_y.get_value()
-        return Sides(xval, 100 - xval, yval, 100 - yval) / self.scale
+        return Sides(xval, 100 - xval, yval, 100 - yval) / self.transform_scale()
 
     def get_diff_offset(self):
-        """Get the fraction of page size differenace at top-left."""
+        """Get the fraction of page size differance at top-left."""
         return self.spinb_x.get_value() / 100, self.spinb_y.get_value() / 100
 
-    def set_scale(self, dpage, lpage):
-        """Set scale between 'destination page edge offset' and 'page size diff offset'."""
+    def get_rescale(self):
+        """The factor by which the old page scale should be multiplied."""
+        return self.rescale
+
+    def transform_scale(self):
+        """Set scale between 'destination page edge offset' and 'page size diff offset.'
+
+        The model stores the offset as 'destination page edge offset':
+        left/top 0%: left/top of the pasted page is at left/top of the page
+        left/top 50%: left/top of the pasted page is at the center of the page
+        left/top 100%: left/top of the pasted page is at right/bottom (and not visible at all)
+
+        The widget stores the offset as 'page size diff offset':
+        left/top 0%: pasted page is all to left/top
+        left/top 50%: pasted page is centered
+        left/top 100%: pasted page is all to right/bottom (and still fully visible)
+
+        The 'transform scale' factor scales between the two ways of expressing the offset.
+        """
+        dpage, lpage = [page for [page] in self.damodel]
         dw, dh = dpage.size_in_pixel()
         lw, lh = lpage.size_in_pixel()
         scalex = 100 * dw / (dw - lw) if dw - lw != 0 else 1e10
         scaley = 100 * dh / (dh - lh) if dh - lh != 0 else 1e10
-        self.scale = Sides(scalex, scalex, scaley, scaley)
+        return Sides(scalex, scalex, scaley, scaley)
 
 
 class DrawingAreaWidget(Gtk.Box):
@@ -616,10 +670,11 @@ class DrawingAreaWidget(Gtk.Box):
         self.render_id = None
         self.surface = None
         self.adjust_rect = [0] * 4
-        self.allow_adjust_rect_resize = True
+        self.allow_side_resize = True
         self.handle_move_limits = True
         self.draw_on_page = draw_on_page_func
         self.da = Gtk.DrawingArea()
+        self.da.set_sensitive(False)
         self.da.set_events(self.da.get_events()
                               | Gdk.EventMask.BUTTON_PRESS_MASK
                               | Gdk.EventMask.BUTTON_RELEASE_MASK
@@ -757,13 +812,10 @@ class DrawingAreaWidget(Gtk.Box):
         """Get appropriate cursor when moving mouse over adjust rect (crop/hide/offset)."""
         margin = 5
         r = self.adjust_rect
-        if self.allow_adjust_rect_resize:
-            w = r[0] - margin < event.x < r[0] + margin
-            e = r[0] + r[2] - margin < event.x < r[0] + r[2] + margin
-            n = r[1] - margin < event.y < r[1] + margin
-            s = r[1] + r[3] - margin < event.y < r[1] + r[3] + margin
-        else:
-            w = e = n = s = False
+        w = r[0] - margin < event.x < r[0] + margin
+        e = r[0] + r[2] - margin < event.x < r[0] + r[2] + margin
+        n = r[1] - margin < event.y < r[1] + margin
+        s = r[1] + r[3] - margin < event.y < r[1] + r[3] + margin
         x_area = r[0] + margin < event.x < r[0] + r[2] - margin
         y_area = r[1] + margin < event.y < r[1] + r[3] - margin
 
@@ -775,13 +827,13 @@ class DrawingAreaWidget(Gtk.Box):
             cursor_name = 'se-resize'
         elif n and e:
             cursor_name = 'ne-resize'
-        elif w and y_area:
+        elif w and y_area and self.allow_side_resize:
             cursor_name = 'w-resize'
-        elif e and y_area:
+        elif e and y_area and self.allow_side_resize:
             cursor_name = 'e-resize'
-        elif n and x_area:
+        elif n and x_area and self.allow_side_resize:
             cursor_name = 'n-resize'
-        elif s and x_area:
+        elif s and x_area and self.allow_side_resize:
             cursor_name = 's-resize'
         elif x_area and y_area:
             cursor_name = 'move'
@@ -814,6 +866,7 @@ class DrawingAreaWidget(Gtk.Box):
     def adjust_val(self, event):
         if self.spinbutton_widget is None:
             return
+        self.quit_rendering()
         left, right, top, bottom = self.spinbutton_widget.get_val()
         page = self.damodel[0][0]
         if self.cursor_name in ['w-resize', 'nw-resize', 'sw-resize', 'move']:
@@ -827,9 +880,12 @@ class DrawingAreaWidget(Gtk.Box):
         v = Sides(left, right, top, bottom)
         if self.cursor_name in ['move'] and self.handle_move_limits:
             v += Sides(*(min(0, v[i]) for i in [1, 0, 3, 2]))
+        if self.cursor_name != 'move':
+            v = Sides(*(max(0, v[i]) for i in [0, 1, 2, 3]))
         self.spinbutton_widget.set_spinb_changed_callback(None)
-        self.spinbutton_widget.set_val(v)
+        self.spinbutton_widget.set_val(v, self.cursor_name)
         self.spinbutton_widget.set_spinb_changed_callback(self.draw_page)
+        self.silent_render()
         self.draw_page()
 
     def sw_leave_notify_event(self, _sw, event):
@@ -842,10 +898,12 @@ class DrawingAreaWidget(Gtk.Box):
         ah = self.da.get_allocated_height()
         self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, aw, ah)
 
-    def on_draw(self, _darea, cr):
+    def on_draw(self, da, cr):
         if self.surface is not None:
             cr.set_source_surface(self.surface, 0, 0)
             cr.paint()
+        if self.adjust_rect != [0] * 4:
+            da.set_sensitive(True)  # Let CI GUI test know rectangle is drawn
 
     def draw_page(self, _widget=None, _rect=None):
         """Draw the 'destination' thumbnail page."""
@@ -857,6 +915,8 @@ class DrawingAreaWidget(Gtk.Box):
         cr = cairo.Context(self.surface)
         aw = self.da.get_allocated_width()
         ah = self.da.get_allocated_height()
+        if aw < 2 or ah < 2:
+            return
 
         # Destination page rectangle
         dw = dpage.width_in_pixel()
@@ -991,19 +1051,20 @@ class CropHideDialog():
 
 
 class PastePageLayerDialog():
-    def __init__(self, window, dpage, lpage_stack, model, pdfqueue, mode, layer_pos):
+    def __init__(self, window, dpage, lpage_list, model, pdfqueue, mode, layer_pos):
         title = _("Overlay") if mode == 'OVERLAY' else _("Underlay")
-        lpage = lpage_stack[0].duplicate()
-        lpage.layerpages = [lp.duplicate() for lp in lpage_stack[1:]]
+        lpage = lpage_list[0].duplicate()
+        lpage.layerpages = [lp.duplicate() for lp in lpage_list[1:]]
         lpage.zoom = dpage.zoom
         lpage.resample = -1
         lpage.thumbnail = None
         lpage.hide = Sides()
-        self.spinbutton_widget = _OffsetWidget(layer_pos, dpage, lpage)
+        self.spinbutton_widget = _OffsetWidget(layer_pos)
         dawidget = DrawingAreaWidget(dpage, pdfqueue, self.spinbutton_widget, self.draw_on_page)
-        dawidget.allow_adjust_rect_resize = False
+        dawidget.allow_side_resize = False
         dawidget.handle_move_limits = False
         dawidget.damodel.append([lpage])
+        self.spinbutton_widget.set_model(dawidget.damodel)
 
         self.dialog = BaseDialog(title, window)
         self.dialog.vbox.pack_start(dawidget, True, True, 0)
@@ -1015,7 +1076,6 @@ class PastePageLayerDialog():
         dpage, lpage = [page for [page] in damodel]
         if lpage.thumbnail is None:
             return [0] * 4
-        self.spinbutton_widget.set_scale(dpage, lpage)
 
         # Layer page rectangle
         offset = self.spinbutton_widget.get_val()
@@ -1040,7 +1100,7 @@ class PastePageLayerDialog():
 
         return [lx - .5, ly - .5, lw + 1, lh + 1]
 
-    def get_offset(self):
+    def get_offset_and_rescale(self):
         """Get layer page x and y offset from top-left edge of the destination page.
 
         The offset is the fraction of space positioned at left and top of the pasted layer,
@@ -1049,7 +1109,9 @@ class PastePageLayerDialog():
         result = self.dialog.run()
         r = None
         if result == Gtk.ResponseType.OK:
-            r = self.spinbutton_widget.get_diff_offset()
+            offset = self.spinbutton_widget.get_diff_offset()
+            rescale = self.spinbutton_widget.get_rescale()
+            r = offset, rescale
         self.dialog.destroy()
         return r
 

@@ -1,4 +1,4 @@
-VERSION='1.11.1'
+VERSION='1.12.1'
 
 from cx_Freeze import setup, Executable
 import os
@@ -69,6 +69,8 @@ def addicons():
         'actions/open-menu',
         'actions/zoom-in',
         'actions/zoom-out',
+        'actions/go-up',
+        'actions/go-down',
         'ui/pan-down',
         'ui/pan-end',
         'ui/pan-start',

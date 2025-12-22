@@ -206,6 +206,7 @@ class PdfArrangerTest(unittest.TestCase):
 
     def _mainmenu(self, action):
         mainmenu = self._app().child(roleName="toggle button", name="Menu")
+        mainmenu.grabFocus()
         self._wait_cond(lambda: mainmenu.sensitive)
         mainmenu.click()
         if not isinstance(action, str):
@@ -218,7 +219,7 @@ class PdfArrangerTest(unittest.TestCase):
         c = 0
         while not cond():
             time.sleep(0.1)
-            self.assertLess(c, 30)
+            self.assertLess(c, 300)
             c += 1
 
     def _find_by_role(self, role, node=None, show_only=False):
@@ -257,6 +258,14 @@ class PdfArrangerTest(unittest.TestCase):
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
         label = " {:.1f} mm \u00D7 {:.1f} mm".format(width, height)
         self.assertTrue(self._status_text().endswith("Page Size:" + label))
+
+    def _page_size(self, pageid):
+        self._icons()[pageid].click()
+        self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
+        text = self._status_text()
+        size = text.split("Page Size: ")[1].split(" \u00D7 ")
+        w, h = size[0].split(" mm")[0], size[1].split(" mm")[0]
+        return float(w), float(h)
 
     def _check_file_content(self, filename, expected: Tuple[str]) -> Tuple[bool, str]:
         """
@@ -581,13 +590,37 @@ class TestBatch2(PdfArrangerTest):
         self._wait_cond(lambda: filechooser.dead)
         self.assertEqual(len(self._icons()), 2)
 
-    def test_03_cropborder(self):
-        self._popupmenu(0, "Crop White Borders")
+    def test_03_blank_page(self):
+        self._popupmenu(0, ["Insert Blank Page…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: len(self._icons()) == 3)
 
-    def test_04_past_overlay(self):
+    def test_04_paste_and_resize_overlay(self):
+        self._popupmenu(0, ["Copy"])
+        self._popupmenu(1, ["Paste Special", "Paste As Overlay…"])
+        dialog = self._app().child(roleName="dialog")
+        da = dialog.child(roleName="drawing area")
+        top_left = da.position[0] + 30, da.position[1] + 25
+        center = da.position[0] + da.size[0] / 2, da.position[1] + da.size[1] / 2
+        from dogtail import rawinput
+        self._wait_cond(lambda: da.sensitive)
+        rawinput.drag(top_left, center)
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_cropborder(self):
+        self._popupmenu(1, "Crop White Borders")
+        small_size = self._page_size(1)
+        self._popupmenu(0, "Crop White Borders")
+        large_size = self._page_size(0)
+        width_ratio = small_size[0] / large_size[0]
+        self.assertAlmostEqual(width_ratio, 0.5, places=1)
+
+    def test_06_paste_and_move_overlay(self):
         app = self._app()
         app.keyCombo("<ctrl>c")
-        app.keyCombo("Right")
+        app.keyCombo("End")
         app.keyCombo("<shift><ctrl>o")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Show values").click()
@@ -600,17 +633,21 @@ class TestBatch2(PdfArrangerTest):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_05_past_underlay(self):
+    def test_07_past_underlay(self):
         """Past a page with overlay under an other page"""
         app = self._app()
         app.keyCombo("<ctrl>c")
-        app.keyCombo("Left")
+        app.keyCombo("Home")
         app.keyCombo("<shift><ctrl>u")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_06_export(self):
+    def test_08_clear(self):
+        self._popupmenu(1, "Delete")
+        self.assertEqual(len(self._icons()), 2)
+
+    def test_09_export(self):
         self._mainmenu(["Export", "Export All Pages to Individual Files…"])
         self._save_as_chooser(
             "alltosingle.pdf", ["alltosingle.pdf", "alltosingle-002.pdf"]
@@ -625,17 +662,13 @@ class TestBatch2(PdfArrangerTest):
             b'  /BBox [', b'    0\n', b"    0\n", b'    612\n', b'    792\n',
             b'0 1 0 rg 530 180 m 70 180 l 300 580 l h 530 180 m B'))
 
-    def test_07_clear(self):
-        self._popupmenu(1, "Delete")
-        self.assertEqual(len(self._icons()), 1)
-
-    def test_08_about(self):
+    def test_10_about(self):
         self._mainmenu("About")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Close").click()
         self._wait_cond(lambda: dialog.dead)
 
-    def test_09_quit(self):
+    def test_11_quit(self):
         self._quit_without_saving()
 
 
@@ -812,6 +845,7 @@ class TestBatch6(PdfArrangerTest):
         x_center = da.position[0] + da.size[0] / 2
         y_center = da.position[1] + da.size[1] / 2
         from dogtail import rawinput
+        self._wait_cond(lambda: da.sensitive)
         for button in ["Apply", "Revert", "Apply"]:
             rawinput.drag((page_x, y_center), (page_x + page_width * 0.8, y_center))
             rawinput.drag((page_x + page_width * 0.9, y_center), (page_x + page_width * 0.3, y_center))
@@ -1065,7 +1099,10 @@ class TestBatch12(PdfArrangerTest):
         """Print with Gtk.PrintUnixDialog"""
         self._mainmenu(["Print…"])
         print_dialog = self._app().child(roleName="dialog")
-        print_dialog.child(name="Print to File").click()
+        print_dialog.grabFocus()
+        print_to_file = print_dialog.child(name="Print to File")
+        print_to_file.grabFocus()
+        print_to_file.click()
         from dogtail import rawinput
         rawinput.keyCombo("Tab")
         # Open "file chooser" to set the output name
@@ -1186,4 +1223,58 @@ class TestBatch15(PdfArrangerTest):
         self._assert_page_size(279.4, 215.9)
 
     def test_04_quit(self):
+        self._quit_without_saving()
+
+
+class TestBatch16(PdfArrangerTest):
+    """Test find text"""
+
+    def test_01_import_pdf(self):
+        self._start(["tests/test_raster_image_text.pdf"])
+
+    def test_02_split_page(self):
+        self._popupmenu(0, ["Split Pages…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self.assertEqual(len(self._icons()), 3)
+
+    def test_03_paste_as_overlay(self):
+        self._popupmenu(0, ["Copy"])
+        self._popupmenu(2, ["Paste Special", "Paste As Overlay…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_04_find_prev(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>F")
+        rawinput.typeText("tests")
+        rawinput.keyCombo("<shift>F3")
+        time.sleep(0.3)
+        self._assert_selected("3")
+
+    def test_05_find_next(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>A")
+        rawinput.typeText("tes")
+        rawinput.keyCombo("enter")
+        time.sleep(0.3)
+        rawinput.keyCombo("F3")
+        time.sleep(0.3)
+        self._mainmenu(["Find", "Find Next"])
+        time.sleep(0.3)
+        self._assert_selected("1")
+
+    def test_06_find_all(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("<ctrl>A")
+        rawinput.typeText("te")
+        self._mainmenu(["Find", "Find All"])
+        time.sleep(0.3)
+        self._assert_selected("1-3")
+
+    def test_07_quit(self):
+        from dogtail import rawinput
+        rawinput.keyCombo("esc")
         self._quit_without_saving()

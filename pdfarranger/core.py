@@ -159,6 +159,17 @@ class Sides(NamedTuple):
         perm = (0, 2, 1, 3)
         return Sides(*(self[perm[(x + times) % 4]] for x in perm))
 
+    def max(self, other: "Sides") -> "Sides":
+        """
+        Pointwise max
+
+        Example:
+
+        >>> Sides(1, 2, 3, 4).max(Sides(4, 3, 2, 1))
+        Sides(left=4, right=3, top=3, bottom=4)
+        """
+        return Sides(*(max(self[i], other[i]) for i in range(4)))
+
 
 class Dims(NamedTuple):
     width: Numeric
@@ -319,6 +330,7 @@ class Page(BasePage):
         self.description = description
         """The text under the thumbnail"""
         self.layerpages = list(layerpages)
+        self.find_rectangles = None
 
     def __repr__(self):
         return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "
@@ -351,6 +363,7 @@ class Page(BasePage):
 
     def duplicate(self, incl_thumbnail=True):
         r = copy.copy(self)
+        r.find_rectangles = None
         r.layerpages = [lp.duplicate() for lp in r.layerpages]
         if incl_thumbnail == False:
             del r.thumbnail  # to save ram
@@ -549,7 +562,7 @@ class PDFDoc:
             self.basename = description.split('\n')[0]
         self.blank_size = blank_size  # != None if page is blank
         self.password = ""
-        filemime = mimetypes.guess_type(self.filename)[0]
+        filemime = mimetypes.guess_type(self.filename, strict=False)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format"))
         if filemime == "application/pdf":
@@ -568,7 +581,7 @@ class PDFDoc:
         elif filemime.split("/")[0] == "image":
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf"))
-            if mimetypes.guess_type(filename)[0] in img2pdf_supported_img:
+            if mimetypes.guess_type(filename, strict=False)[0] in img2pdf_supported_img:
                 self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
@@ -746,6 +759,8 @@ class PageAdder:
                 if select_added:
                     path = self.app.model.get_path(it)
                     self.app.iconview.select_path(path)
+        if select_added:
+            self.app.iv_selection_changed()
         if add_to_undomanager:
             self.app.update_iconview_geometry()
             GObject.idle_add(self.app.retitle)

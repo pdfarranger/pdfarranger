@@ -13,6 +13,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name xml:lang="hu">PDF-rendező</name>
   <name xml:lang="id">Penyusun PDF</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
+  <name xml:lang="vi">PDF Arranger</name>
   <name xml:lang="ca">Arranjador de PDF</name>
   <name xml:lang="zh-tw">PDF Arranger</name>
   <summary>Merge, shuffle, and crop PDFs</summary>
@@ -35,6 +36,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <summary xml:lang="uk">Додаток для об'єднання, зміни порядку сторінок, розділу, обертання та обрізання PDF документів</summary>
+  <summary xml:lang="vi">Gộp, sắp xếp và cắt tệp PDF</summary>
   <summary xml:lang="zh-tw">合併、重新排列及裁切 PDF</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
@@ -188,6 +190,13 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <p xml:lang="zh-tw">
       它是 pikepdf 的前端之一。
     </p>
+
+    <p xml:lang="vi">
+      PDF Arranger là ứng dụng nhỏ giúp gộp hoặc tách tài liệu PDF, xoay, cắt và sắp xếp lại trang bằng giao diện đồ hoạ trực quan tương tác.
+    </p>
+    <p xml:lang="vi">
+      Đây là frontend cho pikepdf.
+    </p>
   </description>
   <developer id="pdfarranger.org">
     <name>The PDF Arranger team</name>
@@ -199,6 +208,8 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2025-06-11" version="1.12.1"/>
+    <release date="2025-05-23" version="1.12.0"/>
     <release date="2024-10-08" version="1.11.1"/>
     <release date="2024-06-20" version="1.11.0"/>
     <release date="2023-10-14" version="1.10.1"/>
@@ -224,6 +235,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   </releases>
   <project_license>GPL-3.0-or-later</project_license>
   <url type="homepage">https://github.com/pdfarranger/pdfarranger</url>
+  <url type="vcs-browser">https://github.com/pdfarranger/pdfarranger</url>
   <url type="bugtracker">https://github.com/pdfarranger/pdfarranger/issues</url>
   <url type="help">https://github.com/pdfarranger/pdfarranger/discussions</url>
   <url type="translate">https://github.com/pdfarranger/pdfarranger#for-translators</url>

@@ -23,6 +23,17 @@ only store snapshots of the GtkListStore object, not of
 the whole PDF files.
 """
 
+from dataclasses import dataclass
+from .core import Page
+
+
+@dataclass
+class State:
+    label: str
+    pages: list[Page]
+    selection: list[int]
+    vadj_percent: float
+
 
 class Manager(object):
     """
@@ -51,23 +62,36 @@ class Manager(object):
         :param label: label of the action
         """
         self.states = self.states[:self.current]
-        self.states.append(([row[0].duplicate(False) for row in self.model], self.label,))
+        self.states.append(self.get_state())
         self.current += 1
         self.label = label
         self.__refresh()
 
+    def get_state(self):
+        """
+        Get the content which should be saved:
+
+        1. The label of the action
+        2. The pages
+        3. Which page numbers are selected
+        4. The vertical adjustment percent value
+        """
+        pages = [row[0].duplicate(False) for row in self.model]
+        s = self.app.iconview.get_selected_items()
+        selection = [path.get_indices()[0] for path in s]
+        vadj_percent = self.app.vadj_percent_handler()
+        return State(self.label, pages, selection, vadj_percent)
+
     def undo(self, _action, _param, _unused):
         if self.current == len(self.states):
-            self.states.append(([row[0].duplicate(False) for row in self.model], self.label,))
-        state, self.label = self.states[self.current - 1]
-        self.__set_state(state)
+            self.states.append(self.get_state())
+        self.__set_state(self.states[self.current - 1])
         self.current -= 1
         self.app.set_unsaved(True)
         self.__refresh()
 
     def redo(self, _action, _param, _unused):
-        state, self.label = self.states[self.current + 1]
-        self.__set_state(state)
+        self.__set_state(self.states[self.current + 1])
         self.current += 1
         self.app.set_unsaved(True)
         self.__refresh()
@@ -82,15 +106,18 @@ class Manager(object):
         self.app.iconview.unselect_all()
         with self.app.render_lock():
             self.model.clear()
-            for page in state:
+            for page in state.pages:
                 # Do not reset the zoom level
                 page.zoom = self.app.zoom_scale
                 page.resample = -1
                 self.model.append([page, page.description])
+        for num in state.selection:
+            self.app.iconview.select_path(self.model[num].path)
+        self.app.vadj_percent = state.vadj_percent
         self.app.update_iconview_geometry()
         self.app.update_max_zoom_level()
         self.app.retitle()
-        self.app.update_statusbar()
+        self.app.iv_selection_changed()
         self.app.silent_render()
 
     def __refresh(self):

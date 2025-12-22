@@ -63,6 +63,9 @@ _DEFAULT_ACCELS = [
     ('main-menu', 'F10'),
     ('metadata', '<Alt>Return'),
     ('context-menu', '<Shift>F10 Menu'),
+    ('find', '<Primary>f'),
+    ('find_prev', '<Shift>F3'),
+    ('find_next', 'F3'),
 ]
 
 
@@ -117,6 +120,9 @@ class Config(object):
         self.data.read(Config._config_file(domain))
         if 'preferences' not in self.data:
             self.data.add_section('preferences')
+        preferences = self.data['preferences']
+        if 'save-window-geometry' not in preferences:
+            preferences['save-window-geometry'] = 'true'
         if 'print-settings' not in self.data:
             self.data.add_section('print-settings')
         if 'image-export' not in self.data:
@@ -141,6 +147,9 @@ class Config(object):
             if keyevent.state & mods == mods and keyevent.keyval == key:
                 return True
         return False
+
+    def save_window_geometry(self):
+        return self.data.getboolean('preferences', 'save-window-geometry', fallback=True)
 
     def window_size(self):
         ds = Gdk.Screen.get_default()
