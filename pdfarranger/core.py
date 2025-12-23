@@ -562,6 +562,8 @@ class PDFDoc:
             self.basename = description.split('\n')[0]
         self.blank_size = blank_size  # != None if page is blank
         self.password = ""
+        # MIME type for jp2 missing in python prior 3.14.0
+        mimetypes.add_type('image/jp2', '.jp2', strict=True)
         filemime = mimetypes.guess_type(self.filename, strict=False)[0]
         if not filemime:
             raise PDFDocError(_("Unknown file format") + ": " + filename)
