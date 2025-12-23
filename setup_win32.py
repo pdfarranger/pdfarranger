@@ -147,6 +147,7 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
+    target_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}',
     extensions=[{
         "extension": "pdf",
@@ -198,16 +199,3 @@ setup(name='PDF Arranger',
                               shortcut_name='PDF Arranger',
                               shortcut_dir='StartMenuFolder'
                               )])
-
-
-def rename_msi():
-    # cx_freeze 6.15: Workaround for having different filename and "ProductName" for the msi.
-    dist_dir = os.path.join(os.getcwd(), 'dist')
-    msi = [f for f in os.listdir(dist_dir) if f.endswith('.msi')]
-    if len(msi) > 0:
-        old_name = os.path.join(dist_dir, msi[0])
-        new_name = os.path.join(dist_dir, get_target_name('installer.msi'))
-        shutil.move(old_name, new_name)
-
-if 'bdist_msi' in sys.argv:
-    rename_msi()
