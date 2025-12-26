@@ -38,7 +38,8 @@ Pip will automatically install the latest pikepdf if there is no pikepdf install
 
 ```
 sudo apt-get install python3-pip python3-wheel python3-gi python3-gi-cairo \
-    gir1.2-gtk-3.0 gir1.2-poppler-0.18 gir1.2-handy-1 python3-setuptools
+    gir1.2-gtk-3.0 gir1.2-poppler-0.18 gir1.2-handy-1 python3-setuptools \
+    gettext python3-dateutil python3-venv
 ```
 
 **On Arch Linux**
@@ -62,10 +63,23 @@ sudo pkg install devel/gettext devel/py-gobject3 devel/py-pip \
     x11-toolkits/libhandy
 ```
 
-**Then**
+**Install PDF Arranger in a virtual environment**
+
+Create a virtual environment in `/home/user/myenv`
+```
+python3 -m venv --system-site-packages ~/myenv
+```
+
+Install PDF Arranger
 
 ```
-pip3 install --user --upgrade https://github.com/pdfarranger/pdfarranger/zipball/main
+~/myenv/bin/pip3 install --upgrade https://github.com/pdfarranger/pdfarranger/zipball/main
+```
+
+Optionally create a symlink so that the app can be started from anywhere in a terminal with `pdfarranger`
+
+```
+sudo ln -s ~/myenv/bin/pdfarranger /usr/local/bin/pdfarranger
 ```
 
 In addition, *PDF Arranger* supports image file import if [img2pdf](https://gitlab.mister-muffin.de/josch/img2pdf) is installed.
