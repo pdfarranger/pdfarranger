@@ -1,11 +1,13 @@
 VERSION='1.12.1'
 
 from cx_Freeze import setup, Executable
+from os.path import join
 import os
 import sys
 import setuptools
 import shutil
 import glob
+import subprocess
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
@@ -33,6 +35,16 @@ def addfile(relpath, warn_missing=False):
     else:
         include_files.append((f, relpath))
 
+def build_mo_files():
+    for filename in glob.glob(join("po", "*.po")):
+        lang = os.path.basename(filename)[:-3]
+        lang_dir = join("build", "mo", lang, "LC_MESSAGES")
+        os.makedirs(lang_dir, exist_ok=True)
+        subprocess.check_call(
+            ["msgfmt", filename, "-o", join(lang_dir, "pdfarranger.mo")]
+        )
+
+build_mo_files()
 
 def addlocale(name):
     langs = os.listdir('build/mo')
@@ -185,10 +197,8 @@ class bdist_zip(setuptools.Command):
 
 
 setup(name='PDF Arranger',
-      author='The PDF Arranger team',
       version=VERSION,
       description='PDF Arranger',
-      long_description='A simple application for PDF Merging, Rearranging, and Splitting',
       options=dict(build_exe=build_options, bdist_msi=msi_options),
       cmdclass={'bdist_zip': bdist_zip},
       packages=['pdfarranger'],
