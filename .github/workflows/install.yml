@@ -31,7 +31,7 @@ jobs:
     - name: Convert to lcov
       run: python3 -m coverage combine && python3 -m coverage lcov
     # Upload for later use (see upload-to-codecov job)
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: ppp-lcov
         path: coverage.lcov
@@ -53,7 +53,7 @@ jobs:
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Convert to lcov
       run: python3 -m coverage combine && python3 -m coverage lcov
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: pp6-lcov
         path: coverage.lcov
@@ -84,11 +84,11 @@ jobs:
     - run: ./setup.py build -v
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: pdfarranger-windows-installer-msi
         path: dist/*.msi
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: pdfarranger-windows-portable-zip
         path: dist/*.zip
@@ -98,7 +98,7 @@ jobs:
     steps:
     - name: RPM Build
       run: /pdfarranger/pdfarranger-build
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       with:
         name: pdfarranger-fedora-testbuild
         path: /github/home/rpmbuild/**/*.rpm
