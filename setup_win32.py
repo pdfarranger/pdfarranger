@@ -3,7 +3,7 @@ VERSION='1.12.1'
 from cx_Freeze import setup, Executable
 import os
 import sys
-import distutils
+import setuptools
 import shutil
 import glob
 
@@ -158,7 +158,7 @@ msi_options = dict(
 )
 
 
-class bdist_zip(distutils.cmd.Command):
+class bdist_zip(setuptools.Command):
     """ Minimalist command to create a Windows portable .zip distribution """
     description = "create a \"zip\" distribution"
     user_options = []
