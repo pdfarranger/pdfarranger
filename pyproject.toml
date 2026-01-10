@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77.0.3", "setuptools-gettext"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdfarranger"
+version = "1.12.1"
+authors = [{name = "PDF Arranger contributors"}]
+license = "GPL-3.0-only"
+description = "A simple application for PDF Merging, Rearranging, and Splitting"
+readme = "README.md"
+dependencies = [
+    "pikepdf>=6",
+    "python-dateutil>=2.4.0",
+    "packaging",
+]
+
+[project.optional-dependencies]
+image = ["img2pdf>=0.3.4"]
+
+[project.urls]
+Homepage = "https://github.com/pdfarranger/pdfarranger"
+
+[project.scripts]
+pdfarranger = "pdfarranger.pdfarranger:main"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pdfarranger"]

@@ -52,7 +52,7 @@ sudo pacman -S poppler-glib python-pip python-gobject gtk3 python-cairo libhandy
 
 ```
 sudo dnf install poppler-glib python3-pip python3-gobject gtk3 python3-cairo \
-    python3-wheel python3-pikepdf python3-img2pdf python3-dateutil libhandy
+    python3-wheel python3-pikepdf python3-img2pdf python3-dateutil libhandy gettext
 ```
 
 **On FreeBSD**
