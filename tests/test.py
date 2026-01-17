@@ -958,6 +958,7 @@ class TestBatch9(PdfArrangerTest):
         self._start(["--version"], gtk_check=False)
         time.sleep(0.5)
         stdout = self._get_stdout()
+        print(stdout)
         self.assertIn("pikepdf", stdout)
         self.assertIn("libqpdf", stdout)
         self.assertIn("OS-", stdout)
