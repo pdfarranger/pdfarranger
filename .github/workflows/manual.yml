@@ -1,0 +1,51 @@
+name: Manual
+on:
+  workflow_dispatch:
+    inputs:
+      pikepdf_tag:
+        description: 'Git tag for pikepdf (e.g., v10.2.0)'
+        required: true
+        type: string
+        default: 'main'
+      qpdf_tag:
+        description: 'Git tag for qpdf (e.g., v12.3.1)'
+        required: true
+        type: string
+        default: 'main'
+jobs:
+  pdfarranger-ci-tests-using-pikepdf-and-qpdf-built-from-source:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/pdfarranger/pdfarranger-pikepdf-qpdf-dev-docker-ci:1.0.0
+    steps:
+      - name: Checkout pdfarranger Git repository
+        uses: actions/checkout@v6
+      - name: Build libqpdf
+        run: |
+          git clone https://github.com/qpdf/qpdf.git
+          cd qpdf
+          git checkout ${{ inputs.qpdf_tag }}
+          echo QPDF_SOURCE_TREE=$PWD >> $GITHUB_ENV
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=ON
+          cmake --build build --parallel --target libqpdf
+          echo QPDF_BUILD_LIBDIR=$PWD/build/libqpdf >> $GITHUB_ENV
+      - name: Set up venv
+        run: |
+          python3 -m venv --system-site-packages virtenv
+          echo "$GITHUB_WORKSPACE/virtenv/bin" >> $GITHUB_PATH
+          echo "VIRTUAL_ENV=$GITHUB_WORKSPACE/virtenv" >> $GITHUB_ENV
+      - name: Upgrade pip
+        run: pip install --upgrade pip
+      - name: Build pikepdf
+        run: |
+          git clone https://github.com/pikepdf/pikepdf.git
+          cd pikepdf
+          git checkout ${{ inputs.pikepdf_tag }}
+          env QPDF_SOURCE_TREE=$QPDF_SOURCE_TREE QPDF_BUILD_LIBDIR=$QPDF_BUILD_LIBDIR \
+          pip install -e .
+      - name: Install pdfaranger
+        run: pip install -v .[image]
+      - name: Dogtail Tests
+        run: python3 -X tracemalloc -u -m unittest -v -f tests.test
+      - name: Exporter Tests
+        run: python3 -X tracemalloc -u -m unittest -v -f tests.test_exporter
