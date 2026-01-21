@@ -12,6 +12,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <name xml:lang="hr">PDF uređivač</name>
   <name xml:lang="hu">PDF-rendező</name>
   <name xml:lang="id">Penyusun PDF</name>
+  <name xml:lang="ka">PDF Arranger</name>
   <name xml:lang="tr">PDF Düzenleyici</name>
   <name xml:lang="vi">PDF Arranger</name>
   <name xml:lang="ca">Arranjador de PDF</name>
@@ -27,6 +28,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
   <summary xml:lang="hu">PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása</summary>
   <summary xml:lang="id">Menggabungkan, Mengatur ulang, Memisahkan, Memutar, dan Memangkas file PDF</summary>
+  <summary xml:lang="ka">შეაერთეთ, გადაალაგეთ და ამოჭერით PDF-ები</summary>
   <summary xml:lang="nl">Een programma voor het samenvoegen, herordenen, opsplitsen, draaien en bijsnijden van pdf-bestanden</summary>
   <summary xml:lang="is">Forrit til að sameina, endurraða, skipta upp, snúa og skera utan af síðum í PDF-skjölum</summary>
   <summary xml:lang="pt">Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF</summary>
@@ -130,6 +132,13 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="is">
       Þetta er viðmót fyrir pikepdf.
+    </p>
+    
+    <p xml:lang="ka">
+      PDF Arranger პატარა აპლიკაციაა, რომელიც მომხმარებელს PDF დოკუმენტების შეერთებაში, გაყოფაში, გადალაგებაში და ამოჭრაში ეხმარება ინტუიტიური გრაფიკული ინტერფეისით.
+    </p>
+    <p xml:lang="ka">
+      ის pikepdf-ის წინაბოლოა.
     </p>
 
     <p xml:lang="ko">
