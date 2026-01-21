@@ -1,0 +1,995 @@
+# Georgian translation for pdfarranger.
+# Copyright (C) 2026 pdfarranger's authors.
+# This file is distributed under the same license as the pdfarranger package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdfarranger\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-21 10:45+0200\n"
+"PO-Revision-Date: 2026-01-21 05:07+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: pdfarranger/splitter.py:87
+msgid "#Col"
+msgstr "#სვტ"
+
+#: pdfarranger/splitter.py:87
+msgid "#Row"
+msgstr "#მწკრ"
+
+#: pdfarranger/pageutils.py:128 pdfarranger/pageutils.py:553
+#: pdfarranger/pageutils.py:555
+msgid "%"
+msgstr "%"
+
+#: pdfarranger/pageutils.py:276
+#, python-format
+msgid "% of height"
+msgstr "სიმაღლის % o"
+
+#: pdfarranger/pageutils.py:276
+#, python-format
+msgid "% of width"
+msgstr "სიმაღლის % o"
+
+#: pdfarranger/pdfarranger.py:3152
+#, python-format
+msgid "%s is a tool for rearranging and modifying PDF files."
+msgstr "%s პროგრამაა PDF ფაილების გადასალაგებლად და შესაცვლელად."
+
+#: pdfarranger/config.py:296
+msgid "(Libhandy missing)"
+msgstr "(Libhandy აღმოჩენილი არაა)"
+
+#: pdfarranger/config.py:288
+msgid "(Requires restart)"
+msgstr "(საჭიროებს გადატვირთვას)"
+
+#: pdfarranger/pdfarranger.py:1402
+#, python-format
+msgid "A file named \"%s\" already exists. Do you want to replace it?"
+msgstr "ფაილის სახელით \"%s\" უკვე არსებობს. გნებავთ მისი ჩანაცვლდება?"
+
+#: pdfarranger/search.py:42
+msgid "All"
+msgstr "ყველა"
+
+#: data/menu.ui:254 data/menu.ui:444
+msgid "All From _Same File"
+msgstr "ყველაფერი _იგივე ფაილიდან"
+
+#: pdfarranger/pdfarranger.py:721
+msgid "All files"
+msgstr "ყველა ფაილი"
+
+#: pdfarranger/pdfarranger.py:510 pdfarranger/pdfarranger.py:589
+msgid "All pages must have the same size."
+msgstr "ყველა გვერდს იგივე ზომა უნდა ჰქონდეს."
+
+#: pdfarranger/pdfarranger.py:692
+msgid "All supported files"
+msgstr "ყველა მხარდაჭერილი ფაილი"
+
+#: pdfarranger/exporter.py:522
+msgid "Auto Rotate"
+msgstr "ავტომატური მობრუნება"
+
+#: pdfarranger/pageutils.py:254
+msgid "Bottom"
+msgstr "ქვემო"
+
+#: pdfarranger/pageutils.py:486
+msgid "Bottom to Top"
+msgstr "ქვემოდან ზემოთ"
+
+#: pdfarranger/core.py:592
+msgid "Clipboard image"
+msgstr "ბუფერის გამოსახულება"
+
+#: pdfarranger/pageutils.py:469 pdfarranger/splitter.py:60
+msgid "Columns"
+msgstr "სვეტები"
+
+#: data/menu.ui:161 data/menu.ui:407
+msgid "Copy _Image"
+msgstr "გამოსახულების _კოპირება"
+
+#: data/menu.ui:166 data/menu.ui:412
+msgid "Copy _Text"
+msgstr "_ტექსტის კოპირება"
+
+#: pdfarranger/metadata.py:49
+msgid "Created"
+msgstr "შექმნის თარიღით"
+
+#: pdfarranger/metadata.py:47
+msgid "Creator"
+msgstr "შემქმნელი"
+
+#: pdfarranger/metadata.py:48
+msgid "Creator tool"
+msgstr "შემქმნელი ხელსაწყო"
+
+#: pdfarranger/pageutils.py:351
+msgid "Crop & Add margins"
+msgstr "ამოჭრა და მინდვრების დამატება"
+
+#: pdfarranger/pageutils.py:1002
+msgid "Crop Margins"
+msgstr "მინდვრების ამჭრა"
+
+#: data/menu.ui:194 data/menu.ui:490
+msgid "Crop White Borders"
+msgstr "წითელი საზღვრების ამოჭრა"
+
+#: pdfarranger/pageutils.py:266 pdfarranger/pdfarranger.py:3118
+msgid ""
+"Cropping/hiding does not remove any content from the PDF file, it only hides "
+"it."
+msgstr ""
+"ამოჭრა დამალვა PDF ფაილის შემცველობას არ ცვლის. ის, მხოლოდ, დამალავს მას."
+
+#: data/menu.ui:114 data/menu.ui:355
+msgid "Cu_t"
+msgstr "ა_მოჭრა"
+
+#: pdfarranger/pageutils.py:154
+msgid "Custom"
+msgstr "ხელით"
+
+#: pdfarranger/pdfarranger.py:1525
+msgid "Despite the warnings the document(s) should have no visible issues."
+msgstr "გაფრთხილებების მოიხედავდა დოკუმენტს პრობლემები არ უნდა ჰქონდეს."
+
+#: pdfarranger/pdfarranger.py:1236
+msgid "Discard changes and close?"
+msgstr "მოვაცილო ცვლილებები და დავხურო?"
+
+#: pdfarranger/pdfarranger.py:1273
+msgid "Discard changes and quit?"
+msgstr "მოვაცილო ცვლილებები და გავიდე?"
+
+#: pdfarranger/pdfarranger.py:3125
+msgid "Do not show this dialog again."
+msgstr "ეს ფანჯარა აღარ მაჩვენო."
+
+#: pdfarranger/pdfarranger.py:1227
+msgid "Do_n’t Save"
+msgstr "არ შეი_ნახო"
+
+#: pdfarranger/pdfarranger.py:1532
+msgid "Don't show warnings when saving again."
+msgstr "არ აჩვენოთ გაფრთხილებები ხელახლა შენახვისას."
+
+#: data/menu.ui:198 data/menu.ui:494
+msgid "Dupl_icate"
+msgstr "დუბლ_ირება"
+
+#: data/menu.ui:52 data/menu.ui:527
+msgid "E_xport"
+msgstr "გა_ტანა"
+
+#: data/menu.ui:55 data/menu.ui:530
+msgid "E_xport Selection to a Single File…"
+msgstr "მონი_შნულის გატანა ერთ ფაილში…"
+
+#: data/menu.ui:319
+msgid "Edit _Properties"
+msgstr "თვისებების ჩას_წორება"
+
+#: pdfarranger/metadata.py:213
+msgid "Edit properties"
+msgstr "თვისებების ჩასწორება"
+
+#: pdfarranger/splitter.py:62
+msgid "Equal column width"
+msgstr "ტოლი სვეტის სიგანე"
+
+#: pdfarranger/splitter.py:62
+msgid "Equal row height"
+msgstr "ტოლი მწკრივის სიმაღლე"
+
+#: pdfarranger/pdfarranger.py:2094
+msgid "Exploding into images…"
+msgstr "აფეთქება სურათებში…"
+
+#: data/menu.ui:60 data/menu.ui:535
+msgid "Export Selection to _Individual Files…"
+msgstr "მონიშნულის გატანა _ინდივიდუალურ ფაილებში…"
+
+#: data/menu.ui:74 data/menu.ui:549
+msgid "Export Selection to _JPG Images…"
+msgstr "მონიშნულის გატანა _JPG გამოსახულებებში…"
+
+#: data/menu.ui:69 data/menu.ui:544
+msgid "Export Selection to _PNG Images…"
+msgstr "მონიშნულის გატანა _PNG გამოსახულებებში…"
+
+#: data/menu.ui:84 data/menu.ui:559
+msgid "Export Selection to _Rasterized PDF (jpg)…"
+msgstr "მონიშნულის გატანა _რასტერიზებულ PDF-ში (jpg)…"
+
+#: data/menu.ui:79 data/menu.ui:554
+msgid "Export Selection to _Rasterized PDF (png)…"
+msgstr "მონიშნულის გატანა _რასტერიზებულ PDF-ში (png)…"
+
+#: data/menu.ui:65 data/menu.ui:540
+msgid "Export _All Pages to Individual Files…"
+msgstr "ყველ_ა გვერდის გატანა ინდივიდუალურ ფაილებში…"
+
+#: pdfarranger/pdfarranger.py:1343
+msgid "Export…"
+msgstr "გატანა…"
+
+#: pdfarranger/core.py:594 pdfarranger/pdfarranger.py:1788
+msgid "File is neither pdf nor image"
+msgstr "ფაილი არის PDF-ია, არც გამოსახულება"
+
+#: pdfarranger/pdfarranger.py:334
+msgid "File(s) to open"
+msgstr "გასახსნელი ფაილი"
+
+#: pdfarranger/search.py:43
+msgid "Find All"
+msgstr "ყველას პოვნა"
+
+#: pdfarranger/search.py:38
+msgid "Find Next"
+msgstr "შემდეგის პოვნა"
+
+#: pdfarranger/search.py:33
+msgid "Find Previous"
+msgstr "წინას პოვნა"
+
+#: data/menu.ui:312
+msgid "Find _All"
+msgstr "ყველაფრის ძებნა"
+
+#: data/menu.ui:308
+msgid "Find _Next"
+msgstr "შემდეგის _პოვნა"
+
+#: data/menu.ui:304
+msgid "Find _Previous"
+msgstr "წინას პოვნა"
+
+#: pdfarranger/pageutils.py:347
+msgid "Fit mode"
+msgstr "ჩატევის რეჟიმი"
+
+#: pdfarranger/exporter.py:520
+msgid "Fit to Full Page"
+msgstr "სრულ გვერდში ჩატევა"
+
+#: pdfarranger/exporter.py:519
+msgid "Fit to Printable Area"
+msgstr "დაბეჭდვად ფართობში ჩატევა"
+
+#: pdfarranger/pageutils.py:356
+msgid "Fit to paper"
+msgstr "ჩატევა ფურცლის ზომაში"
+
+#: pdfarranger/pdfarranger.py:3122
+msgid "For more info see"
+msgstr "მეტი ინფორმაციისთვის იხილეთ"
+
+#: pdfarranger/config.py:332
+msgid "For more options see:"
+msgstr "მეტი პარამეტრისთვის იხილეთ:"
+
+#: data/menu.ui:291
+msgid "Full_screen"
+msgstr "_სრულ ეკრანზე"
+
+#: pdfarranger/pdfarranger.py:3168
+msgid "GNU General Public License (GPL) Version 3."
+msgstr "GNU General Public License (GPL) Version 3."
+
+#: pdfarranger/config.py:327
+msgid "Greyscale"
+msgstr "ნაცრისფერი"
+
+#: pdfarranger/pageutils.py:145
+msgid "Height"
+msgstr "სიმაღლე"
+
+#: pdfarranger/splitter.py:88
+msgid "Height in %"
+msgstr "სიმაღლე %-ში"
+
+#: pdfarranger/pageutils.py:1002
+msgid "Hide Margins"
+msgstr "მინდვრების დამალვა"
+
+#: pdfarranger/pageutils.py:481
+msgid "Horizontal"
+msgstr "ჰორიზონტალური"
+
+#: pdfarranger/splitter.py:61
+msgid "Horizontal Splits"
+msgstr "ჰორიზონტალური გაყოფები"
+
+#: pdfarranger/pageutils.py:552
+msgid "Horizontal offset"
+msgstr "ჰორიზონტალური წანაცვლება"
+
+#: pdfarranger/config.py:316
+msgid "Image Export"
+msgstr "გამოსახულების გატანა"
+
+#: pdfarranger/core.py:583
+msgid "Image files are only supported with img2pdf"
+msgstr "გამოსახულების ფაილები მხარდაჭერილია, მხოლოდ, img2pdf-ისთან ერთად"
+
+#: pdfarranger/core.py:589
+msgid "Image format is not supported by img2pdf"
+msgstr "გამოსახულების ფორმატი მხარდაჭერილი არაა img2pdf-ის მიერ"
+
+#: pdfarranger/pdfarranger.py:2091
+msgid "Img2pdf missing."
+msgstr "Img2pdf აღმოჩენილი არაა."
+
+#: pdfarranger/pdfarranger.py:1600
+msgid "Img2pdf support missing."
+msgstr "Img2pdf-ის მხარდაჭერა აღმოჩენილი არაა."
+
+#: data/pdfarranger.ui:58
+msgid "Import"
+msgstr "შემოტანა"
+
+#: pdfarranger/pdfarranger.py:1610
+msgid "Import…"
+msgstr "შემოტანა…"
+
+#: data/menu.ui:214 data/menu.ui:510
+msgid "Insert Blan_k Page…"
+msgstr "_ცარიელი გვერდის ჩასმა…"
+
+#: pdfarranger/pageutils.py:435
+msgid "Insert Blank Page"
+msgstr "ცარიელი გვერდის ჩასმა"
+
+#: pdfarranger/metadata.py:184
+msgid "Invalid date format. Input discarded."
+msgstr "არასწორი თარიღის ფორმატი. შეყვანილი მონაცემები მოცილებულია."
+
+#: pdfarranger/pdfarranger.py:3155
+#, python-format
+msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
+msgstr "იყენებს: libqpdf %s, pikepdf %s, GTK %s და Python %s."
+
+#: pdfarranger/pdfarranger.py:712
+msgid "JPEG images"
+msgstr "JPEG გამოსახულებები"
+
+#: pdfarranger/metadata.py:45
+msgid "Keywords"
+msgstr "საკვანძო სიტყვები"
+
+#: pdfarranger/pageutils.py:164
+msgid "Landscape"
+msgstr "ლანდშაფტი"
+
+#: pdfarranger/config.py:286
+msgid "Language"
+msgstr "ენა"
+
+#: pdfarranger/pageutils.py:254
+msgid "Left"
+msgstr "მარცხენა"
+
+#: pdfarranger/pageutils.py:483
+msgid "Left to Right"
+msgstr "მარცხნიდან მარჯვნივ"
+
+#: data/pdfarranger.ui:122
+msgid "Main Menu"
+msgstr "მთავარი მენიუ"
+
+#: pdfarranger/pdfarranger.py:3163
+msgid "Maintainers and contributors"
+msgstr "პროგრამისტები და მოხალისეები"
+
+#: pdfarranger/pageutils.py:467
+msgid "Margin"
+msgstr "ზღვარი"
+
+#: pdfarranger/pageutils.py:453
+msgid "Merge Pages"
+msgstr "გვერდების შერწყმა"
+
+#: pdfarranger/pageutils.py:518
+msgid "Merged page size:"
+msgstr "შერწყმული გვერდის ზომა:"
+
+#: pdfarranger/metadata.py:50
+msgid "Modified"
+msgstr "ცვლილების დროით"
+
+#: pdfarranger/pageutils.py:498
+msgid "Non-uniform page size - using max size"
+msgstr "არაერთგვაროვანი გვერდის ზომა - გამოიყენება მაქს. ზომა"
+
+#: pdfarranger/exporter.py:518
+msgid "None"
+msgstr "არცერთი"
+
+#: pdfarranger/pdfarranger.py:3111
+msgid "Note"
+msgstr "შენიშვნა"
+
+#: pdfarranger/pdfarranger.py:3117
+msgid "Note the limitations:"
+msgstr "გაითვალისწინეთ შეზღუდვები:"
+
+#: data/pdfarranger.ui:37
+msgid "Open"
+msgstr "გახსნა"
+
+#: pdfarranger/pdfarranger.py:1458
+msgid "Open…"
+msgstr "გახსნა…"
+
+#: pdfarranger/config.py:324
+msgid "Optimize"
+msgstr "ოპტიმიზაცია"
+
+#: pdfarranger/pageutils.py:162
+msgid "Orientation"
+msgstr "ორიენტაცია"
+
+#: pdfarranger/pdfarranger.py:3119
+msgid "Outlines and links can be preserved only in certain cases."
+msgstr ""
+"კონტურებისა და ბმულების შენახვა, მხოლოდ, ზოგიერთ შემთხვევაშია შესაძლებელი."
+
+#: pdfarranger/pageutils.py:1055
+msgid "Overlay"
+msgstr "დაფარვა"
+
+#: pdfarranger/pdfarranger.py:315
+msgid ""
+"PDF Arranger is a small python-gtk application, which helps the user to "
+"merge or split pdf documents and rotate, crop and rearrange their pages "
+"using an interactive and intuitive graphical interface. It is a frontend for "
+"pikepdf."
+msgstr ""
+"PDF Arranger პატარა python-gtk-ზე დაწერილი აპლიკაციაა, რომელიც მომხმარებელს "
+"ეხმარება, შეაერთოს, ან დაჰყოს pdf დოკუმენტები და შეაბრუნოს, ამოჭრას, ან "
+"გადაალაგოს მათი გვერდები ინტუიტიური და ინტერაქტიური ინტერფეისით. ის pikepdf-"
+"ის წინაბოლოა."
+
+#: pdfarranger/pdfarranger.py:1782
+msgid "PDF document is damaged"
+msgstr "PDF დოკუმენტი დაზიანებულია"
+
+#: pdfarranger/pdfarranger.py:696
+msgid "PDF files"
+msgstr "PDF ფაილები"
+
+#: pdfarranger/pdfarranger.py:704
+msgid "PNG images"
+msgstr "PNG გამოსახულებები"
+
+#: pdfarranger/exporter.py:573
+msgid "Page Handling"
+msgstr "გვერდის დამუშავება"
+
+#: pdfarranger/pageutils.py:494
+msgid "Page Order"
+msgstr "გვერდების მიმდევრობა"
+
+#: pdfarranger/pageutils.py:343
+msgid "Page size"
+msgstr "გვერდის ზომა"
+
+#: pdfarranger/pageutils.py:151
+msgid "Paper size"
+msgstr "გვერდის ზომა"
+
+#: pdfarranger/core.py:470
+msgid "Password"
+msgstr "პაროლი"
+
+#: pdfarranger/core.py:448
+msgid "Password required"
+msgstr "პაროლი აუცილებელია"
+
+#: data/menu.ui:127 data/menu.ui:368
+msgid "Past_e Special"
+msgstr "სპ_ეციალური ჩასმა"
+
+#: data/menu.ui:144 data/menu.ui:386
+msgid "Paste As O_verlay…"
+msgstr "ჩასმა განლაგების სა_ხით…"
+
+#: data/menu.ui:139 data/menu.ui:381
+msgid "Paste As _Even Pages"
+msgstr "ჩასმა ლუწი გვ_ერდების სახით"
+
+#: data/menu.ui:134 data/menu.ui:376
+msgid "Paste As _Odd Pages"
+msgstr "ჩასმა _კენტი გვერდების სახით"
+
+#: data/menu.ui:149 data/menu.ui:391
+msgid "Paste As _Underlay…"
+msgstr "ჩასმა ქვემოთ დადებ_ულის სახით…"
+
+#: data/menu.ui:122 data/menu.ui:363
+msgid "Paste _After"
+msgstr "ჩ_ასმა შემდეგ"
+
+#: data/menu.ui:129 data/menu.ui:371
+msgid "Paste _Before"
+msgstr "ჩასმა _მანამდე"
+
+#: pdfarranger/pdfarranger.py:1938
+msgid "Pasted data not valid. Aborting paste."
+msgstr "ჩასმული მონაცემები არასწორია. ჩასმა შეწყდება."
+
+#: pdfarranger/config.py:318
+msgid "Pixels/inch:"
+msgstr "პიქსელი/დუიმი:"
+
+#: pdfarranger/pageutils.py:163
+msgid "Portrait"
+msgstr "პორტრეტი"
+
+#: data/menu.ui:325
+msgid "Pre_ferences"
+msgstr "_მორგება"
+
+#: pdfarranger/config.py:276
+msgid "Preferences"
+msgstr "მორგება"
+
+#: pdfarranger/pdfarranger.py:326
+msgid "Print the version of PDF Arranger and exit"
+msgstr "PDF Arranger-ის ვერსიის გამოტანა და გასვლა"
+
+#: pdfarranger/config.py:301
+msgid "Printing"
+msgstr "დაბეჭდვა"
+
+#: pdfarranger/exporter.py:554
+msgid "Printing…"
+msgstr "დაბეჭდვა…"
+
+#: pdfarranger/metadata.py:46
+msgid "Producer"
+msgstr "პროდიუსერი"
+
+#: pdfarranger/metadata.py:227
+msgid "Property"
+msgstr "თვისება"
+
+#: pdfarranger/pageutils.py:1122
+msgid "Range Select"
+msgstr "შუალედის არჩევა"
+
+#: data/menu.ui:202 data/menu.ui:498
+msgid "Re_verse Order"
+msgstr "მიმდე_ვრობის შებრუნება"
+
+#: pdfarranger/pageutils.py:357
+msgid "Relative"
+msgstr "ფარდობითი"
+
+#: pdfarranger/exporter.py:591
+msgid "Rendering Preview…"
+msgstr "მინიატურის რენდერი…"
+
+#: pdfarranger/pdfarranger.py:982
+msgid "Rendering…"
+msgstr "რენდერი…"
+
+#: pdfarranger/pdfarranger.py:1404
+msgid "Replace"
+msgstr "ჩანაცვლება"
+
+#: pdfarranger/config.py:308
+msgid "Retain document-level information of the first opened file"
+msgstr "პირველი ღია ფაილის დოკუმენტის დონის ინფორმაციის შენარჩუნება"
+
+#: pdfarranger/pageutils.py:254
+msgid "Right"
+msgstr "მარჯვენა"
+
+#: pdfarranger/pageutils.py:484
+msgid "Right to Left"
+msgstr "მარჯვნიდან მარცხნივ"
+
+#: data/pdfarranger.ui:203
+msgid "Rotate Left"
+msgstr "მარცხნივ შებრუნება"
+
+#: data/pdfarranger.ui:227
+msgid "Rotate Right"
+msgstr "მარჯვნივ შებრუნება"
+
+#: data/menu.ui:172 data/menu.ui:468
+msgid "Rotate _Left"
+msgstr "მარცხნივ მოტრია_ლება"
+
+#: pdfarranger/pageutils.py:470 pdfarranger/splitter.py:60
+msgid "Rows"
+msgstr "მწკრივები"
+
+#: pdfarranger/pdfarranger.py:3158
+#, python-format
+msgid "Running on %s"
+msgstr "გაშვებულია %s-ze"
+
+#: data/menu.ui:259 data/menu.ui:449
+msgid "Same Page _Format"
+msgstr "იგივე გვერდის _ფორმატი"
+
+#: data/pdfarranger.ui:78
+msgid "Save"
+msgstr "შენახვა"
+
+#: data/pdfarranger.ui:97
+msgid "Save As"
+msgstr "შენახვა, როგორც"
+
+#: pdfarranger/pdfarranger.py:1343
+msgid "Save As…"
+msgstr "შენახვა, როგორც…"
+
+#: data/menu.ui:47
+msgid "Save _As…"
+msgstr "_შენახვა, როგორც…"
+
+#: pdfarranger/pdfarranger.py:1245
+msgid "Save changes before closing?"
+msgstr "ცვლილებების შენახვა დახურვამდე?"
+
+#: pdfarranger/pdfarranger.py:1282
+msgid "Save changes before quitting?"
+msgstr "ცვლილებების შენახვა გასვლამდე?"
+
+#: pdfarranger/pdfarranger.py:1242
+msgid "Save changes to “{}” before closing?"
+msgstr "შევინახო ცვლილებები \"{}\"-ში დახურვამდე?"
+
+#: pdfarranger/pdfarranger.py:1279
+msgid "Save changes to “{}” before quitting?"
+msgstr "შევინახო ცვლილებები \"{}\"-ში გასვლამდე?"
+
+#: pdfarranger/pdfarranger.py:1524
+msgid "Saving produced some warnings"
+msgstr "შენახვამ რამდენიმე გაფრთხილება გამოიწვია"
+
+#: pdfarranger/config.py:306
+msgid "Saving/exporting to single file"
+msgstr "შენახვა/გატანა ერთ ფაილში"
+
+#: pdfarranger/pdfarranger.py:1563
+msgid "Saving…"
+msgstr "Შენახვა…"
+
+#: pdfarranger/pageutils.py:349
+msgid "Scale"
+msgstr "მასშტაბი"
+
+#: pdfarranger/pageutils.py:350
+msgid "Scale & Add margins"
+msgstr "გადიდება და მინდვრების დამატება"
+
+#: pdfarranger/pageutils.py:122
+msgid "Scale factor"
+msgstr "გადიდების კოეფიციენტი"
+
+#: pdfarranger/exporter.py:516
+msgid "Scale mode:"
+msgstr "გადიდების რეჟიმი:"
+
+#: data/menu.ui:234 data/menu.ui:424
+msgid "Select _All"
+msgstr "ყველ_აფრის მონიშვნა"
+
+#: data/menu.ui:249 data/menu.ui:439
+msgid "Select _Even Pages"
+msgstr "ლუწი გვ_ერდების მონიშვნა"
+
+#: data/menu.ui:244 data/menu.ui:434
+msgid "Select _Odd Pages"
+msgstr "კენტი გვერდების მ_ონიშვნა"
+
+#: data/menu.ui:269 data/menu.ui:459
+msgid "Select _Range"
+msgstr "შუალედის მო_ნიშვნა"
+
+#: pdfarranger/pageutils.py:1131
+msgid "Select range of pages: "
+msgstr "აირჩიეთ გვერდების შუალედი: "
+
+#: pdfarranger/pdfarranger.py:3186
+msgid "Selected pages: "
+msgstr "მონიშნული გვერდები: "
+
+#: pdfarranger/pageutils.py:699
+msgid "Show values"
+msgstr "მნიშვნელობების ჩვენება"
+
+#: pdfarranger/splitter.py:26
+msgid "Split Pages"
+msgstr "გვერდების გაყოფა"
+
+#: pdfarranger/metadata.py:44
+msgid "Subject"
+msgstr "თემა"
+
+#: pdfarranger/pdfarranger.py:726
+msgid "Supported image files"
+msgstr "გამოსახულების მხარდაჭერილი ფაილები"
+
+#: pdfarranger/config.py:343 pdfarranger/config.py:351
+msgid "System setting"
+msgstr "სისტემური პარამეტრი"
+
+#: pdfarranger/core.py:460
+msgid ""
+"The document “{}” is locked and requires a password before it can be opened."
+msgstr "დოკუმენტი '{}' დაბლოკილია და გასახსნელად პაროლი სჭირდება."
+
+#: pdfarranger/pdfarranger.py:2067
+msgid "The page has several images. Use \"Explode into Images\" first.\""
+msgstr ""
+"გვერდი რამდენიმე გამოსახულებას შეიცავს. ჯერ გამოიყენეთ \"აფეთქება "
+"გამოსახულებებში\"."
+
+#: pdfarranger/pdfarranger.py:577
+msgid "The page selection is not contiguous. Cannot unimpose."
+msgstr "გვერდის მონიშვნა უწყვეტი არაა. დაშლა შეუძლებელია."
+
+#: pdfarranger/core.py:459
+msgid "The password will be remembered until you close PDF Arranger."
+msgstr "პაროლი დამახსოვრებული იქნება, სანამ PDF Arranger-ს არ დახურავთ."
+
+#: pdfarranger/config.py:294
+msgid "Theme"
+msgstr "თემა"
+
+#: pdfarranger/metadata.py:43
+msgid "Title"
+msgstr "სათაური"
+
+#: pdfarranger/pageutils.py:254
+msgid "Top"
+msgstr "ზედა"
+
+#: pdfarranger/pageutils.py:485
+msgid "Top to Bottom"
+msgstr "ზემოდან ქვემოთ"
+
+#: pdfarranger/pageutils.py:1055
+msgid "Underlay"
+msgstr "ქვესადები"
+
+#: pdfarranger/core.py:567 pdfarranger/pdfarranger.py:1778
+msgid "Unknown file format"
+msgstr "უცნობი ფაილის ფორმატი"
+
+#: pdfarranger/pageutils.py:1138
+msgid ""
+"Use a comma to separate page numbers, a dash to select a range of pages. \n"
+"e.g. : \"1,3,5-7,9\""
+msgstr ""
+"გამოიყენეთ მძიმე გვერდის ნომრების გასაყოფად და ტირე გვერდის შუალედების "
+"ასარჩევად.\n"
+"მაგ: \"1,3,5-7,9\""
+
+#: pdfarranger/pdfarranger.py:3123
+msgid "User Manual"
+msgstr "მომხმარებლის სახელმძღვანელო"
+
+#: pdfarranger/metadata.py:227
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+#: pdfarranger/pageutils.py:482
+msgid "Vertical"
+msgstr "ვერტიკალური"
+
+#: pdfarranger/splitter.py:61
+msgid "Vertical Splits"
+msgstr "ვერტიკალური გაყოფები"
+
+#: pdfarranger/pageutils.py:554
+msgid "Vertical offset"
+msgstr "ვერტიკალური წანაცვლება"
+
+#: pdfarranger/pageutils.py:139
+msgid "Width"
+msgstr "სიგანე"
+
+#: pdfarranger/splitter.py:88
+msgid "Width in %"
+msgstr "სიგანე %-ში"
+
+#: pdfarranger/pdfarranger.py:1226
+msgid "Your changes will be lost if you don’t save them."
+msgstr "თქვენი ცვლილებები დაიკარგება, თუ მათ არ შეინახავთ."
+
+#: data/pdfarranger.ui:144
+msgid "Zoom In"
+msgstr "გადიდება"
+
+#: data/pdfarranger.ui:167
+msgid "Zoom Out"
+msgstr "დაპატარავება"
+
+#: data/menu.ui:287
+msgid "Zoom _Fit"
+msgstr "გადიდება _ჩატევამდე"
+
+#: data/menu.ui:279
+msgid "Zoom _In"
+msgstr "_გადიდება"
+
+#: data/menu.ui:283
+msgid "Zoom _Out"
+msgstr "და_პატარავება"
+
+#: data/menu.ui:331
+msgid "_About"
+msgstr "_შესახებ"
+
+#: pdfarranger/pageutils.py:1012
+msgid "_Apply"
+msgstr "გ_ადატარება"
+
+#: data/menu.ui:218 data/menu.ui:514
+msgid "_Booklet"
+msgstr "_ბუკლეტი"
+
+#: pdfarranger/config.py:280 pdfarranger/metadata.py:216
+#: pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:1218
+#: pdfarranger/pdfarranger.py:1227 pdfarranger/pdfarranger.py:1349
+#: pdfarranger/pdfarranger.py:1416
+msgid "_Cancel"
+msgstr "გაუ_ქმება"
+
+#: pdfarranger/pdfarranger.py:1237 data/menu.ui:337
+msgid "_Close"
+msgstr "და_ხურვა"
+
+#: data/menu.ui:118 data/menu.ui:359
+msgid "_Copy"
+msgstr "_კოპირება"
+
+#: data/menu.ui:186 data/menu.ui:482
+msgid "_Crop Margins…"
+msgstr "მინდვრების ამო_ჭრა…"
+
+#: data/menu.ui:110 data/menu.ui:351
+msgid "_Delete"
+msgstr "_წაშლა"
+
+#: data/menu.ui:239 data/menu.ui:429
+msgid "_Deselect All"
+msgstr "შენიშვნის მო_ხსნა"
+
+#: data/menu.ui:107
+msgid "_Edit"
+msgstr "_ჩასწორება"
+
+#: data/menu.ui:157 data/menu.ui:403
+msgid "_Explode into Images"
+msgstr "აფ_ეთქება გამოსახულებებში"
+
+#: data/menu.ui:155 data/menu.ui:400
+msgid "_Extract"
+msgstr "_გაშლა"
+
+#: data/menu.ui:297
+msgid "_Find"
+msgstr "_პოვნა"
+
+#: data/menu.ui:300
+msgid "_Find…"
+msgstr "ძებნა…"
+
+#: data/menu.ui:220 data/menu.ui:516
+msgid "_Generate (imposition)"
+msgstr "_გენერაცია (imposition)"
+
+#: data/menu.ui:190 data/menu.ui:486
+msgid "_Hide Margins…"
+msgstr "მი_ნდვრების დამალვა…"
+
+#: data/menu.ui:30
+msgid "_Import"
+msgstr "შ_ემოტანა"
+
+#: data/menu.ui:264 data/menu.ui:454
+msgid "_Invert Selection"
+msgstr "_მონიშვნის ინვერსია"
+
+#: data/menu.ui:210 data/menu.ui:506
+msgid "_Merge Pages…"
+msgstr "გვერდების შერ_წყმა…"
+
+#: data/menu.ui:36
+msgid "_New Window"
+msgstr "_ახალი ფანჯარა"
+
+#: pdfarranger/config.py:281 pdfarranger/metadata.py:217
+#: pdfarranger/pageutils.py:328 pdfarranger/pdfarranger.py:3114
+msgid "_OK"
+msgstr "_დიახ"
+
+#: pdfarranger/pdfarranger.py:1415 data/menu.ui:24
+msgid "_Open"
+msgstr "_გახსნა"
+
+#: data/menu.ui:182 data/menu.ui:478
+msgid "_Page Size…"
+msgstr "გვერდის _ზომა…"
+
+#: data/menu.ui:91
+msgid "_Print…"
+msgstr "ბეჭდვ_ა…"
+
+#: pdfarranger/pdfarranger.py:1274 data/menu.ui:343
+msgid "_Quit"
+msgstr "გასვ_ლა"
+
+#: data/menu.ui:102
+msgid "_Redo"
+msgstr "გამეო_რება"
+
+#: pdfarranger/pageutils.py:1012
+msgid "_Revert"
+msgstr "და_ბრუნება"
+
+#: data/menu.ui:177 data/menu.ui:473
+msgid "_Rotate Right"
+msgstr "მა_რჯვნივ შებრუნება"
+
+#: pdfarranger/pdfarranger.py:1227 pdfarranger/pdfarranger.py:1348
+#: data/menu.ui:42
+msgid "_Save"
+msgstr "_შენახვა"
+
+#: data/menu.ui:231 data/menu.ui:421
+msgid "_Select"
+msgstr "_მონიშვნა"
+
+#: data/menu.ui:224 data/menu.ui:520
+msgid "_Split (unimposition)"
+msgstr "გა_ყოფა (unimposition)"
+
+#: data/menu.ui:206 data/menu.ui:502
+msgid "_Split Pages…"
+msgstr "გვერდების გა_ყოფა…"
+
+#: data/menu.ui:98
+msgid "_Undo"
+msgstr "გა_უქმება"
+
+#: data/menu.ui:276
+msgid "_View"
+msgstr "_ხედი"
+
+#: pdfarranger/pageutils.py:143 pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:468 pdfarranger/pageutils.py:518
+msgid "mm"
+msgstr "მმ"
+
+#: pdfarranger/core.py:719
+msgid "page"
+msgstr "გვერდი"
+
+#: pdfarranger/pdfarranger.py:1062
+msgid "untitled"
+msgstr "უსახელო"
