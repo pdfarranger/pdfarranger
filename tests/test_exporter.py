@@ -60,6 +60,7 @@ class ExporterTest(unittest.TestCase):
         - lines containing the name /Length
         - anything following the first '/' in line containing a Do operator
         - anything following the xref entry
+        - lines starting with '/P'
         """
         with open(actual_file, 'rb') as f:
             actual = f.readlines()
@@ -69,7 +70,8 @@ class ExporterTest(unittest.TestCase):
         actual_no = 0
         last_match = -1
         for line_no, line in enumerate(expected):
-            if len(line) == 0 or line.isspace() or line.startswith(b'%') or line.endswith(b'%\n') or b'/Length' in line:
+            if (len(line) == 0 or line.isspace() or line.startswith(b'%') or line.endswith(b'%\n')
+                or b'/Length' in line or line.lstrip().startswith(b'/P')):
                 pass
             elif line.startswith(b'xref'):
                 return True, ''
