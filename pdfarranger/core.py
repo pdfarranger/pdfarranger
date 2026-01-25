@@ -21,6 +21,8 @@ __all__ = [
     "PDFDoc",
     "PDFDocError",
     "PDFRenderer",
+    "IMG2PDF_VERSION",
+    "POPPLER_VERSION",
 ]
 
 import sys
@@ -58,6 +60,8 @@ except ImportError:
     img2pdf_supported_img = []
     img2pdf = None
 
+IMG2PDF_VERSION = "0.0.0" if img2pdf is None else img2pdf.__version__
+POPPLER_VERSION = Poppler.get_version()
 
 _ = gettext.gettext
 
@@ -486,7 +490,7 @@ class PasswordDialog(Gtk.Dialog):
 
 def _img_to_pdf(images, tmp_dir, page_size=None):
     """Wrap img2pdf.convert to handle some corner cases"""
-    if version.parse(img2pdf.__version__) < version.Version('0.4.2'):
+    if version.parse(IMG2PDF_VERSION) < version.Version('0.4.2'):
         for num, image in enumerate(images):
             if isinstance(image, img2pdf.BytesIO):
                 # Images from ImageExporter does not have transparency

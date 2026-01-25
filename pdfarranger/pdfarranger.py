@@ -124,7 +124,14 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Dims, Sides, _img_to_pdf
+from .core import Dims, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION
+
+PIKEPDF_VERSION = pikepdf.__version__
+LIBQPDF_VERSION = pikepdf.__libqpdf_version__
+GTK_VERSION = "{}.{}.{}".format(
+    Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
+PYTHON_VERSION = "{}.{}.{}".format(
+    sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
 
 def check_gtk_schema_exists():
     # subprocess.run() would slow down the start of the application, so we only check it on Darwin
@@ -916,8 +923,12 @@ class PdfArranger(Gtk.Application):
         # Print PDF Arranger version and exit
         if options.contains("version"):
             print(APPNAME + "-" + VERSION)
-            print("pikepdf-" + pikepdf.__version__)
-            print("libqpdf-" + pikepdf.__libqpdf_version__)
+            print("pikepdf-" + PIKEPDF_VERSION)
+            print("libqpdf-" + LIBQPDF_VERSION)
+            print("img2pdf-" + IMG2PDF_VERSION)
+            print("Poppler-" + POPPLER_VERSION)
+            print("Gtk-" + GTK_VERSION)
+            print("Python-" + PYTHON_VERSION)
             print("OS-" + platform.platform())
             print("OS_Version-" + self.get_os_version())
             return 0
@@ -3174,22 +3185,20 @@ class PdfArranger(Gtk.Application):
         about_dialog.set_name(APPNAME)
         about_dialog.set_program_name(APPNAME)
         about_dialog.set_version(VERSION)
-        pike = pikepdf.__version__
-        qpdf = pikepdf.__libqpdf_version__
-        gtkv = "{}.{}.{}".format(
-            Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version()
-        )
-        pyv = "{}.{}.{}".format(
-            sys.version_info.major, sys.version_info.minor, sys.version_info.micro
-        )
         about_dialog.set_comments(
             "".join(
                 (
                     _("%s is a tool for rearranging and modifying PDF files.")
                     % APPNAME,
                     "\n \n",
-                    _("It uses libqpdf %s, pikepdf %s, GTK %s and Python %s.")
-                    % (qpdf, pike, gtkv, pyv),
+                    _("Software versions:") + "\n" +
+                    "pikepdf %s, libqpdf %s, img2pdf %s, Poppler %s, GTK %s, Python %s"
+                    % (PIKEPDF_VERSION,
+                       LIBQPDF_VERSION,
+                       IMG2PDF_VERSION,
+                       POPPLER_VERSION,
+                       GTK_VERSION,
+                       PYTHON_VERSION),
                     "\n \n",
                     _("Running on %s") % self.get_platform(),
                 )
