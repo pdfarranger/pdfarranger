@@ -129,6 +129,15 @@ addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
 
+# Add encoding files required to correctly display Chinese, Japanese, Korean
+# and some Cyrillic characters in PDF documents. (from poppler-data package)
+from_path = os.path.join(sys.prefix, 'share/poppler/')
+to_path = 'lib/share/poppler/'
+include_files.append((from_path, to_path))
+addfile('share/licenses/poppler-data/COPYING')
+addfile('share/licenses/poppler-data/COPYING.adobe')
+
+
 # gspawn-helper is needed for website link in AboutDialog
 from_path = os.path.join(sys.prefix, 'bin', 'gspawn-win64-helper.exe')
 to_path = 'gspawn-win64-helper.exe'
