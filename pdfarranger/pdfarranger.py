@@ -86,7 +86,7 @@ else:
     del libintl
 
 APPNAME = 'PDF Arranger'
-VERSION = '1.12.1'
+VERSION = '1.13.0'
 WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
