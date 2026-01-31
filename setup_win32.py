@@ -1,11 +1,13 @@
 VERSION='1.12.1'
 
 from cx_Freeze import setup, Executable
+from os.path import join
 import os
 import sys
-import distutils
+import setuptools
 import shutil
 import glob
+import subprocess
 
 include_files = [
     ('data/pdfarranger.ui', 'share/pdfarranger/pdfarranger.ui'),
@@ -25,6 +27,9 @@ def clean_build():
 
 clean_build()
 
+if os.path.exists('pyproject.toml'):
+    # Don't use this config file
+    os.replace('pyproject.toml', '_pyproject.toml')
 
 def addfile(relpath, warn_missing=False):
     f = os.path.join(sys.prefix, relpath)
@@ -33,6 +38,17 @@ def addfile(relpath, warn_missing=False):
     else:
         include_files.append((f, relpath))
 
+def build_mo_files():
+    """Build gettext .mo files"""
+    for filename in glob.glob(join('po', '*.po')):
+        lang = os.path.basename(filename)[:-3]
+        lang_dir = join('build', 'mo', lang, 'LC_MESSAGES')
+        os.makedirs(lang_dir, exist_ok=True)
+        subprocess.check_call(
+            ['msgfmt', filename, '-o', join(lang_dir, 'pdfarranger.mo')]
+        )
+
+build_mo_files()
 
 def addlocale(name):
     langs = os.listdir('build/mo')
@@ -167,7 +183,7 @@ msi_options = dict(
 )
 
 
-class bdist_zip(distutils.cmd.Command):
+class bdist_zip(setuptools.Command):
     """ Minimalist command to create a Windows portable .zip distribution """
     description = "create a \"zip\" distribution"
     user_options = []
