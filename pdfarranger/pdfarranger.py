@@ -1557,7 +1557,10 @@ class PdfArranger(Gtk.Application):
             return True  # continue polling
         self.set_export_state(False)
         msg_type = None
-        if not export_msg.empty():
+        if self.export_process.exitcode != 0:
+            msg = _("Saving failed") + f" (Exit code: {self.export_process.exitcode})"
+            msg_type = Gtk.MessageType.ERROR
+        elif not export_msg.empty():
             msg, msg_type = export_msg.get()
         if exportmode == 'ALL_TO_SINGLE' and msg_type != Gtk.MessageType.ERROR:
             self.set_unsaved(False)
