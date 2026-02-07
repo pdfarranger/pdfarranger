@@ -686,7 +686,7 @@ class PdfArranger(Gtk.Application):
 
     def on_action_preferences(self, _action, _option, _unknown):
         handy_available = True if Handy else False
-        self.config.preferences_dialog(self.window, localedir, handy_available)
+        self.config.preferences_dialog(self.window, handy_available)
         self.set_color_scheme()
 
     def on_action_print(self, _action, _option, _unknown):

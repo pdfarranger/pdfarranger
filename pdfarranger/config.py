@@ -69,6 +69,44 @@ _DEFAULT_ACCELS = [
 ]
 
 
+LANGUAGE_NAMES = {
+    'ar': 'العربية',
+    'ca': 'Català',
+    'ca@valencia': 'Català (València)',
+    'cs': 'Čeština',
+    'da': 'Dansk',
+    'de': 'Deutsch',
+    'el': 'Ελληνικά',
+    'en': 'English',
+    'es': 'Español',
+    'eu': 'Euskara',
+    'fi': 'Suomi',
+    'fr': 'Français',
+    'he': 'עברית',
+    'hr': 'Hrvatski',
+    'hu': 'Magyar',
+    'id': 'Bahasa Indonesia',
+    'is': 'Íslenska',
+    'it': 'Italiano',
+    'ja': '日本語',
+    'ka': 'ქართული',
+    'ko': '한국어',
+    'nl': 'Nederlands',
+    'oc': 'Occitan',
+    'pl_PL': 'Polski',
+    'pt_BR': 'Português (Brasil)',
+    'pt_PT': 'Português (Portugal)',
+    'ru': 'Русский',
+    'sl': 'Slovenščina',
+    'sv': 'Svenska',
+    'tr': 'Türkçe',
+    'uk': 'Українська',
+    'vi': 'Tiếng Việt',
+    'zh_CN': '简体中文',
+    'zh_TW': '繁體中文',
+}
+
+
 class Config(object):
     """Wrap a ConfigParser object for PDFArranger"""
 
@@ -271,7 +309,7 @@ class Config(object):
             if k != "enable_custom"
         ]
 
-    def preferences_dialog(self, parent, localedir, handy_available):
+    def preferences_dialog(self, parent, handy_available):
         """A dialog for some application preferences."""
         d = Gtk.Dialog(title=_("Preferences"),
                        parent=parent,
@@ -335,19 +373,15 @@ class Config(object):
         frame6.add(label6)
         d.vbox.pack_start(frame6, False, False, 8)
 
-        langs = []
-        if os.path.isdir(localedir):
-            langs = os.listdir(localedir)
-        langs.append("en")
-        langs.sort()
-        langs.insert(0, _("System setting"))
-        for lan in langs:
-            combo.append(None, lan)
-        lang = self.language()
-        if lang in langs:
-            combo.set_active(langs.index(lang))
+        combo.append('', _("System setting"))
+        languages = sorted(LANGUAGE_NAMES.items(), key=lambda item: item[1])
+        for key, value in languages:
+            combo.append(key, value + " [" + key + "]")
+        key = self.language()
+        if key in LANGUAGE_NAMES.keys():
+            combo.set_active_id(key)
         else:
-            combo.set_active(0)
+            combo.set_active_id('')
         themes = [_("System setting"), "light", "dark"]
         for the in themes:
             combo2.append(None, the)
@@ -361,9 +395,7 @@ class Config(object):
         d.show_all()
         result = d.run()
         if result == Gtk.ResponseType.OK:
-            num = combo.get_active()
-            language = langs[num] if num != 0 else ""
-            self.set_language(language)
+            self.set_language(combo.get_active_id())
             num2 = combo2.get_active()
             theme = themes[num2] if num2 != 0 else ""
             self.set_theme(theme)

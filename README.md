@@ -107,6 +107,7 @@ Translations are located in the following files:
 *   [`po`](po)`/LANG.po` for interface translation strings
 *   [data/com.github.jeromerobert.pdfarranger.metainfo.xml](data/com.github.jeromerobert.pdfarranger.metainfo.xml) for repository integration
 *   [data/com.github.jeromerobert.pdfarranger.desktop](data/com.github.jeromerobert.pdfarranger.desktop) for desktop integration
+*   [config.py](pdfarranger/config.py) `LANGUAGE_NAMES` for native language name in preferences drop-down list
 
 If you are not comfortable working with git, **you may edit translations directly from Github's web interface**. However, in the normal case
 you would contribute translations by following these steps:
