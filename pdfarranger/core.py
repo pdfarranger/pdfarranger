@@ -453,9 +453,9 @@ class PasswordDialog(Gtk.Dialog):
             parent=parent,
             flags=Gtk.DialogFlags.MODAL,
             buttons=(
-                "_Cancel",
+                _("_Cancel"),
                 Gtk.ResponseType.CANCEL,
-                "_OK",
+                _("_OK"),
                 Gtk.ResponseType.OK,
             ),
         )
