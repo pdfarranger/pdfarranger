@@ -147,5 +147,5 @@ class ImageExporter:
 
     def exception_handler(self, e):
         print(traceback.format_exc())
-        self.export_msg.put([e, Gtk.MessageType.ERROR])
+        self.export_msg.put([str(e), Gtk.MessageType.ERROR])
         self.join()

@@ -249,7 +249,7 @@ def warn_dialog(func):
                 export_msg.put([warnings.showwarning.buffer, Gtk.MessageType.WARNING])
         except Exception as e:
             traceback.print_exc()
-            export_msg.put([e, Gtk.MessageType.ERROR])
+            export_msg.put([str(e), Gtk.MessageType.ERROR])
         finally:
             warnings.showwarning = backup_showwarning
 
