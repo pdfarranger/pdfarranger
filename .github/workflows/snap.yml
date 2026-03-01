@@ -23,7 +23,7 @@ jobs:
         id: snapcraft-build
         with:
           snapcraft-args: "-v"
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.snapcraft-build.outputs.snap }}
           path: ${{ steps.snapcraft-build.outputs.snap }}
