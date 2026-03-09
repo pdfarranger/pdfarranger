@@ -48,7 +48,8 @@ _DEFAULT_ACCELS = [
     ('import', '<Primary>i'),
     ('zoom-in', 'plus KP_Add <Primary>plus <Primary>KP_Add'),
     ('zoom-out', 'minus KP_Subtract <Primary>minus <Primary>KP_Subtract'),
-    ('zoom-fit', 'f'),
+    ('zoom-fit(0)', 'f'),
+    ('zoom-fit(1)', 'm'),
     ('fullscreen', 'F11'),
     ('undo', '<Primary>z'),
     ('redo', '<Primary>y'),
@@ -174,10 +175,17 @@ class Config(object):
         for k, v in _DEFAULT_ACCELS:
             if not enable_custom or k not in a:
                 a[k] = v
+        self.remove_old_accelerators(a)
         self.popup_menu_accels = [
             Gtk.accelerator_parse(x) for x in a["context-menu"].split()
         ]
         self.has_pikepdf8 = version.parse(pikepdf.__version__) >= version.Version("8.0")
+
+    def remove_old_accelerators(self, a):
+        """Remove accelerators which are no longer used"""
+        key = 'zoom-fit'
+        if key in a:
+            del a[key]
 
     def is_popup_key_event(self, keyevent):
         for key, mods in self.popup_menu_accels:
