@@ -213,7 +213,9 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/pdfarranger/pdfarranger/raw/main/data/screenshot.png</image>
-      <caption/>
+      <caption>
+        Main window with example PDF loaded.
+      </caption>
     </screenshot>
   </screenshots>
   <releases>
