@@ -282,7 +282,8 @@ class PdfArranger(Gtk.Application):
         self.zoom_level_old = 0
         self.zoom_level_limits = [-10, 80]
         self.zoom_scale = None
-        self.zoom_fit_page = False
+        self.zoom_fit = False
+        self.fit_one_page = True
         self.render_id = None
         self.id_scroll_to_sel = None
         self.target_is_intern = True
@@ -449,7 +450,7 @@ class PdfArranger(Gtk.Application):
             ('import', self.on_action_import),
             ('zoom-in', self.on_action_zoom_in),
             ('zoom-out', self.on_action_zoom_out),
-            ('zoom-fit', self.on_action_zoom_fit),
+            ('zoom-fit', self.on_action_zoom_fit, 'i'),
             ('fullscreen', self.on_action_fullscreen),
             ('close', self.on_action_close),
             ('quit', self.on_quit),
@@ -1162,7 +1163,7 @@ class PdfArranger(Gtk.Application):
             # cell width min limit 50 is set in gtkiconview.c
             cell_width = max(item_width + 2 * cellthmb_xpad + border_and_shadow, 50)
             cell_height = -1
-            if self.zoom_fit_page:
+            if self.zoom_fit:
                 item_height = max(row[0].height_in_pixel() for row in self.model)
                 cell_height = item_height + 2 * cellthmb_ypad + border_and_shadow
             self.cellthmb.set_fixed_size(cell_width, cell_height)
@@ -1174,6 +1175,8 @@ class PdfArranger(Gtk.Application):
             #  + min_col_spacing * (col_num+1) = iw_width
             col_num = (iw_width - 2 * min_margin - min_col_spacing) //\
                       (padded_cell_width + min_col_spacing)
+            if self.zoom_fit and self.fit_one_page:
+                col_num = 1
             spacing = (iw_width - col_num * padded_cell_width - 2 * min_margin) // (col_num + 1)
             margin = (iw_width - col_num * (padded_cell_width + spacing) + spacing) // 2
             if col_num == 0:
@@ -1204,7 +1207,7 @@ class PdfArranger(Gtk.Application):
     def iv_size_allocate(self, _iconview, _allocation):
         self.hide_horizontal_scrollbar()
         self.set_adjustment_limits()
-        if self.vadj_percent is not None and not self.zoom_fit_page:
+        if self.vadj_percent is not None and not self.zoom_fit:
             self.vadj_percent_handler(restore=True)
         if self.scroll_path:
             GObject.idle_add(self.scroll_to_path2, self.scroll_path)
@@ -2441,7 +2444,8 @@ class PdfArranger(Gtk.Application):
         # Switch between zoom_fit and zoom_set on double-click
         if event.button == 1 and event.type == Gdk.EventType._2BUTTON_PRESS and self.click_path:
             self.pressed_button = None
-            self.on_action_zoom_fit()
+            multiple_pages = event.state & Gdk.ModifierType.SHIFT_MASK
+            self.on_action_zoom_fit(option=int(multiple_pages))
             return Gdk.EVENT_STOP
 
         # Change to 'move' cursor when pressing mouse wheel
@@ -2675,7 +2679,7 @@ class PdfArranger(Gtk.Application):
         self.vadj_percent_handler(store=True)
         if self.id_scroll_to_sel:
             GObject.source_remove(self.id_scroll_to_sel)
-        self.zoom_fit_page = False
+        self.zoom_fit = False
         self.quit_rendering()  # For performance reasons
         for row in self.model:
             row[0].zoom = self.zoom_scale
@@ -2685,7 +2689,7 @@ class PdfArranger(Gtk.Application):
             self.id_scroll_to_sel = GObject.timeout_add(400, self.scroll_to_selection, False)
             self.silent_render()
 
-    def zoom_fit(self, path):
+    def zoom_fit_path(self, path):
         """Zoom and scroll to path."""
         item_padding = self.iconview.get_item_padding()
         cell_image_renderer, cell_text_renderer = self.iconview.get_cells()
@@ -2722,11 +2726,11 @@ class PdfArranger(Gtk.Application):
     def on_action_zoom_out(self, _action, _param, _unknown):
         self.zoom_set(self.zoom_level - 5)
 
-    def on_action_zoom_fit(self, _action=None, _param=None, _unknown=None):
+    def on_action_zoom_fit(self, _action=None, option=0, _unknown=None):
         """Switch between zoom_fit and zoom_set."""
         if len(self.model) == 0:
             return
-        if self.zoom_fit_page:
+        if self.zoom_fit:
             self.zoom_set(self.zoom_level_old)
         else:
             self.vadj_percent_handler(store=True)
@@ -2738,8 +2742,9 @@ class PdfArranger(Gtk.Application):
                 self.iconview.select_path(path)
             self.iconview.set_cursor(path, None, False)
             self.zoom_level_old = self.zoom_level
-            self.zoom_fit_page = True
-            self.zoom_fit(path)
+            self.zoom_fit = True
+            self.fit_one_page = not bool(option)
+            self.zoom_fit_path(path)
 
     def on_action_fullscreen(self, _action, _param, _unknown):
         """Toggle fullscreen mode."""

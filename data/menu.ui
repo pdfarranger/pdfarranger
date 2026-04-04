@@ -284,8 +284,14 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.zoom-out</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Zoom _Fit</attribute>
+          <attribute name="label" translatable="yes">Fit _One Page</attribute>
           <attribute name="action">win.zoom-fit</attribute>
+          <attribute name="target" type="i">0</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Fit _Multiple Pages</attribute>
+          <attribute name="action">win.zoom-fit</attribute>
+          <attribute name="target" type="i">1</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Full_screen</attribute>
