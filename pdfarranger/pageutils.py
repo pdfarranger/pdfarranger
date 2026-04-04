@@ -136,19 +136,7 @@ class PaperSizeWidget(Gtk.Grid):
     def __init__(self, size, margin=16):
         super().__init__(margin=margin, row_spacing=8, column_spacing=8, row_homogeneous=True)
 
-        self.attach(Gtk.Label(label=_("Width"), halign=Gtk.Align.START), 1, 1, 1, 1)
-        self.width_entry = _LinkedSpinButton(25.4, 5080, 1, 0)
-        self.w_entry_id = self.width_entry.connect('value-changed', self.width_changed)
-        self.attach(self.width_entry, 2, 1, 1, 1)
-        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 1, 1, 1)
-
-        self.attach(Gtk.Label(label=_("Height"), halign=Gtk.Align.START), 1, 2, 1, 1)
-        self.height_entry = _LinkedSpinButton(25.4, 5080, 1, 10)
-        self.h_entry_id = self.height_entry.connect('value-changed', self.height_changed)
-        self.attach(self.height_entry, 2, 2, 1, 1)
-        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 2, 1, 1)
-
-        self.attach(Gtk.Label(_("Paper size"), halign=Gtk.Align.START), 1, 3, 1, 1)
+        self.attach(Gtk.Label(_("Paper size"), halign=Gtk.Align.START), 1, 1, 1, 1)
         self.combo = Gtk.ComboBoxText(margin=0)
         self.combo_changed_id = self.combo.connect('changed', self.paper_size_changed)
         self.papers = [Gtk.PaperSize.new_custom('Custom', _("Custom"), 0, 0, Gtk.Unit.MM)]
@@ -157,7 +145,19 @@ class PaperSizeWidget(Gtk.Grid):
         for p in self.papers:
             p.size = [round(p.get_width(Gtk.Unit.MM), 5), round(p.get_height(Gtk.Unit.MM), 5)]
             self.combo.append(None, p.get_display_name())
-        self.attach(self.combo, 2, 3, 1, 1)
+        self.attach(self.combo, 2, 1, 1, 1)
+
+        self.attach(Gtk.Label(label=_("Width"), halign=Gtk.Align.START), 1, 2, 1, 1)
+        self.width_entry = _LinkedSpinButton(25.4, 5080, 1, 0)
+        self.w_entry_id = self.width_entry.connect('value-changed', self.width_changed)
+        self.attach(self.width_entry, 2, 2, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 2, 1, 1)
+
+        self.attach(Gtk.Label(label=_("Height"), halign=Gtk.Align.START), 1, 3, 1, 1)
+        self.height_entry = _LinkedSpinButton(25.4, 5080, 1, 10)
+        self.h_entry_id = self.height_entry.connect('value-changed', self.height_changed)
+        self.attach(self.height_entry, 2, 3, 1, 1)
+        self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 3, 1, 1)
 
         self.attach(Gtk.Label(_("Orientation"), halign=Gtk.Align.START), 1, 4, 1, 1)
         self.port = Gtk.RadioButton(label=_("Portrait"), group=None)
@@ -173,7 +173,7 @@ class PaperSizeWidget(Gtk.Grid):
         self.ratio_cb = Gtk.CheckButton(margin_top=1)
         box2.pack_start(self.ratio_cb, True, True, 0)
         box2.pack_start(Gtk.Label("┘"), True, True, 0)
-        self.attach(box2, 3, 1, 1, 2)
+        self.attach(box2, 3, 2, 1, 2)
 
         if size is None:
             size = [210, 297]  # A4 by default
