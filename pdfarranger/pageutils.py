@@ -152,7 +152,7 @@ class PaperSizeWidget(Gtk.Grid):
         self.combo = Gtk.ComboBoxText(margin=0)
         self.combo_changed_id = self.combo.connect('changed', self.paper_size_changed)
         self.papers = [Gtk.PaperSize.new_custom('Custom', _("Custom"), 0, 0, Gtk.Unit.MM)]
-        paper_list = ['iso_a3', 'iso_a4', 'iso_a5', 'na_letter', 'na_legal', 'na_ledger']
+        paper_list = ['iso_a0', 'iso_a1', 'iso_a3', 'iso_a4', 'iso_a5', 'na_letter', 'na_legal', 'na_ledger']
         self.papers += [Gtk.PaperSize.new(p) for p in paper_list]
         for p in self.papers:
             p.size = [round(p.get_width(Gtk.Unit.MM), 5), round(p.get_height(Gtk.Unit.MM), 5)]
