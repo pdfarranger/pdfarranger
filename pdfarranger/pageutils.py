@@ -149,12 +149,14 @@ class PaperSizeWidget(Gtk.Grid):
 
         self.attach(Gtk.Label(label=_("Width"), halign=Gtk.Align.START), 1, 2, 1, 1)
         self.width_entry = _LinkedSpinButton(25.4, 5080, 1, 0)
+        self.width_entry.set_activates_default(True)
         self.w_entry_id = self.width_entry.connect('value-changed', self.width_changed)
         self.attach(self.width_entry, 2, 2, 1, 1)
         self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 2, 1, 1)
 
         self.attach(Gtk.Label(label=_("Height"), halign=Gtk.Align.START), 1, 3, 1, 1)
         self.height_entry = _LinkedSpinButton(25.4, 5080, 1, 10)
+        self.height_entry.set_activates_default(True)
         self.h_entry_id = self.height_entry.connect('value-changed', self.height_changed)
         self.attach(self.height_entry, 2, 3, 1, 1)
         self.attach(Gtk.Label(label=_("mm"), halign=Gtk.Align.START), 4, 3, 1, 1)
