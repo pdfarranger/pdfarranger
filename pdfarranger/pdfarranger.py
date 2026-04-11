@@ -2234,8 +2234,8 @@ class PdfArranger(Gtk.Application):
         target = selection_data.get_target().name()
         if target == 'MODEL_ROW_INTERN':
             move = context.get_selected_action() & Gdk.DragAction.MOVE
-            self.undomanager.commit("Move" if move else "Copy")
-            self.set_unsaved(True)
+            old_order = [model.get_value(model.get_iter(Gtk.TreePath(i)), 0).__repr__()
+                         for i in range(model.iter_n_children(None))]
             data.sort(key=int, reverse=not before)
             ref_from_list = [Gtk.TreeRowReference.new(model, Gtk.TreePath(p))
                              for p in data]
@@ -2253,6 +2253,11 @@ class PdfArranger(Gtk.Application):
                 if move:
                     for ref_from in ref_from_list:
                         model.remove(model.get_iter(ref_from.get_path()))
+            new_order = [model.get_value(model.get_iter(Gtk.TreePath(i)), 0).__repr__()
+                         for i in range(model.iter_n_children(None))]
+            if old_order != new_order:
+                self.undomanager.commit("Move" if move else "Copy")
+                self.set_unsaved(True)
             self.iv_selection_changed()
             GObject.idle_add(self.render)
 
