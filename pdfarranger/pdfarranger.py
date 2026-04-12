@@ -2234,6 +2234,13 @@ class PdfArranger(Gtk.Application):
         target = selection_data.get_target().name()
         if target == 'MODEL_ROW_INTERN':
             move = context.get_selected_action() & Gdk.DragAction.MOVE
+            if move and ref_to:
+                indices = sorted(int(p) for p in data)
+                target_idx = ref_to.get_path().get_indices()[0]
+                insert_pos = target_idx if before else target_idx + 1
+                continuous = len(indices) == indices[-1] - indices[0] + 1
+                if continuous and indices[0] <= insert_pos <= indices[-1] + 1:
+                    return
             self.undomanager.commit("Move" if move else "Copy")
             self.set_unsaved(True)
             data.sort(key=int, reverse=not before)
