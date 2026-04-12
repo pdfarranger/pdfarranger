@@ -2214,6 +2214,15 @@ class PdfArranger(Gtk.Application):
             return
         selection_data.set(selection_data.get_target(), 8, data.encode())
 
+    @staticmethod
+    def _is_noop_move(data, ref_to, before):
+        """Check if a move would not change page order."""
+        indices = sorted(int(p) for p in data)
+        target_idx = ref_to.get_path().get_indices()[0]
+        insert_pos = target_idx if before else target_idx + 1
+        continuous = len(indices) == indices[-1] - indices[0] + 1
+        return continuous and indices[0] <= insert_pos <= indices[-1] + 1
+
     def iv_dnd_received_data(self, iconview, context, _x, _y,
                              selection_data, _target_id, etime):
         """Handles received data by drag and drop in iconview"""
@@ -2234,13 +2243,8 @@ class PdfArranger(Gtk.Application):
         target = selection_data.get_target().name()
         if target == 'MODEL_ROW_INTERN':
             move = context.get_selected_action() & Gdk.DragAction.MOVE
-            if move and ref_to:
-                indices = sorted(int(p) for p in data)
-                target_idx = ref_to.get_path().get_indices()[0]
-                insert_pos = target_idx if before else target_idx + 1
-                continuous = len(indices) == indices[-1] - indices[0] + 1
-                if continuous and indices[0] <= insert_pos <= indices[-1] + 1:
-                    return
+            if move and ref_to and self._is_noop_move(data, ref_to, before):
+                return
             self.undomanager.commit("Move" if move else "Copy")
             self.set_unsaved(True)
             data.sort(key=int, reverse=not before)
