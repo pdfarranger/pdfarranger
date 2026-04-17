@@ -271,6 +271,7 @@ class PdfArranger(Gtk.Application):
         self.uiXML = None
         self.window = None
         self.sw = None
+        self.preview_box = None
         self.model = None
         self.undomanager = None
         self.iconview = None
@@ -757,9 +758,14 @@ class PdfArranger(Gtk.Application):
         self.set_title(APPNAME)
         self.window.set_border_width(0)
         self.window.set_application(self)
+
+        window_width, window_height = self.config.window_size()
         if self.config.maximized():
             self.window.maximize()
-        self.window.set_default_size(*self.config.window_size())
+            # If maximized, we don't know exact size immediately, but we can set paned position roughly
+            # based on screen size or just let the default 400 or handle it in a size allocate handler.
+        self.window.set_default_size(window_width, window_height)
+
         self.window.connect('delete_event', self.on_quit)
         self.window.connect('focus_in_event', self.window_focus_in_out_event)
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
@@ -768,6 +774,17 @@ class PdfArranger(Gtk.Application):
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
+
+        self.preview_box = self.uiXML.get_object('preview_box')
+        self.preview_scrolledwindow = self.uiXML.get_object('preview_scrolledwindow')
+
+        # Set paned position to 70% of window width so preview takes 30%
+        self.main_paned = self.uiXML.get_object('main_paned')
+        if self.main_paned:
+            self.main_paned.set_position(int(window_width * 0.70))
+
+        self.preview_toggle_button = self.uiXML.get_object('preview_toggle_button')
+        self.preview_toggle_button.connect('toggled', self.on_preview_toggled)
 
         # Create a scrolled window to hold the thumbnails-container
         self.sw = self.uiXML.get_object('scrolledwindow')
@@ -1111,6 +1128,8 @@ class PdfArranger(Gtk.Application):
         self.redraw_cell(path)
         ac = self.iconview.get_accessible().ref_accessible_child(path.get_indices()[0])
         ac.set_description(page.description)
+
+        self.update_continuous_preview()
 
     def redraw_cell(self, path):
         """Trigger a cell redraw by toggling selection."""
@@ -2577,6 +2596,40 @@ class PdfArranger(Gtk.Application):
         self.update_statusbar()
         if selection and not move_cursor_event:
             self.iv_cursor.cursor_is_visible = False
+
+        self.update_continuous_preview()
+
+    def update_continuous_preview(self):
+        if not self.preview_box:
+            return
+
+        children = self.preview_box.get_children()
+        model_len = len(self.model)
+
+        while len(children) > model_len:
+            child = children.pop()
+            self.preview_box.remove(child)
+
+        while len(children) < model_len:
+            img = Gtk.Image()
+            img.set_visible(True)
+            self.preview_box.pack_start(img, False, False, 0)
+            children.append(img)
+
+        # Update surfaces
+        for i, row in enumerate(self.model):
+            page = row[0]
+            if page.thumbnail:
+                children[i].set_from_surface(page.thumbnail)
+            else:
+                children[i].clear()
+
+    def on_preview_toggled(self, button):
+        if button.get_active():
+            self.preview_scrolledwindow.show()
+            self.update_continuous_preview()
+        else:
+            self.preview_scrolledwindow.hide()
 
     def window_focus_in_out_event(self, _widget=None, _event=None):
         """Keyboard focus enter or leave window."""
