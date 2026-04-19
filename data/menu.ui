@@ -178,6 +178,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.rotate</attribute>
           <attribute name="target" type="i">90</attribute>
         </item>
+	<item>
+          <attribute name="label" translatable="yes">_Transform content…</attribute>
+          <attribute name="action">win.place</attribute>
+	</item>
         <item>
           <attribute name="label" translatable="yes">_Page Size…</attribute>
           <attribute name="action">win.page-size</attribute>
@@ -225,6 +229,14 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
             <attribute name="action">win.split-booklet</attribute>
           </item>
         </submenu>
+	<item>
+          <attribute name="label" translatable="yes">_Montage…</attribute>
+          <attribute name="action">win.montage</attribute>
+	</item>
+	<item>
+          <attribute name="label" translatable="yes">Add Te_xt…</attribute>
+          <attribute name="action">win.add_text</attribute>
+	</item>
       </section>
     </submenu>
     <submenu>
@@ -481,6 +493,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="target" type="i">90</attribute>
       </item>
       <item>
+        <attribute name="label" translatable="yes">_Transform content…</attribute>
+        <attribute name="action">win.place</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Page Size…</attribute>
         <attribute name="action">win.page-size</attribute>
       </item>
@@ -527,6 +543,14 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.split-booklet</attribute>
         </item>
       </submenu>
+      <item>
+        <attribute name="label" translatable="yes">_Montage…</attribute>
+        <attribute name="action">win.montage</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Add Te_xt…</attribute>
+        <attribute name="action">win.add_text</attribute>
+      </item>
     </section>
     <section>
       <submenu>

@@ -14,15 +14,21 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk, Gdk, GObject
 import gettext
 import cairo
 import locale
+import io
+import tempfile
+import os
 
 from math import pi
 
+import pikepdf
+import pdftl.api
+from gi.repository import Gtk, Gdk, GLib, GObject, Poppler
+
 from .core import Sides, Dims, PDFRenderer
-from .exporter import get_in_memory_poppler_doc
+from .exporter import get_in_memory_poppler_doc, export_doc
 
 _ = gettext.gettext
 
@@ -1166,3 +1172,407 @@ class RangeSelectDialog(BaseDialog):
         text = self.range_entry_widget.get_text()
         text = text.replace('--', '-').replace(',,', ',').replace('  ', ' ')
         self.range_entry_widget.set_text(''.join([char for char in text if char in '0123456789,- ']))
+
+
+class PlaceContentDialog:
+    """Dialog for pdftl place operation: shift, scale, spin page content with live preview."""
+
+    def __init__(self, window, selection, model, pdfqueue, callback):
+        self.callback = callback
+        self.selection = selection
+        self.model = model
+        self.pdfqueue = pdfqueue
+
+        # Grab the first page of the selection for the live preview
+        pos = self.model.get_iter(self.selection[0])
+        self.preview_page = self.model.get_value(pos, 0)
+        self._preview_timer_id = None
+        self.preview_scale = 1.0 # Will hold the Cairo scale factor for accurate mouse drag math
+
+        # Mouse Drag State
+        self._dragging = False
+        self._drag_start_x = 0
+        self._drag_start_y = 0
+        self._start_shift_x = 0
+        self._start_shift_y = 0
+
+        d = BaseDialog(_("Transform Content"), window)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=18, margin=12)
+        grid = Gtk.Grid(column_spacing=8, row_spacing=8)
+
+        # Shift X
+        grid.attach(Gtk.Label(label=_("Shift X (pt):"), xalign=1), 0, 0, 1, 1)
+        self.shift_x = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.shift_x.set_value(0)
+        self.shift_x.connect("value-changed", self._queue_preview_update)
+        grid.attach(self.shift_x, 1, 0, 1, 1)
+
+        # Shift Y
+        grid.attach(Gtk.Label(label=_("Shift Y (pt):"), xalign=1), 0, 1, 1, 1)
+        self.shift_y = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.shift_y.set_value(0)
+        self.shift_y.connect("value-changed", self._queue_preview_update)
+        grid.attach(self.shift_y, 1, 1, 1, 1)
+
+        # Scale
+        grid.attach(Gtk.Label(label=_("Scale (1.0 = 100%):"), xalign=1), 0, 2, 1, 1)
+        self.scale = Gtk.SpinButton.new_with_range(0.1, 4.0, 0.05)
+        self.scale.set_digits(2)
+        self.scale.set_value(1.0)
+        self.scale.connect("value-changed", self._queue_preview_update)
+        grid.attach(self.scale, 1, 2, 1, 1)
+
+        # Spin
+        grid.attach(Gtk.Label(label=_("Spin (degrees):"), xalign=1), 0, 3, 1, 1)
+        self.spin = Gtk.SpinButton.new_with_range(-360, 360, 1)
+        self.spin.set_value(0)
+        self.spin.connect("value-changed", self._queue_preview_update)
+        grid.attach(self.spin, 1, 3, 1, 1)
+
+        # Preview Image Widget wrapped in an EventBox for mouse interactivity
+        self.preview_image = Gtk.Image()
+        self.preview_image.set_size_request(300, 400)
+
+        self.event_box = Gtk.EventBox()
+        self.event_box.add(self.preview_image)
+        self.event_box.add_events(
+            Gdk.EventMask.BUTTON_PRESS_MASK |
+            Gdk.EventMask.BUTTON_RELEASE_MASK |
+            Gdk.EventMask.POINTER_MOTION_MASK |
+            Gdk.EventMask.SCROLL_MASK
+        )
+        self.event_box.connect("button-press-event", self._on_mouse_press)
+        self.event_box.connect("button-release-event", self._on_mouse_release)
+        self.event_box.connect("motion-notify-event", self._on_mouse_motion)
+        self.event_box.connect("scroll-event", self._on_scroll)
+
+        hbox.pack_start(grid, False, False, 0)
+        hbox.pack_start(self.event_box, True, True, 0)
+
+        d.vbox.pack_start(hbox, True, True, 0)
+        d.connect('response', self._on_response)
+        d.show_all()
+
+        # Render the initial, unedited state
+        self._update_preview()
+
+    # --- MOUSE INTERACTION HANDLERS ---
+    def _on_mouse_press(self, widget, event):
+        self._dragging = True
+        self._drag_start_x = event.x
+        self._drag_start_y = event.y
+        self._start_shift_x = self.shift_x.get_value()
+        self._start_shift_y = self.shift_y.get_value()
+        return True
+
+    def _on_mouse_release(self, widget, event):
+        self._dragging = False
+        return True
+
+    def _on_mouse_motion(self, widget, event):
+        if self._dragging:
+            # Calculate pixel movement
+            dx = event.x - self._drag_start_x
+            dy = event.y - self._drag_start_y
+
+            # Convert screen pixels to PDF points using the current render scale.
+            # Note: PDF Y-axis goes UP, but GTK screen Y-axis goes DOWN.
+            # So dragging the mouse DOWN (+dy) means we need a negative shift in PDF space.
+            pt_dx = dx / self.preview_scale
+            pt_dy = dy / self.preview_scale
+
+            self.shift_x.set_value(self._start_shift_x + pt_dx)
+            self.shift_y.set_value(self._start_shift_y - pt_dy)
+        return True
+
+    def _on_scroll(self, widget, event):
+        is_shift_held = (event.state & Gdk.ModifierType.SHIFT_MASK) != 0
+
+        if is_shift_held:
+            target_widget = self.spin
+        else:
+            target_widget = self.scale
+
+        step = target_widget.get_adjustment().get_step_increment()
+        current = target_widget.get_value()
+
+        if event.direction == Gdk.ScrollDirection.UP:
+            target_widget.set_value(current + step)
+        elif event.direction == Gdk.ScrollDirection.DOWN:
+            target_widget.set_value(current - step)
+
+        return True
+
+    def _build_spec(self):
+        """Build the pdftl place spec string from widget values."""
+        parts = []
+        sx, sy = self.shift_x.get_value(), self.shift_y.get_value()
+        sc, sp = self.scale.get_value(), self.spin.get_value()
+
+        # translate last so that dragging feels intuitive
+        if sc != 1.0: parts.append(f"scale={sc}")
+        if sp != 0: parts.append(f"spin={sp}")
+        if sx != 0 or sy != 0: parts.append(f"shift={sx}pt,{sy}pt")
+
+        return "(" + "; ".join(parts) + ")" if parts else None
+
+    def _queue_preview_update(self, *args):
+        """Debounce the UI to prevent rendering churn while dragging sliders."""
+        if self._preview_timer_id is not None:
+            GLib.source_remove(self._preview_timer_id)
+        self._preview_timer_id = GLib.timeout_add(150, self._update_preview)
+
+    def _update_preview(self):
+        """Renders the current transformation state to the preview image."""
+        self._preview_timer_id = None
+
+        pdf_input = [None] * len(self.pdfqueue)
+        nfile = self.preview_page.nfile
+        pdf_input[nfile - 1] = pikepdf.open(self.pdfqueue[nfile - 1].copyname)
+
+        buf = io.BytesIO()
+        export_doc(pdf_input, [self.preview_page], {}, [buf], None)
+        pdf_input[nfile - 1].close()
+
+        buf.seek(0)
+        baked_pdf = pikepdf.Pdf.open(buf)
+        spec = self._build_spec()
+        if spec:
+            pdftl.api.call("place", baked_pdf, spec)
+
+        fd, temp_path = tempfile.mkstemp(suffix=".pdf")
+        os.close(fd)
+
+        try:
+            baked_pdf.save(temp_path)
+            baked_pdf.close()
+            buf.close()
+
+            uri = GLib.filename_to_uri(os.path.abspath(temp_path), None)
+            poppler_page = Poppler.Document.new_from_file(uri, None).get_page(0)
+            w, h = poppler_page.get_size()
+
+            if w > 0 and h > 0:
+                # Save this ratio to the class instance so mouse drags map perfectly to PDF points
+                self.preview_scale = min(300 / w, 400 / h)
+
+                surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w * self.preview_scale), int(h * self.preview_scale))
+                context = cairo.Context(surface)
+                context.scale(self.preview_scale, self.preview_scale)
+
+                # Draw white background, then render PDF
+                context.set_source_rgb(1, 1, 1)
+                context.paint()
+                poppler_page.render(context)
+
+                pixbuf = Gdk.pixbuf_get_from_surface(surface, 0, 0, surface.get_width(), surface.get_height())
+                self.preview_image.set_from_pixbuf(pixbuf)
+        finally:
+            os.remove(temp_path)
+
+        return False
+
+    def _on_response(self, dialog, response):
+        if self._preview_timer_id is not None:
+            GLib.source_remove(self._preview_timer_id)
+            self._preview_timer_id = None
+
+        if response == Gtk.ResponseType.OK:
+            spec = self._build_spec()
+            if spec:
+                self.callback(spec, self.selection, self.model)
+        dialog.destroy()
+
+class MontageDialog(BaseDialog):
+    def __init__(self, window, selection, model, pdfqueue, callback):
+        super().__init__(_("Montage (N-up)"), window)
+
+        self.callback = callback
+        self.selection = selection
+        self.model = model
+
+        grid = Gtk.Grid(column_spacing=12, row_spacing=12, margin=18)
+        self.vbox.pack_start(grid, True, True, 0)
+
+        # Columns & Rows
+        grid.attach(Gtk.Label(label=_("Columns:"), xalign=1), 0, 0, 1, 1)
+        self.cols = Gtk.SpinButton.new_with_range(1, 20, 1)
+        self.cols.set_value(2)
+        grid.attach(self.cols, 1, 0, 1, 1)
+
+        grid.attach(Gtk.Label(label=_("Rows:"), xalign=1), 0, 1, 1, 1)
+        self.rows = Gtk.SpinButton.new_with_range(1, 20, 1)
+        self.rows.set_value(2)
+        grid.attach(self.rows, 1, 1, 1, 1)
+
+        # Canvas Size
+        grid.attach(Gtk.Label(label=_("Canvas:"), xalign=1), 0, 2, 1, 1)
+        self.canvas = Gtk.ComboBoxText()
+        for size in ["A4", "Letter", "A3", "A5", "Legal"]:
+            self.canvas.append_text(size)
+        self.canvas.set_active(0)
+        grid.attach(self.canvas, 1, 2, 1, 1)
+
+        # Gutter
+        grid.attach(Gtk.Label(label=_("Gutter (pt):"), xalign=1), 0, 3, 1, 1)
+        self.gutter = Gtk.SpinButton.new_with_range(0, 200, 1)
+        grid.attach(self.gutter, 1, 3, 1, 1)
+
+        self.show_all()
+
+        self.connect("response", self.on_response)
+
+    def on_response(self, dialog, response_id):
+        if response_id == Gtk.ResponseType.OK:
+            spec = self.get_args()
+            # This triggers apply_pdftl_montage in pdfarranger.py
+            if spec:
+                self.callback(spec, self.selection, self.model)
+        dialog.destroy()
+
+    def get_args(self):
+        """Returns the list of strings for pdftl operation_args."""
+        return [
+            f"grid={int(self.cols.get_value())}x{int(self.rows.get_value())}",
+            f"canvas={self.canvas.get_active_text()}",
+            f"gutter={int(self.gutter.get_value())}"
+        ]
+
+
+class AddTextDialog(BaseDialog):
+    """Dialog for pdftl add_text operation."""
+
+    POSITIONS = [
+        "top-left", "top-center", "top-right",
+        "mid-left", "mid-center", "mid-right",
+        "bottom-left", "bottom-center", "bottom-right",
+    ]
+
+    def __init__(self, window, selection, model, pdfqueue, callback):
+        super().__init__(_("Add Text"), window)
+        self.callback = callback
+        self.selection = selection
+        self.model = model
+
+        grid = Gtk.Grid(column_spacing=8, row_spacing=8, margin=12)
+        self.vbox.pack_start(grid, True, True, 0)
+
+        row = 0
+
+        # Text
+        grid.attach(Gtk.Label(label=_("Text:"), xalign=1), 0, row, 1, 1)
+        self.text = Gtk.Entry()
+        self.text.set_text("Page {page} of {total}")
+        self.text.set_width_chars(30)
+        grid.attach(self.text, 1, row, 2, 1)
+        row += 1
+
+        # Position
+        grid.attach(Gtk.Label(label=_("Position:"), xalign=1), 0, row, 1, 1)
+        self.position = Gtk.ComboBoxText()
+        for p in self.POSITIONS:
+            self.position.append_text(p)
+        self.position.set_active(6)  # bottom-left default
+        grid.attach(self.position, 1, row, 2, 1)
+        row += 1
+
+        # Offset X
+        grid.attach(Gtk.Label(label=_("Offset X (pt):"), xalign=1), 0, row, 1, 1)
+        self.offset_x = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.offset_x.set_value(10)
+        grid.attach(self.offset_x, 1, row, 1, 1)
+        row += 1
+
+        # Offset Y
+        grid.attach(Gtk.Label(label=_("Offset Y (pt):"), xalign=1), 0, row, 1, 1)
+        self.offset_y = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.offset_y.set_value(10)
+        grid.attach(self.offset_y, 1, row, 1, 1)
+        row += 1
+
+        # Font size
+        grid.attach(Gtk.Label(label=_("Font size (pt):"), xalign=1), 0, row, 1, 1)
+        self.font_size = Gtk.SpinButton.new_with_range(4, 200, 1)
+        self.font_size.set_value(10)
+        grid.attach(self.font_size, 1, row, 1, 1)
+        row += 1
+
+        # Color (simple: gray scale + opacity)
+        grid.attach(Gtk.Label(label=_("Opacity (0-1):"), xalign=1), 0, row, 1, 1)
+        self.opacity = Gtk.SpinButton.new_with_range(0.0, 1.0, 0.05)
+        self.opacity.set_digits(2)
+        self.opacity.set_value(1.0)
+        grid.attach(self.opacity, 1, row, 1, 1)
+        row += 1
+
+        # Rotation
+        grid.attach(Gtk.Label(label=_("Rotate (degrees):"), xalign=1), 0, row, 1, 1)
+        self.rotate = Gtk.SpinButton.new_with_range(-360, 360, 1)
+        self.rotate.set_value(0)
+        grid.attach(self.rotate, 1, row, 1, 1)
+        row += 1
+
+        # Helper label showing variable hints
+        hint = _("Variables: {page} {total} {date} {time} {datetime}")
+        grid.attach(Gtk.Label(label=hint, xalign=0), 0, row, 3, 1)
+
+        self._last_position = self.POSITIONS[6]  # bottom-left
+        self.position.connect("changed", self._on_position_changed)
+
+        self.show_all()
+        self.connect("response", self._on_response)
+
+    def _build_spec(self):
+        text = self.text.get_text()
+        if not text:
+            return None
+        pos = self.position.get_active_text()
+        ox = self.offset_x.get_value()
+        oy = self.offset_y.get_value()
+        size = int(self.font_size.get_value())
+        opacity = self.opacity.get_value()
+        rotate = int(self.rotate.get_value())
+
+        opts = [f"position={pos}"]
+        if ox != 0:
+            opts.append(f"offset-x={ox}pt")
+        if oy != 0:
+            opts.append(f"offset-y={oy}pt")
+        opts.append(f"size={size}")
+        if opacity < 1.0:
+            opts.append(f"color=0 0 0 {opacity}")
+        if rotate != 0:
+            opts.append(f"rotate={rotate}")
+
+        return f"/{text}/({', '.join(opts)})"
+
+    def _on_response(self, dialog, response):
+        if response == Gtk.ResponseType.OK:
+            spec = self._build_spec()
+            if spec:
+                self.callback(spec, self.selection, self.model)
+        dialog.destroy()
+
+    def _on_position_changed(self, combo):
+        pos = combo.get_active_text()
+        old_pos = self._last_position
+        self._last_position = pos
+
+        ox = self.offset_x.get_value()
+        oy = self.offset_y.get_value()
+
+        # Flip offset-y if crossing top/bottom boundary
+        if (
+            ("bottom" in old_pos and "top" in pos and oy > 0)
+            or
+            ("top" in old_pos and "bottom" in pos and oy < 0)
+        ):
+            self.offset_y.set_value(-oy)
+
+        if (
+            ("left" in old_pos and "right" in pos and ox > 0)
+            or
+            ("right" in old_pos and "left" in pos and ox < 0)
+        ):
+            self.offset_x.set_value(-ox)

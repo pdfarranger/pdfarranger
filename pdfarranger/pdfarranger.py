@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import os
+import io
 import platform
 import ctypes
 
@@ -40,7 +41,15 @@ import hashlib
 from urllib.request import url2pathname
 from functools import lru_cache
 from math import log
-
+try:
+    import pdftl
+    import pdftl.api as _pdftl_api
+    PDFTL_AVAILABLE = True
+    PDFTL_VERSION = pdftl.__version__
+except ImportError:
+    _pdftl_api = None
+    PDFTL_AVAILABLE = False
+    PDFTL_VERSION = "not_found"
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -124,7 +133,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Dims, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION
+from .core import Dims, PDFDoc, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION
 
 PIKEPDF_VERSION = pikepdf.__version__
 LIBQPDF_VERSION = pikepdf.__libqpdf_version__
@@ -433,6 +442,9 @@ class PdfArranger(Gtk.Application):
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
         self.actions = [
+            ('add_text', self.add_text_action),
+            ('montage', self.montage_page_action),
+            ('place', self.place_page_action),
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
@@ -882,6 +894,11 @@ class PdfArranger(Gtk.Application):
         self.__create_actions()
         self.__create_menus()
 
+
+        if not PDFTL_AVAILABLE:
+            for name in ('place', 'montage', 'add_text'):
+                self.window.lookup_action(name).set_enabled(False)
+
         self.iv_cursor = IconviewCursor(self)
         self.iv_drag_select = IconviewDragSelect(self)
         self.iv_pan_view = IconviewPanView(self)
@@ -928,6 +945,7 @@ class PdfArranger(Gtk.Application):
             print("libqpdf-" + LIBQPDF_VERSION)
             print("img2pdf-" + IMG2PDF_VERSION)
             print("Poppler-" + POPPLER_VERSION)
+            print("pdftl-" + PDFTL_VERSION)
             print("Gtk-" + GTK_VERSION)
             print("Python-" + PYTHON_VERSION)
             print("OS-" + platform.platform())
@@ -3212,11 +3230,12 @@ class PdfArranger(Gtk.Application):
                     % APPNAME,
                     "\n \n",
                     _("Software versions:") + "\n" +
-                    "pikepdf %s, libqpdf %s, img2pdf %s, Poppler %s, GTK %s, Python %s"
+                    "pikepdf %s, libqpdf %s, img2pdf %s, Poppler %s, pdftl %s, GTK %s, Python %s"
                     % (PIKEPDF_VERSION,
                        LIBQPDF_VERSION,
                        IMG2PDF_VERSION,
                        POPPLER_VERSION,
+                       PDFTL_VERSION,
                        GTK_VERSION,
                        PYTHON_VERSION),
                     "\n \n",
@@ -3291,6 +3310,197 @@ class PdfArranger(Gtk.Application):
         if unselect_all:
             self.iconview.unselect_all()
         self.iv_selection_changed()
+
+    def apply_pdf_transform(self, selection, model, undo_message,
+                            transform_func, replace_with_output=False):
+        """
+        Generic engine to apply any structural transformation to selected pages.
+        Handles baking UI geometry, memory buffering, temp files, and model updates.
+
+        :param transform_func: A callable that accepts a pikepdf.Pdf object.
+                               It should modify it in-place or return a new pikepdf.Pdf.
+        """
+        if not selection:
+            return
+
+        # 1. Commit to Undo first
+        self.undomanager.commit(undo_message)
+
+        # --- PHASE 1: Gather selection ---
+        selected_pages = []
+        nfiles = set()
+
+        for path in selection:
+            pos = model.get_iter(path)
+            page = model.get_value(pos, 0)
+            selected_pages.append(page)
+            nfiles.add(page.nfile)
+            for lp in page.layerpages:
+                nfiles.add(lp.nfile)
+
+        pdf_input = [None] * len(self.pdfqueue)
+        for nfile in nfiles:
+            pdf = self.pdfqueue[nfile - 1]
+            pdf_input[nfile - 1] = pikepdf.open(pdf.copyname, password=pdf.password)
+
+        # --- PHASE 2: BAKE (In-Memory Buffer) ---
+        buf = io.BytesIO()
+        exporter.export_doc(pdf_input, selected_pages, {}, [buf], None)
+
+        for pdf in pdf_input:
+            if pdf is not None:
+                pdf.close()
+
+        # --- PHASE 3: TRANSFORM (Using the injected function) ---
+        buf.seek(0)
+        baked_pdf = pikepdf.Pdf.open(buf)
+
+        # >>> CALL THE GENERIC TRANSFORM FUNCTION <<<
+        result_pdf = transform_func(baked_pdf)
+
+        # Fallback if the function modified the PDF in-place and returned None
+        if result_pdf is None:
+            result_pdf = baked_pdf
+
+        fd_out, temp_out = tempfile.mkstemp(suffix=".pdf", dir=self.tmp_dir)
+        os.close(fd_out)
+        result_pdf.save(temp_out)
+
+        if result_pdf is not baked_pdf:
+            result_pdf.close()
+        baked_pdf.close()
+        buf.close()
+
+        if replace_with_output:
+            # --- REPLACE MODE: delete selection, insert output pages ---
+            # Sort selection so we insert at the right position
+            sorted_sel = sorted(selection, key=lambda x: x.get_indices()[0])
+            first_index = sorted_sel[0].get_indices()[0]
+
+            self.clear_selected(add_to_undomanager=False)
+            self.iconview.unselect_all()
+
+            # After deletion, the page that was at first_index is now at first_index
+            # (pages before it are unchanged)
+            adder = PageAdder(self)
+            if first_index < len(self.model):
+                ref = Gtk.TreeRowReference.new(self.model, Gtk.TreePath.new_from_indices([first_index]))
+                adder.move(ref, True)
+            else:
+                adder.move(None, False)
+            adder.addpages(temp_out)
+            adder.commit(select_added=True, add_to_undomanager=False)
+
+            self.set_unsaved(True)
+            self.update_iconview_geometry()
+            self.update_max_zoom_level()
+            GObject.idle_add(self.render)
+            return
+
+        # --- PHASE 4: IMPORT ---
+        new_doc = PDFDoc(
+            filename=temp_out, description=None, blank_size=None,
+            stat=None, tmp_dir=self.tmp_dir, parent=self.window
+        )
+        self.pdfqueue.append(new_doc)
+        new_nfile = len(self.pdfqueue)
+
+        # --- PHASE 5: UPDATE UI MODEL ---
+        for index, path in enumerate(selection):
+            pos = model.get_iter(path)
+            page = model.get_value(pos, 0)
+
+            new_page = page.duplicate()
+            new_page.nfile = new_nfile
+            new_page.npage = index + 1
+
+            poppler_page = new_doc.document.get_page(index)
+            w, h = poppler_page.get_size()
+            new_page.size = Dims(w, h)
+
+            new_page.crop = Sides(0, 0, 0, 0)
+            new_page.angle = 0
+            new_page.scale = 1.0
+            new_page.layerpages = []
+
+            new_page.resample = -1
+            new_page.thumbnail = None
+            new_page.preview = None
+
+            model.set_value(pos, 0, new_page)
+
+        # --- PHASE 6: RENDER ---
+        self.set_unsaved(True)
+        self.update_iconview_geometry()
+        self.iv_selection_changed()
+        GObject.idle_add(self.render)
+
+
+    def apply_pdftl_place(self, pdftl_spec, selection, model):
+        """Wrapper for the pdftl 'place' operation."""
+        # Define our transformation bridge
+        def run_pdftl_place(pdf):
+            return _pdftl_api.call("place", pdf, pdftl_spec)
+
+        self.apply_pdf_transform(
+            selection,
+            model,
+            undo_message="Place Content",
+            transform_func=run_pdftl_place
+        )
+
+    def place_page_action(self, _action, _parameter, _unknown):
+        """Opens dialog to shift/scale/spin page content using pdftl."""
+        s = self.iconview.get_selected_items()
+        if not s:
+            return
+        s.sort(key=lambda x: x.get_indices()[0])  # ensure document order
+        pageutils.PlaceContentDialog(
+            self.window, s, self.model, self.pdfqueue, self.apply_pdftl_place
+        )
+
+    def apply_pdftl_montage(self, pdftl_spec, selection, model):
+        """Wrapper for the pdftl 'montage' operation."""
+        # Define our transformation bridge
+        def run_pdftl_montage(pdf):
+            return _pdftl_api.call("montage", pdf, pdftl_spec)
+
+        self.apply_pdf_transform(
+            selection,
+            model,
+            undo_message="Montage",
+            transform_func=run_pdftl_montage,
+            replace_with_output=True
+        )
+
+    def montage_page_action(self, _action, _parameter, _unknown):
+        """Opens dialog to montage page content using pdftl."""
+        s = self.iconview.get_selected_items()
+        if not s:
+            return
+        s.sort(key=lambda x: x.get_indices()[0])  # ensure document order
+        pageutils.MontageDialog(
+            self.window, s, self.model, self.pdfqueue, self.apply_pdftl_montage
+        )
+
+
+    def apply_pdftl_add_text(self, pdftl_spec, selection, model):
+        def run(pdf):
+            return _pdftl_api.call("add_text", pdf, pdftl_spec)
+
+        self.apply_pdf_transform(selection, model,
+                                 undo_message="Add Text",
+                                 transform_func=run)
+
+    def add_text_action(self, _action, _parameter, _unknown):
+        s = self.iconview.get_selected_items()
+        if not s:
+            return
+        s.sort(key=lambda x: x.get_indices()[0])
+        pageutils.AddTextDialog(
+            self.window, s, self.model, self.pdfqueue, self.apply_pdftl_add_text
+        )
+
 
 def is_same_page_size(pages):
     p1w, p1h = pages[0].size_in_points()
