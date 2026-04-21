@@ -398,6 +398,9 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
     if quit_flag is not None and quit_flag.is_set():
         return
+    if len(files_out) == 1:
+        from . import exporter_outlines
+        exporter_outlines.rebuild_outlines(pdf_input, pdf_output, pages)
     if isinstance(files_out[0], str):
         # Only needed when saving to file, not when printing
         mdata = metadata.merge_doc(mdata, pdf_input)
