@@ -49,3 +49,5 @@ jobs:
         run: python3 -X tracemalloc -u -m unittest -v -f tests.test
       - name: Exporter Tests
         run: python3 -X tracemalloc -u -m unittest -v -f tests.test_exporter
+      - name: Exporter Outlines Tests
+        run: python3 -X tracemalloc -u -m unittest -v -f tests.test_exporter_outlines

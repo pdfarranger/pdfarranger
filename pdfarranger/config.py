@@ -351,8 +351,12 @@ class Config(object):
         if self.has_pikepdf8:
             frame4 = Gtk.Frame(label=_("Saving/exporting to single file"), margin=8)
             cb_retain = Gtk.CheckButton(
-                label=_("Retain document-level information of the first opened file"),
+                label=_("Preserve document information from the first file opened"),
                 margin=8)
+            cb_retain.set_tooltip_text("\n".join([
+                _("When checked: use document properties from the first file opened."),
+                _("When unchecked: merge bookmarks from all documents.")
+            ]))
             cb_retain.set_active(not self.start_with_empty())
             frame4.add(cb_retain)
             d.vbox.pack_start(frame4, False, False, 8)

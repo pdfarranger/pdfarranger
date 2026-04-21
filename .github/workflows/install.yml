@@ -16,7 +16,7 @@ jobs:
     - name: Upgrade pip
       run: pip install --upgrade pip
     - name: Install
-      run: pip3 install -v --upgrade .[image] coverage
+      run: pip3 install -v --upgrade .[image] coverage pytest
     - name: AppStream
       run: appstreamcli validate $HOME/.local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
@@ -25,9 +25,11 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Exporter Outlines Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter_outlines -m pytest -v tests/test_exporter_outlines.py
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
-    # Convert to lcov because it's compatible with codecov AND can be combine
+    # Convert to lcov because it's compatible with codecov AND can be combined
     - name: Convert to lcov
       run: python3 -m coverage combine && python3 -m coverage lcov
     # Upload for later use (see upload-to-codecov job)
@@ -44,11 +46,13 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Install
-      run: pip3 install -v .[image]
+      run: pip3 install -v .[image] coverage && pip3 install -v --ignore-installed pytest
     - name: Dogtail Tests and Coverage
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Exporter Outlines Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter_outlines -m pytest -v tests/test_exporter_outlines.py
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Convert to lcov
