@@ -391,16 +391,18 @@ def get_max_pdf_version(pdf_list: List[pikepdf.Pdf]) -> str:
     return max(*versions)
 
 
-def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
+def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False, output_password=None):
     """Same as export() but with pikepdf.PDF objects instead of files"""
     pdf_output = pikepdf.Pdf.new()
     max_version = get_max_pdf_version([pdf_output, *pdf_input])
     _copy_n_transform(pdf_input, pdf_output, pages, quit_flag)
+    password = None
     if quit_flag is not None and quit_flag.is_set():
         return
     if isinstance(files_out[0], str):
         # Only needed when saving to file, not when printing
         mdata = metadata.merge_doc(mdata, pdf_input)
+        password = output_password
     if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
@@ -410,19 +412,37 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            outpdf.save(files_out[n], min_version=max_version)
+            if password:
+                outpdf.save(files_out[n], min_version=max_version,
+                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
+            else:
+                outpdf.save(files_out[n], min_version=max_version, encryption=False)
+
     else:
         if isinstance(files_out[0], str):
             if not test_mode:
                 _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
         if test_mode:
-            pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
-                stream_decode_level=pikepdf.StreamDecodeLevel.all,
-                min_version=max_version,
-            )
+            if password:
+                pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
+                    stream_decode_level=pikepdf.StreamDecodeLevel.all,
+                    min_version=max_version,
+                    encryption=pikepdf.Encryption(user=password, owner=password, R=6)
+                )
+            else:
+                pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
+                                stream_decode_level=pikepdf.StreamDecodeLevel.all,
+                                min_version=max_version,
+                                encryption=False
+                )
+
         else:
-            pdf_output.save(files_out[0], min_version=max_version)
+            if password:
+                pdf_output.save(files_out[0], min_version=max_version,
+                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
+            else:
+                pdf_output.save(files_out[0], min_version=max_version, encryption=False)
 
 
 def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) -> None:
@@ -435,7 +455,7 @@ def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) 
 
 
 def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str], quit_flag=None,
-                test_mode: bool = False):
+                test_mode: bool = False, output_password = None):
     """ Same as _copy_n_transform, except it use the pikepdf Job interface. Requires pikepdf >= 8.0 """
     # Generate the output PDF file including temporary overlay/ underlay pages. We don't need to call
     # _append_page as the Job interface copies pages / annotations as necessary. We can also delay getting
@@ -457,13 +477,29 @@ def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str],
         for lpage in page.layerpages:
             # Layer pages are temporarily added after the page they belong to
             _add_json_entries(json, files, lpage)
+
+    if output_password:
+        if output_password:
+            json["encrypt"] = {
+                "userPassword": output_password,
+                "ownerPassword": output_password,
+                "256bit": {
+                }
+            }
     return pikepdf.Job(json)
 
 
 def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: List[Page], mdata, files_out: List[str],
-                   quit_flag, test_mode: bool = False) -> None:
+                   quit_flag, test_mode: bool = False, output_password = None) -> None:
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
-    job = _create_job(files, pages, files_out, quit_flag, test_mode)
+
+    password = None
+    if isinstance(files_out[0], str):
+        password = output_password
+        job = _create_job(files, pages, files_out, quit_flag, test_mode, output_password=password)
+    else:
+        job = _create_job(files, pages, files_out, quit_flag, test_mode)
+
     pdf_output = job.create_pdf()
     max_version = get_max_pdf_version([pdf_output, *pdf_input])
 
@@ -482,7 +518,11 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
             _set_meta(mdata, pdf_input, outpdf)
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            outpdf.save(files_out[n], min_version=max_version)
+            if password:
+                outpdf.save(files_out[n], min_version=max_version,
+                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
+            else:
+                outpdf.save(files_out[n], min_version=max_version, encryption=False)
     else:
         if isinstance(files_out[0], str) and not test_mode:
             _set_meta(mdata, [pdf_output], pdf_output)
@@ -493,10 +533,11 @@ def export(files, pages, mdata, files_out, config, quit_flag, test_mode=False, *
     pdf_input = [
         pikepdf.open(copyname, password=password) for copyname, password in files
     ]
+    output_password = kwargs.get("output_password")
     if config.start_with_empty():
-        export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode)
+        export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode, output_password=output_password)
     else:
-        export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode)
+        export_doc_job(pdf_input, files, pages, mdata, files_out, quit_flag, test_mode, output_password=output_password)
 
 
 def num_pages(filepath):

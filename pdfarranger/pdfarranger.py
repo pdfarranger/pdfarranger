@@ -312,6 +312,7 @@ class PdfArranger(Gtk.Application):
         multiprocessing.set_start_method('spawn')
         self.quit_flag = multiprocessing.Event()
         self.layer_pos = 0.5, 0.5
+        self.password = None
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -477,6 +478,7 @@ class PdfArranger(Gtk.Application):
             ("find_prev", self.searchbar_widget.find_prev),
             ("find_next", self.searchbar_widget.find_next),
             ("find_all", self.searchbar_widget.find_all),
+            ("encryption", self.on_encryption)
         ]
         self.window.add_action_entries(self.actions)
 
@@ -837,6 +839,9 @@ class PdfArranger(Gtk.Application):
                 self.show_find_results, self.clear_find_results)
         self.searchbar_widget = SearchBarWidget(*args)
         searchbar.pack_start(self.searchbar_widget, True, True, 0)
+
+        # Encryption Button
+        self.set_encrpytion_button(None)
 
         self.window.show_all()
 
@@ -1277,6 +1282,7 @@ class PdfArranger(Gtk.Application):
         self.export_file = None
         self.set_unsaved(False)
         self.update_statusbar()
+        self.set_encrpytion_button(None)
         malloc_trim()
 
     def on_quit(self, _action, _param=None, _unknown=None):
@@ -1483,6 +1489,13 @@ class PdfArranger(Gtk.Application):
                     if not added:
                         break
                 adder.commit(select_added=False, add_to_undomanager=True)
+
+                # Take Password from imported pdf files
+                for pdf in self.pdfqueue:
+                    if pdf.password:
+                        self.set_encrpytion_button(pdf.password)
+                        break
+
         chooser.destroy()
 
     def on_action_save(self, _action, _param, _unknown):
@@ -1523,10 +1536,10 @@ class PdfArranger(Gtk.Application):
         if exportmode in [
             'SELECTED_TO_PNG', 'SELECTED_TO_JPG', 'SELECTED_TO_PDF_PNG', 'SELECTED_TO_PDF_JPG'
             ]:
-            self.export_process = ImageExporter(*args, self.pdfqueue, exportmode, export_msg)
+            self.export_process = ImageExporter(*args, self.pdfqueue, exportmode, export_msg, export_password=self.password)
         else:
             args = *args, self.quit_flag
-            kwargs = dict(export_msg=export_msg)
+            kwargs = dict(export_msg=export_msg, output_password=self.password)
             self.export_process = multiprocessing.Process(target=exporter.export_process,
                                                           args=args, kwargs=kwargs)
         self.export_process.start()
@@ -3291,6 +3304,54 @@ class PdfArranger(Gtk.Application):
         if unselect_all:
             self.iconview.unselect_all()
         self.iv_selection_changed()
+
+    def on_encryption(self, _action, _param, _unknown):
+        self.set_encrpytion_button(EncryptionPasswordDialog(self.window, self.password).get_password())
+
+    def set_encrpytion_button(self, new_password):
+        button = self.uiXML.get_object("encryption_button")
+        if new_password:
+            self.password = new_password
+            icon = Gtk.Image.new_from_icon_name("channel-secure-symbolic", Gtk.IconSize.BUTTON)
+            button.set_image(icon)
+        else:
+            self.password = None
+            icon = Gtk.Image.new_from_icon_name("channel-insecure-symbolic", Gtk.IconSize.BUTTON)
+            button.set_image(icon)
+
+class EncryptionPasswordDialog(Gtk.Dialog):
+    def __init__(self, parent, password=None):
+        super().__init__(
+            title=_("Set Password"),
+            parent=parent,
+            flags=Gtk.DialogFlags.MODAL,
+            buttons=(
+                _("_Cancel"),
+                Gtk.ResponseType.CANCEL,
+                _("_OK"),
+                Gtk.ResponseType.OK,
+            ),
+        )
+        self.password = password
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.entry = Gtk.Entry()
+        self.entry.set_visibility(False)
+        self.entry.set_activates_default(True)
+        self.vbox.pack_start(self.entry, False, False, 0)
+        self.set_resizable(False)
+
+    def get_password(self):
+        self.show_all()
+        result = self.run()
+        text = self.entry.props.text
+        self.destroy()
+        if result == Gtk.ResponseType.OK:
+            return text
+        else:
+            return self.password
+
+
+
 
 def is_same_page_size(pages):
     p1w, p1h = pages[0].size_in_points()
