@@ -21,7 +21,7 @@ import locale
 
 from math import pi
 
-from .core import Sides, Dims, PDFRenderer
+from .core import Sides, Dims, PDFRenderer, PlaceTransform
 from .exporter import get_in_memory_poppler_doc
 
 _ = gettext.gettext
@@ -1166,3 +1166,140 @@ class RangeSelectDialog(BaseDialog):
         text = self.range_entry_widget.get_text()
         text = text.replace('--', '-').replace(',,', ',').replace('  ', ' ')
         self.range_entry_widget.set_text(''.join([char for char in text if char in '0123456789,- ']))
+
+
+class PlaceContentDialog:
+    """Dialog to shift, scale, and spin page content with graphical preview."""
+
+    def __init__(self, window, selection, model, pdfqueue, callback):
+        """Initialize the dialog."""
+        self.callback = callback
+        self.selection = selection
+        self.model = model
+
+        pos = self.model.get_iter(self.selection[0])
+        self.preview_page = self.model.get_value(pos, 0).duplicate()
+
+        pt = self.preview_page.place_transform
+        initial_sx = pt.shift_x if pt else 0.0
+        initial_sy = pt.shift_y if pt else 0.0
+        initial_sc = pt.scale if pt else 1.0
+        initial_sp = pt.spin_deg if pt else 0.0
+
+        d = BaseDialog(_("Transform Content"), window)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=18, margin=12)
+        grid = Gtk.Grid(column_spacing=8, row_spacing=8)
+
+        grid.attach(Gtk.Label(label=_("Shift X (pt):"), xalign=1), 0, 0, 1, 1)
+        self.shift_x = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.shift_x.set_value(initial_sx)
+        self.shift_x.connect("value-changed", self._on_value_changed)
+        grid.attach(self.shift_x, 1, 0, 1, 1)
+
+        grid.attach(Gtk.Label(label=_("Shift Y (pt):"), xalign=1), 0, 1, 1, 1)
+        self.shift_y = Gtk.SpinButton.new_with_range(-500, 500, 1)
+        self.shift_y.set_value(initial_sy)
+        self.shift_y.connect("value-changed", self._on_value_changed)
+        grid.attach(self.shift_y, 1, 1, 1, 1)
+
+        grid.attach(Gtk.Label(label=_("Scale (1.0 = 100%):"), xalign=1), 0, 2, 1, 1)
+        self.scale = Gtk.SpinButton.new_with_range(0.1, 4.0, 0.05)
+        self.scale.set_digits(2)
+        self.scale.set_value(initial_sc)
+        self.scale.connect("value-changed", self._on_value_changed)
+        grid.attach(self.scale, 1, 2, 1, 1)
+
+        grid.attach(Gtk.Label(label=_("Spin (degrees):"), xalign=1), 0, 3, 1, 1)
+        self.spin = Gtk.SpinButton.new_with_range(-360, 360, 1)
+        self.spin.set_value(initial_sp)
+        self.spin.connect("value-changed", self._on_value_changed)
+        grid.attach(self.spin, 1, 3, 1, 1)
+
+        self.dawidget = DrawingAreaWidget(self.preview_page, pdfqueue)
+        self.dawidget.set_size_request(300, 400)
+        # Pre-set zoom to match requested size so first render is correct
+        w = self.preview_page.width_in_points()
+        h = self.preview_page.height_in_points()
+        self.preview_page.zoom = min((300 - self.dawidget.padding * 2) / w,
+                                      (400 - self.dawidget.padding * 2) / h)
+
+        self._dragging = False
+        self._drag_start_x = 0
+        self._drag_start_y = 0
+        self._start_shift_x = initial_sx
+        self._start_shift_y = initial_sy
+
+        self.dawidget.da.add_events(
+            Gdk.EventMask.BUTTON_PRESS_MASK |
+            Gdk.EventMask.BUTTON_RELEASE_MASK |
+            Gdk.EventMask.POINTER_MOTION_MASK
+        )
+        self.dawidget.da.set_sensitive(True)
+        self.dawidget.da.connect("button-press-event", self._on_mouse_press)
+        self.dawidget.da.connect("button-release-event", self._on_mouse_release)
+        self.dawidget.da.connect("motion-notify-event", self._on_mouse_motion)
+        self.dawidget.sw.connect("scroll-event", self._on_scroll)
+
+
+        hbox.pack_start(grid, False, False, 0)
+        hbox.pack_start(self.dawidget, True, True, 0)
+
+        d.vbox.pack_start(hbox, True, True, 0)
+        d.connect('response', self._on_response)
+        d.show_all()
+        self.dawidget.silent_render()
+
+    def _on_mouse_press(self, widget, event):
+        self._dragging = True
+        self._drag_start_x = event.x
+        self._drag_start_y = event.y
+        self._start_shift_x = self.shift_x.get_value()
+        self._start_shift_y = self.shift_y.get_value()
+        return True
+
+    def _on_mouse_release(self, widget, event):
+        self._dragging = False
+        return True
+
+    def _on_mouse_motion(self, widget, event):
+        if self._dragging:
+            dx = event.x - self._drag_start_x
+            dy = event.y - self._drag_start_y
+            zoom = self.preview_page.zoom
+            self.shift_x.set_value(self._start_shift_x + dx / zoom)
+            self.shift_y.set_value(self._start_shift_y - dy / zoom)
+            return True
+        return False
+
+    def _on_scroll(self, widget, event):
+        target_widget = self.spin if (event.state & Gdk.ModifierType.SHIFT_MASK) else self.scale
+        step = target_widget.get_adjustment().get_step_increment()
+        current = target_widget.get_value()
+        if event.direction == Gdk.ScrollDirection.UP:
+            target_widget.set_value(current + step)
+        elif event.direction == Gdk.ScrollDirection.DOWN:
+            target_widget.set_value(current - step)
+        return False
+
+    def _build_transform(self):
+        sx, sy = self.shift_x.get_value(), self.shift_y.get_value()
+        sc, sp = self.scale.get_value(), self.spin.get_value()
+        if sx == 0 and sy == 0 and sc == 1.0 and sp == 0:
+            return None
+        return PlaceTransform(shift_x=sx, shift_y=sy, scale=sc, spin_deg=sp)
+
+    def _on_value_changed(self, *args):
+        # Update the place_transform on the preview page and re-render
+        self.preview_page.place_transform = self._build_transform()
+        self.preview_page.resample = -1
+        self.preview_page.thumbnail = None
+        self.dawidget.damodel.set_value(
+            self.dawidget.damodel.get_iter(Gtk.TreePath.new_from_indices([0])), 0, self.preview_page
+        )
+        self.dawidget.silent_render()
+
+    def _on_response(self, dialog, response):
+        if response == Gtk.ResponseType.OK:
+            self.callback(self._build_transform(), self.selection, self.model)
+        dialog.destroy()
