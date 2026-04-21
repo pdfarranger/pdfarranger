@@ -966,67 +966,48 @@ class TestBatch9(PdfArrangerTest):
 
 
 class TestBatch10(PdfArrangerTest):
-    """Test start-with-empty config setting"""
+    """Test password workflow"""
 
-    def test_01_default(self):
-        """Test default setting"""
+    def test_01_keep_password(self):
+        """Test with export without disabling password"""
         self._start(["tests/test_encrypted.pdf"])
         dialog = self._app().child(roleName="dialog")
         passfield = dialog.child(roleName="password text")
         passfield.text = "foobar"
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
-
-        self._mainmenu("Preferences")
-        dialog = self._app().child(roleName="dialog")
-        savepanel_name = "Saving/exporting to single file"
-        if have_pikepdf8():
-            savepanel = dialog.child(name=savepanel_name)
-            checkboxes = self._find_by_role("check box", savepanel)
-            self.assertTrue(checkboxes[0].checked)
-        else:
-            panels = self._find_by_role("panel", dialog)
-            self.assertNotIn(savepanel_name, [p.name for p in panels])
-        dialog.child(name="OK").click()
-        self._wait_cond(lambda: dialog.dead)
-
         self._mainmenu("Save As…")
         self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"] )
-        if have_pikepdf8():
-            with warnings.catch_warnings(record=True) as w:
-                with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
-                    pass
-            # there should be no warning that no password was needed to open this PDF
-            self.assertEqual(len(w), 0)
-        else:
-            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf")):
-                # there should be no pikepdf._core.PasswordError for pikepdf < 8
+        with warnings.catch_warnings(record=True) as w:
+            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
                 pass
+        # there should be no warning that no password was needed to open this PDF
+        self.assertEqual(len(w), 0)
 
-    def test_02_legacy(self):
-        """Test legacy setting"""
-        if have_pikepdf8():
-            self._mainmenu("Preferences")
-            dialog = self._app().child(roleName="dialog")
-            savepanel = dialog.child(name="Saving/exporting to single file")
-            checkboxes = self._find_by_role("check box", savepanel)
-            checkboxes[0].click()
-            dialog.child(name="OK").click()
-            self.assertFalse(checkboxes[0].checked)
-            self._wait_cond(lambda: dialog.dead)
-
+    def test_02_disable_password(self):
+        """Test export with password disabled"""
+        self._mainmenu("Password")
         self._mainmenu("Save As…")
         self._save_as_chooser("unencrypted.pdf", ["unencrypted.pdf"])
         with pikepdf.open(os.path.join(self.__class__.tmp, "unencrypted.pdf")):
             # there should be no pikepdf._core.PasswordError
             pass
 
-    def test_03_quit(self):
-        self._quit()  # save config
-        self._process().wait(timeout=22)
-        if have_pikepdf8():
-            self.assertEqual(self._config()["preferences"]["start-with-empty"], "True")
-
+    def test_03_enable_password(self):
+        """Test export with a password set"""
+        self._mainmenu("Password")
+        dialog = self._app().child(roleName="dialog")
+        passfield = dialog.child(roleName="password text")
+        passfield.text = "foobar"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        self._mainmenu("Save As…")
+        self._save_as_chooser("encrypted2.pdf", ["encrypted2.pdf"] )
+        with warnings.catch_warnings(record=True) as w:
+            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted2.pdf"), password="foobar"):
+                pass
+        # there should be no warning that no password was needed to open this PDF
+        self.assertEqual(len(w), 0)
 
 class TestBatch11(PdfArrangerTest):
     """Test show-save-warnings config setting and metadata"""

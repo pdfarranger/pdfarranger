@@ -30,7 +30,8 @@ from .metadata import merge
 
 class ImageExporter:
     """Export to png, jpg or rasterized pdf (with png or jpg images)"""
-    def __init__(self, files, pages, metadata, files_out, config, pdfqueue, exportmode, export_msg):
+    def __init__(self, files, pages, metadata, files_out, config, pdfqueue, exportmode, export_msg, export_password=None):
+        """Initialize a ImageExporter Instance, optionally provide export_password to encrypt exported pdf files."""
         self.files = files
         self.model = Gtk.ListStore(GObject.TYPE_PYOBJECT)
         for page in pages:
@@ -50,6 +51,7 @@ class ImageExporter:
             self.pdf_out = pikepdf.Pdf.new()
         self.is_saving = True
         self.exitcode = 1  # unhandled exception
+        self.export_password = export_password
 
     def start(self):
         prange = [0, len(self.model) - 1]
@@ -137,7 +139,11 @@ class ImageExporter:
         m = merge(self.metadata, self.files)
         _set_meta(m, [], self.pdf_out)
         try:
-            self.pdf_out.save(self.files_out[0])
+            if self.export_password:
+                encryption = pikepdf.Encryption(user=self.export_password, owner=self.export_password, R=6)
+            else:
+                encryption = False
+            self.pdf_out.save(self.files_out[0], encryption=encryption)
         except OSError as e:
             self.exception_handler(e)
         if len(self.pdf_out.pages) == len(self.model):
