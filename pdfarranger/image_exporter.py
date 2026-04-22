@@ -31,6 +31,7 @@ from .metadata import merge
 class ImageExporter:
     """Export to png, jpg or rasterized pdf (with png or jpg images)"""
     def __init__(self, files, pages, metadata, files_out, config, pdfqueue, exportmode, export_msg, export_password=None):
+        """Initialize a ImageExporter Instance, optionally provide export_password to encrypt exported pdf files"""
         self.files = files
         self.model = Gtk.ListStore(GObject.TYPE_PYOBJECT)
         for page in pages:
