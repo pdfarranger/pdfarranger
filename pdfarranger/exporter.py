@@ -221,7 +221,7 @@ def _remove_unreferenced_resources(pdfdoc):
     try:
         pdfdoc.remove_unreferenced_resources()
     except RuntimeError:
-	# Catch "RuntimeError: operation for dictionary attempted on object of
+    # Catch "RuntimeError: operation for dictionary attempted on object of
 	# type null" with old version PikePDF (observed with 1.17 and 1.19).
 	# Blindly catch all RuntimeError is dangerous as this may catch
 	# unwanted exception so we print it.
@@ -486,7 +486,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         mdata = metadata.merge_doc(mdata, pdf_input)
         password = output_password
     if password:
-            encryption = pikepdf.Encryption(user=password, owner=password, R=6)
+        encryption = pikepdf.Encryption(user=password, owner=password, R=6)
     else:
         encryption = False
     if len(files_out) > 1:
