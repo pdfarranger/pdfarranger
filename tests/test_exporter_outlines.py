@@ -530,7 +530,7 @@ class TestEdgeCases:
         src.Root.Outlines = src.make_indirect(
             pikepdf.Dictionary(
                 Type=pikepdf.Name.Outlines,
-                Count=pikepdf.Integer(99),  # lies about count — causes parse issues
+                Count=99,  # lies about count — causes parse issues
             )
         )
 

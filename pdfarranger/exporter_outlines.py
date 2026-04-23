@@ -103,7 +103,7 @@ class OutlineCopier:
     def copy_item(self, source_item, new_parent_list):
         """Copy a single outline item and its children, dropping invalid destinations."""
         dest = None
-        if source_item.destination:
+        if source_item.destination is not None:
             dest = source_item.destination
         elif (
             source_item.action
