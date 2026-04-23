@@ -3337,6 +3337,7 @@ class EncryptionPasswordDialog(Gtk.Dialog):
         self.entry = Gtk.Entry()
         self.entry.set_visibility(False)
         self.entry.set_activates_default(True)
+        self.entry.set_width_chars(15)
         self.vbox.pack_start(self.entry, False, False, 0)
         self.set_resizable(False)
 
@@ -3349,9 +3350,6 @@ class EncryptionPasswordDialog(Gtk.Dialog):
             return text
         else:
             return self.password
-
-
-
 
 def is_same_page_size(pages):
     p1w, p1h = pages[0].size_in_points()

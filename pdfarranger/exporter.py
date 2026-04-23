@@ -403,6 +403,10 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False, o
         # Only needed when saving to file, not when printing
         mdata = metadata.merge_doc(mdata, pdf_input)
         password = output_password
+    if password:
+            encryption = pikepdf.Encryption(user=password, owner=password, R=6)
+    else:
+        encryption = False
     if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
@@ -412,37 +416,21 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False, o
             # works without make_indirect as already applied to this page
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            if password:
-                outpdf.save(files_out[n], min_version=max_version,
-                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
-            else:
-                outpdf.save(files_out[n], min_version=max_version, encryption=False)
-
+            outpdf.save(files_out[n], min_version=max_version, encryption=encryption)
     else:
         if isinstance(files_out[0], str):
             if not test_mode:
                 _set_meta(mdata, pdf_input, pdf_output)
             _remove_unreferenced_resources(pdf_output)
         if test_mode:
-            if password:
-                pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
-                    stream_decode_level=pikepdf.StreamDecodeLevel.all,
-                    min_version=max_version,
-                    encryption=pikepdf.Encryption(user=password, owner=password, R=6)
-                )
-            else:
-                pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
-                                stream_decode_level=pikepdf.StreamDecodeLevel.all,
-                                min_version=max_version,
-                                encryption=False
-                )
+            pdf_output.save(files_out[0], qdf=True, static_id=True, compress_streams=False,
+                stream_decode_level=pikepdf.StreamDecodeLevel.all,
+                min_version=max_version,
+                encryption=encryption
+            )
 
         else:
-            if password:
-                pdf_output.save(files_out[0], min_version=max_version,
-                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
-            else:
-                pdf_output.save(files_out[0], min_version=max_version, encryption=False)
+             pdf_output.save(files_out[0], min_version=max_version, encryption=encryption)
 
 
 def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) -> None:
@@ -497,6 +485,10 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
         # Only needed when saving to file, not when printing
         mdata = metadata.merge_doc(mdata, pdf_input)
         password = output_password
+    if password:
+            encryption = pikepdf.Encryption(user=password, owner=password, R=6)
+    else:
+        encryption = False
     if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
@@ -505,18 +497,11 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
             _set_meta(mdata, pdf_input, outpdf)
             outpdf.pages.append(page)
             _remove_unreferenced_resources(outpdf)
-            if password:
-                outpdf.save(files_out[n], min_version=max_version,
-                            encryption=pikepdf.Encryption(user=password, owner=password, R=6))
-            else:
-                outpdf.save(files_out[n], min_version=max_version, encryption=False)
+            outpdf.save(files_out[n], min_version=max_version, encryption=encryption)
     else:
         if isinstance(files_out[0], str) and not test_mode:
             _set_meta(mdata, [pdf_output], pdf_output)
-        if password:
-            pdf_output.save(files_out[0], encryption=pikepdf.Encryption(user=password, owner=password, R=6))
-        else:
-            pdf_output.save(files_out[0], encryption=False)
+        pdf_output.save(files_out[0], min_version=max_version, encryption=encryption)
 
 
 def export(files, pages, mdata, files_out, config, quit_flag, test_mode=False, **kwargs):

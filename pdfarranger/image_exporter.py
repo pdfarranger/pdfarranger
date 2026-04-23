@@ -140,10 +140,10 @@ class ImageExporter:
         _set_meta(m, [], self.pdf_out)
         try:
             if self.export_password:
-                self.pdf_out.save(self.files_out[0],
-                                  encryption=pikepdf.Encryption(user=self.export_password,owner=self.export_password, R=6))
+                encryption = pikepdf.Encryption(user=self.export_password, owner=self.export_password, R=6)
             else:
-                self.pdf_out.save(self.files_out[0], encryption=False)
+                encryption = False
+            self.pdf_out.save(self.files_out[0], encryption=encryption)
         except OSError as e:
             self.exception_handler(e)
         if len(self.pdf_out.pages) == len(self.model):
