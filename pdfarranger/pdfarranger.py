@@ -841,7 +841,7 @@ class PdfArranger(Gtk.Application):
         searchbar.pack_start(self.searchbar_widget, True, True, 0)
 
         # Encryption Button
-        self.set_encrpytion_button(None)
+        self.set_password(None)
 
         self.window.show_all()
 
@@ -958,6 +958,7 @@ class PdfArranger(Gtk.Application):
                 break
 
         a.commit(select_added=False, add_to_undomanager=True)
+        self.set_password_from_input_files()
 
     @staticmethod
     def set_text_renderer_cell_height(iconview):
@@ -1282,7 +1283,7 @@ class PdfArranger(Gtk.Application):
         self.export_file = None
         self.set_unsaved(False)
         self.update_statusbar()
-        self.set_encrpytion_button(None)
+        self.set_password(None)
         malloc_trim()
 
     def on_quit(self, _action, _param=None, _unknown=None):
@@ -1489,12 +1490,7 @@ class PdfArranger(Gtk.Application):
                     if not added:
                         break
                 adder.commit(select_added=False, add_to_undomanager=True)
-
-                # Take Password from imported pdf files
-                for pdf in self.pdfqueue:
-                    if pdf.password:
-                        self.set_encrpytion_button(pdf.password)
-                        break
+                self.set_password_from_input_files()
 
         chooser.destroy()
 
@@ -1646,11 +1642,15 @@ class PdfArranger(Gtk.Application):
             adder = PageAdder(self)
             filenames = chooser.get_filenames()
             filenames = reversed(filenames) if os.name == 'nt' else filenames
+            empty_before_import = len(self.pdfqueue) == 0
             for filename in filenames:
                 added = adder.addpages(filename)
                 if not added:
                     break
             adder.commit(select_added=False, add_to_undomanager=True)
+            # Try to set a password from the input files if no pdf was already opened
+            if empty_before_import:
+                self.set_password_from_input_files()
         chooser.destroy()
 
     def clear_selected(self, add_to_undomanager=True):
@@ -1798,6 +1798,8 @@ class PdfArranger(Gtk.Application):
         if not data:
             return
 
+        empty_before_import = len(self.pdfqueue) == 0
+
         pastemodes = {0: 'AFTER', 1: 'BEFORE', 2: 'ODD', 3: 'EVEN', 4: 'OVERLAY', 5: 'UNDERLAY'}
         pastemode = pastemodes[mode.get_int32()]
 
@@ -1841,6 +1843,9 @@ class PdfArranger(Gtk.Application):
         elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
             selection = self.iconview.get_selected_items()
             self.paste_as_layer_dialog(data, selection, laypos=pastemode)
+        # Try to set a password from the input files if no pdf was already opened
+        if empty_before_import:
+            self.set_password_from_input_files()
 
     def convert_page_data_to_layerpage_lists(self, data, laypos):
         """Convert page data to lists of LayerPage objects
@@ -2247,6 +2252,7 @@ class PdfArranger(Gtk.Application):
         data = selection_data.get_data()
         if not data:
             return
+        empty_before_import = len(self.pdfqueue) == 0
         data = data.decode().split('\n;\n')
         if self.drag_path and len(model) > 0:
             ref_to = Gtk.TreeRowReference.new(model, self.drag_path)
@@ -2288,6 +2294,9 @@ class PdfArranger(Gtk.Application):
             changed = self.paste_pages(data, before, ref_to, select_added=True)
             if changed and context.get_selected_action() & Gdk.DragAction.MOVE:
                 context.finish(True, True, etime)
+
+        if empty_before_import:
+            self.set_password_from_input_files()
 
     def iv_dnd_data_delete(self, _widget, _context):
         """Delete pages from a pdfarranger instance after they have
@@ -2605,6 +2614,7 @@ class PdfArranger(Gtk.Application):
         """Handles received data by drag and drop in scrolledwindow"""
         if target_id == self.TEXT_URI_LIST:
             pageadder = PageAdder(self)
+            empty_before_import = len(self.pdfqueue) == 0
             model = self.iconview.get_model()
             ref_to = Gtk.TreeRowReference.new(model, self.drag_path) if len(model) > 0 else None
             if self.iconview.get_direction() == Gtk.TextDirection.LTR:
@@ -2618,6 +2628,9 @@ class PdfArranger(Gtk.Application):
                 if not added:
                     break
             pageadder.commit(select_added=False, add_to_undomanager=True)
+            # Try to set a password from the input files if no pdf was already opened
+            if empty_before_import:
+                self.set_password_from_input_files()
             self.iv_selection_changed()
 
     def sw_button_press_event(self, _scrolledwindow, event):
@@ -3306,9 +3319,9 @@ class PdfArranger(Gtk.Application):
         self.iv_selection_changed()
 
     def on_encryption(self, _action, _param, _unknown):
-        self.set_encrpytion_button(EncryptionPasswordDialog(self.window, self.password).get_password())
+        self.set_password(EncryptionPasswordDialog(self.window, self.password).get_password())
 
-    def set_encrpytion_button(self, new_password):
+    def set_password(self, new_password):
         button = self.uiXML.get_object("encryption_button")
         if new_password:
             self.password = new_password
@@ -3318,6 +3331,13 @@ class PdfArranger(Gtk.Application):
             self.password = None
             icon = Gtk.Image.new_from_icon_name("channel-insecure-symbolic", Gtk.IconSize.BUTTON)
             button.set_image(icon)
+
+    def set_password_from_input_files(self):
+        """Sets the (output) password with the first password found within the pdf queue"""
+        for pdf in self.pdfqueue:
+            if pdf.password:
+                self.set_password(pdf.password)
+                break
 
 class EncryptionPasswordDialog(Gtk.Dialog):
     def __init__(self, parent, password=None):
