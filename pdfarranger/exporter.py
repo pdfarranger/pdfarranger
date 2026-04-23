@@ -404,7 +404,7 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False, o
         mdata = metadata.merge_doc(mdata, pdf_input)
         password = output_password
     if password:
-            encryption = pikepdf.Encryption(user=password, owner=password, R=6)
+        encryption = pikepdf.Encryption(user=password, owner=password, R=6)
     else:
         encryption = False
     if len(files_out) > 1:
@@ -430,7 +430,7 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False, o
             )
 
         else:
-             pdf_output.save(files_out[0], min_version=max_version, encryption=encryption)
+            pdf_output.save(files_out[0], min_version=max_version, encryption=encryption)
 
 
 def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) -> None:
