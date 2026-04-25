@@ -313,6 +313,7 @@ class PdfArranger(Gtk.Application):
         self.quit_flag = multiprocessing.Event()
         self.layer_pos = 0.5, 0.5
         self.password = None
+        self.password_toggle = None
 
         # Clipboard for cut copy paste
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -477,10 +478,14 @@ class PdfArranger(Gtk.Application):
             ("find", self.searchbar_widget.find),
             ("find_prev", self.searchbar_widget.find_prev),
             ("find_next", self.searchbar_widget.find_next),
-            ("find_all", self.searchbar_widget.find_all),
-            ("encryption", self.on_encryption)
+            ("find_all", self.searchbar_widget.find_all)
         ]
         self.window.add_action_entries(self.actions)
+
+        password_toggle = Gio.SimpleAction.new_stateful("password-setup", None, GLib.Variant.new_boolean(False))
+        password_toggle.connect("change-state", self.password_setup)
+        self.window.add_action(password_toggle)
+
 
         self.main_menu = self.uiXML.get_object("main_menu_button")
         self.window.add_action(Gio.PropertyAction.new("main-menu", self.main_menu, "active"))
@@ -840,9 +845,6 @@ class PdfArranger(Gtk.Application):
         self.searchbar_widget = SearchBarWidget(*args)
         searchbar.pack_start(self.searchbar_widget, True, True, 0)
 
-        # Encryption Button
-        self.set_password(None)
-
         self.window.show_all()
 
         # Change iconview color background
@@ -886,6 +888,8 @@ class PdfArranger(Gtk.Application):
         self.set_unsaved(False)
         self.__create_actions()
         self.__create_menus()
+
+        self.set_password(None)
 
         self.iv_cursor = IconviewCursor(self)
         self.iv_drag_select = IconviewDragSelect(self)
@@ -3319,22 +3323,20 @@ class PdfArranger(Gtk.Application):
             self.iconview.unselect_all()
         self.iv_selection_changed()
 
-    def on_encryption(self, _action, _param, _unknown):
-        if self.password:
-            self.set_password(None)
-        else:
+    def password_setup(self, action, value):
+        if value.get_boolean():
             self.set_password(EncryptionPasswordDialog(self.window, self.password).get_password())
+        else:
+            self.set_password(None)
 
     def set_password(self, new_password):
-        button = self.uiXML.get_object("encryption_button")
+        action = self.window.lookup_action("password-setup")
         if new_password:
             self.password = new_password
-            icon = Gtk.Image.new_from_icon_name("channel-secure-symbolic", Gtk.IconSize.BUTTON)
-            button.set_image(icon)
+            action.set_state(GLib.Variant.new_boolean(True))
         else:
             self.password = None
-            icon = Gtk.Image.new_from_icon_name("channel-insecure-symbolic", Gtk.IconSize.BUTTON)
-            button.set_image(icon)
+            action.set_state(GLib.Variant.new_boolean(False))
 
     def set_password_from_input_files(self):
         """Sets the (output) password with the first password found within the pdf queue"""

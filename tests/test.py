@@ -966,10 +966,10 @@ class TestBatch9(PdfArrangerTest):
 
 
 class TestBatch10(PdfArrangerTest):
-    """Test encryption workflow"""
+    """Test password workflow"""
 
-    def test_01_keep_encryption(self):
-        """Test with export without disabling encryption"""
+    def test_01_keep_password(self):
+        """Test with export without disabling password"""
         self._start(["tests/test_encrypted.pdf"])
         dialog = self._app().child(roleName="dialog")
         passfield = dialog.child(roleName="password text")
@@ -984,18 +984,18 @@ class TestBatch10(PdfArrangerTest):
         # there should be no warning that no password was needed to open this PDF
         self.assertEqual(len(w), 0)
 
-    def test_02_disable_encryption(self):
-        """Test export with encryption disabled"""
-        self._app().button("Encryption").click()
+    def test_02_disable_password(self):
+        """Test export with password disabled"""
+        self._mainmenu("Password")
         self._mainmenu("Save As…")
         self._save_as_chooser("unencrypted.pdf", ["unencrypted.pdf"])
         with pikepdf.open(os.path.join(self.__class__.tmp, "unencrypted.pdf")):
             # there should be no pikepdf._core.PasswordError
             pass
 
-    def test_03_enable_encryption(self):
-        """Test export with a password set manually"""
-        self._app().button("Encryption").click()
+    def test_03_enable_password(self):
+        """Test export with a password set"""
+        self._mainmenu("Password")
         dialog = self._app().child(roleName="dialog")
         passfield = dialog.child(roleName="password text")
         passfield.text = "foobar"

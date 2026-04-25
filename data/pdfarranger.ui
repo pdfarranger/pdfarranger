@@ -109,26 +109,6 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="position">3</property>
               </packing>
             </child>
-            <child>
-              <object class="GtkButton" id="encryption_button">
-                <property name="visible">True</property>
-                <property name="receives_default">False</property>
-                <property name="focus_on_click">False</property>
-                <property name="tooltip_text" translatable="yes">Encryption</property>
-                <property name="action_name">win.encryption</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon_name">channel-insecure-symbolic</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">4</property>
-              </packing>
-            </child>
             <style>
               <class name="linked"/>
             </style>
