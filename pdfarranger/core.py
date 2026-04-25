@@ -37,6 +37,7 @@ import threading
 import time
 import packaging.version as version
 from typing import NamedTuple, Optional, Tuple, Union
+from dataclasses import dataclass
 import gettext
 import gi
 from gi.repository import GObject
@@ -66,6 +67,14 @@ POPPLER_VERSION = Poppler.get_version()
 _ = gettext.gettext
 
 Numeric = Union[float, int]
+
+@dataclass
+class PlaceTransform:
+    shift_x: float = 0.0
+    shift_y: float = 0.0
+    scale: float = 1.0
+    spin_deg: float = 0.0
+    anchor: str = "center"
 
 
 class Sides(NamedTuple):
@@ -289,6 +298,8 @@ class BasePage:
         """Width and height of the original page"""
         self.size = size_orig if angle in [0, 180] else size_orig.flipped()
         """Width and height"""
+        self.place_transform: Optional[PlaceTransform] = None
+        """Content transformation"""
 
     def width_in_points(self) -> Numeric:
         """Return the page width in PDF points."""
@@ -905,6 +916,14 @@ class PDFRenderer(threading.Thread, GObject.GObject):
                 cr.translate(*p.size.scaled(0.5))
                 cr.rotate(rotation * pi / 180)
                 cr.translate(*p.size_orig.scaled(-0.5))
+            if p.place_transform is not None:
+                pt = p.place_transform
+                # Apply in page-point space: translate, then scale around anchor, then spin
+                ax, ay = p.size.width / 2, p.size.height / 2  # center anchor for now
+                cr.translate(ax + pt.shift_x, ay - pt.shift_y)
+                cr.rotate(-pt.spin_deg * pi / 180)
+                cr.scale(pt.scale, pt.scale)
+                cr.translate(-ax, -ay)
             self.render(cr, p)
             cr.restore()
             self.add_layers(cr, p, layer='OVERLAY')

@@ -27,6 +27,7 @@ import locale
 from typing import Any, Dict, List
 
 from . import metadata
+from . import place
 from gi.repository import Gtk
 gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler
@@ -284,9 +285,15 @@ def _copy_n_transform(pdf_input, pdf_output, pages, quit_flag=None):
             return
 
         pdf_output.pages[i] = _apply_geom_transform(pdf_output, pdf_output.pages[i], row)
+        main_i = i
         for lprow in row.layerpages:
             i += 1
             pdf_output.pages[i] = _apply_geom_transform(pdf_output, pdf_output.pages[i], lprow)
+
+        if row.place_transform is not None:
+            pt = row.place_transform
+            place.apply_place(pdf_output.pages[main_i], pt.shift_x, pt.shift_y, pt.scale, pt.spin_deg, pt.anchor)
+
         i += 1
 
     # Add overlays and underlays

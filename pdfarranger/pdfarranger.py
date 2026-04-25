@@ -124,7 +124,7 @@ from gi.repository import GLib
 from gi.repository import Pango
 
 from .config import Config
-from .core import Dims, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION
+from .core import Dims, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION, PlaceTransform
 
 PIKEPDF_VERSION = pikepdf.__version__
 LIBQPDF_VERSION = pikepdf.__libqpdf_version__
@@ -433,6 +433,7 @@ class PdfArranger(Gtk.Application):
         # related some other are application related. As pdfarrager is a single window app does not
         # matter that much.
         self.actions = [
+            ('place', self.place_page_action),
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
@@ -3291,6 +3292,60 @@ class PdfArranger(Gtk.Application):
         if unselect_all:
             self.iconview.unselect_all()
         self.iv_selection_changed()
+
+
+    def place_page_action(self, _action, _parameter, _unknown):
+        """Open a dialog to shift/scale/spin page content."""
+        s = self.iconview.get_selected_items()
+        if not s:
+            return
+        s.sort(key=lambda x: x.get_indices()[0])  # ensure document order
+        pageutils.PlaceContentDialog(
+            self.window, s, self.model, self.pdfqueue, self.apply_place
+        )
+
+    def apply_place(self, spec, selection, model):
+        """Apply a PlaceTransform to the selected pages."""
+        self.undomanager.commit("Place Content")
+        pos = model.get_iter(selection[0])
+        first_page = model.get_value(pos, 0)
+        first_pt = first_page.place_transform
+
+        for path in selection:
+            pos = model.get_iter(path)
+            page = model.get_value(pos, 0)
+            if spec is None:
+                page.place_transform = None
+            elif first_pt is None and page.place_transform is None:
+                page.place_transform = spec
+            elif page.place_transform is first_pt or page.place_transform == first_pt:
+                page.place_transform = spec
+            else:
+                old = first_pt
+                existing = page.place_transform
+                old_sx = old.shift_x if old else 0
+                old_sy = old.shift_y if old else 0
+                old_sc = old.scale if old else 1.0
+                old_sp = old.spin_deg if old else 0
+                ex_sx = existing.shift_x if existing else 0
+                ex_sy = existing.shift_y if existing else 0
+                ex_sc = existing.scale if existing else 1.0
+                ex_sp = existing.spin_deg if existing else 0
+                new_sx = spec.shift_x if spec else 0
+                new_sy = spec.shift_y if spec else 0
+                new_sc = spec.scale if spec else 1.0
+                new_sp = spec.spin_deg if spec else 0
+                page.place_transform = PlaceTransform(
+                    shift_x=ex_sx + (new_sx - old_sx),
+                    shift_y=ex_sy + (new_sy - old_sy),
+                    scale=ex_sc * (new_sc / old_sc),
+                    spin_deg=ex_sp + (new_sp - old_sp),
+                )
+            page.resample = -1
+            page.thumbnail = None
+        self.set_unsaved(True)
+        self.update_iconview_geometry()
+        GObject.idle_add(self.render)
 
 def is_same_page_size(pages):
     p1w, p1h = pages[0].size_in_points()
