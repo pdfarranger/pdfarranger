@@ -3319,7 +3319,10 @@ class PdfArranger(Gtk.Application):
         self.iv_selection_changed()
 
     def on_encryption(self, _action, _param, _unknown):
-        self.set_password(EncryptionPasswordDialog(self.window, self.password).get_password())
+        if self.password:
+            self.set_password(None)
+        else:
+            self.set_password(EncryptionPasswordDialog(self.window, self.password).get_password())
 
     def set_password(self, new_password):
         button = self.uiXML.get_object("encryption_button")
@@ -3357,8 +3360,11 @@ class EncryptionPasswordDialog(Gtk.Dialog):
         self.entry = Gtk.Entry()
         self.entry.set_visibility(False)
         self.entry.set_activates_default(True)
-        self.entry.set_width_chars(15)
+        self.entry.set_width_chars(30)
         self.vbox.pack_start(self.entry, False, False, 0)
+        action_area = self.get_action_area()
+        action_area.set_layout(Gtk.ButtonBoxStyle.EXPAND)
+        action_area.set_homogeneous(True)
         self.set_resizable(False)
 
     def get_password(self):

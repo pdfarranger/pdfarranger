@@ -443,7 +443,7 @@ def _add_json_entries(json: Dict[str, Any], files: List[List[str]], page: Page) 
 
 
 def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str], quit_flag=None,
-                test_mode: bool = False):
+                test_mode: bool = False, output_password = None):
     """ Same as _copy_n_transform, except it use the pikepdf Job interface. Requires pikepdf >= 8.0 """
     # Generate the output PDF file including temporary overlay/ underlay pages. We don't need to call
     # _append_page as the Job interface copies pages / annotations as necessary. We can also delay getting
@@ -465,13 +465,26 @@ def _create_job(files: List[List[str]], pages: List[Page], files_out: List[str],
         for lpage in page.layerpages:
             # Layer pages are temporarily added after the page they belong to
             _add_json_entries(json, files, lpage)
+    if output_password:
+        if output_password:
+            json["encrypt"] = {
+                "userPassword": output_password,
+                "ownerPassword": output_password,
+                "256bit": {
+                }
+            }
+    else:
+        json["decrypt"] = ""
     return pikepdf.Job(json)
 
 
 def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: List[Page], mdata, files_out: List[str],
                    quit_flag, test_mode: bool = False, output_password = None) -> None:
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
-    job = _create_job(files, pages, files_out, quit_flag, test_mode)
+    if not isinstance(files_out[0], str):
+        # Do not encrypt when printing
+        output_password = None
+    job = _create_job(files, pages, files_out, quit_flag, test_mode, output_password=output_password)
     password = None
 
     pdf_output = job.create_pdf()
@@ -484,12 +497,11 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
     if isinstance(files_out[0], str):
         # Only needed when saving to file, not when printing
         mdata = metadata.merge_doc(mdata, pdf_input)
-        password = output_password
-    if password:
-        encryption = pikepdf.Encryption(user=password, owner=password, R=6)
-    else:
-        encryption = False
     if len(files_out) > 1:
+        if output_password:
+            encryption = pikepdf.Encryption(user=password, owner=password, R=6)
+        else:
+            encryption = False
         for n, page in enumerate(pdf_output.pages):
             if quit_flag is not None and quit_flag.is_set():
                 return
@@ -501,7 +513,7 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
     else:
         if isinstance(files_out[0], str) and not test_mode:
             _set_meta(mdata, [pdf_output], pdf_output)
-        pdf_output.save(files_out[0], min_version=max_version, encryption=encryption)
+        job.write_pdf(pdf_output)
 
 
 def export(files, pages, mdata, files_out, config, quit_flag, test_mode=False, **kwargs):
