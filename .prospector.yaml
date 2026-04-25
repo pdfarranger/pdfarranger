@@ -1,0 +1,4 @@
+pydocstyle:
+  disable:
+    - D203  # blank line before class docstring conflicting with D211
+    - D212  # multi-line docstring summary style conflict with D213
