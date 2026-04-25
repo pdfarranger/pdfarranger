@@ -221,7 +221,7 @@ def _remove_unreferenced_resources(pdfdoc):
     try:
         pdfdoc.remove_unreferenced_resources()
     except RuntimeError:
-    # Catch "RuntimeError: operation for dictionary attempted on object of
+	# Catch "RuntimeError: operation for dictionary attempted on object of
 	# type null" with old version PikePDF (observed with 1.17 and 1.19).
 	# Blindly catch all RuntimeError is dangerous as this may catch
 	# unwanted exception so we print it.
