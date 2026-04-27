@@ -115,6 +115,24 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           </object>
         </child>
         <child>
+          <object class="GtkToggleButton" id="preview_toggle_button">
+            <property name="visible">True</property>
+            <property name="active">True</property>
+            <property name="receives_default">False</property>
+            <property name="tooltip_text" translatable="yes">Toggle Preview</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">view-reveal-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkMenuButton" id="main_menu_button">
             <property name="visible">True</property>
             <property name="receives_default">False</property>
@@ -264,10 +282,43 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrolledwindow">
+          <object class="GtkPaned" id="main_paned">
             <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="position">400</property>
             <child>
-              <placeholder/>
+              <object class="GtkScrolledWindow" id="scrolledwindow">
+                <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="preview_scrolledwindow">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkViewport">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkBox" id="preview_box">
+                        <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">5</property>
+                        <property name="halign">center</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">False</property>
+              </packing>
             </child>
           </object>
           <packing>
