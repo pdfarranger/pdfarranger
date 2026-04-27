@@ -1002,9 +1002,9 @@ class TestBatch10(PdfArrangerTest):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
         self._mainmenu("Save As…")
-        self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"] )
+        self._save_as_chooser("encrypted2.pdf", ["encrypted2.pdf"] )
         with warnings.catch_warnings(record=True) as w:
-            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
+            with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted2.pdf"), password="foobar"):
                 pass
         # there should be no warning that no password was needed to open this PDF
         self.assertEqual(len(w), 0)
