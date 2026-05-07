@@ -82,6 +82,14 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - run: ./setup.py build -v
+    - run: HOME=/root wine python setup_win32.py build_exe
+    - name: Patch OpenSSL
+      run: |
+        apt-get update && apt-get install -y wget
+        wget --user-agent="Mozilla/5.0" https://slproweb.com/download/Win64OpenSSL_Light-3_6_2.exe
+        HOME=/root wine Win64OpenSSL_Light-3_6_2.exe /VERYSILENT /DIR=C:\\openssl /EXTRACT="YES"
+        find build -name "libssl-3-x64.dll" -exec cp ~/.wine/drive_c/openssl/libssl-3-x64.dll {} \;
+        find build -name "libcrypto-3-x64.dll" -exec cp ~/.wine/drive_c/openssl/libcrypto-3-x64.dll {} \;
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v7
