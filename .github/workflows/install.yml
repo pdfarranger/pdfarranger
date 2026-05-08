@@ -85,10 +85,10 @@ jobs:
     - run: HOME=/root wine python setup_win32.py build_exe
     - name: Patch OpenSSL
       run: |
-        wget --user-agent="Mozilla/5.0" https://slproweb.com/download/Win64OpenSSL_Light-3_6_2.exe
-        HOME=/root WINEPREFIX=/root/.wine wine Win64OpenSSL_Light-3_6_2.exe /VERYSILENT /DIR=C:\\openssl /EXTRACT="YES"
-        find build -name "libssl-3-x64.dll" -exec cp /root/.wine/drive_c/openssl/libssl-3-x64.dll {} \;
-        find build -name "libcrypto-3-x64.dll" -exec cp /root/.wine/drive_c/openssl/libcrypto-3-x64.dll {} \;
+        wget --user-agent="Mozilla/5.0" -O openssl_dlls.zip https://github.com/a-paul1/pdfarranger/releases/download/v3.6.2-dlls/openssl_dlls.zip
+        python3 -c "import zipfile; zipfile.ZipFile('openssl_dlls.zip').extractall('openssl_dir')"
+        find build -name "libssl-3-x64.dll" -exec cp openssl_dir/libssl-3-x64.dll {} \;
+        find build -name "libcrypto-3-x64.dll" -exec cp openssl_dir/libcrypto-3-x64.dll {} \;
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v7
