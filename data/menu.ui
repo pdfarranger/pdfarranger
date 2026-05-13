@@ -178,6 +178,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
           <attribute name="action">win.rotate</attribute>
           <attribute name="target" type="i">90</attribute>
         </item>
+	<item>
+          <attribute name="label" translatable="yes">_Transform content…</attribute>
+          <attribute name="action">win.place</attribute>
+	</item>
         <item>
           <attribute name="label" translatable="yes">_Page Size…</attribute>
           <attribute name="action">win.page-size</attribute>
@@ -479,6 +483,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="label" translatable="yes">_Rotate Right</attribute>
         <attribute name="action">win.rotate</attribute>
         <attribute name="target" type="i">90</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Transform content…</attribute>
+        <attribute name="action">win.place</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">_Page Size…</attribute>
