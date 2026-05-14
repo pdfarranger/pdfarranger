@@ -156,7 +156,7 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
-    target_name=get_target_name('installer.msi'),
+    output_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}',
     extensions=[{
         "extension": "pdf",
@@ -202,7 +202,7 @@ setup(name='PDF Arranger',
       cmdclass={'bdist_zip': bdist_zip},
       packages=['pdfarranger'],
       executables=[Executable('pdfarranger/__main__.py',
-                              base='Win32GUI' if sys.platform == 'win32' else None,
+                              base='gui' if sys.platform == 'win32' else None,
                               target_name='pdfarranger.exe',
                               icon='data/pdfarranger.ico',
                               shortcut_name='PDF Arranger',
