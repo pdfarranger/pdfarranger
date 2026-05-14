@@ -144,6 +144,10 @@ to_path = 'gspawn-win64-helper.exe'
 include_files.append((from_path, to_path))
 
 
+cert_path = os.path.join(sys.prefix, 'lib/python3.14/site-packages/certifi/cacert.pem')
+include_files.append((cert_path, 'share/certs.pem'))
+
+
 build_options = dict(
     packages=['gi', 'packaging', 'pikepdf'],
     excludes=['tkinter', 'test'],
@@ -156,7 +160,7 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
-    target_name=get_target_name('installer.msi'),
+    output_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}',
     extensions=[{
         "extension": "pdf",
@@ -202,7 +206,7 @@ setup(name='PDF Arranger',
       cmdclass={'bdist_zip': bdist_zip},
       packages=['pdfarranger'],
       executables=[Executable('pdfarranger/__main__.py',
-                              base='Win32GUI' if sys.platform == 'win32' else None,
+                              base='gui' if sys.platform == 'win32' else None,
                               target_name='pdfarranger.exe',
                               icon='data/pdfarranger.ico',
                               shortcut_name='PDF Arranger',
