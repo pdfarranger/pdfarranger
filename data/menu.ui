@@ -325,6 +325,10 @@ along with PDF Arranger.  If not, see <http://www.gnu.org/licenses/>.
         <attribute name="label" translatable="yes">Edit _Properties</attribute>
         <attribute name="action">win.metadata</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">Pass_word</attribute>
+        <attribute name="action">win.password-setup</attribute>
+      </item>
     </section>
     <section>
       <item>
