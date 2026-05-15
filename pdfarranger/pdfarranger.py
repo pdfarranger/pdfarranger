@@ -443,6 +443,7 @@ class PdfArranger(Gtk.Application):
             ('export-selection', self.choose_export_selection_pdf_name, 'i'),
             ('export-all', self.on_action_export_all),
             ('reverse-order', self.reverse_order),
+            ('swap-odd-even', self.swap_odd_even),
             ('save', self.on_action_save),
             ('save-as', self.on_action_save_as),
             ('new', self.on_action_new),
@@ -2552,8 +2553,10 @@ class PdfArranger(Gtk.Application):
     def iv_selection_changed(self, move_cursor_event=False):
         selection = self.iconview.get_selected_items()
         ne = len(selection) > 0
+        contiguous_min2 = self.reverse_order_available(selection)
         for a, e in [
-            ("reverse-order", self.reverse_order_available(selection)),
+            ("reverse-order", contiguous_min2),
+            ("swap-odd-even", contiguous_min2),
             ("delete", ne),
             ("duplicate", ne),
             ("page-size", ne),
@@ -3141,7 +3144,7 @@ class PdfArranger(Gtk.Application):
     @staticmethod
     def reverse_order_available(selection):
         """Determine whether the selection is suitable for the
-           reverse-order command: the selection must be a multiple and
+           reverse-order and swap-odd-even commands: the selection must be a multiple and
            contiguous range of pages.
         """
         if len(selection) < 2:
@@ -3170,6 +3173,29 @@ class PdfArranger(Gtk.Application):
         indices.reverse()
         new_order = list(range(first)) + indices + list(range(last + 1, len(model)))
         self.undomanager.commit("Reorder")
+        with self.render_lock():
+            model.reorder(new_order)
+        GObject.idle_add(self.render)
+
+    def swap_odd_even(self, _action, _parameter, _unknown):
+        """Swaps odd and even elements in the IconView"""
+
+        model = self.iconview.get_model()
+        selection = self.iconview.get_selected_items()
+
+        # selection is a list of 1-tuples, not in order
+        indices = sorted([i[0] for i in selection])
+        if len(indices) % 2 != 0:
+            indices.pop()
+        if len(indices) < 2:
+            return
+        first = indices[0]
+        last = indices[-1]
+        self.set_unsaved(True)
+        for i in range(0, len(indices), 2):
+            indices[i], indices[i + 1] = indices[i + 1], indices[i]
+        new_order = list(range(first)) + indices + list(range(last + 1, len(model)))
+        self.undomanager.commit("Swap odd/even")
         with self.render_lock():
             model.reorder(new_order)
         GObject.idle_add(self.render)
