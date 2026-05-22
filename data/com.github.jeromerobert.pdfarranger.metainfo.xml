@@ -219,6 +219,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2026-05-23" version="1.14.0"/>
     <release date="2026-02-01" version="1.13.0"/>
     <release date="2025-06-11" version="1.12.1"/>
     <release date="2025-05-23" version="1.12.0"/>
