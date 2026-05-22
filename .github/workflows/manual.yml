@@ -16,7 +16,7 @@ jobs:
   pdfarranger-ci-tests-using-pikepdf-and-qpdf-built-from-source:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/pdfarranger/pdfarranger-pikepdf-qpdf-dev-docker-ci:1.0.0
+      image: ghcr.io/pdfarranger/pdfarranger-pikepdf-qpdf-dev-docker-ci:1.1.0
     steps:
       - name: Checkout pdfarranger Git repository
         uses: actions/checkout@v6
