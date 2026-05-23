@@ -335,6 +335,8 @@ class Page(BasePage):
         """The text under the thumbnail"""
         self.layerpages = list(layerpages)
         self.find_rectangles = None
+        self.bookmark = None
+        """Bookmark title string, or None if no bookmark is set for this page."""
 
     def __repr__(self):
         return (f"Page({self.nfile}, {self.npage}, {self.zoom}, '{self.copyname}', "

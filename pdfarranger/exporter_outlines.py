@@ -190,23 +190,51 @@ def write_named_dests(pdf, named_dests):
 
 
 def rebuild_outlines(pdf_input, pdf_output, pages):
-    """Rebuild outlines in pdf_output by remapping bookmarks from pdf_input."""
+    """Rebuild outlines in pdf_output by remapping bookmarks from pdf_input.
+
+    After remapping existing outlines, any user-defined bookmarks stored on
+    Page objects (page.bookmark != None) are appended as top-level outline
+    items, one per bookmarked output page, in page order.  The user-defined
+    set replaces the imported outlines entirely when at least one page carries
+    a bookmark; otherwise the imported outlines are preserved unchanged.
+    """
+    # Determine whether any page has a user-defined bookmark
+    user_bookmarks = [
+        (out_idx, row.bookmark)
+        for out_idx, row in enumerate(pages)
+        if getattr(row, "bookmark", None)
+    ]
+
     remapper = OutlineRemapper(pdf_input, pdf_output, pages)
     # preserve first-appearance order of source files, deduplicated
     ordered_file_indices = list(dict.fromkeys(row.nfile - 1 for row in pages))
     with pdf_output.open_outline() as new_outline:
-        for file_idx in ordered_file_indices:
-            source_pdf = pdf_input[file_idx]
-            if source_pdf is None or pikepdf.Name.Outlines not in source_pdf.Root:
-                continue
-            try:
-                with source_pdf.open_outline() as source_outline:
-                    copier = OutlineCopier(remapper, file_idx)
-                    for item in source_outline.root:
-                        copier.copy_item(item, new_outline.root)
-            except pikepdf.PdfError as e:
-                warnings.warn(
-                    f"Failed to copy bookmarks from document {file_idx + 1}: {e}"
-                )
+        if not user_bookmarks:
+            # No user bookmarks — copy existing outlines from source files unchanged
+            for file_idx in ordered_file_indices:
+                source_pdf = pdf_input[file_idx]
+                if source_pdf is None or pikepdf.Name.Outlines not in source_pdf.Root:
+                    continue
+                try:
+                    with source_pdf.open_outline() as source_outline:
+                        copier = OutlineCopier(remapper, file_idx)
+                        for item in source_outline.root:
+                            copier.copy_item(item, new_outline.root)
+                except pikepdf.PdfError as e:
+                    warnings.warn(
+                        f"Failed to copy bookmarks from document {file_idx + 1}: {e}"
+                    )
+        else:
+            # User bookmarks are present — emit one top-level item per bookmarked page
+            for out_idx, title in user_bookmarks:
+                target_page_obj = pdf_output.pages[out_idx].obj
+                dest = pikepdf.Array([
+                    target_page_obj,
+                    pikepdf.Name.FitH,
+                    pdf_output.pages[out_idx].mediabox[3],  # top of page
+                ])
+                item = pikepdf.OutlineItem(title=title, destination=dest)
+                new_outline.root.append(item)
+
     if remapper.new_named_dests:
         write_named_dests(pdf_output, remapper.new_named_dests)

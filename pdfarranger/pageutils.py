@@ -1166,3 +1166,53 @@ class RangeSelectDialog(BaseDialog):
         text = self.range_entry_widget.get_text()
         text = text.replace('--', '-').replace(',,', ',').replace('  ', ' ')
         self.range_entry_widget.set_text(''.join([char for char in text if char in '0123456789,- ']))
+
+
+class BookmarkDialog(BaseDialog):
+    """Dialog to add or edit a bookmark (outline item) for a page."""
+
+    def __init__(self, parent, title=""):
+        super().__init__(title=_("Edit Bookmark"), parent=parent)
+        self.set_resizable(False)
+
+        grid = Gtk.Grid()
+        grid.set_column_spacing(8)
+        grid.set_row_spacing(6)
+        grid.props.margin = 12
+
+        # Title entry
+        title_label = Gtk.Label(label=_("Title:"))
+        title_label.set_halign(Gtk.Align.END)
+        self.title_entry = Gtk.Entry()
+        self.title_entry.set_text(title)
+        self.title_entry.set_activates_default(True)
+        self.title_entry.set_hexpand(True)
+        self.title_entry.set_width_chars(36)
+        grid.attach(title_label, 0, 0, 1, 1)
+        grid.attach(self.title_entry, 1, 0, 1, 1)
+
+        # Remove-bookmark button (shown only when editing existing bookmark)
+        if title:
+            self._remove_button = self.add_button(_("_Remove Bookmark"),
+                                                  Gtk.ResponseType.REJECT)
+            self._remove_button.get_style_context().add_class("destructive-action")
+            self.action_area.reorder_child(self._remove_button, 0)
+
+        self.vbox.pack_start(grid, True, True, 0)
+        self.show_all()
+
+    def run_get(self):
+        """Run the dialog. Returns:
+        - a non-empty string: set/update the bookmark title
+        - empty string '': remove the bookmark
+        - None: cancelled
+        """
+        response = self.run()
+        if response == Gtk.ResponseType.REJECT:
+            result = ""   # Remove
+        elif response == Gtk.ResponseType.OK:
+            result = self.title_entry.get_text().strip()
+        else:
+            result = None  # Cancelled
+        self.destroy()
+        return result

@@ -88,17 +88,34 @@ class CellRendererImage(Gtk.CellRenderer):
 
         # rectangles around found text
         rectangles = self.page.find_rectangles
-        if rectangles is None:
-            return
-        window.set_line_width(2)
-        window.set_source_rgb(1, 0, 0)
-        for r in rectangles:
-            rx = r.x1 * self.page.zoom * self.page.scale / scale
-            ry = h0 - r.y2 * self.page.zoom * self.page.scale / scale
-            rw = (r.x2 - r.x1) * self.page.zoom * self.page.scale / scale
-            rh = (r.y2 - r.y1) * self.page.zoom * self.page.scale / scale
-            window.rectangle(rx, ry, rw, rh)
-        window.stroke()
+        if rectangles is not None:
+            window.set_line_width(2)
+            window.set_source_rgb(1, 0, 0)
+            for r in rectangles:
+                rx = r.x1 * self.page.zoom * self.page.scale / scale
+                ry = h0 - r.y2 * self.page.zoom * self.page.scale / scale
+                rw = (r.x2 - r.x1) * self.page.zoom * self.page.scale / scale
+                rh = (r.y2 - r.y1) * self.page.zoom * self.page.scale / scale
+                window.rectangle(rx, ry, rw, rh)
+            window.stroke()
+
+        # Bookmark badge: a small ribbon/bookmark shape in the top-right corner
+        if getattr(self.page, 'bookmark', None):
+            bw, bh, notch = 12, 18, 5  # badge width, height, notch depth
+            bx = w2 - bw - 2  # 2 px margin from right edge of page image
+            by = 0
+            window.new_path()
+            window.move_to(bx, by)
+            window.line_to(bx + bw, by)
+            window.line_to(bx + bw, by + bh)
+            window.line_to(bx + bw / 2, by + bh - notch)
+            window.line_to(bx, by + bh)
+            window.close_path()
+            window.set_source_rgba(0.18, 0.45, 0.90, 0.92)
+            window.fill_preserve()
+            window.set_source_rgba(0.10, 0.28, 0.65, 1.0)
+            window.set_line_width(1.0)
+            window.stroke()
 
     def do_get_size(self, _widget, cell_area=None):
         x = y = 0
