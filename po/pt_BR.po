@@ -925,7 +925,7 @@ msgstr "_Encontrar"
 
 #: data/menu.ui:310
 msgid "_Find…"
-msgstr "_Encontrar..."
+msgstr "_Encontrar…"
 
 #: data/menu.ui:224 data/menu.ui:530
 msgid "_Generate (imposition)"
