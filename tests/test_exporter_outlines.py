@@ -850,3 +850,208 @@ class TestOutlineStylesAndState:
             assert parent_out.obj[pikepdf.Name.F] == 3
             # Verify it is still closed
             assert parent_out.is_closed is True
+
+
+
+# ---------------------------------------------------------------------------
+# Tests: user-defined bookmarks (Page.bookmark feature)
+# ---------------------------------------------------------------------------
+
+
+class RowWithBookmark(Row):
+    """Row stand-in that also carries a user-defined bookmark title."""
+
+    def __init__(self, nfile: int, npage: int, bookmark=None):
+        super().__init__(nfile, npage)
+        self.bookmark = bookmark
+
+
+def run_with_bookmarks(src_pdfs, pages):
+    """Build output PDF and run rebuild_outlines, returning a roundtripped result.
+
+    src_pdfs can be a single pikepdf.Pdf or a list of them.
+    The output PDF is a fresh n-page PDF (same page count as pages), matching
+    the pattern used by all other tests in this file.
+    """
+    if isinstance(src_pdfs, pikepdf.Pdf):
+        src_pdfs = [src_pdfs]
+    srcs = [roundtrip(s) for s in src_pdfs]
+    output = make_pdf(len(pages))
+    rebuild_outlines(srcs, output, pages)
+    return roundtrip(output)
+
+
+class TestUserBookmarksExport:
+    """User-defined Page.bookmark values are written as top-level outline items."""
+
+    def test_bookmarks_on_subset_of_pages(self):
+        """Bookmarked pages produce outline items; non-bookmarked pages are skipped."""
+        src = make_pdf(4)
+        pages = [
+            RowWithBookmark(1, 1, "Introduction"),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(1, 3, "Chapter 1"),
+            RowWithBookmark(1, 4, None),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["Introduction", "Chapter 1"]
+
+    def test_bookmark_destinations_point_to_correct_output_pages(self):
+        """Each outline item's destination resolves to the correct output page index."""
+        src = make_pdf(3)
+        pages = [
+            RowWithBookmark(1, 1, "First"),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(1, 3, "Last"),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            items = list(ol.root)
+        assert len(items) == 2
+        assert dest_page_index(output, items[0].destination) == 0  # "First" → page 0
+        assert dest_page_index(output, items[1].destination) == 2  # "Last" → page 2
+
+    def test_all_pages_bookmarked(self):
+        """When every page has a bookmark, all appear in the outline in order."""
+        src = make_pdf(3)
+        pages = [
+            RowWithBookmark(1, 1, "A"),
+            RowWithBookmark(1, 2, "B"),
+            RowWithBookmark(1, 3, "C"),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["A", "B", "C"]
+
+    def test_no_bookmarks_preserves_existing_outline(self):
+        """When no page has a user bookmark, existing source outlines are kept."""
+        src = make_pdf(3)
+        add_outline(src, [("Orig 1", 0), ("Orig 2", 1)])
+        pages = [
+            RowWithBookmark(1, 1, None),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(1, 3, None),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["Orig 1", "Orig 2"]
+
+    def test_user_bookmarks_replace_existing_outline(self):
+        """If any page has a user bookmark, imported outlines are replaced entirely."""
+        src = make_pdf(3)
+        add_outline(src, [("Old Ch 1", 0), ("Old Ch 2", 1)])
+        pages = [
+            RowWithBookmark(1, 1, "New Ch 1"),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(1, 3, "New Ch 3"),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["New Ch 1", "New Ch 3"]
+
+    def test_single_page_bookmark(self):
+        """A single bookmarked page out of many produces exactly one outline item."""
+        src = make_pdf(3)
+        pages = [
+            RowWithBookmark(1, 1, None),
+            RowWithBookmark(1, 2, "Only"),
+            RowWithBookmark(1, 3, None),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            items = list(ol.root)
+        assert len(items) == 1
+        assert items[0].title == "Only"
+        assert dest_page_index(output, items[0].destination) == 1
+
+    def test_reordered_pages_bookmark_follows_output_order(self):
+        """Bookmark destinations reflect the output page order, not source order."""
+        src = make_pdf(3)
+        # Source order: 1,2,3 → output order: 3,1,2 (all bookmarked)
+        pages = [
+            RowWithBookmark(1, 3, "Was-3"),
+            RowWithBookmark(1, 1, "Was-1"),
+            RowWithBookmark(1, 2, "Was-2"),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            items = list(ol.root)
+        assert [i.title for i in items] == ["Was-3", "Was-1", "Was-2"]
+        assert dest_page_index(output, items[0].destination) == 0
+        assert dest_page_index(output, items[1].destination) == 1
+        assert dest_page_index(output, items[2].destination) == 2
+
+    def test_duplicate_page_both_bookmarked(self):
+        """When the same source page appears twice, each copy gets its own item."""
+        src = make_pdf(2)
+        pages = [
+            RowWithBookmark(1, 1, "Copy A"),
+            RowWithBookmark(1, 1, "Copy B"),
+        ]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            items = list(ol.root)
+        assert [i.title for i in items] == ["Copy A", "Copy B"]
+        assert dest_page_index(output, items[0].destination) == 0
+        assert dest_page_index(output, items[1].destination) == 1
+
+    def test_bookmark_destination_type_is_fith(self):
+        """User bookmark destinations use FitH (fit-to-width) destination type."""
+        src = make_pdf(2)
+        pages = [RowWithBookmark(1, 1, "Page One"), RowWithBookmark(1, 2, None)]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            dest = ol.root[0].destination
+        assert dest[1] == pikepdf.Name.FitH
+
+    def test_row_without_bookmark_attr_treated_as_no_bookmark(self):
+        """Plain Row objects (no .bookmark attr) don't trigger user-bookmark mode."""
+        src = make_pdf(3)
+        add_outline(src, [("Existing", 0)])
+        pages = [Row(1, 1), Row(1, 2), Row(1, 3)]
+        output = run_with_bookmarks(src, pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["Existing"]
+
+    def test_multifile_no_user_bookmarks_preserves_all_outlines(self):
+        """With multiple source files and no user bookmarks, all outlines are merged."""
+        src1 = make_pdf(2)
+        add_outline(src1, [("File1 Ch1", 0)])
+        src2 = make_pdf(2)
+        add_outline(src2, [("File2 Ch1", 0)])
+        pages = [
+            RowWithBookmark(1, 1, None),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(2, 1, None),
+            RowWithBookmark(2, 2, None),
+        ]
+        output = run_with_bookmarks([src1, src2], pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert "File1 Ch1" in titles
+        assert "File2 Ch1" in titles
+
+    def test_multifile_with_user_bookmarks_replaces_all_outlines(self):
+        """User bookmarks from a multi-file session replace all imported outlines."""
+        src1 = make_pdf(2)
+        add_outline(src1, [("File1 Old", 0)])
+        src2 = make_pdf(2)
+        add_outline(src2, [("File2 Old", 0)])
+        pages = [
+            RowWithBookmark(1, 1, "Part 1"),
+            RowWithBookmark(1, 2, None),
+            RowWithBookmark(2, 1, None),
+            RowWithBookmark(2, 2, "Part 2"),
+        ]
+        output = run_with_bookmarks([src1, src2], pages)
+        with output.open_outline() as ol:
+            titles = [item.title for item in ol.root]
+        assert titles == ["Part 1", "Part 2"]
+        assert "File1 Old" not in titles
+        assert "File2 Old" not in titles

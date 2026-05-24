@@ -478,6 +478,7 @@ class PdfArranger(Gtk.Application):
             ("find_prev", self.searchbar_widget.find_prev),
             ("find_next", self.searchbar_widget.find_next),
             ("find_all", self.searchbar_widget.find_all),
+            ("edit-bookmark", self.edit_bookmark),
         ]
         self.window.add_action_entries(self.actions)
 
@@ -2575,6 +2576,7 @@ class PdfArranger(Gtk.Application):
             ("crop-white-borders", ne),
             ("generate-booklet", ne),
             ("split-booklet", ne),
+            ("edit-bookmark", ne),
         ]:
             self.window.lookup_action(a).set_enabled(e)
         self.update_statusbar()
@@ -3000,6 +3002,25 @@ class PdfArranger(Gtk.Application):
         for path in paths:
             self.iconview.select_path(path)
         self.iv_selection_changed()
+
+    def edit_bookmark(self, _action=None, _parameter=None, _unknown=None):
+        """Opens a dialog to add or edit a bookmark for the selected page(s)."""
+        selection = self.iconview.get_selected_items()
+        if not selection:
+            return
+        # Pre-fill dialog with the bookmark of the first selected page
+        first_page = self.model[selection[0]][0]
+        current_title = first_page.bookmark or ""
+        result = pageutils.BookmarkDialog(self.window, current_title).run_get()
+        if result is None:
+            return  # Cancelled
+        self.undomanager.commit("Edit bookmark")
+        for path in selection:
+            page = self.model[path][0]
+            page.bookmark = result if result else None
+            self.model.set_value(self.model.get_iter(path), 0, page)
+        self.set_unsaved(True)
+        GObject.idle_add(self.render)
 
     def crop_dialog(self, _action, _parameter, _unknown):
         """Opens a dialog box to define margins for page cropping."""
