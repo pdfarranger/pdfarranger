@@ -100,11 +100,7 @@ class OutlineRemapper:
     def _new_dest_array(
         self, dest_array, target_page_obj, file_idx, scale, original_name
     ):
-        new_dest_array = pikepdf.Array()
-        new_dest_array.append(target_page_obj)
         d_type = dest_array[1]
-        new_dest_array.append(d_type)
-        # Identify coordinate parameters based on destination type
         coord_indices = []
         if d_type == pikepdf.Name.XYZ:
             coord_indices = [2, 3]  # left, top (zoom ratio at index 4 is not scaled)
@@ -117,15 +113,18 @@ class OutlineRemapper:
             coord_indices = [2]  # [top] or [left]
         elif d_type == pikepdf.Name.FitR:
             coord_indices = [2, 3, 4, 5]  # [left, bottom, right, top]
-        # Apply scale directly to coordinates
+
+        items = [target_page_obj, d_type]
         for i in range(2, len(dest_array)):
             val = dest_array[i]
             if i in coord_indices and isinstance(val, (int, float, decimal.Decimal)):
-                new_dest_array.append(float(val) * scale)
+                items.append(float(val) * scale)
             elif isinstance(val, pikepdf.Object) and val.is_indirect:
-                new_dest_array.append(self.pdf_output.copy_foreign(val))
+                items.append(self.pdf_output.copy_foreign(val))
             else:
-                new_dest_array.append(val)
+                items.append(val)  # None (PDF null) is fine here
+
+        new_dest_array = pikepdf.Array(items)
         if original_name:
             new_name_str = f"f{file_idx}-{original_name}"
             self.new_named_dests.append((new_name_str, new_dest_array))

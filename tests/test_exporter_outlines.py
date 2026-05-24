@@ -850,3 +850,48 @@ class TestOutlineStylesAndState:
             assert parent_out.obj[pikepdf.Name.F] == 3
             # Verify it is still closed
             assert parent_out.is_closed is True
+
+
+# ---------------------------------------------------------------------------
+# Issue 1395
+# ---------------------------------------------------------------------------
+
+
+def test_null_coordinates_in_xyz_destination():
+    """
+    XYZ destinations with null coordinates (e.g. [page /XYZ null null null])
+    must survive remapping. This is the standard PDF idiom meaning 'inherit
+    current position/zoom'. Broke in pikepdf 10.6+ after the pybind11→nanobind
+    migration (Array.append(None) stopped accepting None).
+    """
+    src = make_pdf(2)
+    with src.open_outline() as ol:
+        for i, title in enumerate(["Chapter 1", "Chapter 2"]):
+            ol.root.append(
+                pikepdf.OutlineItem(
+                    title,
+                    pikepdf.Array(
+                        [src.pages[i].obj, pikepdf.Name.XYZ, None, None, None]
+                    ),
+                )
+            )
+    src = roundtrip(src)
+
+    out = make_pdf(2)
+    pages = [Row(1, 1), Row(1, 2)]
+    rebuild_outlines([src], out, pages)
+    out = roundtrip(out)
+
+    with out.open_outline() as ol:
+        assert len(ol.root) == 2
+        assert ol.root[0].title == "Chapter 1"
+        assert ol.root[1].title == "Chapter 2"
+        assert dest_page_index(out, ol.root[0].destination) == 0
+        assert dest_page_index(out, ol.root[1].destination) == 1
+        # Null coordinates must be preserved, not dropped or mangled
+        for item in ol.root:
+            dest = item.destination
+            assert dest[1] == pikepdf.Name.XYZ
+            assert dest[2] is None
+            assert dest[3] is None
+            assert dest[4] is None
