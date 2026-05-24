@@ -19,6 +19,26 @@ import pikepdf
 import decimal
 
 
+def scale_annot_coords(annot, factor):
+    """Scale coordinate fields in an annotation dict by factor, in-place."""
+    for field in [
+        pikepdf.Name.Rect,
+        pikepdf.Name.QuadPoints,
+        pikepdf.Name.Vertices,
+        pikepdf.Name.CL,
+    ]:
+        if field in annot:
+            annot[field] = pikepdf.Array([float(v) * factor for v in annot[field]])
+    # InkList is an array of arrays (one per stroke)
+    if pikepdf.Name.InkList in annot:
+        annot[pikepdf.Name.InkList] = pikepdf.Array(
+            [
+                pikepdf.Array([float(v) * factor for v in stroke])
+                for stroke in annot[pikepdf.Name.InkList]
+            ]
+        )
+
+
 class OutlineRemapper:
     """
     Maps source-file bookmark destinations to their new locations in the output PDF.
@@ -219,9 +239,8 @@ def write_named_dests(pdf, named_dests):
 
 
 def rebuild_outlines(pdf_input, pdf_output, pages):
-    """Rebuild outlines in pdf_output by remapping bookmarks from pdf_input."""
+    """Rebuild outlines and internal links in pdf_output."""
     remapper = OutlineRemapper(pdf_input, pdf_output, pages)
-    # preserve first-appearance order of source files, deduplicated
     ordered_file_indices = list(dict.fromkeys(row.nfile - 1 for row in pages))
     with pdf_output.open_outline() as new_outline:
         for file_idx in ordered_file_indices:
@@ -237,5 +256,102 @@ def rebuild_outlines(pdf_input, pdf_output, pages):
                 warnings.warn(
                     f"Failed to copy bookmarks from document {file_idx + 1}: {e}"
                 )
+    rebuild_links(pdf_input, pdf_output, pages, remapper)  # <-- new
     if remapper.new_named_dests:
         write_named_dests(pdf_output, remapper.new_named_dests)
+
+
+def _extract_destination(annot):
+    """Extract the destination and whether it relies on an Action (/A)."""
+    if pikepdf.Name.A in annot:
+        action = annot.A
+        if action.get(pikepdf.Name.S) == pikepdf.Name.GoTo:
+            return action.get(pikepdf.Name.D), True
+    elif pikepdf.Name.Dest in annot:
+        return annot.Dest, False
+    return None, False
+
+
+def _process_link_annotation(
+    src_annot, file_idx, pdf_input, pdf_output, remapper, scale
+):
+    """Process a single link, returning the remapped annotation or None if dropped."""
+    if src_annot.get(pikepdf.Name.Subtype) != pikepdf.Name.Link:
+        return None  # Handled by the non-links collection
+
+    dest, is_action_based = _extract_destination(src_annot)
+
+    # Attempt to remap the internal destination if it's an internal link
+    new_dest = None
+    if dest is not None:
+        new_dest = remapper.remap_destination(file_idx, dest)
+        if new_dest is None:
+            return None  # Target deleted, drop the link
+
+    # Construct the new annotation from the source
+    new_annot = pikepdf.Dictionary(
+        pdf_output.copy_foreign(pdf_input[file_idx].make_indirect(src_annot))
+    )
+
+    # Apply scaling to the link's clickable area/geometry if the page was resized
+    if scale != 1.0:
+        scale_annot_coords(new_annot, scale)
+
+    # Strip old page reference safely
+    if pikepdf.Name.P in new_annot:
+        del new_annot[pikepdf.Name.P]
+
+    # Apply the new destination if it was an internal link
+    # (If dest is None, it was an external URI link, so we just keep the scaled copy)
+    if dest is not None:
+        if is_action_based:
+            new_action = pikepdf.Dictionary(new_annot.A)
+            new_action[pikepdf.Name.D] = new_dest
+            new_annot[pikepdf.Name.A] = new_action
+        else:
+            new_annot[pikepdf.Name.Dest] = new_dest
+
+    return new_annot
+
+
+def rebuild_links(pdf_input, pdf_output, pages, remapper):
+    """Remap internal GoTo link annotations, reading from source pages."""
+    for out_idx, row in enumerate(pages):
+        file_idx = row.nfile - 1
+        src_page = pdf_input[file_idx].pages[row.npage - 1]
+        out_page = pdf_output.pages[out_idx]
+
+        # Grab the scale factor for the current page row
+        scale = getattr(row, "scale", 1.0)
+
+        # 1. Handle pages with no source annotations
+        if pikepdf.Name.Annots not in src_page:
+            if pikepdf.Name.Annots in out_page:
+                del out_page.Annots
+            continue
+
+        # 2. Collect base non-link annotations (already transformed on out_page)
+        non_links = []
+        if pikepdf.Name.Annots in out_page:
+            for a in out_page.Annots:
+                if a.get(pikepdf.Name.Subtype) != pikepdf.Name.Link:
+                    non_links.append(a)
+
+        # 3. Process, remap, and scale link annotations from the source page
+        remapped_links = []
+        for src_annot in src_page.Annots:
+            new_link = _process_link_annotation(
+                src_annot, file_idx, pdf_input, pdf_output, remapper, scale
+            )
+            if new_link is not None:
+                remapped_links.append(new_link)
+
+        # 4. Apply combined annotations back to the output page
+        new_annots = non_links + remapped_links
+        if new_annots:
+            for annot in new_annots:
+                annot[pikepdf.Name.P] = out_page.obj
+            out_page.Annots = pdf_output.make_indirect(pikepdf.Array(new_annots))
+        else:
+            if pikepdf.Name.Annots in out_page:
+                del out_page.Annots
