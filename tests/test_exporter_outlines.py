@@ -16,6 +16,7 @@ import builtins
 import pikepdf
 import pytest
 from unittest.mock import patch
+from collections import namedtuple
 
 from pdfarranger.exporter_outlines import rebuild_outlines, write_named_dests
 
@@ -895,3 +896,168 @@ def test_null_coordinates_in_xyz_destination():
             assert dest[2] is None
             assert dest[3] is None
             assert dest[4] is None
+
+
+# Mock the Row object that pdfarranger uses for page sequences
+PageRow = namedtuple("PageRow", ["nfile", "npage", "scale"])
+
+
+@pytest.fixture
+def sample_input_pdf(tmp_path):
+    """Generates an input PDF with a strict nested outline hierarchy."""
+    pdf_path = tmp_path / "input.pdf"
+    with pikepdf.Pdf.new() as pdf:
+        # Add 3 blank pages to map destinations to
+        for _ in range(3):
+            pdf.add_blank_page()
+
+        with pdf.open_outline() as outline:
+            # Level 1 Parent
+            p1 = pikepdf.OutlineItem("Root Parent", 0)
+            # Level 2 Child
+            c1 = pikepdf.OutlineItem("Child Level 1", 1)
+            # Level 3 Grandchild
+            g1 = pikepdf.OutlineItem("Grandchild Level 2", 2)
+
+            # Assemble tree manually
+            c1.children.append(g1)
+            p1.children.append(c1)
+            outline.root.append(p1)
+
+        pdf.save(pdf_path)
+    return pdf_path
+
+
+def test_rebuild_outlines_preserves_nested_hierarchy(sample_input_pdf):
+    # Open the generated test source PDF
+    with pikepdf.open(sample_input_pdf) as pdf_in:
+        pdf_input = [pdf_in]
+
+        # Create an output PDF context
+        with pikepdf.Pdf.new() as pdf_out:
+            # Replicate pages sequence mapping from file 1
+            pdf_out.add_blank_page()
+            pdf_out.add_blank_page()
+            pdf_out.add_blank_page()
+
+            pages_map = [
+                PageRow(nfile=1, npage=1, scale=1.0),
+                PageRow(nfile=1, npage=2, scale=1.0),
+                PageRow(nfile=1, npage=3, scale=1.0),
+            ]
+
+            # Execute the processor
+            rebuild_outlines(pdf_input, pdf_out, pages_map)
+
+            # Verify structural health of output outlines
+            with pdf_out.open_outline() as out_outline:
+                assert len(out_outline.root) == 1
+
+                root_node = out_outline.root[0]
+                assert root_node.title == "Root Parent"
+                assert len(root_node.children) == 1
+
+                child_node = root_node.children[0]
+                assert child_node.title == "Child Level 1"
+                assert len(child_node.children) == 1
+
+                grandchild_node = child_node.children[0]
+                assert grandchild_node.title == "Grandchild Level 2"
+                assert len(grandchild_node.children) == 0
+
+                # Validate low-level PDF structural binding integrity
+                # A broken structural binding usually results in missing target dictionary keys
+                assert pikepdf.Name.Parent in grandchild_node.obj
+                assert grandchild_node.obj.Parent == child_node.obj
+
+
+def test_vacon_low_level_structure_regression(tmp_path):
+    pdf_path = tmp_path / "mock_vacon.pdf"
+    out_path = tmp_path / "out.pdf"
+
+    # 1. Build the PDF "The Hard Way" (Low-level dictionaries)
+    with pikepdf.Pdf.new() as pdf:
+        pdf.add_blank_page()
+
+        # Mirror Vacon's structure:
+        # Item 1 has an Action (/A) instead of a Dest, AND a color array (/C)
+        item1 = pdf.make_indirect(
+            pikepdf.Dictionary(
+                Title="Sisällys",
+                A=pikepdf.Dictionary(S=pikepdf.Name.GoTo, D="TOC"),
+                C=pikepdf.Array([0, 0, 0]),
+            )
+        )
+
+        # Item 2 is a sibling to prove the linked list breaks
+        item2 = pdf.make_indirect(
+            pikepdf.Dictionary(
+                Title="Esipuhe", A=pikepdf.Dictionary(S=pikepdf.Name.GoTo, D="AN10025")
+            )
+        )
+
+        # Manually wire the linked list
+        item1.Next = item2
+        item2.Prev = item1
+
+        outlines = pdf.make_indirect(
+            pikepdf.Dictionary(
+                Type=pikepdf.Name.Outlines, First=item1, Last=item2, Count=2
+            )
+        )
+        item1.Parent = outlines
+        item2.Parent = outlines
+
+        pdf.Root.Outlines = outlines
+
+        # Add a NameTree so fixed code can resolve the strings
+        dests = pikepdf.NameTree.new(pdf)
+        dests["TOC"] = pikepdf.Array(
+            [pdf.pages[0].obj, pikepdf.Name.XYZ, None, None, None]
+        )
+        dests["AN10025"] = pikepdf.Array(
+            [pdf.pages[0].obj, pikepdf.Name.XYZ, None, None, None]
+        )
+        pdf.Root.Names = pikepdf.Dictionary(Dests=dests.obj)
+
+        pdf.save(pdf_path)
+
+    # 2. Run rebuild_outlines
+    with pikepdf.open(pdf_path) as pdf_in:
+        with pikepdf.Pdf.new() as pdf_out:
+            pdf_out.add_blank_page()
+            pages_map = [PageRow(nfile=1, npage=1, scale=1.0)]
+
+            rebuild_outlines([pdf_in], pdf_out, pages_map)
+            pdf_out.save(out_path)
+
+    # 3. Assertions
+    with pikepdf.open(out_path) as pdf_res:
+        with pdf_res.open_outline() as res_outline:
+            assert len(res_outline.root) == 2, "Outline tree collapsed!"
+
+            item1_out = res_outline.root[0]
+            item2_out = res_outline.root[1]
+
+            # --- FAILURE 1: Dead Bookmark ---
+            # `main` fails to parse the /A GoTo dictionary, leaving the output bookmark dead
+            has_dest = item1_out.destination is not None
+            has_action = pikepdf.Name.A in item1_out.obj
+            assert has_dest or has_action, (
+                "FAIL: Bookmark completely lost its destination/action!"
+            )
+
+            # --- FAILURE 2: Direct Object Corruption ---
+            # `main` overwrites the obj dictionary to copy the Color array, forcing a Direct Object
+            assert item1_out.obj.is_indirect, (
+                "FAIL: Bookmark was corrupted into a Direct Object!"
+            )
+
+            # --- FAILURE 3: Broken Pointers ---
+            # The direct object causes the sibling to point back to (0, 0)
+            assert pikepdf.Name.Prev in item2_out.obj
+            try:
+                obj_num = item2_out.obj.Prev.objgen[0]
+            except AttributeError:
+                obj_num = 0
+            assert obj_num != 0, "FAIL: Sibling has a broken /Prev (0, 0) pointer!"
