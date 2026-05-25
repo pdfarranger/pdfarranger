@@ -135,10 +135,12 @@ class OutlineRemapper:
 class OutlineCopier:
     """Copy outline items from a source PDF, remapping destinations."""
 
-    def __init__(self, remapper, file_idx):
+    def __init__(self, remapper, file_idx, source_pdf, pdf_output):
         """Initialize with a remapper and the source file index."""
         self.remapper = remapper
         self.file_idx = file_idx
+        self.source_pdf = source_pdf
+        self.pdf_output = pdf_output
 
     def _get_mapped_dest(self, source_item):
         """Extract and remap the destination from a source outline item."""
@@ -150,27 +152,55 @@ class OutlineCopier:
             return self.remapper.remap_destination(self.file_idx, dest)
         return None
 
-    def _copy_styles_and_state(self, source_item, new_item):
-        """Preserve color, text style flags, and default open/closed state."""
-        if source_item.is_closed:
-            new_item.is_closed = True
-        for key in (pikepdf.Name.C, pikepdf.Name.F):
-            if key in source_item.obj:
-                if new_item.obj is None:
-                    new_item.obj = pikepdf.Dictionary()
-                new_item.obj[key] = source_item.obj[key]
+    def _build_valid_tree(self, source_item):
+        """Pass 1: Recursively filter and build a clean Python tree of surviving nodes."""
+        final_dest = self._get_mapped_dest(source_item)
+
+        valid_children = []
+        for child in source_item.children:
+            child_node = self._build_valid_tree(child)
+            if child_node is not None:
+                valid_children.append(child_node)
+
+        # An item is kept if it has a valid target destination OR contains surviving children
+        if final_dest is not None or valid_children:
+            return {
+                "source_item": source_item,
+                "destination": final_dest,
+                "children": valid_children,
+            }
+        return None
+
+    def _insert_tree_node(self, node, pikepdf_parent_list):
+        """Pass 2: Insert nodes into the hierarchy using strict parent-first order."""
+        source_item = node["source_item"]
+        final_dest = node["destination"]
+
+        # 1. Instantiate the temporary OutlineItem object
+        new_item = pikepdf.OutlineItem(
+            title=source_item.title,
+            destination=final_dest,
+            obj=self.pdf_output.copy_foreign(
+                self.source_pdf.make_indirect(source_item.obj)
+            ),
+        )
+
+        new_item.is_closed = (
+            source_item.is_closed or pikepdf.Name.Count not in source_item.obj
+        )
+
+        # 3. Append to the parent list
+        pikepdf_parent_list.append(new_item)
+
+        # 4. Recursively insert children into the new item's children list
+        for child_node in node["children"]:
+            self._insert_tree_node(child_node, new_item.children)
 
     def copy_item(self, source_item, new_parent_list):
         """Copy a single outline item and its children, dropping invalid destinations."""
-        final_dest = self._get_mapped_dest(source_item)
-        new_item = pikepdf.OutlineItem(title=source_item.title, destination=final_dest)
-        # Recursively process children first so we know if new_item has valid children
-        for child in source_item.children:
-            self.copy_item(child, new_item.children)
-        # Only copy bookmark if it has a valid destination or valid surviving children
-        if final_dest is not None or new_item.children:
-            self._copy_styles_and_state(source_item, new_item)
-            new_parent_list.append(new_item)
+        node = self._build_valid_tree(source_item)
+        if node is not None:
+            self._insert_tree_node(node, new_parent_list)
 
 
 def write_named_dests(pdf, named_dests):
@@ -200,7 +230,7 @@ def rebuild_outlines(pdf_input, pdf_output, pages):
                 continue
             try:
                 with source_pdf.open_outline() as source_outline:
-                    copier = OutlineCopier(remapper, file_idx)
+                    copier = OutlineCopier(remapper, file_idx, source_pdf, pdf_output)
                     for item in source_outline.root:
                         copier.copy_item(item, new_outline.root)
             except pikepdf.PdfError as e:
