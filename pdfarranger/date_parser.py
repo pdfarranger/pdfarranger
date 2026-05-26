@@ -24,12 +24,12 @@ def parse_pdf_date(date_str: str) -> datetime | None:
     # 3. Timezone Extraction & Validation
     tz_info = None
 
-    if "Z" in date_str:
+    if re.search(r"Z\s*$", date_str, re.IGNORECASE):
         tz_info = timezone.utc
-        date_str = date_str.replace("Z", "")
-    elif "UTC" in date_str:
+        date_str = re.sub(r"Z\s*$", "", date_str, flags=re.IGNORECASE).strip()
+    elif re.search(r"\bUTC\b", date_str, re.IGNORECASE):
         tz_info = timezone.utc
-        date_str = re.sub(r"\bUTC\b", " ", date_str)
+        date_str = re.sub(r"\bUTC\b", "", date_str, flags=re.IGNORECASE).strip()
     else:
         # Match timezone patterns at the end of the string (+HH'mm', +HHmm, +HH:mm)
         tz_match = re.search(
@@ -123,7 +123,6 @@ def parse_pdf_date(date_str: str) -> datetime | None:
             dt = datetime.strptime(date_digits[:6], "%Y%m")
         else:
             return None
-
         return dt.replace(tzinfo=tz_info) if tz_info else dt
     except ValueError:
         return None

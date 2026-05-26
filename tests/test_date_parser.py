@@ -123,8 +123,8 @@ class TestPDFDateParser(unittest.TestCase):
         self.assertIsNotNone(res_month)
         self.assertEqual(res_month.year, 2026)
         self.assertEqual(res_month.month, 5)
-        self.assertEqual(res_month.day, 1)       # Python fallback value
-        self.assertEqual(res_month.hour, 0)      # Python fallback value
+        self.assertEqual(res_month.day, 1)  # Python fallback value
+        self.assertEqual(res_month.hour, 0)  # Python fallback value
 
         # Truncated down to the hour
         res_hour = parse_pdf_date("D:2026052613")
@@ -133,7 +133,7 @@ class TestPDFDateParser(unittest.TestCase):
         self.assertEqual(res_hour.month, 5)
         self.assertEqual(res_hour.day, 26)
         self.assertEqual(res_hour.hour, 13)
-        self.assertEqual(res_hour.minute, 0)     # Python fallback value
+        self.assertEqual(res_hour.minute, 0)  # Python fallback value
 
     def test_fractional_timezones(self):
         """Handles non-hourly timezone offsets (e.g., India +05:30, Newfoundland -03:30)."""
@@ -161,6 +161,27 @@ class TestPDFDateParser(unittest.TestCase):
         self.assertIsNotNone(res)
         self.assertEqual(res.year, 2026)
         self.assertEqual(res.hour, 13)
+
+    def test_gap_ctime_style_with_utc(self):
+        """Covers lines 31-32: Correctly extracts UTC when positioned mid-string."""
+        res = parse_pdf_date("Mon May 26 13:49:58 UTC 2026")
+        self.assertIsNotNone(res)
+        self.assertEqual(res.year, 2026)
+        self.assertEqual(res.month, 5)
+        self.assertEqual(res.day, 26)
+        self.assertEqual(res.hour, 13)
+        self.assertEqual(res.tzinfo, timezone.utc)
+
+    def test_pdf_spec_twelve_digit_truncation(self):
+        """Covers line 117: Truncated down to the exact minute mark (12 digits)."""
+        res = parse_pdf_date("D:202605261349")
+        self.assertIsNotNone(res)
+        self.assertEqual(res.year, 2026)
+        self.assertEqual(res.month, 5)
+        self.assertEqual(res.day, 26)
+        self.assertEqual(res.hour, 13)
+        self.assertEqual(res.minute, 49)
+        self.assertEqual(res.second, 0)  # Python fallback default
 
 
 if __name__ == "__main__":
