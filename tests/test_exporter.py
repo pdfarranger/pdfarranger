@@ -94,13 +94,17 @@ class ExporterTest(unittest.TestCase):
 
     def case(self, test, files, *pages, start_with_empty=False):
         """Run a single test case."""
-        if version.parse(pikepdf.__version__) < version.Version('8.0.0') or start_with_empty:
-            expected_file = file(f'test{test}_out')
+        # For pikepdf < 8, we must always start with empty
+        if version.parse(pikepdf.__version__) < version.Version('8.0.0'):
             start_with_empty = True
-        else:
+
+        # Select the expected file based purely on version and test ID
+        if version.parse(pikepdf.__version__) >= version.Version('8.0.0'):
             expected_file = file(f'test{test}_8_out')
             if not os.path.exists(expected_file):
                 expected_file = file(f'test{test}_out')
+        else:
+            expected_file = file(f'test{test}_out')
 
         mock_config = Mock()
         mock_config.start_with_empty.return_value = start_with_empty
@@ -207,7 +211,7 @@ class ExporterTest(unittest.TestCase):
 
     def test19a(self):
         """Copy file and discard outlines for pikepdf 8 """
-        self.outlines(19, Page(1), Page(2), Page(3), Page(4), start_with_empty=True)
+        self.outlines('19a', Page(1), Page(2), Page(3), Page(4), start_with_empty=True)
 
     def test20(self):
         """Reorder pages in file with outlines"""

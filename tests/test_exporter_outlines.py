@@ -18,7 +18,12 @@ import pytest
 from unittest.mock import patch
 from collections import namedtuple
 
-from pdfarranger.exporter_outlines import rebuild_outlines, write_named_dests
+from pdfarranger.exporter_outlines import (
+    rebuild_outlines,
+    write_named_dests,
+    OutlineRemapper,
+    rebuild_links,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -393,7 +398,7 @@ class TestNamedDestinations:
 # ---------------------------------------------------------------------------
 
 
-class TestMultiFileMerge:
+class TestMultiFileMergeBookmarks:
     def test_bookmarks_from_both_files_appear(self):
         src_a = make_pdf(2)
         add_outline(src_a, [("File A Ch1", 0), ("File A Ch2", 1)])
@@ -488,7 +493,7 @@ class TestMultiFileMerge:
 # ---------------------------------------------------------------------------
 
 
-class TestDuplicatePages:
+class TestDuplicatePagesBookmarks:
     def test_bookmark_targets_first_copy_of_duplicated_page(self):
         """
         When a source page appears twice in the output, bookmarks should
@@ -812,6 +817,53 @@ class TestScaling:
             dest1 = list(ol.root[1].destination)
             assert [float(x) for x in dest1[2:6]] == [20.0, 40.0, 60.0, 80.0]
 
+    def test_annotation_coordinate_scaling_and_p_removal(self):
+        """Test scaling of all auxiliary coordinate types and removal of the /P key."""
+        src = make_pdf(1)
+        annot = make_goto_action_annot(src, 0)
+
+        # Populate all coordinate types handled by scale_annot_coords
+        annot.QuadPoints = pikepdf.Array([10, 10, 20, 20, 30, 30, 40, 40])
+        annot.Vertices = pikepdf.Array([5, 5, 15, 15])
+        annot.CL = pikepdf.Array([1, 2, 3])
+        annot.InkList = pikepdf.Array([pikepdf.Array([1, 2]), pikepdf.Array([3, 4])])
+
+        # Inject a raw string to force survival through copy_foreign, hitting line 273
+        annot.P = pikepdf.String("stale-p-ref")
+
+        add_annots(src, 0, [annot])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        row = Row(1, 1)
+        row.scale = 2.0  # Trigger scale factor != 1.0
+
+        run_rebuild_links([src], out, [row])
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        new_annot = annots[0]
+
+        # Verify all coordinate dimensions were scaled properly
+        assert list(new_annot.QuadPoints) == [
+            20.0,
+            20.0,
+            40.0,
+            40.0,
+            60.0,
+            60.0,
+            80.0,
+            80.0,
+        ]
+        assert list(new_annot.Vertices) == [10.0, 10.0, 30.0, 30.0]
+        assert list(new_annot.CL) == [2.0, 4.0, 6.0]
+        assert list(new_annot.InkList[0]) == [2.0, 4.0]
+        assert list(new_annot.InkList[1]) == [6.0, 8.0]
+
+        # Verify old page reference key was dropped and replaced with the new page obj
+        assert new_annot.P == out.pages[0].obj
+
 
 # ---------------------------------------------------------------------------
 # Tests: Outline styles and open/closed state
@@ -1061,3 +1113,615 @@ def test_vacon_low_level_structure_regression(tmp_path):
             except AttributeError:
                 obj_num = 0
             assert obj_num != 0, "FAIL: Sibling has a broken /Prev (0, 0) pointer!"
+
+
+"""Tests for rebuild_links — internal hyperlink remapping when pdfarranger
+reorders, subsets, or merges pages.
+
+Reuses the same helpers as test_exporter_outlines.py (make_pdf, Row, roundtrip,
+dest_page_index).  Kept in a separate file so the two test modules stay focused.
+"""
+
+
+# ---------------------------------------------------------------------------
+# Annotation factories
+# ---------------------------------------------------------------------------
+
+
+def make_goto_action_annot(
+    pdf: pikepdf.Pdf, target_page_idx: int, rect=None
+) -> pikepdf.Dictionary:
+    """Link annotation whose destination is wrapped in a /GoTo /A action."""
+    if rect is None:
+        rect = [0, 700, 100, 792]
+    return pikepdf.Dictionary(
+        Type=pikepdf.Name.Annot,
+        Subtype=pikepdf.Name.Link,
+        Rect=pikepdf.Array(rect),
+        A=pikepdf.Dictionary(
+            S=pikepdf.Name.GoTo,
+            D=pikepdf.Array([pdf.pages[target_page_idx].obj, pikepdf.Name.Fit]),
+        ),
+    )
+
+
+def make_dest_annot(
+    pdf: pikepdf.Pdf, target_page_idx: int, rect=None
+) -> pikepdf.Dictionary:
+    """Link annotation with a /Dest key directly (no /A wrapper)."""
+    if rect is None:
+        rect = [0, 700, 100, 792]
+    return pikepdf.Dictionary(
+        Type=pikepdf.Name.Annot,
+        Subtype=pikepdf.Name.Link,
+        Rect=pikepdf.Array(rect),
+        Dest=pikepdf.Array([pdf.pages[target_page_idx].obj, pikepdf.Name.Fit]),
+    )
+
+
+def make_uri_annot(uri: str = "https://example.com", rect=None) -> pikepdf.Dictionary:
+    """External URI link annotation — should pass through untouched."""
+    if rect is None:
+        rect = [0, 600, 100, 700]
+    return pikepdf.Dictionary(
+        Type=pikepdf.Name.Annot,
+        Subtype=pikepdf.Name.Link,
+        Rect=pikepdf.Array(rect),
+        A=pikepdf.Dictionary(
+            S=pikepdf.Name.URI,
+            URI=pikepdf.String(uri),
+        ),
+    )
+
+
+def make_non_link_annot(rect=None) -> pikepdf.Dictionary:
+    """A non-Link annotation (e.g. a text note) — must be preserved as-is."""
+    if rect is None:
+        rect = [0, 500, 100, 600]
+    return pikepdf.Dictionary(
+        Type=pikepdf.Name.Annot,
+        Subtype=pikepdf.Name.Text,
+        Contents=pikepdf.String("A comment"),
+        Rect=pikepdf.Array(rect),
+    )
+
+
+def add_annots(pdf: pikepdf.Pdf, page_idx: int, annots: list) -> None:
+    """Attach a list of annotation dicts to a page, making each indirect."""
+    pdf.pages[page_idx].Annots = pikepdf.Array([pdf.make_indirect(a) for a in annots])
+
+
+def get_annots(pdf: pikepdf.Pdf, page_idx: int) -> list:
+    """Return annotations on a page as a plain Python list."""
+    page = pdf.pages[page_idx]
+    if pikepdf.Name.Annots not in page:
+        return []
+    return list(page.Annots)
+
+
+def simulate_append_page(pdf_input, pdf_output, pages):
+    """Pre-populate out_page.Annots as _append_page does, before rebuild_links."""
+    for row in pages:
+        file_idx = row.nfile - 1
+        src_page = pdf_input[file_idx].pages[row.npage - 1]
+        out_page = pdf_output.pages[pages.index(row)]
+        if pikepdf.Name.Annots in src_page:
+            pdf_temp = pikepdf.Pdf.new()
+            pdf_temp.pages.append(src_page)
+            indirect_annots = pdf_temp.make_indirect(pdf_temp.pages[0].Annots)
+            out_page.Annots = pdf_output.copy_foreign(indirect_annots)
+
+
+def run_rebuild_links(pdf_input, pdf_output, pages):
+    simulate_append_page(pdf_input, pdf_output, pages)
+    remapper = OutlineRemapper(pdf_input, pdf_output, pages)
+    rebuild_links(pdf_input, pdf_output, pages, remapper)
+
+
+# ---------------------------------------------------------------------------
+# Basic GoTo action link tests
+# ---------------------------------------------------------------------------
+
+
+class TestGoToActionLinks:
+    """Link annotations that use /A with S=/GoTo."""
+
+    def test_identity_single_page(self):
+        """Single page kept in place — link to self still resolves."""
+        src = make_pdf(1)
+        add_annots(src, 0, [make_goto_action_annot(src, 0)])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        pages = [Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].A.D) == 0
+
+    def test_link_follows_target_page_after_reorder(self):
+        """Link on page 0 targeting page 2; pages are reversed in output."""
+        src = make_pdf(3)
+        add_annots(src, 0, [make_goto_action_annot(src, 2)])
+        src = roundtrip(src)
+
+        out = make_pdf(3)
+        pages = [Row(1, 3), Row(1, 2), Row(1, 1)]  # reversed
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        # src page 2 (index) is now output page 0
+        annots = get_annots(out, 2)  # source page 0 ended up at output index 2
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].A.D) == 0
+
+    def test_link_to_excluded_page_is_dropped(self):
+        """Target page removed from output — annotation must be dropped."""
+        src = make_pdf(3)
+        add_annots(src, 0, [make_goto_action_annot(src, 1)])  # targets middle page
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 3)]  # page 2 (index 1) excluded
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        assert get_annots(out, 0) == []
+
+    def test_link_source_page_excluded_no_crash(self):
+        """Page carrying the annotation is excluded — its output page differs, no crash."""
+        src = make_pdf(3)
+        add_annots(src, 1, [make_goto_action_annot(src, 2)])
+        src = roundtrip(src)
+
+        # Only keep pages 1 and 3; page 2 (index 1) with the annotation is dropped
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 3)]
+        run_rebuild_links([src], out, pages)
+        # Page 2 was excluded, so output has 2 pages from pages 1 and 3
+        assert get_annots(out, 0) == []  # page 1 had no annots
+        assert get_annots(out, 1) == []  # page 3 had no annots
+        out = roundtrip(out)
+        assert len(out.pages) == 2
+
+
+# ---------------------------------------------------------------------------
+# Direct /Dest link tests
+# ---------------------------------------------------------------------------
+
+
+class TestDirectDestLinks:
+    """Link annotations that carry /Dest directly instead of /A."""
+
+    def test_direct_dest_remapped(self):
+        src = make_pdf(2)
+        add_annots(src, 0, [make_dest_annot(src, 1)])
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].Dest) == 1
+
+    def test_direct_dest_follows_reorder(self):
+        src = make_pdf(3)
+        add_annots(src, 0, [make_dest_annot(src, 2)])
+        src = roundtrip(src)
+
+        out = make_pdf(3)
+        pages = [Row(1, 3), Row(1, 2), Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        # Source page 0 ends up at output index 2
+        annots = get_annots(out, 2)
+        assert len(annots) == 1
+        # Source page 2 ends up at output index 0
+        assert dest_page_index(out, annots[0].Dest) == 0
+
+    def test_direct_dest_to_excluded_page_dropped(self):
+        src = make_pdf(3)
+        add_annots(src, 0, [make_dest_annot(src, 1)])
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 3)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        assert get_annots(out, 0) == []
+
+
+# ---------------------------------------------------------------------------
+# Passthrough tests — annotations that must not be modified
+# ---------------------------------------------------------------------------
+
+
+class TestPassthroughAnnotations:
+    def test_uri_link_preserved(self):
+        src = make_pdf(1)
+        add_annots(src, 0, [make_uri_annot("https://example.com")])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        pages = [Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert str(annots[0].A.S) == "/URI"
+        assert str(annots[0].A.URI) == "https://example.com"
+
+    def test_non_link_annotation_preserved(self):
+        src = make_pdf(1)
+        add_annots(src, 0, [make_non_link_annot()])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        pages = [Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert annots[0].Subtype == pikepdf.Name.Text
+
+    def test_mixed_annots_on_same_page(self):
+        """GoTo link, URI link, and text note all on one page — each handled correctly."""
+        src = make_pdf(2)
+        add_annots(
+            src,
+            0,
+            [
+                make_goto_action_annot(src, 1),
+                make_uri_annot(),
+                make_non_link_annot(),
+            ],
+        )
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 3
+        subtypes = [str(a.Subtype) for a in annots]
+        assert subtypes.count("/Link") == 2
+        assert subtypes.count("/Text") == 1
+
+    def test_gotor_action_preserved(self):
+        """GoToR (cross-document) links must pass through without remapping."""
+        src = make_pdf(1)
+        gotor = pikepdf.Dictionary(
+            Type=pikepdf.Name.Annot,
+            Subtype=pikepdf.Name.Link,
+            Rect=pikepdf.Array([0, 0, 100, 100]),
+            A=pikepdf.Dictionary(
+                S=pikepdf.Name.GoToR,
+                F=pikepdf.String("other.pdf"),
+                D=pikepdf.Array([0, pikepdf.Name.Fit]),
+            ),
+        )
+        add_annots(src, 0, [gotor])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        pages = [Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert str(annots[0].A.S) == "/GoToR"
+
+    def test_link_with_no_action_and_no_dest_preserved(self):
+        """A Link annotation with neither /A nor /Dest (unusual but valid) is kept."""
+        src = make_pdf(1)
+        bare_link = pikepdf.Dictionary(
+            Type=pikepdf.Name.Annot,
+            Subtype=pikepdf.Name.Link,
+            Rect=pikepdf.Array([0, 0, 100, 100]),
+        )
+        add_annots(src, 0, [bare_link])
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        pages = [Row(1, 1)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+
+
+# ---------------------------------------------------------------------------
+# Page with no annotations
+# ---------------------------------------------------------------------------
+
+
+class TestNoAnnotations:
+    def test_page_without_annots_unchanged(self):
+        src = make_pdf(2)
+        # Only page 1 has annotations
+        add_annots(src, 1, [make_goto_action_annot(src, 0)])
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        assert get_annots(out, 0) == []
+        assert len(get_annots(out, 1)) == 1
+
+    def test_stale_output_annots_deleted_when_source_has_none(self):
+        """Line 301: Output page /Annots gets cleared if the source page has no annotations."""
+        src = make_pdf(1)  # Clean source page with no annotations
+        src = roundtrip(src)
+
+        out = make_pdf(1)
+        # Pre-populate the output page manually with a dummy annotation entry
+        stale_annot = out.make_indirect(make_non_link_annot())
+        out.pages[0].Annots = pikepdf.Array([stale_annot])
+
+        # Run rebuild_links directly to step into the target branch code path
+        remapper = OutlineRemapper([src], out, [Row(1, 1)])
+        rebuild_links([src], out, [Row(1, 1)], remapper)
+
+        # Ensure the stale annotations array has been deleted completely
+        assert pikepdf.Name.Annots not in out.pages[0]
+
+
+# ---------------------------------------------------------------------------
+# Duplicate pages
+# ---------------------------------------------------------------------------
+
+
+class TestDuplicatePagesLinks:
+    def test_both_copies_link_to_first_copy(self):
+        """
+        Source page 0 is duplicated to output positions 0 and 2.
+        Both copies carry a link targeting source page 1 (output page 1).
+        Both should resolve correctly.
+        """
+        src = make_pdf(2)
+        add_annots(src, 0, [make_goto_action_annot(src, 1)])
+        src = roundtrip(src)
+
+        out = make_pdf(3)
+        pages = [Row(1, 1), Row(1, 2), Row(1, 1)]  # page 1 duplicated
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        for out_idx in (0, 2):
+            annots = get_annots(out, out_idx)
+            assert len(annots) == 1
+            assert dest_page_index(out, annots[0].A.D) == 1
+
+    def test_link_targeting_duplicated_page_resolves_to_first_copy(self):
+        """
+        A link points at a page that appears twice in the output.
+        It must resolve to the first copy (instance 0).
+        """
+        src = make_pdf(2)
+        add_annots(src, 1, [make_goto_action_annot(src, 0)])
+        src = roundtrip(src)
+
+        out = make_pdf(3)
+        pages = [Row(1, 1), Row(1, 1), Row(1, 2)]  # page 1 at positions 0 and 1
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 2)
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].A.D) == 0  # first copy
+
+
+# ---------------------------------------------------------------------------
+# Multi-file merge
+# ---------------------------------------------------------------------------
+
+
+class TestMultiFileMergeLinks:
+    def test_links_from_both_files_remapped(self):
+        src_a = make_pdf(2)
+        add_annots(src_a, 0, [make_goto_action_annot(src_a, 1)])
+        src_a = roundtrip(src_a)
+
+        src_b = make_pdf(2)
+        add_annots(src_b, 0, [make_goto_action_annot(src_b, 1)])
+        src_b = roundtrip(src_b)
+
+        out = make_pdf(4)
+        pages = [Row(1, 1), Row(1, 2), Row(2, 1), Row(2, 2)]
+        run_rebuild_links([src_a, src_b], out, pages)
+        out = roundtrip(out)
+
+        # File A: link on output page 0 → output page 1
+        assert dest_page_index(out, get_annots(out, 0)[0].A.D) == 1
+        # File B: link on output page 2 → output page 3
+        assert dest_page_index(out, get_annots(out, 2)[0].A.D) == 3
+
+    def test_cross_file_link_not_remapped(self):
+        """
+        A GoTo link whose destination page object is not in the source file's
+        rev_map cannot be resolved and must be dropped (not crash).
+
+        We simulate this by constructing an annotation whose /D references a
+        dummy indirect object (not a real page), so rev_map lookup returns None.
+        """
+        src_a = make_pdf(2)
+        # A dummy indirect object that looks like a page ref but isn't in rev_map
+        dummy = src_a.make_indirect(
+            pikepdf.Dictionary(Type=pikepdf.Name.Page, MediaBox=[0, 0, 612, 792])
+        )
+        cross_annot = pikepdf.Dictionary(
+            Type=pikepdf.Name.Annot,
+            Subtype=pikepdf.Name.Link,
+            Rect=pikepdf.Array([0, 0, 100, 100]),
+            A=pikepdf.Dictionary(
+                S=pikepdf.Name.GoTo,
+                D=pikepdf.Array([dummy, pikepdf.Name.Fit]),
+            ),
+        )
+        add_annots(src_a, 0, [cross_annot])
+        src_a = roundtrip(src_a)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]
+        run_rebuild_links([src_a], out, pages)
+        out = roundtrip(out)
+
+        # The unresolvable link must be dropped
+        assert get_annots(out, 0) == []
+
+    def test_file_b_pages_only_no_crash(self):
+        """Output contains only pages from file B; file A is in pdf_input but unused."""
+        src_a = make_pdf(2)
+        src_b = make_pdf(2)
+        add_annots(src_b, 0, [make_goto_action_annot(src_b, 1)])
+        src_a = roundtrip(src_a)
+        src_b = roundtrip(src_b)
+
+        out = make_pdf(2)
+        pages = [Row(2, 1), Row(2, 2)]
+        run_rebuild_links([src_a, src_b], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].A.D) == 1
+
+
+# ---------------------------------------------------------------------------
+# Named destination links
+# ---------------------------------------------------------------------------
+
+
+class TestNamedDestinationLinks:
+    """Links that reference named destinations (string /D in a GoTo action)."""
+
+    def _add_named_dest(self, pdf, name, page_idx):
+        if pikepdf.Name.Names not in pdf.Root:
+            pdf.Root.Names = pdf.make_indirect(pikepdf.Dictionary())
+        nt = pikepdf.NameTree.new(pdf)
+        nt[name] = pikepdf.Array([pdf.pages[page_idx].obj, pikepdf.Name.Fit])
+        pdf.Root.Names.Dests = nt.obj
+
+    def test_named_dest_link_remapped(self):
+        src = make_pdf(2)
+        self._add_named_dest(src, "section-2", 1)
+        annot = pikepdf.Dictionary(
+            Type=pikepdf.Name.Annot,
+            Subtype=pikepdf.Name.Link,
+            Rect=pikepdf.Array([0, 0, 100, 100]),
+            A=pikepdf.Dictionary(
+                S=pikepdf.Name.GoTo,
+                D=pikepdf.String("section-2"),
+            ),
+        )
+        add_annots(src, 0, [annot])
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]
+        remapper = OutlineRemapper([src], out, pages)
+        rebuild_links([src], out, pages, remapper)
+        if remapper.new_named_dests:
+            write_named_dests(out, remapper.new_named_dests)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        # The action should now reference the remapped name
+        new_name = str(annots[0].A.D)
+        assert new_name == "f0-section-2"
+        # And that named dest must exist and point to the right page
+        nt = dict(pikepdf.NameTree(out.Root.Names.Dests).items())
+        assert "f0-section-2" in nt
+
+    def test_named_dest_link_to_excluded_page_dropped(self):
+        src = make_pdf(3)
+        self._add_named_dest(src, "gone", 1)
+        annot = pikepdf.Dictionary(
+            Type=pikepdf.Name.Annot,
+            Subtype=pikepdf.Name.Link,
+            Rect=pikepdf.Array([0, 0, 100, 100]),
+            A=pikepdf.Dictionary(
+                S=pikepdf.Name.GoTo,
+                D=pikepdf.String("gone"),
+            ),
+        )
+        add_annots(src, 0, [annot])
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 3)]
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        assert get_annots(out, 0) == []
+
+
+class TestRebuildLinksAnnotsCleaned:
+    def test_partial_invalid_links_only_valid_survive(self):
+        """
+        Mix of valid and invalid GoTo links on same page — only valid ones remain,
+        /Annots is replaced not left with stale entries.
+        """
+        src = make_pdf(3)
+        add_annots(
+            src,
+            0,
+            [
+                make_goto_action_annot(src, 1),  # valid — page 2 kept
+                make_goto_action_annot(src, 2),  # invalid — page 3 excluded
+            ],
+        )
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 2)]  # page 3 excluded
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        annots = get_annots(out, 0)
+        assert len(annots) == 1
+        assert dest_page_index(out, annots[0].A.D) == 1
+
+    def test_all_invalid_goto_links_removed(self):
+        """
+        Page whose only annotations are GoTo links to an excluded page must
+        have /Annots removed entirely — covering the `del out_page.Annots` branch.
+        """
+        src = make_pdf(3)
+        add_annots(src, 0, [make_goto_action_annot(src, 1)])  # target excluded
+        src = roundtrip(src)
+
+        out = make_pdf(2)
+        pages = [Row(1, 1), Row(1, 3)]  # page 2 (index 1) excluded
+
+        # Simulate what _append_page does: pre-copy stale annots onto the output page
+        stale_annot = out.make_indirect(
+            pikepdf.Dictionary(
+                Type=pikepdf.Name.Annot,
+                Subtype=pikepdf.Name.Link,
+                Rect=pikepdf.Array([0, 0, 100, 100]),
+            )
+        )
+        out.pages[0].Annots = pikepdf.Array([stale_annot])
+
+        run_rebuild_links([src], out, pages)
+        out = roundtrip(out)
+
+        assert pikepdf.Name.Annots not in out.pages[0]
+
