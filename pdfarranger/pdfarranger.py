@@ -35,12 +35,20 @@ import locale  # for multilanguage support
 import gettext
 import gc
 import subprocess
-import pikepdf
 import hashlib
 from urllib.request import url2pathname
 from functools import lru_cache
 from math import log
 
+from pdfarranger.constants import (
+    APPNAME,
+    DOMAIN,
+    ICON_ID,
+    LIBQPDF_VERSION,
+    PIKEPDF_VERSION,
+    PYTHON_VERSION,
+    VERSION,
+)
 
 sharedir = os.path.join(sys.prefix, 'share')
 basedir = '.'
@@ -64,9 +72,6 @@ try:
 except locale.Error:
     pass  # Gtk already prints a warning
 
-DOMAIN = 'pdfarranger'
-ICON_ID = 'com.github.jeromerobert.' + DOMAIN
-
 def get_libintl_path():
     if os.name == 'nt':
         return 'libintl-8'
@@ -84,10 +89,6 @@ else:
     libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
     del libintl
-
-APPNAME = 'PDF Arranger'
-VERSION = '1.14.0'
-WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
     from winreg import HKEY_CURRENT_USER, QueryValueEx, OpenKey
@@ -126,12 +127,9 @@ from gi.repository import Pango
 from .config import Config
 from .core import Dims, Sides, _img_to_pdf, IMG2PDF_VERSION, POPPLER_VERSION
 
-PIKEPDF_VERSION = pikepdf.__version__
-LIBQPDF_VERSION = pikepdf.__libqpdf_version__
 GTK_VERSION = "{}.{}.{}".format(
     Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
-PYTHON_VERSION = "{}.{}.{}".format(
-    sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
+
 
 def check_gtk_schema_exists():
     # subprocess.run() would slow down the start of the application, so we only check it on Darwin
@@ -259,6 +257,8 @@ class PdfArranger(Gtk.Application):
 
         GLib.set_application_name(APPNAME)
         GLib.set_prgname('com.github.jeromerobert.pdfarranger')
+
+        self.gtk_version = GTK_VERSION
 
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp(DOMAIN)
@@ -436,9 +436,9 @@ class PdfArranger(Gtk.Application):
             ('rotate', self.rotate_page_action, 'i'),
             ('delete', self.on_action_delete),
             ('duplicate', self.duplicate),
-            ('page-size', self.page_size_dialog),
-            ('crop', self.crop_dialog),
-            ('hide', self.hide_dialog),
+            ('page-size', self.dialogs.page_size),
+            ('crop', self.dialogs.crop),
+            ('hide', self.dialogs.hide),
             ('crop-white-borders', self.crop_white_borders),
             ('export-selection', self.choose_export_selection_pdf_name, 'i'),
             ('export-all', self.on_action_export_all),
@@ -468,7 +468,7 @@ class PdfArranger(Gtk.Application):
             ('select', self.on_action_select, 'i'),
             ('select-same-file', self.on_action_select, 'i'),
             ('select-same-format', self.on_action_select, 'i'),
-            ('about', self.about_dialog),
+            ('about', self.dialogs.about),
             ("insert-blank-page", self.insert_blank_page),
             ("generate-booklet", self.generate_booklet),
             ("split-booklet", self.split_booklet),
@@ -517,7 +517,7 @@ class PdfArranger(Gtk.Application):
         # Need uniform page size.
         if not equal_size:
             msg = _('All pages must have the same size.')
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
             return
         self.undomanager.commit("generate booklet")
 
@@ -584,7 +584,7 @@ class PdfArranger(Gtk.Application):
 
         if not is_selection_contiguous(selected_page_numbers):
             msg = _('The page selection is not contiguous. Cannot unimpose.')
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
             return
 
         model = self.iconview.get_model()
@@ -596,7 +596,7 @@ class PdfArranger(Gtk.Application):
         # Need uniform page size.
         if not is_same_page_size(pages):
             msg = _('All pages must have the same size.')
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
             return
 
         # Simulate split window
@@ -695,7 +695,7 @@ class PdfArranger(Gtk.Application):
         exporter.PrintOperation(self).run()
 
     @staticmethod
-    def __create_filters(file_type_list):
+    def _create_filters(file_type_list):
         filter_list = []
         f_supported = Gtk.FileFilter()
         f_supported.set_name(_('All supported files'))
@@ -766,6 +766,10 @@ class PdfArranger(Gtk.Application):
         self.window.connect('focus_out_event', self.window_focus_in_out_event)
         self.window.connect('configure_event', self.window_configure_event)
         self.window.connect('key_press_event', self.window_key_press_event)
+
+        from pdfarranger.dialogs import Dialogs
+
+        self.dialogs = Dialogs(self)
 
         if hasattr(GLib, "unix_signal_add"):
             GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self.close_application)
@@ -888,7 +892,7 @@ class PdfArranger(Gtk.Application):
         self.iv_pan_view = IconviewPanView(self)
 
         if self.config.content_loss_warning():
-            self.content_loss_warning()
+            self.dialogs.content_loss_warning()
 
     @staticmethod
     def get_os_version():
@@ -1227,29 +1231,12 @@ class PdfArranger(Gtk.Application):
             upper_limit = vscrollbar.props.adjustment.get_upper() - lower_limit
             vscrollbar.set_range(lower_limit, upper_limit)
 
-    def confirm_dialog(self, msg, action):
-        """A dialog for confirmation of an action."""
-        d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-        d.add_buttons(action, 1, _('_Cancel'), 2)
-        response = d.run()
-        d.destroy()
-        return response == 1
-
-    def save_changes_dialog(self, msg):
-        """A dialog which ask if changes should be saved."""
-        d = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, msg)
-        d.format_secondary_markup(_("Your changes will be lost if you don’t save them."))
-        d.add_buttons(_('Do_n’t Save'), 1, _('_Cancel'), 2, _('_Save'), 3)
-        response = d.run()
-        d.destroy()
-        return response
-
     def on_action_close(self, _action, _param, _unknown):
         """Close all files and restore initial state."""
         if self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and close?')
-                confirm = self.confirm_dialog(msg, action=_('_Close'))
+                confirm = self.dialogs.confirm(msg, action=_('_Close'))
                 if not confirm:
                     return
             else:
@@ -1258,7 +1245,7 @@ class PdfArranger(Gtk.Application):
                     msg = msg.format(os.path.basename(self.save_file))
                 else:
                     msg = _('Save changes before closing?')
-                response = self.save_changes_dialog(msg)
+                response = self.dialogs.save_changes(msg)
                 if response == 3:
                     self.post_action = 'CLEAR_DATA'
                     self.save_or_choose()
@@ -1286,7 +1273,7 @@ class PdfArranger(Gtk.Application):
         elif self.is_unsaved:
             if len(self.model) == 0:
                 msg = _('Discard changes and quit?')
-                confirm = self.confirm_dialog(msg, action=_('_Quit'))
+                confirm = self.dialogs.confirm(msg, action=_('_Quit'))
                 if not confirm:
                     return Gdk.EVENT_STOP
             else:
@@ -1295,7 +1282,7 @@ class PdfArranger(Gtk.Application):
                     msg = msg.format(os.path.basename(self.save_file))
                 else:
                     msg = _('Save changes before quitting?')
-                response = self.save_changes_dialog(msg)
+                response = self.dialogs.save_changes(msg)
                 if response == 3:
                     self.post_action = 'CLOSE_APPLICATION'
                     self.save_or_choose()
@@ -1386,11 +1373,11 @@ class PdfArranger(Gtk.Application):
                 chooser.set_current_name(f)  # Set name to new file
                 chooser.set_current_folder(self.export_directory)
         if exportmode == 'SELECTED_TO_PNG':
-            filter_list = self.__create_filters(['png', 'all'])
+            filter_list = self._create_filters(['png', 'all'])
         elif exportmode == 'SELECTED_TO_JPG':
-            filter_list = self.__create_filters(['jpeg', 'all'])
+            filter_list = self._create_filters(['jpeg', 'all'])
         else:
-            filter_list = self.__create_filters(['pdf', 'all'])
+            filter_list = self._create_filters(['pdf', 'all'])
         for f in filter_list[1:]:
             chooser.add_filter(f)
 
@@ -1416,30 +1403,13 @@ class PdfArranger(Gtk.Application):
                     if os.path.exists(files_out[i]):
                         msg = (_('A file named "%s" already exists. Do you want to replace it?')
                                % os.path.split(files_out[i])[1])
-                        replace = self.confirm_dialog(msg, _("Replace"))
+                        replace = self.dialogs.confirm(msg, _("Replace"))
                         if not replace:
                             return
             self.save(exportmode, files_out)
         else:
             self.post_action = None
 
-    def open_dialog(self, title):
-        chooser = Gtk.FileChooserNative.new(title=title,
-                                        parent=self.window,
-                                        action=Gtk.FileChooserAction.OPEN,
-                                        accept_label=_("_Open"),
-                                        cancel_label=_("_Cancel"))
-        if self.import_directory is not None:
-            chooser.set_current_folder(self.import_directory)
-        chooser.set_select_multiple(True)
-        file_type_list = ['all', 'pdf']
-        if len(img2pdf_supported_img) > 0:
-            file_type_list = ['all', 'img2pdf', 'pdf']
-        filter_list = self.__create_filters(file_type_list)
-        for f in filter_list:
-            chooser.add_filter(f)
-
-        return chooser.run(), chooser
 
     def on_action_new(self, _action=None, _param=None, _unknown=None, filenames=None):
         """Start a new instance."""
@@ -1470,7 +1440,7 @@ class PdfArranger(Gtk.Application):
 
     def on_action_open(self, _action, _param, _unknown):
         """Open new file(s)."""
-        response, chooser = self.open_dialog(_('Open…'))
+        response, chooser = self.dialogs.open(_('Open…'))
 
         if response == Gtk.ResponseType.ACCEPT:
             if len(self.pdfqueue) > 0 or len(self.metadata) > 0:
@@ -1534,26 +1504,6 @@ class PdfArranger(Gtk.Application):
         GObject.timeout_add(300, self.export_finished, exportmode, export_msg)
         self.set_export_state(True)
 
-    def save_warning_dialog(self, msg):
-        d = Gtk.MessageDialog(
-            type=Gtk.MessageType.WARNING,
-            parent=self.window,
-            text=_("Saving produced some warnings"),
-            secondary_text=_("Despite the warnings the document(s) should have no visible issues."),
-            buttons=Gtk.ButtonsType.OK
-            )
-        sw = Gtk.ScrolledWindow(margin=6)
-        label = Gtk.Label(msg, wrap=True, margin=6, xalign=0.0, selectable=True)
-        sw.add(label)
-        d.vbox.pack_start(sw, False, False, 0)
-        cb = Gtk.CheckButton(_("Don't show warnings when saving again."), margin=6, can_focus=False)
-        d.vbox.pack_start(cb, False, False, 0)
-        d.show_all()
-        sw.set_min_content_height(min(150, label.get_allocated_height()))
-        cb.set_can_focus(True)
-        d.run()
-        self.config.set_show_save_warnings(not cb.get_active())
-        d.destroy()
 
     def export_finished(self, exportmode, export_msg):
         """Check if export finished. Show any messages. Run any post action."""
@@ -1570,9 +1520,9 @@ class PdfArranger(Gtk.Application):
         if exportmode == 'ALL_TO_SINGLE' and msg_type != Gtk.MessageType.ERROR:
             self.set_unsaved(False)
         if msg_type == Gtk.MessageType.ERROR:
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
         elif msg_type == Gtk.MessageType.WARNING and self.config.show_save_warnings():
-            self.save_warning_dialog(msg)
+            self.dialogs.save_warning(msg)
         if not self.is_unsaved:
             if self.post_action == 'CLEAR_DATA':
                 self.clear_data()
@@ -1619,7 +1569,7 @@ class PdfArranger(Gtk.Application):
         exportmode = exportmodes[mode.get_int32()]
         if ImageExporter is None and mode.get_int32() in [4, 5, 6, 7]:
             msg = _("Img2pdf support missing.")
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
             return
         self.choose_export_pdf_name(exportmode)
 
@@ -1628,7 +1578,7 @@ class PdfArranger(Gtk.Application):
 
     def on_action_import(self, _action, _param, _unknown):
         """Import doc"""
-        response, chooser = self.open_dialog(_('Import…'))
+        response, chooser = self.dialogs.open(_('Import…'))
 
         if response == Gtk.ResponseType.ACCEPT:
             adder = PageAdder(self)
@@ -1817,7 +1767,7 @@ class PdfArranger(Gtk.Application):
                             raise PDFDocError(filepath + ':\n' + _('File is neither pdf nor image'))
                 except PDFDocError as e:
                     print(e.message, file=sys.stderr)
-                    self.error_message_dialog(e.message)
+                    self.dialogs.error_message(e.message)
                     return
                 data = filepaths
             self.paste_pages_interleave(data, before, ref_to)
@@ -1828,7 +1778,7 @@ class PdfArranger(Gtk.Application):
             self.silent_render()
         elif pastemode in ['OVERLAY', 'UNDERLAY'] and not data_is_filepaths:
             selection = self.iconview.get_selected_items()
-            self.paste_as_layer_dialog(data, selection, laypos=pastemode)
+            self.dialogs.paste_as_layer(data, selection, laypos=pastemode)
 
     def convert_page_data_to_layerpage_lists(self, data, laypos):
         """Convert page data to lists of LayerPage objects
@@ -1853,22 +1803,6 @@ class PdfArranger(Gtk.Application):
             lpage_lists.append(lpage_list)
         return lpage_lists
 
-    def paste_as_layer_dialog(self, data, destination, laypos):
-        lpage_lists = self.convert_page_data_to_layerpage_lists(data, laypos)
-        if lpage_lists is None or len(destination) == 0:
-            return
-        dpage = self.model[destination[-1]][0]
-        lpage_list = lpage_lists[0]
-        a = self.window, dpage, lpage_list, self.model, self.pdfqueue, laypos, self.layer_pos
-        result = pageutils.PastePageLayerDialog(*a).get_offset_and_rescale()
-        if result is None:
-            # Dialog canceled
-            return
-        offset_xy, rescale = result
-        self.layer_pos = offset_xy
-        self.undomanager.commit("Add Layer")
-        self.set_unsaved(True)
-        self.paste_as_layer(data, destination, laypos, offset_xy, rescale)
 
     def paste_as_layer(self, data, destination, laypos, offset_xy, rescale=1):
         lpage_lists = self.convert_page_data_to_layerpage_lists(data, laypos)
@@ -1969,7 +1903,7 @@ class PdfArranger(Gtk.Application):
                     data = []
                 if len(data) == 0:
                     message = _("Pasted data not valid. Aborting paste.")
-                    self.error_message_dialog(message)
+                    self.dialogs.error_message(message)
             else:
                 data_is_filepaths = True
                 if os.name == 'posix' and data.startswith('x-special/nautilus-clipboard\ncopy'):
@@ -2121,7 +2055,7 @@ class PdfArranger(Gtk.Application):
         """Add all images in selected pages as new pages."""
         if len(img2pdf_supported_img) == 0:
             msg = _("Img2pdf missing.")
-            self.error_message_dialog(msg)
+            self.dialogs.error_message(msg)
             return
         self.set_export_state(True, _("Exploding into images…"))
         self.process_pending_events()
@@ -2186,7 +2120,7 @@ class PdfArranger(Gtk.Application):
                 else:
                     self.iconview.select_path(row.path)
         elif selectoption == 'RANGE':
-            self.range_select_dialog()
+            self.dialogs.range_select()
         self.iv_selection_changed()
 
     @staticmethod
@@ -2900,83 +2834,6 @@ class PdfArranger(Gtk.Application):
         if metadata.edit(self.metadata, files, self.window):
             self.set_unsaved(True)
 
-    def page_size_dialog(self, _action, _parameter, _unknown):
-        """Opens a dialog box to define page size."""
-        selection = self.iconview.get_selected_items()
-        diag = pageutils.ScaleDialog(self.iconview.get_model(), selection, self.window)
-        result = diag.run_get()
-        if result is None:
-            return
-        newscale, mode = result
-        if mode == 'SCALE':
-            self.undomanager.commit("Scale")
-            if not pageutils.scale(self.model, selection, newscale):
-                return
-        elif mode == 'SCALE-ADD-MARG':
-            self.undomanager.commit("Scale & add margins")
-            pageutils.scale(self.model, selection, newscale)
-            self.center_on_blank_page(selection, newscale)
-        else:
-            self.undomanager.commit("Crop & add margins")
-            self.center_on_blank_page(selection, newscale)
-        self.set_unsaved(True)
-        self.update_statusbar()
-        self.update_iconview_geometry()
-        self.update_max_zoom_level()
-        self.scroll_to_selection(center=False)
-        GObject.idle_add(self.render)
-
-    def range_select_dialog(self):
-        """Opens a dialog box to range select"""
-        model = self.iconview.get_model()
-        diag = pageutils.RangeSelectDialog(self.window)
-        range_selected = diag.run_get()
-        # clean up the selection and split the ranges
-        if range_selected is not None:
-            result_list = []
-            # split the string using commas
-            comma_split = range_selected.split(',')
-            for element in comma_split:
-                element = element.strip()
-                # check if the element has a dash
-                # Consider multiple dashes? Might create problems?
-                if '-' in element and element.count('-') == 1:
-                    # split the range by the dash
-                    range_split = element.split('-')
-                    # convert the range to integers
-                    # If the dash range is given without the first element (-3)
-                    # then the range starts from the first page
-                    if len(range_split) == 2 and range_split[0]:
-                        range_start = int(range_split[0])
-                        if range_start < 1:
-                            range_start = 1
-                    else:
-                        # Set to 1 because the model is zero indexed
-                        range_start = 1
-                    # If the dash range is given without the last element (3-)
-                    # then the range ends at the last page
-                    if len(range_split) == 2 and range_split[1]:
-                        range_end = int(range_split[1])
-                        if range_end > len(model):
-                            range_end = len(model)
-                    else:
-                        range_end = len(model)
-                    # add the range to the result list
-                    result_list += list(range(range_start, range_end+1))
-                elif element.isdigit():
-                    # add the number to the result list
-                    # If it includes multiple dashes elif will not be executed
-                    # Check if the element is in the range of all pages
-                    if int(element) >=1 and int(element) <= len(model):
-                        result_list.append(int(element))
-            # Clean selection
-            # TO-DO: Maybe an additive selection to the previous selection
-            self.iconview.unselect_all()
-            for page in result_list:
-                # Because the model is zero indexed remove 1 from the page number
-                row = model[page-1]
-                self.iconview.select_path(row.path)
-            self.update_statusbar()
 
     def center_on_blank_page(self, paths, size):
         """Add paths as overlay, centered on blank pages with 'size'"""
@@ -3001,11 +2858,6 @@ class PdfArranger(Gtk.Application):
             self.iconview.select_path(path)
         self.iv_selection_changed()
 
-    def crop_dialog(self, _action, _parameter, _unknown):
-        """Opens a dialog box to define margins for page cropping."""
-        s = self.iconview.get_selected_items()
-        a = self.window, s, self.model, self.pdfqueue, self.is_unsaved, 'CROP', self.update_crop
-        pageutils.CropHideDialog(*a)
 
     def update_crop(self, crops, selection, is_unsaved):
         self.undomanager.commit("Crop")
@@ -3016,13 +2868,6 @@ class PdfArranger(Gtk.Application):
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
-    def hide_dialog(self, _action, _parameter, _unknown):
-        """Opens a dialog box to define margins for page hiding."""
-        s = self.iconview.get_selected_items()
-        if not self.is_paste_layer_available(s):
-            return
-        a = self.window, s, self.model, self.pdfqueue, self.is_unsaved, 'HIDE', self.update_hide
-        pageutils.CropHideDialog(*a)
 
     def update_hide(self, hide, selection, is_unsaved):
         """Step 1 in update hide. This make hiding work in iconview.
@@ -3200,66 +3045,7 @@ class PdfArranger(Gtk.Application):
             model.reorder(new_order)
         GObject.idle_add(self.render)
 
-    def content_loss_warning(self):
-        d = Gtk.Dialog(_("Note"),
-            parent=self.window,
-            flags=Gtk.DialogFlags.MODAL,
-            buttons=(_("_OK"), Gtk.ResponseType.OK),
-            resizable=False
-            )
-        m1 = _("Note the limitations:")
-        m2 = _("Cropping/hiding does not remove any content from the PDF file, it only hides it.")
-        m3 = _("Outlines and links can be preserved only in certain cases.")
-        link = "https://github.com/pdfarranger/pdfarranger/wiki/User-Manual"
-        section = "#preserving-of-outlines-and-links"
-        markup = (m1 + "\n\n" + m2 + "\n\n" + m3 + " " + _("For more info see") +
-                  " " + '<a href="' + link + section + '">' + _("User Manual") + "</a>")
-        label = Gtk.Label(label=markup, use_markup=True, max_width_chars=50, wrap=True, margin=12)
-        cb = Gtk.CheckButton(_("Do not show this dialog again."), can_focus=False, margin=12)
-        d.vbox.pack_start(label, False, False, 6)
-        d.vbox.pack_start(cb, False, False, 6)
-        d.show_all()
-        cb.set_can_focus(True)
-        d.run()
-        self.config.set_content_loss_warning(not cb.get_active())
-        d.destroy()
 
-    def about_dialog(self, _action, _parameter, _unknown):
-        about_dialog = Gtk.AboutDialog()
-        about_dialog.set_transient_for(self.window)
-        about_dialog.set_modal(True)
-        about_dialog.set_name(APPNAME)
-        about_dialog.set_program_name(APPNAME)
-        about_dialog.set_version(VERSION)
-        about_dialog.set_comments(
-            "".join(
-                (
-                    _("%s is a tool for rearranging and modifying PDF files.")
-                    % APPNAME,
-                    "\n \n",
-                    _("Software versions:") + "\n" +
-                    "pikepdf %s, libqpdf %s, img2pdf %s, Poppler %s, GTK %s, Python %s"
-                    % (PIKEPDF_VERSION,
-                       LIBQPDF_VERSION,
-                       IMG2PDF_VERSION,
-                       POPPLER_VERSION,
-                       GTK_VERSION,
-                       PYTHON_VERSION),
-                    "\n \n",
-                    _("Running on %s") % self.get_platform(),
-                )
-            )
-        )
-        about_dialog.set_authors(['Konstantinos Poulios'])
-        about_dialog.add_credit_section(_('Maintainers and contributors'), [
-            'https://github.com/pdfarranger/pdfarranger/graphs/contributors'])
-        about_dialog.set_website(WEBSITE)
-        about_dialog.set_website_label(WEBSITE)
-        about_dialog.set_logo_icon_name(ICON_ID)
-        about_dialog.set_license(_('GNU General Public License (GPL) Version 3.'))
-        about_dialog.connect('response', lambda w, *args: w.destroy())
-        about_dialog.connect('delete_event', lambda w, *args: w.destroy())
-        about_dialog.show_all()
 
     def update_statusbar(self):
         selection = self.iconview.get_selected_items()
@@ -3285,14 +3071,6 @@ class PdfArranger(Gtk.Application):
         for a in ["save", "save-as", "select", "export-all", "zoom-fit", "print", "find"]:
             self.window.lookup_action(a).set_enabled(num_pages > 0)
 
-    def error_message_dialog(self, msg):
-        error_msg_dlg = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL,
-                                          type=Gtk.MessageType.ERROR, parent=self.window,
-                                          message_format=str(msg),
-                                          buttons=Gtk.ButtonsType.OK)
-        response = error_msg_dlg.run()
-        if response == Gtk.ResponseType.OK:
-            error_msg_dlg.destroy()
 
     def window_key_press_event(self, _window, event):
         handled = self.searchbar_widget.handle_event(event)
