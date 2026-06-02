@@ -39,6 +39,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <summary xml:lang="uk">Додаток для об'єднання, зміни порядку сторінок, розділу, обертання та обрізання PDF документів</summary>
   <summary xml:lang="vi">Gộp, sắp xếp và cắt tệp PDF</summary>
+  <summary xml:lang="zh-cn">合并、重新排列或裁剪 PDF</summary>
   <summary xml:lang="zh-tw">合併、重新排列及裁切 PDF</summary>
   <launchable type="desktop-id">com.github.jeromerobert.pdfarranger.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
@@ -166,7 +167,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       Het is een frontend voor pikepdf.
     </p>
 
-        <p xml:lang="ru">
+    <p xml:lang="ru">
       PDF Arranger - это небольшое python-gtk приложение, которое помогает пользователю
       объединять или разделять документы PDF, а также вращать, обрезать и изменять порядок
       страниц с помощью интерактивного и интуитивно понятного графического интерфейса.
@@ -183,6 +184,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     <p xml:lang="tr">
       pikepdf için bir önyüzdür.
     </p>
+
     <p xml:lang="uk">
       PDF Arranger це маленький python-gtk додаток, який допоможе користувачу зливати разом
       або розділяти pdf документи і перегортати, обрізати і переставляти місцями сторінки за
@@ -192,19 +194,27 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
       Це графічна оболонка для pikepdf.
     </p>
 
+    <p xml:lang="vi">
+      PDF Arranger là ứng dụng nhỏ giúp gộp hoặc tách tài liệu PDF, xoay, cắt và sắp xếp lại trang bằng giao diện đồ hoạ trực quan tương tác.
+    </p>
+    <p xml:lang="vi">
+      Đây là frontend cho pikepdf.
+    </p>
+
+    <p xml:lang="zh-cn">
+      PDF Arranger 是一个轻量的 python-gtk 应用程序，它可以帮助用户交互式地使用直观
+      的图形界面来处理多个 PDF 文档，包括合并、拆分、旋转、裁剪、重排等功能。
+    </p>
+    <p xml:lang="zh-cn">
+      它是 pikepdf 的前端。
+    </p>
+
     <p xml:lang="zh-tw">
       PDF Arranger 是一個用 python-gtk 寫的小程式，讓使用者能透過直覺的互動式圖形介面，
       合併、分割 PDF 文件並裁切及重新排列頁面。
     </p>
     <p xml:lang="zh-tw">
       它是 pikepdf 的前端之一。
-    </p>
-
-    <p xml:lang="vi">
-      PDF Arranger là ứng dụng nhỏ giúp gộp hoặc tách tài liệu PDF, xoay, cắt và sắp xếp lại trang bằng giao diện đồ hoạ trực quan tương tác.
-    </p>
-    <p xml:lang="vi">
-      Đây là frontend cho pikepdf.
     </p>
   </description>
   <developer id="pdfarranger.org">
