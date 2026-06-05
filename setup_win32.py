@@ -1,4 +1,4 @@
-VERSION='1.12.1'
+VERSION='1.14.0'
 
 from cx_Freeze import setup, Executable
 import os
@@ -129,6 +129,15 @@ addfile("share/glib-2.0/schemas/gschemas.compiled")
 addicons()
 
 
+# Add encoding files required to correctly display Chinese, Japanese, Korean
+# and some Cyrillic characters in PDF documents. (from poppler-data package)
+from_path = os.path.join(sys.prefix, 'share/poppler/')
+to_path = 'lib/share/poppler/'
+include_files.append((from_path, to_path))
+addfile('share/licenses/poppler-data/COPYING')
+addfile('share/licenses/poppler-data/COPYING.adobe')
+
+
 # gspawn-helper is needed for website link in AboutDialog
 from_path = os.path.join(sys.prefix, 'bin', 'gspawn-win64-helper.exe')
 to_path = 'gspawn-win64-helper.exe'
@@ -147,6 +156,7 @@ def get_target_name(suffix):
 
 
 msi_options = dict(
+    output_name=get_target_name('installer.msi'),
     upgrade_code='{ab1752a6-575c-42e1-a261-b85cb8a6b524}',
     extensions=[{
         "extension": "pdf",
@@ -192,22 +202,9 @@ setup(name='PDF Arranger',
       cmdclass={'bdist_zip': bdist_zip},
       packages=['pdfarranger'],
       executables=[Executable('pdfarranger/__main__.py',
-                              base='Win32GUI' if sys.platform == 'win32' else None,
+                              base='gui' if sys.platform == 'win32' else None,
                               target_name='pdfarranger.exe',
                               icon='data/pdfarranger.ico',
                               shortcut_name='PDF Arranger',
                               shortcut_dir='StartMenuFolder'
                               )])
-
-
-def rename_msi():
-    # cx_freeze 6.15: Workaround for having different filename and "ProductName" for the msi.
-    dist_dir = os.path.join(os.getcwd(), 'dist')
-    msi = [f for f in os.listdir(dist_dir) if f.endswith('.msi')]
-    if len(msi) > 0:
-        old_name = os.path.join(dist_dir, msi[0])
-        new_name = os.path.join(dist_dir, get_target_name('installer.msi'))
-        shutil.move(old_name, new_name)
-
-if 'bdist_msi' in sys.argv:
-    rename_msi()

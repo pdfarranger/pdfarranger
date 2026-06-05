@@ -16,7 +16,7 @@ jobs:
     - name: Upgrade pip
       run: pip install --upgrade pip
     - name: Install
-      run: pip3 install -v --upgrade .[image] coverage
+      run: pip3 install -v --upgrade .[image] coverage pytest
     - name: AppStream
       run: appstreamcli validate $HOME/.local/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
     - name: Validate Desktop File
@@ -25,13 +25,15 @@ jobs:
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Exporter Outlines Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter_outlines -m pytest -v tests/test_exporter_outlines.py
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
-    # Convert to lcov because it's compatible with codecov AND can be combine
+    # Convert to lcov because it's compatible with codecov AND can be combined
     - name: Convert to lcov
       run: python3 -m coverage combine && python3 -m coverage lcov
     # Upload for later use (see upload-to-codecov job)
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v7
       with:
         name: ppp-lcov
         path: coverage.lcov
@@ -44,16 +46,18 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Install
-      run: pip3 install -v .[image]
+      run: pip3 install -v .[image] coverage && pip3 install -v --ignore-installed pytest
     - name: Dogtail Tests and Coverage
       run: python3 -X tracemalloc -u -m unittest -v -f tests.test
     - name: Exporter Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.exporter -m unittest -v -f tests.test_exporter
+    - name: Exporter Outlines Tests and Coverage
+      run: python3 -m coverage run --data-file=.coverage.exporter_outlines -m pytest -v tests/test_exporter_outlines.py
     - name: Core Tests and Coverage
       run: python3 -m coverage run --data-file=.coverage.core -m unittest -v -f tests.test_core
     - name: Convert to lcov
       run: python3 -m coverage combine && python3 -m coverage lcov
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v7
       with:
         name: pp6-lcov
         path: coverage.lcov
@@ -67,28 +71,28 @@ jobs:
       - name: Install lcov
         run: sudo apt-get -y install lcov
       - name: Download Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
       - name: Combine Coverage
         run: lcov -a ppp-lcov/coverage.lcov -a pp6-lcov/coverage.lcov -o lcov.info
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
   build-win32:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/pdfarranger/wine-mingw64:1.10.0
+      image: ghcr.io/pdfarranger/wine-mingw64:1.12.0
       options: --user root
     steps:
     - uses: actions/checkout@v6
     - run: ./setup.py build -v
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v7
       with:
         name: pdfarranger-windows-installer-msi
         path: dist/*.msi
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v7
       with:
         name: pdfarranger-windows-portable-zip
         path: dist/*.zip
@@ -98,7 +102,7 @@ jobs:
     steps:
     - name: RPM Build
       run: /pdfarranger/pdfarranger-build
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v7
       with:
         name: pdfarranger-fedora-testbuild
         path: /github/home/rpmbuild/**/*.rpm

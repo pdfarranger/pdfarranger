@@ -249,7 +249,7 @@ def warn_dialog(func):
                 export_msg.put([warnings.showwarning.buffer, Gtk.MessageType.WARNING])
         except Exception as e:
             traceback.print_exc()
-            export_msg.put([e, Gtk.MessageType.ERROR])
+            export_msg.put([str(e), Gtk.MessageType.ERROR])
         finally:
             warnings.showwarning = backup_showwarning
 
@@ -400,6 +400,10 @@ def export_doc(pdf_input, pages, mdata, files_out, quit_flag, test_mode=False):
         return
     if isinstance(files_out[0], str):
         # Only needed when saving to file, not when printing
+        if len(files_out) == 1:
+            # Imported here to avoid circular import with exporter_outlines
+            from . import exporter_outlines
+            exporter_outlines.rebuild_outlines(pdf_input, pdf_output, pages)
         mdata = metadata.merge_doc(mdata, pdf_input)
     if len(files_out) > 1:
         for n, page in enumerate(pdf_output.pages):

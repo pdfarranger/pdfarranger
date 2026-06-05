@@ -49,6 +49,7 @@ class ImageExporter:
         if exportmode in ['SELECTED_TO_PDF_PNG', 'SELECTED_TO_PDF_JPG']:
             self.pdf_out = pikepdf.Pdf.new()
         self.is_saving = True
+        self.exitcode = 1  # unhandled exception
 
     def start(self):
         prange = [0, len(self.model) - 1]
@@ -118,6 +119,7 @@ class ImageExporter:
             imgpil.save(filename, ext, dpi=(self.ppi, self.ppi), optimize=self.optimize)
         except OSError as e:
             self.exception_handler(e)
+        self.exitcode = 0
 
     def add_to_pdf(self, imgpil, ext, page_size):
         imgio = img2pdf.BytesIO()
@@ -138,8 +140,12 @@ class ImageExporter:
             self.pdf_out.save(self.files_out[0])
         except OSError as e:
             self.exception_handler(e)
+        if len(self.pdf_out.pages) == len(self.model):
+            self.exitcode = 0
+        else:
+            self.exitcode = 10  # exception in add_to_pdf()
 
     def exception_handler(self, e):
         print(traceback.format_exc())
-        self.export_msg.put([e, Gtk.MessageType.ERROR])
+        self.export_msg.put([str(e), Gtk.MessageType.ERROR])
         self.join()

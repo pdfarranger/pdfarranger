@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 16:57+0100\n"
+"POT-Creation-Date: 2026-02-18 16:00+0100\n"
 "PO-Revision-Date: 2025-07-09 08:35+0200\n"
 "Last-Translator: Sebastian Scherch\n"
 "Language-Team: \n"
@@ -34,81 +34,83 @@ msgstr "Spalte"
 msgid "#Row"
 msgstr "Zeile"
 
-#: pdfarranger/pageutils.py:127 pdfarranger/pageutils.py:549
-#: pdfarranger/pageutils.py:551
+#: pdfarranger/pageutils.py:128 pdfarranger/pageutils.py:553
+#: pdfarranger/pageutils.py:555
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/pageutils.py:275
-#, python-format
+#: pdfarranger/pageutils.py:276
 msgid "% of height"
 msgstr "% der Höhe"
 
-#: pdfarranger/pageutils.py:275
-#, python-format
+#: pdfarranger/pageutils.py:276
 msgid "% of width"
 msgstr "% der Breite"
 
-#: pdfarranger/pdfarranger.py:3094
+#: pdfarranger/pdfarranger.py:3195
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
 msgstr "%s ist ein Werkzeug zum Neuordnen und Ändern von PDF-Dateien."
 
-#: pdfarranger/config.py:287
+#: pdfarranger/config.py:334
 msgid "(Libhandy missing)"
 msgstr "(Libhandy fehlt)"
 
-#: pdfarranger/config.py:279
+#: pdfarranger/config.py:326
 msgid "(Requires restart)"
 msgstr "(Erfordert Neustart)"
 
-#: pdfarranger/pdfarranger.py:1366
+#: pdfarranger/pdfarranger.py:1413
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr ""
 "Eine Datei mit dem Namen »%s« existiert bereits. Möchten Sie diese ersetzen?"
 
-#: data/menu.ui:254 data/menu.ui:423
+#: pdfarranger/search.py:42
+msgid "All"
+msgstr "Alles"
+
+#: data/menu.ui:254 data/menu.ui:444
 msgid "All From _Same File"
 msgstr "Alle der _gleichen Datei"
 
-#: pdfarranger/pdfarranger.py:697
+#: pdfarranger/pdfarranger.py:728
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: pdfarranger/pdfarranger.py:501 pdfarranger/pdfarranger.py:565
+#: pdfarranger/pdfarranger.py:517 pdfarranger/pdfarranger.py:596
 msgid "All pages must have the same size."
 msgstr "Alle Seiten müssen die gleiche Größe haben."
 
-#: pdfarranger/pdfarranger.py:668
+#: pdfarranger/pdfarranger.py:699
 msgid "All supported files"
 msgstr "Alle unterstützten Dateien"
 
-#: pdfarranger/exporter.py:581
+#: pdfarranger/exporter.py:522
 msgid "Auto Rotate"
 msgstr "Automatisch drehen"
 
-#: pdfarranger/pageutils.py:253
+#: pdfarranger/pageutils.py:254
 msgid "Bottom"
 msgstr "Unten"
 
-#: pdfarranger/pageutils.py:482
+#: pdfarranger/pageutils.py:486
 msgid "Bottom to Top"
 msgstr "Unten nach oben"
 
-#: pdfarranger/core.py:579
+#: pdfarranger/core.py:599
 msgid "Clipboard image"
 msgstr "Zwischenablage-Bild"
 
-#: pdfarranger/pageutils.py:465 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:469 pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Spalten"
 
-#: data/menu.ui:161 data/menu.ui:386
+#: data/menu.ui:161 data/menu.ui:407
 msgid "Copy _Image"
 msgstr "_Bild kopieren"
 
-#: data/menu.ui:166 data/menu.ui:391
+#: data/menu.ui:166 data/menu.ui:412
 msgid "Copy _Text"
 msgstr "_Text kopieren"
 
@@ -124,19 +126,19 @@ msgstr "Ersteller"
 msgid "Creator tool"
 msgstr "Erstellungswerkzeug"
 
-#: pdfarranger/pageutils.py:350
+#: pdfarranger/pageutils.py:351
 msgid "Crop & Add margins"
 msgstr "Seitenränder beschneiden & hinzufügen"
 
-#: pdfarranger/pageutils.py:942
+#: pdfarranger/pageutils.py:1002
 msgid "Crop Margins"
 msgstr "Seitenränder beschneiden"
 
-#: data/menu.ui:194 data/menu.ui:469
+#: data/menu.ui:194 data/menu.ui:490
 msgid "Crop White Borders"
 msgstr "Weiße Ränder beschneiden"
 
-#: pdfarranger/pageutils.py:265 pdfarranger/pdfarranger.py:3060
+#: pdfarranger/pageutils.py:266 pdfarranger/pdfarranger.py:3169
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
@@ -144,53 +146,53 @@ msgstr ""
 "Durch Beschneiden/Verbergen wird kein Inhalt aus der PDF-Datei entfernt, er "
 "wird nur verborgen."
 
-#: data/menu.ui:114 data/menu.ui:334
+#: data/menu.ui:114 data/menu.ui:355
 msgid "Cu_t"
 msgstr "_Ausschneiden"
 
-#: pdfarranger/pageutils.py:153
+#: pdfarranger/pageutils.py:154
 msgid "Custom"
 msgstr "Benutzerdefiniert"
 
-#: pdfarranger/pdfarranger.py:1489
+#: pdfarranger/pdfarranger.py:1538
 msgid "Despite the warnings the document(s) should have no visible issues."
 msgstr ""
 "Trotz der Warnungen sollte(n) das/die Dokument(e) keine sichtbaren Probleme "
 "aufweisen."
 
-#: pdfarranger/pdfarranger.py:1201
+#: pdfarranger/pdfarranger.py:1247
 msgid "Discard changes and close?"
 msgstr "Änderungen verwerfen und schließen?"
 
-#: pdfarranger/pdfarranger.py:1238
+#: pdfarranger/pdfarranger.py:1284
 msgid "Discard changes and quit?"
 msgstr "Änderungen verwerfen und beenden?"
 
-#: pdfarranger/pdfarranger.py:3067
+#: pdfarranger/pdfarranger.py:3176
 msgid "Do not show this dialog again."
 msgstr "Diesen Dialog nicht mehr anzeigen."
 
-#: pdfarranger/pdfarranger.py:1192
+#: pdfarranger/pdfarranger.py:1238
 msgid "Do_n’t Save"
 msgstr "_Nicht speichern"
 
-#: pdfarranger/pdfarranger.py:1496
+#: pdfarranger/pdfarranger.py:1545
 msgid "Don't show warnings when saving again."
 msgstr "Beim erneuten Speichern keine Warnungen anzeigen."
 
-#: data/menu.ui:198 data/menu.ui:473
+#: data/menu.ui:198 data/menu.ui:494
 msgid "Dupl_icate"
 msgstr "_Duplizieren"
 
-#: data/menu.ui:52 data/menu.ui:506
+#: data/menu.ui:52 data/menu.ui:527
 msgid "E_xport"
 msgstr "E_xportieren"
 
-#: data/menu.ui:55 data/menu.ui:509
+#: data/menu.ui:55 data/menu.ui:530
 msgid "E_xport Selection to a Single File…"
 msgstr "Auswahl in eine Datei e_xportieren…"
 
-#: data/menu.ui:298
+#: data/menu.ui:319
 msgid "Edit _Properties"
 msgstr "Eige_nschaften ändern"
 
@@ -206,67 +208,91 @@ msgstr "Gleiche Spaltenbreite"
 msgid "Equal row height"
 msgstr "Gleiche Zeilenhöhe"
 
-#: pdfarranger/pdfarranger.py:2033
+#: pdfarranger/pdfarranger.py:2122
 msgid "Exploding into images…"
 msgstr "In Einzelbilder umwandeln…"
 
-#: data/menu.ui:60 data/menu.ui:514
+#: data/menu.ui:60 data/menu.ui:535
 msgid "Export Selection to _Individual Files…"
 msgstr "Auswahl in E_inzeldateien exportieren…"
 
-#: data/menu.ui:74 data/menu.ui:528
+#: data/menu.ui:74 data/menu.ui:549
 msgid "Export Selection to _JPG Images…"
 msgstr "Auswahl als _JPG Bilddateien exportieren…"
 
-#: data/menu.ui:69 data/menu.ui:523
+#: data/menu.ui:69 data/menu.ui:544
 msgid "Export Selection to _PNG Images…"
 msgstr "Auswahl als _PNG Bilddateien exportieren…"
 
-#: data/menu.ui:84 data/menu.ui:538
+#: data/menu.ui:84 data/menu.ui:559
 msgid "Export Selection to _Rasterized PDF (jpg)…"
 msgstr "Auswahl als ge_rastertes PDF (JPG) exportieren…"
 
-#: data/menu.ui:79 data/menu.ui:533
+#: data/menu.ui:79 data/menu.ui:554
 msgid "Export Selection to _Rasterized PDF (png)…"
 msgstr "Auswahl als ge_rastertes PDF (PNG) exportieren…"
 
-#: data/menu.ui:65 data/menu.ui:519
+#: data/menu.ui:65 data/menu.ui:540
 msgid "Export _All Pages to Individual Files…"
 msgstr "_Alle Seiten in Einzeldateien exportieren…"
 
-#: pdfarranger/pdfarranger.py:1307
+#: pdfarranger/pdfarranger.py:1354
 msgid "Export…"
 msgstr "Exportieren…"
 
-#: pdfarranger/core.py:581 pdfarranger/pdfarranger.py:1751
+#: pdfarranger/core.py:601 pdfarranger/pdfarranger.py:1813
 msgid "File is neither pdf nor image"
 msgstr "Datei ist weder ein PDF noch ein Bild"
 
-#: pdfarranger/pdfarranger.py:333
+#: pdfarranger/pdfarranger.py:341
 msgid "File(s) to open"
 msgstr "Zu öffnende Datei(en)"
 
-#: pdfarranger/pageutils.py:346
+#: pdfarranger/search.py:43
+msgid "Find All"
+msgstr "Alle suchen"
+
+#: pdfarranger/search.py:38
+msgid "Find Next"
+msgstr "Nächsten suchen"
+
+#: pdfarranger/search.py:33
+msgid "Find Previous"
+msgstr "Vorherigen suchen"
+
+#: data/menu.ui:312
+msgid "Find _All"
+msgstr "_Alle suchen"
+
+#: data/menu.ui:308
+msgid "Find _Next"
+msgstr "_Nächsten suchen"
+
+#: data/menu.ui:304
+msgid "Find _Previous"
+msgstr "_Vorherigen suchen"
+
+#: pdfarranger/pageutils.py:347
 msgid "Fit mode"
 msgstr "Anpassungsmodus"
 
-#: pdfarranger/exporter.py:579
+#: pdfarranger/exporter.py:520
 msgid "Fit to Full Page"
 msgstr "An ganze Seite anpassen"
 
-#: pdfarranger/exporter.py:578
+#: pdfarranger/exporter.py:519
 msgid "Fit to Printable Area"
 msgstr "An Druckbereich anpassen"
 
-#: pdfarranger/pageutils.py:355
+#: pdfarranger/pageutils.py:356
 msgid "Fit to paper"
 msgstr "An Papierformat anpassen"
 
-#: pdfarranger/pdfarranger.py:3064
+#: pdfarranger/pdfarranger.py:3173
 msgid "For more info see"
 msgstr "Weitere Informationen finden Sie im"
 
-#: pdfarranger/config.py:323
+#: pdfarranger/config.py:370
 msgid "For more options see:"
 msgstr "Weitere Optionen in der Konfigurationsdatei:"
 
@@ -274,15 +300,15 @@ msgstr "Weitere Optionen in der Konfigurationsdatei:"
 msgid "Full_screen"
 msgstr "Voll_bild"
 
-#: pdfarranger/pdfarranger.py:3110
+#: pdfarranger/pdfarranger.py:3217
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
-#: pdfarranger/config.py:318
+#: pdfarranger/config.py:365
 msgid "Greyscale"
 msgstr "Graustufen"
 
-#: pdfarranger/pageutils.py:144
+#: pdfarranger/pageutils.py:145
 msgid "Height"
 msgstr "Höhe"
 
@@ -290,11 +316,11 @@ msgstr "Höhe"
 msgid "Height in %"
 msgstr "Höhe in %"
 
-#: pdfarranger/pageutils.py:942
+#: pdfarranger/pageutils.py:1002
 msgid "Hide Margins"
 msgstr "Ränder verbergen"
 
-#: pdfarranger/pageutils.py:477
+#: pdfarranger/pageutils.py:481
 msgid "Horizontal"
 msgstr "Horizontal"
 
@@ -302,27 +328,27 @@ msgstr "Horizontal"
 msgid "Horizontal Splits"
 msgstr "Waagerechte Teilungen"
 
-#: pdfarranger/pageutils.py:548
+#: pdfarranger/pageutils.py:552
 msgid "Horizontal offset"
 msgstr "Horizontale Verschiebung"
 
-#: pdfarranger/config.py:307
+#: pdfarranger/config.py:354
 msgid "Image Export"
 msgstr "Bildexport"
 
-#: pdfarranger/core.py:570
+#: pdfarranger/core.py:589
 msgid "Image files are only supported with img2pdf"
 msgstr "Bilddateien werden nur mit img2pdf unterstützt"
 
-#: pdfarranger/core.py:576
+#: pdfarranger/core.py:596
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformat wird von img2pdf nicht unterstützt"
 
-#: pdfarranger/pdfarranger.py:2030
+#: pdfarranger/pdfarranger.py:2119
 msgid "Img2pdf missing."
 msgstr "Img2pdf nicht vorhanden"
 
-#: pdfarranger/pdfarranger.py:1564
+#: pdfarranger/pdfarranger.py:1617
 msgid "Img2pdf support missing."
 msgstr "Img2pdf Unterstützung nicht vorhanden."
 
@@ -330,15 +356,15 @@ msgstr "Img2pdf Unterstützung nicht vorhanden."
 msgid "Import"
 msgstr "Importieren"
 
-#: pdfarranger/pdfarranger.py:1574
+#: pdfarranger/pdfarranger.py:1627
 msgid "Import…"
 msgstr "Importieren …"
 
-#: data/menu.ui:214 data/menu.ui:489
+#: data/menu.ui:214 data/menu.ui:510
 msgid "Insert Blan_k Page…"
 msgstr "_Leere Seite einfügen …"
 
-#: pdfarranger/pageutils.py:431
+#: pdfarranger/pageutils.py:435
 msgid "Insert Blank Page"
 msgstr "Leere Seite einfügen"
 
@@ -346,12 +372,7 @@ msgstr "Leere Seite einfügen"
 msgid "Invalid date format. Input discarded."
 msgstr "Ungültiges Datumsformat. Eingabe verworfen."
 
-#: pdfarranger/pdfarranger.py:3097
-#, python-format
-msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-msgstr "Es verwendet libqpdf %s, pikepdf %s, GTK %s and Python %s."
-
-#: pdfarranger/pdfarranger.py:688
+#: pdfarranger/pdfarranger.py:719
 msgid "JPEG images"
 msgstr "JPEG-Dateien"
 
@@ -359,19 +380,19 @@ msgstr "JPEG-Dateien"
 msgid "Keywords"
 msgstr "Schlagworte"
 
-#: pdfarranger/pageutils.py:163
+#: pdfarranger/pageutils.py:164
 msgid "Landscape"
 msgstr "Querformat"
 
-#: pdfarranger/config.py:277
+#: pdfarranger/config.py:324
 msgid "Language"
 msgstr "Sprache"
 
-#: pdfarranger/pageutils.py:253
+#: pdfarranger/pageutils.py:254
 msgid "Left"
 msgstr "Links"
 
-#: pdfarranger/pageutils.py:479
+#: pdfarranger/pageutils.py:483
 msgid "Left to Right"
 msgstr "Links nach rechts"
 
@@ -379,19 +400,19 @@ msgstr "Links nach rechts"
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: pdfarranger/pdfarranger.py:3105
+#: pdfarranger/pdfarranger.py:3212
 msgid "Maintainers and contributors"
 msgstr "Hauptentwickler und Mitwirkende"
 
-#: pdfarranger/pageutils.py:463
+#: pdfarranger/pageutils.py:467
 msgid "Margin"
 msgstr "Seitenrand"
 
-#: pdfarranger/pageutils.py:449
+#: pdfarranger/pageutils.py:453
 msgid "Merge Pages"
 msgstr "Seiten zusammenfügen"
 
-#: pdfarranger/pageutils.py:514
+#: pdfarranger/pageutils.py:518
 msgid "Merged page size:"
 msgstr "Größe der zusammengefügten Seiten:"
 
@@ -399,19 +420,19 @@ msgstr "Größe der zusammengefügten Seiten:"
 msgid "Modified"
 msgstr "Geändert"
 
-#: pdfarranger/pageutils.py:494
+#: pdfarranger/pageutils.py:498
 msgid "Non-uniform page size - using max size"
 msgstr "Uneinheitliche Seitengröße - die größte Seite ist maßgeblich"
 
-#: pdfarranger/exporter.py:577
+#: pdfarranger/exporter.py:518
 msgid "None"
 msgstr "Keine"
 
-#: pdfarranger/pdfarranger.py:3053
+#: pdfarranger/pdfarranger.py:3162
 msgid "Note"
 msgstr "Hinweis"
 
-#: pdfarranger/pdfarranger.py:3059
+#: pdfarranger/pdfarranger.py:3168
 msgid "Note the limitations:"
 msgstr "Beachten Sie die Einschränkungen:"
 
@@ -419,29 +440,29 @@ msgstr "Beachten Sie die Einschränkungen:"
 msgid "Open"
 msgstr "Öffnen"
 
-#: pdfarranger/pdfarranger.py:1422
+#: pdfarranger/pdfarranger.py:1469
 msgid "Open…"
 msgstr "Öffnen…"
 
-#: pdfarranger/config.py:315
+#: pdfarranger/config.py:362
 msgid "Optimize"
 msgstr "Optimieren"
 
-#: pdfarranger/pageutils.py:161
+#: pdfarranger/pageutils.py:162
 msgid "Orientation"
 msgstr "Ausrichtung"
 
-#: pdfarranger/pdfarranger.py:3061
+#: pdfarranger/pdfarranger.py:3170
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr ""
 "Inhaltsverzeichnisse und Verweise könnnen nur in bestimmten Fällen erhalten "
 "werden."
 
-#: pdfarranger/pageutils.py:995
+#: pdfarranger/pageutils.py:1055
 msgid "Overlay"
 msgstr "Overlay"
 
-#: pdfarranger/pdfarranger.py:314
+#: pdfarranger/pdfarranger.py:322
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
@@ -453,103 +474,103 @@ msgstr ""
 "einer interaktiven und intuitiven grafischen Oberfläche zu drehen, "
 "zuzuschneiden und neu anzuordnen. Es ist ein Frontend für Pikepdf."
 
-#: pdfarranger/pdfarranger.py:1745
+#: pdfarranger/pdfarranger.py:1807
 msgid "PDF document is damaged"
 msgstr "PDF-Dokument ist beschädigt"
 
-#: pdfarranger/pdfarranger.py:672
+#: pdfarranger/pdfarranger.py:703
 msgid "PDF files"
 msgstr "PDF-Dateien"
 
-#: pdfarranger/pdfarranger.py:680
+#: pdfarranger/pdfarranger.py:711
 msgid "PNG images"
 msgstr "PNG-Dateien"
 
-#: pdfarranger/exporter.py:616
+#: pdfarranger/exporter.py:573
 msgid "Page Handling"
 msgstr "Seitenhandhabung"
 
-#: pdfarranger/pageutils.py:490
+#: pdfarranger/pageutils.py:494
 msgid "Page Order"
 msgstr "Sortierung"
 
-#: pdfarranger/pdfarranger.py:3133
+#: pdfarranger/pdfarranger.py:3240
 msgid "Page Size:"
 msgstr "Seitengröße:"
 
-#: pdfarranger/pageutils.py:342
+#: pdfarranger/pageutils.py:343
 msgid "Page size"
 msgstr "Seitengröße"
 
-#: pdfarranger/pageutils.py:150
+#: pdfarranger/pageutils.py:151
 msgid "Paper size"
 msgstr "Papierformat"
 
-#: pdfarranger/core.py:457
+#: pdfarranger/core.py:474
 msgid "Password"
 msgstr "Passwort"
 
-#: pdfarranger/core.py:435
+#: pdfarranger/core.py:452
 msgid "Password required"
 msgstr "Passwort wird benötigt"
 
-#: data/menu.ui:127 data/menu.ui:347
+#: data/menu.ui:127 data/menu.ui:368
 msgid "Past_e Special"
 msgstr "Spezielles Ein_fügen"
 
-#: data/menu.ui:144 data/menu.ui:365
+#: data/menu.ui:144 data/menu.ui:386
 msgid "Paste As O_verlay…"
 msgstr "Als _Overlay einfügen …"
 
-#: data/menu.ui:139 data/menu.ui:360
+#: data/menu.ui:139 data/menu.ui:381
 msgid "Paste As _Even Pages"
 msgstr "Als _gerade Seiten einfügen"
 
-#: data/menu.ui:134 data/menu.ui:355
+#: data/menu.ui:134 data/menu.ui:376
 msgid "Paste As _Odd Pages"
 msgstr "Als _ungerade Seiten einfügen"
 
-#: data/menu.ui:149 data/menu.ui:370
+#: data/menu.ui:149 data/menu.ui:391
 msgid "Paste As _Underlay…"
 msgstr "Als _Hintergrund einfügen …"
 
-#: data/menu.ui:122 data/menu.ui:342
+#: data/menu.ui:122 data/menu.ui:363
 msgid "Paste _After"
 msgstr "Einfügen _nach"
 
-#: data/menu.ui:129 data/menu.ui:350
+#: data/menu.ui:129 data/menu.ui:371
 msgid "Paste _Before"
 msgstr "Einfügen _vor"
 
-#: pdfarranger/pdfarranger.py:1877
+#: pdfarranger/pdfarranger.py:1967
 msgid "Pasted data not valid. Aborting paste."
 msgstr "Eingefügte Daten sind ungültig. Einfügen wird abgebrochen."
 
-#: pdfarranger/config.py:309
+#: pdfarranger/config.py:356
 msgid "Pixels/inch:"
 msgstr "Pixel/Inch:"
 
-#: pdfarranger/pageutils.py:162
+#: pdfarranger/pageutils.py:163
 msgid "Portrait"
 msgstr "Hochformat"
 
-#: data/menu.ui:304
+#: data/menu.ui:325
 msgid "Pre_ferences"
 msgstr "_Einstellungen"
 
-#: pdfarranger/config.py:267
+#: pdfarranger/config.py:314
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: pdfarranger/pdfarranger.py:325
+#: pdfarranger/pdfarranger.py:333
 msgid "Print the version of PDF Arranger and exit"
 msgstr "PDF Arranger Version anzeigen und beenden"
 
-#: pdfarranger/config.py:292
+#: pdfarranger/config.py:339
 msgid "Printing"
 msgstr "Drucken"
 
-#: pdfarranger/exporter.py:597
+#: pdfarranger/exporter.py:554
 msgid "Printing…"
 msgstr "Drucken…"
 
@@ -561,39 +582,39 @@ msgstr "Hersteller"
 msgid "Property"
 msgstr "Eigenschaft"
 
-#: pdfarranger/pageutils.py:1060
+#: pdfarranger/pageutils.py:1122
 msgid "Range Select"
 msgstr "Bereichsauswahl"
 
-#: data/menu.ui:202 data/menu.ui:477
+#: data/menu.ui:202 data/menu.ui:498
 msgid "Re_verse Order"
 msgstr "Rei_henfolge umkehren"
 
-#: pdfarranger/pageutils.py:356
+#: pdfarranger/pageutils.py:357
 msgid "Relative"
 msgstr "Relativ"
 
-#: pdfarranger/exporter.py:634
+#: pdfarranger/exporter.py:591
 msgid "Rendering Preview…"
 msgstr "Vorschau erstellen…"
 
-#: pdfarranger/pdfarranger.py:953
+#: pdfarranger/pdfarranger.py:991
 msgid "Rendering…"
 msgstr "Vorschau erstellen…"
 
-#: pdfarranger/pdfarranger.py:1368
+#: pdfarranger/pdfarranger.py:1415
 msgid "Replace"
 msgstr "Ersetzen"
 
-#: pdfarranger/config.py:299
+#: pdfarranger/config.py:346
 msgid "Retain document-level information of the first opened file"
 msgstr "Dokumentinformationen der zuerst geöffneten Datei beibehalten"
 
-#: pdfarranger/pageutils.py:253
+#: pdfarranger/pageutils.py:254
 msgid "Right"
 msgstr "Rechts"
 
-#: pdfarranger/pageutils.py:480
+#: pdfarranger/pageutils.py:484
 msgid "Right to Left"
 msgstr "Rechts nach links"
 
@@ -605,20 +626,20 @@ msgstr "Nach links drehen"
 msgid "Rotate Right"
 msgstr "Nach rechts drehen"
 
-#: data/menu.ui:172 data/menu.ui:447
+#: data/menu.ui:172 data/menu.ui:468
 msgid "Rotate _Left"
 msgstr "Nach _links drehen"
 
-#: pdfarranger/pageutils.py:466 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:470 pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Zeilen"
 
-#: pdfarranger/pdfarranger.py:3100
+#: pdfarranger/pdfarranger.py:3207
 #, python-format
 msgid "Running on %s"
 msgstr "Betriebssystem: %s"
 
-#: data/menu.ui:259 data/menu.ui:428
+#: data/menu.ui:259 data/menu.ui:449
 msgid "Same Page _Format"
 msgstr "Gleiches Seiten_format"
 
@@ -630,7 +651,7 @@ msgstr "Speichern"
 msgid "Save As"
 msgstr "Speichern unter"
 
-#: pdfarranger/pdfarranger.py:1307
+#: pdfarranger/pdfarranger.py:1354
 msgid "Save As…"
 msgstr "Speichern unter …"
 
@@ -638,77 +659,87 @@ msgstr "Speichern unter …"
 msgid "Save _As…"
 msgstr "Speichern _unter …"
 
-#: pdfarranger/pdfarranger.py:1210
+#: pdfarranger/pdfarranger.py:1256
 msgid "Save changes before closing?"
 msgstr "Änderungen vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:1247
+#: pdfarranger/pdfarranger.py:1293
 msgid "Save changes before quitting?"
 msgstr "Änderungen vor dem Beenden speichern?"
 
-#: pdfarranger/pdfarranger.py:1207
+#: pdfarranger/pdfarranger.py:1253
+#, python-brace-format
 msgid "Save changes to “{}” before closing?"
 msgstr "Änderungen an »{}« vor dem Schließen speichern?"
 
-#: pdfarranger/pdfarranger.py:1244
+#: pdfarranger/pdfarranger.py:1290
+#, python-brace-format
 msgid "Save changes to “{}” before quitting?"
 msgstr "Änderungen an »{}« vor dem Beenden speichern?"
 
-#: pdfarranger/pdfarranger.py:1488
+#: pdfarranger/pdfarranger.py:1563
+msgid "Saving failed"
+msgstr "Speichern fehlgeschlagen"
+
+#: pdfarranger/pdfarranger.py:1537
 msgid "Saving produced some warnings"
 msgstr "Speichern führte zu einigen Warnungen"
 
-#: pdfarranger/config.py:297
+#: pdfarranger/config.py:344
 msgid "Saving/exporting to single file"
 msgstr "Speichern/exportieren als einzelne Datei"
 
-#: pdfarranger/pdfarranger.py:1527
+#: pdfarranger/pdfarranger.py:1580
 msgid "Saving…"
 msgstr "Speichern…"
 
-#: pdfarranger/pageutils.py:348
+#: pdfarranger/pageutils.py:349
 msgid "Scale"
 msgstr "Skalieren"
 
-#: pdfarranger/pageutils.py:349
+#: pdfarranger/pageutils.py:350
 msgid "Scale & Add margins"
 msgstr "Skalieren & Ränder hinzufügen"
 
-#: pdfarranger/pageutils.py:121
+#: pdfarranger/pageutils.py:122
 msgid "Scale factor"
 msgstr "Vergrößerung"
 
-#: pdfarranger/exporter.py:575
+#: pdfarranger/exporter.py:516
 msgid "Scale mode:"
 msgstr "Skalierung:"
 
-#: data/menu.ui:234 data/menu.ui:403
+#: data/menu.ui:234 data/menu.ui:424
 msgid "Select _All"
 msgstr "_Alles auswählen"
 
-#: data/menu.ui:249 data/menu.ui:418
+#: data/menu.ui:249 data/menu.ui:439
 msgid "Select _Even Pages"
 msgstr "_Gerade Seiten auswählen"
 
-#: data/menu.ui:244 data/menu.ui:413
+#: data/menu.ui:244 data/menu.ui:434
 msgid "Select _Odd Pages"
 msgstr "_Ungerade Seiten auswählen"
 
-#: data/menu.ui:269 data/menu.ui:438
+#: data/menu.ui:269 data/menu.ui:459
 msgid "Select _Range"
 msgstr "_Bereich auswählen"
 
-#: pdfarranger/pageutils.py:1069
+#: pdfarranger/pageutils.py:1131
 msgid "Select range of pages: "
 msgstr "Seiten auswählen: "
 
-#: pdfarranger/pdfarranger.py:3128
+#: pdfarranger/pdfarranger.py:3235
 msgid "Selected pages: "
 msgstr "Ausgewählte Seiten: "
 
-#: pdfarranger/pageutils.py:644
+#: pdfarranger/pageutils.py:699
 msgid "Show values"
 msgstr "Werte anzeigen"
+
+#: pdfarranger/pdfarranger.py:3198
+msgid "Software versions:"
+msgstr "Softwareversionen:"
 
 #: pdfarranger/splitter.py:26
 msgid "Split Pages"
@@ -718,35 +749,36 @@ msgstr "Seiten teilen"
 msgid "Subject"
 msgstr "Thema"
 
-#: pdfarranger/pdfarranger.py:702
+#: pdfarranger/pdfarranger.py:733
 msgid "Supported image files"
 msgstr "Unterstützte Bilddateien"
 
-#: pdfarranger/config.py:334 pdfarranger/config.py:342
+#: pdfarranger/config.py:376 pdfarranger/config.py:385
 msgid "System setting"
 msgstr "Systemeinstellung"
 
-#: pdfarranger/core.py:447
+#: pdfarranger/core.py:464
+#, python-brace-format
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr ""
 "Das Dokument »{}« ist gesperrt und ein Passwort wird benötigt, um es zu "
 "öffnen."
 
-#: pdfarranger/pdfarranger.py:2006
+#: pdfarranger/pdfarranger.py:2095
 msgid "The page has several images. Use \"Explode into Images\" first.\""
 msgstr ""
 "Die Seite hat mehrere Bilder. Verwenden Sie zunächst »In Bilder aufteilen«."
 
-#: pdfarranger/pdfarranger.py:553
+#: pdfarranger/pdfarranger.py:584
 msgid "The page selection is not contiguous. Cannot unimpose."
 msgstr "Seitenauswahl ist nicht fortlaufend. Kann nicht aufgeteilt werden."
 
-#: pdfarranger/core.py:446
+#: pdfarranger/core.py:463
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Das Passwort wird gespeichert, bis PDF Arranger geschlossen wird."
 
-#: pdfarranger/config.py:285
+#: pdfarranger/config.py:332
 msgid "Theme"
 msgstr "Erscheinungsbild"
 
@@ -754,23 +786,23 @@ msgstr "Erscheinungsbild"
 msgid "Title"
 msgstr "Titel"
 
-#: pdfarranger/pageutils.py:253
+#: pdfarranger/pageutils.py:254
 msgid "Top"
 msgstr "Oben"
 
-#: pdfarranger/pageutils.py:481
+#: pdfarranger/pageutils.py:485
 msgid "Top to Bottom"
 msgstr "Oben nach unten"
 
-#: pdfarranger/pageutils.py:995
+#: pdfarranger/pageutils.py:1055
 msgid "Underlay"
 msgstr "Hintergrund"
 
-#: pdfarranger/core.py:554 pdfarranger/pdfarranger.py:1741
+#: pdfarranger/core.py:573 pdfarranger/pdfarranger.py:1803
 msgid "Unknown file format"
 msgstr "Unbekanntes Dateiformat"
 
-#: pdfarranger/pageutils.py:1076
+#: pdfarranger/pageutils.py:1138
 msgid ""
 "Use a comma to separate page numbers, a dash to select a range of pages. \n"
 "e.g. : \"1,3,5-7,9\""
@@ -779,7 +811,7 @@ msgstr ""
 "Nummernbereiche auszuwählen.\n"
 "z.B.: »1,3,5-7,9«"
 
-#: pdfarranger/pdfarranger.py:3065
+#: pdfarranger/pdfarranger.py:3174
 msgid "User Manual"
 msgstr "Benutzerhandbuch"
 
@@ -787,7 +819,7 @@ msgstr "Benutzerhandbuch"
 msgid "Value"
 msgstr "Wert"
 
-#: pdfarranger/pageutils.py:478
+#: pdfarranger/pageutils.py:482
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -795,11 +827,11 @@ msgstr "Vertikal"
 msgid "Vertical Splits"
 msgstr "Senkrechte Teilungen"
 
-#: pdfarranger/pageutils.py:550
+#: pdfarranger/pageutils.py:554
 msgid "Vertical offset"
 msgstr "Vertikale Verschiebung"
 
-#: pdfarranger/pageutils.py:138
+#: pdfarranger/pageutils.py:139
 msgid "Width"
 msgstr "Breite"
 
@@ -807,7 +839,7 @@ msgstr "Breite"
 msgid "Width in %"
 msgstr "Breite in %"
 
-#: pdfarranger/pdfarranger.py:1191
+#: pdfarranger/pdfarranger.py:1237
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Änderungen gehen verloren, wenn sie nicht gespeichert werden."
 
@@ -831,42 +863,42 @@ msgstr "Ver_größern"
 msgid "Zoom _Out"
 msgstr "Ver_kleinern"
 
-#: data/menu.ui:310
+#: data/menu.ui:331
 msgid "_About"
 msgstr "Über _PDF Arranger"
 
-#: pdfarranger/pageutils.py:952
+#: pdfarranger/pageutils.py:1012
 msgid "_Apply"
 msgstr "An_wenden"
 
-#: data/menu.ui:218 data/menu.ui:493
+#: data/menu.ui:218 data/menu.ui:514
 msgid "_Booklet"
 msgstr "Broschüre"
 
-#: pdfarranger/config.py:271 pdfarranger/metadata.py:216
-#: pdfarranger/pageutils.py:326 pdfarranger/pdfarranger.py:1183
-#: pdfarranger/pdfarranger.py:1192 pdfarranger/pdfarranger.py:1313
-#: pdfarranger/pdfarranger.py:1380
+#: pdfarranger/config.py:318 pdfarranger/metadata.py:216
+#: pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:1229
+#: pdfarranger/pdfarranger.py:1238 pdfarranger/pdfarranger.py:1360
+#: pdfarranger/pdfarranger.py:1427
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: pdfarranger/pdfarranger.py:1202 data/menu.ui:316
+#: pdfarranger/pdfarranger.py:1248 data/menu.ui:337
 msgid "_Close"
 msgstr "_Schließen"
 
-#: data/menu.ui:118 data/menu.ui:338
+#: data/menu.ui:118 data/menu.ui:359
 msgid "_Copy"
 msgstr "_Kopieren"
 
-#: data/menu.ui:186 data/menu.ui:461
+#: data/menu.ui:186 data/menu.ui:482
 msgid "_Crop Margins…"
 msgstr "Ränder _beschneiden …"
 
-#: data/menu.ui:110 data/menu.ui:330
+#: data/menu.ui:110 data/menu.ui:351
 msgid "_Delete"
 msgstr "_Entfernen"
 
-#: data/menu.ui:239 data/menu.ui:408
+#: data/menu.ui:239 data/menu.ui:429
 msgid "_Deselect All"
 msgstr "Auswahl au_fheben"
 
@@ -874,19 +906,27 @@ msgstr "Auswahl au_fheben"
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: data/menu.ui:157 data/menu.ui:382
+#: data/menu.ui:157 data/menu.ui:403
 msgid "_Explode into Images"
 msgstr "In Bilder aufteilen"
 
-#: data/menu.ui:155 data/menu.ui:379
+#: data/menu.ui:155 data/menu.ui:400
 msgid "_Extract"
 msgstr "_Extrahieren"
 
-#: data/menu.ui:220 data/menu.ui:495
+#: data/menu.ui:297
+msgid "_Find"
+msgstr "_Suchen"
+
+#: data/menu.ui:300
+msgid "_Find…"
+msgstr "_Suchen…"
+
+#: data/menu.ui:220 data/menu.ui:516
 msgid "_Generate (imposition)"
 msgstr "_Erzeugen"
 
-#: data/menu.ui:190 data/menu.ui:465
+#: data/menu.ui:190 data/menu.ui:486
 msgid "_Hide Margins…"
 msgstr "_Ränder verbergen …"
 
@@ -894,11 +934,11 @@ msgstr "_Ränder verbergen …"
 msgid "_Import"
 msgstr "_Importieren"
 
-#: data/menu.ui:264 data/menu.ui:433
+#: data/menu.ui:264 data/menu.ui:454
 msgid "_Invert Selection"
 msgstr "Auswahl _umkehren"
 
-#: data/menu.ui:210 data/menu.ui:485
+#: data/menu.ui:210 data/menu.ui:506
 msgid "_Merge Pages…"
 msgstr "Seiten _zusammenfügen …"
 
@@ -906,16 +946,16 @@ msgstr "Seiten _zusammenfügen …"
 msgid "_New Window"
 msgstr "_Neues Fenster"
 
-#: pdfarranger/config.py:272 pdfarranger/metadata.py:217
-#: pdfarranger/pageutils.py:327 pdfarranger/pdfarranger.py:3056
+#: pdfarranger/config.py:319 pdfarranger/metadata.py:217
+#: pdfarranger/pageutils.py:328 pdfarranger/pdfarranger.py:3165
 msgid "_OK"
 msgstr "_Ok"
 
-#: pdfarranger/pdfarranger.py:1379 data/menu.ui:24
+#: pdfarranger/pdfarranger.py:1426 data/menu.ui:24
 msgid "_Open"
 msgstr "_Öffnen"
 
-#: data/menu.ui:182 data/menu.ui:457
+#: data/menu.ui:182 data/menu.ui:478
 msgid "_Page Size…"
 msgstr "_Seitengröße …"
 
@@ -923,7 +963,7 @@ msgstr "_Seitengröße …"
 msgid "_Print…"
 msgstr "_Drucken …"
 
-#: pdfarranger/pdfarranger.py:1239 data/menu.ui:322
+#: pdfarranger/pdfarranger.py:1285 data/menu.ui:343
 msgid "_Quit"
 msgstr "Been_den"
 
@@ -931,28 +971,28 @@ msgstr "Been_den"
 msgid "_Redo"
 msgstr "_Wiederholen"
 
-#: pdfarranger/pageutils.py:952
+#: pdfarranger/pageutils.py:1012
 msgid "_Revert"
 msgstr "_Rückgängig machen"
 
-#: data/menu.ui:177 data/menu.ui:452
+#: data/menu.ui:177 data/menu.ui:473
 msgid "_Rotate Right"
 msgstr "Nach _rechts drehen"
 
-#: pdfarranger/pdfarranger.py:1192 pdfarranger/pdfarranger.py:1312
+#: pdfarranger/pdfarranger.py:1238 pdfarranger/pdfarranger.py:1359
 #: data/menu.ui:42
 msgid "_Save"
 msgstr "_Speichern"
 
-#: data/menu.ui:231 data/menu.ui:400
+#: data/menu.ui:231 data/menu.ui:421
 msgid "_Select"
 msgstr "Aus_wählen"
 
-#: data/menu.ui:224 data/menu.ui:499
+#: data/menu.ui:224 data/menu.ui:520
 msgid "_Split (unimposition)"
 msgstr "_Aufteilen"
 
-#: data/menu.ui:206 data/menu.ui:481
+#: data/menu.ui:206 data/menu.ui:502
 msgid "_Split Pages…"
 msgstr "_Seiten teilen…"
 
@@ -964,16 +1004,16 @@ msgstr "_Rückgängig"
 msgid "_View"
 msgstr "_Ansicht"
 
-#: pdfarranger/pageutils.py:142 pdfarranger/pageutils.py:148
-#: pdfarranger/pageutils.py:464 pdfarranger/pageutils.py:514
-#: pdfarranger/pdfarranger.py:3133
+#: pdfarranger/pageutils.py:143 pdfarranger/pageutils.py:149
+#: pdfarranger/pageutils.py:468 pdfarranger/pageutils.py:518
+#: pdfarranger/pdfarranger.py:3240
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/core.py:706
+#: pdfarranger/core.py:730
 msgid "page"
 msgstr "Seite"
 
-#: pdfarranger/pdfarranger.py:1033
+#: pdfarranger/pdfarranger.py:1071
 msgid "untitled"
 msgstr "unbenannt"

@@ -48,7 +48,8 @@ _DEFAULT_ACCELS = [
     ('import', '<Primary>i'),
     ('zoom-in', 'plus KP_Add <Primary>plus <Primary>KP_Add'),
     ('zoom-out', 'minus KP_Subtract <Primary>minus <Primary>KP_Subtract'),
-    ('zoom-fit', 'f'),
+    ('zoom-fit(0)', 'f'),
+    ('zoom-fit(1)', 'm'),
     ('fullscreen', 'F11'),
     ('undo', '<Primary>z'),
     ('redo', '<Primary>y'),
@@ -67,6 +68,44 @@ _DEFAULT_ACCELS = [
     ('find_prev', '<Shift>F3'),
     ('find_next', 'F3'),
 ]
+
+
+LANGUAGE_NAMES = {
+    'ar': 'العربية',
+    'ca': 'Català',
+    'ca@valencia': 'Català (València)',
+    'cs': 'Čeština',
+    'da': 'Dansk',
+    'de': 'Deutsch',
+    'el': 'Ελληνικά',
+    'en': 'English',
+    'es': 'Español',
+    'eu': 'Euskara',
+    'fi': 'Suomi',
+    'fr': 'Français',
+    'he': 'עברית',
+    'hr': 'Hrvatski',
+    'hu': 'Magyar',
+    'id': 'Bahasa Indonesia',
+    'is': 'Íslenska',
+    'it': 'Italiano',
+    'ja': '日本語',
+    'ka': 'ქართული',
+    'ko': '한국어',
+    'nl': 'Nederlands',
+    'oc': 'Occitan',
+    'pl_PL': 'Polski',
+    'pt_BR': 'Português (Brasil)',
+    'pt_PT': 'Português (Portugal)',
+    'ru': 'Русский',
+    'sl': 'Slovenščina',
+    'sv': 'Svenska',
+    'tr': 'Türkçe',
+    'uk': 'Українська',
+    'vi': 'Tiếng Việt',
+    'zh_CN': '简体中文',
+    'zh_TW': '繁體中文',
+}
 
 
 class Config(object):
@@ -136,10 +175,17 @@ class Config(object):
         for k, v in _DEFAULT_ACCELS:
             if not enable_custom or k not in a:
                 a[k] = v
+        self.remove_old_accelerators(a)
         self.popup_menu_accels = [
             Gtk.accelerator_parse(x) for x in a["context-menu"].split()
         ]
         self.has_pikepdf8 = version.parse(pikepdf.__version__) >= version.Version("8.0")
+
+    def remove_old_accelerators(self, a):
+        """Remove accelerators which are no longer used"""
+        key = 'zoom-fit'
+        if key in a:
+            del a[key]
 
     def is_popup_key_event(self, keyevent):
         for key, mods in self.popup_menu_accels:
@@ -271,7 +317,7 @@ class Config(object):
             if k != "enable_custom"
         ]
 
-    def preferences_dialog(self, parent, localedir, handy_available):
+    def preferences_dialog(self, parent, handy_available):
         """A dialog for some application preferences."""
         d = Gtk.Dialog(title=_("Preferences"),
                        parent=parent,
@@ -305,8 +351,12 @@ class Config(object):
         if self.has_pikepdf8:
             frame4 = Gtk.Frame(label=_("Saving/exporting to single file"), margin=8)
             cb_retain = Gtk.CheckButton(
-                label=_("Retain document-level information of the first opened file"),
+                label=_("Preserve document information from the first file opened"),
                 margin=8)
+            cb_retain.set_tooltip_text("\n".join([
+                _("When checked: use document properties from the first file opened."),
+                _("When unchecked: merge bookmarks from all documents.")
+            ]))
             cb_retain.set_active(not self.start_with_empty())
             frame4.add(cb_retain)
             d.vbox.pack_start(frame4, False, False, 8)
@@ -335,19 +385,15 @@ class Config(object):
         frame6.add(label6)
         d.vbox.pack_start(frame6, False, False, 8)
 
-        langs = []
-        if os.path.isdir(localedir):
-            langs = os.listdir(localedir)
-        langs.append("en")
-        langs.sort()
-        langs.insert(0, _("System setting"))
-        for lan in langs:
-            combo.append(None, lan)
-        lang = self.language()
-        if lang in langs:
-            combo.set_active(langs.index(lang))
+        combo.append('', _("System setting"))
+        languages = sorted(LANGUAGE_NAMES.items(), key=lambda item: item[1])
+        for key, value in languages:
+            combo.append(key, value + " [" + key + "]")
+        key = self.language()
+        if key in LANGUAGE_NAMES.keys():
+            combo.set_active_id(key)
         else:
-            combo.set_active(0)
+            combo.set_active_id('')
         themes = [_("System setting"), "light", "dark"]
         for the in themes:
             combo2.append(None, the)
@@ -361,9 +407,7 @@ class Config(object):
         d.show_all()
         result = d.run()
         if result == Gtk.ResponseType.OK:
-            num = combo.get_active()
-            language = langs[num] if num != 0 else ""
-            self.set_language(language)
+            self.set_language(combo.get_active_id())
             num2 = combo2.get_active()
             theme = themes[num2] if num2 != 0 else ""
             self.set_theme(theme)

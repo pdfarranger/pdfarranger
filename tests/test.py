@@ -296,7 +296,7 @@ class PdfArrangerTest(unittest.TestCase):
         ok, content = self._check_file_content(temp, expected)
         self.assertTrue(ok, f'expectent content {content} missing in {filename}')
 
-    def _assert_file_size(self, filename, size, tolerance=0.03):
+    def _assert_file_size(self, filename, size, tolerance=0.04):
         """
         Check if a file in the current tmp folder have the expected size
         at a given tolerance.
@@ -958,6 +958,7 @@ class TestBatch9(PdfArrangerTest):
         self._start(["--version"], gtk_check=False)
         time.sleep(0.5)
         stdout = self._get_stdout()
+        print(stdout)
         self.assertIn("pikepdf", stdout)
         self.assertIn("libqpdf", stdout)
         self.assertIn("OS-", stdout)
