@@ -2754,6 +2754,7 @@ class PdfArranger(Gtk.Application):
             else:
                 path = Gtk.TreePath.new_from_indices([self.get_visible_range2()[0]])
                 self.iconview.select_path(path)
+                self.iv_selection_changed()
             self.iconview.set_cursor(path, None, False)
             self.zoom_level_old = self.zoom_level
             self.zoom_fit = True
