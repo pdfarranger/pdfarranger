@@ -42,7 +42,7 @@ You may need to run the following commands to run those tests in your current se
 * setxkbmap -v fr
 * gsettings set org.gnome.desktop.interface toolkit-accessibility true
 
-Tests need to be run with a window size of 545x600. It must be set in ~/.config/pdfarranger/config.ini.
+Tests run with a window size of 580x600.
 
 Some tips:
 
@@ -250,14 +250,16 @@ class PdfArrangerTest(unittest.TestCase):
         return statusbar.name
 
     def _assert_selected(self, selection):
-        self.assertTrue(self._status_text().startswith("Selected pages: " + selection))
+        msg = "Statusbar text is: " + self._status_text()
+        self.assertTrue(self._status_text().startswith("Selected pages: " + selection), msg=msg)
 
     def _assert_page_size(self, width, height, pageid=None):
         if pageid is not None:
             self._icons()[pageid].click()
             self._wait_cond(lambda: self._status_text().startswith(f"Selected pages: {pageid+1}"))
         label = " {:.1f} mm \u00D7 {:.1f} mm".format(width, height)
-        self.assertTrue(self._status_text().endswith("Page Size:" + label))
+        msg = "Statusbar text is: " + self._status_text()
+        self.assertTrue(self._status_text().endswith("Page Size:" + label), msg=msg)
 
     def _page_size(self, pageid):
         self._icons()[pageid].click()
@@ -402,6 +404,9 @@ class PdfArrangerTest(unittest.TestCase):
         self._process().wait(timeout=22)
 
     default_config = """
+                     [window]
+                     width = 580
+                     height = 600
                      [preferences]
                      content-loss-warning = False
                      """
@@ -470,6 +475,7 @@ class TestBatch1(PdfArrangerTest):
         dialog.child(name="OK").click()
         self._mainmenu("Edit Properties")
         dialog = self._app().child(roleName="dialog")
+        rawinput.keyCombo("Tab")
         rawinput.keyCombo("enter")
         rawinput.typeText('Memories')
         rawinput.keyCombo("enter")
@@ -504,6 +510,7 @@ class TestBatch1(PdfArrangerTest):
         app.keyCombo("<ctrl>a")
         app.keyCombo("<ctrl>Right")  # rotate right
         app.keyCombo("<ctrl>Right")  # rotate right
+        self._assert_page_size(199.5, 308.0)
 
     def test_05_duplicate(self):
         self._popupmenu(0, "Duplicate")
@@ -533,6 +540,7 @@ class TestBatch1(PdfArrangerTest):
         cropbuttons = self._find_by_role("spin button", croppanel)
         for i in range(4):
             cropbuttons[i].click()
+            time.sleep(0.5)
             cropbuttons[i].text = str((i+1)*4)
         dialog.child(name="OK").click()
         # TODO: find the condition which could replace this ugly sleep
