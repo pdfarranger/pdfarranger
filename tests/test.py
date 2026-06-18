@@ -487,8 +487,10 @@ class TestBatch1(PdfArrangerTest):
         zoominb = app.child(description="Zoom In")
         # maximum dezoom whatever the initial zoom level
         for _ in range(10):
+            time.sleep(0.5)
             zoomoutb.click()
         for _ in range(3):
+            time.sleep(0.5)
             zoominb.click()
 
     def test_04_rotate_undo(self):
@@ -553,8 +555,8 @@ class TestBatch1(PdfArrangerTest):
         self._app().child(roleName="layered pane").keyCombo("Home")
         self._assert_selected("1")
         self._app().keyCombo("f")
-        for __ in range(2):
-            self._app().keyCombo("minus")
+        self._app().keyCombo("f")
+        self._mainmenu(["View", "Zoom Out"])
         # Zoom level is now 0 and that's what will be saved to config.ini and
         # used by next batches
 
