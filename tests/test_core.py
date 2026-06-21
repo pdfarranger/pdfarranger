@@ -125,6 +125,41 @@ class PageTest(PTest):
         self.assertTrue(isinstance(self._page1().height_in_pixel(), int), 'height_in_pixel not an int')
         self.assertTrue(isinstance(self._page1().width_in_pixel(), int), 'width_in_pixel not an int')
 
+    @staticmethod
+    def _unmodified_page() -> core.Page:
+        """Return a sample page without modifications."""
+        return core.Page(
+            1,
+            1,
+            1.0,
+            'copy',
+            0,
+            1,
+            core.Sides(),
+            core.Sides(),
+            core.Dims(100, 200),
+            'base',
+            [],
+        )
+
+    def test05(self):
+        """Test unmodified"""
+        self.assertTrue(self._unmodified_page().unmodified())
+
+        changes = {
+            'angle': 90,
+            'crop': core.Sides(0.1, 0, 0, 0),
+            'hide': core.Sides(0.1, 0, 0, 0),
+            'scale': 2,
+            'layerpages': [self._lpage1()],
+        }
+
+        for attribute, value in changes.items():
+            with self.subTest(attribute=attribute):
+                page = self._unmodified_page()
+                setattr(page, attribute, value)
+                self.assertFalse(page.unmodified())
+
 
 class LayerPageTest(PTest):
 
