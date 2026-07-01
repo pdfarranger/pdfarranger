@@ -12,7 +12,7 @@ jobs:
     - run: sudo apt-get update
     - name: Install APT packages
       run: sudo apt-get -y install gettext appstream python3-dogtail desktop-file-utils xvfb gir1.2-poppler-0.18
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Upgrade pip
       run: pip install --upgrade pip
     - name: Install
@@ -44,7 +44,7 @@ jobs:
     env:
       PDFARRANGER_COVERAGE: 1
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Install
       run: pip3 install -v .[image] coverage && pip3 install -v --ignore-installed pytest
     - name: Dogtail Tests and Coverage
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install lcov
         run: sudo apt-get -y install lcov
       - name: Download Artifacts
@@ -84,7 +84,7 @@ jobs:
       image: ghcr.io/pdfarranger/wine-mingw64:1.12.0
       options: --user root
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - run: ./setup.py build -v
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip

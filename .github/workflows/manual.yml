@@ -19,7 +19,7 @@ jobs:
       image: ghcr.io/pdfarranger/pdfarranger-pikepdf-qpdf-dev-docker-ci:1.1.0
     steps:
       - name: Checkout pdfarranger Git repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Build libqpdf
         run: |
           git clone https://github.com/qpdf/qpdf.git
