@@ -516,7 +516,7 @@ def num_pages(filepath):
 
 class PrintSettingsWidget(Gtk.Grid):
     def __init__(self, scale_mode, auto_rotate):
-        super().__init__(margin=0, row_spacing=6, column_spacing=12, border_width=12)
+        super().__init__(margin=0, row_spacing=6, column_spacing=12, border_width=3)
         lbl = Gtk.Label(_("Scale mode:"), margin=0)
         self.combo = Gtk.ComboBoxText(margin=0)
         self.combo.append("NONE", _("None"))
