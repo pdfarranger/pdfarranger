@@ -468,6 +468,8 @@ def export_doc_job(pdf_input: List[pikepdf.Pdf], files: List[List[str]], pages: 
                    quit_flag, test_mode: bool = False) -> None:
     """  Same as export() but uses the pikepdf Job interface. Requires pikedf >= 8.0. """
     job = _create_job(files, pages, files_out, quit_flag, test_mode)
+    if job is None:
+        return
     pdf_output = job.create_pdf()
     max_version = get_max_pdf_version([pdf_output, *pdf_input])
 

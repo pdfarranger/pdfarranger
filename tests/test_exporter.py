@@ -245,3 +245,29 @@ class ExporterTest(unittest.TestCase):
             Page(1),
             Page(1, nfile=2),
         )
+    def test27(self):
+        """Cancel export before writing output file."""
+
+        class QuitFlag:
+            def is_set(self):
+                return True
+
+        output_file = file('quit_flag')
+
+        if os.path.exists(output_file):
+            os.remove(output_file)
+
+        mock_config = Mock()
+        mock_config.start_with_empty.return_value = False
+
+        export(
+            [(file('basic'), '')],
+            [Page(1)],
+            {},
+            [output_file],
+            mock_config,
+            QuitFlag(),
+            True,
+        )
+
+        self.assertFalse(os.path.exists(output_file))
