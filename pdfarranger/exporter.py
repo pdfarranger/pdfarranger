@@ -153,6 +153,21 @@ def _set_meta(mdata, pdf_input, pdf_output):
         for k, v in mdata.items():
             outmeta[k] = v
 
+def _scale_annots(doc, page, new_page, factor):
+    if pikepdf.Name.Annots in page:
+        scaled_annots = []
+        for annot in page.Annots:
+            a = pikepdf.Dictionary(annot)
+            if pikepdf.Name.P in a:
+                del a[pikepdf.Name.P]   # will be set correctly by rebuild_links
+            from .exporter_outlines import scale_annot_coords
+
+            scale_annot_coords(a, factor)
+            scaled_annots.append(doc.make_indirect(a))
+        new_page[pikepdf.Name.Annots] = doc.make_indirect(
+            pikepdf.Array(scaled_annots)
+        )
+    return new_page
 
 def _scale(doc, page, factor):
     """ Scale a page """
@@ -175,6 +190,7 @@ def _scale(doc, page, factor):
         Resources={'/XObject': {'/p{}'.format(page_id): xobject}},
         Rotate=rotate,
     )
+    new_page = _scale_annots(doc, page, new_page, factor)
     # This was needed for pikepdf <= 2.6.0. See https://github.com/pikepdf/pikepdf/issues/174
     # It's also needed for pikepdf 8.8 but not for pikepdf 6.0.1
     new_page = doc.make_indirect(new_page)
