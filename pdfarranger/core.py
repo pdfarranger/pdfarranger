@@ -39,9 +39,7 @@ import packaging.version as version
 from typing import NamedTuple, Optional, Tuple, Union
 import gettext
 import gi
-from gi.repository import GObject
-from gi.repository import GLib
-from gi.repository import Gtk
+from gi.repository import GObject, GLib, Gtk, Gio
 
 gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler  # for the rendering of pdf pages
@@ -62,6 +60,10 @@ except ImportError:
 
 IMG2PDF_VERSION = "0.0.0" if img2pdf is None else img2pdf.__version__
 POPPLER_VERSION = Poppler.get_version()
+
+if os.name == 'nt':
+    # MIME type for jp2 missing in python prior 3.14.0
+    mimetypes.add_type('image/jp2', '.jp2', strict=True)
 
 _ = gettext.gettext
 
@@ -566,9 +568,7 @@ class PDFDoc:
             self.basename = description.split('\n')[0]
         self.blank_size = blank_size  # != None if page is blank
         self.password = ""
-        # MIME type for jp2 missing in python prior 3.14.0
-        mimetypes.add_type('image/jp2', '.jp2', strict=True)
-        filemime = mimetypes.guess_type(self.filename, strict=False)[0]
+        filemime = self.get_file_content_type(self.filename)
         if not filemime:
             raise PDFDocError(_("Unknown file format") + ": " + filename)
         if filemime == "application/pdf":
@@ -588,7 +588,7 @@ class PDFDoc:
             if not img2pdf:
                 raise PDFDocError(_("Image files are only supported with img2pdf") +
                                   ": " + filename)
-            if mimetypes.guess_type(filename, strict=False)[0] in img2pdf_supported_img:
+            if filemime in img2pdf_supported_img:
                 self.copyname = _img_to_pdf([filename], tmp_dir)
                 uri = pathlib.Path(self.copyname).as_uri()
                 self.document = Poppler.Document.new_from_file(uri, None)
@@ -617,6 +617,25 @@ class PDFDoc:
                 page.remove_annot(a)
         self.transparent_link_annots_removed[n_page] = True
         return page
+
+    @staticmethod
+    def get_file_content_type(filename):
+        if os.name == 'nt':
+            filemime = mimetypes.guess_type(filename, strict=False)[0]
+        else:
+            try:
+                file_item = Gio.File.new_for_path(filename)
+                file_info = file_item.query_info(
+                    Gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                    Gio.FileQueryInfoFlags.NONE,
+                    None
+                )
+                native_type = file_info.get_content_type()
+                filemime = Gio.content_type_get_mime_type(native_type)
+            except GLib.GError as e:
+                raise PDFDocError(e.message)
+        return filemime
+
 
 class PageAdder:
     """Helper class to add pages to the current model."""
