@@ -1379,7 +1379,8 @@ class PdfArranger(Gtk.Application):
             tempdir = f_dir.startswith(tempfile.gettempdir()) and f_dir.endswith(DOMAIN)
             if exportmode == 'ALL_TO_SINGLE':
                 if f.endswith(".pdf") and not tempdir:
-                    chooser.set_filename(f)  # Set name to existing file
+                    chooser.set_current_folder(f_dir)
+                    chooser.set_current_name(basename)
             else:
                 shortname, _ext = os.path.splitext(basename)
                 if self.export_file is None and tempdir:
