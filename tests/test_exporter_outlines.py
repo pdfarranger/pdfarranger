@@ -824,18 +824,21 @@ class TestOutlineStylesAndState:
     def test_styles_and_closed_state_preserved(self):
         """Color, font flags, and default closed state should survive remapping."""
         src = make_pdf(2)
+        # NOTE: raw obj[Name.C]/[Name.F] mutation must happen after the
+        # `with src.open_outline()` block fully closes — pikepdf >= 10.11.0
+        # silently drops such mutations made on a not-yet-committed item,
+        # even after it's been appended, as long as the outline context
+        # manager it was appended under is still open.
         with src.open_outline() as ol:
             parent = pikepdf.OutlineItem("Styled Parent", 0)
-            # Give the new item a dictionary to hold custom styles ---
-            parent.obj = pikepdf.Dictionary()
-            # Set color to red [1.0, 0.0, 0.0] and font to bold-italic (3)
-            parent.obj[pikepdf.Name.C] = pikepdf.Array([1.0, 0.0, 0.0])
-            parent.obj[pikepdf.Name.F] = 3
             # Add a child so the parent has something to collapse
             child = pikepdf.OutlineItem("Child", 1)
             parent.children.append(child)
             parent.is_closed = True
             ol.root.append(parent)
+        # Set color to red [1.0, 0.0, 0.0] and font to bold-italic (3)
+        parent.obj[pikepdf.Name.C] = pikepdf.Array([1.0, 0.0, 0.0])
+        parent.obj[pikepdf.Name.F] = 3
         src = roundtrip(src)
         out = make_pdf(2)
         pages = [Row(1, 1), Row(1, 2)]

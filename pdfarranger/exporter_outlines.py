@@ -132,6 +132,27 @@ class OutlineRemapper:
         return new_dest_array
 
 
+# Dictionary keys that pikepdf's OutlineItem manages natively via its own
+# constructor kwargs / properties. Anything else (color, font flags,
+# structure elements, vendor-specific keys) must be stashed and reapplied
+# after the outline's `with` block closes: pikepdf >= 10.11.0 silently
+# drops non-managed keys supplied via OutlineItem(obj=...) or set directly
+# on a not-yet-committed item once the outline tree is serialized.
+_MANAGED_OUTLINE_KEYS = frozenset(
+    [
+        pikepdf.Name.Title,
+        pikepdf.Name.Dest,
+        pikepdf.Name.A,
+        pikepdf.Name.Parent,
+        pikepdf.Name.First,
+        pikepdf.Name.Last,
+        pikepdf.Name.Next,
+        pikepdf.Name.Prev,
+        pikepdf.Name.Count,
+    ]
+)
+
+
 class OutlineCopier:
     """Copy outline items from a source PDF, remapping destinations."""
 
@@ -176,18 +197,28 @@ class OutlineCopier:
         source_item = node["source_item"]
         final_dest = node["destination"]
 
-        # 1. Instantiate the temporary OutlineItem object
+        # 1. Instantiate the temporary OutlineItem object.
+        # NOTE: we deliberately do NOT pass obj=... here (see
+        # _MANAGED_OUTLINE_KEYS comment above) — any custom keys from the
+        # source dict are stashed below and reapplied once the outline
+        # commits, rather than being supplied at construction time.
         new_item = pikepdf.OutlineItem(
             title=source_item.title,
             destination=final_dest,
-            obj=self.pdf_output.copy_foreign(
-                self.source_pdf.make_indirect(source_item.obj)
-            ),
         )
 
         new_item.is_closed = (
             source_item.is_closed or pikepdf.Name.Count not in source_item.obj
         )
+
+        copied_obj = self.pdf_output.copy_foreign(
+            self.source_pdf.make_indirect(source_item.obj)
+        )
+        extra_items = {
+            k: v for k, v in copied_obj.items() if k not in _MANAGED_OUTLINE_KEYS
+        }
+        if extra_items:
+            new_item._extra_dict_items = extra_items
 
         # 3. Append to the parent list
         pikepdf_parent_list.append(new_item)
@@ -196,11 +227,25 @@ class OutlineCopier:
         for child_node in node["children"]:
             self._insert_tree_node(child_node, new_item.children)
 
+        return new_item
+
     def copy_item(self, source_item, new_parent_list):
         """Copy a single outline item and its children, dropping invalid destinations."""
         node = self._build_valid_tree(source_item)
         if node is not None:
-            self._insert_tree_node(node, new_parent_list)
+            return self._insert_tree_node(node, new_parent_list)
+        return None
+
+
+def _apply_stashed_extras(items):
+    """Recursively reapply dictionary keys stashed by _insert_tree_node,
+    after the outline's `with` block has closed (see _MANAGED_OUTLINE_KEYS)."""
+    for item in items:
+        extras = getattr(item, "_extra_dict_items", None)
+        if extras:
+            for k, v in extras.items():
+                item.obj[k] = v
+        _apply_stashed_extras(item.children)
 
 
 def write_named_dests(pdf, named_dests):
@@ -223,6 +268,7 @@ def rebuild_outlines(pdf_input, pdf_output, pages):
     remapper = OutlineRemapper(pdf_input, pdf_output, pages)
     # preserve first-appearance order of source files, deduplicated
     ordered_file_indices = list(dict.fromkeys(row.nfile - 1 for row in pages))
+    top_level_new_items = []
     with pdf_output.open_outline() as new_outline:
         for file_idx in ordered_file_indices:
             source_pdf = pdf_input[file_idx]
@@ -232,10 +278,13 @@ def rebuild_outlines(pdf_input, pdf_output, pages):
                 with source_pdf.open_outline() as source_outline:
                     copier = OutlineCopier(remapper, file_idx, source_pdf, pdf_output)
                     for item in source_outline.root:
-                        copier.copy_item(item, new_outline.root)
+                        new_item = copier.copy_item(item, new_outline.root)
+                        if new_item is not None:
+                            top_level_new_items.append(new_item)
             except pikepdf.PdfError as e:
                 warnings.warn(
                     f"Failed to copy bookmarks from document {file_idx + 1}: {e}"
                 )
+    _apply_stashed_extras(top_level_new_items)
     if remapper.new_named_dests:
         write_named_dests(pdf_output, remapper.new_named_dests)
