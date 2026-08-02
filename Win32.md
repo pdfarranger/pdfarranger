@@ -27,10 +27,6 @@ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-pikepdf mingw-w64-x86_64-img2pdf
 ```
 
-```
-/mingw64/bin/python3.exe -m pip install --user keyboard
-```
-
 ## Building PDF Arranger
 
 Get the PDF Arranger sources:

@@ -91,7 +91,6 @@ WEBSITE = 'https://github.com/pdfarranger/pdfarranger'
 
 if os.name == 'nt':
     from winreg import HKEY_CURRENT_USER, QueryValueEx, OpenKey
-    import keyboard  # to get control key state when drag to other instance
     # Add support for dnd to other instance and insert file at drop location in Windows
     os.environ['GDK_WIN32_USE_EXPERIMENTAL_OLE2_DND'] = 'true'
     # Use client side decorations. Will also enable window moving with Win + left/right
@@ -234,6 +233,13 @@ def get_file_path_from_uri(uri):
     if os.name == 'posix':
         path = '/' + path
     return path
+
+
+@staticmethod
+def is_ctrl_pressed():
+    """Read if control key is pressed on Windows"""
+    VK_CONTROL = 0x11
+    return bool(ctypes.windll.user32.GetAsyncKeyState(VK_CONTROL) & 0x8000)
 
 
 class PdfArranger(Gtk.Application):
@@ -2341,7 +2347,7 @@ class PdfArranger(Gtk.Application):
 
         # Select move or copy dragAction
         drag_move_posix = os.name == 'posix' and context.get_actions() & Gdk.DragAction.MOVE
-        drag_move_nt = os.name == 'nt' and not keyboard.is_pressed('control')
+        drag_move_nt = os.name == 'nt' and not is_ctrl_pressed()
         if drag_move_posix or drag_move_nt:
             Gdk.drag_status(context, Gdk.DragAction.MOVE, etime)
         else:
