@@ -522,7 +522,7 @@ def _img_to_pdf(images, tmp_dir, page_size=None):
         kwargs['layout_fun'] = img2pdf.get_layout_fun(page_size)
     try:
         pdf = img2pdf.convert(images, **kwargs)
-    except ValueError as e:
+    except (ValueError, img2pdf.Image.DecompressionBombError) as e:
         # Too small or large image
         raise PDFDocError(e)
     if tmp_dir is None:
