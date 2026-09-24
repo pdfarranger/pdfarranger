@@ -46,7 +46,6 @@ parts:
       - typing_extensions==4.6.3
       - deprecation==2.1.0
       - pikepdf==7.2.0
-      - python_dateutil==2.8.2
       - img2pdf==0.4.4
     build-environment:
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
@@ -76,7 +75,6 @@ parts:
       - -usr/lib/python3.10/site-packages/pkg_re*
       - -usr/lib/python3.10/site-packages/setuptools
       - -usr/lib/python3.10/site-packages/setuptools-59*
-      - -usr/lib/python3.10/site-packages/six*
       - -lib64
     organize:
       bin: usr/bin

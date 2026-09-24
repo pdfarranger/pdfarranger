@@ -39,7 +39,7 @@ Pip will automatically install the latest pikepdf if there is no pikepdf install
 ```
 sudo apt-get install python3-pip python3-wheel python3-gi python3-gi-cairo \
     gir1.2-gtk-3.0 gir1.2-poppler-0.18 gir1.2-handy-1 python3-setuptools \
-    gettext python3-dateutil python3-venv
+    gettext python3-venv
 ```
 
 **On Arch Linux**
@@ -52,7 +52,7 @@ sudo pacman -S poppler-glib python-pip python-gobject gtk3 python-cairo libhandy
 
 ```
 sudo dnf install poppler-glib python3-pip python3-gobject gtk3 python3-cairo \
-    python3-wheel python3-pikepdf python3-img2pdf python3-dateutil libhandy
+    python3-wheel python3-pikepdf python3-img2pdf libhandy
 ```
 
 **On FreeBSD**
