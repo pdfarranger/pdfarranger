@@ -451,9 +451,24 @@ def with_config(test_config):
     return f
 
 
+class TestBatch01(PdfArrangerTest):
+    """test batch for cli flags """
+
+    def test_01_cli_version(self):
+        """test version flag"""
+        self._start(["--version"], gtk_check=False)
+        time.sleep(0.5)
+        stdout = self._get_stdout()
+        print(stdout)
+        self.assertIn("pikepdf", stdout)
+        self.assertIn("libqpdf", stdout)
+        self.assertIn("OS-", stdout)
+        self.assertIn("OS_Version-", stdout)
+
+
 @with_config("""[preferences]
                 content-loss-warning=True""")
-class TestBatch01(PdfArrangerTest):
+class TestBatch02(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
         # Handle the "content loss warning" dialog
@@ -591,7 +606,7 @@ class TestBatch01(PdfArrangerTest):
         self.assertEqual(self._config()["preferences"]["content-loss-warning"], "False")
 
 
-class TestBatch02(PdfArrangerTest):
+class TestBatch03(PdfArrangerTest):
     def test_01_open_empty(self):
         self._start()
 
@@ -682,7 +697,7 @@ class TestBatch02(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch03(PdfArrangerTest):
+class TestBatch04(PdfArrangerTest):
     """Test encryption"""
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
@@ -721,7 +736,7 @@ class TestBatch03(PdfArrangerTest):
         self._process().wait(timeout=22)
 
 
-class TestBatch04(PdfArrangerTest):
+class TestBatch05(PdfArrangerTest):
     """Check the size of duplicated and scaled pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -759,7 +774,7 @@ class TestBatch04(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch05(PdfArrangerTest):
+class TestBatch06(PdfArrangerTest):
     """Test booklet and blank pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -819,7 +834,7 @@ class TestBatch05(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch06(PdfArrangerTest):
+class TestBatch07(PdfArrangerTest):
     """Test hide margins and merge pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -895,7 +910,7 @@ class TestBatch06(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch07(PdfArrangerTest):
+class TestBatch08(PdfArrangerTest):
     """Test extracting of images and text"""
     def test_01_import_pdf(self):
         self._start(["tests/test_raster_image_text.pdf"])
@@ -933,7 +948,7 @@ class TestBatch07(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch08(PdfArrangerTest):
+class TestBatch09(PdfArrangerTest):
     """Test Open action"""
 
     def test_01_open_empty(self):
@@ -959,20 +974,6 @@ class TestBatch08(PdfArrangerTest):
         """Quit the first instance"""
         self._quit()
         self._process().wait(timeout=22)
-
-class TestBatch09(PdfArrangerTest):
-    """test batch for cli flags """
-
-    def test_01_cli_version(self):
-        """test version flag"""
-        self._start(["--version"], gtk_check=False)
-        time.sleep(0.5)
-        stdout = self._get_stdout()
-        print(stdout)
-        self.assertIn("pikepdf", stdout)
-        self.assertIn("libqpdf", stdout)
-        self.assertIn("OS-", stdout)
-        self.assertIn("OS_Version-", stdout)
 
 
 class TestBatch10(PdfArrangerTest):
