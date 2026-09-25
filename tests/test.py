@@ -453,7 +453,7 @@ def with_config(test_config):
 
 @with_config("""[preferences]
                 content-loss-warning=True""")
-class TestBatch1(PdfArrangerTest):
+class TestBatch01(PdfArrangerTest):
     def test_01_import_img(self):
         self._start(["data/screenshot.png"])
         # Handle the "content loss warning" dialog
@@ -591,7 +591,7 @@ class TestBatch1(PdfArrangerTest):
         self.assertEqual(self._config()["preferences"]["content-loss-warning"], "False")
 
 
-class TestBatch2(PdfArrangerTest):
+class TestBatch02(PdfArrangerTest):
     def test_01_open_empty(self):
         self._start()
 
@@ -682,7 +682,7 @@ class TestBatch2(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch3(PdfArrangerTest):
+class TestBatch03(PdfArrangerTest):
     """Test encryption"""
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
@@ -721,7 +721,7 @@ class TestBatch3(PdfArrangerTest):
         self._process().wait(timeout=22)
 
 
-class TestBatch4(PdfArrangerTest):
+class TestBatch04(PdfArrangerTest):
     """Check the size of duplicated and scaled pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -759,7 +759,7 @@ class TestBatch4(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch5(PdfArrangerTest):
+class TestBatch05(PdfArrangerTest):
     """Test booklet and blank pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -819,7 +819,7 @@ class TestBatch5(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch6(PdfArrangerTest):
+class TestBatch06(PdfArrangerTest):
     """Test hide margins and merge pages"""
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
@@ -895,7 +895,7 @@ class TestBatch6(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch7(PdfArrangerTest):
+class TestBatch07(PdfArrangerTest):
     """Test extracting of images and text"""
     def test_01_import_pdf(self):
         self._start(["tests/test_raster_image_text.pdf"])
@@ -933,7 +933,7 @@ class TestBatch7(PdfArrangerTest):
         self._quit_without_saving()
 
 
-class TestBatch8(PdfArrangerTest):
+class TestBatch08(PdfArrangerTest):
     """Test Open action"""
 
     def test_01_open_empty(self):
@@ -960,7 +960,7 @@ class TestBatch8(PdfArrangerTest):
         self._quit()
         self._process().wait(timeout=22)
 
-class TestBatch9(PdfArrangerTest):
+class TestBatch09(PdfArrangerTest):
     """test batch for cli flags """
 
     def test_01_cli_version(self):
