@@ -3307,12 +3307,14 @@ class PdfArranger(Gtk.Application):
                     if l + 1 < r]
         ranges = list(selected_pages[0:1] + sum(jumps, []) + selected_pages[-1:])
         display = []
+        num_selected = 0
         for lo, hi in zip(ranges[::2], ranges[1::2]):
             range_str = '{}-{}'.format(lo,hi) if lo < hi else '{}'.format(lo)
             display.append(range_str)
+            num_selected += hi-lo+1
         ctxt_id = self.status_bar.get_context_id("selected_pages")
         num_pages = len(self.model)
-        msg = _("Selected pages: ") + ", ".join(display) + " / " + str(num_pages)
+        msg = _("Selected pages: ") + ", ".join(display) + " / " + str(num_pages) + " (" + str(num_selected) + ")"
         if len(selection) == 1:
             model = self.iconview.get_model()
             pagesize = model[selection[0]][0].size_in_points()
