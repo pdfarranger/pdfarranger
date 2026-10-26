@@ -249,9 +249,10 @@ class PdfArrangerTest(unittest.TestCase):
         statusbar = allstatusbar[0]
         return statusbar.name
 
-    def _assert_selected(self, selection):
+    def _assert_selected(self, selection, num_selected):
         msg = "Statusbar text is: " + self._status_text()
         self.assertTrue(self._status_text().startswith("Selected pages: " + selection), msg=msg)
+        self.assertTrue(self._status_text().endswith("(" + num_selected + ")"), msg=msg)
 
     def _assert_page_size(self, width, height, pageid=None):
         if pageid is not None:
@@ -516,9 +517,9 @@ class TestBatch02(PdfArrangerTest):
 
     def test_04_rotate_undo(self):
         app = self._app()
-        self._assert_selected("")
+        self._assert_selected("", 0)
         app.keyCombo("<ctrl>a")  # select all
-        self._assert_selected("1")
+        self._assert_selected("1", 1)
         app.keyCombo("<ctrl>Left")  # rotate left
         app.keyCombo("<ctrl>z")  # undo
         app.keyCombo("<ctrl>y")  # redo
@@ -540,13 +541,13 @@ class TestBatch02(PdfArrangerTest):
         app.keyCombo("Right")
         app.keyCombo("Left")
         app.keyCombo("Down")
-        self._assert_selected("4")
+        self._assert_selected("4", 1)
         app.keyCombo("Up")
-        self._assert_selected("2")
+        self._assert_selected("2", 1)
 
     def test_06_crop_margins(self):
         self._popupmenu(None, ["Select", "Select Odd Pages"])
-        self._assert_selected("1, 3, 5, 7")
+        self._assert_selected("1, 3, 5, 7", 4)
         self._popupmenu(0, "Crop Margins…")
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="Show values").click()
@@ -567,7 +568,7 @@ class TestBatch02(PdfArrangerTest):
         lp.grabFocus()
         lbefore = len(self._icons())
         self._popupmenu(0, ["Select", "Select Even Pages"])
-        self._assert_selected("2, 4, 6, 8")
+        self._assert_selected("2, 4, 6, 8", 4)
         self._mainmenu(["Edit", "Split Pages…"])
         dialog = self._app().child(roleName="dialog")
         dialog.child(name="OK").click()
@@ -576,7 +577,7 @@ class TestBatch02(PdfArrangerTest):
 
     def test_08_zoom_pages(self):
         self._app().child(roleName="layered pane").keyCombo("Home")
-        self._assert_selected("1")
+        self._assert_selected("1", 1)
         self._app().keyCombo("f")
         self._app().keyCombo("f")
         self._mainmenu(["View", "Zoom Out"])
@@ -589,9 +590,9 @@ class TestBatch02(PdfArrangerTest):
 
     def test_10_reverse(self):
         self._popupmenu(0, ["Select", "Same Page Format"])
-        self._assert_selected("1, 4, 7, 10")
+        self._assert_selected("1, 4, 7, 10", 4)
         self._popupmenu(0, ["Select", "All From Same File"])
-        self._assert_selected("1-12")
+        self._assert_selected("1-12", 12)
         self._popupmenu(0, "Reverse Order")
 
     def test_11_quit(self):
@@ -750,7 +751,7 @@ class TestBatch05(PdfArrangerTest):
     def test_03_scale(self):
         self._scale_selected(200)
         self._app().keyCombo("<ctrl>Left")  # rotate left
-        self._assert_selected("2")
+        self._assert_selected("2", 1)
         self._assert_page_size(558.8, 431.8)
 
     def test_04_export(self):
@@ -769,7 +770,7 @@ class TestBatch05(PdfArrangerTest):
         self._app().child(roleName="layered pane").grabFocus()
         app.keyCombo("Right")
         app.keyCombo("Right")
-        self._assert_selected("2")
+        self._assert_selected("2", 1)
         self._assert_page_size(558.8, 431.8)
         self._quit_without_saving()
 
@@ -801,7 +802,7 @@ class TestBatch06(PdfArrangerTest):
         # Test selection with shift+arrow
         self._app().child(roleName="layered pane").grabFocus()
         self._app().child(roleName="layered pane").keyCombo("<shift>Left")
-        self._assert_selected("1-2")
+        self._assert_selected("1-2", 2)
         self._popupmenu(0, ["Crop White Borders"])
         self._assert_page_size(245.2, 213.3, 0)
         self._assert_page_size(245.2, 213.3, 1)
@@ -861,7 +862,7 @@ class TestBatch07(PdfArrangerTest):
 
     def test_04_hide_margins(self):
         self._app().keyCombo("<ctrl>a")
-        self._assert_selected("1")
+        self._assert_selected("1", 1)
         self._app().keyCombo("H")
         dialog = self._app().child(roleName="dialog")
         da = dialog.child(roleName="drawing area")
@@ -1245,7 +1246,7 @@ class TestBatch16(PdfArrangerTest):
         rawinput.typeText("tests")
         rawinput.keyCombo("<shift>F3")
         time.sleep(0.3)
-        self._assert_selected("3")
+        self._assert_selected("3", 1)
 
     def test_05_find_next(self):
         from dogtail import rawinput
@@ -1257,7 +1258,7 @@ class TestBatch16(PdfArrangerTest):
         time.sleep(0.3)
         self._mainmenu(["Find", "Find Next"])
         time.sleep(0.3)
-        self._assert_selected("1")
+        self._assert_selected("1", 1)
 
     def test_06_find_all(self):
         from dogtail import rawinput
@@ -1265,7 +1266,7 @@ class TestBatch16(PdfArrangerTest):
         rawinput.typeText("te")
         self._mainmenu(["Find", "Find All"])
         time.sleep(0.3)
-        self._assert_selected("1-3")
+        self._assert_selected("1-3", 3)
 
     def test_07_quit(self):
         from dogtail import rawinput
