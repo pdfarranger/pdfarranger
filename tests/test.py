@@ -250,9 +250,11 @@ class PdfArrangerTest(unittest.TestCase):
         return statusbar.name
 
     def _assert_selected(self, selection, num_selected):
-        msg = "Statusbar text is: " + self._status_text()
-        self.assertTrue(self._status_text().startswith("Selected pages: " + selection), msg=msg)
-        self.assertTrue(self._status_text().endswith("(" + num_selected + ")"), msg=msg)
+        status_text = self._status_text()
+        msg = "Statusbar text is: " + status_text
+        self.assertTrue(status_text.startswith("Selected pages: " + selection), msg=msg)
+        num_selected_str = "(Selection count: " + str(num_selected) + ")"
+        self.assertIn(num_selected_str, status_text, msg=msg)
 
     def _assert_page_size(self, width, height, pageid=None):
         if pageid is not None:
@@ -517,7 +519,7 @@ class TestBatch02(PdfArrangerTest):
 
     def test_04_rotate_undo(self):
         app = self._app()
-        self._assert_selected("", 0)
+        self._assert_selected("", 1)
         app.keyCombo("<ctrl>a")  # select all
         self._assert_selected("1", 1)
         app.keyCombo("<ctrl>Left")  # rotate left

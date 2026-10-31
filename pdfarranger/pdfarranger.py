@@ -3314,7 +3314,7 @@ class PdfArranger(Gtk.Application):
             num_selected += hi-lo+1
         ctxt_id = self.status_bar.get_context_id("selected_pages")
         num_pages = len(self.model)
-        msg = _("Selected pages: ") + ", ".join(display) + " / " + str(num_pages) + " (" + str(num_selected) + ")"
+        msg = _("Selected pages: ") + ", ".join(display) + " / " + str(num_pages) + " (Selection count: " + str(num_selected) + ")"
         if len(selection) == 1:
             model = self.iconview.get_model()
             pagesize = model[selection[0]][0].size_in_points()
