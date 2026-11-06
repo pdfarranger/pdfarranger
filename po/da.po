@@ -243,7 +243,7 @@ msgstr "Fil(er) at åbne"
 
 #: pdfarranger/search.py:43
 msgid "Find All"
-msgstr "Find alle
+msgstr "Find alle"
 
 #: pdfarranger/search.py:38
 msgid "Find Next"
