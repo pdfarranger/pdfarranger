@@ -29,6 +29,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="hr">Sjedinjavanje, preraspoređivanje, rastavljanje, okretanje i obrezivanje PDF dokumenata</summary>
   <summary xml:lang="hu">PDF egyesítése, átrendezése, felosztása, elforgatása és körülvágása</summary>
   <summary xml:lang="id">Menggabungkan, Mengatur ulang, Memisahkan, Memutar, dan Memangkas file PDF</summary>
+  <summary xml:lang="ja">PDF の結合、入れ替え、トリミング</summary>
   <summary xml:lang="ka">შეაერთეთ, გადაალაგეთ და ამოჭერით PDF-ები</summary>
   <summary xml:lang="nl">Een programma voor het samenvoegen, herordenen, opsplitsen, draaien en bijsnijden van pdf-bestanden</summary>
   <summary xml:lang="is">Forrit til að sameina, endurraða, skipta upp, snúa og skera utan af síðum í PDF-skjölum</summary>
@@ -134,6 +135,13 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="is">
       Þetta er viðmót fyrir pikepdf.
+    </p>
+    
+    <p xml:lang="ja">
+      PDF Arranger は、対話的で直感的なグラフィカルインターフェイスを使って、PDF 文書の結合や分割、ページの回転・トリミング・入れ替えを行える小さなアプリケーションです。
+    </p>
+    <p xml:lang="ja">
+      pikepdf のフロントエンドです。
     </p>
     
     <p xml:lang="ka">
