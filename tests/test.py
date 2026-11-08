@@ -140,12 +140,14 @@ class DogtailManager:
 # dogtail does not support change of X11 server so it must be a singleton
 dogtail_manager = DogtailManager()
 
+
 def setUpModule():
     # if we can't kill the dbus process on GHA, let's at least suppress the warning
     if dogtail_manager.xvfb and "GITHUB_ACTIONS" in os.environ:
         warnings.filterwarnings("ignore",
                                 f"subprocess {dogtail_manager.xvfb.dbus_proc.pid} is still running",
                                 ResourceWarning)
+
 
 def tearDownModule():
     dogtail_manager.kill()
@@ -169,6 +171,7 @@ class PdfArrangerManager:
         self.process.kill()
         self.process.wait()
 
+
 class PdfArrangerTest(unittest.TestCase):
     def _start(self, args=None, gtk_check=True):
         from dogtail.config import config
@@ -189,7 +192,7 @@ class PdfArrangerTest(unittest.TestCase):
     def _app(self):
         """Return the first instance of pdfarranger"""
         self._wait_cond(lambda: len(self._apps()) > 0)
-        a =  self._apps()[0]
+        a = self._apps()[0]
         self.assertFalse(a.dead)
         return a
 
@@ -276,7 +279,7 @@ class PdfArrangerTest(unittest.TestCase):
         """
         Check expected is contained in file.
         """
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             actual = f.readlines()
 
         n = 0
@@ -285,21 +288,21 @@ class PdfArrangerTest(unittest.TestCase):
                 while not actual[n].startswith(line):
                     n += 1
                 n += 1
-            except IndexError: # pragma: no cover
+            except IndexError:  # pragma: no cover
                 # Only get executed for failing test
                 return False, line
-        return True, ''
+        return True, ""
 
     def _assert_page_content(self, filename: str, expected: Tuple[str]):
         """
         Check if a file in the current tmp folder contains expected content.
         """
-        temp = os.path.join(self.__class__.tmp, 'temp.pdf')
+        temp = os.path.join(self.__class__.tmp, "temp.pdf")
         with pikepdf.Pdf.open(os.path.join(self.__class__.tmp, filename)) as pdf:
             pdf.save(temp, qdf=True, static_id=True, compress_streams=False,
                             stream_decode_level=pikepdf.StreamDecodeLevel.all)
         ok, content = self._check_file_content(temp, expected)
-        self.assertTrue(ok, f'expectent content {content} missing in {filename}')
+        self.assertTrue(ok, f"expectent content {content} missing in {filename}")
 
     def _assert_file_size(self, filename, size, tolerance=0.05):
         """
@@ -338,7 +341,7 @@ class PdfArrangerTest(unittest.TestCase):
     def _import_file(self, filename, open_action=False):
         """Try to import a file with a file chooser and return that file chooser object"""
         self._mainmenu("Open" if open_action else "Import")
-        filechooser = self._app().child(roleName='file chooser')
+        filechooser = self._app().child(roleName="file chooser")
         treeview = filechooser.child(roleName="table", name="Files")
         treeview.keyCombo("<ctrl>L")
         treeview.typeText(os.path.abspath(filename))
@@ -448,14 +451,16 @@ def with_config(test_config):
     test_config is the config.ini content to be applied on top of the default
     config defined in PdfArrangerTest.default_config
     """
+
     def f(cls):
         cls.test_config = test_config
         return cls
+
     return f
 
 
 class TestBatch01(PdfArrangerTest):
-    """test batch for cli flags """
+    """test batch for cli flags"""
 
     def test_01_cli_version(self):
         """test version flag"""
@@ -495,10 +500,10 @@ class TestBatch02(PdfArrangerTest):
         dialog = self._app().child(roleName="dialog")
         rawinput.keyCombo("Tab")
         rawinput.keyCombo("enter")
-        rawinput.typeText('Memories')
+        rawinput.typeText("Memories")
         rawinput.keyCombo("enter")
-	# FIXME: depending on where the test is ran the previous enter close
-	# the dialog or do not close it.
+        # FIXME: depending on where the test is ran the previous enter close
+        # the dialog or do not close it.
         try:
             dialog.child(name="OK").click()
         except Exception:
@@ -559,7 +564,7 @@ class TestBatch02(PdfArrangerTest):
         for i in range(4):
             cropbuttons[i].click()
             time.sleep(0.5)
-            cropbuttons[i].text = str((i+1)*4)
+            cropbuttons[i].text = str((i + 1) * 4)
         dialog.child(name="OK").click()
         # TODO: find the condition which could replace this ugly sleep
         time.sleep(0.5)
@@ -620,8 +625,6 @@ class TestBatch03(PdfArrangerTest):
 
     def test_03_blank_page(self):
         self._popupmenu(0, ["Insert Blank Page…"])
-        dialog = self._app().child(roleName="dialog")
-        dialog.child(name="OK").click()
         self._wait_cond(lambda: len(self._icons()) == 3)
 
     def test_04_paste_and_resize_overlay(self):
@@ -702,6 +705,7 @@ class TestBatch03(PdfArrangerTest):
 
 class TestBatch04(PdfArrangerTest):
     """Test encryption"""
+
     def test_01_open_encrypted(self):
         filename = os.path.join(self.__class__.tmp, "other_encrypted.pdf")
         shutil.copyfile("tests/test_encrypted.pdf", filename)
@@ -741,6 +745,7 @@ class TestBatch04(PdfArrangerTest):
 
 class TestBatch05(PdfArrangerTest):
     """Check the size of duplicated and scaled pages"""
+
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -779,6 +784,7 @@ class TestBatch05(PdfArrangerTest):
 
 class TestBatch06(PdfArrangerTest):
     """Test booklet and blank pages"""
+
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -787,8 +793,6 @@ class TestBatch06(PdfArrangerTest):
         self._popupmenu(0, ["Crop White Borders"])
         self._scale_selected(150)
         self._popupmenu(0, ["Insert Blank Page…"])
-        dialog = self._app().child(roleName="dialog")
-        dialog.child(name="OK").click()
         self._wait_cond(lambda: len(self._icons()) == 3)
 
     def test_03_booklet(self):
@@ -826,7 +830,7 @@ class TestBatch06(PdfArrangerTest):
 
     def test_06_buggy_exif(self):
         """Test img2pdf import with buggy EXIF rotation"""
-        if not check_img2pdf([0,4,2]):
+        if not check_img2pdf([0, 4, 2]):
             print("Ignoring test_05_buggy_exif, img2pdf too old")
             return
         filechooser = self._import_file("tests/1x1.jpg")
@@ -839,6 +843,7 @@ class TestBatch06(PdfArrangerTest):
 
 class TestBatch07(PdfArrangerTest):
     """Test hide margins and merge pages"""
+
     def test_01_import_pdf(self):
         self._start(["tests/test.pdf"])
 
@@ -885,7 +890,7 @@ class TestBatch07(PdfArrangerTest):
         self.assertEqual(hidebuttons[2].text, "60")
         self.assertEqual(hidebuttons[3].text, "20")
         self._zoom(da, 15, zoom_in=True)
-        rawinput.drag((x_center, y_center), (x_center + 10, y_center + 20),  button=2)  # pan view
+        rawinput.drag((x_center, y_center), (x_center + 10, y_center + 20), button=2)  # pan view
         self._zoom(da, 15, zoom_in=False)
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
@@ -915,6 +920,7 @@ class TestBatch07(PdfArrangerTest):
 
 class TestBatch08(PdfArrangerTest):
     """Test extracting of images and text"""
+
     def test_01_import_pdf(self):
         self._start(["tests/test_raster_image_text.pdf"])
 
@@ -991,7 +997,7 @@ class TestBatch10(PdfArrangerTest):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
         self._mainmenu("Save As…")
-        self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"] )
+        self._save_as_chooser("encrypted.pdf", ["encrypted.pdf"])
         with warnings.catch_warnings(record=True) as w:
             with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted.pdf"), password="foobar"):
                 pass
@@ -1016,12 +1022,13 @@ class TestBatch10(PdfArrangerTest):
         dialog.child(name="OK").click()
         self._wait_cond(lambda: dialog.dead)
         self._mainmenu("Save As…")
-        self._save_as_chooser("encrypted2.pdf", ["encrypted2.pdf"] )
+        self._save_as_chooser("encrypted2.pdf", ["encrypted2.pdf"])
         with warnings.catch_warnings(record=True) as w:
             with pikepdf.open(os.path.join(self.__class__.tmp, "encrypted2.pdf"), password="foobar"):
                 pass
         # there should be no warning that no password was needed to open this PDF
         self.assertEqual(len(w), 0)
+
 
 class TestBatch11(PdfArrangerTest):
     """Test show-save-warnings config setting and metadata"""
@@ -1272,5 +1279,54 @@ class TestBatch16(PdfArrangerTest):
 
     def test_07_quit(self):
         from dogtail import rawinput
+        rawinput.keyCombo("esc")
+        self._quit_without_saving()
+
+
+class TestBatch17(PdfArrangerTest):
+    """Test insert blank page"""
+
+    def test_01_open_empty(self):
+        self._start()
+
+    def test_02_no_file(self):
+        self._app().child(roleName="layered pane").grabFocus()
+        self._popupmenu(None, ["Insert Blank Page…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+
+    def test_03_no_selection(self):
+        self._popupmenu(0, ["Insert Blank Page…"])
+        self._wait_cond(lambda: len(self._icons()) == 2)
+
+    def test_04_blank_page_not_same_size(self):
+        self._popupmenu(0, ["Insert Blank Page…"])
+        app = self._app()
+        self._mainmenu(["Select", "Select Range"])
+        dialog = self._app().child(roleName="dialog")
+        range_text = dialog.child(roleName="text")
+        range_text.text = "3"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        app.keyCombo("s")
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(roleName="radio button", name="Landscape").click()
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+        app.keyCombo("<ctrl>a")
+        self._popupmenu(0, ["Insert Blank Page…"])
+        dialog = self._app().child(roleName="dialog")
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: len(self._icons()) == 4)
+        self._mainmenu(["Select", "Select Range"])
+        dialog = self._app().child(roleName="dialog")
+        range_text = dialog.child(roleName="text")
+        range_text.text = "3-4"
+        dialog.child(name="OK").click()
+        self._wait_cond(lambda: dialog.dead)
+
+    def test_05_quit(self):
+        from dogtail import rawinput
+
         rawinput.keyCombo("esc")
         self._quit_without_saving()
