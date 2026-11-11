@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the pdfarranger package.
 # Translators:
 # kbengs, 2020-2025
+# Jonatan Nyberg, 2026
 msgid ""
 msgstr ""
 "Project-Id-Version: pdfarranger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-23 05:41+0300\n"
-"PO-Revision-Date: 2026-05-24 07:36+0300\n"
-"Last-Translator: kbengs\n"
+"POT-Creation-Date: 2026-11-11 09:43+0200\n"
+"PO-Revision-Date: 2026-11-11 18:57+0200\n"
+"Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.9\n"
 
 #: pdfarranger/splitter.py:87
 msgid "#Col"
@@ -26,23 +26,25 @@ msgstr "#Kolumn"
 msgid "#Row"
 msgstr "#Rad"
 
-#: pdfarranger/pageutils.py:128 pdfarranger/pageutils.py:555
-#: pdfarranger/pageutils.py:557
+#: pdfarranger/pageutils.py:128 pdfarranger/pageutils.py:560
+#: pdfarranger/pageutils.py:562
 msgid "%"
 msgstr "%"
 
-#: pdfarranger/pageutils.py:278
+#: pdfarranger/pageutils.py:282
+#, no-python-format
 msgid "% of height"
-msgstr "% av höjd"
+msgstr "% av höjden"
 
-#: pdfarranger/pageutils.py:278
+#: pdfarranger/pageutils.py:280
+#, no-python-format
 msgid "% of width"
-msgstr "% av bredd"
+msgstr "% av bredden"
 
-#: pdfarranger/pdfarranger.py:3237
+#: pdfarranger/pdfarranger.py:3275
 #, python-format
 msgid "%s is a tool for rearranging and modifying PDF files."
-msgstr "%s är ett verktyg för att arrangera om och modifiera PDF filer."
+msgstr "%s är ett verktyg för att ordna om och redigera PDF-filer."
 
 #: pdfarranger/config.py:342
 msgid "(Libhandy missing)"
@@ -52,7 +54,7 @@ msgstr "(Libhandy saknas)"
 msgid "(Requires restart)"
 msgstr "(Kräver omstart)"
 
-#: pdfarranger/pdfarranger.py:1417
+#: pdfarranger/pdfarranger.py:1434
 #, python-format
 msgid "A file named \"%s\" already exists. Do you want to replace it?"
 msgstr "En fil med namnet \"%s\" finns redan. Vill du skriva över den?"
@@ -61,47 +63,47 @@ msgstr "En fil med namnet \"%s\" finns redan. Vill du skriva över den?"
 msgid "All"
 msgstr "Alla"
 
-#: data/menu.ui:258 data/menu.ui:454
+#: data/menu.ui:258 data/menu.ui:458
 msgid "All From _Same File"
 msgstr "Alla från samma _fil"
 
-#: pdfarranger/pdfarranger.py:730
+#: pdfarranger/pdfarranger.py:742
 msgid "All files"
 msgstr "Alla filer"
 
-#: pdfarranger/pdfarranger.py:519 pdfarranger/pdfarranger.py:598
+#: pdfarranger/pdfarranger.py:531 pdfarranger/pdfarranger.py:610
 msgid "All pages must have the same size."
 msgstr "Alla sidor måste ha samma storlek."
 
-#: pdfarranger/pdfarranger.py:701
+#: pdfarranger/pdfarranger.py:713
 msgid "All supported files"
 msgstr "Alla filer som stöds"
 
-#: pdfarranger/exporter.py:526
+#: pdfarranger/exporter.py:554
 msgid "Auto Rotate"
 msgstr "Rotera automatiskt"
 
 #: pdfarranger/pageutils.py:256
 msgid "Bottom"
-msgstr "Under"
+msgstr "Nederkant"
 
-#: pdfarranger/pageutils.py:488
+#: pdfarranger/pageutils.py:493
 msgid "Bottom to Top"
 msgstr "Nerifrån uppåt"
 
 #: pdfarranger/core.py:599
 msgid "Clipboard image"
-msgstr "Urklipp bild"
+msgstr "Bild från urklipp"
 
-#: pdfarranger/pageutils.py:471 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:476 pdfarranger/splitter.py:60
 msgid "Columns"
 msgstr "Kolumner"
 
-#: data/menu.ui:161 data/menu.ui:417
+#: data/menu.ui:161 data/menu.ui:421
 msgid "Copy _Image"
 msgstr "Kopiera _bild"
 
-#: data/menu.ui:166 data/menu.ui:422
+#: data/menu.ui:166 data/menu.ui:426
 msgid "Copy _Text"
 msgstr "Kopiera _text"
 
@@ -117,27 +119,27 @@ msgstr "Författare"
 msgid "Creator tool"
 msgstr "Program"
 
-#: pdfarranger/pageutils.py:353
+#: pdfarranger/pageutils.py:358
 msgid "Crop & Add margins"
-msgstr "Beskär & lägg till marginaler"
+msgstr "Beskär och lägg till marginaler"
 
-#: pdfarranger/pageutils.py:1004
+#: pdfarranger/pageutils.py:1009
 msgid "Crop Margins"
 msgstr "Beskär marginaler"
 
-#: data/menu.ui:194 data/menu.ui:500
+#: data/menu.ui:194 data/menu.ui:504
 msgid "Crop White Borders"
-msgstr "_Beskär vita marginaler"
+msgstr "Beskär vita marginaler"
 
-#: pdfarranger/pageutils.py:268 pdfarranger/pdfarranger.py:3211
+#: pdfarranger/pageutils.py:268 pdfarranger/pdfarranger.py:3249
 msgid ""
 "Cropping/hiding does not remove any content from the PDF file, it only hides "
 "it."
 msgstr ""
-"Beskär/dölj tar inte bort innehåll från PDF-filen utan gömmer endast bort "
-"det."
+"När du beskär eller döljer innehåll tas det inte bort från PDF-filen, utan "
+"döljs bara."
 
-#: data/menu.ui:114 data/menu.ui:365
+#: data/menu.ui:114 data/menu.ui:369
 msgid "Cu_t"
 msgstr "_Klipp ut"
 
@@ -145,39 +147,39 @@ msgstr "_Klipp ut"
 msgid "Custom"
 msgstr "Anpassad"
 
-#: pdfarranger/pdfarranger.py:1542
+#: pdfarranger/pdfarranger.py:1562
 msgid "Despite the warnings the document(s) should have no visible issues."
-msgstr "Trots varningarna borde dokumenten inte ha noterbara problem."
+msgstr "Trots varningarna bör dokumenten inte ha några synliga problem."
 
-#: pdfarranger/pdfarranger.py:1251
+#: pdfarranger/pdfarranger.py:1266
 msgid "Discard changes and close?"
 msgstr "Förkasta ändringar och stäng?"
 
-#: pdfarranger/pdfarranger.py:1288
+#: pdfarranger/pdfarranger.py:1304
 msgid "Discard changes and quit?"
 msgstr "Förkasta ändringar och avsluta?"
 
-#: pdfarranger/pdfarranger.py:3218
+#: pdfarranger/pdfarranger.py:3256
 msgid "Do not show this dialog again."
-msgstr "Visa inte detta meddelande igen."
+msgstr "Visa inte den här dialogrutan igen."
 
-#: pdfarranger/pdfarranger.py:1242
+#: pdfarranger/pdfarranger.py:1257
 msgid "Do_n’t Save"
 msgstr "Spara _inte"
 
-#: pdfarranger/pdfarranger.py:1549
+#: pdfarranger/pdfarranger.py:1569
 msgid "Don't show warnings when saving again."
-msgstr "Visa inte varningar när dokument sparas."
+msgstr "Visa inte dessa varningar igen när dokument sparas."
 
-#: data/menu.ui:198 data/menu.ui:504
+#: data/menu.ui:198 data/menu.ui:508
 msgid "Dupl_icate"
 msgstr "Dupli_cera"
 
-#: data/menu.ui:52 data/menu.ui:541
+#: data/menu.ui:52 data/menu.ui:545
 msgid "E_xport"
 msgstr "E_xportera"
 
-#: data/menu.ui:55 data/menu.ui:544
+#: data/menu.ui:55 data/menu.ui:548
 msgid "E_xport Selection to a Single File…"
 msgstr "E_xportera markerade sidor till en fil…"
 
@@ -187,7 +189,7 @@ msgstr "Redigera _egenskaper"
 
 #: pdfarranger/metadata.py:213
 msgid "Edit properties"
-msgstr "Dokument egenskaper"
+msgstr "Redigera egenskaper"
 
 #: pdfarranger/splitter.py:62
 msgid "Equal column width"
@@ -197,43 +199,43 @@ msgstr "Samma kolumnbredd"
 msgid "Equal row height"
 msgstr "Samma radhöjd"
 
-#: pdfarranger/pdfarranger.py:2126
+#: pdfarranger/pdfarranger.py:2155
 msgid "Exploding into images…"
-msgstr "Exploderar till bilder…"
+msgstr "Delar upp i bilder…"
 
-#: data/menu.ui:60 data/menu.ui:549
+#: data/menu.ui:60 data/menu.ui:553
 msgid "Export Selection to _Individual Files…"
 msgstr "Exportera markerade sidor till _enskilda filer…"
 
-#: data/menu.ui:74 data/menu.ui:563
+#: data/menu.ui:74 data/menu.ui:567
 msgid "Export Selection to _JPG Images…"
-msgstr "Exportera markerade sidor till _JPG bilder…"
+msgstr "Exportera markerade sidor till _JPG-bilder…"
 
-#: data/menu.ui:69 data/menu.ui:558
+#: data/menu.ui:69 data/menu.ui:562
 msgid "Export Selection to _PNG Images…"
-msgstr "Exportera markerade sidor till _PNG bilder…"
+msgstr "Exportera markerade sidor till _PNG-bilder…"
 
-#: data/menu.ui:84 data/menu.ui:573
+#: data/menu.ui:84 data/menu.ui:577
 msgid "Export Selection to _Rasterized PDF (jpg)…"
-msgstr "Exportera markerade sidor till _raster PDF (jpg)…"
+msgstr "Exportera markerade sidor till rasteriserad PD_F (jpg)…"
 
-#: data/menu.ui:79 data/menu.ui:568
+#: data/menu.ui:79 data/menu.ui:572
 msgid "Export Selection to _Rasterized PDF (png)…"
-msgstr "Exportera markerade sidor till _raster PDF (png)…"
+msgstr "Exportera markerade sidor till _rasteriserad PDF (png)…"
 
-#: data/menu.ui:65 data/menu.ui:554
+#: data/menu.ui:65 data/menu.ui:558
 msgid "Export _All Pages to Individual Files…"
 msgstr "Exportera _alla sidor till enskilda filer…"
 
-#: pdfarranger/pdfarranger.py:1358
+#: pdfarranger/pdfarranger.py:1374
 msgid "Export…"
 msgstr "Exportera…"
 
-#: pdfarranger/core.py:601 pdfarranger/pdfarranger.py:1817
+#: pdfarranger/core.py:601 pdfarranger/pdfarranger.py:1843
 msgid "File is neither pdf nor image"
-msgstr "Filen är varken en PDF eller en bildfil"
+msgstr "Filen är varken en PDF-fil eller en bildfil"
 
-#: pdfarranger/pdfarranger.py:342
+#: pdfarranger/pdfarranger.py:350
 msgid "File(s) to open"
 msgstr "Fil(er) att öppna"
 
@@ -269,25 +271,25 @@ msgstr "Zooma till _flera sidor"
 msgid "Fit _One Page"
 msgstr "Zooma till _en sida"
 
-#: pdfarranger/pageutils.py:349
+#: pdfarranger/pageutils.py:354
 msgid "Fit mode"
 msgstr "Anpassningssätt"
 
-#: pdfarranger/exporter.py:524
+#: pdfarranger/exporter.py:552
 msgid "Fit to Full Page"
 msgstr "Anpassa till hel sida"
 
-#: pdfarranger/exporter.py:523
+#: pdfarranger/exporter.py:551
 msgid "Fit to Printable Area"
 msgstr "Anpassa till utskrivbart område"
 
-#: pdfarranger/pageutils.py:358
+#: pdfarranger/pageutils.py:363
 msgid "Fit to paper"
 msgstr "Anpassa till papper"
 
-#: pdfarranger/pdfarranger.py:3215
+#: pdfarranger/pdfarranger.py:3253
 msgid "For more info see"
-msgstr "För mer info se"
+msgstr "För mer information, se"
 
 #: pdfarranger/config.py:382
 msgid "For more options see:"
@@ -297,7 +299,7 @@ msgstr "För fler inställningar se:"
 msgid "Full_screen"
 msgstr "_Helskärm"
 
-#: pdfarranger/pdfarranger.py:3259
+#: pdfarranger/pdfarranger.py:3297
 msgid "GNU General Public License (GPL) Version 3."
 msgstr "GNU General Public License (GPL) Version 3."
 
@@ -313,65 +315,65 @@ msgstr "Höjd"
 msgid "Height in %"
 msgstr "Höjd i %"
 
-#: pdfarranger/pageutils.py:1004
+#: pdfarranger/pageutils.py:1009
 msgid "Hide Margins"
 msgstr "Dölj marginaler"
 
-#: pdfarranger/pageutils.py:483
+#: pdfarranger/pageutils.py:488
 msgid "Horizontal"
-msgstr "Horizontell"
+msgstr "Horisontell"
 
 #: pdfarranger/splitter.py:61
 msgid "Horizontal Splits"
 msgstr "Horisontell delning"
 
-#: pdfarranger/pageutils.py:554
+#: pdfarranger/pageutils.py:559
 msgid "Horizontal offset"
-msgstr "Horizontell offset"
+msgstr "Horisontell förskjutning"
 
 #: pdfarranger/config.py:366
 msgid "Image Export"
-msgstr "Bild export"
+msgstr "Bildexport"
 
 #: pdfarranger/core.py:589
 msgid "Image files are only supported with img2pdf"
-msgstr "Img2pdf krävs för stöd av bildfiler"
+msgstr "Bildfiler stöds endast med img2pdf"
 
 #: pdfarranger/core.py:596
 msgid "Image format is not supported by img2pdf"
 msgstr "Bildformatet stöds inte av img2pdf"
 
-#: pdfarranger/pdfarranger.py:2123
+#: pdfarranger/pdfarranger.py:2152
 msgid "Img2pdf missing."
 msgstr "Img2pdf saknas."
 
-#: pdfarranger/pdfarranger.py:1621
+#: pdfarranger/pdfarranger.py:1641
 msgid "Img2pdf support missing."
-msgstr "Imgpdf stöd saknas."
+msgstr "Stöd för img2pdf saknas."
 
 #: data/pdfarranger.ui:58
 msgid "Import"
 msgstr "Importera"
 
-#: pdfarranger/pdfarranger.py:1631
+#: pdfarranger/pdfarranger.py:1651
 msgid "Import…"
 msgstr "Importera…"
 
-#: data/menu.ui:218 data/menu.ui:524
+#: data/menu.ui:218 data/menu.ui:528
 msgid "Insert Blan_k Page…"
 msgstr "_Infoga tom sida…"
 
-#: pdfarranger/pageutils.py:437
+#: pdfarranger/pageutils.py:442
 msgid "Insert Blank Page"
 msgstr "Infoga tom sida"
 
 #: pdfarranger/metadata.py:184
 msgid "Invalid date format. Input discarded."
-msgstr "Ogiltigt datumformat."
+msgstr "Ogiltigt datumformat. Det inmatade värdet har förkastats."
 
-#: pdfarranger/pdfarranger.py:721
+#: pdfarranger/pdfarranger.py:733
 msgid "JPEG images"
-msgstr "JPEG bilder"
+msgstr "JPEG-bilder"
 
 #: pdfarranger/metadata.py:45
 msgid "Keywords"
@@ -389,7 +391,7 @@ msgstr "Språk"
 msgid "Left"
 msgstr "Vänster"
 
-#: pdfarranger/pageutils.py:485
+#: pdfarranger/pageutils.py:490
 msgid "Left to Right"
 msgstr "Vänster till höger"
 
@@ -397,39 +399,39 @@ msgstr "Vänster till höger"
 msgid "Main Menu"
 msgstr "Huvudmeny"
 
-#: pdfarranger/pdfarranger.py:3254
+#: pdfarranger/pdfarranger.py:3292
 msgid "Maintainers and contributors"
-msgstr "Administratörer och bidragsgivare"
+msgstr "Projektansvariga och bidragsgivare"
 
-#: pdfarranger/pageutils.py:469
+#: pdfarranger/pageutils.py:474
 msgid "Margin"
 msgstr "Marginal"
 
-#: pdfarranger/pageutils.py:455
+#: pdfarranger/pageutils.py:460
 msgid "Merge Pages"
 msgstr "Slå samman sidor"
 
-#: pdfarranger/pageutils.py:520
+#: pdfarranger/pageutils.py:525
 msgid "Merged page size:"
-msgstr "Sammanslagna sidstorleken:"
+msgstr "Den sammanslagna sidans storlek:"
 
 #: pdfarranger/metadata.py:50
 msgid "Modified"
 msgstr "Ändrad"
 
-#: pdfarranger/pageutils.py:500
+#: pdfarranger/pageutils.py:505
 msgid "Non-uniform page size - using max size"
-msgstr "Sidorna har olika storlek - max storleken används"
+msgstr "Sidorna har olika storlek – den största storleken används"
 
-#: pdfarranger/exporter.py:522
+#: pdfarranger/exporter.py:550
 msgid "None"
 msgstr "Ingen"
 
-#: pdfarranger/pdfarranger.py:3204
+#: pdfarranger/pdfarranger.py:3242
 msgid "Note"
-msgstr "Notera"
+msgstr "Observera"
 
-#: pdfarranger/pdfarranger.py:3210
+#: pdfarranger/pdfarranger.py:3248
 msgid "Note the limitations:"
 msgstr "Notera begränsningarna:"
 
@@ -437,7 +439,7 @@ msgstr "Notera begränsningarna:"
 msgid "Open"
 msgstr "Öppna"
 
-#: pdfarranger/pdfarranger.py:1473
+#: pdfarranger/pdfarranger.py:1490
 msgid "Open…"
 msgstr "Öppna…"
 
@@ -449,51 +451,51 @@ msgstr "Optimera"
 msgid "Orientation"
 msgstr "Orientering"
 
-#: pdfarranger/pdfarranger.py:3212
+#: pdfarranger/pdfarranger.py:3250
 msgid "Outlines and links can be preserved only in certain cases."
 msgstr "Bokmärken och länkar kan bevaras endast i vissa fall."
 
-#: pdfarranger/pageutils.py:1057
+#: pdfarranger/pageutils.py:1062
 msgid "Overlay"
 msgstr "Klistra in ovanpå"
 
-#: pdfarranger/pdfarranger.py:323
+#: pdfarranger/pdfarranger.py:331
 msgid ""
 "PDF Arranger is a small python-gtk application, which helps the user to "
 "merge or split pdf documents and rotate, crop and rearrange their pages "
 "using an interactive and intuitive graphical interface. It is a frontend for "
 "pikepdf."
 msgstr ""
-"PDF Arranger är ett litet python-gtk program som hjälper användaren att slå "
-"samman och dela pdf dokument samt att rotera och arrangera om dess sidor med "
-"ett interaktivt och intuitivt grafiskt användargränssnitt. Programmet "
-"använder pikepdf i bakgrunden."
+"PDF Arranger är ett litet Python/GTK-program som hjälper användaren att slå "
+"samman eller dela PDF-dokument samt rotera, beskära och ordna om deras sidor "
+"via ett interaktivt och intuitivt grafiskt gränssnitt. Programmet fungerar "
+"som ett grafiskt gränssnitt för pikepdf."
 
-#: pdfarranger/pdfarranger.py:1811
+#: pdfarranger/pdfarranger.py:1837
 msgid "PDF document is damaged"
-msgstr "PDF dokumentet är skadat"
+msgstr "PDF-dokumentet är skadat"
 
-#: pdfarranger/pdfarranger.py:705
+#: pdfarranger/pdfarranger.py:717
 msgid "PDF files"
-msgstr "PDF filer"
+msgstr "PDF-filer"
 
-#: pdfarranger/pdfarranger.py:713
+#: pdfarranger/pdfarranger.py:725
 msgid "PNG images"
-msgstr "PNG bilder"
+msgstr "PNG-bilder"
 
-#: pdfarranger/exporter.py:577
+#: pdfarranger/exporter.py:605
 msgid "Page Handling"
 msgstr "Sidhantering"
 
-#: pdfarranger/pageutils.py:496
+#: pdfarranger/pageutils.py:501
 msgid "Page Order"
 msgstr "Sidordning"
 
-#: pdfarranger/pdfarranger.py:3282
+#: pdfarranger/pdfarranger.py:3322
 msgid "Page Size:"
 msgstr "Sidstorlek:"
 
-#: pdfarranger/pageutils.py:345
+#: pdfarranger/pageutils.py:350
 msgid "Page size"
 msgstr "Sidstorlek"
 
@@ -501,45 +503,49 @@ msgstr "Sidstorlek"
 msgid "Paper size"
 msgstr "Pappersstorlek"
 
-#: pdfarranger/core.py:474
+#: data/menu.ui:333
+msgid "Pass_word"
+msgstr "_Lösenord"
+
+#: pdfarranger/core.py:476
 msgid "Password"
 msgstr "Lösenord"
 
-#: pdfarranger/core.py:452
+#: pdfarranger/core.py:454
 msgid "Password required"
 msgstr "Lösenord krävs"
 
-#: data/menu.ui:127 data/menu.ui:378
+#: data/menu.ui:127 data/menu.ui:382
 msgid "Past_e Special"
-msgstr "Klistra in _special"
+msgstr "Klistra in s_pecial"
 
-#: data/menu.ui:144 data/menu.ui:396
+#: data/menu.ui:144 data/menu.ui:400
 msgid "Paste As O_verlay…"
 msgstr "Klistra in ovanp_å…"
 
-#: data/menu.ui:139 data/menu.ui:391
+#: data/menu.ui:139 data/menu.ui:395
 msgid "Paste As _Even Pages"
 msgstr "Klistra in som _jämna sidor"
 
-#: data/menu.ui:134 data/menu.ui:386
+#: data/menu.ui:134 data/menu.ui:390
 msgid "Paste As _Odd Pages"
 msgstr "Klistra in som _udda sidor"
 
-#: data/menu.ui:149 data/menu.ui:401
+#: data/menu.ui:149 data/menu.ui:405
 msgid "Paste As _Underlay…"
 msgstr "Klistra in unde_r…"
 
-#: data/menu.ui:122 data/menu.ui:373
+#: data/menu.ui:122 data/menu.ui:377
 msgid "Paste _After"
 msgstr "Klistra in _efter"
 
-#: data/menu.ui:129 data/menu.ui:381
+#: data/menu.ui:129 data/menu.ui:385
 msgid "Paste _Before"
 msgstr "Klistra in _före"
 
-#: pdfarranger/pdfarranger.py:1971
+#: pdfarranger/pdfarranger.py:2000
 msgid "Pasted data not valid. Aborting paste."
-msgstr "Inklistrat data är inte giltigt. Inklistringen avbryts."
+msgstr "Inklistrade data är inte giltiga. Inklistringen avbryts."
 
 #: pdfarranger/config.py:368
 msgid "Pixels/inch:"
@@ -549,7 +555,7 @@ msgstr "Pixlar/tum:"
 msgid "Portrait"
 msgstr "Stående"
 
-#: data/menu.ui:335
+#: data/menu.ui:339
 msgid "Pre_ferences"
 msgstr "_Inställningar"
 
@@ -559,49 +565,49 @@ msgstr "Inställningar"
 
 #: pdfarranger/config.py:354
 msgid "Preserve document information from the first file opened"
-msgstr "Behåll dokument information från filen som öppnats först"
+msgstr "Behåll dokumentinformationen från den först öppnade filen"
 
-#: pdfarranger/pdfarranger.py:334
+#: pdfarranger/pdfarranger.py:342
 msgid "Print the version of PDF Arranger and exit"
-msgstr "Skriv ut PDF Arranger versionen och avsluta"
+msgstr "Skriv ut versionsnumret för PDF Arranger och avsluta"
 
 #: pdfarranger/config.py:347
 msgid "Printing"
 msgstr "Utskrift"
 
-#: pdfarranger/exporter.py:558
+#: pdfarranger/exporter.py:586
 msgid "Printing…"
 msgstr "Skriver ut…"
 
 #: pdfarranger/metadata.py:46
 msgid "Producer"
-msgstr "PDF-framställning"
+msgstr "PDF-producent"
 
 #: pdfarranger/metadata.py:227
 msgid "Property"
-msgstr "Fält"
+msgstr "Egenskap"
 
-#: pdfarranger/pageutils.py:1124
+#: pdfarranger/pageutils.py:1129
 msgid "Range Select"
 msgstr "Markera intervall"
 
-#: data/menu.ui:202 data/menu.ui:508
+#: data/menu.ui:202 data/menu.ui:512
 msgid "Re_verse Order"
 msgstr "Omv_änd ordningen"
 
-#: pdfarranger/pageutils.py:359
+#: pdfarranger/pageutils.py:364
 msgid "Relative"
 msgstr "Relativt"
 
-#: pdfarranger/exporter.py:595
+#: pdfarranger/exporter.py:623
 msgid "Rendering Preview…"
 msgstr "Renderar förhandsgranskning…"
 
-#: pdfarranger/pdfarranger.py:993
+#: pdfarranger/pdfarranger.py:1008
 msgid "Rendering…"
 msgstr "Renderar…"
 
-#: pdfarranger/pdfarranger.py:1419
+#: pdfarranger/pdfarranger.py:1436
 msgid "Replace"
 msgstr "Ersätt"
 
@@ -609,7 +615,7 @@ msgstr "Ersätt"
 msgid "Right"
 msgstr "Höger"
 
-#: pdfarranger/pageutils.py:486
+#: pdfarranger/pageutils.py:491
 msgid "Right to Left"
 msgstr "Höger till vänster"
 
@@ -621,20 +627,20 @@ msgstr "Rotera åt vänster"
 msgid "Rotate Right"
 msgstr "Rotera åt höger"
 
-#: data/menu.ui:172 data/menu.ui:478
+#: data/menu.ui:172 data/menu.ui:482
 msgid "Rotate _Left"
 msgstr "Rotera åt _vänster"
 
-#: pdfarranger/pageutils.py:472 pdfarranger/splitter.py:60
+#: pdfarranger/pageutils.py:477 pdfarranger/splitter.py:60
 msgid "Rows"
 msgstr "Rader"
 
-#: pdfarranger/pdfarranger.py:3249
+#: pdfarranger/pdfarranger.py:3287
 #, python-format
 msgid "Running on %s"
 msgstr "Kör på %s"
 
-#: data/menu.ui:263 data/menu.ui:459
+#: data/menu.ui:263 data/menu.ui:463
 msgid "Same Page _Format"
 msgstr "Alla med samma _sidformat"
 
@@ -646,7 +652,7 @@ msgstr "Spara"
 msgid "Save As"
 msgstr "Spara som"
 
-#: pdfarranger/pdfarranger.py:1358
+#: pdfarranger/pdfarranger.py:1374
 msgid "Save As…"
 msgstr "Spara som…"
 
@@ -654,85 +660,91 @@ msgstr "Spara som…"
 msgid "Save _As…"
 msgstr "Spara s_om…"
 
-#: pdfarranger/pdfarranger.py:1260
+#: pdfarranger/pdfarranger.py:1275
 msgid "Save changes before closing?"
-msgstr "Spara ändringar innan stängning?"
+msgstr "Spara ändringarna innan dokumentet stängs?"
 
-#: pdfarranger/pdfarranger.py:1297
+#: pdfarranger/pdfarranger.py:1313
 msgid "Save changes before quitting?"
 msgstr "Spara ändringar innan programmet avslutas?"
 
-#: pdfarranger/pdfarranger.py:1257
-#, python-brace-format
+#: pdfarranger/pdfarranger.py:1272
 msgid "Save changes to “{}” before closing?"
-msgstr "Spara ändringar till “{}” innan stängning?"
+msgstr "Spara ändringarna i ”{}” innan dokumentet stängs?"
 
-#: pdfarranger/pdfarranger.py:1294
-#, python-brace-format
+#: pdfarranger/pdfarranger.py:1310
 msgid "Save changes to “{}” before quitting?"
-msgstr "Spara ändringar till “{}” innan programmet avslutas?"
+msgstr "Spara ändringarna i ”{}” innan programmet avslutas?"
 
-#: pdfarranger/pdfarranger.py:1567
+#: pdfarranger/pdfarranger.py:1587
 msgid "Saving failed"
 msgstr "Sparningen misslyckades"
 
-#: pdfarranger/pdfarranger.py:1541
+#: pdfarranger/pdfarranger.py:1561
 msgid "Saving produced some warnings"
-msgstr "Spara-processen skapade varningar"
+msgstr "Varningar uppstod när dokumentet sparades"
 
 #: pdfarranger/config.py:352
 msgid "Saving/exporting to single file"
 msgstr "Spara/exportera till en enskild fil"
 
-#: pdfarranger/pdfarranger.py:1584
+#: pdfarranger/pdfarranger.py:1604
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: pdfarranger/pageutils.py:351
+#: pdfarranger/pageutils.py:356
 msgid "Scale"
 msgstr "Skala"
 
-#: pdfarranger/pageutils.py:352
+#: pdfarranger/pageutils.py:357
 msgid "Scale & Add margins"
-msgstr "Skala & lägg till marginaler"
+msgstr "Skala och lägg till marginaler"
 
 #: pdfarranger/pageutils.py:122
 msgid "Scale factor"
-msgstr "Skalningsfaktor"
+msgstr "Skalfaktor"
 
-#: pdfarranger/exporter.py:520
+#: pdfarranger/exporter.py:548
 msgid "Scale mode:"
 msgstr "Skalningsmetod:"
 
-#: data/menu.ui:238 data/menu.ui:434
+#: data/menu.ui:238 data/menu.ui:438
 msgid "Select _All"
 msgstr "_Markera allt"
 
-#: data/menu.ui:253 data/menu.ui:449
+#: data/menu.ui:253 data/menu.ui:453
 msgid "Select _Even Pages"
 msgstr "Markera _jämna sidor"
 
-#: data/menu.ui:248 data/menu.ui:444
+#: data/menu.ui:248 data/menu.ui:448
 msgid "Select _Odd Pages"
 msgstr "Markera _udda sidor"
 
-#: data/menu.ui:273 data/menu.ui:469
+#: data/menu.ui:273 data/menu.ui:473
 msgid "Select _Range"
-msgstr "Markera _intervall"
+msgstr "Markera i_ntervall"
 
-#: pdfarranger/pageutils.py:1133
+#: pdfarranger/pageutils.py:1138
 msgid "Select range of pages: "
-msgstr "Välj sidintervall: "
+msgstr "Markera sidintervall: "
 
-#: pdfarranger/pdfarranger.py:3277
+#: pdfarranger/pdfarranger.py:3317
 msgid "Selected pages: "
 msgstr "Markerade sidor: "
 
-#: pdfarranger/pageutils.py:701
+#: pdfarranger/pdfarranger.py:3317
+msgid "Selection count: "
+msgstr "Antal markerade: "
+
+#: pdfarranger/pdfarranger.py:3386
+msgid "Set Password"
+msgstr "Ange lösenord"
+
+#: pdfarranger/pageutils.py:706
 msgid "Show values"
 msgstr "Visa värden"
 
-#: pdfarranger/pdfarranger.py:3240
+#: pdfarranger/pdfarranger.py:3278
 msgid "Software versions:"
 msgstr "Programvaruversioner:"
 
@@ -744,11 +756,11 @@ msgstr "Dela sidor"
 msgid "Subject"
 msgstr "Ämne"
 
-#: pdfarranger/pdfarranger.py:735
+#: pdfarranger/pdfarranger.py:747
 msgid "Supported image files"
 msgstr "Bildfiler som stöds"
 
-#: data/menu.ui:206 data/menu.ui:512
+#: data/menu.ui:206 data/menu.ui:516
 msgid "Swap Odd/Even"
 msgstr "Växla udda och jämna"
 
@@ -756,21 +768,21 @@ msgstr "Växla udda och jämna"
 msgid "System setting"
 msgstr "Systemets inställning"
 
-#: pdfarranger/core.py:464
-#, python-brace-format
+#: pdfarranger/core.py:466
 msgid ""
 "The document “{}” is locked and requires a password before it can be opened."
 msgstr "Dokumentet “{}” är låst och ett lösenord krävs innan det kan öppnas."
 
-#: pdfarranger/pdfarranger.py:2099
+#: pdfarranger/pdfarranger.py:2128
 msgid "The page has several images. Use \"Explode into Images\" first.\""
-msgstr "Sidan har flera bilder. Använd \"Explodera till bilder\" först."
+msgstr "Sidan har flera bilder. Använd \"Dela upp i bilder\" först."
 
-#: pdfarranger/pdfarranger.py:586
+#: pdfarranger/pdfarranger.py:598
 msgid "The page selection is not contiguous. Cannot unimpose."
-msgstr "Markeringen är inte kontinuerlig. Kan inte unimpose."
+msgstr ""
+"De markerade sidorna är inte sammanhängande. Häftet kan inte delas upp."
 
-#: pdfarranger/core.py:463
+#: pdfarranger/core.py:465
 msgid "The password will be remembered until you close PDF Arranger."
 msgstr "Lösenordet kommer att vara sparat tills du stänger PDF Arranger."
 
@@ -784,38 +796,38 @@ msgstr "Titel"
 
 #: pdfarranger/pageutils.py:256
 msgid "Top"
-msgstr "Över"
+msgstr "Överkant"
 
-#: pdfarranger/pageutils.py:487
+#: pdfarranger/pageutils.py:492
 msgid "Top to Bottom"
 msgstr "Uppifrån neråt"
 
-#: pdfarranger/pageutils.py:1057
+#: pdfarranger/pageutils.py:1062
 msgid "Underlay"
 msgstr "Klistra in under"
 
-#: pdfarranger/core.py:573 pdfarranger/pdfarranger.py:1807
+#: pdfarranger/core.py:573 pdfarranger/pdfarranger.py:1833
 msgid "Unknown file format"
 msgstr "Okänt filformat"
 
-#: pdfarranger/pageutils.py:1140
+#: pdfarranger/pageutils.py:1145
 msgid ""
 "Use a comma to separate page numbers, a dash to select a range of pages. \n"
 "e.g. : \"1,3,5-7,9\""
 msgstr ""
-"Använd komma för att separera sidnummer, bindestreck för att välja ett "
-"sidintervall \n"
-"t.ex. : \"1,3,5-7,9\""
+"Använd komma för att separera sidnummer och bindestreck för att markera ett "
+"sidintervall. \n"
+"Exempel: \"1,3,5-7,9\""
 
-#: pdfarranger/pdfarranger.py:3216
+#: pdfarranger/pdfarranger.py:3254
 msgid "User Manual"
 msgstr "Användarmanual"
 
 #: pdfarranger/metadata.py:227
 msgid "Value"
-msgstr "Innehåll"
+msgstr "Värde"
 
-#: pdfarranger/pageutils.py:484
+#: pdfarranger/pageutils.py:489
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -823,17 +835,20 @@ msgstr "Vertikal"
 msgid "Vertical Splits"
 msgstr "Vertikal delning"
 
-#: pdfarranger/pageutils.py:556
+#: pdfarranger/pageutils.py:561
 msgid "Vertical offset"
-msgstr "Vertikal offset"
+msgstr "Vertikal förskjutning"
 
 #: pdfarranger/config.py:357
 msgid "When checked: use document properties from the first file opened."
-msgstr "Valt: använd dokument information från filen som öppnats först"
+msgstr ""
+"När alternativet är markerat: använd dokumentegenskaper från den först "
+"öppnade filen."
 
 #: pdfarranger/config.py:358
 msgid "When unchecked: merge bookmarks from all documents."
-msgstr "Ej valt: slå samman bokmärken från alla dokument."
+msgstr ""
+"När alternativet inte är markerat: slå samman bokmärken från alla dokument."
 
 #: pdfarranger/pageutils.py:150
 msgid "Width"
@@ -843,7 +858,7 @@ msgstr "Bredd"
 msgid "Width in %"
 msgstr "Bredd i %"
 
-#: pdfarranger/pdfarranger.py:1241
+#: pdfarranger/pdfarranger.py:1256
 msgid "Your changes will be lost if you don’t save them."
 msgstr "Dina ändringar går förlorade om du inte sparar dem."
 
@@ -863,43 +878,43 @@ msgstr "Zooma _in"
 msgid "Zoom _Out"
 msgstr "Zooma _ut"
 
-#: data/menu.ui:341
+#: data/menu.ui:345
 msgid "_About"
-msgstr "_Om PDF Arranger"
+msgstr "Om P_DF Arranger"
 
-#: pdfarranger/pageutils.py:1014
+#: pdfarranger/pageutils.py:1019
 msgid "_Apply"
 msgstr "_Verkställ"
 
-#: data/menu.ui:222 data/menu.ui:528
+#: data/menu.ui:222 data/menu.ui:532
 msgid "_Booklet"
-msgstr "_Häfte"
+msgstr "Hä_fte"
 
-#: pdfarranger/config.py:326 pdfarranger/core.py:456
-#: pdfarranger/metadata.py:216 pdfarranger/pageutils.py:329
-#: pdfarranger/pdfarranger.py:1233 pdfarranger/pdfarranger.py:1242
-#: pdfarranger/pdfarranger.py:1364 pdfarranger/pdfarranger.py:1431
-#: pdfarranger/splitter.py:30
+#: pdfarranger/config.py:326 pdfarranger/core.py:458
+#: pdfarranger/metadata.py:216 pdfarranger/pageutils.py:334
+#: pdfarranger/pdfarranger.py:1248 pdfarranger/pdfarranger.py:1257
+#: pdfarranger/pdfarranger.py:1380 pdfarranger/pdfarranger.py:1448
+#: pdfarranger/pdfarranger.py:3390 pdfarranger/splitter.py:30
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: pdfarranger/pdfarranger.py:1252 data/menu.ui:347
+#: pdfarranger/pdfarranger.py:1267 data/menu.ui:351
 msgid "_Close"
-msgstr "_Stäng"
+msgstr "S_täng"
 
-#: data/menu.ui:118 data/menu.ui:369
+#: data/menu.ui:118 data/menu.ui:373
 msgid "_Copy"
 msgstr "K_opiera"
 
-#: data/menu.ui:186 data/menu.ui:492
+#: data/menu.ui:186 data/menu.ui:496
 msgid "_Crop Margins…"
 msgstr "_Beskär marginaler…"
 
-#: data/menu.ui:110 data/menu.ui:361
+#: data/menu.ui:110 data/menu.ui:365
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: data/menu.ui:243 data/menu.ui:439
+#: data/menu.ui:243 data/menu.ui:443
 msgid "_Deselect All"
 msgstr "_Avmarkera allt"
 
@@ -907,39 +922,39 @@ msgstr "_Avmarkera allt"
 msgid "_Edit"
 msgstr "_Redigera"
 
-#: data/menu.ui:157 data/menu.ui:413
+#: data/menu.ui:157 data/menu.ui:417
 msgid "_Explode into Images"
-msgstr "_Explodera till bilder"
+msgstr "_Dela upp i bilder"
 
-#: data/menu.ui:155 data/menu.ui:410
+#: data/menu.ui:155 data/menu.ui:414
 msgid "_Extract"
-msgstr "_Extrahera"
+msgstr "Ext_rahera"
 
 #: data/menu.ui:307
 msgid "_Find"
-msgstr "_Sök"
+msgstr "Sö_k"
 
 #: data/menu.ui:310
 msgid "_Find…"
 msgstr "_Sök…"
 
-#: data/menu.ui:224 data/menu.ui:530
+#: data/menu.ui:224 data/menu.ui:534
 msgid "_Generate (imposition)"
-msgstr "_Generera (imposition)"
+msgstr "_Skapa (utskjutning)"
 
-#: data/menu.ui:190 data/menu.ui:496
+#: data/menu.ui:190 data/menu.ui:500
 msgid "_Hide Margins…"
-msgstr "_Dölj marginaler…"
+msgstr "Dö_lj marginaler…"
 
 #: data/menu.ui:30
 msgid "_Import"
 msgstr "Im_portera"
 
-#: data/menu.ui:268 data/menu.ui:464
+#: data/menu.ui:268 data/menu.ui:468
 msgid "_Invert Selection"
 msgstr "_Invertera markeringen"
 
-#: data/menu.ui:214 data/menu.ui:520
+#: data/menu.ui:214 data/menu.ui:524
 msgid "_Merge Pages…"
 msgstr "Sl_å samman sidor…"
 
@@ -947,25 +962,26 @@ msgstr "Sl_å samman sidor…"
 msgid "_New Window"
 msgstr "_Nytt fönster"
 
-#: pdfarranger/config.py:327 pdfarranger/core.py:458
-#: pdfarranger/metadata.py:217 pdfarranger/pageutils.py:330
-#: pdfarranger/pdfarranger.py:3207 pdfarranger/splitter.py:32
+#: pdfarranger/config.py:327 pdfarranger/core.py:460
+#: pdfarranger/metadata.py:217 pdfarranger/pageutils.py:335
+#: pdfarranger/pdfarranger.py:3245 pdfarranger/pdfarranger.py:3392
+#: pdfarranger/splitter.py:32
 msgid "_OK"
 msgstr "_OK"
 
-#: pdfarranger/pdfarranger.py:1430 data/menu.ui:24
+#: pdfarranger/pdfarranger.py:1447 data/menu.ui:24
 msgid "_Open"
 msgstr "_Öppna"
 
-#: data/menu.ui:182 data/menu.ui:488
+#: data/menu.ui:182 data/menu.ui:492
 msgid "_Page Size…"
 msgstr "_Sidstorlek…"
 
 #: data/menu.ui:91
 msgid "_Print…"
-msgstr "_Skriv ut…"
+msgstr "Skriv _ut…"
 
-#: pdfarranger/pdfarranger.py:1289 data/menu.ui:353
+#: pdfarranger/pdfarranger.py:1305 data/menu.ui:357
 msgid "_Quit"
 msgstr "_Avsluta"
 
@@ -973,28 +989,28 @@ msgstr "_Avsluta"
 msgid "_Redo"
 msgstr "_Gör om"
 
-#: pdfarranger/pageutils.py:1014
+#: pdfarranger/pageutils.py:1019
 msgid "_Revert"
 msgstr "_Återställ"
 
-#: data/menu.ui:177 data/menu.ui:483
+#: data/menu.ui:177 data/menu.ui:487
 msgid "_Rotate Right"
 msgstr "Rotera åt _höger"
 
-#: pdfarranger/pdfarranger.py:1242 pdfarranger/pdfarranger.py:1363
+#: pdfarranger/pdfarranger.py:1257 pdfarranger/pdfarranger.py:1379
 #: data/menu.ui:42
 msgid "_Save"
 msgstr "_Spara"
 
-#: data/menu.ui:235 data/menu.ui:431
+#: data/menu.ui:235 data/menu.ui:435
 msgid "_Select"
 msgstr "_Markera"
 
-#: data/menu.ui:228 data/menu.ui:534
+#: data/menu.ui:228 data/menu.ui:538
 msgid "_Split (unimposition)"
-msgstr "_Dela (unimposition)"
+msgstr "_Dela upp (omvänd utskjutning)"
 
-#: data/menu.ui:210 data/menu.ui:516
+#: data/menu.ui:210 data/menu.ui:520
 msgid "_Split Pages…"
 msgstr "_Dela sidor…"
 
@@ -1007,22 +1023,15 @@ msgid "_View"
 msgstr "_Visa"
 
 #: pdfarranger/pageutils.py:155 pdfarranger/pageutils.py:162
-#: pdfarranger/pageutils.py:470 pdfarranger/pageutils.py:520
-#: pdfarranger/pdfarranger.py:3282
+#: pdfarranger/pageutils.py:475 pdfarranger/pageutils.py:525
+#: pdfarranger/pdfarranger.py:3322
 msgid "mm"
 msgstr "mm"
 
-#: pdfarranger/core.py:730
+#: pdfarranger/core.py:749
 msgid "page"
 msgstr "sida"
 
-#: pdfarranger/pdfarranger.py:1073
+#: pdfarranger/pdfarranger.py:1088
 msgid "untitled"
 msgstr "osparat dokument"
-
-#, python-format
-#~ msgid "It uses libqpdf %s, pikepdf %s, GTK %s and Python %s."
-#~ msgstr "Programmet använder libqpdf %s, pikepdf %s, GTK %s och Python %s."
-
-#~ msgid "Zoom _Fit"
-#~ msgstr "_Anpassa zoom"
