@@ -275,7 +275,12 @@ class _CropHideWidget(Gtk.Frame):
         grid.attach(label, 0, 0, 3, 1)
         self.spin_changed_callback = None
         self.spin_list = []
-        units = 2 * [_('% of width')] + 2 * [_('% of height')]
+        units = (
+            # xgettext: no-python-format
+            2 * [_('% of width')]
+            # xgettext: no-python-format
+            + 2 * [_('% of height')]
+        )
 
         for row, side in enumerate(_CropHideWidget.sides):
             label = Gtk.Label(label=_CropHideWidget.side_names[side])

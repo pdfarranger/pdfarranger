@@ -35,7 +35,7 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
   <summary xml:lang="pt">Aplicação para juntar, organizar, separar, rodar e recortar ficheiros PDF</summary>
   <summary xml:lang="ru">Приложение для объединения, изменения порядка страниц, разделения, вращение и обрезки документов PDF</summary>
   <summary xml:lang="sk">Grafický nástroj na manipuláciu s PDF</summary>
-  <summary xml:lang="sv">Slå samman, arrangera om, dela, rotera och beskär PDF filer</summary>
+  <summary xml:lang="sv">Slå samman, ordna om och beskär PDF-filer</summary>
   <summary xml:lang="ko">PDF를 합치기, 재정렬, 나누기, 회전하거나 잘라내기</summary>
   <summary xml:lang="tr">PDF Birleştirme, Yeniden Düzenleme, Bölme, Döndürme ve Kırpma</summary>
   <summary xml:lang="uk">Об'єднуй, впорядковуй і редагуй PDF-документи</summary>
@@ -175,6 +175,15 @@ See file COPYING or go to <http://www.gnu.org/licenses/> for full license detail
     </p>
     <p xml:lang="ru">
       Это клиентский интерфейс для pikepdf.
+    </p>
+
+    <p xml:lang="sv">
+      PDF Arranger är ett litet program som hjälper dig att slå samman eller dela
+      PDF-dokument samt rotera, beskära och ordna om deras sidor i ett interaktivt
+      och intuitivt grafiskt gränssnitt.
+    </p>
+    <p xml:lang="sv">
+      Det är ett grafiskt gränssnitt för pikepdf.
     </p>
 
     <p xml:lang="tr">
