@@ -69,7 +69,7 @@ class ScanPreviewTest(unittest.TestCase):
         pdf.close()
         return path
 
-    def preview(self, path, password=""):
+    def preview(self, path, password=None):
         preview = module.ScanPreview(str(path), password)
         self.previews.append(preview)
         return preview
@@ -104,7 +104,7 @@ class ScanPreviewTest(unittest.TestCase):
     def test_context_and_source_file_unchanged(self):
         path = self.document()
         before = hashlib.sha256(path.read_bytes()).digest()
-        surface, cr = self.surface()
+        _, cr = self.surface()
         cr.translate(2, 3)
         cr.scale(.5, .5)
         cr.set_source_rgb(.1, .2, .3)
