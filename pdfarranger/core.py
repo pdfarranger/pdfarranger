@@ -44,6 +44,7 @@ from gi.repository import GObject, GLib, Gtk, Gio
 gi.require_version("Poppler", "0.18")
 from gi.repository import Poppler  # for the rendering of pdf pages
 import cairo
+from .scanpreview import ScanPreview
 from math import pi
 
 
@@ -601,6 +602,7 @@ class PDFDoc:
             raise PDFDocError(_("File is neither pdf nor image") + ": " + filename)
 
         self.transparent_link_annots_removed = [False] * self.document.get_n_pages()
+        self.scan_preview = ScanPreview(self.copyname, self.password)
 
     def get_page(self, n_page):
         """Get a page where transparent link annotations are removed.
@@ -895,7 +897,8 @@ class PDFRenderer(threading.Thread, GObject.GObject):
         pdfdoc = self.pdfqueue[p.nfile - 1]
         page = pdfdoc.get_page(p.npage - 1)
         with pdfdoc.render_lock:
-            page.render(cr)
+            if not pdfdoc.scan_preview.paint(cr, p.npage - 1):
+                page.render(cr)
 
     def update(self, p: Page, ref, zoom, is_preview):
         """Render and emit updated thumbnails."""
