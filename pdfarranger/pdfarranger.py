@@ -506,12 +506,21 @@ class PdfArranger(Gtk.Application):
 
     def insert_blank_page(self, _action, _option, _unknown):
         size = None
+        equal_size = False
         selection = self.iconview.get_selected_items()
         selection.sort()
         model = self.iconview.get_model()
-        if len(selection) > 0:
-            size = model[selection[-1]][0].size_in_mm()
-        page_size = pageutils.BlankPageDialog(size, self.window).run_get()
+        if len(self.model) > 0:
+            if len(selection) > 0:
+                size = model[selection[-1]][0].size_in_mm()
+                _, _, equal_selected = self.get_size_info(selection)
+                _, _, equal_all = self.get_size_info()
+                equal_size = equal_selected or equal_all
+            else:
+                # Not selected: equal_size, if all pages have the same size
+                size = model[-1][0].size_in_mm()
+                _, _, equal_size = self.get_size_info()
+        page_size = pageutils.BlankPageDialog(size, equal_size, self.window).run_get()
         if page_size is not None:
             adder = PageAdder(self)
             if len(selection) > 0:
@@ -2875,8 +2884,12 @@ class PdfArranger(Gtk.Application):
         self.update_max_zoom_level()
         GObject.idle_add(self.render)
 
-    def get_size_info(self, selection):
-        sizes = [self.model[row][0].size_in_points() for row in reversed(selection)]
+    def get_size_info(self, selection=None):
+        """Size of selected pages; with no selction size of all pages."""
+        if selection:
+            sizes = [self.model[path][0].size_in_points() for path in reversed(selection)]
+        else:
+            sizes = [row[0].size_in_points() for row in self.model]
         max_width = max(s[0] for s in sizes)
         min_width = min(s[0] for s in sizes)
         max_height = max(s[1] for s in sizes)

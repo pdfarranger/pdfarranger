@@ -57,7 +57,7 @@ def scale(model, selection, factor):
 
 
 class _LinkedSpinButton(Gtk.SpinButton):
-    """ A spin button which can be bound to an other button """
+    """A spin button which can be bound to an other button"""
 
     def __init__(self, minval, maxval, step, page=None):
         Gtk.SpinButton.__init__(self)
@@ -69,14 +69,14 @@ class _LinkedSpinButton(Gtk.SpinButton):
         self.changing_from_brother = False
 
     def __output(self, _user_data):
-        """ output signal handler to remove unneeded 0 """
+        """output signal handler to remove unneeded 0"""
         s = locale.format_string("%.8g", self.get_adjustment().get_value())
         self.get_buffer().set_text(s, len(s))
         return True
 
 
 class _RadioStackSwitcher(Gtk.Box):
-    """ Same as GtkStackSwitcher but with radio button (i.e different semantic) """
+    """Same as GtkStackSwitcher but with radio button (i.e different semantic)"""
 
     def __init__(self, margin=10):
         super().__init__()
@@ -114,7 +114,7 @@ class _RadioStackSwitcher(Gtk.Box):
 
 
 class _RelativeScalingWidget(Gtk.Box):
-    """ A form to specify the relative scaling factor """
+    """A form to specify the relative scaling factor"""
 
     def __init__(self, current_scale, margin=10):
         super().__init__(valign=Gtk.Align.CENTER, halign=Gtk.Align.CENTER)
@@ -344,7 +344,7 @@ class BaseDialog(Gtk.Dialog):
 
 
 class ScaleDialog(BaseDialog):
-    """ A dialog box to define page size or scale factor """
+    """A dialog box to define page size or scale factor"""
 
     def __init__(self, model, selection, window):
         super().__init__(title=_("Page size"), parent=window)
@@ -369,7 +369,7 @@ class ScaleDialog(BaseDialog):
         self.selection = selection
 
     def run_get(self):
-        """ Open the dialog and return the size value """
+        """Open the dialog and return the size value"""
         result = self.run()
         val = None
         if result == Gtk.ResponseType.OK:
@@ -438,14 +438,20 @@ def white_borders(model, selection, pdfqueue):
 
 
 class BlankPageDialog(BaseDialog):
-    def __init__(self, size, window):
+    def __init__(self, size, equal_size, window):
         super().__init__(title=_("Insert Blank Page"), parent=window)
+        self.equal_size = equal_size
         self.set_resizable(False)
         self.paper_widget = PaperSizeWidget(size)
         self.vbox.pack_start(self.paper_widget, True, True, 0)
         self.show_all()
 
     def run_get(self):
+        if self.equal_size:
+            r = self.paper_widget.get_value()
+            self.destroy()
+            return r
+
         result = self.run()
         r = None
         if result == Gtk.ResponseType.OK:
