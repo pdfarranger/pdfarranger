@@ -178,6 +178,7 @@ from . import splitter
 from .search import SearchBarWidget
 from .iconview import CellRendererImage, IconviewCursor, IconviewDragSelect, IconviewPanView
 from .core import img2pdf_supported_img, PageAdder, PDFDocError, PDFRenderer
+from .command_palette import CommandPaletteDialog
 if 'image/png' in img2pdf_supported_img and 'image/jpeg' in img2pdf_supported_img:
     from .image_exporter import ImageExporter
 else:
@@ -283,6 +284,7 @@ class PdfArranger(Gtk.Application):
         self.cellthmb = None
         self.status_bar = None
         self.popup = None
+        self.main_menu_model = None
         self.is_unsaved = False
         self.zoom_level = None
         self.zoom_level_old = 0
@@ -434,7 +436,8 @@ class PdfArranger(Gtk.Application):
         self.popup = Gtk.Menu.new_from_model(b.get_object("popup_menu"))
         self.popup.attach_to_widget(self.window, None)
         main_menu = self.uiXML.get_object("main_menu_button")
-        main_menu.set_menu_model(b.get_object("main_menu"))
+        self.main_menu_model = b.get_object("main_menu")
+        main_menu.set_menu_model(self.main_menu_model)
 
     def __create_actions(self):
         # Both Handy.ApplicationWindow and Gtk.Application are Gio.ActionMap. Some action are window
@@ -485,7 +488,8 @@ class PdfArranger(Gtk.Application):
             ("find", self.searchbar_widget.find),
             ("find_prev", self.searchbar_widget.find_prev),
             ("find_next", self.searchbar_widget.find_next),
-            ("find_all", self.searchbar_widget.find_all)
+            ("find_all", self.searchbar_widget.find_all),
+            ("command-palette", self.show_command_palette)
         ]
         self.window.add_action_entries(self.actions)
 
@@ -503,6 +507,18 @@ class PdfArranger(Gtk.Application):
         self.undomanager.set_actions(self.window.lookup_action('undo'),
                                      self.window.lookup_action('redo'))
         self.searchbar_widget.enable_actions()
+
+    def show_command_palette(self, _action, _param, _unknown):
+        dialog = CommandPaletteDialog(self.window, self.main_menu_model)
+        dialog.run()
+        command = dialog.selected_command
+        dialog.destroy()
+        if command is not None:
+            action_name = command.action[4:] if command.action.startswith("win.") else command.action
+            action = self.window.lookup_action(action_name)
+            if action is not None and action.get_enabled():
+                action.activate(command.target)
+        self.iconview.grab_focus()
 
     def insert_blank_page(self, _action, _option, _unknown):
         size = None
