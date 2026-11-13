@@ -22,7 +22,7 @@ import re
 import json
 import traceback
 from datetime import datetime
-from dateutil import parser
+from pdfarranger.date_parser import parse_pdf_date
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -177,7 +177,7 @@ class _EditedEventHandler(object):
     @staticmethod
     def _parse_date(string, parent):
         try:
-            date = parser.parse(string)
+            date = parse_pdf_date(string)
             return datetime.isoformat(date) # ISO-8601 formatted date
         except ValueError:
             if string:
